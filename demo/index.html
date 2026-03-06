@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>DAR Illustration</title>
+<style>
+body{
+font-family:Arial;
+background:#0f172a;
+color:white;
+display:flex;
+align-items:center;
+justify-content:center;
+height:100vh
+}
+
+.box{
+background:#1f2937;
+padding:30px;
+border-radius:10px;
+width:420px
+}
+
+input{
+width:100%;
+padding:10px;
+margin-top:10px
+}
+
+button{
+margin-top:10px;
+padding:10px;
+width:100%;
+background:#2563eb;
+color:white;
+border:none
+}
+
+.result{
+margin-top:15px
+}
+</style>
+</head>
+
+<body>
+
+<div class="box">
+
+<h2>DAR Illustration</h2>
+
+<p><b>Process:</b> Autonomous payment execution</p>
+
+<p><b>Irreversible step:</b> Funds released to external account</p>
+
+<p><b>Question:</b><br>
+Who is the named Stop Authority?</p>
+
+<input id="name" placeholder="Enter name">
+
+<button onclick="check()">Run DAR Check</button>
+
+<div id="result" class="result"></div>
+
+</div>
+
+<script>
+
+function check(){
+
+let name=document.getElementById("name").value.trim();
+let r=document.getElementById("result");
+
+if(name===""){
+
+r.innerHTML="DAR condition not satisfied.<br>Named Stop Authority: MISSING";
+r.style.color="red";
+
+}else{
+
+r.innerHTML="DAR condition satisfied.<br>Stop Authority: "+name;
+r.style.color="lightgreen";
+
+}
+
+}
+
+</script>
+
+</body>
+</html>
