@@ -1,89 +1,364 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-<title>DAR Illustration</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DAR — Decision Accountability Record</title>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,300;0,400;0,500;1,300&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
 <style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+
+:root{
+  --bg:#090909;--surface:#111111;--surface2:#161616;
+  --border:#1e1e1e;--border2:#2a2a2a;
+  --text:#e6e0d4;--muted:#52504c;--muted2:#7a7570;
+  --accent:#c8a96e;
+  --danger:#c0392b;--danger-bg:rgba(192,57,43,0.07);--danger-border:rgba(192,57,43,0.28);
+  --safe:#3d9970;--safe-bg:rgba(61,153,112,0.06);--safe-border:rgba(61,153,112,0.25);
+  --mono:'IBM Plex Mono',monospace;--serif:'Playfair Display',serif;
+}
+
 body{
-font-family:Arial;
-background:#0f172a;
-color:white;
-display:flex;
-align-items:center;
-justify-content:center;
-height:100vh
+  background:var(--bg);
+  color:var(--text);
+  font-family:var(--mono);
+  min-height:100vh;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  padding:4rem 1.5rem 5rem;
 }
 
-.box{
-background:#1f2937;
-padding:30px;
-border-radius:10px;
-width:420px
+/* Subtle grain */
+body::before{
+  content:'';
+  position:fixed;inset:0;
+  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
+  pointer-events:none;z-index:0;
 }
 
-input{
-width:100%;
-padding:10px;
-margin-top:10px
+.wrapper{position:relative;z-index:1;max-width:700px;width:100%}
+
+/* Header */
+.header{
+  text-align:center;margin-bottom:3.5rem;
+  animation:fadeDown .7s ease both;
+}
+.eyebrow{
+  font-size:.6rem;letter-spacing:.28em;color:var(--accent);
+  text-transform:uppercase;display:block;margin-bottom:1rem;
+}
+h1{
+  font-family:var(--serif);font-size:clamp(1.8rem,5vw,2.8rem);
+  font-weight:400;line-height:1.15;margin-bottom:1rem;
+}
+.subtitle{
+  font-size:.74rem;color:var(--muted2);line-height:1.75;
+  max-width:500px;margin:0 auto;
 }
 
-button{
-margin-top:10px;
-padding:10px;
-width:100%;
-background:#2563eb;
-color:white;
-border:none
+/* Scenario selector */
+.selector-label{
+  font-size:.58rem;letter-spacing:.22em;color:var(--muted);
+  text-transform:uppercase;margin-bottom:.9rem;
+  animation:fadeUp .7s .15s ease both;
 }
+.scenarios{
+  display:grid;grid-template-columns:repeat(3,1fr);
+  gap:.5rem;margin-bottom:2.5rem;
+  animation:fadeUp .7s .2s ease both;
+}
+.scenario-btn{
+  background:var(--surface);border:1px solid var(--border);
+  color:var(--muted2);font-family:var(--mono);
+  font-size:.65rem;padding:1rem .9rem;
+  cursor:pointer;text-align:left;line-height:1.6;
+  transition:border-color .18s,background .18s;
+}
+.scenario-btn .s-tag{
+  display:block;font-size:.55rem;letter-spacing:.18em;
+  color:var(--muted);text-transform:uppercase;margin-bottom:.35rem;
+}
+.scenario-btn .s-name{color:var(--text);font-size:.7rem;}
+.scenario-btn:hover{border-color:var(--border2);}
+.scenario-btn.active{border-color:var(--accent);background:var(--surface2);}
+.scenario-btn.active .s-tag{color:var(--accent);}
 
+/* Flow card */
+.flow-card{
+  background:var(--surface);border:1px solid var(--border);
+  margin-bottom:2rem;
+  animation:fadeUp .6s .28s ease both;
+}
+.flow-header{
+  padding:1rem 1.5rem;border-bottom:1px solid var(--border);
+  display:flex;align-items:center;justify-content:space-between;
+}
+.flow-title{font-size:.6rem;color:var(--muted);letter-spacing:.15em;text-transform:uppercase;}
+.flow-scenario-name{font-size:.68rem;color:var(--accent);}
+.flow-steps{padding:0 1.5rem;}
+.flow-step{
+  display:flex;align-items:flex-start;gap:1rem;
+  padding:1rem 0;border-bottom:1px solid var(--border);
+}
+.flow-step:last-child{border-bottom:none;}
+.step-num{
+  width:26px;height:26px;flex-shrink:0;
+  border:1px solid var(--border2);
+  display:flex;align-items:center;justify-content:center;
+  font-size:.58rem;color:var(--muted);margin-top:2px;
+}
+.step-num.critical{border-color:var(--accent);color:var(--accent);font-size:.75rem;}
+.step-name{font-size:.74rem;color:var(--text);margin-bottom:.2rem;}
+.step-desc{font-size:.64rem;color:var(--muted2);line-height:1.55;}
+.step-desc.warn{color:var(--accent);}
+
+/* Question block */
+.q-block{
+  border:1px solid var(--border);border-left:3px solid var(--accent);
+  padding:1.75rem 2rem;margin-bottom:1.5rem;
+  animation:fadeUp .6s .38s ease both;
+}
+.q-text{
+  font-family:var(--serif);font-size:clamp(1rem,2.8vw,1.35rem);
+  font-style:italic;color:var(--text);line-height:1.5;margin-bottom:1.5rem;
+}
+.q-text em{color:var(--accent);font-style:normal;}
+.input-row{display:flex;gap:.6rem;}
+
+input[type="text"]{
+  flex:1;min-width:0;
+  background:var(--bg);border:1px solid var(--border2);
+  color:var(--text);font-family:var(--mono);font-size:.78rem;
+  padding:.8rem 1rem;outline:none;
+  transition:border-color .18s;
+}
+input[type="text"]::placeholder{color:var(--muted);}
+input[type="text"]:focus{border-color:var(--accent);}
+input[type="text"]:disabled{opacity:.4;}
+
+.confirm-btn{
+  background:var(--accent);color:var(--bg);border:none;
+  font-family:var(--mono);font-size:.65rem;letter-spacing:.14em;
+  text-transform:uppercase;font-weight:500;
+  padding:.8rem 1.3rem;cursor:pointer;
+  transition:opacity .15s;white-space:nowrap;
+}
+.confirm-btn:hover{opacity:.85;}
+.confirm-btn:disabled{opacity:.35;cursor:default;}
+
+/* Result */
 .result{
-margin-top:15px
+  padding:1.6rem 2rem;border:1px solid transparent;
+  display:none;margin-bottom:.5rem;
+}
+.result.show{display:block;animation:resultIn .35s ease both;}
+.result.missing{background:var(--danger-bg);border-color:var(--danger-border);}
+.result.satisfied{background:var(--safe-bg);border-color:var(--safe-border);}
+
+.r-status{
+  font-size:.58rem;letter-spacing:.2em;
+  text-transform:uppercase;margin-bottom:.85rem;
+}
+.result.missing .r-status{color:var(--danger);}
+.result.satisfied .r-status{color:var(--safe);}
+
+.r-main{
+  font-family:var(--serif);font-size:clamp(.95rem,2.5vw,1.15rem);
+  line-height:1.45;margin-bottom:.85rem;
+}
+.r-sub{font-size:.66rem;color:var(--muted2);line-height:1.75;}
+.authority-name{color:var(--safe);font-weight:500;}
+
+/* Reset */
+.reset-row{text-align:right;margin-top:1.2rem;display:none;}
+.reset-btn{
+  background:transparent;border:none;
+  border-bottom:1px solid var(--border);
+  color:var(--muted);font-family:var(--mono);
+  font-size:.62rem;letter-spacing:.1em;
+  cursor:pointer;padding:.3rem 0;
+  transition:color .15s,border-color .15s;
+}
+.reset-btn:hover{color:var(--text);border-color:var(--muted2);}
+
+/* Footer */
+.footer{
+  margin-top:4rem;text-align:center;
+  border-top:1px solid var(--border);padding-top:2.5rem;
+  animation:fadeUp .7s .5s ease both;
+}
+.footer p{font-size:.6rem;color:var(--muted);letter-spacing:.1em;line-height:2.2;}
+.footer a{color:var(--muted2);text-decoration:none;border-bottom:1px solid var(--border2);transition:color .15s;}
+.footer a:hover{color:var(--accent);}
+
+/* Animations */
+@keyframes fadeDown{from{opacity:0;transform:translateY(-14px)}to{opacity:1;transform:translateY(0)}}
+@keyframes fadeUp{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:translateY(0)}}
+@keyframes resultIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
+
+@media(max-width:520px){
+  .scenarios{grid-template-columns:1fr;}
+  .input-row{flex-direction:column;}
+  .confirm-btn{width:100%;text-align:center;}
 }
 </style>
 </head>
-
 <body>
+<div class="wrapper">
 
-<div class="box">
+  <header class="header">
+    <span class="eyebrow">Decision Accountability Record · DAR™</span>
+    <h1>The Human Stop Boundary</h1>
+    <p class="subtitle">When an automated system reaches a point of irreversibility under uncertainty — execution must pause until a named human authority accepts responsibility.</p>
+  </header>
 
-<h2>DAR Illustration</h2>
+  <p class="selector-label">Select a scenario</p>
 
-<p><b>Process:</b> Autonomous payment execution</p>
+  <div class="scenarios">
+    <button class="scenario-btn active" onclick="selectScenario(0)">
+      <span class="s-tag">Fintech</span>
+      <span class="s-name">Autonomous Payment Execution</span>
+    </button>
+    <button class="scenario-btn" onclick="selectScenario(1)">
+      <span class="s-tag">Capital Markets</span>
+      <span class="s-name">AI Trading System</span>
+    </button>
+    <button class="scenario-btn" onclick="selectScenario(2)">
+      <span class="s-tag">Healthcare AI</span>
+      <span class="s-name">Clinical Decision Support</span>
+    </button>
+  </div>
 
-<p><b>Irreversible step:</b> Funds released to external account</p>
+  <div class="flow-card">
+    <div class="flow-header">
+      <span class="flow-title">Execution flow</span>
+      <span class="flow-scenario-name" id="flowTitle"></span>
+    </div>
+    <div class="flow-steps" id="flowSteps"></div>
+  </div>
 
-<p><b>Question:</b><br>
-Who is the named Stop Authority?</p>
+  <div class="q-block">
+    <p class="q-text">Before execution continues — <em>who is the named Stop Authority?</em></p>
+    <div class="input-row">
+      <input type="text" id="authorityInput" placeholder="Enter full name and role" autocomplete="off"/>
+      <button class="confirm-btn" id="confirmBtn" onclick="checkDAR()">Confirm</button>
+    </div>
+  </div>
 
-<input id="name" placeholder="Enter name">
+  <div class="result" id="result">
+    <div class="r-status" id="rStatus"></div>
+    <div class="r-main" id="rMain"></div>
+    <div class="r-sub" id="rSub"></div>
+  </div>
 
-<button onclick="check()">Run DAR Check</button>
+  <div class="reset-row" id="resetRow">
+    <button class="reset-btn" onclick="resetDemo()">↩ Try another scenario</button>
+  </div>
 
-<div id="result" class="result"></div>
+  <footer class="footer">
+    <p>This is a conceptual illustration — not a software product.</p>
+    <p>DAR™ is a governance principle: named stop authority before the point of irreversibility.</p>
+    <p style="margin-top:.8rem"><a href="https://github.com/liranbarshrim-ui/human-stop-boundary" target="_blank">github.com / human-stop-boundary</a></p>
+  </footer>
 
 </div>
-
 <script>
+const SCENARIOS=[
+  {
+    name:"Autonomous Payment Execution",
+    steps:[
+      {n:"01",name:"Payment instruction received",desc:"Transaction initiated by automated system. Counterparty verified against internal registry.",crit:false},
+      {n:"02",name:"Risk threshold evaluated",desc:"Amount exceeds standard threshold. Anomaly flag raised. System continues processing.",crit:false},
+      {n:"⚑",name:"Irreversible step approaching",desc:"Funds about to be released to external account. This action cannot be fully reversed.",crit:true}
+    ],
+    missing:"No individual is on record as personally responsible for authorizing this transfer. The system may execute — but accountability has no owner. If the transaction is fraudulent, erroneous, or sanctioned, no named human accepted responsibility before the funds left.",
+    satisfied:"This individual is now explicitly named — on record, before execution — as the person who authorized proceeding past the point of irreversibility. If harm results, the accountability record predates the harm."
+  },
+  {
+    name:"AI Trading System",
+    steps:[
+      {n:"01",name:"Market signal detected",desc:"Algorithm identifies a large directional trade. Position sizing exceeds single-name concentration limit.",crit:false},
+      {n:"02",name:"Risk model override triggered",desc:"Volatility spike detected. Model recommends proceeding. No human has reviewed the override.",crit:false},
+      {n:"⚑",name:"Irreversible step approaching",desc:"Large block order about to be submitted to exchange. Market impact cannot be undone once the order is live.",crit:true}
+    ],
+    missing:"No individual is recorded as having accepted responsibility for this order at this size, under these conditions. The system may execute — but accountability has no owner. If the trade causes a loss event, there is no named human who was accountable before the order was placed.",
+    satisfied:"A named individual has accepted personal accountability for this order before market submission. The record of that acceptance exists prior to execution — not as a post-hoc assignment of blame, but as a deliberate, pre-decision commitment."
+  },
+  {
+    name:"Clinical Decision Support",
+    steps:[
+      {n:"01",name:"Patient data analysed",desc:"AI system processes imaging and lab results. High-confidence recommendation generated.",crit:false},
+      {n:"02",name:"Protocol threshold reached",desc:"Recommendation meets criteria for automated escalation to treatment pathway. No physician has reviewed.",crit:false},
+      {n:"⚑",name:"Irreversible step approaching",desc:"Treatment order about to be committed. Some interventions carry permanent physiological consequences.",crit:true}
+    ],
+    missing:"No named clinician has accepted responsibility for this AI-generated recommendation before it becomes a treatment order. The system may execute — but accountability has no owner. If the outcome is harmful, the accountability record is absent at the moment that mattered most.",
+    satisfied:"A named clinician has explicitly accepted responsibility for this recommendation before the order is committed. The accountability record is established prior to the irreversible step — not reconstructed after an adverse event."
+  }
+];
 
-function check(){
+let current=0,answered=false;
 
-let name=document.getElementById("name").value.trim();
-let r=document.getElementById("result");
-
-if(name===""){
-
-r.innerHTML="DAR condition not satisfied.<br>Named Stop Authority: MISSING";
-r.style.color="red";
-
-}else{
-
-r.innerHTML="DAR condition satisfied.<br>Stop Authority: "+name;
-r.style.color="lightgreen";
-
+function selectScenario(i){
+  if(answered)return;
+  current=i;
+  document.querySelectorAll('.scenario-btn').forEach((b,idx)=>b.classList.toggle('active',idx===i));
+  renderFlow();
 }
 
+function renderFlow(){
+  const s=SCENARIOS[current];
+  document.getElementById('flowTitle').textContent=s.name;
+  document.getElementById('flowSteps').innerHTML=s.steps.map(st=>`
+    <div class="flow-step">
+      <div class="step-num${st.crit?' critical':''}">${st.n}</div>
+      <div>
+        <div class="step-name">${st.name}</div>
+        <div class="step-desc${st.crit?' warn':''}">${st.desc}</div>
+      </div>
+    </div>`).join('');
 }
 
+function checkDAR(){
+  const name=document.getElementById('authorityInput').value.trim();
+  const s=SCENARIOS[current];
+  const result=document.getElementById('result');
+  result.className='result';
+  void result.offsetWidth;
+  if(!name){
+    result.className='result missing show';
+    document.getElementById('rStatus').textContent='● DAR Condition Not Satisfied';
+    document.getElementById('rMain').textContent='Named Stop Authority: MISSING';
+    document.getElementById('rSub').textContent=s.missing;
+  } else {
+    result.className='result satisfied show';
+    document.getElementById('rStatus').textContent='● DAR Condition Satisfied';
+    document.getElementById('rMain').innerHTML='Named Stop Authority: <span class="authority-name">'+esc(name)+'</span>';
+    document.getElementById('rSub').textContent=s.satisfied;
+  }
+  answered=true;
+  document.getElementById('authorityInput').disabled=true;
+  document.getElementById('confirmBtn').disabled=true;
+  document.getElementById('resetRow').style.display='block';
+  document.querySelectorAll('.scenario-btn').forEach(b=>b.style.opacity='.4');
+}
+
+function resetDemo(){
+  answered=false;
+  document.getElementById('authorityInput').value='';
+  document.getElementById('authorityInput').disabled=false;
+  document.getElementById('confirmBtn').disabled=false;
+  document.getElementById('result').className='result';
+  document.getElementById('resetRow').style.display='none';
+  document.querySelectorAll('.scenario-btn').forEach(b=>b.style.opacity='1');
+  document.getElementById('authorityInput').focus();
+}
+
+function esc(s){return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');}
+
+document.getElementById('authorityInput').addEventListener('keydown',e=>{if(e.key==='Enter'&&!answered)checkDAR();});
+
+renderFlow();
 </script>
-
 </body>
 </html>
