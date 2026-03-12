@@ -67,9 +67,11 @@ They are ungoverned.
 
 ## Non-Goals
 
-- This is not an implementation library.
-- This repository provides no executable code.
-- This repository does not offer automation, optimization, or performance improvements.
+This repository is not an implementation library.
+
+It provides no executable code and does not attempt to automate governance.
+
+The goal is to define a governance boundary that can be inspected, documented, and audited.
 
 ## Status
 
