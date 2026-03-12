@@ -1,4 +1,3 @@
-
 # Human Stop Boundary
 
 A sovereign decision boundary for irreversible automated actions.
@@ -11,8 +10,14 @@ It specifies when execution must pause and responsibility must return to a named
 
 The boundary is triggered when an action is both:
 
-- Irreversible  
+- Irreversible
 - Performed under high uncertainty
+
+## Core Governance Question
+
+Who, by name, has the authority to stop execution before a decision becomes irreversible?
+
+If no named authority exists, the system should not execute.
 
 ## Principle
 
@@ -21,12 +26,6 @@ When irreversibility meets uncertainty, the system must stop.
 No optimization, fallback, or probabilistic override is permitted.
 
 Continuation requires explicit human acknowledgement and signature.
-
-## Core Governance Question
-
-Who, by name, has the authority to stop execution before a decision becomes irreversible?
-
-If no named authority exists, the system should not execute.
 
 ## Decision Accountability Record (DAR)
 
@@ -59,9 +58,12 @@ Stopping is not a failure mode.
 
 It is a deliberately designed state that preserves:
 
-- accountability  
-- legality  
+- accountability
+- legality
 - human agency
+
+Systems that cannot stop are not autonomous.
+They are ungoverned.
 
 ## Non-Goals
 
@@ -79,9 +81,9 @@ Provided as a governance reference for inspection and discussion.
 
 human-stop-boundary/
 
-README.md        – concept and specification  
-dar-record.md    – record template  
-demo/            – visualization example  
+README.md – concept and specification  
+dar-record.md – record template  
+demo/ – visualization example
 
 ## License
 
