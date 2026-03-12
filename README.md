@@ -1,32 +1,88 @@
+
 # Human Stop Boundary
 
 A sovereign decision boundary for irreversible automated actions.
 
 ## Purpose
+
 This repository defines a human-first stop condition for automated and autonomous systems.
+
 It specifies when execution must pause and responsibility must return to a named human authority.
 
 The boundary is triggered when an action is both:
-- Irreversible
+
+- Irreversible  
 - Performed under high uncertainty
 
 ## Principle
+
 When irreversibility meets uncertainty, the system must stop.
 
 No optimization, fallback, or probabilistic override is permitted.
-Continuation requires explicit human acknowledgment and signature.
+
+Continuation requires explicit human acknowledgement and signature.
+
+## Core Governance Question
+
+Who, by name, has the authority to stop execution before a decision becomes irreversible?
+
+If no named authority exists, the system should not execute.
+
+## Decision Accountability Record (DAR)
+
+The boundary can be documented using a minimal record structure.
+
+system:
+irreversible_boundary:
+stop_authority_name:
+stop_authority_role:
+escalation_path:
+review_date:
+
+## Example
+
+system: automated_credit_approval
+
+irreversible_boundary: loan_contract_issued_to_customer
+
+stop_authority_name: Head of Credit Risk
+
+stop_authority_role: Credit Risk Officer
+
+escalation_path: Chief Risk Officer
+
+review_date: 2026-03-12
 
 ## Design Intent
+
 Stopping is not a failure mode.
-It is a deliberately designed state that preserves accountability, legality, and human agency.
+
+It is a deliberately designed state that preserves:
+
+- accountability  
+- legality  
+- human agency
 
 ## Non-Goals
+
 - This is not an implementation library.
 - This repository provides no executable code.
 - This repository does not offer automation, optimization, or performance improvements.
 
 ## Status
-Read-only reference.
-Provided for inspection and discussion only.
 
-© 2026 Liran Bar-Sharyim. All rights reserved.
+Concept specification.
+
+Provided as a governance reference for inspection and discussion.
+
+## Repository Structure
+
+human-stop-boundary/
+
+README.md        – concept and specification  
+dar-record.md    – record template  
+demo/            – visualization example  
+
+## License
+
+© 2026 Liran Bar-Sharim. All rights reserved.
