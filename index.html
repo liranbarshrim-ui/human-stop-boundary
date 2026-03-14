@@ -1,107 +1,250 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Decision Accountability Record (DAR) — Matrix Audit</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@300;400;500&family=Playfair+Display:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
-  <style>
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    :root {
-      --bg: #090909; --surface: #111111; --gold: #c8a96e;
-      --text: #e6e0d4; --muted: #7a7570; --muted-2: #52504c;
-      --border: #1e1e1e; --border-2: #2a2a2a;
-    }
-    html { font-size: 16px; scroll-behavior: smooth; }
-    body { background: var(--bg); color: var(--text); font-family: 'IBM Plex Mono', monospace; font-weight: 300; line-height: 1.8; min-height: 100vh; overflow-x: hidden; }
-    body::before { content: ''; position: fixed; inset: 0; background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E"); pointer-events: none; z-index: 1000; opacity: 0.4; }
-    .wrap { max-width: 680px; margin: 0 auto; padding: 0 2rem; }
-    header { padding: 3rem 0 2rem; border-bottom: 1px solid var(--border); }
-    .brand { font-size: 0.65rem; font-weight: 500; letter-spacing: 0.25em; text-transform: uppercase; color: var(--gold); display: flex; align-items: center; gap: 0.75rem; }
-    .brand::before { content: ''; display: inline-block; width: 18px; height: 2px; background: var(--gold); }
-    .title-block { padding: 4rem 0 3rem; border-bottom: 1px solid var(--border); }
-    .tag { font-size: 0.6rem; font-weight: 500; letter-spacing: 0.2em; text-transform: uppercase; color: var(--muted); margin-bottom: 1.5rem; }
-    h1 { font-family: 'Playfair Display', serif; font-size: clamp(1.8rem, 4vw, 2.6rem); font-weight: 400; line-height: 1.25; color: var(--text); margin-bottom: 0.5rem; }
-    h1 em { font-style: italic; color: var(--gold); }
-    .subtitle { font-size: 0.7rem; color: var(--muted); letter-spacing: 0.1em; margin-top: 1rem; }
-    section { padding: 3rem 0; border-bottom: 1px solid var(--border); }
-    .section-label { font-size: 0.58rem; font-weight: 500; letter-spacing: 0.22em; text-transform: uppercase; color: var(--muted-2); margin-bottom: 2rem; display: flex; align-items: center; gap: 1rem; }
-    .section-label::after { content: ''; flex: 1; height: 1px; background: var(--border-2); }
-    p { font-size: 0.9rem; color: var(--text); margin-bottom: 1.25rem; font-weight: 300; }
-    p:last-child { margin-bottom: 0; }
-    .accent-p { border-left: 2px solid var(--gold); padding-left: 1.25rem; font-weight: 400; }
-    .principle { background: var(--surface); border: 1px solid var(--border-2); border-left: 3px solid var(--gold); padding: 2rem; margin: 1.5rem 0; }
-    .principle p { font-family: 'Playfair Display', serif; font-size: 1rem; line-height: 1.7; margin-bottom: 0.75rem; }
-    .principle p:last-child { margin-bottom: 0; }
-    .def-box { background: var(--surface); border: 1px solid var(--border-2); padding: 2rem; margin: 1.5rem 0; }
-    .def-term { font-size: 0.65rem; font-weight: 500; letter-spacing: 0.2em; text-transform: uppercase; color: var(--gold); margin-bottom: 1rem; }
-    .core-question { padding: 4rem 0; text-align: center; }
-    .core-question .q { font-family: 'Playfair Display', serif; font-size: clamp(1.2rem, 3vw, 1.6rem); font-weight: 400; font-style: italic; line-height: 1.4; margin-bottom: 1rem; }
-    .core-question .answer { font-size: 0.75rem; font-weight: 500; letter-spacing: 0.35em; text-transform: uppercase; color: var(--gold); }
-    .divider-gold { width: 40px; height: 1px; background: var(--gold); margin: 1.5rem auto; }
-    footer { border-top: 1px solid var(--border); padding: 2.5rem 0; display: flex; justify-content: space-between; align-items: center; }
-    .footer-brand { font-size: 0.6rem; font-weight: 500; letter-spacing: 0.2em; text-transform: uppercase; color: var(--gold); }
-    .footer-copy { font-size: 0.6rem; color: var(--muted-2); letter-spacing: 0.05em; }
-    @keyframes fadeUp { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: translateY(0); } }
-    .fade-up { opacity: 0; animation: fadeUp 0.7s ease forwards; }
-    .fade-up:nth-child(1) { animation-delay: 0.1s; }
-    .fade-up:nth-child(2) { animation-delay: 0.25s; }
-    .fade-up:nth-child(3) { animation-delay: 0.4s; }
-    .fade-up:nth-child(4) { animation-delay: 0.55s; }
-    @media (max-width: 480px) { .wrap { padding: 0 1.25rem; } footer { flex-direction: column; gap: 0.75rem; align-items: flex-start; } }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Decision Accountability Record (DAR)</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&family=Playfair+Display:ital@0;1&display=swap" rel="stylesheet">
+
+<style>
+
+*,
+*::before,
+*::after{
+box-sizing:border-box;
+margin:0;
+padding:0;
+}
+
+body{
+background:#090909;
+color:#e6e0d4;
+font-family:Inter,sans-serif;
+line-height:1.7;
+padding:40px 20px;
+}
+
+.wrap{
+max-width:680px;
+margin:auto;
+}
+
+header{
+margin-bottom:60px;
+}
+
+.brand{
+font-size:11px;
+letter-spacing:4px;
+color:#c9b27b;
+text-transform:uppercase;
+margin-bottom:30px;
+}
+
+h1{
+font-family:"Playfair Display",serif;
+font-size:42px;
+font-weight:400;
+margin-bottom:10px;
+}
+
+h1 em{
+font-style:italic;
+color:#c9b27b;
+}
+
+.subtitle{
+font-size:13px;
+color:#8c8c8c;
+margin-top:12px;
+}
+
+section{
+margin-top:70px;
+}
+
+.section-label{
+font-size:11px;
+letter-spacing:3px;
+text-transform:uppercase;
+color:#777;
+margin-bottom:20px;
+}
+
+p{
+margin-bottom:18px;
+}
+
+.quote{
+border-left:2px solid #c9b27b;
+padding-left:16px;
+margin-bottom:30px;
+}
+
+.core-question{
+text-align:center;
+margin-top:90px;
+}
+
+.q{
+font-family:"Playfair Display",serif;
+font-size:28px;
+font-style:italic;
+margin-bottom:20px;
+}
+
+.answer{
+letter-spacing:6px;
+color:#c9b27b;
+margin-top:10px;
+}
+
+footer{
+margin-top:80px;
+border-top:1px solid #1e1e1e;
+padding-top:20px;
+font-size:12px;
+color:#777;
+}
+
+.footer-brand{
+letter-spacing:3px;
+margin-bottom:6px;
+}
+
+</style>
 </head>
+
+
 <body>
-  <div class="wrap">
-    <header>
-      <div class="brand">Matrix Audit — Autonomous Systems Governance</div>
-    </header>
-    <div class="title-block">
-      <div class="tag fade-up">Governance Artifact</div>
-      <h1 class="fade-up">Decision Accountability <em>Record</em> (DAR)</h1>
-      <div class="subtitle fade-up">Pre-Incident Responsibility Definition for Autonomous Systems</div>
-      <div class="subtitle fade-up" style="margin-top:0.4rem; color: var(--muted-2);">A governance artifact for irreversible decision boundaries</div>
-    </div>
-    <section>
-      <div class="section-label">Principle</div>
-      <div class="principle">
-        <p>Autonomous systems execute decisions.</p>
-        <p>Responsibility remains human.</p>
-      </div>
-      <p>At some point every automated system reaches a boundary where execution becomes irreversible.</p>
-      <p>The Decision Accountability Record identifies the individual who holds the authority to stop the system before that boundary is reached.</p>
-      <p class="accent-p">By name.</p>
-    </section>
-    <section>
-      <div class="section-label">Definition</div>
-      <div class="def-box">
-        <div class="def-term">Decision Accountability Record (DAR)</div>
-        <p>A governance artifact created prior to system execution. It records the individual who holds explicit authority to halt a system when it reaches an irreversible decision boundary.</p>
-      </div>
-      <p>The DAR exists prior to the event. It defines responsibility in advance.</p>
-      <p class="accent-p">Not after failure.</p>
-    </section>
-    <section>
-      <div class="section-label">Why DAR exists</div>
-      <p>Most governance frameworks define policies, controls, and review processes.</p>
-      <p>Few define the specific moment when authority must attach to a person.</p>
-      <p>DAR addresses that gap directly. It identifies the point where a system's decision becomes irreversible and records who holds the authority to stop it.</p>
-    </section>
-    <section>
-      <div class="section-label">Regulatory Reality</div>
-      <p class="accent-p">When a system fails, regulators do not investigate the algorithm.<br>They ask who was responsible.</p>
-    </section>
-    <div class="core-question">
-      <div class="divider-gold"></div>
-      <div class="q">Who holds the authority to stop the system<br>when execution becomes irreversible?</div>
-      <div class="answer">BY NAME</div>
-      <div class="divider-gold"></div>
-    </div>
-    <footer>
-      <div class="footer-brand">Matrix Audit</div>
-      <div class="footer-copy">Decision Accountability Record (DAR) &nbsp;·&nbsp; © 2026</div>
-    </footer>
-  </div>
+
+<div class="wrap">
+
+<header>
+
+<div class="brand">
+MATRIX AUDIT — AUTONOMOUS SYSTEMS GOVERNANCE
+</div>
+
+<h1>
+Decision Accountability <em>Record</em> (DAR)
+</h1>
+
+<div class="subtitle">
+Pre-Incident Responsibility Definition for Autonomous Systems
+</div>
+
+</header>
+
+
+<section>
+
+<div class="section-label">Principle</div>
+
+<p>
+The Authority to Initiate is not the Authority to Terminate.
+</p>
+
+</section>
+
+
+<section>
+
+<div class="section-label">Definition</div>
+
+<p>
+A Decision Accountability Record (DAR) is an immutable,
+auditable log of <em>Who, What, Why, and When</em>
+for any critical system action.
+</p>
+
+</section>
+
+
+<section>
+
+<div class="section-label">Why DAR Exists</div>
+
+<p>
+The 2012 Knight Capital event was not a technical failure.
+</p>
+
+<p>
+It was a failure of stopping authority.
+</p>
+
+<p>
+The system continued to execute because no single person
+had the structural mandate to terminate the process.
+</p>
+
+</section>
+
+
+<section>
+
+<div class="section-label">Regulatory Reality</div>
+
+<div class="quote">
+When a system fails, regulators do not investigate the algorithm.
+They ask who was responsible.
+</div>
+
+</section>
+
+
+<div class="core-question">
+
+<div class="q">
+Who holds the authority to stop the system
+when execution becomes irreversible?
+</div>
+
+<div class="answer">
+BY NAME
+</div>
+
+</div>
+
+
+<section>
+
+<div class="section-label">Contact</div>
+
+<p>
+For governance inquiries regarding the DAR framework:
+</p>
+
+<p>
+Liran Bar Shrim<br>
+contact@matrix-audit.com<br>
+LinkedIn: Liran Bar Shrim
+</p>
+
+</section>
+
+
+<footer>
+
+<div class="footer-brand">
+MATRIX AUDIT
+</div>
+
+<div>
+Decision Accountability Record (DAR)<br>
+Author: Liran Bar Shrim<br>
+© 2026
+</div>
+
+</footer>
+
+</div>
+
 </body>
 </html>
