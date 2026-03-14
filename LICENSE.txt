@@ -1,8 +1,8 @@
-© 2026 Liran Bar-Sharyim
+
+Copyright (c) 2026 Liran Bar Shrim
+
 All rights reserved.
 
-This repository is provided for reading and reference only.
+The Decision Accountability Record (DAR) concept and related materials are the intellectual work of Liran Bar Shrim.
 
-No permission is granted to copy, modify, distribute, sublicense,
-or use this material, in whole or in part, in any form,
-without explicit prior written consent from the author.
+Unauthorized commercial use is prohibited without permission.
