@@ -1,14 +1,17 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
 
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 
-<title>Decision Accountability Record (DAR) — Matrix Audit</title>
+<title>Decision Accountability Record (DAR)</title>
+
+<meta name="description" content="Decision Accountability Record (DAR) defines human stopping authority in autonomous systems before irreversible execution.">
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
 
 <style>
@@ -19,114 +22,108 @@ margin:0;
 padding:0;
 }
 
-:root{
---bg:#090909;
---text:#e6e0d4;
---muted:#7a7570;
---gold:#c6a76b;
---border:#1e1e1e;
-}
-
 body{
-background:var(--bg);
-color:var(--text);
-font-family:'Inter',sans-serif;
+background:#090909;
+color:#e6e0d4;
+font-family:Inter, sans-serif;
 line-height:1.7;
 }
 
 .wrap{
-max-width:720px;
+max-width:700px;
 margin:auto;
-padding:60px 24px 80px;
+padding:40px 24px;
+}
+
+header{
+margin-bottom:60px;
 }
 
 .brand{
-color:var(--gold);
-letter-spacing:3px;
+letter-spacing:4px;
 font-size:12px;
-margin-bottom:40px;
+color:#c7a86b;
+margin-bottom:30px;
 }
 
 h1{
-font-family:'Playfair Display',serif;
-font-size:48px;
+font-family:'Playfair Display', serif;
+font-size:54px;
 font-weight:500;
 line-height:1.1;
-margin-bottom:16px;
-}
-
-h1 em{
-color:var(--gold);
-font-style:italic;
+margin-bottom:20px;
 }
 
 .subtitle{
-color:var(--muted);
+color:#9c9c9c;
+font-size:18px;
+margin-bottom:60px;
+}
+
+.section{
 margin-bottom:70px;
 }
 
-.section-label{
-color:var(--muted);
-letter-spacing:3px;
+.label{
+letter-spacing:4px;
 font-size:12px;
-margin:60px 0 20px;
+color:#777;
+margin-bottom:16px;
 }
 
 p{
-margin-bottom:20px;
+font-size:18px;
+margin-bottom:16px;
 }
 
 .quote{
-border-left:2px solid var(--gold);
-padding-left:16px;
-margin:30px 0;
-}
-
-.core-question{
-text-align:center;
-margin:100px 0 80px;
-}
-
-.core-question h2{
-font-family:'Playfair Display',serif;
-font-size:34px;
-font-weight:400;
-line-height:1.4;
-margin-bottom:20px;
-}
-
-.answer{
-letter-spacing:6px;
-color:var(--gold);
+border-left:2px solid #c7a86b;
+padding-left:20px;
 margin-top:20px;
+}
+
+.big-question{
+font-family:'Playfair Display', serif;
+font-size:42px;
+text-align:center;
+margin:120px 0 20px;
+}
+
+.byname{
+text-align:center;
+letter-spacing:6px;
+color:#c7a86b;
+margin-bottom:80px;
 }
 
 .contact{
 margin-top:60px;
 }
 
+.contact a{
+color:#e6e0d4;
+text-decoration:underline;
+}
+
+.contact a:hover{
+color:#c7a86b;
+}
+
+.divider{
+height:1px;
+background:#222;
+margin:60px 0;
+}
+
 footer{
-margin-top:80px;
-padding-top:40px;
-border-top:1px solid var(--border);
-color:var(--muted);
+color:#777;
 font-size:14px;
 }
 
-.footer-brand{
-color:var(--gold);
-letter-spacing:3px;
-margin-bottom:10px;
-}
-
-a{
-color:var(--text);
-text-decoration:none;
-border-bottom:1px solid var(--border);
-}
-
-a:hover{
-color:var(--gold);
+footer .brand-footer{
+letter-spacing:4px;
+color:#c7a86b;
+margin-bottom:12px;
 }
 
 </style>
@@ -137,32 +134,49 @@ color:var(--gold);
 
 <div class="wrap">
 
+<header>
+
 <div class="brand">
 MATRIX AUDIT — AUTONOMOUS SYSTEMS GOVERNANCE
 </div>
 
 <h1>
-Decision Accountability <em>Record</em> (DAR)
+Decision Accountability<br>
+Record (DAR)
 </h1>
 
 <div class="subtitle">
 Pre-Incident Responsibility Definition for Autonomous Systems
 </div>
 
-<div class="section-label">PRINCIPLE</div>
+</header>
+
+
+<div class="section">
+
+<div class="label">PRINCIPLE</div>
 
 <p>
 The Authority to Initiate is not the Authority to Terminate.
 </p>
 
-<div class="section-label">DEFINITION</div>
+</div>
+
+
+<div class="section">
+
+<div class="label">DEFINITION</div>
 
 <p>
-A Decision Accountability Record (DAR) is an immutable, auditable log of
-<em>Who, What, Why, and When</em> for any critical system action.
+A Decision Accountability Record (DAR) is an immutable, auditable log of <em>Who, What, Why, and When</em> for any critical system action.
 </p>
 
-<div class="section-label">WHY DAR EXISTS</div>
+</div>
+
+
+<div class="section">
+
+<div class="label">WHY DAR EXISTS</div>
 
 <p>
 The 2012 Knight Capital event was not a technical failure.
@@ -176,28 +190,47 @@ It was a failure of stopping authority.
 The system continued to execute because no single person had the structural mandate to terminate the process.
 </p>
 
-<div class="section-label">REGULATORY REALITY</div>
-
-<div class="quote">
-When a system fails, regulators do not investigate the algorithm.  
-They ask who was responsible.
 </div>
 
-<div class="core-question">
 
-<h2>
+<div class="section">
+
+<div class="label">REGULATORY REALITY</div>
+
+<div class="quote">
+
+<p>
+When a system fails, regulators do not investigate the algorithm. They ask who was responsible.
+</p>
+
+</div>
+
+</div>
+
+
+<div class="big-question">
+
 Who holds the authority to stop the system when execution becomes irreversible?
-</h2>
 
-<div class="answer">
+</div>
+
+<div class="byname">
 BY NAME
 </div>
 
+
+<div class="section">
+
+<p>
+The DAR framework establishes a named human authority before irreversible automated execution.
+</p>
+
 </div>
 
-<div class="section-label">CONTACT</div>
 
-<div class="contact">
+<div class="section contact">
+
+<div class="label">CONTACT</div>
 
 <p>
 For governance inquiries regarding the DAR framework:
@@ -208,36 +241,37 @@ Liran Bar Shrim
 </p>
 
 <p>
-<a href="mailto:Liran@liranbarshrim.com">
-Liran@liranbarshrim.com
-</a>
+<a href="mailto:Liran@liranbarshrim.com">Liran@liranbarshrim.com</a>
 </p>
 
 <p>
 <a href="https://www.linkedin.com/in/liranbarshrim/" target="_blank">
-LinkedIn Profile
+LinkedIn: Liran Bar Shrim
 </a>
 </p>
 
 </div>
 
+
+<div class="divider"></div>
+
 <footer>
 
-<div class="footer-brand">
+<div class="brand-footer">
 MATRIX AUDIT
 </div>
 
-<div>
+<p>
 Decision Accountability Record (DAR)
-</div>
+</p>
 
-<div>
+<p>
 Author: Liran Bar Shrim
-</div>
+</p>
 
-<div>
+<p>
 © 2026 Matrix Audit
-</div>
+</p>
 
 </footer>
 
