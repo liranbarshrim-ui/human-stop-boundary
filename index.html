@@ -1,67 +1,82 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
 
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
-<title>Decision Accountability Record (DAR)</title>
+<title>Decision Accountability Record (DAR) — Matrix Audit</title>
 
-<meta name="description" content="Decision Accountability Record (DAR) defines human stopping authority in autonomous systems before irreversible execution.">
+<meta name="description" content="Decision Accountability Record (DAR) is a governance standard proposal defining named human stop authority in autonomous systems.">
+
+<meta name="robots" content="index, follow">
+
+<link rel="canonical" href="https://matrix-audit.com">
+
+<meta property="og:title" content="Decision Accountability Record (DAR)">
+<meta property="og:description" content="A governance standard proposal defining named human stopping authority for irreversible system execution.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://matrix-audit.com">
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+
+<script type="application/ld+json">
+{
+ "@context": "https://schema.org",
+ "@type": "DefinedTerm",
+ "name": "Decision Accountability Record",
+ "alternateName": "DAR",
+ "description": "A governance artifact that records the named individual with authority to stop a system before execution becomes irreversible.",
+ "url": "https://matrix-audit.com",
+ "creator": {
+   "@type": "Person",
+   "name": "Liran Bar Shrim"
+ }
+}
+</script>
 
 <style>
 
-*{
-box-sizing:border-box;
-margin:0;
-padding:0;
-}
+*{box-sizing:border-box;margin:0;padding:0;}
 
 body{
 background:#090909;
 color:#e6e0d4;
-font-family:Inter, sans-serif;
+font-family:Inter,sans-serif;
 line-height:1.7;
 }
 
 .wrap{
-max-width:700px;
+max-width:720px;
 margin:auto;
 padding:40px 24px;
-}
-
-header{
-margin-bottom:60px;
 }
 
 .brand{
 letter-spacing:4px;
 font-size:12px;
 color:#c7a86b;
-margin-bottom:30px;
-}
-
-h1{
-font-family:'Playfair Display', serif;
-font-size:54px;
-font-weight:500;
-line-height:1.1;
 margin-bottom:20px;
 }
 
+h1{
+font-family:'Playfair Display',serif;
+font-size:48px;
+margin-bottom:10px;
+}
+
 .subtitle{
-color:#9c9c9c;
-font-size:18px;
-margin-bottom:60px;
+font-size:20px;
+color:#d6d0c4;
+margin-bottom:20px;
 }
 
 .section{
-margin-bottom:70px;
+margin-bottom:60px;
 }
 
 .label{
@@ -76,15 +91,9 @@ font-size:18px;
 margin-bottom:16px;
 }
 
-.quote{
-border-left:2px solid #c7a86b;
-padding-left:20px;
-margin-top:20px;
-}
-
 .big-question{
-font-family:'Playfair Display', serif;
-font-size:42px;
+font-family:'Playfair Display',serif;
+font-size:36px;
 text-align:center;
 margin:120px 0 20px;
 }
@@ -96,34 +105,21 @@ color:#c7a86b;
 margin-bottom:80px;
 }
 
-.contact{
-margin-top:60px;
-}
-
 .contact a{
 color:#e6e0d4;
 text-decoration:underline;
 }
 
-.contact a:hover{
-color:#c7a86b;
+footer{
+margin-top:60px;
+color:#777;
+font-size:14px;
 }
 
 .divider{
 height:1px;
 background:#222;
 margin:60px 0;
-}
-
-footer{
-color:#777;
-font-size:14px;
-}
-
-footer .brand-footer{
-letter-spacing:4px;
-color:#c7a86b;
-margin-bottom:12px;
 }
 
 </style>
@@ -134,23 +130,17 @@ margin-bottom:12px;
 
 <div class="wrap">
 
-<header>
-
 <div class="brand">
 MATRIX AUDIT — AUTONOMOUS SYSTEMS GOVERNANCE
 </div>
 
 <h1>
-Decision Accountability<br>
-Record (DAR)
+Decision Accountability Record (DAR)
 </h1>
 
 <div class="subtitle">
-Pre-Incident Responsibility Definition for Autonomous Systems
+A Governance Standard Proposal for Human Stop Authority in Autonomous Systems
 </div>
-
-</header>
-
 
 <div class="section">
 
@@ -160,57 +150,36 @@ Pre-Incident Responsibility Definition for Autonomous Systems
 The Authority to Initiate is not the Authority to Terminate.
 </p>
 
-</div>
+<p>
+Systems may execute decisions. Accountability remains human.
+</p>
 
+</div>
 
 <div class="section">
 
 <div class="label">DEFINITION</div>
 
 <p>
-A Decision Accountability Record (DAR) is an immutable, auditable log of <em>Who, What, Why, and When</em> for any critical system action.
+A Decision Accountability Record (DAR) records the named individual who holds the authority to stop a system before execution becomes irreversible.
 </p>
 
 </div>
-
 
 <div class="section">
 
-<div class="label">WHY DAR EXISTS</div>
+<div class="label">REFERENCE CASE</div>
 
 <p>
-The 2012 Knight Capital event was not a technical failure.
-</p>
-
-<p>
-It was a failure of stopping authority.
-</p>
-
-<p>
-The system continued to execute because no single person had the structural mandate to terminate the process.
+The 2012 Knight Capital event demonstrated that catastrophic failures can occur when no single person holds the authority to stop execution.
 </p>
 
 </div>
-
-
-<div class="section">
-
-<div class="label">REGULATORY REALITY</div>
-
-<div class="quote">
-
-<p>
-When a system fails, regulators do not investigate the algorithm. They ask who was responsible.
-</p>
-
-</div>
-
-</div>
-
 
 <div class="big-question">
 
-Who holds the authority to stop the system when execution becomes irreversible?
+Who holds the authority to stop the system  
+when execution becomes irreversible?
 
 </div>
 
@@ -218,55 +187,32 @@ Who holds the authority to stop the system when execution becomes irreversible?
 BY NAME
 </div>
 
-
-<div class="section">
-
-<p>
-The DAR framework establishes a named human authority before irreversible automated execution.
-</p>
-
-</div>
-
-
 <div class="section contact">
 
 <div class="label">CONTACT</div>
 
+<p>Liran Bar Shrim</p>
+
 <p>
-For governance inquiries regarding the DAR framework:
+<a href="mailto:Liran@liranbarshrim.com">
+Liran@liranbarshrim.com
+</a>
 </p>
 
 <p>
-Liran Bar Shrim
-</p>
-
-<p>
-<a href="mailto:Liran@liranbarshrim.com">Liran@liranbarshrim.com</a>
-</p>
-
-<p>
-<a href="https://www.linkedin.com/in/liranbarshrim/" target="_blank">
-LinkedIn: Liran Bar Shrim
+<a href="https://www.linkedin.com/in/liranbarshrim">
+LinkedIn
 </a>
 </p>
 
 </div>
 
-
 <div class="divider"></div>
 
 <footer>
 
-<div class="brand-footer">
-MATRIX AUDIT
-</div>
-
 <p>
 Decision Accountability Record (DAR)
-</p>
-
-<p>
-Author: Liran Bar Shrim
 </p>
 
 <p>
