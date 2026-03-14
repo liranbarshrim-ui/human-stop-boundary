@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
+
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
@@ -11,9 +13,7 @@
 
 <style>
 
-*,
-*::before,
-*::after{
+*{
 box-sizing:border-box;
 margin:0;
 padding:0;
@@ -21,7 +21,6 @@ padding:0;
 
 :root{
 --bg:#090909;
---surface:#111111;
 --text:#e6e0d4;
 --muted:#7a7570;
 --gold:#c6a76b;
@@ -120,7 +119,18 @@ letter-spacing:3px;
 margin-bottom:10px;
 }
 
+a{
+color:var(--text);
+text-decoration:none;
+border-bottom:1px solid var(--border);
+}
+
+a:hover{
+color:var(--gold);
+}
+
 </style>
+
 </head>
 
 <body>
@@ -198,11 +208,15 @@ Liran Bar Shrim
 </p>
 
 <p>
-contact@matrix-audit.com
+<a href="mailto:Liran@liranbarshrim.com">
+Liran@liranbarshrim.com
+</a>
 </p>
 
 <p>
-LinkedIn: Liran Bar Shrim
+<a href="https://www.linkedin.com/in/liranbarshrim/" target="_blank">
+LinkedIn Profile
+</a>
 </p>
 
 </div>
