@@ -1,92 +1,27 @@
-# Human Stop Boundary
+# Decision Accountability Record (DAR)
 
-A sovereign decision boundary for irreversible automated actions.
+Decision Accountability Record (DAR) is a governance structure assigning named human authority responsible for stopping automated systems before irreversible execution.
 
-## Purpose
+## Core Principle
 
-This repository defines a human-first stop condition for automated and autonomous systems.
+The Authority to Initiate is not the Authority to Terminate.
 
-It specifies when execution must pause and responsibility must return to a named human authority.
+Automated systems may execute decisions.
 
-The boundary is triggered when an action is both:
+Accountability remains human.
 
-- Irreversible
-- Performed under high uncertainty
+## Definition
 
-## Core Governance Question
+Decision Accountability Record (DAR) defines the governance structure that identifies the individual responsible for halting automated execution when systems approach irreversible decision boundaries.
 
-Who, by name, has the authority to stop execution before a decision becomes irreversible?
+## Reference
 
-If no named authority exists, the system should not execute.
+The concept addresses structural governance failures observed in high-speed automated systems such as the 2012 Knight Capital event.
 
-## Principle
+## Website
 
-When irreversibility meets uncertainty, the system must stop.
+https://matrix-audit.com
 
-No optimization, fallback, or probabilistic override is permitted.
+## Author
 
-Continuation requires explicit human acknowledgement and signature.
-
-## Decision Accountability Record (DAR)
-
-The boundary can be documented using a minimal record structure.
-
-system:
-irreversible_boundary:
-stop_authority_name:
-stop_authority_role:
-escalation_path:
-review_date:
-
-## Example
-
-system: automated_credit_approval
-
-irreversible_boundary: loan_contract_issued_to_customer
-
-stop_authority_name: Head of Credit Risk
-
-stop_authority_role: Credit Risk Officer
-
-escalation_path: Chief Risk Officer
-
-review_date: 2026-03-12
-
-## Design Intent
-
-Stopping is not a failure mode.
-
-It is a deliberately designed state that preserves:
-
-- accountability
-- legality
-- human agency
-
-Systems that cannot stop are not autonomous.
-They are ungoverned.
-
-## Non-Goals
-
-This repository is not an implementation library.
-
-It provides no executable code and does not attempt to automate governance.
-
-The goal is to define a governance boundary that can be inspected, documented, and audited.
-
-## Status
-
-Concept specification.
-
-Provided as a governance reference for inspection and discussion.
-
-## Repository Structure
-
-human-stop-boundary/
-
-README.md – concept and specification  
-dar-record.md – record template  
-demo/ – visualization example
-
-## License
-
-© 2026 Liran Bar-Sharim. All rights reserved.
+Liran Bar Shrim
