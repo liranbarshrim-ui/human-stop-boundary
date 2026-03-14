@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -23,7 +22,6 @@
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://matrix-audit.com">
 
-<!-- Google Search Console -->
 <meta name="google-site-verification" content="1305c86f2cce0142">
 
 <script type="application/ld+json">
@@ -47,43 +45,34 @@
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet">
 
 <style>
 
 :root {
-  --bg:        #090909;
-  --surface:   #111111;
-  --gold:      #c8a96e;
-  --danger:    #c0392b;
-  --safe:      #3d9970;
-  --text:      #f0ebe2;
-  --muted:     #b0a99f;
-  --muted2:    #7a7570;
-  --border:    #1e1e1e;
-  --border2:   #2a2a2a;
+  --bg:      #090909;
+  --surface: #111111;
+  --gold:    #c8a96e;
+  --safe:    #3d9970;
+  --text:    #f0ebe2;
+  --muted:   #b0a99f;
+  --muted2:  #7a7570;
+  --border:  #1e1e1e;
+  --border2: #2a2a2a;
 }
 
-*, *::before, *::after {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-}
-
-html {
-  scroll-behavior: smooth;
-}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
 
 body {
   background-color: var(--bg);
   color: var(--text);
-  font-family: 'Playfair Display', Georgia, serif;
+  font-family: 'DM Serif Display', Georgia, serif;
   line-height: 1.8;
   position: relative;
   overflow-x: hidden;
 }
 
-/* Grain overlay */
 body::before {
   content: '';
   position: fixed;
@@ -104,7 +93,6 @@ body::before {
   z-index: 1;
 }
 
-/* TOP BAR */
 .topbar {
   display: flex;
   justify-content: space-between;
@@ -122,9 +110,7 @@ body::before {
   text-transform: uppercase;
 }
 
-.topbar-left span {
-  color: var(--gold);
-}
+.topbar-left span { color: var(--gold); }
 
 .topbar-right {
   font-family: 'IBM Plex Mono', monospace;
@@ -133,10 +119,7 @@ body::before {
   color: var(--muted2);
 }
 
-/* HERO */
-.hero {
-  margin-bottom: 80px;
-}
+.hero { margin-bottom: 80px; }
 
 .hero-tag {
   font-family: 'IBM Plex Mono', monospace;
@@ -149,13 +132,12 @@ body::before {
 }
 
 .hero h1 {
-  font-family: 'Playfair Display', serif;
-  font-size: clamp(36px, 6vw, 58px);
-  font-weight: 700;
+  font-family: 'DM Serif Display', serif;
+  font-size: clamp(32px, 5.5vw, 54px);
+  font-weight: 400;
   line-height: 1.2;
   color: var(--text);
   margin-bottom: 32px;
-  letter-spacing: -0.5px;
 }
 
 .hero h1 em {
@@ -168,11 +150,10 @@ body::before {
   color: var(--muted);
   max-width: 620px;
   line-height: 1.7;
-  font-family: 'Playfair Display', serif;
+  font-family: 'DM Serif Display', serif;
   font-style: italic;
 }
 
-/* DIVIDER */
 .divider {
   width: 48px;
   height: 2px;
@@ -181,7 +162,6 @@ body::before {
   opacity: 0.6;
 }
 
-/* SECTION */
 .section {
   margin-bottom: 64px;
   padding-left: 20px;
@@ -205,11 +185,8 @@ body::before {
   line-height: 1.75;
 }
 
-.section p:last-child {
-  margin-bottom: 0;
-}
+.section p:last-child { margin-bottom: 0; }
 
-/* ACCENT BLOCK */
 .accent-block {
   border-left: 3px solid var(--gold);
   padding: 28px 32px;
@@ -227,15 +204,14 @@ body::before {
 }
 
 .accent-block p {
-  font-family: 'Playfair Display', serif;
-  font-size: clamp(22px, 3.5vw, 30px);
+  font-family: 'DM Serif Display', serif;
+  font-size: clamp(20px, 3.2vw, 28px);
   line-height: 1.5;
   color: var(--text);
   font-style: italic;
   margin: 0;
 }
 
-/* KEY QUESTION */
 .key-question {
   padding: 48px 0;
   border-top: 1px solid var(--border);
@@ -255,7 +231,7 @@ body::before {
 }
 
 .key-question .q-text {
-  font-family: 'Playfair Display', serif;
+  font-family: 'DM Serif Display', serif;
   font-size: clamp(20px, 3vw, 26px);
   color: var(--text);
   line-height: 1.55;
@@ -271,7 +247,6 @@ body::before {
   color: var(--gold);
 }
 
-/* STATUS BADGES */
 .badges {
   display: flex;
   flex-wrap: wrap;
@@ -288,22 +263,10 @@ body::before {
   border: 1px solid;
 }
 
-.badge-gold {
-  border-color: var(--gold);
-  color: var(--gold);
-}
+.badge-gold  { border-color: var(--gold);   color: var(--gold); }
+.badge-safe  { border-color: var(--safe);   color: var(--safe); }
+.badge-muted { border-color: var(--muted2); color: var(--muted2); }
 
-.badge-safe {
-  border-color: var(--safe);
-  color: var(--safe);
-}
-
-.badge-muted {
-  border-color: var(--muted2);
-  color: var(--muted2);
-}
-
-/* LINKS */
 a {
   color: var(--text);
   text-decoration: none;
@@ -316,11 +279,10 @@ a:hover {
   border-bottom-color: var(--gold);
 }
 
-/* HEBREW */
 .hebrew {
   direction: rtl;
   text-align: right;
-  font-family: 'Playfair Display', serif;
+  font-family: 'DM Serif Display', serif;
   font-size: 17px;
   color: var(--muted);
   font-style: italic;
@@ -330,7 +292,6 @@ a:hover {
   margin: 40px 0;
 }
 
-/* FOOTER */
 .footer {
   margin-top: 100px;
   padding-top: 48px;
@@ -372,9 +333,7 @@ a:hover {
   border-bottom: none;
 }
 
-.footer-col a {
-  border-bottom: 1px solid var(--border2);
-}
+.footer-col a { border-bottom: 1px solid var(--border2); }
 
 .footer-col a:hover {
   color: var(--gold);
@@ -416,7 +375,6 @@ a:hover {
 <body>
 <div class="container">
 
-  <!-- TOP BAR -->
   <div class="topbar">
     <div class="topbar-left">
       <span>MATRIX AUDIT</span> — Autonomous Systems Governance
@@ -424,12 +382,11 @@ a:hover {
     <div class="topbar-right">matrix-audit.com</div>
   </div>
 
-  <!-- HERO -->
   <div class="hero">
     <span class="hero-tag">Governance Principle — 2026</span>
     <h1>Decision Accountability<br><em>Record</em></h1>
     <p class="hero-sub">
-      Named human stop authority in autonomous systems,<br>
+      Named human stop authority in autonomous systems,
       defined before irreversible execution occurs.
     </p>
   </div>
@@ -442,12 +399,11 @@ a:hover {
     <span class="badge badge-muted">Autonomous Systems</span>
   </div>
 
-  <!-- PRINCIPLE -->
   <div class="section">
     <span class="section-label">Principle</span>
     <p>The authority to initiate is not the authority to terminate.</p>
     <p>Autonomous systems may execute decisions. Responsibility remains human.</p>
-    <p>The gap between information and named stop authority is not a structural bug. It is an intentional feature — designed to avoid personal accountability.</p>
+    <p>The gap between information and named stop authority is not a structural bug. It is an intentional feature designed to avoid personal accountability.</p>
   </div>
 
   <div class="accent-block">
@@ -456,60 +412,48 @@ a:hover {
     is explain why no one did.</p>
   </div>
 
-  <!-- DEFINITION -->
   <div class="section">
     <span class="section-label">Formal Definition</span>
     <p>Decision Accountability Record (DAR) assigns a named human authority responsible for stopping automated systems before irreversible execution occurs.</p>
     <p>Not a committee. Not a policy. A name.</p>
   </div>
 
-  <!-- PURPOSE -->
   <div class="section">
     <span class="section-label">Purpose</span>
     <p>DAR ensures that automated systems operating in critical environments cannot execute irreversible actions without an identified human authority responsible for halting execution.</p>
-    <p>If authority needs to be reconstructed after an incident, it was not defined before it. Compliance confirms that rules were followed. DAR confirms that someone was authorized to stop — before the rules ran out.</p>
+    <p>If authority needs to be reconstructed after an incident, it was not defined before it. Compliance confirms that rules were followed. DAR confirms that someone was authorized to stop before the rules ran out.</p>
   </div>
 
-  <!-- REFERENCE -->
   <div class="section">
     <span class="section-label">Reference Case</span>
     <p>The 2012 Knight Capital collapse demonstrated how automated systems can execute catastrophic, irreversible actions when no single individual holds clear stop authority. $440 million in losses in 45 minutes. The system ran. No one stopped it.</p>
   </div>
 
-  <!-- KEY QUESTION -->
   <div class="key-question">
     <span class="q-label">The question regulation rarely asks</span>
     <p class="q-text">Who holds the authority to stop the system<br>when execution becomes irreversible?</p>
     <span class="q-answer">By name.</span>
   </div>
 
-  <!-- POSITIONING -->
   <div class="section">
     <span class="section-label">Positioning</span>
     <p>The principle of named stop authority already exists in critical systems. It is beginning to appear in academic discussions of AI governance. DAR frames it as a simple question regulation rarely asks: who, by name, can stop the system before execution becomes irreversible?</p>
     <p>Systems that cannot stop are not autonomous. They are ungoverned.</p>
   </div>
 
-  <!-- HEBREW -->
   <div class="hebrew">
     לירן בר שרים — חוקר עצמאי בתחום ממשל מערכות אוטונומיות ואחריות אנושית בהחלטות מכונה.
     DAR מגדיר שאלה פשוטה שהרגולציה לרוב לא שואלת: מי, בשם, מוסמך לעצור את המערכת לפני שהביצוע הופך לבלתי הפיך?
   </div>
 
-  <!-- SPECIFICATION -->
   <div class="section">
     <span class="section-label">Specification</span>
     <p>Full DAR specification, research notes, and reference materials:</p>
-    <p>
-      <a href="https://github.com/liranbarshrim-ui/human-stop-boundary" target="_blank" rel="noopener">
-        GitHub — human-stop-boundary
-      </a>
-    </p>
+    <p><a href="https://github.com/liranbarshrim-ui/human-stop-boundary" target="_blank" rel="noopener">GitHub — human-stop-boundary</a></p>
   </div>
 
   <div class="divider"></div>
 
-  <!-- FOOTER -->
   <div class="footer">
     <span class="footer-label">Contact</span>
 
