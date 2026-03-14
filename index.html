@@ -1,163 +1,538 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
 
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Matrix Audit | Decision Accountability Record</title>
+<title>Decision Accountability Record (DAR) — Liran Bar Shrim</title>
 
-<meta name="description" content="Decision Accountability Record (DAR) defines named human stop authority in autonomous systems operating under irreversible execution risk.">
+<meta name="description" content="Decision Accountability Record (DAR) — governance principle defining named human stop authority in autonomous systems before irreversible execution occurs. Introduced by Liran Bar Shrim.">
+<meta name="keywords" content="Decision Accountability Record, DAR, AI Governance, Stop Authority, Autonomous Systems, Human Stop Boundary, MiCA, CASP, Liran Bar Shrim, Matrix Audit">
 <meta name="author" content="Liran Bar Shrim">
+<meta name="robots" content="index, follow">
+<meta name="googlebot" content="index, follow">
+<meta name="theme-color" content="#090909">
+<link rel="icon" href="/favicon.ico">
 
 <link rel="canonical" href="https://matrix-audit.com">
 
-<meta property="og:title" content="Decision Accountability Record (DAR)">
-<meta property="og:description" content="Governance framework defining named human stop authority in autonomous systems.">
+<meta property="og:title" content="Decision Accountability Record (DAR) — Liran Bar Shrim">
+<meta property="og:description" content="Governance principle defining named human stop authority in autonomous systems before irreversible execution occurs.">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://matrix-audit.com">
 
+<!-- Google Search Console -->
+<meta name="google-site-verification" content="PUT_GOOGLE_CODE_HERE">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "CreativeWork",
+  "headline": "Decision Accountability Record (DAR)",
+  "author": {
+    "@type": "Person",
+    "name": "Liran Bar Shrim",
+    "url": "https://www.linkedin.com/in/liranbarshrim"
+  },
+  "about": "Named human stop authority in autonomous systems",
+  "url": "https://matrix-audit.com",
+  "publisher": {
+    "@type": "Organization",
+    "name": "Matrix Audit"
+  }
+}
+</script>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+
 <style>
 
-body{
-background:#0b0b0b;
-color:#e7e1d6;
-font-family:Georgia, serif;
-margin:0;
-padding:0;
-line-height:1.7;
+:root {
+  --bg:        #090909;
+  --surface:   #111111;
+  --gold:      #c8a96e;
+  --danger:    #c0392b;
+  --safe:      #3d9970;
+  --text:      #e6e0d4;
+  --muted:     #7a7570;
+  --muted2:    #52504c;
+  --border:    #1e1e1e;
+  --border2:   #2a2a2a;
 }
 
-.container{
-max-width:900px;
-margin:auto;
-padding:60px 25px;
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
 }
 
-h1{
-font-size:58px;
-line-height:1.1;
-margin-bottom:30px;
+html {
+  scroll-behavior: smooth;
 }
 
-h2{
-margin-top:70px;
-letter-spacing:3px;
-font-size:14px;
-color:#c8a96e;
+body {
+  background-color: var(--bg);
+  color: var(--text);
+  font-family: 'Playfair Display', Georgia, serif;
+  line-height: 1.8;
+  position: relative;
+  overflow-x: hidden;
 }
 
-p{
-font-size:21px;
-margin-bottom:22px;
+/* Grain overlay */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+  background-repeat: repeat;
+  background-size: 256px;
+  pointer-events: none;
+  z-index: 0;
+  opacity: 0.4;
 }
 
-.quote{
-font-size:26px;
-margin-top:80px;
-margin-bottom:80px;
+.container {
+  max-width: 860px;
+  margin: 0 auto;
+  padding: 80px 32px 120px;
+  position: relative;
+  z-index: 1;
 }
 
-a{
-color:#e7e1d6;
-text-decoration:none;
-border-bottom:1px solid #555;
+/* TOP BAR */
+.topbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 90px;
+  padding-bottom: 24px;
+  border-bottom: 1px solid var(--border);
 }
 
-.footer{
-margin-top:100px;
-border-top:1px solid #333;
-padding-top:40px;
-font-size:18px;
+.topbar-left {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 11px;
+  letter-spacing: 2.5px;
+  color: var(--muted);
+  text-transform: uppercase;
+}
+
+.topbar-left span {
+  color: var(--gold);
+}
+
+.topbar-right {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 11px;
+  letter-spacing: 1px;
+  color: var(--muted2);
+}
+
+/* HERO */
+.hero {
+  margin-bottom: 80px;
+}
+
+.hero-tag {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 28px;
+  display: block;
+}
+
+.hero h1 {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(36px, 6vw, 58px);
+  font-weight: 700;
+  line-height: 1.2;
+  color: var(--text);
+  margin-bottom: 32px;
+  letter-spacing: -0.5px;
+}
+
+.hero h1 em {
+  font-style: italic;
+  color: var(--gold);
+}
+
+.hero-sub {
+  font-size: 19px;
+  color: var(--muted);
+  max-width: 620px;
+  line-height: 1.7;
+  font-family: 'Playfair Display', serif;
+  font-style: italic;
+}
+
+/* DIVIDER */
+.divider {
+  width: 48px;
+  height: 2px;
+  background: var(--gold);
+  margin: 60px 0;
+  opacity: 0.6;
+}
+
+/* SECTION */
+.section {
+  margin-bottom: 64px;
+  padding-left: 20px;
+  border-left: 2px solid var(--border2);
+}
+
+.section-label {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 20px;
+  display: block;
+}
+
+.section p {
+  font-size: 18px;
+  color: var(--text);
+  margin-bottom: 16px;
+  line-height: 1.75;
+}
+
+.section p:last-child {
+  margin-bottom: 0;
+}
+
+/* ACCENT BLOCK */
+.accent-block {
+  border-left: 3px solid var(--gold);
+  padding: 28px 32px;
+  background: var(--surface);
+  margin: 56px 0;
+  position: relative;
+}
+
+.accent-block::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(90deg, rgba(200,169,110,0.03) 0%, transparent 60%);
+  pointer-events: none;
+}
+
+.accent-block p {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(22px, 3.5vw, 30px);
+  line-height: 1.5;
+  color: var(--text);
+  font-style: italic;
+  margin: 0;
+}
+
+/* KEY QUESTION */
+.key-question {
+  padding: 48px 0;
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+  margin: 64px 0;
+  text-align: center;
+}
+
+.key-question .q-label {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: var(--muted2);
+  display: block;
+  margin-bottom: 24px;
+}
+
+.key-question .q-text {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(20px, 3vw, 26px);
+  color: var(--text);
+  line-height: 1.55;
+  margin-bottom: 24px;
+  font-style: italic;
+}
+
+.key-question .q-answer {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 13px;
+  letter-spacing: 4px;
+  text-transform: uppercase;
+  color: var(--gold);
+}
+
+/* STATUS BADGES */
+.badges {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin: 48px 0;
+}
+
+.badge {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  padding: 6px 14px;
+  border: 1px solid;
+}
+
+.badge-gold {
+  border-color: var(--gold);
+  color: var(--gold);
+}
+
+.badge-safe {
+  border-color: var(--safe);
+  color: var(--safe);
+}
+
+.badge-muted {
+  border-color: var(--muted2);
+  color: var(--muted2);
+}
+
+/* LINKS */
+a {
+  color: var(--text);
+  text-decoration: none;
+  border-bottom: 1px solid var(--muted2);
+  transition: color 0.2s, border-color 0.2s;
+}
+
+a:hover {
+  color: var(--gold);
+  border-bottom-color: var(--gold);
+}
+
+/* HEBREW */
+.hebrew {
+  direction: rtl;
+  text-align: right;
+  font-family: 'Playfair Display', serif;
+  font-size: 17px;
+  color: var(--muted);
+  font-style: italic;
+  line-height: 1.8;
+  padding: 24px 20px;
+  border-right: 2px solid var(--border2);
+  margin: 40px 0;
+}
+
+/* FOOTER */
+.footer {
+  margin-top: 100px;
+  padding-top: 48px;
+  border-top: 1px solid var(--border);
+}
+
+.footer-label {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 32px;
+  display: block;
+}
+
+.footer-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 48px;
+  margin-bottom: 56px;
+}
+
+.footer-col-label {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--muted2);
+  margin-bottom: 16px;
+  display: block;
+}
+
+.footer-col p, .footer-col a {
+  font-size: 17px;
+  color: var(--muted);
+  display: block;
+  margin-bottom: 10px;
+  border-bottom: none;
+}
+
+.footer-col a {
+  border-bottom: 1px solid var(--border2);
+}
+
+.footer-col a:hover {
+  color: var(--gold);
+  border-bottom-color: var(--gold);
+}
+
+.footer-bottom {
+  padding-top: 32px;
+  border-top: 1px solid var(--border);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.footer-bottom-left {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 11px;
+  color: var(--muted2);
+  letter-spacing: 1.5px;
+}
+
+.footer-bottom-right {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 11px;
+  color: var(--muted2);
+  letter-spacing: 1px;
+}
+
+@media (max-width: 600px) {
+  .container { padding: 48px 20px 80px; }
+  .topbar { flex-direction: column; align-items: flex-start; gap: 8px; margin-bottom: 60px; }
+  .footer-grid { grid-template-columns: 1fr; gap: 32px; }
+  .footer-bottom { flex-direction: column; gap: 12px; align-items: flex-start; }
 }
 
 </style>
-
 </head>
 
 <body>
-
 <div class="container">
 
-<h2>MATRIX AUDIT — AUTONOMOUS SYSTEMS GOVERNANCE</h2>
+  <!-- TOP BAR -->
+  <div class="topbar">
+    <div class="topbar-left">
+      <span>MATRIX AUDIT</span> — Autonomous Systems Governance
+    </div>
+    <div class="topbar-right">matrix-audit.com</div>
+  </div>
 
-<h1>Decision Accountability Record (DAR)</h1>
+  <!-- HERO -->
+  <div class="hero">
+    <span class="hero-tag">Governance Principle — 2026</span>
+    <h1>Decision Accountability<br><em>Record</em></h1>
+    <p class="hero-sub">
+      Named human stop authority in autonomous systems,<br>
+      defined before irreversible execution occurs.
+    </p>
+  </div>
 
-<p>
-Matrix Audit is an independent governance initiative focused on structural accountability in autonomous systems.
-</p>
+  <div class="badges">
+    <span class="badge badge-gold">DAR Framework</span>
+    <span class="badge badge-safe">Human Stop Authority</span>
+    <span class="badge badge-muted">AI Governance</span>
+    <span class="badge badge-muted">MiCA / CASP</span>
+    <span class="badge badge-muted">Autonomous Systems</span>
+  </div>
 
-<p>
-Decision Accountability Record (DAR) defines named human stop authority in automated systems operating in high-risk environments.
-</p>
+  <!-- PRINCIPLE -->
+  <div class="section">
+    <span class="section-label">Principle</span>
+    <p>The authority to initiate is not the authority to terminate.</p>
+    <p>Autonomous systems may execute decisions. Responsibility remains human.</p>
+    <p>The gap between information and named stop authority is not a structural bug. It is an intentional feature — designed to avoid personal accountability.</p>
+  </div>
 
-<h2>PRINCIPLE</h2>
+  <div class="accent-block">
+    <p>There is a moment when you can stop.<br>
+    And there is a moment when all you can do<br>
+    is explain why no one did.</p>
+  </div>
 
-<p>
-The Authority to Initiate is not the Authority to Terminate.
-</p>
+  <!-- DEFINITION -->
+  <div class="section">
+    <span class="section-label">Formal Definition</span>
+    <p>Decision Accountability Record (DAR) assigns a named human authority responsible for stopping automated systems before irreversible execution occurs.</p>
+    <p>Not a committee. Not a policy. A name.</p>
+  </div>
 
-<p>
-Automated systems may execute decisions. Accountability remains human.
-</p>
+  <!-- PURPOSE -->
+  <div class="section">
+    <span class="section-label">Purpose</span>
+    <p>DAR ensures that automated systems operating in critical environments cannot execute irreversible actions without an identified human authority responsible for halting execution.</p>
+    <p>If authority needs to be reconstructed after an incident, it was not defined before it. Compliance confirms that rules were followed. DAR confirms that someone was authorized to stop — before the rules ran out.</p>
+  </div>
 
-<h2>FORMAL DEFINITION</h2>
+  <!-- REFERENCE -->
+  <div class="section">
+    <span class="section-label">Reference Case</span>
+    <p>The 2012 Knight Capital collapse demonstrated how automated systems can execute catastrophic, irreversible actions when no single individual holds clear stop authority. $440 million in losses in 45 minutes. The system ran. No one stopped it.</p>
+  </div>
 
-<p>
-Decision Accountability Record (DAR) is a governance principle assigning named human authority responsible for stopping automated systems before irreversible execution occurs.
-</p>
+  <!-- KEY QUESTION -->
+  <div class="key-question">
+    <span class="q-label">The question regulation rarely asks</span>
+    <p class="q-text">Who holds the authority to stop the system<br>when execution becomes irreversible?</p>
+    <span class="q-answer">By name.</span>
+  </div>
 
-<h2>PURPOSE</h2>
+  <!-- POSITIONING -->
+  <div class="section">
+    <span class="section-label">Positioning</span>
+    <p>The principle of named stop authority already exists in critical systems. It is beginning to appear in academic discussions of AI governance. DAR frames it as a simple question regulation rarely asks: who, by name, can stop the system before execution becomes irreversible?</p>
+    <p>Systems that cannot stop are not autonomous. They are ungoverned.</p>
+  </div>
 
-<p>
-DAR ensures that automated systems operating in critical environments cannot execute irreversible actions without an identified human authority responsible for halting execution.
-</p>
+  <!-- HEBREW -->
+  <div class="hebrew">
+    לירן בר שרים — חוקר עצמאי בתחום ממשל מערכות אוטונומיות ואחריות אנושית בהחלטות מכונה.
+    DAR מגדיר שאלה פשוטה שהרגולציה לרוב לא שואלת: מי, בשם, מוסמך לעצור את המערכת לפני שהביצוע הופך לבלתי הפיך?
+  </div>
 
-<h2>REFERENCE CASE</h2>
+  <!-- SPECIFICATION -->
+  <div class="section">
+    <span class="section-label">Specification</span>
+    <p>Full DAR specification, research notes, and reference materials:</p>
+    <p>
+      <a href="https://github.com/liranbarshrim-ui/human-stop-boundary" target="_blank" rel="noopener">
+        GitHub — human-stop-boundary
+      </a>
+    </p>
+  </div>
 
-<p>
-The 2012 Knight Capital event demonstrated how automated systems can execute catastrophic actions when no clearly defined human authority exists to stop execution.
-</p>
+  <div class="divider"></div>
 
-<h2>KEY QUESTION</h2>
+  <!-- FOOTER -->
+  <div class="footer">
+    <span class="footer-label">Contact</span>
 
-<p>
-Who holds the authority to stop the system when execution becomes irreversible?
-</p>
+    <div class="footer-grid">
+      <div class="footer-col">
+        <span class="footer-col-label">Author</span>
+        <p>Liran Bar Shrim</p>
+        <p>Independent practitioner</p>
+        <p>Autonomous systems governance</p>
+      </div>
+      <div class="footer-col">
+        <span class="footer-col-label">Links</span>
+        <a href="mailto:Liran@liranbarshrim.com">Liran@liranbarshrim.com</a>
+        <a href="https://www.linkedin.com/in/liranbarshrim" target="_blank" rel="noopener">LinkedIn Profile</a>
+        <a href="https://github.com/liranbarshrim-ui/human-stop-boundary" target="_blank" rel="noopener">GitHub Repository</a>
+      </div>
+    </div>
 
-<p><strong>By name.</strong></p>
-
-<div class="quote">
-
-When a decision becomes irreversible under uncertainty,
-someone must have the authority to stop it — by name.
+    <div class="footer-bottom">
+      <span class="footer-bottom-left">© 2026 MATRIX AUDIT</span>
+      <span class="footer-bottom-right">DAR — Decision Accountability Record</span>
+    </div>
+  </div>
 
 </div>
-
-<div class="footer">
-
-<h2>CONTACT</h2>
-
-<p>Liran Bar Shrim</p>
-
-<p>
-<a href="mailto:Liran@liranbarshrim.com">
-Liran@liranbarshrim.com
-</a>
-</p>
-
-<p>
-<a href="https://www.linkedin.com/in/liranbarshrim" target="_blank">
-LinkedIn Profile
-</a>
-</p>
-
-<p>© 2026 Matrix Audit</p>
-
-</div>
-
-</div>
-
 </body>
 </html>
