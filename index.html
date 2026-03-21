@@ -39,9 +39,9 @@
   .definition-box p { font-family: 'Playfair Display', serif; font-size: 17px; line-height: 1.65; color: var(--text); }
   .not-list { margin-top: 24px; display: flex; flex-direction: column; gap: 8px; }
   .not-item { font-size: 12px; color: var(--muted); display: flex; align-items: center; gap: 10px; }
-  .not-item::before { content: '—'; color: var(--danger); font-weight: 500; }
+  .not-item::before { content: '\2014'; color: var(--danger); font-weight: 500; }
   .def-name { font-size: 13px; color: var(--accent); font-weight: 500; letter-spacing: 0.05em; margin-top: 20px; padding-top: 20px; border-top: 1px solid var(--border2); }
-  .clarify-box { font-size: 12px; color: var(--muted2); line-height: 1.8; margin-top: 16px; padding: 16px; border: 1px solid var(--border2); }
+  .clarify-box { font-size: 12px; color: var(--muted); line-height: 1.8; margin-top: 16px; padding: 16px 20px; border: 1px solid var(--border2); }
   .position-statement { font-family: 'Playfair Display', serif; font-size: 20px; line-height: 1.6; color: var(--text); padding: 40px 0; border-top: 1px solid var(--border2); border-bottom: 1px solid var(--border2); margin: 40px 0; }
   .position-statement em { font-style: italic; color: var(--accent); }
   .deliverable-grid { display: grid; gap: 1px; background: var(--border); border: 1px solid var(--border); margin: 40px 0; }
@@ -58,7 +58,7 @@
   .step-content p { font-size: 12px; color: var(--muted); line-height: 1.7; }
   .step-meta { font-size: 11px; color: var(--accent); margin-top: 8px; }
   .pricing-box { background: var(--surface); border: 1px solid var(--border2); padding: 40px; margin: 40px 0; }
-  .price-amount { font-family: 'IBM Plex Mono', monospace; font-variant-numeric: tabular-nums; font-size: 42px; color: var(--accent); line-height: 1; margin-bottom: 8px; }
+  .price-amount { font-family: 'IBM Plex Mono', monospace; font-variant-numeric: tabular-nums; font-size: 36px; color: var(--accent); line-height: 1; margin-bottom: 8px; }
   .price-note { font-size: 11px; color: var(--muted); margin-bottom: 32px; }
   .price-terms { display: flex; flex-direction: column; gap: 12px; }
   .price-term { display: flex; justify-content: space-between; font-size: 12px; padding-bottom: 12px; border-bottom: 1px solid var(--border); }
@@ -68,8 +68,8 @@
   .case-block { background: var(--surface); border: 1px solid var(--border2); border-left: 3px solid var(--danger); padding: 32px; margin: 40px 0; }
   .case-header { display: flex; align-items: flex-start; justify-content: space-between; gap: 16px; margin-bottom: 20px; flex-wrap: wrap; }
   .case-title { font-size: 10px; letter-spacing: 0.15em; text-transform: uppercase; color: var(--danger); }
-  .case-stat { font-family: 'Playfair Display', serif; font-size: 28px; color: var(--text); line-height: 1; }
-  .case-stat span { font-family: 'IBM Plex Mono', monospace; font-size: 11px; color: var(--muted); display: block; margin-top: 4px; }
+  .case-stat { font-family: 'IBM Plex Mono', monospace; font-variant-numeric: tabular-nums; font-size: 28px; color: var(--text); line-height: 1; }
+  .case-stat span { font-size: 11px; color: var(--muted); display: block; margin-top: 4px; }
   .case-block p { font-size: 13px; color: var(--muted); line-height: 1.7; }
   .case-finding { margin-top: 20px; padding-top: 20px; border-top: 1px solid var(--border2); font-family: 'Playfair Display', serif; font-size: 15px; color: var(--text); font-style: italic; }
   .reg-item { display: flex; gap: 20px; padding: 20px 0; border-bottom: 1px solid var(--border); }
@@ -90,7 +90,6 @@
   .footer-links { display: flex; gap: 24px; }
   .footer-links a { font-size: 11px; color: var(--muted2); text-decoration: none; letter-spacing: 0.05em; }
   .footer-links a:hover { color: var(--muted); }
-  .number { font-family: 'IBM Plex Mono', monospace; font-variant-numeric: tabular-nums; }
   @media (max-width: 600px) {
     .hero { padding: 64px 0 48px; } section { padding: 48px 0; }
     .pricing-box { padding: 28px; } .cta-box { padding: 32px 24px; }
@@ -152,14 +151,15 @@
       </div>
       <div class="def-name">A name.</div>
     </div>
-    <p style="font-size: 13px; color: var(--muted); line-height: 1.8; margin-top: 24px;">
+    <p style="font-size:13px;color:var(--muted);line-height:1.8;margin-top:24px;">
       If authority needs to be reconstructed after an incident, it was not defined before it.<br><br>
       Compliance confirms that rules were followed.<br>
       DAR confirms that someone was authorized to stop &#8212; before the rules ran out.
     </p>
     <div class="clarify-box">
       DAR does not replace technical controls or operational risk systems.<br>
-      It defines named stop authority around them &#8212; for one defined use case.
+      It defines named stop authority around them &#8212; for one defined use case.<br><br>
+      DAR frames the question regulation rarely asks &#8212; and defines the answer before it has to be explained.
     </div>
     <div class="position-statement">
       Systems that cannot stop are not autonomous.<br>
@@ -171,9 +171,9 @@
 <section id="deliverable">
   <div class="container">
     <div class="section-label">What You Receive</div>
-    <p style="font-size: 13px; color: var(--muted); margin-bottom: 32px; line-height: 1.8;">
+    <p style="font-size:13px;color:var(--muted);margin-bottom:32px;line-height:1.8;">
       One audit-ready document. One named authority. One defined moment.<br>
-      Delivered in 7&#8211;10 business days, asynchronously.
+      Delivered in 7&#8211;10 business days. Can be conducted asynchronously.
     </p>
     <div class="deliverable-grid">
       <div class="deliverable-item">
@@ -212,7 +212,7 @@
         </div>
       </div>
     </div>
-    <p style="font-size: 12px; color: var(--muted2); margin-top: 24px; line-height: 1.7;">
+    <p style="font-size:12px;color:var(--muted2);margin-top:24px;line-height:1.7;">
       On the day after an incident, no one asks &#8220;who was supposed to stop this?&#8221; &#8212; It is already on record.
     </p>
   </div>
@@ -226,7 +226,7 @@
         <div class="step-num">01</div>
         <div class="step-content">
           <h4>Intake Questionnaire</h4>
-          <p>A structured intake questionnaire sent via email. A 30-minute call is available if needed.</p>
+          <p>A structured intake questionnaire sent via email. A 30-minute call can be scheduled if helpful.</p>
           <div class="step-meta">&#8776; 30 minutes to complete</div>
         </div>
       </div>
@@ -261,7 +261,7 @@
 <section id="pricing">
   <div class="container">
     <div class="section-label">Engagement Terms</div>
-    <p style="font-size: 12px; color: var(--muted2); margin-bottom: 24px; line-height: 1.7;">
+    <p style="font-size:12px;color:var(--muted2);margin-bottom:24px;line-height:1.7;">
       For one defined use case. No subscription. No implementation layer.<br>
       Best suited for organizations that need a defined accountability layer, not a control redesign.
     </p>
@@ -279,7 +279,7 @@
         </div>
         <div class="price-term">
           <span class="price-term-label">Format</span>
-          <span class="price-term-value">Can be conducted asynchronously.</span>
+          <span class="price-term-value">Can be conducted asynchronously</span>
         </div>
         <div class="price-term">
           <span class="price-term-label">Ongoing fees</span>
@@ -291,6 +291,10 @@
         </div>
       </div>
     </div>
+    <p style="font-size:12px;color:var(--muted);margin-top:20px;line-height:1.8;padding:16px 20px;border:1px solid var(--border2);">
+      DAR documents that stop authority was defined before it was needed.<br>
+      It creates a clear governance record before the point of no return.
+    </p>
   </div>
 </section>
 
@@ -301,8 +305,8 @@
       <div class="case-header">
         <div class="case-title">Knight Capital &#8212; 2012</div>
         <div style="display:flex;gap:32px;flex-wrap:wrap;">
-          <div class="case-stat number">$440M <span>in losses</span></div>
-          <div class="case-stat number">45 min <span>duration</span></div>
+          <div class="case-stat">$440M <span>in losses</span></div>
+          <div class="case-stat">45 min <span>duration</span></div>
         </div>
       </div>
       <p>The system ran. The controls existed. The losses compounded. No single individual held clear stop authority in real time. $440 million in 45 minutes.</p>
@@ -312,8 +316,8 @@
       <div class="case-header">
         <div class="case-title" style="color:var(--muted);">TSB Bank &#8212; 2018</div>
         <div style="display:flex;gap:32px;flex-wrap:wrap;">
-          <div class="case-stat number" style="font-size:22px;">&#163;330M <span>total costs</span></div>
-          <div class="case-stat number" style="font-size:22px;">&#163;81,620 <span>personal fine</span></div>
+          <div class="case-stat" style="font-size:22px;">&#163;330M <span>total costs</span></div>
+          <div class="case-stat" style="font-size:22px;">&#163;81,620 <span>personal fine</span></div>
         </div>
       </div>
       <p>5.2 million customers lost access. When regulators investigated, they did not fine the system. They fined the CIO. By name. Carlos Abarca. Personal liability for failing to oversee what he was responsible for.</p>
@@ -322,7 +326,7 @@
     <div class="case-block" style="border-left-color:var(--accent);margin-top:16px;">
       <div class="case-header">
         <div class="case-title" style="color:var(--accent);">Regulatory Signal &#8212; 2025</div>
-        <div class="case-stat number" style="font-size:22px;">$1.23B <span>in fines, H1 2025</span></div>
+        <div class="case-stat" style="font-size:22px;">$1.23B <span>in fines, H1 2025</span></div>
       </div>
       <p>Regulators fined financial institutions $1.23 billion in the first half of 2025. A 417% increase from the same period in 2024.</p>
       <div class="case-finding">The fines are growing.<br>The question does not change:<br>who, by name, was responsible?</div>
@@ -361,9 +365,9 @@
     <div class="cta-box">
       <h3>Define it before the moment passes.</h3>
       <p>After the event, accountability is always assigned.<br>The only question is whether it was defined in advance.</p>
-      <a href="/cdn-cgi/l/email-protection#0c40657e6d624c60657e6d626e6d7e7f647e6561226f6361" class="cta-link">Request the Intake Questionnaire</a>
+      <a href="mailto:Liran@liranbarshrim.com" class="cta-link">Request the Intake Questionnaire</a>
       <br>
-      <a href="/cdn-cgi/l/email-protection#662a0f140708260a0f140708040714150e140f0b4805090b" class="cta-secondary">Not sure where to start? Request a 30-minute call &#8594;</a>
+      <a href="mailto:Liran@liranbarshrim.com" class="cta-secondary">Not sure where to start? Request a 30-minute call &#8594;</a>
       <br>
       <a href="https://www.linkedin.com/in/liranbarshrim" class="cta-secondary" target="_blank">Connect on LinkedIn &#8594;</a>
       <p style="margin-top:32px;font-size:12px;color:var(--muted2);font-style:italic;">
@@ -378,4 +382,11 @@
     <span class="footer-brand">&#169; 2026 MATRIX AUDIT &#8212; Liran Bar Shrim</span>
     <div class="footer-links">
       <a href="https://github.com/liranbarshrim-ui/human-stop-boundary" target="_blank">GitHub</a>
-      <a href="/cdn-cgi/l/email-protection#f0bc9982919eb09c9982919e929182839882999dde939f9d">Contact<
+      <a href="mailto:Liran@liranbarshrim.com">Contact</a>
+      <a href="https://www.linkedin.com/in/liranbarshrim" target="_blank">LinkedIn</a>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
