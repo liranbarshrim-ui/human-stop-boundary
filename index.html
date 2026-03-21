@@ -58,7 +58,7 @@
   .step-content p { font-size: 12px; color: var(--muted); line-height: 1.7; }
   .step-meta { font-size: 11px; color: var(--accent); margin-top: 8px; }
   .pricing-box { background: var(--surface); border: 1px solid var(--border2); padding: 40px; margin: 40px 0; }
-  .price-amount { font-family: 'Playfair Display', serif; font-size: 42px; color: var(--accent); line-height: 1; margin-bottom: 8px; }
+  .price-amount { font-family: 'IBM Plex Mono', monospace; font-variant-numeric: tabular-nums; font-size: 42px; color: var(--accent); line-height: 1; margin-bottom: 8px; }
   .price-note { font-size: 11px; color: var(--muted); margin-bottom: 32px; }
   .price-terms { display: flex; flex-direction: column; gap: 12px; }
   .price-term { display: flex; justify-content: space-between; font-size: 12px; padding-bottom: 12px; border-bottom: 1px solid var(--border); }
@@ -90,6 +90,7 @@
   .footer-links { display: flex; gap: 24px; }
   .footer-links a { font-size: 11px; color: var(--muted2); text-decoration: none; letter-spacing: 0.05em; }
   .footer-links a:hover { color: var(--muted); }
+  .number { font-family: 'IBM Plex Mono', monospace; font-variant-numeric: tabular-nums; }
   @media (max-width: 600px) {
     .hero { padding: 64px 0 48px; } section { padding: 48px 0; }
     .pricing-box { padding: 28px; } .cta-box { padding: 32px 24px; }
@@ -300,8 +301,8 @@
       <div class="case-header">
         <div class="case-title">Knight Capital &#8212; 2012</div>
         <div style="display:flex;gap:32px;flex-wrap:wrap;">
-          <div class="case-stat">$440M <span>in losses</span></div>
-          <div class="case-stat">45 min <span>duration</span></div>
+          <div class="case-stat number">$440M <span>in losses</span></div>
+          <div class="case-stat number">45 min <span>duration</span></div>
         </div>
       </div>
       <p>The system ran. The controls existed. The losses compounded. No single individual held clear stop authority in real time. $440 million in 45 minutes.</p>
@@ -311,8 +312,8 @@
       <div class="case-header">
         <div class="case-title" style="color:var(--muted);">TSB Bank &#8212; 2018</div>
         <div style="display:flex;gap:32px;flex-wrap:wrap;">
-          <div class="case-stat" style="font-size:22px;">&#163;330M <span>total costs</span></div>
-          <div class="case-stat" style="font-size:22px;">&#163;81,620 <span>personal fine</span></div>
+          <div class="case-stat number" style="font-size:22px;">&#163;330M <span>total costs</span></div>
+          <div class="case-stat number" style="font-size:22px;">&#163;81,620 <span>personal fine</span></div>
         </div>
       </div>
       <p>5.2 million customers lost access. When regulators investigated, they did not fine the system. They fined the CIO. By name. Carlos Abarca. Personal liability for failing to oversee what he was responsible for.</p>
@@ -321,7 +322,7 @@
     <div class="case-block" style="border-left-color:var(--accent);margin-top:16px;">
       <div class="case-header">
         <div class="case-title" style="color:var(--accent);">Regulatory Signal &#8212; 2025</div>
-        <div class="case-stat" style="font-size:22px;">$1.23B <span>in fines, H1 2025</span></div>
+        <div class="case-stat number" style="font-size:22px;">$1.23B <span>in fines, H1 2025</span></div>
       </div>
       <p>Regulators fined financial institutions $1.23 billion in the first half of 2025. A 417% increase from the same period in 2024.</p>
       <div class="case-finding">The fines are growing.<br>The question does not change:<br>who, by name, was responsible?</div>
