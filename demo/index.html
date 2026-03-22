@@ -3,362 +3,646 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>DAR — Decision Accountability Record</title>
-<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,300;0,400;0,500;1,300&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+<title>Can your system be stopped?</title>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Playfair+Display:ital,wght@0,700;1,400&display=swap" rel="stylesheet">
 <style>
-*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-:root{
-  --bg:#090909;--surface:#111111;--surface2:#161616;
-  --border:#1e1e1e;--border2:#2a2a2a;
-  --text:#e6e0d4;--muted:#52504c;--muted2:#7a7570;
-  --accent:#c8a96e;
-  --danger:#c0392b;--danger-bg:rgba(192,57,43,0.07);--danger-border:rgba(192,57,43,0.28);
-  --safe:#3d9970;--safe-bg:rgba(61,153,112,0.06);--safe-border:rgba(61,153,112,0.25);
-  --mono:'IBM Plex Mono',monospace;--serif:'Playfair Display',serif;
-}
+  :root {
+    --bg: #090909;
+    --surface: #111111;
+    --accent: #c8a96e;
+    --danger: #c0392b;
+    --safe: #3d9970;
+    --partial: #e67e22;
+    --text: #e6e0d4;
+    --muted: #7a7570;
+    --border: #1e1e1e;
+    --border2: #2a2a2a;
+  }
 
-body{
-  background:var(--bg);
-  color:var(--text);
-  font-family:var(--mono);
-  min-height:100vh;
-  display:flex;
-  flex-direction:column;
-  align-items:center;
-  padding:4rem 1.5rem 5rem;
-}
+  html, body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'IBM Plex Mono', monospace;
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
 
-/* Subtle grain */
-body::before{
-  content:'';
-  position:fixed;inset:0;
-  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
-  pointer-events:none;z-index:0;
-}
+  /* grain texture */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 0;
+    opacity: 0.6;
+  }
 
-.wrapper{position:relative;z-index:1;max-width:700px;width:100%}
+  .container {
+    position: relative;
+    z-index: 1;
+    max-width: 680px;
+    margin: 0 auto;
+    padding: 80px 32px 120px;
+    min-height: 100vh;
+  }
 
-/* Header */
-.header{
-  text-align:center;margin-bottom:3.5rem;
-  animation:fadeDown .7s ease both;
-}
-.eyebrow{
-  font-size:.6rem;letter-spacing:.28em;color:var(--accent);
-  text-transform:uppercase;display:block;margin-bottom:1rem;
-}
-h1{
-  font-family:var(--serif);font-size:clamp(1.8rem,5vw,2.8rem);
-  font-weight:400;line-height:1.15;margin-bottom:1rem;
-}
-.subtitle{
-  font-size:.74rem;color:var(--muted2);line-height:1.75;
-  max-width:500px;margin:0 auto;
-}
+  /* screens */
+  .screen { display: none; animation: fadeIn 0.4s ease; }
+  .screen.active { display: block; }
+  @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
 
-/* Scenario selector */
-.selector-label{
-  font-size:.58rem;letter-spacing:.22em;color:var(--muted);
-  text-transform:uppercase;margin-bottom:.9rem;
-  animation:fadeUp .7s .15s ease both;
-}
-.scenarios{
-  display:grid;grid-template-columns:repeat(3,1fr);
-  gap:.5rem;margin-bottom:2.5rem;
-  animation:fadeUp .7s .2s ease both;
-}
-.scenario-btn{
-  background:var(--surface);border:1px solid var(--border);
-  color:var(--muted2);font-family:var(--mono);
-  font-size:.65rem;padding:1rem .9rem;
-  cursor:pointer;text-align:left;line-height:1.6;
-  transition:border-color .18s,background .18s;
-}
-.scenario-btn .s-tag{
-  display:block;font-size:.55rem;letter-spacing:.18em;
-  color:var(--muted);text-transform:uppercase;margin-bottom:.35rem;
-}
-.scenario-btn .s-name{color:var(--text);font-size:.7rem;}
-.scenario-btn:hover{border-color:var(--border2);}
-.scenario-btn.active{border-color:var(--accent);background:var(--surface2);}
-.scenario-btn.active .s-tag{color:var(--accent);}
+  /* header */
+  .header {
+    margin-bottom: 64px;
+  }
+  .header-tag {
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 24px;
+    display: block;
+  }
+  .header h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(28px, 5vw, 42px);
+    font-weight: 700;
+    line-height: 1.15;
+    color: var(--text);
+    margin-bottom: 16px;
+  }
+  .header h1 em {
+    font-style: italic;
+    color: var(--accent);
+  }
+  .header p {
+    font-size: 13px;
+    color: var(--muted);
+    line-height: 1.7;
+  }
 
-/* Flow card */
-.flow-card{
-  background:var(--surface);border:1px solid var(--border);
-  margin-bottom:2rem;
-  animation:fadeUp .6s .28s ease both;
-}
-.flow-header{
-  padding:1rem 1.5rem;border-bottom:1px solid var(--border);
-  display:flex;align-items:center;justify-content:space-between;
-}
-.flow-title{font-size:.6rem;color:var(--muted);letter-spacing:.15em;text-transform:uppercase;}
-.flow-scenario-name{font-size:.68rem;color:var(--accent);}
-.flow-steps{padding:0 1.5rem;}
-.flow-step{
-  display:flex;align-items:flex-start;gap:1rem;
-  padding:1rem 0;border-bottom:1px solid var(--border);
-}
-.flow-step:last-child{border-bottom:none;}
-.step-num{
-  width:26px;height:26px;flex-shrink:0;
-  border:1px solid var(--border2);
-  display:flex;align-items:center;justify-content:center;
-  font-size:.58rem;color:var(--muted);margin-top:2px;
-}
-.step-num.critical{border-color:var(--accent);color:var(--accent);font-size:.75rem;}
-.step-name{font-size:.74rem;color:var(--text);margin-bottom:.2rem;}
-.step-desc{font-size:.64rem;color:var(--muted2);line-height:1.55;}
-.step-desc.warn{color:var(--accent);}
+  /* step indicator */
+  .step-indicator {
+    display: flex;
+    gap: 6px;
+    margin-bottom: 48px;
+  }
+  .step-dot {
+    width: 20px;
+    height: 2px;
+    background: var(--border2);
+    transition: background 0.3s;
+  }
+  .step-dot.active { background: var(--accent); }
+  .step-dot.done { background: var(--muted); }
 
-/* Question block */
-.q-block{
-  border:1px solid var(--border);border-left:3px solid var(--accent);
-  padding:1.75rem 2rem;margin-bottom:1.5rem;
-  animation:fadeUp .6s .38s ease both;
-}
-.q-text{
-  font-family:var(--serif);font-size:clamp(1rem,2.8vw,1.35rem);
-  font-style:italic;color:var(--text);line-height:1.5;margin-bottom:1.5rem;
-}
-.q-text em{color:var(--accent);font-style:normal;}
-.input-row{display:flex;gap:.6rem;}
+  /* question block */
+  .question-block {
+    margin-bottom: 40px;
+  }
+  .question-number {
+    font-size: 10px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 10px;
+    display: block;
+  }
+  .question-text {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(18px, 3vw, 24px);
+    font-weight: 700;
+    line-height: 1.3;
+    color: var(--text);
+    margin-bottom: 20px;
+  }
+  .question-sub {
+    font-size: 12px;
+    color: var(--muted);
+    margin-bottom: 20px;
+    line-height: 1.6;
+  }
 
-input[type="text"]{
-  flex:1;min-width:0;
-  background:var(--bg);border:1px solid var(--border2);
-  color:var(--text);font-family:var(--mono);font-size:.78rem;
-  padding:.8rem 1rem;outline:none;
-  transition:border-color .18s;
-}
-input[type="text"]::placeholder{color:var(--muted);}
-input[type="text"]:focus{border-color:var(--accent);}
-input[type="text"]:disabled{opacity:.4;}
+  /* inputs */
+  textarea, input[type="text"] {
+    width: 100%;
+    background: var(--surface);
+    border: 1px solid var(--border2);
+    border-left: 3px solid var(--accent);
+    color: var(--text);
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 13px;
+    padding: 16px 18px;
+    resize: vertical;
+    outline: none;
+    transition: border-color 0.2s;
+    line-height: 1.6;
+  }
+  textarea { min-height: 100px; }
+  textarea:focus, input[type="text"]:focus {
+    border-color: var(--accent);
+    border-left-color: var(--accent);
+  }
+  textarea::placeholder, input::placeholder { color: var(--muted); }
 
-.confirm-btn{
-  background:var(--accent);color:var(--bg);border:none;
-  font-family:var(--mono);font-size:.65rem;letter-spacing:.14em;
-  text-transform:uppercase;font-weight:500;
-  padding:.8rem 1.3rem;cursor:pointer;
-  transition:opacity .15s;white-space:nowrap;
-}
-.confirm-btn:hover{opacity:.85;}
-.confirm-btn:disabled{opacity:.35;cursor:default;}
+  /* radio buttons */
+  .radio-group { display: flex; flex-direction: column; gap: 10px; }
+  .radio-option {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 14px 18px;
+    background: var(--surface);
+    border: 1px solid var(--border2);
+    cursor: pointer;
+    transition: border-color 0.2s, background 0.2s;
+    font-size: 13px;
+    color: var(--text);
+    user-select: none;
+  }
+  .radio-option:hover { border-color: var(--border2); background: #161616; }
+  .radio-option.selected { border-color: var(--accent); background: #161210; }
+  .radio-option input[type="radio"] { display: none; }
+  .radio-dot {
+    width: 12px; height: 12px;
+    border: 1px solid var(--muted);
+    border-radius: 50%;
+    flex-shrink: 0;
+    transition: all 0.2s;
+  }
+  .radio-option.selected .radio-dot {
+    background: var(--accent);
+    border-color: var(--accent);
+  }
 
-/* Result */
-.result{
-  padding:1.6rem 2rem;border:1px solid transparent;
-  display:none;margin-bottom:.5rem;
-}
-.result.show{display:block;animation:resultIn .35s ease both;}
-.result.missing{background:var(--danger-bg);border-color:var(--danger-border);}
-.result.satisfied{background:var(--safe-bg);border-color:var(--safe-border);}
+  /* buttons */
+  .btn {
+    display: inline-block;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    padding: 14px 28px;
+    border: none;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  .btn-primary {
+    background: var(--accent);
+    color: var(--bg);
+  }
+  .btn-primary:hover { background: #d4b87a; }
+  .btn-ghost {
+    background: transparent;
+    color: var(--muted);
+    border: 1px solid var(--border2);
+  }
+  .btn-ghost:hover { color: var(--text); border-color: var(--muted); }
+  .btn:disabled { opacity: 0.3; cursor: not-allowed; }
 
-.r-status{
-  font-size:.58rem;letter-spacing:.2em;
-  text-transform:uppercase;margin-bottom:.85rem;
-}
-.result.missing .r-status{color:var(--danger);}
-.result.satisfied .r-status{color:var(--safe);}
+  .btn-row {
+    display: flex;
+    gap: 12px;
+    margin-top: 32px;
+    align-items: center;
+  }
 
-.r-main{
-  font-family:var(--serif);font-size:clamp(.95rem,2.5vw,1.15rem);
-  line-height:1.45;margin-bottom:.85rem;
-}
-.r-sub{font-size:.66rem;color:var(--muted2);line-height:1.75;}
-.authority-name{color:var(--safe);font-weight:500;}
+  /* divider */
+  .divider {
+    border: none;
+    border-top: 1px solid var(--border);
+    margin: 40px 0;
+  }
 
-/* Reset */
-.reset-row{text-align:right;margin-top:1.2rem;display:none;}
-.reset-btn{
-  background:transparent;border:none;
-  border-bottom:1px solid var(--border);
-  color:var(--muted);font-family:var(--mono);
-  font-size:.62rem;letter-spacing:.1em;
-  cursor:pointer;padding:.3rem 0;
-  transition:color .15s,border-color .15s;
-}
-.reset-btn:hover{color:var(--text);border-color:var(--muted2);}
+  /* result card */
+  .result-card {
+    background: var(--surface);
+    border: 1px solid var(--border2);
+    padding: 0;
+    overflow: hidden;
+  }
+  .result-bar {
+    height: 4px;
+    width: 100%;
+  }
+  .result-bar.missing { background: var(--danger); }
+  .result-bar.partial { background: var(--partial); }
+  .result-bar.present { background: var(--safe); }
 
-/* Footer */
-.footer{
-  margin-top:4rem;text-align:center;
-  border-top:1px solid var(--border);padding-top:2.5rem;
-  animation:fadeUp .7s .5s ease both;
-}
-.footer p{font-size:.6rem;color:var(--muted);letter-spacing:.1em;line-height:2.2;}
-.footer a{color:var(--muted2);text-decoration:none;border-bottom:1px solid var(--border2);transition:color .15s;}
-.footer a:hover{color:var(--accent);}
+  .result-inner { padding: 32px; }
 
-/* Animations */
-@keyframes fadeDown{from{opacity:0;transform:translateY(-14px)}to{opacity:1;transform:translateY(0)}}
-@keyframes fadeUp{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:translateY(0)}}
-@keyframes resultIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
+  .result-status-row {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 28px;
+    flex-wrap: wrap;
+  }
+  .status-badge {
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    padding: 6px 12px;
+    border: 1px solid;
+  }
+  .status-badge.missing { color: var(--danger); border-color: var(--danger); }
+  .status-badge.partial { color: var(--partial); border-color: var(--partial); }
+  .status-badge.present { color: var(--safe); border-color: var(--safe); }
 
-@media(max-width:520px){
-  .scenarios{grid-template-columns:1fr;}
-  .input-row{flex-direction:column;}
-  .confirm-btn{width:100%;text-align:center;}
-}
+  .result-label {
+    font-family: 'Playfair Display', serif;
+    font-size: 22px;
+    font-weight: 700;
+  }
+
+  .result-fields { display: flex; flex-direction: column; gap: 16px; margin-bottom: 28px; }
+  .result-field { display: flex; flex-direction: column; gap: 4px; }
+  .result-field-key {
+    font-size: 10px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+  .result-field-val {
+    font-size: 13px;
+    color: var(--text);
+    line-height: 1.5;
+  }
+  .result-field-val.none { color: var(--danger); font-style: italic; }
+  .result-field-val.yes { color: var(--safe); }
+  .result-field-val.no { color: var(--danger); }
+
+  hr.result-divider {
+    border: none;
+    border-top: 1px solid var(--border);
+    margin: 24px 0;
+  }
+
+  .result-conclusion {
+    font-size: 13px;
+    line-height: 1.8;
+    color: var(--muted);
+    border-left: 3px solid var(--accent);
+    padding-left: 16px;
+  }
+  .result-conclusion strong {
+    color: var(--text);
+    font-weight: 500;
+  }
+
+  .result-cta {
+    margin-top: 24px;
+    font-size: 12px;
+    color: var(--muted);
+    line-height: 1.7;
+    white-space: pre-line;
+  }
+  .result-cta a {
+    color: var(--accent);
+    text-decoration: none;
+    letter-spacing: 0.05em;
+  }
+  .result-cta a:hover { text-decoration: underline; }
+
+  .restart-row {
+    margin-top: 40px;
+    display: flex;
+    gap: 12px;
+    align-items: center;
+  }
+
+  /* watermark */
+  .watermark {
+    margin-top: 64px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .watermark-bar {
+    width: 3px;
+    height: 28px;
+    background: var(--accent);
+    flex-shrink: 0;
+  }
+  .watermark-text { font-size: 10px; color: var(--muted); letter-spacing: 0.12em; line-height: 1.5; }
+  .watermark-text strong { color: var(--accent); font-weight: 600; letter-spacing: 0.18em; text-transform: uppercase; display: block; }
+
+  /* validation error */
+  .error-msg {
+    font-size: 11px;
+    color: var(--danger);
+    margin-top: 8px;
+    display: none;
+  }
+  .error-msg.show { display: block; }
 </style>
 </head>
 <body>
-<div class="wrapper">
+<div class="container">
 
-  <header class="header">
-    <span class="eyebrow">Decision Accountability Record · DAR™</span>
-    <h1>The Human Stop Boundary</h1>
-    <p class="subtitle">When an automated system reaches a point of irreversibility under uncertainty — execution must pause until a named human authority accepts responsibility.</p>
-  </header>
-
-  <p class="selector-label">Select a scenario</p>
-
-  <div class="scenarios">
-    <button class="scenario-btn active" onclick="selectScenario(0)">
-      <span class="s-tag">Fintech</span>
-      <span class="s-name">Autonomous Payment Execution</span>
-    </button>
-    <button class="scenario-btn" onclick="selectScenario(1)">
-      <span class="s-tag">Capital Markets</span>
-      <span class="s-name">AI Trading System</span>
-    </button>
-    <button class="scenario-btn" onclick="selectScenario(2)">
-      <span class="s-tag">Healthcare AI</span>
-      <span class="s-name">Clinical Decision Support</span>
-    </button>
-  </div>
-
-  <div class="flow-card">
-    <div class="flow-header">
-      <span class="flow-title">Execution flow</span>
-      <span class="flow-scenario-name" id="flowTitle"></span>
+  <!-- SCREEN 1: Entry -->
+  <div class="screen active" id="screen-1">
+    <div class="header">
+      <span class="header-tag">DAR — Decision Accountability Record</span>
+      <h1>Can your system<br><em>be stopped?</em></h1>
+      <p>One decision. Three questions.<br>A structural answer.</p>
     </div>
-    <div class="flow-steps" id="flowSteps"></div>
-  </div>
 
-  <div class="q-block">
-    <p class="q-text">Before execution continues — <em>who is the named Stop Authority?</em></p>
-    <div class="input-row">
-      <input type="text" id="authorityInput" placeholder="Enter full name and role" autocomplete="off"/>
-      <button class="confirm-btn" id="confirmBtn" onclick="checkDAR()">Confirm</button>
+    <div class="question-block">
+      <span class="question-number">Start here</span>
+      <div class="question-text">Name one decision your system makes that could cause real damage if wrong.</div>
+      <p class="question-sub">Be specific. Not "risk management" — "approve credit above $50K based on model score."</p>
+      <textarea id="input-decision" placeholder="e.g. The system auto-rejects flagged transactions above threshold within 90 seconds."></textarea>
+      <div class="error-msg" id="err-1">Please describe a decision before continuing.</div>
+    </div>
+
+    <div class="btn-row">
+      <button class="btn btn-primary" onclick="goTo2()">Continue</button>
+    </div>
+
+    <div class="watermark">
+      <div class="watermark-bar"></div>
+      <div class="watermark-text">
+        <strong>DAR</strong>
+        matrix-audit.com
+      </div>
     </div>
   </div>
 
-  <div class="result" id="result">
-    <div class="r-status" id="rStatus"></div>
-    <div class="r-main" id="rMain"></div>
-    <div class="r-sub" id="rSub"></div>
+  <!-- SCREEN 2: Three questions -->
+  <div class="screen" id="screen-2">
+    <div class="header">
+      <span class="header-tag">DAR — Three questions</span>
+      <h1>The structure<br><em>of accountability.</em></h1>
+    </div>
+
+    <div class="step-indicator">
+      <div class="step-dot done" id="dot-1"></div>
+      <div class="step-dot active" id="dot-2"></div>
+      <div class="step-dot" id="dot-3"></div>
+    </div>
+
+    <!-- Q1 -->
+    <div class="question-block">
+      <span class="question-number">Question 01</span>
+      <div class="question-text">When does this decision become irreversible?</div>
+      <p class="question-sub">The point after which the action cannot be undone. Money moved. Trade executed. Record written.</p>
+      <input type="text" id="input-irreversible" placeholder="e.g. When the transaction batch is submitted to the clearing system at 17:00.">
+      <div class="error-msg" id="err-q1">Required.</div>
+    </div>
+
+    <hr class="divider">
+
+    <!-- Q2 -->
+    <div class="question-block">
+      <span class="question-number">Question 02</span>
+      <div class="question-text">Who, by name, can stop it before that moment?</div>
+      <p class="question-sub">Not a role. Not a team. One person — first name, last name — with a prior signed commitment to act.</p>
+      <input type="text" id="input-name" placeholder="e.g. Sarah Cohen — or write: No one defined">
+      <div class="error-msg" id="err-q2">Please enter a name or explicitly write "No one defined."</div>
+    </div>
+
+    <hr class="divider">
+
+    <!-- Q3 -->
+    <div class="question-block">
+      <span class="question-number">Question 03</span>
+      <div class="question-text">Does that person have a real mechanism to stop it?</div>
+      <p class="question-sub">A button, override, API call, signed authority. Not a meeting. Not an escalation path.</p>
+      <div class="radio-group">
+        <label class="radio-option" onclick="selectOption(this, 'mechanism', 'yes')">
+          <input type="radio" name="mechanism" value="yes">
+          <span class="radio-dot"></span>
+          Yes — there is a defined, tested stop mechanism.
+        </label>
+        <label class="radio-option" onclick="selectOption(this, 'mechanism', 'no')">
+          <input type="radio" name="mechanism" value="no">
+          <span class="radio-dot"></span>
+          No — or I'm not certain.
+        </label>
+      </div>
+      <div class="error-msg" id="err-q3">Please select an answer.</div>
+    </div>
+
+    <div class="btn-row">
+      <button class="btn btn-ghost" onclick="goTo1()">Back</button>
+      <button class="btn btn-primary" onclick="goToResult()">Generate DAR Status</button>
+    </div>
+
+    <div class="watermark">
+      <div class="watermark-bar"></div>
+      <div class="watermark-text">
+        <strong>DAR</strong>
+        matrix-audit.com
+      </div>
+    </div>
   </div>
 
-  <div class="reset-row" id="resetRow">
-    <button class="reset-btn" onclick="resetDemo()">↩ Try another scenario</button>
-  </div>
+  <!-- SCREEN 3: Result -->
+  <div class="screen" id="screen-3">
+    <div class="header">
+      <span class="header-tag">DAR — Output</span>
+      <h1>Your DAR<br><em>status.</em></h1>
+    </div>
 
-  <footer class="footer">
-    <p>This is a conceptual illustration — not a software product.</p>
-    <p>DAR™ is a governance principle: named stop authority before the point of irreversibility.</p>
-    <p style="margin-top:.8rem"><a href="https://github.com/liranbarshrim-ui/human-stop-boundary" target="_blank">github.com / human-stop-boundary</a></p>
-  </footer>
+    <div class="step-indicator">
+      <div class="step-dot done"></div>
+      <div class="step-dot done"></div>
+      <div class="step-dot active"></div>
+    </div>
+
+    <div class="result-card">
+      <div class="result-bar" id="result-bar"></div>
+      <div class="result-inner">
+        <div class="result-status-row">
+          <span class="status-badge" id="result-badge"></span>
+          <span class="result-label" id="result-label"></span>
+        </div>
+
+        <div class="result-fields">
+          <div class="result-field">
+            <span class="result-field-key">Decision</span>
+            <span class="result-field-val" id="out-decision"></span>
+          </div>
+          <div class="result-field">
+            <span class="result-field-key">Point of no return</span>
+            <span class="result-field-val" id="out-irreversible"></span>
+          </div>
+          <div class="result-field">
+            <span class="result-field-key">Named stop authority</span>
+            <span class="result-field-val" id="out-name"></span>
+          </div>
+          <div class="result-field">
+            <span class="result-field-key">Stop mechanism confirmed</span>
+            <span class="result-field-val" id="out-mechanism"></span>
+          </div>
+        </div>
+
+        <hr class="result-divider">
+
+        <div class="result-conclusion" id="result-conclusion"></div>
+
+        <p class="result-cta" id="result-cta"></p>
+      </div>
+    </div>
+
+    <div class="restart-row">
+      <button class="btn btn-ghost" onclick="restart()">Run another decision</button>
+    </div>
+
+    <div class="watermark">
+      <div class="watermark-bar"></div>
+      <div class="watermark-text">
+        <strong>DAR</strong>
+        matrix-audit.com
+      </div>
+    </div>
+  </div>
 
 </div>
+
 <script>
-const SCENARIOS=[
-  {
-    name:"Autonomous Payment Execution",
-    steps:[
-      {n:"01",name:"Payment instruction received",desc:"Transaction initiated by automated system. Counterparty verified against internal registry.",crit:false},
-      {n:"02",name:"Risk threshold evaluated",desc:"Amount exceeds standard threshold. Anomaly flag raised. System continues processing.",crit:false},
-      {n:"⚑",name:"Irreversible step approaching",desc:"Funds about to be released to external account. This action cannot be fully reversed.",crit:true}
-    ],
-    missing:"No individual is on record as personally responsible for authorizing this transfer. The system may execute — but accountability has no owner. If the transaction is fraudulent, erroneous, or sanctioned, no named human accepted responsibility before the funds left.",
-    satisfied:"This individual is now explicitly named — on record, before execution — as the person who authorized proceeding past the point of irreversibility. If harm results, the accountability record predates the harm."
-  },
-  {
-    name:"AI Trading System",
-    steps:[
-      {n:"01",name:"Market signal detected",desc:"Algorithm identifies a large directional trade. Position sizing exceeds single-name concentration limit.",crit:false},
-      {n:"02",name:"Risk model override triggered",desc:"Volatility spike detected. Model recommends proceeding. No human has reviewed the override.",crit:false},
-      {n:"⚑",name:"Irreversible step approaching",desc:"Large block order about to be submitted to exchange. Market impact cannot be undone once the order is live.",crit:true}
-    ],
-    missing:"No individual is recorded as having accepted responsibility for this order at this size, under these conditions. The system may execute — but accountability has no owner. If the trade causes a loss event, there is no named human who was accountable before the order was placed.",
-    satisfied:"A named individual has accepted personal accountability for this order before market submission. The record of that acceptance exists prior to execution — not as a post-hoc assignment of blame, but as a deliberate, pre-decision commitment."
-  },
-  {
-    name:"Clinical Decision Support",
-    steps:[
-      {n:"01",name:"Patient data analysed",desc:"AI system processes imaging and lab results. High-confidence recommendation generated.",crit:false},
-      {n:"02",name:"Protocol threshold reached",desc:"Recommendation meets criteria for automated escalation to treatment pathway. No physician has reviewed.",crit:false},
-      {n:"⚑",name:"Irreversible step approaching",desc:"Treatment order about to be committed. Some interventions carry permanent physiological consequences.",crit:true}
-    ],
-    missing:"No named clinician has accepted responsibility for this AI-generated recommendation before it becomes a treatment order. The system may execute — but accountability has no owner. If the outcome is harmful, the accountability record is absent at the moment that mattered most.",
-    satisfied:"A named clinician has explicitly accepted responsibility for this recommendation before the order is committed. The accountability record is established prior to the irreversible step — not reconstructed after an adverse event."
+  let state = {
+    decision: '',
+    irreversible: '',
+    name: '',
+    mechanism: ''
+  };
+
+  function selectOption(el, group, val) {
+    document.querySelectorAll(`.radio-option`).forEach(o => {
+      if (o.querySelector(`input[name="${group}"]`)) o.classList.remove('selected');
+    });
+    el.classList.add('selected');
+    state[group] = val;
   }
-];
 
-let current=0,answered=false;
-
-function selectScenario(i){
-  if(answered)return;
-  current=i;
-  document.querySelectorAll('.scenario-btn').forEach((b,idx)=>b.classList.toggle('active',idx===i));
-  renderFlow();
-}
-
-function renderFlow(){
-  const s=SCENARIOS[current];
-  document.getElementById('flowTitle').textContent=s.name;
-  document.getElementById('flowSteps').innerHTML=s.steps.map(st=>`
-    <div class="flow-step">
-      <div class="step-num${st.crit?' critical':''}">${st.n}</div>
-      <div>
-        <div class="step-name">${st.name}</div>
-        <div class="step-desc${st.crit?' warn':''}">${st.desc}</div>
-      </div>
-    </div>`).join('');
-}
-
-function checkDAR(){
-  const name=document.getElementById('authorityInput').value.trim();
-  const s=SCENARIOS[current];
-  const result=document.getElementById('result');
-  result.className='result';
-  void result.offsetWidth;
-  if(!name){
-    result.className='result missing show';
-    document.getElementById('rStatus').textContent='● DAR Condition Not Satisfied';
-    document.getElementById('rMain').textContent='Named Stop Authority: MISSING';
-    document.getElementById('rSub').textContent=s.missing;
-  } else {
-    result.className='result satisfied show';
-    document.getElementById('rStatus').textContent='● DAR Condition Satisfied';
-    document.getElementById('rMain').innerHTML='Named Stop Authority: <span class="authority-name">'+esc(name)+'</span>';
-    document.getElementById('rSub').textContent=s.satisfied;
+  function goTo1() {
+    show('screen-1');
   }
-  answered=true;
-  document.getElementById('authorityInput').disabled=true;
-  document.getElementById('confirmBtn').disabled=true;
-  document.getElementById('resetRow').style.display='block';
-  document.querySelectorAll('.scenario-btn').forEach(b=>b.style.opacity='.4');
-}
 
-function resetDemo(){
-  answered=false;
-  document.getElementById('authorityInput').value='';
-  document.getElementById('authorityInput').disabled=false;
-  document.getElementById('confirmBtn').disabled=false;
-  document.getElementById('result').className='result';
-  document.getElementById('resetRow').style.display='none';
-  document.querySelectorAll('.scenario-btn').forEach(b=>b.style.opacity='1');
-  document.getElementById('authorityInput').focus();
-}
+  function goTo2() {
+    const val = document.getElementById('input-decision').value.trim();
+    if (!val) {
+      document.getElementById('err-1').classList.add('show');
+      return;
+    }
+    document.getElementById('err-1').classList.remove('show');
+    state.decision = val;
+    show('screen-2');
+  }
 
-function esc(s){return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');}
+  function goToResult() {
+    let valid = true;
 
-document.getElementById('authorityInput').addEventListener('keydown',e=>{if(e.key==='Enter'&&!answered)checkDAR();});
+    const irr = document.getElementById('input-irreversible').value.trim();
+    if (!irr) { document.getElementById('err-q1').classList.add('show'); valid = false; }
+    else document.getElementById('err-q1').classList.remove('show');
 
-renderFlow();
+    const nm = document.getElementById('input-name').value.trim();
+    if (!nm) { document.getElementById('err-q2').classList.add('show'); valid = false; }
+    else document.getElementById('err-q2').classList.remove('show');
+
+    if (!state.mechanism) { document.getElementById('err-q3').classList.add('show'); valid = false; }
+    else document.getElementById('err-q3').classList.remove('show');
+
+    if (!valid) return;
+
+    state.irreversible = irr;
+    state.name = nm;
+
+    buildResult();
+    show('screen-3');
+  }
+
+  function buildResult() {
+    const noName = isNameMissing(state.name);
+    const noMech = state.mechanism === 'no';
+
+    let status, barClass, badgeClass, label, conclusion, cta;
+
+    if (noName && noMech) {
+      status = 'MISSING';
+      barClass = badgeClass = 'missing';
+      label = 'No accountability defined.';
+      conclusion = `<strong>No named stop authority.</strong> No stop mechanism confirmed.<br><br>
+If this decision executes under uncertainty, no one is accountable in real time.<br><br>
+The gap is not technical. It is structural.<br><br>
+<em>This is your system, not a hypothetical case.</em>`;
+      cta = `This decision has no verified stop authority.\n\n<a href="https://matrix-audit.com" target="_blank" rel="noopener noreferrer">Request a formal DAR mapping →</a>`;
+    } else if (noName || noMech) {
+      status = 'PARTIAL';
+      barClass = badgeClass = 'partial';
+      label = noName ? 'Authority unnamed.' : 'Mechanism unconfirmed.';
+      conclusion = noName
+        ? `<strong>A stop mechanism exists — but no one is named.</strong><br><br>
+When the moment comes, who acts? Role-based accountability collapses under pressure.<br><br>
+DAR requires a name, not a title.<br><br>
+<em>This is your system, not a hypothetical case.</em>`
+        : `<strong>A person is named — but no stop mechanism is confirmed.</strong><br><br>
+Named authority without operational capability is intent, not control.<br><br>
+The name is not enough.<br><br>
+<em>This is your system, not a hypothetical case.</em>`;
+      cta = `This decision has a partial DAR structure, but no verified stop authority.\n\n<a href="https://matrix-audit.com" target="_blank" rel="noopener noreferrer">Request a formal DAR mapping →</a>`;
+    } else {
+      status = 'PRESENT';
+      barClass = badgeClass = 'present';
+      label = 'Accountability defined.';
+      conclusion = `<strong>Named authority exists. Stop mechanism confirmed.</strong><br><br>
+Accountability is defined before execution — not reconstructed after.<br><br>
+This is what DAR requires.`;
+      cta = `A named stop authority appears to be in place.\n\n<a href="https://matrix-audit.com" target="_blank" rel="noopener noreferrer">Verify the full DAR structure →</a>`;
+    }
+
+    document.getElementById('result-bar').className = 'result-bar ' + barClass;
+    const badge = document.getElementById('result-badge');
+    badge.className = 'status-badge ' + badgeClass;
+    badge.textContent = 'DAR: ' + status;
+    document.getElementById('result-label').textContent = label;
+
+    document.getElementById('out-decision').textContent = state.decision;
+    document.getElementById('out-irreversible').textContent = state.irreversible;
+
+    const nameEl = document.getElementById('out-name');
+    if (noName) { nameEl.textContent = 'Not defined'; nameEl.className = 'result-field-val none'; }
+    else { nameEl.textContent = state.name; nameEl.className = 'result-field-val'; }
+
+    const mechEl = document.getElementById('out-mechanism');
+    if (state.mechanism === 'yes') { mechEl.textContent = 'Yes'; mechEl.className = 'result-field-val yes'; }
+    else { mechEl.textContent = 'No'; mechEl.className = 'result-field-val no'; }
+
+    document.getElementById('result-conclusion').innerHTML = conclusion;
+    document.getElementById('result-cta').innerHTML = cta;
+  }
+
+  function isNameMissing(val) {
+    const v = val.toLowerCase();
+    return !val || v.includes('no one') || v.includes('unknown') || v.includes('not defined') || v.includes('none');
+  }
+
+  function restart() {
+    state = { decision: '', irreversible: '', name: '', mechanism: '' };
+    document.getElementById('input-decision').value = '';
+    document.getElementById('input-irreversible').value = '';
+    document.getElementById('input-name').value = '';
+    document.querySelectorAll('.radio-option').forEach(o => o.classList.remove('selected'));
+
+    document.getElementById('err-1').classList.remove('show');
+    document.getElementById('err-q1').classList.remove('show');
+    document.getElementById('err-q2').classList.remove('show');
+    document.getElementById('err-q3').classList.remove('show');
+
+    show('screen-1');
+  }
+
+  function show(id) {
+    document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+    document.getElementById(id).classList.add('active');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
 </script>
 </body>
 </html>
