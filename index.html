@@ -77,6 +77,12 @@
   .reg-tag { font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--accent); border: 1px solid var(--accent); padding: 3px 8px; height: fit-content; min-width: 80px; text-align: center; opacity: 0.7; }
   .reg-content p { font-size: 12px; color: var(--muted); line-height: 1.7; }
   .cta-section { padding: 72px 0; }
+  .diagnostic-strip { background: var(--surface); border: 1px solid var(--border2); border-left: 3px solid var(--accent); padding: 28px 32px; margin-bottom: 2px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px; }
+  .diagnostic-strip-text .strip-label { font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--accent); margin-bottom: 6px; }
+  .diagnostic-strip-text .strip-title { font-family: 'Playfair Display', serif; font-size: 16px; color: var(--text); }
+  .diagnostic-strip-text .strip-sub { font-size: 11px; color: var(--muted); margin-top: 4px; }
+  .diagnostic-btn { font-family: 'IBM Plex Mono', monospace; font-size: 11px; letter-spacing: 0.15em; text-transform: uppercase; color: var(--bg); background: var(--accent); padding: 12px 24px; text-decoration: none; white-space: nowrap; transition: opacity 0.2s; }
+  .diagnostic-btn:hover { opacity: 0.85; }
   .cta-box { background: var(--surface); border: 1px solid var(--border2); padding: 48px; text-align: center; }
   .cta-box h3 { font-family: 'Playfair Display', serif; font-size: 26px; font-weight: 400; color: var(--text); margin-bottom: 16px; }
   .cta-box > p { font-size: 12px; color: var(--muted); margin-bottom: 32px; line-height: 1.7; max-width: 400px; margin-left: auto; margin-right: auto; }
@@ -94,6 +100,7 @@
     .hero { padding: 64px 0 48px; } section { padding: 48px 0; }
     .pricing-box { padding: 28px; } .cta-box { padding: 32px 24px; }
     .case-header { flex-direction: column; }
+    .diagnostic-strip { flex-direction: column; align-items: flex-start; }
   }
 </style>
 </head>
@@ -362,6 +369,14 @@
 
 <div class="cta-section">
   <div class="container">
+    <div class="diagnostic-strip">
+      <div class="diagnostic-strip-text">
+        <div class="strip-label">DAR Diagnostic</div>
+        <div class="strip-title">Can your system be stopped?</div>
+        <div class="strip-sub">One decision. Three questions. A structural answer.</div>
+      </div>
+      <a href="/demo/" class="diagnostic-btn" target="_blank" rel="noopener noreferrer">Run the diagnostic &rarr;</a>
+    </div>
     <div class="cta-box">
       <h3>Define it before the moment passes.</h3>
       <p>After the event, accountability is always assigned.<br>The only question is whether it was defined in advance.</p>
@@ -369,10 +384,10 @@
       <br>
       <a href="mailto:Liran@liranbarshrim.com" class="cta-secondary">Not sure where to start? Request a 30-minute call &#8594;</a>
       <br>
-      <a href="https://www.linkedin.com/in/liranbarshrim" class="cta-secondary" target="_blank">Connect on LinkedIn &#8594;</a>
+      <a href="https://www.linkedin.com/in/liranbarshrim" class="cta-secondary" target="_blank" rel="noopener noreferrer">Connect on LinkedIn &#8594;</a>
       <p style="margin-top:32px;font-size:12px;color:var(--muted2);font-style:italic;">
         If you cannot name the person,<br>you already know the gap.
-      </p>
+        </p>
     </div>
   </div>
 </div>
@@ -381,9 +396,9 @@
   <div class="container">
     <span class="footer-brand">&#169; 2026 MATRIX AUDIT &#8212; Liran Bar Shrim</span>
     <div class="footer-links">
-      <a href="https://github.com/liranbarshrim-ui/human-stop-boundary" target="_blank">GitHub</a>
+      <a href="https://github.com/liranbarshrim-ui/human-stop-boundary" target="_blank" rel="noopener noreferrer">GitHub</a>
       <a href="mailto:Liran@liranbarshrim.com">Contact</a>
-      <a href="https://www.linkedin.com/in/liranbarshrim" target="_blank">LinkedIn</a>
+      <a href="https://www.linkedin.com/in/liranbarshrim" target="_blank" rel="noopener noreferrer">LinkedIn</a>
     </div>
   </div>
 </footer>
