@@ -1,387 +1,131 @@
-<!DOCTYPE html>  <html lang="en">  
-<head>  
-<meta charset="UTF-8">  
-<meta name="viewport" content="width=device-width, initial-scale=1.0">  
-<title>DAR&#8482; &#8212; Decision Accountability Record</title>  
-<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@300;400;500&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">  
-<style>  
-  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }  
-  :root {  
-    --bg: #090909; --surface: #111111; --accent: #c8a96e;  
-    --danger: #c0392b; --text: #e6e0d4; --muted: #9a9590;  
-    --muted2: #6a6865; --border: #1e1e1e; --border2: #2a2a2a;  
-  }  
-  html { scroll-behavior: smooth; }  
-  body { background: var(--bg); color: var(--text); font-family: 'IBM Plex Mono', monospace; font-size: 14px; line-height: 1.7; min-height: 100vh; overflow-x: hidden; }  
-  .container { max-width: 720px; margin: 0 auto; padding: 0 24px; }  
-  nav { border-bottom: 1px solid var(--border); padding: 20px 0; position: sticky; top: 0; background: rgba(9,9,9,0.95); backdrop-filter: blur(8px); z-index: 100; }  
-  nav .container { display: flex; align-items: center; justify-content: space-between; }  
-  .nav-brand { font-size: 11px; font-weight: 500; letter-spacing: 0.15em; color: var(--accent); text-transform: uppercase; text-decoration: none; }  
-  .nav-tag { font-size: 10px; color: var(--muted); letter-spacing: 0.1em; text-transform: uppercase; }  
-  .hero { padding: 96px 0 72px; border-bottom: 1px solid var(--border); }  
-  .hero-label { display: inline-block; font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--accent); border: 1px solid var(--accent); padding: 4px 10px; margin-bottom: 40px; opacity: 0.8; }  
-  .hero h1 { font-family: 'Playfair Display', serif; font-size: clamp(32px, 5vw, 52px); font-weight: 400; line-height: 1.2; color: var(--text); margin-bottom: 32px; }  
-  .hero h1 em { font-style: italic; color: var(--accent); }  
-  .hero-sub { font-size: 13px; color: var(--muted); max-width: 480px; line-height: 1.8; border-left: 2px solid var(--accent); padding-left: 20px; }  
-  .tags { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 40px; }  
-  .tag { font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); border: 1px solid var(--border2); padding: 4px 10px; }  
-  section { padding: 72px 0; border-bottom: 1px solid var(--border); }  
-  .section-label { font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--accent); margin-bottom: 40px; display: flex; align-items: center; gap: 12px; }  
-  .section-label::after { content: ''; flex: 1; height: 1px; background: var(--border2); }  
-  .principle-block { border-left: 3px solid var(--accent); padding: 24px 0 24px 28px; margin-bottom: 32px; }  
-  .principle-block p { font-family: 'Playfair Display', serif; font-size: 18px; line-height: 1.6; color: var(--text); }  
-  .principle-block p + p { margin-top: 16px; font-size: 14px; font-family: 'IBM Plex Mono', monospace; color: var(--muted); }  
-  .quote-block { background: var(--surface); border: 1px solid var(--border2); border-left: 3px solid var(--muted2); padding: 24px 28px; margin: 40px 0; }  
-  .quote-block p { font-family: 'Playfair Display', serif; font-style: italic; font-size: 16px; color: var(--muted); line-height: 1.7; }  
-  .definition-box { background: var(--surface); border: 1px solid var(--border2); padding: 32px; margin: 40px 0; }  
-  .definition-box .def-label { font-size: 10px; letter-spacing: 0.15em; text-transform: uppercase; color: var(--accent); margin-bottom: 16px; }  
-  .definition-box p { font-family: 'Playfair Display', serif; font-size: 17px; line-height: 1.65; color: var(--text); }  
-  .not-list { margin-top: 24px; display: flex; flex-direction: column; gap: 8px; }  
-  .not-item { font-size: 12px; color: var(--muted); display: flex; align-items: center; gap: 10px; }  
-  .not-item::before { content: '\2014'; color: var(--danger); font-weight: 500; }  
-  .def-name { font-size: 13px; color: var(--accent); font-weight: 500; letter-spacing: 0.05em; margin-top: 20px; padding-top: 20px; border-top: 1px solid var(--border2); }  
-  .clarify-box { font-size: 12px; color: var(--muted); line-height: 1.8; margin-top: 16px; padding: 16px 20px; border: 1px solid var(--border2); }  
-  .position-statement { font-family: 'Playfair Display', serif; font-size: 20px; line-height: 1.6; color: var(--text); padding: 40px 0; border-top: 1px solid var(--border2); border-bottom: 1px solid var(--border2); margin: 40px 0; }  
-  .position-statement em { font-style: italic; color: var(--accent); }  
-  .deliverable-grid { display: grid; gap: 1px; background: var(--border); border: 1px solid var(--border); margin: 40px 0; }  
-  .deliverable-item { background: var(--bg); padding: 24px 28px; display: flex; gap: 20px; align-items: flex-start; }  
-  .deliverable-item:hover { background: var(--surface); }  
-  .deliverable-num { font-size: 10px; color: var(--accent); letter-spacing: 0.1em; min-width: 24px; margin-top: 2px; }  
-  .deliverable-content h4 { font-size: 12px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text); margin-bottom: 6px; }  
-  .deliverable-content p { font-size: 12px; color: var(--muted); line-height: 1.6; }  
-  .process-steps { margin: 40px 0; display: flex; flex-direction: column; }  
-  .process-step { display: flex; gap: 24px; padding: 28px 0; border-bottom: 1px solid var(--border); }  
-  .process-step:last-child { border-bottom: none; }  
-  .step-num { font-size: 10px; color: var(--muted2); letter-spacing: 0.1em; min-width: 32px; padding-top: 2px; }  
-  .step-content h4 { font-size: 12px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text); margin-bottom: 8px; }  
-  .step-content p { font-size: 12px; color: var(--muted); line-height: 1.7; }  
-  .step-meta { font-size: 11px; color: var(--accent); margin-top: 8px; }  
-  .pricing-box { background: var(--surface); border: 1px solid var(--border2); padding: 40px; margin: 40px 0; }  
-  .price-amount { font-family: 'IBM Plex Mono', monospace; font-variant-numeric: tabular-nums; font-size: 36px; color: var(--accent); line-height: 1; margin-bottom: 8px; }  
-  .price-note { font-size: 11px; color: var(--muted); margin-bottom: 32px; }  
-  .price-terms { display: flex; flex-direction: column; gap: 12px; }  
-  .price-term { display: flex; justify-content: space-between; font-size: 12px; padding-bottom: 12px; border-bottom: 1px solid var(--border); }  
-  .price-term:last-child { border-bottom: none; }  
-  .price-term-label { color: var(--muted); }  
-  .price-term-value { color: var(--text); }  
-  .case-block { background: var(--surface); border: 1px solid var(--border2); border-left: 3px solid var(--danger); padding: 32px; margin: 40px 0; }  
-  .case-header { display: flex; align-items: flex-start; justify-content: space-between; gap: 16px; margin-bottom: 20px; flex-wrap: wrap; }  
-  .case-title { font-size: 10px; letter-spacing: 0.15em; text-transform: uppercase; color: var(--danger); }  
-  .case-stat { font-family: 'IBM Plex Mono', monospace; font-variant-numeric: tabular-nums; font-size: 28px; color: var(--text); line-height: 1; }  
-  .case-stat span { font-size: 11px; color: var(--muted); display: block; margin-top: 4px; }  
-  .case-block p { font-size: 13px; color: var(--muted); line-height: 1.7; }  
-  .case-finding { margin-top: 20px; padding-top: 20px; border-top: 1px solid var(--border2); font-family: 'Playfair Display', serif; font-size: 15px; color: var(--text); font-style: italic; }  
-  .reg-item { display: flex; gap: 20px; padding: 20px 0; border-bottom: 1px solid var(--border); }  
-  .reg-item:last-child { border-bottom: none; }  
-  .reg-tag { font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--accent); border: 1px solid var(--accent); padding: 3px 8px; height: fit-content; min-width: 80px; text-align: center; opacity: 0.7; }  
-  .reg-content p { font-size: 12px; color: var(--muted); line-height: 1.7; }  
-  .cta-section { padding: 72px 0; }  
-  .diagnostic-strip { background: var(--surface); border: 1px solid var(--border2); border-left: 3px solid var(--accent); padding: 28px 32px; margin-bottom: 2px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px; }  
-  .diagnostic-strip-text .strip-label { font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--accent); margin-bottom: 6px; }  
-  .diagnostic-strip-text .strip-title { font-family: 'Playfair Display', serif; font-size: 16px; color: var(--text); }  
-  .diagnostic-strip-text .strip-sub { font-size: 11px; color: var(--muted); margin-top: 4px; }  
-  .diagnostic-btn { font-family: 'IBM Plex Mono', monospace; font-size: 11px; letter-spacing: 0.15em; text-transform: uppercase; color: var(--bg); background: var(--accent); padding: 12px 24px; text-decoration: none; white-space: nowrap; transition: opacity 0.2s; }  
-  .diagnostic-btn:hover { opacity: 0.85; }  
-  .cta-box { background: var(--surface); border: 1px solid var(--border2); padding: 48px; text-align: center; }  
-  .cta-box h3 { font-family: 'Playfair Display', serif; font-size: 26px; font-weight: 400; color: var(--text); margin-bottom: 16px; }  
-  .cta-box > p { font-size: 12px; color: var(--muted); margin-bottom: 32px; line-height: 1.7; max-width: 400px; margin-left: auto; margin-right: auto; }  
-  .cta-link { display: inline-block; font-size: 11px; letter-spacing: 0.15em; text-transform: uppercase; color: var(--bg); background: var(--accent); padding: 14px 32px; text-decoration: none; transition: opacity 0.2s; }  
-  .cta-link:hover { opacity: 0.85; }  
-  .cta-secondary { display: inline-block; font-size: 11px; letter-spacing: 0.1em; color: var(--muted); margin-top: 16px; text-decoration: none; }  
-  .cta-secondary:hover { color: var(--text); }  
-  footer { border-top: 1px solid var(--border); padding: 32px 0; }  
-  footer .container { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px; }  
-  .footer-brand { font-size: 11px; color: var(--muted2); letter-spacing: 0.1em; }  
-  .footer-links { display: flex; gap: 24px; }  
-  .footer-links a { font-size: 11px; color: var(--muted2); text-decoration: none; letter-spacing: 0.05em; }  
-  .footer-links a:hover { color: var(--muted); }  
-  @media (max-width: 600px) {  
-    .hero { padding: 64px 0 48px; } section { padding: 48px 0; }  
-    .pricing-box { padding: 28px; } .cta-box { padding: 32px 24px; }  
-    .case-header { flex-direction: column; }  
-    .diagnostic-strip { flex-direction: column; align-items: flex-start; }  
-  }  
-</style>  
-</head>  
-<body>  <nav>  
-  <div class="container">  
-    <a href="#" class="nav-brand">DAR&#8482; &#8212; Matrix Audit</a>  
-    <span class="nav-tag">Governance Principle &#8212; 2026</span>  
-  </div>  
-</nav>  <div class="hero">  
-  <div class="container">  
-    <div class="hero-label">Decision Accountability Record</div>  
-    <h1>Who, by name,<br>is authorized to stop it<br><em>before</em> it becomes irreversible?</h1>  
-    <p class="hero-sub">Named human stop authority in autonomous systems,<br>defined before execution becomes irreversible.</p>  
-    <div class="tags">  
-      <span class="tag">Human Stop Authority</span>  
-      <span class="tag">AI Governance</span>  
-      <span class="tag">MiCA / CASP</span>  
-      <span class="tag">Autonomous Systems</span>  
-      <span class="tag">DORA</span>  
-    </div>  
-  </div>  
-</div>  <section id="principle">  
-  <div class="container">  
-    <div class="section-label">The Principle</div>  
-    <div class="principle-block">  
-      <p>The authority to initiate is not the authority to terminate.</p>  
-      <p>Autonomous systems may execute decisions. Responsibility remains human.</p>  
-    </div>  
-    <div class="principle-block">  
-      <p>The gap between information and named stop authority is not a structural bug.</p>  
-      <p>It often functions as a structural condition that diffuses personal accountability.</p>  
-    </div>  
-    <div class="quote-block">  
-      <p>&#8220;There is a moment when you can stop. And there is a moment when all you can do is explain why no one did.&#8221;</p>  
-    </div>  
-  </div>  
-</section>  <section id="definition">  
-  <div class="container">  
-    <div class="section-label">Formal Definition</div>  
-    <div class="definition-box">  
-      <div class="def-label">DAR&#8482; &#8212; Decision Accountability Record</div>  
-      <p>Assigns a named human authority responsible for stopping automated systems before irreversible execution occurs.</p>  
-      <div class="not-list">  
-        <div class="not-item">Not a committee</div>  
-        <div class="not-item">Not a policy</div>  
-        <div class="not-item">Not a role</div>  
-      </div>  
-      <div class="def-name">A name.</div>  
-    </div>  
-    <p style="font-size:13px;color:var(--muted);line-height:1.8;margin-top:24px;">
-      If authority must be reconstructed after an incident,
-      it did not exist when it mattered.<br><br>
-      Compliance confirms that rules were followed.<br>
-      DAR confirms that someone was authorized to stop &#8212; before the rules ran out.
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DAR&#8482; &#8212; Decision Accountability Record</title>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@300;400;500&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --bg: #090909; --surface: #111111; --accent: #c8a96e;
+    --danger: #c0392b; --text: #e6e0d4; --muted: #9a9590;
+    --muted2: #6a6865; --border: #1e1e1e; --border2: #2a2a2a;
+  }
+  html { scroll-behavior: smooth; }
+  body { background: var(--bg); color: var(--text); font-family: 'IBM Plex Mono', monospace; font-size: 14px; line-height: 1.7; min-height: 100vh; overflow-x: hidden; }
+  .container { max-width: 720px; margin: 0 auto; padding: 0 24px; }
+  nav { border-bottom: 1px solid var(--border); padding: 20px 0; position: sticky; top: 0; background: rgba(9,9,9,0.95); backdrop-filter: blur(8px); z-index: 100; }
+  nav .container { display: flex; align-items: center; justify-content: space-between; }
+  .nav-brand { font-size: 11px; font-weight: 500; letter-spacing: 0.15em; color: var(--accent); text-transform: uppercase; text-decoration: none; }
+  .nav-tag { font-size: 10px; color: var(--muted); letter-spacing: 0.1em; text-transform: uppercase; }
+  .hero { padding: 96px 0 72px; border-bottom: 1px solid var(--border); }
+  .hero-label { display: inline-block; font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--accent); border: 1px solid var(--accent); padding: 4px 10px; margin-bottom: 40px; opacity: 0.8; }
+  .hero h1 { font-family: 'Playfair Display', serif; font-size: clamp(32px, 5vw, 52px); font-weight: 400; line-height: 1.2; color: var(--text); margin-bottom: 32px; }
+  .hero h1 em { font-style: italic; color: var(--accent); }
+  .hero-sub { font-size: 13px; color: var(--muted); max-width: 480px; line-height: 1.8; border-left: 2px solid var(--accent); padding-left: 20px; }
+  .tags { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 40px; }
+  .tag { font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); border: 1px solid var(--border2); padding: 4px 10px; }
+  section { padding: 72px 0; border-bottom: 1px solid var(--border); }
+  .section-label { font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--accent); margin-bottom: 40px; display: flex; align-items: center; gap: 12px; }
+  .section-label::after { content: ''; flex: 1; height: 1px; background: var(--border2); }
+  .principle-block { border-left: 3px solid var(--accent); padding: 24px 0 24px 28px; margin-bottom: 32px; }
+  .principle-block p { font-family: 'Playfair Display', serif; font-size: 18px; line-height: 1.6; color: var(--text); }
+  .principle-block p + p { margin-top: 16px; font-size: 14px; font-family: 'IBM Plex Mono', monospace; color: var(--muted); }
+  .quote-block { background: var(--surface); border: 1px solid var(--border2); border-left: 3px solid var(--muted2); padding: 24px 28px; margin: 40px 0; }
+  .quote-block p { font-family: 'Playfair Display', serif; font-style: italic; font-size: 16px; color: var(--muted); line-height: 1.7; }
+  .definition-box { background: var(--surface); border: 1px solid var(--border2); padding: 32px; margin: 40px 0; }
+  .definition-box .def-label { font-size: 10px; letter-spacing: 0.15em; text-transform: uppercase; color: var(--accent); margin-bottom: 16px; }
+  .definition-box p { font-family: 'Playfair Display', serif; font-size: 17px; line-height: 1.65; color: var(--text); }
+  .not-list { margin-top: 24px; display: flex; flex-direction: column; gap: 8px; }
+  .not-item { font-size: 12px; color: var(--muted); display: flex; align-items: center; gap: 10px; }
+  .not-item::before { content: '\2014'; color: var(--danger); font-weight: 500; }
+  .def-name { font-size: 13px; color: var(--accent); font-weight: 500; letter-spacing: 0.05em; margin-top: 20px; padding-top: 20px; border-top: 1px solid var(--border2); }
+  .clarify-box { font-size: 12px; color: var(--muted); line-height: 1.8; margin-top: 16px; padding: 16px 20px; border: 1px solid var(--border2); }
+  .position-statement { font-family: 'Playfair Display', serif; font-size: 20px; line-height: 1.6; color: var(--text); padding: 40px 0; border-top: 1px solid var(--border2); border-bottom: 1px solid var(--border2); margin: 40px 0; }
+  .position-statement em { font-style: italic; color: var(--accent); }
+  footer { border-top: 1px solid var(--border); padding: 32px 0; }
+  footer .container { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px; }
+  .footer-links { display: flex; gap: 24px; }
+  .footer-links a { font-size: 11px; color: var(--muted2); text-decoration: none; }
+  .footer-links a:hover { color: var(--muted); }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="container">
+    <a href="#" class="nav-brand">DAR™ — Matrix Audit</a>
+    <span class="nav-tag">Governance Principle — 2026</span>
+  </div>
+</nav>
+
+<div class="hero">
+  <div class="container">
+    <div class="hero-label">Decision Accountability Record</div>
+    <h1>Who, by name,<br>is authorized to stop it<br><em>before</em> it becomes irreversible?</h1>
+
+    <p class="hero-sub">
+      Named human stop authority in autonomous systems,<br>
+      defined before execution becomes irreversible.<br><br>
+      <a href="/dar-spec.md" style="color:var(--accent);text-decoration:none;">
+        Read the formal DAR™ specification →
+      </a>
     </p>
-    <div class="clarify-box">
-      DAR does not replace systems.<br>
-      It defines who can stop them &#8212; before it matters.
+
+    <div class="tags">
+      <span class="tag">Human Stop Authority</span>
+      <span class="tag">AI Governance</span>
+      <span class="tag">DORA</span>
     </div>
-    <div class="position-statement">  
-      Systems that cannot stop are not autonomous.<br>  
-      <em>They are ungoverned.</em>  
-    </div>  
-  </div>  
-</section>  <section id="deliverable">  
-  <div class="container">  
-    <div class="section-label">What You Receive</div>  
-    <p style="font-size:13px;color:var(--muted);margin-bottom:32px;line-height:1.8;">
-DAR does not deliver control.<br>
-It defines who is responsible to stop &#8212; when control is no longer enough.
-    </p>
-    <div class="deliverable-grid">  
-      <div class="deliverable-item">  
-        <div class="deliverable-num">01</div>  
-        <div class="deliverable-content">  
-          <h4>Irreversibility Threshold</h4>  
-          <p>The moment where execution can no longer be reversed without material consequence.</p>
-        </div>  
-      </div>  
-      <div class="deliverable-item">  
-        <div class="deliverable-num">02</div>  
-        <div class="deliverable-content">  
-          <h4>Named Stop Authority</h4>  
-          <p>One person. Identified in advance. Responsible at that moment.</p>
-        </div>  
-      </div>  
-      <div class="deliverable-item">  
-        <div class="deliverable-num">03</div>  
-        <div class="deliverable-content">  
-          <h4>Trigger Conditions</h4>  
-          <p>When uncertainty overrides structure.</p>
-        </div>  
-      </div>  
-      <div class="deliverable-item">  
-        <div class="deliverable-num">04</div>  
-        <div class="deliverable-content">  
-          <h4>Accountability Statement</h4>  
-          <p>Not inferred. Not reconstructed. Defined before.</p>
-        </div>  
-      </div>  
-      <div class="deliverable-item">  
-        <div class="deliverable-num">05</div>  
-        <div class="deliverable-content">  
-          <h4>Audit-Ready Record</h4>  
-          <p>So the question never needs to be asked after.</p>
-        </div>  
-      </div>  
-    </div>  
-    <p style="font-size:12px;color:var(--muted2);margin-top:24px;line-height:1.7;">
-      On the day after an incident, no one asks who was supposed to stop it.<br>
-      It is already known.
-    </p>
-  </div>  
-</section>  <section id="process">  
-  <div class="container">  
-    <div class="section-label">How It Works</div>  
-    <div class="process-steps">  
-      <div class="process-step">  
-        <div class="step-num">01</div>  
-        <div class="step-content">  
-          <h4>Intake Questionnaire</h4>  
-          <p>A structured intake questionnaire sent via email. A 30-minute call can be scheduled if helpful.</p>  
-          <div class="step-meta">&#8776; 30 minutes to complete</div>  
-        </div>  
-      </div>  
-      <div class="process-step">  
-        <div class="step-num">02</div>  
-        <div class="step-content">  
-          <h4>Assessment</h4>  
-          <p>Identification of the irreversibility point, existing authority gaps, and trigger conditions specific to your system.</p>  
-          <div class="step-meta">Conducted asynchronously</div>  
-        </div>  
-      </div>  
-      <div class="process-step">  
-        <div class="step-num">03</div>  
-        <div class="step-content">  
-          <h4>DAR&#8482; Document Delivered</h4>  
-          <p>One audit-ready PDF. Named. Defined. Documented before the moment passes.</p>  
-          <div class="step-meta">7&#8211;10 business days from receipt of questionnaire</div>  
-        </div>  
-      </div>  
-      <div class="process-step">  
-        <div class="step-num">04</div>  
-        <div class="step-content">  
-          <h4>Revision Round (if needed)</h4>  
-          <p>One revision cycle included. Requested within 7 business days of delivery.</p>  
-          <div class="step-meta">No additional charge</div>  
-        </div>  
-      </div>  
-    </div>  
-  </div>  
-</section>  <section id="pricing">  
-  <div class="container">  
-    <div class="section-label">Engagement Terms</div>  
-    <p style="font-size:12px;color:var(--muted2);margin-bottom:24px;line-height:1.7;">  
-      For one defined use case. No subscription. No implementation layer.<br>  
-      Best suited for organizations that need a defined accountability layer, not a control redesign.  
-    </p>  
-    <div class="pricing-box">  
-      <div class="price-amount">&#8364;15,000 &#8211; &#8364;20,000</div>  
-      <div class="price-note">Fixed fee. Per use case.</div>  
-      <div class="price-terms">  
-        <div class="price-term">  
-          <span class="price-term-label">Payment structure</span>  
-          <span class="price-term-value">50% upfront / 50% on delivery</span>  
-        </div>  
-        <div class="price-term">  
-          <span class="price-term-label">Timeline</span>  
-          <span class="price-term-value">7&#8211;10 business days</span>  
-        </div>  
-        <div class="price-term">  
-          <span class="price-term-label">Format</span>  
-          <span class="price-term-value">Can be conducted asynchronously</span>  
-        </div>  
-        <div class="price-term">  
-          <span class="price-term-label">Ongoing fees</span>  
-          <span class="price-term-value">None</span>  
-        </div>  
-        <div class="price-term">  
-          <span class="price-term-label">This is not</span>  
-          <span class="price-term-value">Control redesign &#183; Legal advice &#183; Ongoing consulting</span>  
-        </div>  
-      </div>  
-    </div>  
-    <p style="font-size:12px;color:var(--muted);margin-top:20px;line-height:1.8;padding:16px 20px;border:1px solid var(--border2);">  
-      DAR documents that stop authority was defined before it was needed.<br>  
-      It creates a clear governance record before the point of no return.  
-    </p>  
-  </div>  
-</section>  <section id="case">  
-  <div class="container">  
-    <div class="section-label">Reference Case</div>  
-    <div class="case-block">  
-      <div class="case-header">  
-        <div class="case-title">Knight Capital &#8212; 2012</div>  
-        <div style="display:flex;gap:32px;flex-wrap:wrap;">  
-          <div class="case-stat">$440M <span>in losses</span></div>  
-          <div class="case-stat">45 min <span>duration</span></div>  
-        </div>  
-      </div>  
-      <p>The system ran. The controls existed. The losses compounded. No single individual held clear stop authority in real time. $440 million in 45 minutes.</p>  
-      <div class="case-finding">&#8220;The system ran. No one stopped it.&#8221;<br>Not because they couldn&#8217;t. Because no one was defined.</div>  
-    </div>  
-    <div class="case-block" style="border-left-color:var(--muted2);margin-top:16px;">  
-      <div class="case-header">  
-        <div class="case-title" style="color:var(--muted);">TSB Bank &#8212; 2018</div>  
-        <div style="display:flex;gap:32px;flex-wrap:wrap;">  
-          <div class="case-stat" style="font-size:22px;">&#163;330M <span>total costs</span></div>  
-          <div class="case-stat" style="font-size:22px;">&#163;81,620 <span>personal fine</span></div>  
-        </div>  
-      </div>  
-      <p>5.2 million customers lost access. When regulators investigated, they did not fine the system. They fined the CIO. By name. Carlos Abarca. Personal liability for failing to oversee what he was responsible for.</p>  
-      <div class="case-finding">The regulator did not fine the system.<br>It fined the person who was expected to be accountable when the failure could no longer be reversed.</div>  
-    </div>  
-    <div class="case-block" style="border-left-color:var(--accent);margin-top:16px;">  
-      <div class="case-header">  
-        <div class="case-title" style="color:var(--accent);">Regulatory Signal &#8212; 2025</div>  
-        <div class="case-stat" style="font-size:22px;">$1.23B <span>in fines, H1 2025</span></div>  
-      </div>  
-      <p>Regulators fined financial institutions $1.23 billion in the first half of 2025. A 417% increase from the same period in 2024.</p>  
-      <div class="case-finding">The fines are growing.<br>The question does not change:<br>who, by name, was responsible?</div>  
-    </div>  
-  </div>  
-</section>  <section id="regulatory">  
-  <div class="container">  
-    <div class="section-label">Regulatory Context</div>  
-    <p style="font-size:13px;color:var(--muted);margin-bottom:40px;line-height:1.8;">  
-      The question regulation rarely asks:<br>  
-      <em style="color:var(--text);font-family:'Playfair Display',serif;font-size:16px;">Who holds the authority to stop the system when execution becomes irreversible? By name.</em>  
-    </p>  
-    <div class="reg-item">  
-      <div class="reg-tag">EU AI Act</div>  
-      <div class="reg-content"><p>Article 14 emphasizes human oversight and the ability to stop a system. It does not require a name. DAR addresses the governance gap between oversight capability and defined stop authority.</p></div>  
-    </div>  
-    <div class="reg-item">  
-      <div class="reg-tag">DORA</div>  
-      <div class="reg-content"><p>Operational resilience frameworks increasingly expect that responsibility be attributable before an incident. DAR aligns with this direction by providing a structural definition before the moment requires it.</p></div>  
-    </div>  
-    <div class="reg-item">  
-      <div class="reg-tag">MiCA / CASP</div>  
-      <div class="reg-content"><p>Crypto-asset service providers operating automated systems must demonstrate governance over execution. DAR addresses a governance gap that existing frameworks rarely define explicitly.</p></div>  
-    </div>  
-    <div class="reg-item">  
-      <div class="reg-tag">Senior Managers</div>  
-      <div class="reg-content"><p>Under Senior Managers Regime and similar individual accountability frameworks, responsibility at the point of execution is increasingly examined. DAR ensures that accountability is defined before it is assigned after.</p></div>  
-    </div>  
-  </div>  
-</section>  <div class="cta-section">  
-  <div class="container">  
-    <div class="diagnostic-strip">  
-      <div class="diagnostic-strip-text">  
-        <div class="strip-label">DAR Diagnostic</div>  
-        <div class="strip-title">Can your system be stopped?</div>  
-        <div class="strip-sub">One decision. Three questions. A structural answer.</div>  
-      </div>  
-      <div style="display:flex;flex-direction:column;align-items:flex-start;gap:6px;">  
-        <a href="/demo/" class="diagnostic-btn" target="_blank" rel="noopener noreferrer">Test your stop authority &rarr;</a>  
-        <div style="font-size:11px;color:var(--muted);">Takes less than 60 seconds</div>  
-      </div>  
-    </div>  
-    <div class="cta-box">  
-      <h3>Define it before the moment passes.</h3>  
-      <p>After the event, accountability is always assigned.<br>The only question is whether it was defined in advance.</p>  
-      <a href="mailto:Liran@liranbarshrim.com" class="cta-link">Request the Intake Questionnaire</a>  
-      <br>  
-      <a href="mailto:Liran@liranbarshrim.com" class="cta-secondary">Not sure where to start? Request a 30-minute call &#8594;</a>  
-      <br>  
-      <a href="https://www.linkedin.com/in/liranbarshrim" class="cta-secondary" target="_blank" rel="noopener noreferrer">Connect on LinkedIn &#8594;</a>  
-      <p style="margin-top:32px;font-size:12px;color:var(--muted2);font-style:italic;">
-        If you cannot name the person,<br>
-        there is no one to stop it.
-      </p>
-    </div>  
-  </div>  
-</div>  <footer>  
-  <div class="container">  
-    <span class="footer-brand">&#169; 2026 MATRIX AUDIT &#8212; Liran Bar Shrim</span>  
-    <div class="footer-links">  
-      <a href="https://github.com/liranbarshrim-ui/human-stop-boundary" target="_blank" rel="noopener noreferrer">GitHub</a>  
-      <a href="mailto:Liran@liranbarshrim.com">Contact</a>  
-      <a href="https://www.linkedin.com/in/liranbarshrim" target="_blank" rel="noopener noreferrer">LinkedIn</a>  
-    </div>  
-  </div>  
-</footer>  </body>  
+  </div>
+</div>
+
+<section>
+  <div class="container">
+    <div class="section-label">The Principle</div>
+
+    <div class="principle-block">
+      <p>The authority to initiate is not the authority to terminate.</p>
+      <p>Autonomous systems may execute decisions. Responsibility remains human.</p>
+    </div>
+
+    <div class="principle-block">
+      <p>The gap between information and named stop authority is not a structural bug.</p>
+      <p>It often functions as a structural condition that diffuses accountability.</p>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="container">
+    <div class="section-label">Definition</div>
+
+    <div class="definition-box">
+      <div class="def-label">DAR™</div>
+      <p>Assigns a named individual responsible for stopping execution before irreversible outcomes occur.</p>
+      <div class="not-list">
+        <div class="not-item">Not a committee</div>
+        <div class="not-item">Not a policy</div>
+        <div class="not-item">Not a role</div>
+      </div>
+      <div class="def-name">A name.</div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="container">
+    <span class="footer-brand">© 2026 MATRIX AUDIT — Liran Bar Shrim</span>
+
+    <div class="footer-links">
+      <a href="https://github.com/liranbarshrim-ui/human-stop-boundary" target="_blank">GitHub</a>
+      <a href="/dar-spec.md" target="_blank">Specification</a>
+      <a href="mailto:Liran@liranbarshrim.com">Contact</a>
+      <a href="https://www.linkedin.com/in/liranbarshrim" target="_blank">LinkedIn</a>
+    </div>
+  </div>
+</footer>
+
+</body>
 </html>
