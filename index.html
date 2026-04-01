@@ -4,47 +4,149 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>DAR&#8482; &#8212; Decision Accountability Record</title>
+
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@300;400;500&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+
 <style>
-  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-  :root {
-    --bg: #090909; --surface: #111111; --accent: #c8a96e;
-    --danger: #c0392b; --text: #e6e0d4; --muted: #9a9590;
-    --muted2: #6a6865; --border: #1e1e1e; --border2: #2a2a2a;
-  }
-  html { scroll-behavior: smooth; }
-  body { background: var(--bg); color: var(--text); font-family: 'IBM Plex Mono', monospace; font-size: 14px; line-height: 1.7; min-height: 100vh; overflow-x: hidden; }
-  .container { max-width: 720px; margin: 0 auto; padding: 0 24px; }
-  nav { border-bottom: 1px solid var(--border); padding: 20px 0; position: sticky; top: 0; background: rgba(9,9,9,0.95); backdrop-filter: blur(8px); z-index: 100; }
-  nav .container { display: flex; align-items: center; justify-content: space-between; }
-  .nav-brand { font-size: 11px; font-weight: 500; letter-spacing: 0.15em; color: var(--accent); text-transform: uppercase; text-decoration: none; }
-  .nav-tag { font-size: 10px; color: var(--muted); letter-spacing: 0.1em; text-transform: uppercase; }
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-  .hero { padding: 96px 0 72px; border-bottom: 1px solid var(--border); text-align:center; }
-  .hero-label { display: inline-block; font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--accent); border: 1px solid var(--accent); padding: 4px 10px; margin-bottom: 40px; opacity: 0.8; }
-  .hero h1 { font-family: 'Playfair Display', serif; font-size: clamp(32px, 5vw, 52px); font-weight: 400; line-height: 1.2; color: var(--text); margin-bottom: 32px; }
-  .hero h1 em { font-style: italic; color: var(--accent); }
-  .hero-sub { font-size: 13px; color: var(--muted); max-width: 480px; margin: 0 auto; line-height: 1.8; border-left: 2px solid var(--accent); padding-left: 20px; text-align:left; }
-  .tags { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 40px; justify-content:center; }
-  .tag { font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); border: 1px solid var(--border2); padding: 4px 10px; }
+:root {
+  --bg: #090909;
+  --surface: #111111;
+  --accent: #c8a96e;
+  --text: #e6e0d4;
+  --muted: #9a9590;
+  --border: #1e1e1e;
+}
 
-  section { padding: 72px 0; border-bottom: 1px solid var(--border); }
-  .section-label { font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--accent); margin-bottom: 40px; display: flex; align-items: center; gap: 12px; }
-  .section-label::after { content: ''; flex: 1; height: 1px; background: var(--border2); }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 14px;
+  line-height: 1.7;
+}
 
-  .principle-block { border-left: 3px solid var(--accent); padding: 24px 0 24px 28px; margin-bottom: 32px; }
-  .principle-block p { font-family: 'Playfair Display', serif; font-size: 18px; line-height: 1.6; color: var(--text); }
-  .principle-block p + p { margin-top: 16px; font-size: 14px; color: var(--muted); }
+.container {
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 0 24px;
+}
 
-  .definition-box { background: var(--surface); border: 1px solid var(--border2); padding: 32px; margin: 40px 0; }
-  .def-label { font-size: 10px; letter-spacing: 0.15em; text-transform: uppercase; color: var(--accent); margin-bottom: 16px; }
-  .definition-box p { font-family: 'Playfair Display', serif; font-size: 17px; line-height: 1.65; }
+nav {
+  border-bottom: 1px solid var(--border);
+  padding: 20px 0;
+}
 
-  footer { border-top: 1px solid var(--border); padding: 32px 0; }
-  footer .container { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px; }
-  .footer-brand { font-size: 11px; color: var(--muted2); }
-  .footer-links { display: flex; gap: 24px; }
-  .footer-links a { font-size: 11px; color: var(--muted2); text-decoration: none; }
+nav .container {
+  display: flex;
+  justify-content: space-between;
+}
+
+.nav-brand {
+  font-size: 11px;
+  letter-spacing: 0.15em;
+  color: var(--accent);
+}
+
+.nav-tag {
+  font-size: 10px;
+  color: var(--muted);
+}
+
+.hero {
+  padding: 96px 0 72px;
+  border-bottom: 1px solid var(--border);
+}
+
+.hero-label {
+  font-size: 10px;
+  letter-spacing: 0.2em;
+  color: var(--accent);
+  border: 1px solid var(--accent);
+  padding: 4px 10px;
+  display: inline-block;
+  margin-bottom: 40px;
+}
+
+.hero h1 {
+  font-family: 'Playfair Display', serif;
+  font-size: 42px;
+  line-height: 1.3;
+  margin-bottom: 32px;
+}
+
+.hero em {
+  color: var(--accent);
+}
+
+.hero-sub {
+  color: var(--muted);
+  border-left: 2px solid var(--accent);
+  padding-left: 20px;
+}
+
+/* 🔥 הלינק החדש */
+.hero-link {
+  display: inline-block;
+  margin-top: 48px;
+  font-size: 13px;
+  color: var(--accent);
+  text-decoration: none;
+  border-bottom: 1px solid var(--accent);
+  padding-bottom: 4px;
+  letter-spacing: 0.08em;
+  transition: opacity 0.2s;
+}
+
+.hero-link:hover {
+  opacity: 0.7;
+}
+
+section {
+  padding: 72px 0;
+  border-bottom: 1px solid var(--border);
+}
+
+.section-label {
+  font-size: 10px;
+  letter-spacing: 0.2em;
+  color: var(--accent);
+  margin-bottom: 40px;
+}
+
+.principle-block {
+  border-left: 3px solid var(--accent);
+  padding-left: 28px;
+  margin-bottom: 32px;
+}
+
+.principle-block p:first-child {
+  font-family: 'Playfair Display', serif;
+  font-size: 20px;
+}
+
+.principle-block p:last-child {
+  color: var(--muted);
+  margin-top: 10px;
+}
+
+.definition-box {
+  border: 1px solid var(--border);
+  padding: 32px;
+}
+
+.definition-box p {
+  font-family: 'Playfair Display', serif;
+  font-size: 18px;
+}
+
+footer {
+  padding: 40px 0;
+  text-align: center;
+  color: var(--muted);
+}
+
 </style>
 </head>
 
@@ -52,8 +154,8 @@
 
 <nav>
   <div class="container">
-    <a href="#" class="nav-brand">DAR™ — Matrix Audit</a>
-    <span class="nav-tag">Governance Principle — 2026</span>
+    <div class="nav-brand">DAR™ — MATRIX AUDIT</div>
+    <div class="nav-tag">Governance Principle — 2026</div>
   </div>
 </nav>
 
@@ -68,29 +170,21 @@
     </h1>
 
     <p class="hero-sub">
-      Named human stop authority in autonomous systems,
+      Named human stop authority in autonomous systems,<br>
       defined before execution becomes irreversible.
     </p>
 
-    <div class="tags">
-      <span class="tag">Human Stop Authority</span>
-      <span class="tag">AI Governance</span>
-      <span class="tag">Autonomous Systems</span>
-    </div>
-
-    <!-- הלינק החדש -->
-    <div style="margin-top:40px;">
-      <a href="/commercial.html" style="font-size:11px;color:var(--muted);text-decoration:none;">
-        What stopping means in practice →
-      </a>
-    </div>
+    <!-- 🔥 הלינק הברור -->
+    <a href="/commercial.html" class="hero-link">
+      What stopping means in practice →
+    </a>
 
   </div>
 </div>
 
 <section>
   <div class="container">
-    <div class="section-label">The Principle</div>
+    <div class="section-label">THE PRINCIPLE</div>
 
     <div class="principle-block">
       <p>The authority to initiate is not the authority to terminate.</p>
@@ -106,27 +200,26 @@
 
 <section>
   <div class="container">
-    <div class="section-label">Definition</div>
+    <div class="section-label">DEFINITION</div>
 
     <div class="definition-box">
-      <div class="def-label">DAR™</div>
       <p>
         Assigns a named human authority responsible for stopping automated systems
         before irreversible execution occurs.
       </p>
     </div>
+
+    <!-- 🔥 סגירה -->
+    <p style="margin-top:60px;font-size:12px;color:var(--muted);text-align:center;">
+      If you cannot name the person,
+      there is no one to stop it.
+    </p>
+
   </div>
 </section>
 
 <footer>
-  <div class="container">
-    <span class="footer-brand">© 2026 MATRIX AUDIT — Liran Bar Shrim</span>
-    <div class="footer-links">
-      <a href="https://github.com/liranbarshrim-ui/human-stop-boundary">GitHub</a>
-      <a href="mailto:Liran@liranbarshrim.com">Contact</a>
-      <a href="https://www.linkedin.com/in/liranbarshrim">LinkedIn</a>
-    </div>
-  </div>
+  © 2026 MATRIX AUDIT — Liran Bar Shrim
 </footer>
 
 </body>
