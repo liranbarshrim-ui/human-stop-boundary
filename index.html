@@ -46,29 +46,70 @@ h1 {
   font-style:italic;
 }
 
+/* ===== FOOTER DESIGN ===== */
 .footer {
   display:flex;
   flex-direction:column;
-  gap:14px;
-  margin-top:40px;
+  gap:16px;
+  margin-top:60px;
 }
 
 .footer a {
   display:flex;
   justify-content:space-between;
-  padding:18px;
+  align-items:center;
+  padding:20px 22px;
   border:1px solid var(--border);
-  background:var(--surface);
+  background:rgba(255,255,255,0.02);
   text-decoration:none;
-  color:var(--text);
-  transition:0.2s;
+  transition:all 0.25s ease;
+  position:relative;
+}
+
+.footer a::before {
+  content:"";
+  position:absolute;
+  left:0;
+  top:0;
+  bottom:0;
+  width:2px;
+  background:var(--gold);
+  opacity:0;
+  transition:opacity 0.25s;
 }
 
 .footer a:hover {
   border-color:var(--gold);
+  background:rgba(200,169,110,0.05);
+}
+
+.footer a:hover::before {
+  opacity:1;
+}
+
+.label {
+  font-size:10px;
+  letter-spacing:0.15em;
+  text-transform:uppercase;
   color:var(--gold);
 }
 
+.title {
+  font-family:'Playfair Display', serif;
+  font-size:15px;
+  color:var(--text);
+}
+
+.arrow {
+  color:var(--muted);
+  transition:0.2s;
+}
+
+.footer a:hover .arrow {
+  color:var(--gold);
+}
+
+/* ===== COPYRIGHT ===== */
 .copyright {
   margin-top:40px;
   font-size:11px;
@@ -89,18 +130,27 @@ h1 {
 <div class="footer">
 
 <a href="we.html">
-<span>ESSAY</span>
-<span>Read the full argument →</span>
+  <div>
+    <div class="label">Essay</div>
+    <div class="title">Read the full argument</div>
+  </div>
+  <div class="arrow">→</div>
 </a>
 
 <a href="mailto:Liran@liranbarshrim.com">
-<span>CONTACT</span>
-<span>Liran@liranbarshrim.com →</span>
+  <div>
+    <div class="label">Contact</div>
+    <div class="title">Liran@liranbarshrim.com</div>
+  </div>
+  <div class="arrow">→</div>
 </a>
 
 <a href="https://github.com/liranbarshrim-ui/human-stop-boundary" target="_blank">
-<span>SOURCE</span>
-<span>See how this is built →</span>
+  <div>
+    <div class="label">Source</div>
+    <div class="title">See how this is built</div>
+  </div>
+  <div class="arrow">→</div>
 </a>
 
 </div>
