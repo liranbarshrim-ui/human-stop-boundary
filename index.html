@@ -1,203 +1,337 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>The Architecture of Accountability</title>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Playfair+Display:ital,wght@0,700;1,400&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg:      #090909;
+      --surface: #111111;
+      --gold:    #c8a96e;
+      --danger:  #c0392b;
+      --text:    #e6e0d4;
+      --muted:   #7a7570;
+      --border:  #1e1e1e;
+      --border2: #2a2a2a;
+    }
 
-<title>The Architecture of Accountability</title>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-<style>
-:root {
-  --text: #111;
-  --muted: #666;
-  --border: #eaeaea;
-}
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'IBM Plex Mono', monospace;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
 
-body {
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
-  background: #fff;
-  color: var(--text);
-  margin: 0;
-}
+    /* grain texture */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+      pointer-events: none;
+      z-index: 0;
+      opacity: 0.6;
+    }
 
-.container {
-  max-width: 820px;
-  margin: 60px auto;
-  padding: 0 20px;
-}
+    .container {
+      position: relative;
+      z-index: 1;
+      max-width: 760px;
+      margin: 0 auto;
+      padding: 60px 24px 80px;
+    }
 
-h1 {
-  font-size: 30px;
-  line-height: 1.3;
-  margin-bottom: 30px;
-  letter-spacing: -0.3px;
-}
+    /* top tag */
+    .tag {
+      font-size: 10px;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 40px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .tag::before {
+      content: '';
+      display: inline-block;
+      width: 20px;
+      height: 1px;
+      background: var(--gold);
+    }
 
-h2 {
-  margin-top: 50px;
-  font-size: 22px;
-}
+    /* title */
+    h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(26px, 5vw, 40px);
+      font-weight: 700;
+      line-height: 1.2;
+      color: var(--text);
+      margin-bottom: 32px;
+      border-left: 3px solid var(--gold);
+      padding-left: 20px;
+    }
 
-h3 {
-  margin-top: 25px;
-  font-size: 18px;
-}
+    /* lead */
+    .lead {
+      font-size: 14px;
+      line-height: 1.8;
+      color: var(--muted);
+      margin-bottom: 48px;
+      padding-left: 23px;
+    }
 
-p {
-  font-size: 16px;
-  line-height: 1.75;
-  margin: 16px 0;
-}
+    /* highlight block */
+    .highlight {
+      border-left: 3px solid var(--gold);
+      padding: 16px 20px;
+      margin-bottom: 48px;
+      background: var(--surface);
+      font-size: 15px;
+      color: var(--text);
+      font-style: italic;
+      font-family: 'Playfair Display', serif;
+    }
 
-table {
-  width: 100%;
-  border-collapse: collapse;
-  margin: 25px 0;
-  font-size: 14px;
-}
+    /* section blocks */
+    .section {
+      border-top: 1px solid var(--border2);
+      padding: 28px 0;
+    }
 
-th, td {
-  border: 1px solid var(--border);
-  padding: 12px;
-  text-align: left;
-}
+    .section-label {
+      font-size: 10px;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 10px;
+    }
 
-th {
-  background: #fafafa;
-}
+    .section h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: 20px;
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 10px;
+    }
 
-.section {
-  margin-top: 50px;
-}
+    .section p {
+      font-size: 13px;
+      color: var(--muted);
+      line-height: 1.75;
+    }
 
-.highlight {
-  border-left: 3px solid #000;
-  padding-left: 16px;
-  margin: 30px 0;
-  font-weight: 500;
-}
+    /* table */
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 20px;
+      font-size: 12px;
+    }
+    th {
+      text-align: left;
+      padding: 10px 14px;
+      background: var(--surface);
+      color: var(--gold);
+      font-size: 10px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      border-bottom: 1px solid var(--border2);
+    }
+    td {
+      padding: 10px 14px;
+      border-bottom: 1px solid var(--border);
+      color: var(--text);
+      vertical-align: top;
+    }
+    tr:last-child td { border-bottom: none; }
 
-.final-line {
-  margin-top: 60px;
-  font-size: 20px;
-  font-weight: 600;
-}
+    /* conclusion */
+    .conclusion {
+      border-top: 1px solid var(--border2);
+      padding-top: 48px;
+      margin-top: 12px;
+    }
 
-.footer {
-  margin-top: 60px;
-  padding-top: 20px;
-  border-top: 1px solid var(--border);
-  font-size: 14px;
-}
+    .final-line {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(22px, 4vw, 32px);
+      font-weight: 700;
+      color: var(--text);
+      line-height: 1.3;
+      border-left: 3px solid var(--gold);
+      padding-left: 20px;
+      margin-bottom: 48px;
+    }
 
-.footer a {
-  color: #000;
-  text-decoration: underline;
-  display: block;
-  margin-top: 10px;
-}
-</style>
+    /* footer banners */
+    .footer {
+      border-top: 1px solid var(--border2);
+      padding-top: 36px;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+
+    .footer a {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 18px 22px;
+      text-decoration: none;
+      border: 1px solid var(--border2);
+      background: var(--surface);
+      transition: border-color 0.2s, background 0.2s;
+      gap: 16px;
+    }
+    .footer a:hover {
+      border-color: var(--gold);
+      background: #161410;
+    }
+    .footer a:hover .banner-arrow { color: var(--gold); }
+
+    .banner-left {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+    .banner-label {
+      font-size: 10px;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--gold);
+    }
+    .banner-title {
+      font-size: 14px;
+      color: var(--text);
+      font-family: 'Playfair Display', serif;
+    }
+    .banner-arrow {
+      font-size: 20px;
+      color: var(--muted);
+      flex-shrink: 0;
+      transition: color 0.2s;
+    }
+
+    /* fade-in on load */
+    .container { animation: fadeIn 0.8s ease both; }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(12px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+  </style>
 </head>
-
 <body>
-
 <div class="container">
 
-<h1>
-The Architecture of Accountability: Individual Agency and Systemic Momentum in the Face of Irreversible Risk
-</h1>
+  <div class="tag">matrix-audit.com &mdash; decision authority research</div>
 
-<p>
-The fundamental tension within modern organizational governance lies in the conflict between individual accountability and collective complexity.
-</p>
+  <h1>The Architecture of Accountability</h1>
 
-<div class="highlight">
-"We" is not a mistake. It is a structure.
+  <p class="lead">
+    Individual agency and systemic momentum in the face of irreversible risk.
+  </p>
+
+  <div class="highlight">
+    "We" is not a mistake. It is a structure.
+  </div>
+
+  <div class="section">
+    <div class="section-label">The Problem</div>
+    <h2>The Linguistic Shield</h2>
+    <p>"We" diffuses responsibility. It creates a gap where oversight exists in language but not in reality.</p>
+    <table>
+      <tr>
+        <th>Problem</th>
+        <th>Characteristic</th>
+        <th>Impact</th>
+      </tr>
+      <tr>
+        <td>Many Hands</td>
+        <td>Agency is diffused</td>
+        <td>No one stops</td>
+      </tr>
+      <tr>
+        <td>Many Causes</td>
+        <td>Complex causality</td>
+        <td>Failure feels inevitable</td>
+      </tr>
+      <tr>
+        <td>Responsibility Gap</td>
+        <td>Ambiguous ownership</td>
+        <td>No intervention</td>
+      </tr>
+      <tr>
+        <td>Marking Gap</td>
+        <td>No enforcement layer</td>
+        <td>No trigger</td>
+      </tr>
+    </table>
+  </div>
+
+  <div class="section">
+    <div class="section-label">The Imperative</div>
+    <h2>One Name</h2>
+    <p>Critical outcomes must map to a single name. Not a function. Not a team. A person.</p>
+  </div>
+
+  <div class="section">
+    <div class="section-label">The Law</div>
+    <h2>Statutory Accountability</h2>
+    <p>Responsibility must exist before failure, not after.</p>
+  </div>
+
+  <div class="section">
+    <div class="section-label">The Threshold</div>
+    <h2>Irreversibility</h2>
+    <p>When uncertainty meets irreversible impact, delay becomes decision.</p>
+  </div>
+
+  <div class="section">
+    <div class="section-label">The Authority</div>
+    <h2>Stop Authority</h2>
+    <p>Authority to stop exists only if it is real, supported, and usable.</p>
+  </div>
+
+  <div class="section">
+    <div class="section-label">The Erosion</div>
+    <h2>Decay of Agency</h2>
+    <p>Responsibility erodes gradually inside systems. The named person is a fragile achievement.</p>
+  </div>
+
+  <div class="conclusion">
+    <p class="final-line">The stop must always be personal.</p>
+  </div>
+
+  <div class="footer">
+    <a href="we.html">
+      <div class="banner-left">
+        <span class="banner-label">Essay</span>
+        <span class="banner-title">Read the full argument</span>
+      </div>
+      <span class="banner-arrow">→</span>
+    </a>
+    <a href="mailto:Liran@liranbarshrim.com">
+      <div class="banner-left">
+        <span class="banner-label">Contact</span>
+        <span class="banner-title">Liran@liranbarshrim.com</span>
+      </div>
+      <span class="banner-arrow">→</span>
+    </a>
+    <a href="https://github.com/liranbarshrim-ui/human-stop-boundary" target="_blank">
+      <div class="banner-left">
+        <span class="banner-label">Source</span>
+        <span class="banner-title">See how this is built</span>
+      </div>
+      <span class="banner-arrow">→</span>
+    </a>
+  </div>
+
 </div>
-
-<div class="section">
-<h2>The Linguistic Shield</h2>
-
-<p>
-"We" diffuses responsibility. It creates a gap where oversight exists in language but not in reality.
-</p>
-
-<table>
-<tr>
-<th>Problem</th>
-<th>Characteristic</th>
-<th>Impact</th>
-</tr>
-<tr>
-<td>Many Hands</td>
-<td>Agency is diffused</td>
-<td>No one stops</td>
-</tr>
-<tr>
-<td>Many Causes</td>
-<td>Complex causality</td>
-<td>Failure feels inevitable</td>
-</tr>
-<tr>
-<td>Responsibility Gap</td>
-<td>Ambiguous ownership</td>
-<td>No intervention</td>
-</tr>
-<tr>
-<td>Marking Gap</td>
-<td>No enforcement layer</td>
-<td>No trigger</td>
-</tr>
-</table>
-</div>
-
-<div class="section">
-<h2>The Individualist Imperative</h2>
-<p>Critical outcomes must map to a single name.</p>
-</div>
-
-<div class="section">
-<h2>Statutory Accountability</h2>
-<p>Responsibility must exist before failure, not after.</p>
-</div>
-
-<div class="section">
-<h2>Irreversibility</h2>
-<p>When uncertainty meets irreversible impact, delay becomes decision.</p>
-</div>
-
-<div class="section">
-<h2>Stop Authority</h2>
-<p>Authority to stop exists only if it is real, supported, and usable.</p>
-</div>
-
-<div class="section">
-<h2>Decay of Agency</h2>
-<p>Responsibility erodes gradually inside systems.</p>
-</div>
-
-<div class="section">
-<h2>Conclusion</h2>
-
-<p class="final-line">
-The stop must always be personal.
-</p>
-
-</div>
-
-<div class="footer">
-
-<a href="we.html">
-Read the essay
-</a>
-
-<a href="https://github.com/liranbarshrim-ui/human-stop-boundary" target="_blank">
-See how this is built
-</a>
-
-</div>
-
-</div>
-
 </body>
 </html>
