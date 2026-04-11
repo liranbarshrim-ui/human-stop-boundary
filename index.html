@@ -3,26 +3,8 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>The Architecture of Accountability</title>
+  <title>About — Decision Authority Research</title>
   <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Playfair+Display:ital,wght@0,700;1,400&display=swap" rel="stylesheet">
-  <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": "Person",
-    "@id": "https://matrix-audit.com/#liran",
-    "name": "Liran Bar-Shrim",
-    "url": "https://matrix-audit.com",
-    "email": "mailto:Liran@liranbarshrim.com",
-    "knowsAbout": [
-      "Decision Accountability",
-      "Irreversibility in decision-making",
-      "Corporate governance under uncertainty"
-    ],
-    "sameAs": [
-      "https://github.com/liranbarshrim-ui"
-    ]
-  }
-  </script>
   <style>
     :root {
       --bg:      #090909;
@@ -82,95 +64,59 @@
     }
     h1 {
       font-family: 'Playfair Display', serif;
-      font-size: clamp(26px, 5vw, 40px);
+      font-size: clamp(24px, 4vw, 36px);
       font-weight: 700;
       line-height: 1.2;
       color: var(--text);
-      margin-bottom: 32px;
+      margin-bottom: 48px;
       border-left: 3px solid var(--gold);
       padding-left: 20px;
     }
-    .lead {
-      font-size: 14px;
-      line-height: 1.8;
-      color: var(--muted);
-      margin-bottom: 48px;
-      padding-left: 23px;
-    }
-    .highlight {
-      border-left: 3px solid var(--gold);
-      padding: 16px 20px;
-      margin-bottom: 48px;
-      background: var(--surface);
-      font-size: 15px;
-      color: var(--text);
-      font-style: italic;
-      font-family: 'Playfair Display', serif;
-    }
-    .section {
+    .block {
       border-top: 1px solid var(--border2);
       padding: 28px 0;
     }
-    .section-label {
+    .block-label {
       font-size: 10px;
       letter-spacing: 0.15em;
       text-transform: uppercase;
       color: var(--gold);
-      margin-bottom: 10px;
+      margin-bottom: 14px;
     }
-    .section h2 {
-      font-family: 'Playfair Display', serif;
-      font-size: 20px;
-      font-weight: 700;
-      color: var(--text);
-      margin-bottom: 10px;
-    }
-    .section p {
+    .block p {
       font-size: 13px;
       color: var(--muted);
-      line-height: 1.75;
+      line-height: 1.8;
+      margin-bottom: 10px;
     }
-    table {
-      width: 100%;
-      border-collapse: collapse;
-      margin-top: 20px;
-      font-size: 12px;
-    }
-    th {
-      text-align: left;
-      padding: 10px 14px;
-      background: var(--surface);
-      color: var(--gold);
-      font-size: 10px;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      border-bottom: 1px solid var(--border2);
-    }
-    td {
-      padding: 10px 14px;
-      border-bottom: 1px solid var(--border);
+    .block p:last-child { margin-bottom: 0; }
+    .block p strong {
       color: var(--text);
-      vertical-align: top;
+      font-weight: 500;
     }
-    tr:last-child td { border-bottom: none; }
-    .conclusion {
-      border-top: 1px solid var(--border2);
-      padding-top: 48px;
+    .not-list {
       margin-top: 12px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
     }
-    .final-line {
-      font-family: 'Playfair Display', serif;
-      font-size: clamp(22px, 4vw, 32px);
-      font-weight: 700;
-      color: var(--text);
-      line-height: 1.3;
-      border-left: 3px solid var(--gold);
-      padding-left: 20px;
-      margin-bottom: 48px;
+    .not-item {
+      font-size: 13px;
+      color: var(--muted);
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+    }
+    .not-item::before {
+      content: '\00D7';
+      color: #c0392b;
+      flex-shrink: 0;
+      font-size: 14px;
     }
     .footer {
       border-top: 1px solid var(--border2);
       padding-top: 36px;
+      margin-top: 12px;
       display: flex;
       flex-direction: column;
       gap: 14px;
@@ -226,71 +172,61 @@
 
   <div class="tag">matrix-audit.com &mdash; decision authority research</div>
 
-  <h1>The Architecture of Accountability</h1>
+  <h1>Decision Authority Research</h1>
 
-  <p class="lead">Individual agency and systemic momentum in the face of irreversible risk.</p>
-
-  <div class="highlight">"We" is not a mistake. It is a structure.</div>
-
-  <div class="section">
-    <div class="section-label">The Problem</div>
-    <h2>No One Stops</h2>
-    <p>"We" diffuses responsibility. It creates a gap where oversight exists in language but not in reality.</p>
-    <table>
-      <tr><th>Problem</th><th>Characteristic</th><th>Impact</th></tr>
-      <tr><td>Many Hands</td><td>Agency is diffused</td><td>No one stops</td></tr>
-      <tr><td>Many Causes</td><td>Complex causality</td><td>Failure feels inevitable</td></tr>
-      <tr><td>Responsibility Gap</td><td>Ambiguous ownership</td><td>No intervention</td></tr>
-      <tr><td>Marking Gap</td><td>No enforcement layer</td><td>No trigger</td></tr>
-    </table>
+  <div class="block">
+    <div class="block-label">What it is</div>
+    <p>A governance framing for high-stakes decisions under uncertainty.</p>
   </div>
 
-  <div class="section">
-    <div class="section-label">The Imperative</div>
-    <h2>One Name</h2>
-    <p>Critical outcomes must map to a single name. Not a function. Not a team. A person.</p>
+  <div class="block">
+    <div class="block-label">Core principle</div>
+    <p>When a decision becomes irreversible under uncertainty, a single named person must have the authority to stop it.</p>
+    <p><strong>Not a role. Not a committee. A name.</strong></p>
   </div>
 
-  <div class="section">
-    <div class="section-label">The Law</div>
-    <h2>Responsibility Before Failure</h2>
-    <p>Responsibility must exist before failure, not after.</p>
+  <div class="block">
+    <div class="block-label">What it does</div>
+    <p>Maps critical outcomes to one named individual before failure. Not accountability after the fact. Named commitment before execution becomes impossible to reverse.</p>
   </div>
 
-  <div class="section">
-    <div class="section-label">The Threshold</div>
-    <h2>Irreversibility</h2>
-    <p>When uncertainty meets irreversible impact, delay becomes decision.</p>
+  <div class="block">
+    <div class="block-label">Position</div>
+    <p>Not cybersecurity. Not AI governance. Not compliance.<br/><br/>
+    <strong>One question: who is named to stop an irreversible outcome?</strong></p>
   </div>
 
-  <div class="section">
-    <div class="section-label">The Authority</div>
-    <h2>Stop Authority</h2>
-    <p>Authority to stop exists only if it is real, supported, and usable.</p>
+  <div class="block">
+    <div class="block-label">What it is not</div>
+    <div class="not-list">
+      <div class="not-item">A regulatory certification</div>
+      <div class="not-item">Legal advice</div>
+      <div class="not-item">A software product</div>
+    </div>
   </div>
 
-  <div class="section">
-    <div class="section-label">The Erosion</div>
-    <h2>How Responsibility Disappears</h2>
-    <p>Responsibility erodes gradually inside systems. The named person is a fragile achievement.</p>
+  <div class="block">
+    <div class="block-label">Status</div>
+    <p>Independent governance research. Applied through advisory work.</p>
   </div>
 
-  <div class="conclusion">
-    <p class="final-line">The stop must always be personal.</p>
+  <div class="block">
+    <div class="block-label">Contact</div>
+    <p>Liran Bar-Shrim &mdash; <a href="/cdn-cgi/l/email-protection#0d41647f6c634d61647f6c636f6c7f7e657f6460236e6260" style="color:var(--gold);text-decoration:none;"><span class="__cf_email__" data-cfemail="175b7e657679577b7e657679757665647f657e7a3974787a">[email&#160;protected]</span></a></p>
   </div>
 
   <div class="footer">
-    <a href="we.html">
+    <a href="index.html">
       <div class="banner-left">
-        <span class="banner-label">Essay</span>
-        <span class="banner-title">Read the full argument</span>
+        <span class="banner-label">Home</span>
+        <span class="banner-title">The Architecture of Accountability</span>
       </div>
       <span class="banner-arrow">&#8594;</span>
     </a>
-    <a href="about.html">
+    <a href="we.html">
       <div class="banner-left">
-        <span class="banner-label">About</span>
-        <span class="banner-title">Decision Authority Research</span>
+        <span class="banner-label">Essay</span>
+        <span class="banner-title">The Death of "We"</span>
       </div>
       <span class="banner-arrow">&#8594;</span>
     </a>
@@ -299,26 +235,4 @@
         <span class="banner-label">DAR</span>
         <span class="banner-title">Decision Authority Record</span>
       </div>
-      <span class="banner-arrow">&#8594;</span>
-    </a>
-    <a href="mailto:Liran@liranbarshrim.com">
-      <div class="banner-left">
-        <span class="banner-label">Contact</span>
-        <span class="banner-title">Liran@liranbarshrim.com</span>
-      </div>
-      <span class="banner-arrow">&#8594;</span>
-    </a>
-    <a href="https://github.com/liranbarshrim-ui/human-stop-boundary" target="_blank" rel="noopener noreferrer">
-      <div class="banner-left">
-        <span class="banner-label">Technical note</span>
-        <span class="banner-title">See how this is built</span>
-      </div>
-      <span class="banner-arrow">&#8594;</span>
-    </a>
-  </div>
-
-  <p class="copyright">&#169; 2026 Liran Bar-Shrim. All rights reserved.</p>
-
-</div>
-</body>
-</html>
+      <span class="banner
