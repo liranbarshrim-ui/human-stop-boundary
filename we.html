@@ -5,50 +5,89 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>The Death of "We"</title>
 
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono&family=Playfair+Display:wght@400;700&display=swap" rel="stylesheet">
 
 <style>
 :root {
   --bg:#090909;
+  --surface:#111;
   --gold:#c8a96e;
   --text:#e6e0d4;
   --muted:#7a7570;
+  --border:#1e1e1e;
 }
+
+* {margin:0;padding:0;box-sizing:border-box;}
 
 body {
   background:var(--bg);
   color:var(--text);
   font-family:'Playfair Display', serif;
-  max-width:720px;
-  margin:auto;
-  padding:80px 24px;
   line-height:1.8;
 }
 
-h1 {
-  border-left:3px solid var(--gold);
-  padding-left:20px;
-  margin-bottom:40px;
+.container {
+  max-width:720px;
+  margin:auto;
+  padding:80px 24px;
 }
 
+/* header */
+h1 {
+  font-size:2.4rem;
+  border-left:3px solid var(--gold);
+  padding-left:20px;
+  margin-bottom:50px;
+}
+
+/* sections */
 .section {
   margin-bottom:60px;
 }
 
+.section-label {
+  font-family:'IBM Plex Mono', monospace;
+  font-size:12px;
+  color:var(--gold);
+  letter-spacing:2px;
+  margin-bottom:20px;
+}
+
+h2 {
+  font-size:1.4rem;
+  margin-bottom:20px;
+}
+
+p {
+  margin-bottom:18px;
+}
+
+/* verse */
+.verse {
+  border-left:1px solid var(--border);
+  padding-left:20px;
+  margin:25px 0;
+  color:var(--muted);
+  font-style:italic;
+}
+
+/* pull */
 .pull {
-  background:#111;
+  background:var(--surface);
   padding:20px;
   border-left:3px solid var(--gold);
   margin:30px 0;
   font-style:italic;
 }
 
+/* closing */
 .closing {
   border:1px solid var(--gold);
   padding:30px;
   margin-top:60px;
 }
 
+/* copyright */
 .copyright {
   margin-top:60px;
   font-size:11px;
@@ -58,45 +97,97 @@ h1 {
 </head>
 
 <body>
+<div class="container">
 
 <h1>The Death of "We"</h1>
 
 <div class="section">
-<p>In the boardroom, everyone says "We".</p>
+<div class="section-label">I</div>
+<h2>The Death of "We"</h2>
+
+<div class="verse">
+<p>In the boardroom, everyone says "We."</p>
 <p>"We approved."</p>
 <p>"We're moving forward."</p>
+</div>
 
-<p>It sounds safe.</p>
+<p>It sounds safe. It feels aligned.</p>
 <p>It isn't.</p>
-
-<p>When something goes wrong, "We" disappears.</p>
-<p>No one stops.</p>
+<p>When something goes wrong, "We" disappears. No one is responsible.</p>
 </div>
 
 <div class="section">
+<div class="section-label">II</div>
+<h2>The Illusion of Safety</h2>
+
+<p>Consensus is mistaken for control.</p>
+
+<div class="verse">
+<p>If enough people agree, it must be correct.</p>
+<p>If enough people approve, it must be safe.</p>
+</div>
+
+<p>No one feels the weight of stopping.</p>
+
 <div class="pull">
 And when no one feels it, no one stops it.
 </div>
 </div>
 
 <div class="section">
+<div class="section-label">III</div>
+<h2>The Missing Function</h2>
+
 <p>Every system moves forward.</p>
 <p>Unless someone is required to stop.</p>
-</div>
 
-<div class="section">
-<p>Most failures are not decisions.</p>
-<p>They are momentum.</p>
-</div>
-
-<div class="section">
 <div class="pull">
-Without a named person, there is no real stopping point.
+Without someone explicitly required to stop, there is only motion.
+</div>
+</div>
+
+<div class="section">
+<div class="section-label">IV</div>
+<h2>What Actually Fails</h2>
+
+<p>Failures rarely begin with intent.</p>
+<p>They begin with motion.</p>
+
+<div class="verse">
+<p>A process starts.</p>
+<p>Momentum builds.</p>
+<p>No one interrupts.</p>
+</div>
+
+<p>And so it continues.</p>
+</div>
+
+<div class="section">
+<div class="section-label">V</div>
+<h2>The Line No One Sees</h2>
+
+<p>Systems do not fail at decision.</p>
+<p>They fail when decisions become irreversible.</p>
+
+<div class="pull">
+This is not a cliff. It is a slope.
+</div>
+</div>
+
+<div class="section">
+<div class="section-label">VI</div>
+<h2>The Structural Shift</h2>
+
+<p>Replace "We" with a name.</p>
+<p>One person required to stop.</p>
+
+<div class="pull">
+That is exactly why it is avoided.
 </div>
 </div>
 
 <div class="closing">
-<p>When a decision becomes irreversible under uncertainty — is there a name?</p>
+<p>When a decision becomes irreversible under uncertainty, is there a name?</p>
 <p>Not a role. Not a committee.</p>
 <p>A name.</p>
 
@@ -105,8 +196,9 @@ Without a named person, there is no real stopping point.
 </div>
 
 <p class="copyright">
-© 2026 Liran Bar-Shrim. All rights reserved.
+© 2026 Liran Bar-Shrim. All rights reserved. This work is proprietary.
 </p>
 
+</div>
 </body>
 </html>
