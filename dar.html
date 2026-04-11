@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>DAR — Decision Authority Record</title>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Playfair+Display:ital,wght@0,700;1,400&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg:      #090909;
+      --surface: #111111;
+      --gold:    #c8a96e;
+      --danger:  #c0392b;
+      --text:    #e6e0d4;
+      --muted:   #7a7570;
+      --dim:     #52504c;
+      --border:  #1e1e1e;
+      --border2: #2a2a2a;
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'IBM Plex Mono', monospace;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+      pointer-events: none;
+      z-index: 0;
+      opacity: 0.6;
+    }
+    .container {
+      position: relative;
+      z-index: 1;
+      max-width: 760px;
+      margin: 0 auto;
+      padding: 60px 24px 80px;
+      animation: fadeIn 0.8s ease both;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(12px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* top tag */
+    .tag {
+      font-size: 10px;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 48px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .tag::before {
+      content: '';
+      display: inline-block;
+      width: 20px;
+      height: 1px;
+      background: var(--gold);
+    }
+
+    /* hero question */
+    .hero {
+      border-left: 3px solid var(--gold);
+      padding-left: 20px;
+      margin-bottom: 48px;
+    }
+    .hero-question {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(22px, 4.5vw, 36px);
+      font-weight: 700;
+      line-height: 1.25;
+      color: var(--text);
+      margin-bottom: 16px;
+    }
+    .hero-sub {
+      font-size: 13px;
+      color: var(--muted);
+      line-height: 1.7;
+    }
+
+    /* problem block */
+    .problem {
+      background: var(--surface);
+      border-left: 3px solid var(--danger);
+      padding: 20px 24px;
+      margin-bottom: 48px;
+      font-size: 13px;
+      color: var(--muted);
+      line-height: 1.8;
+    }
+    .problem strong {
+      color: var(--text);
+      display: block;
+      margin-bottom: 12px;
+      font-size: 10px;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--danger);
+    }
+
+    /* what DAR does */
+    .section {
+      border-top: 1px solid var(--border2);
+      padding: 32px 0;
+    }
+    .section-label {
+      font-size: 10px;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 12px;
+    }
+    .section h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: 22px;
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 16px;
+    }
+    .section p {
+      font-size: 13px;
+      color: var(--muted);
+      line-height: 1.8;
+      margin-bottom: 12px;
+    }
+
+    /* deliverable box */
+    .deliverable {
+      border: 1px solid var(--border2);
+      background: var(--surface);
+      padding: 24px;
+      margin-top: 24px;
+    }
+    .deliverable-title {
+      font-size: 10px;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 16px;
+    }
+    .deliverable-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      margin-bottom: 12px;
+      font-size: 13px;
+      color: var(--text);
+    }
+    .deliverable-item::before {
+      content: '—';
+      color: var(--gold);
+      flex-shrink: 0;
+    }
+
+    /* price */
+    .price-block {
+      border-top: 1px solid var(--border2);
+      padding: 32px 0;
+      display: flex;
+      align-items: baseline;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+    .price-amount {
+      font-family: 'Playfair Display', serif;
+      font-size: 40px;
+      font-weight: 700;
+      color: var(--text);
+    }
+    .price-detail {
+      font-size: 12px;
+      color: var(--muted);
+      line-height: 1.6;
+    }
+
+    /* footer banners */
+    .footer {
+      border-top: 1px solid var(--border2);
+      padding-top: 36px;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+    .footer a {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 18px 22px;
+      text-decoration: none;
+      border: 1px solid var(--border2);
+      background: var(--surface);
+      transition: border-color 0.2s, background 0.2s;
+      gap: 16px;
+    }
+    .footer a:hover {
+      border-color: var(--gold);
+      background: #161410;
+    }
+    .footer a:hover .banner-arrow { color: var(--gold); }
+    .banner-left {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+    .banner-label {
+      font-size: 10px;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--gold);
+    }
+    .banner-title {
+      font-size: 14px;
+      color: var(--text);
+      font-family: 'Playfair Display', serif;
+    }
+    .banner-arrow {
+      font-size: 20px;
+      color: var(--muted);
+      flex-shrink: 0;
+      transition: color 0.2s;
+    }
+
+    /* contact CTA — highlighted */
+    .footer a.cta {
+      border-color: var(--gold);
+      background: #13110d;
+    }
+    .footer a.cta .banner-title {
+      color: var(--gold);
+    }
+
+    .copyright {
+      margin-top: 28px;
+      font-size: 11px;
+      color: var(--dim);
+      letter-spacing: 0.05em;
+    }
+  </style>
+</head>
+<body>
+<div class="container">
+
+  <div class="tag">DAR &mdash; Decision Authority Record</div>
+
+  <div class="hero">
+    <p class="hero-question">When a decision becomes irreversible, who is named to stop it?</p>
+    <p class="hero-sub">Not a team. Not a process. A person. Named in advance. Bound to refuse.</p>
+  </div>
+
+  <div class="problem">
+    <strong>The gap</strong>
+    Every organization has people who approve. No organization names the person required to stop.<br><br>
+    When no name exists, no stop exists. The system continues until it cannot be undone.
+  </div>
+
+  <div class="section">
+    <div class="section-label">What DAR does</div>
+    <h2>One named person. One pathway. One commitment.</h2>
+    <p>DAR identifies the single individual who must be named — by name, not by role — as the stop authority for a specific irreversible decision pathway.</p>
+    <p>Not accountability after the fact. Named commitment before execution becomes impossible to reverse.</p>
+
+    <div class="deliverable">
+      <div class="deliverable-title">Engagement deliverable</div>
+      <div class="deliverable-item">Named Stop Authority Map for one decision pathway</div>
+      <div class="deliverable-item">One name. Documented. Signed.</div>
+      <div class="deliverable-item">Gap analysis: where the stop function is missing or shared</div>
+      <div class="deliverable-item">Delivered in 7 to 10 business days</div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-label">Who this is for</div>
+    <h2>Personal exposure. Board accountability. Irreversible decisions.</h2>
+    <p>CMOs. Medical Directors. Chief Risk Officers. Heads of compliance with personal regulatory liability.</p>
+    <p>If your name is on the line when something cannot be undone, DAR is for you.</p>
+  </div>
+
+  <div class="price-block">
+    <span class="price-amount">12,000 &#8364;</span>
+    <span class="price-detail">One pathway. One name.<br>Fixed engagement. No retainer.</span>
+  </div>
+
+  <div class="footer">
+    <a href="mailto:Liran@liranbarshrim.com" class="cta">
+      <div class="banner-left">
+        <span class="banner-label">Start here</span>
+        <span class="banner-title">Liran@liranbarshrim.com</span>
+      </div>
+      <span class="banner-arrow">&#8594;</span>
+    </a>
+    <a href="we.html">
+      <div class="banner-left">
+        <span class="banner-label">Essay</span>
+        <span class="banner-title">The Death of "We"</span>
+      </div>
+      <span class="banner-arrow">&#8594;</span>
+    </a>
+    <a href="index.html">
+      <div class="banner-left">
+        <span class="banner-label">Home</span>
+        <span class="banner-title">The Architecture of Accountability</span>
+      </div>
+      <span class="banner-arrow">&#8594;</span>
+    </a>
+  </div>
+
+  <p class="copyright">&#169; 2026 Liran Bar-Shrim. All rights reserved.</p>
+
+</div>
+</body>
+</html>
