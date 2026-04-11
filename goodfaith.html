@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Good Faith Use — Decision Authority Research</title>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Playfair+Display:ital,wght@0,700;1,400&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg:      #090909;
+      --surface: #111111;
+      --gold:    #c8a96e;
+      --text:    #e6e0d4;
+      --muted:   #7a7570;
+      --dim:     #52504c;
+      --border:  #1e1e1e;
+      --border2: #2a2a2a;
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'IBM Plex Mono', monospace;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+      pointer-events: none;
+      z-index: 0;
+      opacity: 0.6;
+    }
+    .container {
+      position: relative;
+      z-index: 1;
+      max-width: 760px;
+      margin: 0 auto;
+      padding: 60px 24px 80px;
+      animation: fadeIn 0.8s ease both;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(12px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    .tag {
+      font-size: 10px;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 40px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .tag::before {
+      content: '';
+      display: inline-block;
+      width: 20px;
+      height: 1px;
+      background: var(--gold);
+    }
+    h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(24px, 4vw, 36px);
+      font-weight: 700;
+      line-height: 1.2;
+      color: var(--text);
+      margin-bottom: 48px;
+      border-left: 3px solid var(--gold);
+      padding-left: 20px;
+    }
+    .block {
+      border-top: 1px solid var(--border2);
+      padding: 28px 0;
+    }
+    .block p {
+      font-size: 13px;
+      color: var(--muted);
+      line-height: 1.8;
+      margin-bottom: 10px;
+    }
+    .block p:last-child { margin-bottom: 0; }
+    .block p strong { color: var(--text); font-weight: 500; }
+    .footer {
+      border-top: 1px solid var(--border2);
+      padding-top: 36px;
+      margin-top: 12px;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+    .footer a {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 18px 22px;
+      text-decoration: none;
+      border: 1px solid var(--border2);
+      background: var(--surface);
+      transition: border-color 0.2s, background 0.2s;
+      gap: 16px;
+    }
+    .footer a:hover { border-color: var(--gold); background: #161410; }
+    .footer a:hover .banner-arrow { color: var(--gold); }
+    .banner-left { display: flex; flex-direction: column; gap: 4px; }
+    .banner-label { font-size: 10px; letter-spacing: 0.15em; text-transform: uppercase; color: var(--gold); }
+    .banner-title { font-size: 14px; color: var(--text); font-family: 'Playfair Display', serif; }
+    .banner-arrow { font-size: 20px; color: var(--muted); flex-shrink: 0; transition: color 0.2s; }
+    .copyright { margin-top: 28px; font-size: 11px; color: var(--dim); letter-spacing: 0.05em; }
+  </style>
+</head>
+<body>
+<div class="container">
+
+  <div class="tag">matrix-audit.com &mdash; decision authority research</div>
+
+  <h1>Good Faith Use</h1>
+
+  <div class="block">
+    <p>Decision Authority Research (DAR) is a governance methodology. It is designed to clarify responsibility before irreversible decisions occur.</p>
+  </div>
+
+  <div class="block">
+    <p>It aligns with regulatory expectations for human oversight and accountability, but does not constitute legal advice, compliance certification, or protection from liability.</p>
+  </div>
+
+  <div class="block">
+    <p>The responsibility for decisions remains with the organization and its designated individuals.</p>
+  </div>
+
+  <div class="block">
+    <p><strong>DAR defines who is accountable to stop.</strong></p>
+    <p>It does not replace judgment.</p>
+  </div>
+
+  <div class="footer">
+    <a href="index.html">
+      <div class="banner-left">
+        <span class="banner-label">Home</span>
+        <span class="banner-title">The Architecture of Accountability</span>
+      </div>
+      <span class="banner-arrow">&#8594;</span>
+    </a>
+    <a href="about.html">
+      <div class="banner-left">
+        <span class="banner-label">About</span>
+        <span class="banner-title">Decision Authority Research</span>
+      </div>
+      <span class="banner-arrow">&#8594;</span>
+    </a>
+  </div>
+
+  <p class="copyright">&#169; 2026 Liran Bar-Shrim. All rights reserved.</p>
+
+</div>
+</body>
+</html>
