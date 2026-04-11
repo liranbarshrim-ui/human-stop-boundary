@@ -14,10 +14,8 @@
   --gold:#c8a96e;
   --text:#e6e0d4;
   --muted:#7a7570;
-  --border:#1e1e1e;
+  --border:#2a2a2a;
 }
-
-* {margin:0;padding:0;box-sizing:border-box;}
 
 body {
   background:var(--bg);
@@ -32,62 +30,55 @@ body {
   padding:80px 24px;
 }
 
-/* header */
 h1 {
-  font-size:2.4rem;
   border-left:3px solid var(--gold);
   padding-left:20px;
-  margin-bottom:50px;
-}
-
-/* sections */
-.section {
-  margin-bottom:60px;
-}
-
-.section-label {
-  font-family:'IBM Plex Mono', monospace;
-  font-size:12px;
-  color:var(--gold);
-  letter-spacing:2px;
-  margin-bottom:20px;
+  margin-bottom:40px;
 }
 
 h2 {
-  font-size:1.4rem;
-  margin-bottom:20px;
+  margin:40px 0 20px;
 }
 
 p {
-  margin-bottom:18px;
+  margin-bottom:20px;
 }
 
-/* verse */
-.verse {
-  border-left:1px solid var(--border);
-  padding-left:20px;
-  margin:25px 0;
-  color:var(--muted);
-  font-style:italic;
-}
-
-/* pull */
 .pull {
-  background:var(--surface);
-  padding:20px;
   border-left:3px solid var(--gold);
+  padding:20px;
+  background:var(--surface);
   margin:30px 0;
   font-style:italic;
 }
 
-/* closing */
-.closing {
-  border:1px solid var(--gold);
-  padding:30px;
-  margin-top:60px;
+.gas {
+  border:1px solid var(--border);
+  padding:20px;
+  background:#0e0e0e;
+  font-family:'IBM Plex Mono';
+  margin:30px 0;
 }
 
-/* copyright */
+.functions span {
+  border:1px solid var(--border);
+  padding:6px 10px;
+  margin-right:6px;
+  font-size:12px;
+}
+
+.missing {
+  color:#c0392b;
+  border-color:#c0392b;
+}
+
+.slope {
+  background:var(--surface);
+  padding:20px;
+  margin:30px 0;
+  font-family:'IBM Plex Mono';
+}
+
 .copyright {
   margin-top:60px;
   font-size:11px;
@@ -101,102 +92,75 @@ p {
 
 <h1>The Death of "We"</h1>
 
-<div class="section">
-<div class="section-label">I</div>
-<h2>The Death of "We"</h2>
-
-<div class="verse">
+<h2>I</h2>
 <p>In the boardroom, everyone says "We."</p>
 <p>"We approved."</p>
 <p>"We're moving forward."</p>
-</div>
 
-<p>It sounds safe. It feels aligned.</p>
+<p>It sounds safe.</p>
 <p>It isn't.</p>
-<p>When something goes wrong, "We" disappears. No one is responsible.</p>
+
+<div class="gas">
+Responsibility shared by everyone  
+is responsibility avoided by anyone  
+
+It behaves like gas  
+It expands  
+It applies no pressure  
 </div>
 
-<div class="section">
-<div class="section-label">II</div>
-<h2>The Illusion of Safety</h2>
-
+<h2>II</h2>
 <p>Consensus is mistaken for control.</p>
-
-<div class="verse">
-<p>If enough people agree, it must be correct.</p>
-<p>If enough people approve, it must be safe.</p>
-</div>
-
-<p>No one feels the weight of stopping.</p>
 
 <div class="pull">
 And when no one feels it, no one stops it.
 </div>
+
+<h2>III</h2>
+<div class="functions">
+<span>Initiate</span>
+<span>Review</span>
+<span>Approve</span>
+<span>Execute</span>
+<span class="missing">Stop — missing</span>
 </div>
-
-<div class="section">
-<div class="section-label">III</div>
-<h2>The Missing Function</h2>
-
-<p>Every system moves forward.</p>
-<p>Unless someone is required to stop.</p>
 
 <div class="pull">
-Without someone explicitly required to stop, there is only motion.
+Without someone required to stop, there is only motion.
 </div>
-</div>
 
-<div class="section">
-<div class="section-label">IV</div>
-<h2>What Actually Fails</h2>
-
-<p>Failures rarely begin with intent.</p>
-<p>They begin with motion.</p>
-
-<div class="verse">
+<h2>IV</h2>
 <p>A process starts.</p>
 <p>Momentum builds.</p>
 <p>No one interrupts.</p>
+
+<h2>V</h2>
+<div class="slope">
+"We can still stop"<br>
+↓<br>
+No signal<br>
+↓<br>
+"We are already committed"
 </div>
-
-<p>And so it continues.</p>
-</div>
-
-<div class="section">
-<div class="section-label">V</div>
-<h2>The Line No One Sees</h2>
-
-<p>Systems do not fail at decision.</p>
-<p>They fail when decisions become irreversible.</p>
 
 <div class="pull">
 This is not a cliff. It is a slope.
 </div>
-</div>
 
-<div class="section">
-<div class="section-label">VI</div>
-<h2>The Structural Shift</h2>
-
+<h2>VI</h2>
 <p>Replace "We" with a name.</p>
 <p>One person required to stop.</p>
 
 <div class="pull">
 That is exactly why it is avoided.
 </div>
-</div>
 
-<div class="closing">
-<p>When a decision becomes irreversible under uncertainty, is there a name?</p>
-<p>Not a role. Not a committee.</p>
-<p>A name.</p>
-
-<p>If not, the system will continue.</p>
-<p>Until it doesn't.</p>
+<div class="pull">
+When a decision becomes irreversible under uncertainty, is there a name?
 </div>
 
 <p class="copyright">
-© 2026 Liran Bar-Shrim. All rights reserved. This work is proprietary.
+© 2026 Liran Bar-Shrim. All rights reserved.
 </p>
 
 </div>
