@@ -5,17 +5,19 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>The Death of "We"</title>
 
-<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono&family=Playfair+Display:wght@400;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Playfair+Display:wght@400;700&display=swap" rel="stylesheet">
 
 <style>
 :root {
   --bg:#090909;
-  --surface:#111;
+  --surface:#111111;
   --gold:#c8a96e;
   --text:#e6e0d4;
   --muted:#7a7570;
   --border:#2a2a2a;
 }
+
+* {margin:0;padding:0;box-sizing:border-box;}
 
 body {
   background:var(--bg);
@@ -30,60 +32,96 @@ body {
   padding:80px 24px;
 }
 
+/* TITLE */
 h1 {
   border-left:3px solid var(--gold);
   padding-left:20px;
-  margin-bottom:40px;
+  margin-bottom:60px;
+  font-size:2.4rem;
 }
 
+/* HEADINGS */
 h2 {
-  margin:40px 0 20px;
+  margin:60px 0 20px;
+  font-size:1.4rem;
 }
 
+/* TEXT */
 p {
   margin-bottom:20px;
 }
 
+/* VERSE */
+.verse {
+  border-left:1px solid var(--border);
+  padding-left:20px;
+  margin:20px 0;
+  color:var(--muted);
+  font-style:italic;
+}
+
+/* PULL QUOTE */
 .pull {
   border-left:3px solid var(--gold);
   padding:20px;
   background:var(--surface);
-  margin:30px 0;
+  margin:40px 0;
   font-style:italic;
 }
 
+/* GAS BLOCK */
 .gas {
   border:1px solid var(--border);
-  padding:20px;
+  padding:24px;
   background:#0e0e0e;
-  font-family:'IBM Plex Mono';
-  margin:30px 0;
+  font-family:'IBM Plex Mono', monospace;
+  font-size:0.85rem;
+  line-height:1.8;
+  margin:40px 0;
+  color:var(--muted);
 }
 
-.functions span {
+.gas .strong {
+  color:var(--text);
+}
+
+/* FUNCTIONS */
+.functions {
+  display:flex;
+  flex-wrap:wrap;
+  gap:10px;
+  margin:20px 0;
+}
+
+.fn {
   border:1px solid var(--border);
-  padding:6px 10px;
-  margin-right:6px;
+  padding:6px 12px;
+  font-family:'IBM Plex Mono';
   font-size:12px;
 }
 
-.missing {
+.fn.missing {
   color:#c0392b;
   border-color:#c0392b;
 }
 
+/* SLOPE */
 .slope {
   background:var(--surface);
-  padding:20px;
-  margin:30px 0;
+  padding:24px;
+  margin:40px 0;
   font-family:'IBM Plex Mono';
+  font-size:0.85rem;
+  color:var(--muted);
 }
 
+/* COPYRIGHT */
 .copyright {
-  margin-top:60px;
+  margin-top:80px;
   font-size:11px;
   color:#52504c;
 }
+
 </style>
 </head>
 
@@ -93,52 +131,73 @@ p {
 <h1>The Death of "We"</h1>
 
 <h2>I</h2>
+
+<div class="verse">
 <p>In the boardroom, everyone says "We."</p>
 <p>"We approved."</p>
 <p>"We're moving forward."</p>
+</div>
 
-<p>It sounds safe.</p>
+<p>It sounds safe. It feels aligned.</p>
 <p>It isn't.</p>
 
-<div class="gas">
-Responsibility shared by everyone  
-is responsibility avoided by anyone  
+<p>When something goes wrong, "We" disappears. No one is responsible.</p>
 
-It behaves like gas  
-It expands  
-It applies no pressure  
+<div class="gas">
+<span class="strong">Responsibility shared by everyone</span><br>
+<span class="strong">is responsibility avoided by anyone.</span><br><br>
+It behaves like gas.<br>
+It expands to fill the space.<br>
+<span class="strong">It applies no pressure.</span><br>
+<span class="strong">It supports no weight.</span>
 </div>
 
 <h2>II</h2>
+
 <p>Consensus is mistaken for control.</p>
+
+<div class="verse">
+<p>If enough people agree, it must be correct.</p>
+<p>If enough people approve, it must be safe.</p>
+</div>
+
+<p>No one feels the weight of stopping.</p>
 
 <div class="pull">
 And when no one feels it, no one stops it.
 </div>
 
 <h2>III</h2>
+
+<p>Every system has functions:</p>
+
 <div class="functions">
-<span>Initiate</span>
-<span>Review</span>
-<span>Approve</span>
-<span>Execute</span>
-<span class="missing">Stop — missing</span>
+<span class="fn">Initiate</span>
+<span class="fn">Review</span>
+<span class="fn">Approve</span>
+<span class="fn">Execute</span>
+<span class="fn missing">Stop — missing</span>
 </div>
 
+<p>Without stopping, progress becomes automatic.</p>
+
 <div class="pull">
-Without someone required to stop, there is only motion.
+Without someone explicitly required to stop, there is only motion.
 </div>
 
 <h2>IV</h2>
+
 <p>A process starts.</p>
 <p>Momentum builds.</p>
 <p>No one interrupts.</p>
+<p>And so it continues.</p>
 
 <h2>V</h2>
+
 <div class="slope">
 "We can still stop"<br>
 ↓<br>
-No signal<br>
+No alert. No escalation.<br>
 ↓<br>
 "We are already committed"
 </div>
@@ -148,6 +207,7 @@ This is not a cliff. It is a slope.
 </div>
 
 <h2>VI</h2>
+
 <p>Replace "We" with a name.</p>
 <p>One person required to stop.</p>
 
@@ -156,7 +216,9 @@ That is exactly why it is avoided.
 </div>
 
 <div class="pull">
-When a decision becomes irreversible under uncertainty, is there a name?
+When a decision becomes irreversible under uncertainty, is there a name?<br><br>
+Not a role. Not a committee.<br><br>
+A name.
 </div>
 
 <p class="copyright">
