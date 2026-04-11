@@ -4,9 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>The Death of "We"</title>
-
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Playfair+Display:wght@400;700&display=swap" rel="stylesheet">
-
 <style>
 :root {
   --bg:#090909;
@@ -18,38 +16,29 @@
   --border:#2a2a2a;
   --border1:#1e1e1e;
 }
-
 * {margin:0;padding:0;box-sizing:border-box;}
-
 body {
   background:var(--bg);
   color:var(--text);
   font-family:'Playfair Display', serif;
   line-height:1.8;
 }
-
 .container {
   max-width:720px;
   margin:auto;
   padding:80px 24px;
 }
-
 h1 {
   border-left:3px solid var(--gold);
   padding-left:20px;
   margin-bottom:60px;
   font-size:2.4rem;
 }
-
 h2 {
   margin:60px 0 20px;
   font-size:1.4rem;
 }
-
-p {
-  margin-bottom:20px;
-}
-
+p { margin-bottom:20px; }
 .verse {
   border-left:1px solid var(--border);
   padding-left:20px;
@@ -57,7 +46,6 @@ p {
   color:var(--muted);
   font-style:italic;
 }
-
 .pull {
   border-left:3px solid var(--gold);
   padding:20px;
@@ -65,7 +53,6 @@ p {
   margin:40px 0;
   font-style:italic;
 }
-
 .gas {
   border:1px solid var(--border);
   padding:24px;
@@ -76,30 +63,23 @@ p {
   margin:40px 0;
   color:var(--muted);
 }
-
-.gas .strong {
-  color:var(--text);
-}
-
+.gas .strong { color:var(--text); }
 .functions {
   display:flex;
   flex-wrap:wrap;
   gap:10px;
   margin:20px 0;
 }
-
 .fn {
   border:1px solid var(--border);
   padding:6px 12px;
   font-family:'IBM Plex Mono';
   font-size:12px;
 }
-
 .fn.missing {
   color:#c0392b;
   border-color:#c0392b;
 }
-
 .slope {
   background:var(--surface);
   padding:24px;
@@ -108,8 +88,6 @@ p {
   font-size:0.85rem;
   color:var(--muted);
 }
-
-/* footer banners */
 .footer {
   border-top:1px solid var(--border);
   padding-top:36px;
@@ -118,7 +96,6 @@ p {
   flex-direction:column;
   gap:14px;
 }
-
 .footer a {
   display:flex;
   align-items:center;
@@ -130,20 +107,21 @@ p {
   transition:border-color 0.2s, background 0.2s;
   gap:16px;
 }
-
 .footer a:hover {
   border-color:var(--gold);
   background:#161410;
 }
-
 .footer a:hover .banner-arrow { color:var(--gold); }
-
+.footer a.cta {
+  border-color:var(--gold);
+  background:#13110d;
+}
+.footer a.cta .banner-title { color:var(--gold); }
 .banner-left {
   display:flex;
   flex-direction:column;
   gap:4px;
 }
-
 .banner-label {
   font-size:10px;
   letter-spacing:0.15em;
@@ -151,20 +129,17 @@ p {
   color:var(--gold);
   font-family:'IBM Plex Mono', monospace;
 }
-
 .banner-title {
   font-size:14px;
   color:var(--text);
   font-family:'Playfair Display', serif;
 }
-
 .banner-arrow {
   font-size:20px;
   color:var(--muted);
   flex-shrink:0;
   transition:color 0.2s;
 }
-
 .copyright {
   margin-top:28px;
   font-size:11px;
@@ -174,25 +149,20 @@ p {
 }
 </style>
 </head>
-
 <body>
 <div class="container">
 
 <h1>The Death of "We"</h1>
 
 <h2>I</h2>
-
 <div class="verse">
 <p>In the boardroom, everyone says "We."</p>
 <p>"We approved."</p>
 <p>"We're moving forward."</p>
 </div>
-
 <p>It sounds safe. It feels aligned.</p>
 <p>It isn't.</p>
-
 <p>When something goes wrong, "We" disappears. No one is responsible.</p>
-
 <div class="gas">
 <span class="strong">Responsibility shared by everyone</span><br>
 <span class="strong">is responsibility avoided by anyone.</span><br><br>
@@ -203,47 +173,33 @@ It expands to fill the space.<br>
 </div>
 
 <h2>II</h2>
-
 <p>Consensus is mistaken for control.</p>
-
 <div class="verse">
 <p>If enough people agree, it must be correct.</p>
 <p>If enough people approve, it must be safe.</p>
 </div>
-
 <p>No one feels the weight of stopping.</p>
-
-<div class="pull">
-And when no one feels it, no one stops it.
-</div>
+<div class="pull">And when no one feels it, no one stops it.</div>
 
 <h2>III</h2>
-
 <p>Every system has functions:</p>
-
 <div class="functions">
 <span class="fn">Initiate</span>
 <span class="fn">Review</span>
 <span class="fn">Approve</span>
 <span class="fn">Execute</span>
-<span class="fn missing">Stop — missing</span>
+<span class="fn missing">Stop &#8212; missing</span>
 </div>
-
 <p>Without stopping, progress becomes automatic.</p>
-
-<div class="pull">
-Without someone explicitly required to stop, there is only motion.
-</div>
+<div class="pull">Without someone explicitly required to stop, there is only motion.</div>
 
 <h2>IV</h2>
-
 <p>A process starts.</p>
 <p>Momentum builds.</p>
 <p>No one interrupts.</p>
 <p>And so it continues.</p>
 
 <h2>V</h2>
-
 <div class="slope">
 "We can still stop"<br>
 &#8595;<br>
@@ -251,20 +207,12 @@ No alert. No escalation.<br>
 &#8595;<br>
 "We are already committed"
 </div>
-
-<div class="pull">
-This is not a cliff. It is a slope.
-</div>
+<div class="pull">This is not a cliff. It is a slope.</div>
 
 <h2>VI</h2>
-
 <p>Replace "We" with a name.</p>
 <p>One person required to stop.</p>
-
-<div class="pull">
-That is exactly why it is avoided.
-</div>
-
+<div class="pull">That is exactly why it is avoided.</div>
 <div class="pull">
 When a decision becomes irreversible under uncertainty, is there a name?<br><br>
 Not a role. Not a committee.<br><br>
@@ -272,6 +220,13 @@ A name.
 </div>
 
 <div class="footer">
+  <a href="dar.html" class="cta">
+    <div class="banner-left">
+      <span class="banner-label">DAR</span>
+      <span class="banner-title">Decision Authority Record</span>
+    </div>
+    <span class="banner-arrow">&#8594;</span>
+  </a>
   <a href="index.html">
     <div class="banner-left">
       <span class="banner-label">Home</span>
