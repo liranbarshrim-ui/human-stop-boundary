@@ -14,7 +14,9 @@
   --gold:#c8a96e;
   --text:#e6e0d4;
   --muted:#7a7570;
+  --dim:#52504c;
   --border:#2a2a2a;
+  --border1:#1e1e1e;
 }
 
 * {margin:0;padding:0;box-sizing:border-box;}
@@ -32,7 +34,6 @@ body {
   padding:80px 24px;
 }
 
-/* TITLE */
 h1 {
   border-left:3px solid var(--gold);
   padding-left:20px;
@@ -40,18 +41,15 @@ h1 {
   font-size:2.4rem;
 }
 
-/* HEADINGS */
 h2 {
   margin:60px 0 20px;
   font-size:1.4rem;
 }
 
-/* TEXT */
 p {
   margin-bottom:20px;
 }
 
-/* VERSE */
 .verse {
   border-left:1px solid var(--border);
   padding-left:20px;
@@ -60,7 +58,6 @@ p {
   font-style:italic;
 }
 
-/* PULL QUOTE */
 .pull {
   border-left:3px solid var(--gold);
   padding:20px;
@@ -69,7 +66,6 @@ p {
   font-style:italic;
 }
 
-/* GAS BLOCK */
 .gas {
   border:1px solid var(--border);
   padding:24px;
@@ -85,7 +81,6 @@ p {
   color:var(--text);
 }
 
-/* FUNCTIONS */
 .functions {
   display:flex;
   flex-wrap:wrap;
@@ -105,7 +100,6 @@ p {
   border-color:#c0392b;
 }
 
-/* SLOPE */
 .slope {
   background:var(--surface);
   padding:24px;
@@ -115,13 +109,69 @@ p {
   color:var(--muted);
 }
 
-/* COPYRIGHT */
-.copyright {
+/* footer banners */
+.footer {
+  border-top:1px solid var(--border);
+  padding-top:36px;
   margin-top:80px;
-  font-size:11px;
-  color:#52504c;
+  display:flex;
+  flex-direction:column;
+  gap:14px;
 }
 
+.footer a {
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding:18px 22px;
+  text-decoration:none;
+  border:1px solid var(--border);
+  background:var(--surface);
+  transition:border-color 0.2s, background 0.2s;
+  gap:16px;
+}
+
+.footer a:hover {
+  border-color:var(--gold);
+  background:#161410;
+}
+
+.footer a:hover .banner-arrow { color:var(--gold); }
+
+.banner-left {
+  display:flex;
+  flex-direction:column;
+  gap:4px;
+}
+
+.banner-label {
+  font-size:10px;
+  letter-spacing:0.15em;
+  text-transform:uppercase;
+  color:var(--gold);
+  font-family:'IBM Plex Mono', monospace;
+}
+
+.banner-title {
+  font-size:14px;
+  color:var(--text);
+  font-family:'Playfair Display', serif;
+}
+
+.banner-arrow {
+  font-size:20px;
+  color:var(--muted);
+  flex-shrink:0;
+  transition:color 0.2s;
+}
+
+.copyright {
+  margin-top:28px;
+  font-size:11px;
+  color:var(--dim);
+  letter-spacing:0.05em;
+  font-family:'IBM Plex Mono', monospace;
+}
 </style>
 </head>
 
@@ -196,9 +246,9 @@ Without someone explicitly required to stop, there is only motion.
 
 <div class="slope">
 "We can still stop"<br>
-↓<br>
+&#8595;<br>
 No alert. No escalation.<br>
-↓<br>
+&#8595;<br>
 "We are already committed"
 </div>
 
@@ -221,9 +271,31 @@ Not a role. Not a committee.<br><br>
 A name.
 </div>
 
-<p class="copyright">
-© 2026 Liran Bar-Shrim. All rights reserved.
-</p>
+<div class="footer">
+  <a href="index.html">
+    <div class="banner-left">
+      <span class="banner-label">Home</span>
+      <span class="banner-title">The Architecture of Accountability</span>
+    </div>
+    <span class="banner-arrow">&#8594;</span>
+  </a>
+  <a href="mailto:Liran@liranbarshrim.com">
+    <div class="banner-left">
+      <span class="banner-label">Contact</span>
+      <span class="banner-title">Liran@liranbarshrim.com</span>
+    </div>
+    <span class="banner-arrow">&#8594;</span>
+  </a>
+  <a href="https://github.com/liranbarshrim-ui/human-stop-boundary" target="_blank">
+    <div class="banner-left">
+      <span class="banner-label">Source</span>
+      <span class="banner-title">See how this is built</span>
+    </div>
+    <span class="banner-arrow">&#8594;</span>
+  </a>
+</div>
+
+<p class="copyright">&#169; 2026 Liran Bar-Shrim. All rights reserved.</p>
 
 </div>
 </body>
