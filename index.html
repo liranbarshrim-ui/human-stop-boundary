@@ -31,93 +31,56 @@ body {
   padding:60px 24px;
 }
 
-/* ===== TITLE ===== */
 h1 {
   font-family:'Playfair Display', serif;
   border-left:3px solid var(--gold);
   padding-left:20px;
   margin-bottom:30px;
-  font-size:32px;
-  line-height:1.2;
 }
 
-/* ===== HIGHLIGHT ===== */
 .highlight {
   border-left:3px solid var(--gold);
   padding:16px;
   background:var(--surface);
-  margin-bottom:50px;
+  margin-bottom:40px;
   font-style:italic;
-  color:var(--text);
 }
 
-/* ===== FOOTER LINKS ===== */
 .footer {
   display:flex;
   flex-direction:column;
-  gap:16px;
+  gap:14px;
 }
 
 .footer a {
   display:flex;
   justify-content:space-between;
-  align-items:center;
-  padding:20px 22px;
+  padding:20px;
   border:1px solid var(--border);
-  background:rgba(255,255,255,0.02);
+  background:var(--surface);
   text-decoration:none;
-  transition:all 0.25s ease;
-  position:relative;
-}
-
-/* gold side line */
-.footer a::before {
-  content:"";
-  position:absolute;
-  left:0;
-  top:0;
-  bottom:0;
-  width:2px;
-  background:var(--gold);
-  opacity:0;
-  transition:opacity 0.25s;
+  color:var(--text);
+  transition:0.25s;
 }
 
 .footer a:hover {
   border-color:var(--gold);
-  background:rgba(200,169,110,0.05);
+  background:#161410;
 }
 
-.footer a:hover::before {
-  opacity:1;
-}
-
-/* text structure */
 .label {
   font-size:10px;
-  letter-spacing:0.15em;
-  text-transform:uppercase;
   color:var(--gold);
+  letter-spacing:0.15em;
 }
 
 .title {
   font-family:'Playfair Display', serif;
-  font-size:15px;
-  color:var(--text);
+  font-size:16px;
 }
 
-.arrow {
-  color:var(--muted);
-  transition:0.2s;
-}
-
-.footer a:hover .arrow {
-  color:var(--gold);
-}
-
-/* ===== COPYRIGHT ===== */
 .copyright {
-  margin-top:50px;
+  margin-top:40px;
   font-size:11px;
   color:#52504c;
 }
@@ -135,31 +98,28 @@ h1 {
 
 <div class="footer">
 
-<!-- ESSAY -->
-<a href="/we.html">
-  <div>
-    <div class="label">Essay</div>
-    <div class="title">Read the full argument</div>
-  </div>
-  <div class="arrow">→</div>
+<a href="we.html">
+<div>
+<div class="label">ESSAY</div>
+<div class="title">Read the full argument</div>
+</div>
+<span>→</span>
 </a>
 
-<!-- CONTACT -->
 <a href="mailto:Liran@liranbarshrim.com">
-  <div>
-    <div class="label">Contact</div>
-    <div class="title">Liran@liranbarshrim.com</div>
-  </div>
-  <div class="arrow">→</div>
+<div>
+<div class="label">CONTACT</div>
+<div class="title">Liran@liranbarshrim.com</div>
+</div>
+<span>→</span>
 </a>
 
-<!-- SOURCE -->
 <a href="https://github.com/liranbarshrim-ui/human-stop-boundary" target="_blank">
-  <div>
-    <div class="label">Source</div>
-    <div class="title">See how this is built</div>
-  </div>
-  <div class="arrow">→</div>
+<div>
+<div class="label">SOURCE</div>
+<div class="title">See how this is built</div>
+</div>
+<span>→</span>
 </a>
 
 </div>
