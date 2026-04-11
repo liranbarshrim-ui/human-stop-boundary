@@ -31,27 +31,31 @@ body {
   padding:60px 24px;
 }
 
+/* ===== TITLE ===== */
 h1 {
   font-family:'Playfair Display', serif;
   border-left:3px solid var(--gold);
   padding-left:20px;
   margin-bottom:30px;
+  font-size:32px;
+  line-height:1.2;
 }
 
+/* ===== HIGHLIGHT ===== */
 .highlight {
   border-left:3px solid var(--gold);
   padding:16px;
   background:var(--surface);
-  margin-bottom:40px;
+  margin-bottom:50px;
   font-style:italic;
+  color:var(--text);
 }
 
-/* ===== FOOTER DESIGN ===== */
+/* ===== FOOTER LINKS ===== */
 .footer {
   display:flex;
   flex-direction:column;
   gap:16px;
-  margin-top:60px;
 }
 
 .footer a {
@@ -66,6 +70,7 @@ h1 {
   position:relative;
 }
 
+/* gold side line */
 .footer a::before {
   content:"";
   position:absolute;
@@ -87,6 +92,7 @@ h1 {
   opacity:1;
 }
 
+/* text structure */
 .label {
   font-size:10px;
   letter-spacing:0.15em;
@@ -111,7 +117,7 @@ h1 {
 
 /* ===== COPYRIGHT ===== */
 .copyright {
-  margin-top:40px;
+  margin-top:50px;
   font-size:11px;
   color:#52504c;
 }
@@ -129,7 +135,8 @@ h1 {
 
 <div class="footer">
 
-<a href="we.html">
+<!-- ESSAY -->
+<a href="/we.html">
   <div>
     <div class="label">Essay</div>
     <div class="title">Read the full argument</div>
@@ -137,6 +144,7 @@ h1 {
   <div class="arrow">→</div>
 </a>
 
+<!-- CONTACT -->
 <a href="mailto:Liran@liranbarshrim.com">
   <div>
     <div class="label">Contact</div>
@@ -145,6 +153,7 @@ h1 {
   <div class="arrow">→</div>
 </a>
 
+<!-- SOURCE -->
 <a href="https://github.com/liranbarshrim-ui/human-stop-boundary" target="_blank">
   <div>
     <div class="label">Source</div>
