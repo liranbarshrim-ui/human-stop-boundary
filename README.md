@@ -1,27 +1,292 @@
-# Decision Accountability Record (DAR)
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>The Architecture of Accountability</title>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Playfair+Display:ital,wght@0,700;1,400&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg:      #090909;
+      --surface: #111111;
+      --gold:    #c8a96e;
+      --text:    #e6e0d4;
+      --muted:   #7a7570;
+      --dim:     #52504c;
+      --border:  #1e1e1e;
+      --border2: #2a2a2a;
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'IBM Plex Mono', monospace;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+      pointer-events: none;
+      z-index: 0;
+      opacity: 0.6;
+    }
+    .container {
+      position: relative;
+      z-index: 1;
+      max-width: 760px;
+      margin: 0 auto;
+      padding: 60px 24px 80px;
+      animation: fadeIn 0.8s ease both;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(12px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    .tag {
+      font-size: 10px;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 40px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .tag::before {
+      content: '';
+      display: inline-block;
+      width: 20px;
+      height: 1px;
+      background: var(--gold);
+    }
+    h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(26px, 5vw, 40px);
+      font-weight: 700;
+      line-height: 1.2;
+      color: var(--text);
+      margin-bottom: 32px;
+      border-left: 3px solid var(--gold);
+      padding-left: 20px;
+    }
+    .lead {
+      font-size: 14px;
+      line-height: 1.8;
+      color: var(--muted);
+      margin-bottom: 48px;
+      padding-left: 23px;
+    }
+    .highlight {
+      border-left: 3px solid var(--gold);
+      padding: 16px 20px;
+      margin-bottom: 48px;
+      background: var(--surface);
+      font-size: 15px;
+      color: var(--text);
+      font-style: italic;
+      font-family: 'Playfair Display', serif;
+    }
+    .section {
+      border-top: 1px solid var(--border2);
+      padding: 28px 0;
+    }
+    .section-label {
+      font-size: 10px;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 10px;
+    }
+    .section h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: 20px;
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 10px;
+    }
+    .section p {
+      font-size: 13px;
+      color: var(--muted);
+      line-height: 1.75;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 20px;
+      font-size: 12px;
+    }
+    th {
+      text-align: left;
+      padding: 10px 14px;
+      background: var(--surface);
+      color: var(--gold);
+      font-size: 10px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      border-bottom: 1px solid var(--border2);
+    }
+    td {
+      padding: 10px 14px;
+      border-bottom: 1px solid var(--border);
+      color: var(--text);
+      vertical-align: top;
+    }
+    tr:last-child td { border-bottom: none; }
+    .conclusion {
+      border-top: 1px solid var(--border2);
+      padding-top: 48px;
+      margin-top: 12px;
+    }
+    .final-line {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(22px, 4vw, 32px);
+      font-weight: 700;
+      color: var(--text);
+      line-height: 1.3;
+      border-left: 3px solid var(--gold);
+      padding-left: 20px;
+      margin-bottom: 48px;
+    }
+    .footer {
+      border-top: 1px solid var(--border2);
+      padding-top: 36px;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+    .footer a {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 18px 22px;
+      text-decoration: none;
+      border: 1px solid var(--border2);
+      background: var(--surface);
+      transition: border-color 0.2s, background 0.2s;
+      gap: 16px;
+    }
+    .footer a:hover {
+      border-color: var(--gold);
+      background: #161410;
+    }
+    .footer a:hover .banner-arrow { color: var(--gold); }
+    .banner-left {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+    .banner-label {
+      font-size: 10px;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--gold);
+    }
+    .banner-title {
+      font-size: 14px;
+      color: var(--text);
+      font-family: 'Playfair Display', serif;
+    }
+    .banner-arrow {
+      font-size: 20px;
+      color: var(--muted);
+      flex-shrink: 0;
+      transition: color 0.2s;
+    }
+    .copyright {
+      margin-top: 28px;
+      font-size: 11px;
+      color: var(--dim);
+      letter-spacing: 0.05em;
+    }
+  </style>
+</head>
+<body>
+<div class="container">
 
-Decision Accountability Record (DAR) is a governance structure assigning named human authority responsible for stopping automated systems before irreversible execution.
+  <div class="tag">matrix-audit.com &mdash; decision authority research</div>
 
-## Core Principle
+  <h1>The Architecture of Accountability</h1>
 
-The Authority to Initiate is not the Authority to Terminate.
+  <p class="lead">Individual agency and systemic momentum in the face of irreversible risk.</p>
 
-Automated systems may execute decisions.
+  <div class="highlight">"We" is not a mistake. It is a structure.</div>
 
-Accountability remains human.
+  <div class="section">
+    <div class="section-label">The Problem</div>
+    <h2>The Linguistic Shield</h2>
+    <p>"We" diffuses responsibility. It creates a gap where oversight exists in language but not in reality.</p>
+    <table>
+      <tr><th>Problem</th><th>Characteristic</th><th>Impact</th></tr>
+      <tr><td>Many Hands</td><td>Agency is diffused</td><td>No one stops</td></tr>
+      <tr><td>Many Causes</td><td>Complex causality</td><td>Failure feels inevitable</td></tr>
+      <tr><td>Responsibility Gap</td><td>Ambiguous ownership</td><td>No intervention</td></tr>
+      <tr><td>Marking Gap</td><td>No enforcement layer</td><td>No trigger</td></tr>
+    </table>
+  </div>
 
-## Definition
+  <div class="section">
+    <div class="section-label">The Imperative</div>
+    <h2>One Name</h2>
+    <p>Critical outcomes must map to a single name. Not a function. Not a team. A person.</p>
+  </div>
 
-Decision Accountability Record (DAR) defines the governance structure that identifies the individual responsible for halting automated execution when systems approach irreversible decision boundaries.
+  <div class="section">
+    <div class="section-label">The Law</div>
+    <h2>Statutory Accountability</h2>
+    <p>Responsibility must exist before failure, not after.</p>
+  </div>
 
-## Reference
+  <div class="section">
+    <div class="section-label">The Threshold</div>
+    <h2>Irreversibility</h2>
+    <p>When uncertainty meets irreversible impact, delay becomes decision.</p>
+  </div>
 
-The concept addresses structural governance failures observed in high-speed automated systems such as the 2012 Knight Capital event.
+  <div class="section">
+    <div class="section-label">The Authority</div>
+    <h2>Stop Authority</h2>
+    <p>Authority to stop exists only if it is real, supported, and usable.</p>
+  </div>
 
-## Website
+  <div class="section">
+    <div class="section-label">The Erosion</div>
+    <h2>Decay of Agency</h2>
+    <p>Responsibility erodes gradually inside systems. The named person is a fragile achievement.</p>
+  </div>
 
-https://matrix-audit.com
+  <div class="conclusion">
+    <p class="final-line">The stop must always be personal.</p>
+  </div>
 
-## Author
+  <div class="footer">
+    <a href="we.html">
+      <div class="banner-left">
+        <span class="banner-label">Essay</span>
+        <span class="banner-title">Read the full argument</span>
+      </div>
+      <span class="banner-arrow">&#8594;</span>
+    </a>
+    <a href="mailto:Liran@liranbarshrim.com">
+      <div class="banner-left">
+        <span class="banner-label">Contact</span>
+        <span class="banner-title">Liran@liranbarshrim.com</span>
+      </div>
+      <span class="banner-arrow">&#8594;</span>
+    </a>
+    <a href="https://github.com/liranbarshrim-ui/human-stop-boundary" target="_blank">
+      <div class="banner-left">
+        <span class="banner-label">Source</span>
+        <span class="banner-title">See how this is built</span>
+      </div>
+      <span class="banner-arrow">&#8594;</span>
+    </a>
+  </div>
 
-Liran Bar Shrim
+  <p class="copyright">&#169; Liran Bar-Shrim. All rights reserved.</p>
+
+</div>
+</body>
+</html>
