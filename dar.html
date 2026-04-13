@@ -5,7 +5,71 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>DAR — Decision Authority Record</title>
   <meta name="description" content="One named individual. One commitment. One pathway. DAR maps named stop authority to irreversible decision points before execution.">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebPage",
+    "@id": "https://matrix-audit.com/dar#page",
+    "name": "DAR — Decision Authority Record",
+    "description": "One named person. One pathway. One commitment. DAR maps named stop authority to irreversible decision points before execution.",
+    "mainEntity": {"@id": "https://matrix-audit.com/terms/dar"},
+    "author": {"@id": "https://matrix-audit.com/#liran"}
+  }
+  </script>
   <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Playfair+Display:ital,wght@0,700;1,400&display=swap" rel="stylesheet">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "DefinedTerm",
+    "@id": "https://matrix-audit.com/dar#definition",
+    "name": "Decision Authority Record (DAR)",
+    "description": "A governance construct that defines a single named individual with explicit authority to stop a decision before it becomes irreversible.",
+    "creator": {
+      "@type": "Person",
+      "name": "Liran Bar-Shrim",
+      "@id": "https://matrix-audit.com/#liran"
+    }
+  }
+  </script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Action",
+    "name": "Assign Stop Authority",
+    "description": "The act of explicitly naming a single individual with authority to stop a decision pathway before irreversibility.",
+    "object": {
+      "@id": "https://matrix-audit.com/dar#definition"
+    },
+    "agent": {
+      "@type": "Organization"
+    },
+    "result": {
+      "@type": "Thing",
+      "name": "Named Stop Authority established before execution"
+    }
+  }
+  </script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "HowTo",
+    "name": "Define Stop Authority Before Irreversible Decisions",
+    "step": [
+      {
+        "@type": "HowToStep",
+        "name": "Identify the irreversible decision point"
+      },
+      {
+        "@type": "HowToStep",
+        "name": "Name a single individual with stop authority"
+      },
+      {
+        "@type": "HowToStep",
+        "name": "Establish that no continuation exists without explicit release"
+      }
+    ]
+  }
+  </script>
   <style>
     :root {
       --bg:#090909; --surface:#111111; --gold:#c8a96e;
