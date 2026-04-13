@@ -12,11 +12,11 @@
   --surface: #111111;
   --surface2: #0e0e0e;
   --gold: #c8a96e;
-  --gold-dim: #8a7048;
+  --gold-dim: #a08050;
   --text: #e6e0d4;
-  --muted: #a09a94;
-  --dim: #7a7570;
-  --faint: #52504c;
+  --muted: #b8b2ac;
+  --dim: #8a8480;
+  --faint: #6a6460;
   --border: #2a2a2a;
   --border1: #1e1e1e;
   --danger: #c0392b;
@@ -293,6 +293,34 @@ p.muted {
   color: var(--muted);
   flex-shrink: 0;
   transition: color 0.2s;
+}
+
+@media (max-width: 600px) {
+  .container {
+    padding: 48px 18px 72px;
+  }
+  h1 {
+    font-size: 1.7rem;
+    padding-left: 16px;
+  }
+  .mono-block, .slope, .final-statement {
+    padding: 18px 16px;
+    font-size: 0.78rem;
+  }
+  .pull {
+    padding: 14px 16px;
+    font-size: 0.97rem;
+  }
+  .functions {
+    gap: 6px;
+  }
+  .fn {
+    font-size: 10px;
+    padding: 4px 10px;
+  }
+  .footer a {
+    padding: 14px 16px;
+  }
 }
 
 .copyright {
