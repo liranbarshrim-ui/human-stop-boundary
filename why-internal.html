@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Why Internal Attempts Fail — Decision Authority Research</title>
+  <meta name="description" content="Most organizations can describe the decision. They fail when asked to name the person.">
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Playfair+Display:ital,wght@0,700;1,400&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg:#090909; --surface:#111111; --gold:#c8a96e;
+      --danger:#c0392b; --text:#e6e0d4; --muted:#a09a94;
+      --dim:#7a7570; --border:#1e1e1e; --border2:#2a2a2a;
+    }
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+    body{background:var(--bg);color:var(--text);font-family:'IBM Plex Mono',monospace;min-height:100vh;overflow-x:hidden;}
+    body::before{content:'';position:fixed;inset:0;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");pointer-events:none;z-index:0;opacity:0.6;}
+    .container{position:relative;z-index:1;max-width:760px;margin:0 auto;padding:60px 24px 80px;animation:fadeIn 0.8s ease both;}
+    @keyframes fadeIn{from{opacity:0;transform:translateY(12px);}to{opacity:1;transform:translateY(0);}}
+
+    .tag{font-size:10px;letter-spacing:0.15em;text-transform:uppercase;color:var(--muted);margin-bottom:40px;display:flex;align-items:center;gap:12px;}
+    .tag::before{content:'';display:inline-block;width:20px;height:1px;background:var(--gold);}
+
+    h1{font-family:'Playfair Display',serif;font-size:clamp(26px,5vw,40px);font-weight:700;line-height:1.2;color:var(--text);margin-bottom:32px;border-left:3px solid var(--gold);padding-left:20px;}
+
+    .opening{font-size:14px;line-height:1.8;color:var(--muted);margin-bottom:48px;padding-left:23px;}
+    .opening strong{color:var(--text);}
+
+    .section{border-top:1px solid var(--border2);padding:28px 0;}
+    .section-label{font-size:10px;letter-spacing:0.15em;text-transform:uppercase;color:var(--gold);margin-bottom:10px;}
+    .section h2{font-family:'Playfair Display',serif;font-size:18px;font-weight:700;color:var(--text);margin-bottom:10px;}
+    .section p{font-size:13px;color:var(--muted);line-height:1.75;}
+
+    .divider-line{border-top:1px solid var(--border2);margin:48px 0;}
+
+    .statement{border-left:3px solid var(--gold);padding:16px 20px;background:var(--surface);font-size:15px;color:var(--text);font-style:italic;font-family:'Playfair Display',serif;margin-bottom:32px;}
+
+    .filter{border-left:3px solid var(--border2);padding:16px 20px;background:var(--surface);font-size:13px;color:var(--dim);line-height:1.7;margin-bottom:32px;}
+
+    .closing{font-size:13px;color:#c0392b;margin-bottom:48px;}
+
+    .footer{border-top:1px solid var(--border2);padding-top:36px;display:flex;flex-direction:column;gap:14px;}
+    .footer a{display:flex;align-items:center;justify-content:space-between;padding:18px 22px;text-decoration:none;border:1px solid var(--border2);background:var(--surface);transition:border-color 0.2s,background 0.2s;gap:16px;}
+    .footer a:hover{border-color:var(--gold);background:#161410;}
+    .footer a:hover .banner-arrow{color:var(--gold);}
+    .footer a.cta{border-color:var(--gold);background:#13110d;}
+    .footer a.cta .banner-title{color:var(--gold);}
+    .banner-left{display:flex;flex-direction:column;gap:4px;}
+    .banner-label{font-size:10px;letter-spacing:0.15em;text-transform:uppercase;color:var(--gold);}
+    .banner-title{font-size:14px;color:var(--text);font-family:'Playfair Display',serif;}
+    .banner-arrow{font-size:20px;color:var(--muted);flex-shrink:0;transition:color 0.2s;}
+    .copyright{margin-top:28px;font-size:11px;color:var(--dim);letter-spacing:0.05em;}
+  </style>
+</head>
+<body>
+<div class="container">
+
+  <div class="tag">decision authority research</div>
+
+  <h1>Why internal attempts fail</h1>
+
+  <p class="opening">
+    Most organizations can describe the decision.<br>
+    <strong>They fail when asked to name the person.</strong>
+  </p>
+
+  <div class="section">
+    <div class="section-label">Diffusion of responsibility</div>
+    <h2>&ldquo;We&rsquo;ll escalate&rdquo; replaces ownership.</h2>
+    <p>When no one is required to hold the decision, everyone assumes someone else will. Escalation becomes the answer. By the time it reaches someone with authority, the window has closed.</p>
+  </div>
+
+  <div class="section">
+    <div class="section-label">Political cost</div>
+    <h2>No one wants their name attached before the outcome is known.</h2>
+    <p>Naming a stop authority before the decision means accepting accountability before there is anything to be accountable for. Most people avoid this. Most organizations do not ask them to do otherwise.</p>
+  </div>
+
+  <div class="section">
+    <div class="section-label">Timing collapse</div>
+    <h2>Escalation happens after it is already irreversible.</h2>
+    <p>Internal processes move at the speed of consensus. Irreversible decisions move faster. By the time the right person is notified, the decision has already made itself.</p>
+  </div>
+
+  <div class="divider-line"></div>
+
+  <div class="statement">
+    Internal processes optimize for alignment.<br>
+    Irreversible decisions require ownership.
+  </div>
+
+  <div class="filter">
+    If you can assign a single name before the decision &mdash; you do not need this.<br><br>
+    If you cannot &mdash; that is exactly where this starts.
+  </div>
+
+  <p class="closing">If you cannot name the person &mdash; it is already happening.</p>
+
+  <div class="footer">
+    <a href="dar.html" class="cta">
+      <div class="banner-left">
+        <span class="banner-label">DAR</span>
+        <span class="banner-title">Decision Authority Record</span>
+      </div>
+      <span class="banner-arrow">&#8594;</span>
+    </a>
+    <a href="scenarios.html">
+      <div class="banner-left">
+        <span class="banner-label">Where it breaks</span>
+        <span class="banner-title">Failure points</span>
+      </div>
+      <span class="banner-arrow">&#8594;</span>
+    </a>
+    <a href="index.html">
+      <div class="banner-left">
+        <span class="banner-label">Home</span>
+        <span class="banner-title">The Architecture of Accountability</span>
+      </div>
+      <span class="banner-arrow">&#8594;</span>
+    </a>
+  </div>
+
+  <p class="copyright">&#169; 2026 Liran Bar-Shrim. All rights reserved.</p>
+
+</div>
+</body>
+</html>
