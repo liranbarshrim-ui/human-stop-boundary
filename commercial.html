@@ -1,85 +1,117 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>DAR — What stopping means in practice</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>DAR — What stopping means in practice</title>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Playfair+Display:ital,wght@0,700;1,400&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg:#090909; --surface:#111111; --gold:#c8a96e;
+      --danger:#c0392b; --text:#e6e0d4; --muted:#a09a94;
+      --dim:#7a7570; --border:#1e1e1e; --border2:#2a2a2a;
+    }
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+    body{background:var(--bg);color:var(--text);font-family:'IBM Plex Mono',monospace;min-height:100vh;overflow-x:hidden;}
+    body::before{content:'';position:fixed;inset:0;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");pointer-events:none;z-index:0;opacity:0.6;}
+    .container{position:relative;z-index:1;max-width:760px;margin:0 auto;padding:60px 24px 80px;animation:fadeIn 0.8s ease both;}
+    @keyframes fadeIn{from{opacity:0;transform:translateY(12px);}to{opacity:1;transform:translateY(0);}}
 
-<style>
-body {
-  background:#090909;
-  color:#e6e0d4;
-  font-family: monospace;
-  max-width:720px;
-  margin:80px auto;
-  line-height:1.7;
-  padding:0 24px;
-}
+    .tag{font-size:10px;letter-spacing:0.15em;text-transform:uppercase;color:var(--muted);margin-bottom:40px;display:flex;align-items:center;gap:12px;}
+    .tag::before{content:'';display:inline-block;width:20px;height:1px;background:var(--gold);}
 
-h1 {
-  font-size:28px;
-  margin-bottom:24px;
-}
+    h1{font-family:'Playfair Display',serif;font-size:clamp(26px,5vw,40px);font-weight:700;line-height:1.2;color:var(--text);margin-bottom:32px;border-left:3px solid var(--gold);padding-left:20px;}
 
-p {
-  color:#9a9590;
-  margin-bottom:16px;
-}
+    .section{border-top:1px solid var(--border2);padding:28px 0;}
+    .section-label{font-size:10px;letter-spacing:0.15em;text-transform:uppercase;color:var(--gold);margin-bottom:10px;}
+    .section p{font-size:13px;color:var(--muted);line-height:1.8;margin-bottom:12px;}
+    .section p:last-child{margin-bottom:0;}
 
-.cta {
-  display:inline-block;
-  margin-top:48px;
-  color:#c8a96e;
-  text-decoration:none;
-  border-bottom:1px solid #c8a96e;
-  padding-bottom:4px;
-  letter-spacing:0.08em;
-}
+    .definition{display:flex;flex-direction:column;gap:12px;margin-top:16px;}
+    .def-item{display:flex;align-items:flex-start;gap:12px;font-size:13px;color:var(--text);}
+    .def-item::before{content:'—';color:var(--gold);flex-shrink:0;}
 
-.cta:hover {
-  opacity:0.7;
-}
+    .highlight{border-left:3px solid var(--gold);padding:16px 20px;margin:28px 0;background:var(--surface);font-size:15px;color:var(--text);font-style:italic;font-family:'Playfair Display',serif;}
 
-.final-line {
-  margin-top:60px;
-  font-size:12px;
-  color:#6a6865;
-}
-
-</style>
+    .footer{border-top:1px solid var(--border2);padding-top:36px;display:flex;flex-direction:column;gap:14px;}
+    .footer a{display:flex;align-items:center;justify-content:space-between;padding:18px 22px;text-decoration:none;border:1px solid var(--border2);background:var(--surface);transition:border-color 0.2s,background 0.2s;gap:16px;}
+    .footer a:hover{border-color:var(--gold);background:#161410;}
+    .footer a:hover .banner-arrow{color:var(--gold);}
+    .footer a.cta{border-color:var(--gold);background:#13110d;}
+    .footer a.cta .banner-title{color:var(--gold);}
+    .banner-left{display:flex;flex-direction:column;gap:4px;}
+    .banner-label{font-size:10px;letter-spacing:0.15em;text-transform:uppercase;color:var(--gold);}
+    .banner-title{font-size:14px;color:var(--text);font-family:'Playfair Display',serif;}
+    .banner-arrow{font-size:20px;color:var(--muted);flex-shrink:0;transition:color 0.2s;}
+    .copyright{margin-top:28px;font-size:11px;color:var(--dim);letter-spacing:0.05em;}
+  </style>
 </head>
 <body>
+<div class="container">
 
-<h1>What stopping means in practice</h1>
+  <div class="tag">decision authority research</div>
 
-<p>
-In high-stakes systems, the question is not whether controls exist.
-It is whether someone is defined to stop execution before it becomes irreversible.
-</p>
+  <h1>What stopping means in practice</h1>
 
-<p>DAR defines:</p>
+  <div class="section">
+    <p>In high-stakes systems, the question is not whether controls exist. It is whether someone is named to stop execution before it becomes irreversible.</p>
+    <p>After an incident, accountability is always assigned. The only question is whether it was defined in advance.</p>
+  </div>
 
-<p>
-— The irreversibility threshold<br>
-— One named individual<br>
-— The moment authority must be exercised
-</p>
+  <div class="section">
+    <div class="section-label">DAR defines</div>
+    <div class="definition">
+      <div class="def-item">The irreversibility threshold for one decision pathway</div>
+      <div class="def-item">One named individual explicitly required to stop</div>
+      <div class="def-item">The moment authority must be exercised</div>
+    </div>
+  </div>
 
-<p>
-After an incident, accountability is always assigned.<br>
-The only question is whether it was defined in advance.
-</p>
+  <div class="highlight">
+    If no one is named before the moment &mdash;<br>
+    no one can stop it when it matters.
+  </div>
 
-<!-- 🔥 CTA מתוקן -->
-<a href="mailto:Liran@liranbarshrim.com" class="cta">
-Request the DAR intake →
-</a>
+  <div class="section">
+    <div class="section-label">Engagement</div>
+    <p>Single irreversible pathway. One named stop authority. Delivered in 7 to 10 business days.</p>
+    <p>Advisory only. No access to internal systems required.</p>
+    <p style="color:#c0392b;margin-top:8px;">If you cannot name the person &mdash; it is already happening.</p>
+  </div>
 
-<!-- 🔥 סגירה -->
-<p class="final-line">
-If no one is named before the moment,
-no one can stop it when it matters.
-</p>
+  <div class="footer">
+    <a id="contact-commercial" href="#" class="cta">
+      <div class="banner-left">
+        <span class="banner-label">Request intake</span>
+        <span class="banner-title">Before your name is on the line</span>
+      </div>
+      <span class="banner-arrow">&#8594;</span>
+    </a>
+    <a href="dar.html">
+      <div class="banner-left">
+        <span class="banner-label">DAR</span>
+        <span class="banner-title">Decision Authority Record</span>
+      </div>
+      <span class="banner-arrow">&#8594;</span>
+    </a>
+    <a href="index.html">
+      <div class="banner-left">
+        <span class="banner-label">Home</span>
+        <span class="banner-title">The Architecture of Accountability</span>
+      </div>
+      <span class="banner-arrow">&#8594;</span>
+    </a>
+  </div>
 
+  <p class="copyright">&#169; 2026 Liran Bar-Shrim. All rights reserved.</p>
+
+</div>
+<script data-cfasync="false">
+(function(){
+  var u='Liran',d='liranbarshrim.com';
+  var el=document.getElementById('contact-commercial');
+  if(el) el.href='mailto:'+u+'@'+d;
+})();
+</script>
 </body>
 </html>
