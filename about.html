@@ -20,6 +20,42 @@
     "sameAs": ["https://www.linkedin.com/in/liran-bar-shrim-079079191"]
   }
   </script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "DefinedTerm",
+        "@id": "https://matrix-audit.com/terms/dar",
+        "name": "Decision Authority Record (DAR)",
+        "description": "A governance construct that defines a single named individual with explicit authority to stop a decision before it becomes irreversible.",
+        "creator": {
+          "@id": "https://matrix-audit.com/#liran"
+        }
+      },
+      {
+        "@type": "DefinedTerm",
+        "@id": "https://matrix-audit.com/terms/named-stop-authority",
+        "name": "Named Stop Authority",
+        "description": "A single identified individual explicitly authorized to halt a decision pathway before irreversibility.",
+        "isPartOf": {
+          "@id": "https://matrix-audit.com/terms/dar"
+        }
+      }
+    ]
+  }
+  </script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebPage",
+    "@id": "https://matrix-audit.com/about#page",
+    "name": "Liran Bar-Shrim — Decision Authority Research",
+    "description": "Liran Bar-Shrim focuses on stop authority. If no one is named in advance to stop a decision, the system does not actually know how to stop.",
+    "mainEntity": {"@id": "https://matrix-audit.com/#liran"},
+    "author": {"@id": "https://matrix-audit.com/#liran"}
+  }
+  </script>
   <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Playfair+Display:ital,wght@0,700;1,400&display=swap" rel="stylesheet">
   <style>
     :root{--bg:#090909;--surface:#111111;--gold:#c8a96e;--danger:#c0392b;--text:#e6e0d4;--muted:#a09a94;--dim:#7a7570;--border:#1e1e1e;--border2:#2a2a2a;}
@@ -82,7 +118,7 @@
   </div>
   <div class="block">
     <div class="block-label">Contact</div>
-    <p><a id="about-contact" href="/cdn-cgi/l/email-protection#cc80a5beada28ca0a5beada2aeadbebfa4bea5a1e2afa3a1" style="color:var(--gold);text-decoration:none;">Liran Bar-Shrim</a></p>
+    <p><a id="about-contact" href="mailto:Liran@liranbarshrim.com" style="color:var(--gold);text-decoration:none;">Liran Bar-Shrim</a></p>
   </div>
   <p style="font-size:13px;color:#c0392b;margin-top:8px;margin-bottom:32px;">If you cannot name the person &mdash; it is already happening.</p>
   <div class="footer">
@@ -105,6 +141,12 @@
   </div>
   <p class="copyright">&#169; 2026 Liran Bar-Shrim. All rights reserved.</p>
 </div>
-<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script data-cfasync="false">
+<script data-cfasync="false">
 (function(){
-  var u='Liran',d='liranbars
+  var u='Liran',d='liranbarshrim.com';
+  var el=document.getElementById('about-contact');
+  if(el){el.href='mailto:'+u+'@'+d;el.textContent=u+'@'+d;}
+})();
+</script>
+</body>
+</html>
