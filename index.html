@@ -31,7 +31,8 @@
     @keyframes fadeIn{from{opacity:0;transform:translateY(12px);}to{opacity:1;transform:translateY(0);}}
     .tag{font-size:10px;letter-spacing:0.15em;text-transform:uppercase;color:var(--muted);margin-bottom:40px;display:flex;align-items:center;gap:12px;}
     .tag::before{content:'';display:inline-block;width:20px;height:1px;background:var(--gold);}
-    h1{font-family:'Playfair Display',serif;font-size:clamp(26px,5vw,40px);font-weight:700;line-height:1.2;color:var(--text);margin-bottom:32px;border-left:3px solid var(--gold);padding-left:20px;}
+    h1{font-family:'Playfair Display',serif;font-size:clamp(26px,5vw,40px);font-weight:700;line-height:1.2;color:var(--text);margin-bottom:24px;border-left:3px solid var(--gold);padding-left:20px;}
+    .framing{font-family:'Playfair Display',serif;font-size:15px;color:var(--muted);padding-left:23px;margin-bottom:36px;line-height:1.75;font-style:italic;}
     .lead{font-size:14px;line-height:1.8;color:var(--muted);margin-bottom:48px;padding-left:23px;}
     .highlight{border-left:3px solid var(--gold);padding:16px 20px;margin-bottom:16px;background:var(--surface);font-size:15px;color:var(--text);font-style:italic;font-family:'Playfair Display',serif;}
     .statement{font-size:14px;line-height:1.8;color:var(--text);margin-top:0;margin-bottom:48px;padding-left:23px;font-weight:500;}
@@ -63,16 +64,18 @@
 
   <h1>The Architecture of Accountability</h1>
 
-  <p class="lead">Systems move. Decisions execute. Outcomes become irreversible.<br>The question is not what happened.<br>It's who was named to stop it before it became irreversible.</p>
+  <p class="framing">This is not a tool.<br>This is the moment someone must decide whether to stop.<br><br>Most organizations never define who that person is.</p>
+
+  <p class="lead">If this decision becomes irreversible &mdash;<br>will your name be the one that remains?</p>
 
   <div style="margin-bottom:48px; padding:20px; border-left:3px solid #c0392b; background:var(--surface); font-size:13px; color:var(--muted); line-height:1.7;">
     <strong style="color:var(--text); display:block; margin-bottom:8px; font-size:10px; letter-spacing:0.12em; text-transform:uppercase;">Exposure</strong>
-    If an irreversible decision causes harm, responsibility will not remain abstract.<br><br>
+    If this decision causes harm &mdash;<br>responsibility will not remain abstract.<br><br>
     It will resolve to a name.<br><br>
     If no name was defined in advance, accountability will be assigned after the fact.
   </div>
 
-  <div class="highlight">"We" removes the need for a single person to stop.</div>
+  <div class="highlight">&ldquo;We&rdquo; removes the need for a single person to stop.</div>
   <div class="highlight">The system cannot bear the cost.<br>Only a named individual can.</div>
 
   <p class="statement">When a decision becomes irreversible under uncertainty, someone must be named to stop it.</p>
@@ -80,8 +83,8 @@
   <div class="section">
     <div class="section-label">The Problem</div>
     <h2>No One Stops</h2>
-    <p>"We" is where responsibility disappears.</p>
-    <p>"We" diffuses responsibility. It creates a gap where oversight exists in language but not in reality.</p>
+    <p>&ldquo;We&rdquo; is where responsibility disappears.</p>
+    <p>&ldquo;We&rdquo; diffuses responsibility. It creates a gap where oversight exists in language but not in reality.</p>
     <table>
       <tr><th>Problem</th><th>Characteristic</th><th>Impact</th></tr>
       <tr><td>Many Hands</td><td>Agency is diffused</td><td>No one stops</td></tr>
@@ -122,8 +125,12 @@
   </div>
 
   <div class="conclusion">
-    <p class="final-line">Who is named to stop an irreversible decision?<br>If no one is named — no one stops.</p>
+    <p class="final-line">Who is named to stop an irreversible decision?<br>If no one is named &mdash; no one stops.<br><br>And when it fails &mdash; responsibility will not stay abstract.</p>
   </div>
+
+  <div class="highlight">Before your next irreversible decision &mdash;<br>who is explicitly named to stop it?</div>
+
+  <div class="highlight" style="border-left-color:#c0392b;">If you cannot name that person &mdash;<br>the system will not stop.</div>
 
   <div class="footer">
     <a href="dar.html">
@@ -164,7 +171,7 @@
     <a id="contact-banner" href="#">
       <div class="banner-left">
         <span class="banner-label">Contact</span>
-        <span class="banner-title">Start a conversation</span>
+        <span class="banner-title">When this becomes real &mdash; you will know</span>
       </div>
       <span class="banner-arrow">&#8594;</span>
     </a>
@@ -187,11 +194,11 @@
   <p class="copyright">&#169; 2026 Liran Bar-Shrim. All rights reserved.</p>
 
 </div>
-<script>
+<script data-cfasync="false">
 (function(){
   var u='Liran',d='liranbarshrim.com';
   var el=document.getElementById('contact-banner');
-  el.href='mailto:'+u+'@'+d;
+  if(el) el.href='mailto:'+u+'@'+d;
 })();
 </script>
 </body>
