@@ -8,327 +8,55 @@
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
 <style>
 :root {
-  --bg: #090909;
-  --surface: #111111;
-  --surface2: #0e0e0e;
-  --gold: #c8a96e;
-  --gold-dim: #a08050;
-  --text: #e6e0d4;
-  --muted: #b8b2ac;
-  --dim: #8a8480;
-  --faint: #6a6460;
-  --border: #2a2a2a;
-  --border1: #1e1e1e;
-  --danger: #c0392b;
+  --bg: #090909; --surface: #111111; --surface2: #0e0e0e;
+  --gold: #c8a96e; --gold-dim: #a08050; --text: #e6e0d4;
+  --muted: #b8b2ac; --dim: #8a8480; --faint: #6a6460;
+  --border: #2a2a2a; --border1: #1e1e1e; --danger: #c0392b;
 }
-
 * { margin: 0; padding: 0; box-sizing: border-box; }
-
 html { scroll-behavior: smooth; }
-
-body {
-  background: var(--bg);
-  color: var(--text);
-  font-family: 'Playfair Display', Georgia, serif;
-  line-height: 1.85;
-  min-height: 100vh;
-}
-
-/* grain overlay */
-body::before {
-  content: '';
-  position: fixed;
-  inset: 0;
-  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
-  pointer-events: none;
-  z-index: 0;
-  opacity: 0.4;
-}
-
-.container {
-  position: relative;
-  z-index: 1;
-  max-width: 700px;
-  margin: 0 auto;
-  padding: 80px 28px 100px;
-}
-
-/* header */
-.article-header {
-  margin-bottom: 72px;
-}
-
-.article-label {
-  font-family: 'IBM Plex Mono', monospace;
-  font-size: 10px;
-  letter-spacing: 0.2em;
-  text-transform: uppercase;
-  color: var(--gold);
-  margin-bottom: 24px;
-  display: block;
-}
-
-h1 {
-  font-family: 'Playfair Display', serif;
-  font-size: clamp(2rem, 5vw, 3rem);
-  font-weight: 700;
-  line-height: 1.15;
-  border-left: 3px solid var(--gold);
-  padding-left: 24px;
-  margin-bottom: 20px;
-  letter-spacing: -0.01em;
-}
-
-.article-sub {
-  font-family: 'IBM Plex Mono', monospace;
-  font-size: 13px;
-  color: var(--muted);
-  padding-left: 27px;
-  font-style: italic;
-}
-
-/* divider */
-.divider {
-  border: none;
-  border-top: 1px solid var(--border1);
-  margin: 48px 0;
-}
-
-/* section headings */
-.section-num {
-  font-family: 'IBM Plex Mono', monospace;
-  font-size: 11px;
-  letter-spacing: 0.15em;
-  text-transform: uppercase;
-  color: var(--gold-dim);
-  margin-bottom: 20px;
-  display: block;
-}
-
-/* body text */
-p {
-  margin-bottom: 18px;
-  font-size: 1.05rem;
-  color: var(--text);
-}
-
-p.muted {
-  color: var(--muted);
-}
-
-/* verse / quote block */
-.verse {
-  border-left: 1px solid var(--border);
-  padding: 4px 0 4px 22px;
-  margin: 24px 0;
-  color: var(--muted);
-  font-style: italic;
-}
-
-.verse p {
-  margin-bottom: 6px;
-  font-size: 1rem;
-  color: var(--muted);
-}
-
-/* mono block */
-.mono-block {
-  border: 1px solid var(--border);
-  padding: 24px 28px;
-  background: var(--surface2);
-  font-family: 'IBM Plex Mono', monospace;
-  font-size: 0.82rem;
-  line-height: 1.9;
-  margin: 32px 0;
-  color: var(--muted);
-}
-
-.mono-block .strong {
-  color: var(--text);
-  font-weight: 500;
-}
-
-/* pull quote */
-.pull {
-  border-left: 3px solid var(--gold);
-  padding: 18px 22px;
-  background: var(--surface);
-  margin: 32px 0;
-  font-style: italic;
-  font-size: 1.05rem;
-  color: var(--text);
-  line-height: 1.7;
-}
-
-/* function tags */
-.functions {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
-  margin: 24px 0;
-}
-
-.fn {
-  border: 1px solid var(--border);
-  padding: 5px 13px;
-  font-family: 'IBM Plex Mono', monospace;
-  font-size: 11px;
-  letter-spacing: 0.08em;
-  color: var(--muted);
-  text-transform: uppercase;
-}
-
-.fn.missing {
-  color: var(--danger);
-  border-color: var(--danger);
-  background: rgba(192, 57, 43, 0.06);
-}
-
-/* slope */
-.slope {
-  background: var(--surface);
-  border: 1px solid var(--border1);
-  padding: 28px;
-  margin: 32px 0;
-  font-family: 'IBM Plex Mono', monospace;
-  font-size: 0.82rem;
-  color: var(--muted);
-  line-height: 2;
-}
-
-.slope .arrow {
-  color: var(--gold-dim);
-  display: block;
-  margin: 2px 0;
-}
-
-/* closing section */
-.closing {
-  margin-top: 64px;
-  padding-top: 40px;
-  border-top: 1px solid var(--border1);
-}
-
-.final-question {
-  font-size: 1.15rem;
-  font-style: italic;
-  color: var(--text);
-  line-height: 1.7;
-  margin-bottom: 32px;
-}
-
-.final-statement {
-  font-family: 'IBM Plex Mono', monospace;
-  font-size: 0.82rem;
-  color: var(--muted);
-  line-height: 2;
-  border: 1px solid var(--border);
-  padding: 28px;
-  background: var(--surface2);
-}
-
-.final-statement .strong {
-  color: var(--text);
-  font-weight: 500;
-}
-
-/* footer links */
-.footer {
-  border-top: 1px solid var(--border);
-  padding-top: 40px;
-  margin-top: 80px;
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-}
-
-.footer a {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 18px 22px;
-  text-decoration: none;
-  border: 1px solid var(--border);
-  background: var(--surface);
-  transition: border-color 0.2s, background 0.2s;
-  gap: 16px;
-}
-
-.footer a:hover {
-  border-color: var(--gold);
-  background: #161410;
-}
-
+body { background: var(--bg); color: var(--text); font-family: 'Playfair Display', Georgia, serif; line-height: 1.85; min-height: 100vh; }
+body::before { content: ''; position: fixed; inset: 0; background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E"); pointer-events: none; z-index: 0; opacity: 0.4; }
+.container { position: relative; z-index: 1; max-width: 700px; margin: 0 auto; padding: 80px 28px 100px; }
+.article-header { margin-bottom: 72px; }
+.article-label { font-family: 'IBM Plex Mono', monospace; font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--gold); margin-bottom: 24px; display: block; }
+h1 { font-family: 'Playfair Display', serif; font-size: clamp(2rem, 5vw, 3rem); font-weight: 700; line-height: 1.15; border-left: 3px solid var(--gold); padding-left: 24px; margin-bottom: 20px; letter-spacing: -0.01em; }
+.article-sub { font-family: 'IBM Plex Mono', monospace; font-size: 13px; color: var(--muted); padding-left: 27px; font-style: italic; }
+.divider { border: none; border-top: 1px solid var(--border1); margin: 48px 0; }
+.section-num { font-family: 'IBM Plex Mono', monospace; font-size: 11px; letter-spacing: 0.15em; text-transform: uppercase; color: var(--gold-dim); margin-bottom: 20px; display: block; }
+p { margin-bottom: 18px; font-size: 1.05rem; color: var(--text); }
+p.muted { color: var(--muted); }
+.verse { border-left: 1px solid var(--border); padding: 4px 0 4px 22px; margin: 24px 0; color: var(--muted); font-style: italic; }
+.verse p { margin-bottom: 6px; font-size: 1rem; color: var(--muted); }
+.mono-block { border: 1px solid var(--border); padding: 24px 28px; background: var(--surface2); font-family: 'IBM Plex Mono', monospace; font-size: 0.82rem; line-height: 1.9; margin: 32px 0; color: var(--muted); }
+.mono-block .strong { color: var(--text); font-weight: 500; }
+.pull { border-left: 3px solid var(--gold); padding: 18px 22px; background: var(--surface); margin: 32px 0; font-style: italic; font-size: 1.05rem; color: var(--text); line-height: 1.7; }
+.functions { display: flex; flex-wrap: wrap; gap: 8px; margin: 24px 0; }
+.fn { border: 1px solid var(--border); padding: 5px 13px; font-family: 'IBM Plex Mono', monospace; font-size: 11px; letter-spacing: 0.08em; color: var(--muted); text-transform: uppercase; }
+.fn.missing { color: var(--danger); border-color: var(--danger); background: rgba(192, 57, 43, 0.06); }
+.slope { background: var(--surface); border: 1px solid var(--border1); padding: 28px; margin: 32px 0; font-family: 'IBM Plex Mono', monospace; font-size: 0.82rem; color: var(--muted); line-height: 2; }
+.slope .arrow { color: var(--gold-dim); display: block; margin: 2px 0; }
+.closing { margin-top: 64px; padding-top: 40px; border-top: 1px solid var(--border1); }
+.final-question { font-size: 1.15rem; font-style: italic; color: var(--text); line-height: 1.7; margin-bottom: 32px; }
+.final-statement { font-family: 'IBM Plex Mono', monospace; font-size: 0.82rem; color: var(--muted); line-height: 2; border: 1px solid var(--border); padding: 28px; background: var(--surface2); }
+.final-statement .strong { color: var(--text); font-weight: 500; }
+.footer { border-top: 1px solid var(--border); padding-top: 40px; margin-top: 80px; display: flex; flex-direction: column; gap: 10px; }
+.footer a { display: flex; align-items: center; justify-content: space-between; padding: 18px 22px; text-decoration: none; border: 1px solid var(--border); background: var(--surface); transition: border-color 0.2s, background 0.2s; gap: 16px; }
+.footer a:hover { border-color: var(--gold); background: #161410; }
 .footer a:hover .banner-arrow { color: var(--gold); }
-
-.footer a.cta {
-  border-color: var(--gold);
-  background: #13110d;
-}
-
+.footer a.cta { border-color: var(--gold); background: #13110d; }
 .footer a.cta .banner-title { color: var(--gold); }
-
-.banner-left {
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
-}
-
-.banner-label {
-  font-size: 10px;
-  letter-spacing: 0.15em;
-  text-transform: uppercase;
-  color: var(--gold);
-  font-family: 'IBM Plex Mono', monospace;
-}
-
-.banner-title {
-  font-size: 14px;
-  color: var(--text);
-  font-family: 'Playfair Display', serif;
-}
-
-.banner-arrow {
-  font-size: 20px;
-  color: var(--muted);
-  flex-shrink: 0;
-  transition: color 0.2s;
-}
-
+.banner-left { display: flex; flex-direction: column; gap: 4px; }
+.banner-label { font-size: 10px; letter-spacing: 0.15em; text-transform: uppercase; color: var(--gold); font-family: 'IBM Plex Mono', monospace; }
+.banner-title { font-size: 14px; color: var(--text); font-family: 'Playfair Display', serif; }
+.banner-arrow { font-size: 20px; color: var(--muted); flex-shrink: 0; transition: color 0.2s; }
+.copyright { margin-top: 32px; font-size: 11px; color: var(--faint); letter-spacing: 0.05em; font-family: 'IBM Plex Mono', monospace; }
 @media (max-width: 600px) {
-  .container {
-    padding: 48px 18px 72px;
-  }
-  h1 {
-    font-size: 1.7rem;
-    padding-left: 16px;
-  }
-  .mono-block, .slope, .final-statement {
-    padding: 18px 16px;
-    font-size: 0.78rem;
-  }
-  .pull {
-    padding: 14px 16px;
-    font-size: 0.97rem;
-  }
-  .functions {
-    gap: 6px;
-  }
-  .fn {
-    font-size: 10px;
-    padding: 4px 10px;
-  }
-  .footer a {
-    padding: 14px 16px;
-  }
-}
-
-.copyright {
-  margin-top: 32px;
-  font-size: 11px;
-  color: var(--faint);
-  letter-spacing: 0.05em;
-  font-family: 'IBM Plex Mono', monospace;
+  .container { padding: 48px 18px 72px; }
+  h1 { font-size: 1.7rem; padding-left: 16px; }
+  .mono-block, .slope, .final-statement { padding: 18px 16px; font-size: 0.78rem; }
+  .pull { padding: 14px 16px; font-size: 0.97rem; }
+  .footer a { padding: 14px 16px; }
 }
 </style>
 </head>
@@ -336,14 +64,13 @@ p.muted {
 <div class="container">
 
   <header class="article-header">
-    <span class="article-label">DAR — Decision Accountability Record</span>
+    <span class="article-label">decision authority research</span>
     <h1>The Death of &ldquo;We&rdquo;</h1>
     <p class="article-sub">At some point, this will no longer be &ldquo;We.&rdquo;</p>
   </header>
 
   <hr class="divider">
 
-  <!-- I -->
   <section>
     <span class="section-num">I.</span>
     <div class="verse">
@@ -367,7 +94,6 @@ p.muted {
 
   <hr class="divider">
 
-  <!-- II -->
   <section>
     <span class="section-num">II.</span>
     <p>Consensus is mistaken for control.</p>
@@ -381,7 +107,6 @@ p.muted {
 
   <hr class="divider">
 
-  <!-- III -->
   <section>
     <span class="section-num">III.</span>
     <p>Every system has its functions:</p>
@@ -392,14 +117,11 @@ p.muted {
       <span class="fn">Execute</span>
       <span class="fn missing">Stop &mdash; missing</span>
     </div>
-    <div class="pull">Stop &mdash; missing</div>
-    <p>Without an explicit Stop, progress becomes automatic.</p>
     <div class="pull">Without someone required to stop,<br>even good people do not stop.</div>
   </section>
 
   <hr class="divider">
 
-  <!-- IV -->
   <section>
     <span class="section-num">IV.</span>
     <p>A process starts.<br>Momentum builds.<br>No one interrupts.</p>
@@ -408,7 +130,6 @@ p.muted {
 
   <hr class="divider">
 
-  <!-- V -->
   <section>
     <span class="section-num">V.</span>
     <div class="slope">
@@ -423,7 +144,6 @@ p.muted {
 
   <hr class="divider">
 
-  <!-- VI -->
   <section>
     <span class="section-num">VI.</span>
     <p>Replace &ldquo;We&rdquo; with a name.</p>
@@ -435,21 +155,17 @@ p.muted {
     <div class="pull">That is exactly why it is avoided.</div>
   </section>
 
-  <!-- Closing -->
   <div class="closing">
-
     <p class="final-question">
       Who is explicitly required to stop<br>
       before a decision becomes irreversible?
     </p>
-
     <div class="final-statement">
       At the moment of an irreversible decision under uncertainty,<br><br>
       the risk does not disappear.<br><br>
       It concentrates &mdash;<br><br>
       <span class="strong">on whoever signs.</span>
     </div>
-
     <div class="pull" style="margin-top:16px;">
       After every failure, the same line appears:<br><br>
       &ldquo;Someone should have stopped this.&rdquo;<br><br>
@@ -458,14 +174,12 @@ p.muted {
       <strong>If no one was named,<br>
       no one was supposed to stop it.</strong>
     </div>
-
   </div>
 
-  <!-- Footer -->
   <nav class="footer">
     <a href="dar.html" class="cta">
       <div class="banner-left">
-        <span class="banner-label">DAR&trade;</span>
+        <span class="banner-label">DAR</span>
         <span class="banner-title">Name the stop.</span>
       </div>
       <span class="banner-arrow">&#8594;</span>
@@ -480,7 +194,7 @@ p.muted {
     <a id="contact-link" href="#">
       <div class="banner-left">
         <span class="banner-label">Contact</span>
-        <span class="banner-title" id="contact-display">Contact</span>
+        <span class="banner-title" id="contact-display">Liran Bar-Shrim</span>
       </div>
       <span class="banner-arrow">&#8594;</span>
     </a>
@@ -496,16 +210,14 @@ p.muted {
   <p class="copyright">&#169; 2026 Liran Bar-Shrim. All rights reserved.</p>
 
 </div>
-
 <script data-cfasync="false">
-(function() {
-  var u = 'Liran';
-  var d = 'liranbarshrim' + '.' + 'com';
-  var e = u + '@' + d;
-  var el = document.getElementById('contact-link');
-  var disp = document.getElementById('contact-display');
-  if (el) el.href = 'mailto:' + e;
-  if (disp) disp.textContent = e;
+(function(){
+  var u='Liran', d='liranbarshrim.com';
+  var e=u+'@'+d;
+  var el=document.getElementById('contact-link');
+  var disp=document.getElementById('contact-display');
+  if(el) el.href='mailto:'+e;
+  if(disp) disp.textContent=e;
 })();
 </script>
 </body>
