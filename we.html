@@ -3,273 +3,482 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>The Death of "We"</title>
-<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Playfair+Display:wght@400;700&display=swap" rel="stylesheet">
+<title>The Death of "We" — Liran Bar-Shrim</title>
+<meta name="description" content="At some point, this will no longer be We. On accountability, stop authority, and why no one stops.">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
 <style>
 :root {
-  --bg:#090909;
-  --surface:#111111;
-  --gold:#c8a96e;
-  --text:#e6e0d4;
-  --muted:#a09a94;
-  --dim:#7a7570;
-  --border:#2a2a2a;
-  --border1:#1e1e1e;
+  --bg: #090909;
+  --surface: #111111;
+  --surface2: #0e0e0e;
+  --gold: #c8a96e;
+  --gold-dim: #8a7048;
+  --text: #e6e0d4;
+  --muted: #a09a94;
+  --dim: #7a7570;
+  --faint: #52504c;
+  --border: #2a2a2a;
+  --border1: #1e1e1e;
+  --danger: #c0392b;
 }
-* {margin:0;padding:0;box-sizing:border-box;}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+html { scroll-behavior: smooth; }
+
 body {
-  background:var(--bg);
-  color:var(--text);
-  font-family:'Playfair Display', serif;
-  line-height:1.8;
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'Playfair Display', Georgia, serif;
+  line-height: 1.85;
+  min-height: 100vh;
 }
+
+/* grain overlay */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+  pointer-events: none;
+  z-index: 0;
+  opacity: 0.4;
+}
+
 .container {
-  max-width:720px;
-  margin:auto;
-  padding:80px 24px;
+  position: relative;
+  z-index: 1;
+  max-width: 700px;
+  margin: 0 auto;
+  padding: 80px 28px 100px;
 }
+
+/* header */
+.article-header {
+  margin-bottom: 72px;
+}
+
+.article-label {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 24px;
+  display: block;
+}
+
 h1 {
-  border-left:3px solid var(--gold);
-  padding-left:20px;
-  margin-bottom:60px;
-  font-size:2.4rem;
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(2rem, 5vw, 3rem);
+  font-weight: 700;
+  line-height: 1.15;
+  border-left: 3px solid var(--gold);
+  padding-left: 24px;
+  margin-bottom: 20px;
+  letter-spacing: -0.01em;
 }
-h2 {
-  margin:60px 0 20px;
-  font-size:1.4rem;
+
+.article-sub {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 13px;
+  color: var(--muted);
+  padding-left: 27px;
+  font-style: italic;
 }
-p { margin-bottom:20px; }
+
+/* divider */
+.divider {
+  border: none;
+  border-top: 1px solid var(--border1);
+  margin: 48px 0;
+}
+
+/* section headings */
+.section-num {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 11px;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--gold-dim);
+  margin-bottom: 20px;
+  display: block;
+}
+
+/* body text */
+p {
+  margin-bottom: 18px;
+  font-size: 1.05rem;
+  color: var(--text);
+}
+
+p.muted {
+  color: var(--muted);
+}
+
+/* verse / quote block */
 .verse {
-  border-left:1px solid var(--border);
-  padding-left:20px;
-  margin:20px 0;
-  color:var(--muted);
-  font-style:italic;
+  border-left: 1px solid var(--border);
+  padding: 4px 0 4px 22px;
+  margin: 24px 0;
+  color: var(--muted);
+  font-style: italic;
 }
+
+.verse p {
+  margin-bottom: 6px;
+  font-size: 1rem;
+  color: var(--muted);
+}
+
+/* mono block */
+.mono-block {
+  border: 1px solid var(--border);
+  padding: 24px 28px;
+  background: var(--surface2);
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 0.82rem;
+  line-height: 1.9;
+  margin: 32px 0;
+  color: var(--muted);
+}
+
+.mono-block .strong {
+  color: var(--text);
+  font-weight: 500;
+}
+
+/* pull quote */
 .pull {
-  border-left:3px solid var(--gold);
-  padding:20px;
-  background:var(--surface);
-  margin:40px 0;
-  font-style:italic;
+  border-left: 3px solid var(--gold);
+  padding: 18px 22px;
+  background: var(--surface);
+  margin: 32px 0;
+  font-style: italic;
+  font-size: 1.05rem;
+  color: var(--text);
+  line-height: 1.7;
 }
-.gas {
-  border:1px solid var(--border);
-  padding:24px;
-  background:#0e0e0e;
-  font-family:'IBM Plex Mono', monospace;
-  font-size:0.85rem;
-  line-height:1.8;
-  margin:40px 0;
-  color:var(--muted);
-}
-.gas .strong { color:var(--text); }
+
+/* function tags */
 .functions {
-  display:flex;
-  flex-wrap:wrap;
-  gap:10px;
-  margin:20px 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 24px 0;
 }
+
 .fn {
-  border:1px solid var(--border);
-  padding:6px 12px;
-  font-family:'IBM Plex Mono';
-  font-size:12px;
+  border: 1px solid var(--border);
+  padding: 5px 13px;
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  color: var(--muted);
+  text-transform: uppercase;
 }
+
 .fn.missing {
-  color:#c0392b;
-  border-color:#c0392b;
+  color: var(--danger);
+  border-color: var(--danger);
+  background: rgba(192, 57, 43, 0.06);
 }
+
+/* slope */
 .slope {
-  background:var(--surface);
-  padding:24px;
-  margin:40px 0;
-  font-family:'IBM Plex Mono';
-  font-size:0.85rem;
-  color:var(--muted);
+  background: var(--surface);
+  border: 1px solid var(--border1);
+  padding: 28px;
+  margin: 32px 0;
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 0.82rem;
+  color: var(--muted);
+  line-height: 2;
 }
+
+.slope .arrow {
+  color: var(--gold-dim);
+  display: block;
+  margin: 2px 0;
+}
+
+/* closing section */
+.closing {
+  margin-top: 64px;
+  padding-top: 40px;
+  border-top: 1px solid var(--border1);
+}
+
+.final-question {
+  font-size: 1.15rem;
+  font-style: italic;
+  color: var(--text);
+  line-height: 1.7;
+  margin-bottom: 32px;
+}
+
+.final-statement {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 0.82rem;
+  color: var(--muted);
+  line-height: 2;
+  border: 1px solid var(--border);
+  padding: 28px;
+  background: var(--surface2);
+}
+
+.final-statement .strong {
+  color: var(--text);
+  font-weight: 500;
+}
+
+/* footer links */
 .footer {
-  border-top:1px solid var(--border);
-  padding-top:36px;
-  margin-top:80px;
-  display:flex;
-  flex-direction:column;
-  gap:14px;
+  border-top: 1px solid var(--border);
+  padding-top: 40px;
+  margin-top: 80px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
 }
+
 .footer a {
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  padding:18px 22px;
-  text-decoration:none;
-  border:1px solid var(--border);
-  background:var(--surface);
-  transition:border-color 0.2s, background 0.2s;
-  gap:16px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 18px 22px;
+  text-decoration: none;
+  border: 1px solid var(--border);
+  background: var(--surface);
+  transition: border-color 0.2s, background 0.2s;
+  gap: 16px;
 }
+
 .footer a:hover {
-  border-color:var(--gold);
-  background:#161410;
+  border-color: var(--gold);
+  background: #161410;
 }
-.footer a:hover .banner-arrow { color:var(--gold); }
+
+.footer a:hover .banner-arrow { color: var(--gold); }
+
 .footer a.cta {
-  border-color:var(--gold);
-  background:#13110d;
+  border-color: var(--gold);
+  background: #13110d;
 }
-.footer a.cta .banner-title { color:var(--gold); }
+
+.footer a.cta .banner-title { color: var(--gold); }
+
 .banner-left {
-  display:flex;
-  flex-direction:column;
-  gap:4px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
 }
+
 .banner-label {
-  font-size:10px;
-  letter-spacing:0.15em;
-  text-transform:uppercase;
-  color:var(--gold);
-  font-family:'IBM Plex Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--gold);
+  font-family: 'IBM Plex Mono', monospace;
 }
+
 .banner-title {
-  font-size:14px;
-  color:var(--text);
-  font-family:'Playfair Display', serif;
+  font-size: 14px;
+  color: var(--text);
+  font-family: 'Playfair Display', serif;
 }
+
 .banner-arrow {
-  font-size:20px;
-  color:var(--muted);
-  flex-shrink:0;
-  transition:color 0.2s;
+  font-size: 20px;
+  color: var(--muted);
+  flex-shrink: 0;
+  transition: color 0.2s;
 }
+
 .copyright {
-  margin-top:28px;
-  font-size:11px;
-  color:var(--dim);
-  letter-spacing:0.05em;
-  font-family:'IBM Plex Mono', monospace;
+  margin-top: 32px;
+  font-size: 11px;
+  color: var(--faint);
+  letter-spacing: 0.05em;
+  font-family: 'IBM Plex Mono', monospace;
 }
 </style>
 </head>
 <body>
 <div class="container">
 
-<h1>The Death of "We"</h1>
+  <header class="article-header">
+    <span class="article-label">DAR — Decision Accountability Record</span>
+    <h1>The Death of &ldquo;We&rdquo;</h1>
+    <p class="article-sub">At some point, this will no longer be &ldquo;We.&rdquo;</p>
+  </header>
 
-<p style="color:var(--muted);">At some point, this will not be "We".</p>
+  <hr class="divider">
 
-<h2>I</h2>
-<div class="verse">
-<p>In the boardroom, everyone says "We."</p>
-<p>"We approved."</p>
-<p>"We're moving forward."</p>
-</div>
-<p>It sounds safe. It feels aligned.</p>
-<p>It isn't.</p>
-<p style="color:var(--muted); margin-top:10px;">Not always<br>But at a specific moment.</p>
-<p>When something goes wrong, "We" disappears. No one is responsible.</p>
-<div class="gas">
-<span class="strong">Responsibility shared by everyone</span><br>
-<span class="strong">is responsibility avoided by anyone.</span><br><br>
-It behaves like gas.<br><br>
-It expands to fill the space.<br>
-<span class="strong">It applies no pressure.</span><br>
-<span class="strong">It supports no weight.</span>
-</div>
-
-<h2>II</h2>
-<p>Consensus is mistaken for control.</p>
-<div class="verse">
-<p>If enough people agree, it must be correct.</p>
-<p>If enough people approve, it must be safe.</p>
-</div>
-<p>No one feels the weight of stopping.</p>
-<div class="pull">And when no one feels it, no one stops it.</div>
-
-<h2>III</h2>
-<p>Every system has functions:</p>
-<div class="functions">
-<span class="fn">Initiate</span>
-<span class="fn">Review</span>
-<span class="fn">Approve</span>
-<span class="fn">Execute</span>
-<span class="fn missing">Stop &#8212; missing</span>
-</div>
-<p>Without stopping, progress becomes automatic.</p>
-<div class="pull">Without someone explicitly required to stop, there is only motion.</div>
-<div class="pull">When no one is explicitly required to stop, even good people do not stop.</div>
-
-<h2>IV</h2>
-<p>A process starts.</p>
-<p>Momentum builds.</p>
-<p>No one interrupts.</p>
-<p>And so it continues.</p>
-
-<h2>V</h2>
-<div class="slope">
-"We can still stop"<br>
-&#8595;<br>
-No alert. No escalation.<br>
-&#8595;<br>
-"We are already committed"
-</div>
-<div class="pull">This is not a cliff. It is a slope.</div>
-
-<h2>VI</h2>
-<p>Replace "We" with a name.</p>
-<p>One person explicitly required to stop.</p>
-<p>Responsibility without authority is punishment. Authority without responsibility is risk.</p>
-<div class="pull">That is exactly why it is avoided.</div>
-<div class="pull">
-Who is explicitly required to stop<br>
-before a decision becomes irreversible?
-</div>
-
-<div class="gas" style="margin-top:60px;">
-At the moment of an irreversible decision under uncertainty<br><br>
-the risk does not disappear<br><br>
-It concentrates<br><br>
-<span class="strong">On whoever signs.</span>
-</div>
-
-<div class="gas" style="margin-top:20px;">
-<span class="strong">After every failure, the same line appears:</span><br><br>
-"Someone should have stopped this."<br><br>
-<span class="strong">The only question:</span><br>
-Who was supposed to stop it — and why was that never defined in advance.<br><br>
-<span class="strong">If no one was named, no one was supposed to stop it.</span>
-</div>
-
-<div class="footer">
-  <a href="dar.html" class="cta">
-    <div class="banner-left">
-      <span class="banner-label">DAR</span>
-      <span class="banner-title">Name the stop.</span>
+  <!-- I -->
+  <section>
+    <span class="section-num">I.</span>
+    <div class="verse">
+      <p>In the boardroom, everyone says &ldquo;We.&rdquo;</p>
+      <p>&ldquo;We approved.&rdquo;</p>
+      <p>&ldquo;We&rsquo;re moving forward.&rdquo;</p>
     </div>
-    <span class="banner-arrow">&#8594;</span>
-  </a>
-  <a href="index.html">
-    <div class="banner-left">
-      <span class="banner-label">Home</span>
-      <span class="banner-title">The Architecture of Accountability</span>
+    <p>It sounds safe. It feels aligned.</p>
+    <p>It isn&rsquo;t.</p>
+    <p class="muted">Not always.<br>But at one specific moment &mdash; when something goes wrong &mdash; &ldquo;We&rdquo; disappears.</p>
+    <p>No one is responsible.</p>
+    <div class="mono-block">
+      <span class="strong">Responsibility shared by everyone<br>
+      is responsibility avoided by anyone.</span><br><br>
+      It behaves like gas:<br><br>
+      It expands to fill the space.<br>
+      <span class="strong">It applies no pressure.<br>
+      It supports no weight.</span>
     </div>
-    <span class="banner-arrow">&#8594;</span>
-  </a>
-  <a id="contact-we" href="#">
-    <div class="banner-left">
-      <span class="banner-label">Contact</span>
-      <span class="banner-title">Liran@liranbarshrim.com</span>
+  </section>
+
+  <hr class="divider">
+
+  <!-- II -->
+  <section>
+    <span class="section-num">II.</span>
+    <p>Consensus is mistaken for control.</p>
+    <div class="verse">
+      <p>If enough people agree, it must be correct.</p>
+      <p>If enough people approve, it must be safe.</p>
     </div>
-    <span class="banner-arrow">&#8594;</span>
-  </a>
-  <a href="https://github.com/liranbarshrim-ui/human-stop-boundary" target="_blank">
-    <div class="banner-left">
-      <span class="banner-label">Source</span>
-      <span class="banner-title">See how this is built</span>
+    <p>No one feels the weight of stopping.</p>
+    <div class="pull">And when no one feels it &mdash; no one stops.</div>
+  </section>
+
+  <hr class="divider">
+
+  <!-- III -->
+  <section>
+    <span class="section-num">III.</span>
+    <p>Every system has its functions:</p>
+    <div class="functions">
+      <span class="fn">Initiate</span>
+      <span class="fn">Review</span>
+      <span class="fn">Approve</span>
+      <span class="fn">Execute</span>
+      <span class="fn missing">Stop &mdash; missing</span>
     </div>
-    <span class="banner-arrow">&#8594;</span>
-  </a>
+    <div class="pull">Stop &mdash; missing</div>
+    <p>Without an explicit Stop, progress becomes automatic.</p>
+    <div class="pull">Without someone required to stop,<br>even good people do not stop.</div>
+  </section>
+
+  <hr class="divider">
+
+  <!-- IV -->
+  <section>
+    <span class="section-num">IV.</span>
+    <p>A process starts.<br>Momentum builds.<br>No one interrupts.</p>
+    <p class="muted">And so it continues &mdash;<br>until it can&rsquo;t.</p>
+  </section>
+
+  <hr class="divider">
+
+  <!-- V -->
+  <section>
+    <span class="section-num">V.</span>
+    <div class="slope">
+      &ldquo;We can still stop.&rdquo;<br>
+      <span class="arrow">&#8595;</span>
+      No alert. No escalation.<br>
+      <span class="arrow">&#8595;</span>
+      &ldquo;We are already committed.&rdquo;
+    </div>
+    <div class="pull">This is not a cliff.<br>It is a slope.</div>
+  </section>
+
+  <hr class="divider">
+
+  <!-- VI -->
+  <section>
+    <span class="section-num">VI.</span>
+    <p>Replace &ldquo;We&rdquo; with a name.</p>
+    <p>One person explicitly required to stop.</p>
+    <div class="mono-block">
+      <span class="strong">Responsibility without authority is punishment.<br>
+      Authority without responsibility is risk.</span>
+    </div>
+    <div class="pull">That is exactly why it is avoided.</div>
+  </section>
+
+  <!-- Closing -->
+  <div class="closing">
+
+    <p class="final-question">
+      Who is explicitly required to stop<br>
+      before a decision becomes irreversible?
+    </p>
+
+    <div class="final-statement">
+      At the moment of an irreversible decision under uncertainty,<br><br>
+      the risk does not disappear.<br><br>
+      It concentrates &mdash;<br><br>
+      <span class="strong">on whoever signs.</span>
+    </div>
+
+    <div class="pull" style="margin-top:16px;">
+      After every failure, the same line appears:<br><br>
+      &ldquo;Someone should have stopped this.&rdquo;<br><br>
+      Who was supposed to stop it &mdash;<br>
+      and why was that never defined in advance?<br><br>
+      <strong>If no one was named,<br>
+      no one was supposed to stop it.</strong>
+    </div>
+
+  </div>
+
+  <!-- Footer -->
+  <nav class="footer">
+    <a href="dar.html" class="cta">
+      <div class="banner-left">
+        <span class="banner-label">DAR&trade;</span>
+        <span class="banner-title">Name the stop.</span>
+      </div>
+      <span class="banner-arrow">&#8594;</span>
+    </a>
+    <a href="index.html">
+      <div class="banner-left">
+        <span class="banner-label">Home</span>
+        <span class="banner-title">The Architecture of Accountability</span>
+      </div>
+      <span class="banner-arrow">&#8594;</span>
+    </a>
+    <a id="contact-link" href="#">
+      <div class="banner-left">
+        <span class="banner-label">Contact</span>
+        <span class="banner-title" id="contact-display">Contact</span>
+      </div>
+      <span class="banner-arrow">&#8594;</span>
+    </a>
+    <a href="https://github.com/liranbarshrim-ui/human-stop-boundary" target="_blank" rel="noopener">
+      <div class="banner-left">
+        <span class="banner-label">Source</span>
+        <span class="banner-title">See how this is built</span>
+      </div>
+      <span class="banner-arrow">&#8594;</span>
+    </a>
+  </nav>
+
+  <p class="copyright">&#169; 2026 Liran Bar-Shrim. All rights reserved.</p>
+
 </div>
 
-<p class="copyright">&#169; 2026 Liran Bar-Shrim. All rights reserved.</p>
-
-</div>
-<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-st
+<script data-cfasync="false">
+(function() {
+  var u = 'Liran';
+  var d = 'liranbarshrim' + '.' + 'com';
+  var e = u + '@' + d;
+  var el = document.getElementById('contact-link');
+  var disp = document.getElementById('contact-display');
+  if (el) el.href = 'mailto:' + e;
+  if (disp) disp.textContent = e;
+})();
+</script>
+</body>
+</html>
