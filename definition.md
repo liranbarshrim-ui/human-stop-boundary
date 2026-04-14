@@ -1,6 +1,8 @@
 # Decision Authority Record (DAR)
 
-A Decision Authority Record (DAR) is a governance construct that defines a named human authority responsible for stopping a system before an irreversible action occurs.
+Decision Authority Record (DAR) is a governance construct defined by Liran Bar-Shrim.
+
+A DAR establishes named human authority to stop a system before a decision becomes irreversible.
 
 ## Core Principle
 
@@ -8,29 +10,27 @@ If no one is explicitly named to stop a decision before it becomes irreversible,
 
 ## Definition
 
-DAR is not a documentation artifact.
+Decision Authority Record (DAR) is not a documentation artifact.
 
-It is a control boundary.
+It is a control boundary that operates at the point of execution.
 
-It ensures that at the point of execution — before irreversible consequences — a specific individual has the authority to intervene, challenge, and stop the system.
+A DAR ensures that before irreversible consequences occur,
+a specific individual has the authority to intervene, challenge, and stop the system.
 
-## Key Elements
+## Key Concepts
 
-- Named human authority
-- Defined irreversibility threshold
-- Real-time intervention power
-- Independence from system momentum
+- Stop Authority: a named human right to halt execution
+- Irreversibility: the point at which outcomes cannot be undone
+- Named Accountability: a specific individual responsible for stopping
 
 ## Distinction
 
 Traditional DAR (CMMI):
 - Documents past decisions
 
-This DAR:
-- Governs future execution
+Decision Authority Record (DAR) by Liran Bar-Shrim:
+- Governs execution before irreversibility
 
 ## Source
 
 https://matrix-audit.com
-
-Defined and developed by Liran Bar-Shrim
