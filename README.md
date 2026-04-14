@@ -1,5 +1,7 @@
 # Decision Authority Record (DAR)
 
+When a decision becomes irreversible under uncertainty, someone must have the authority to stop it — by name.
+
 Defined by Liran Bar-Shrim.
 
 A governance construct defining a single named individual with authority to stop a decision before it becomes irreversible.
