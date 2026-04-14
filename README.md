@@ -1,11 +1,11 @@
-# Decision Authority Record (DAR)
-
-Defined by Liran Bar-Shrim
+When a decision becomes irreversible under uncertainty,
+someone must have the authority to stop it — by name.
 
 ---
 
-When a decision becomes irreversible under uncertainty,
-someone must have the authority to stop it — by name.
+# Decision Authority Record (DAR)
+
+Defined by Liran Bar-Shrim
 
 ---
 
@@ -48,5 +48,5 @@ accountability will manifest as blame.
 
 ---
 
-Liran Bar-Shrim
+Liran Bar-Shrim  
 https://matrix-audit.com
