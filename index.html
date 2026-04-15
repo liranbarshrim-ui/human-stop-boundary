@@ -224,7 +224,7 @@
       <div class="banner-left"><span class="banner-label">Good Faith Use</span><span class="banner-title">Understand the scope</span></div>
       <span class="banner-arrow">&#8594;</span>
     </a>
-    <a id="contact-banner" href="/cdn-cgi/l/email-protection#e8a4819a8986a884819a89868a899a9b809a8185c68b8785">
+    <a id="contact-banner" href="#">
       <div class="banner-left"><span class="banner-label">Contact</span><span class="banner-title">When this becomes real &mdash; you will know</span></div>
       <span class="banner-arrow">&#8594;</span>
     </a>
@@ -237,6 +237,11 @@
   <p class="copyright">&#169; 2026 Liran Bar-Shrim. All rights reserved.</p>
 
 </div>
-<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script data-cfasync="false">
+<script>
 (function(){
-  var 
+  var u = "Liran" + "@" + "liranbarshrim.com";
+  document.getElementById('contact-banner').setAttribute('href','mailto:' + u);
+})();
+</script>
+</body>
+</html>
