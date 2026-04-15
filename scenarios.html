@@ -9,7 +9,7 @@
   <style>
     :root {
       --bg:#090909; --surface:#111111; --gold:#c8a96e;
-      --danger:#c0392b; --text:#e6e0d4; --muted:#b8b2ac;
+      --danger:#c0392b; --green:#3d9970; --text:#e6e0d4; --muted:#b8b2ac;
       --dim:#7a7570; --border:#1e1e1e; --border2:#2a2a2a;
     }
     *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
@@ -35,6 +35,52 @@
 
     .question{margin-top:28px;font-family:'Playfair Display',serif;font-size:17px;color:var(--text);line-height:1.5;}
     .answer{margin-top:10px;font-size:13px;color:var(--muted);font-style:italic;}
+
+    /* DAR DIAGRAM */
+    .dar-diagram{margin:48px 0;border-top:1px solid var(--border2);border-bottom:1px solid var(--border2);padding:40px 0;}
+
+    .diagram-bridge{font-size:13px;color:var(--dim);line-height:1.7;margin-bottom:32px;padding-left:20px;border-left:3px solid var(--border2);}
+    .diagram-bridge em{color:var(--text);font-style:normal;}
+
+    .diagram-section{margin-bottom:36px;}
+
+    .diagram-section-label{font-size:10px;letter-spacing:0.2em;text-transform:uppercase;color:var(--dim);margin-bottom:16px;display:flex;align-items:center;gap:12px;}
+    .diagram-section-label::after{content:'';flex:1;height:1px;background:var(--border2);}
+
+    /* LAYERS */
+    .layers{display:flex;flex-direction:column;}
+    .layer{background:var(--surface);border:1px solid var(--border2);border-bottom:none;padding:12px 16px;display:flex;align-items:center;justify-content:space-between;}
+    .layer:first-child{border-radius:4px 4px 0 0;}
+    .layer:last-child{border-bottom:1px solid var(--border2);border-radius:0 0 4px 4px;}
+    .layer-name{font-size:12px;color:var(--text);letter-spacing:0.04em;}
+    .layer-badge{font-size:9px;letter-spacing:0.1em;text-transform:uppercase;padding:2px 8px;border-radius:2px;border:1px solid;}
+    .badge-protected{color:var(--gold);border-color:var(--gold);background:rgba(200,169,110,0.06);}
+    .badge-exposed{color:var(--danger);border-color:var(--danger);background:rgba(192,57,43,0.08);}
+    .arrow-down{text-align:center;color:var(--danger);font-size:16px;padding:6px 0;opacity:0.6;}
+    .responsibility-target{background:rgba(192,57,43,0.06);border:1px solid rgba(192,57,43,0.35);border-radius:4px;padding:12px 16px;display:flex;align-items:center;justify-content:space-between;margin-top:4px;}
+    .responsibility-target .layer-name{color:var(--danger);}
+
+    /* TIMELINE */
+    .timeline{display:grid;grid-template-columns:1fr 36px 1fr;gap:0;align-items:start;}
+    .timeline-col{display:flex;flex-direction:column;gap:10px;}
+    .timeline-header{font-size:10px;letter-spacing:0.15em;text-transform:uppercase;padding:5px 10px;border-radius:2px;margin-bottom:2px;}
+    .before .timeline-header{color:var(--green);border:1px solid rgba(61,153,112,0.4);background:rgba(61,153,112,0.05);}
+    .after .timeline-header{color:var(--danger);border:1px solid rgba(192,57,43,0.35);background:rgba(192,57,43,0.05);}
+    .timeline-item{font-size:11px;color:var(--dim);line-height:1.5;padding:8px 10px;border-radius:2px;background:var(--surface);border:1px solid var(--border2);}
+    .timeline-item strong{display:block;color:var(--muted);font-weight:500;margin-bottom:2px;font-size:11px;}
+    .timeline-divider{display:flex;flex-direction:column;align-items:center;padding-top:28px;gap:4px;}
+    .divider-line{width:1px;flex:1;background:var(--border2);min-height:140px;}
+    .divider-dot{width:7px;height:7px;border-radius:50%;background:var(--gold);border:2px solid var(--bg);outline:1px solid var(--gold);}
+    .divider-label{font-size:8px;letter-spacing:0.15em;text-transform:uppercase;color:var(--gold);writing-mode:vertical-rl;text-orientation:mixed;margin:6px 0;}
+
+    /* MISSING NAME */
+    .missing-name{background:var(--surface);border:1px solid var(--border2);border-left:3px solid var(--danger);border-radius:4px;padding:20px 18px;position:relative;overflow:hidden;}
+    .missing-name::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,rgba(192,57,43,0.4),transparent);}
+    .missing-name .question-text{font-family:'Playfair Display',serif;font-size:15px;color:var(--text);margin-bottom:12px;line-height:1.4;}
+    .missing-name .answer-text{font-size:11px;color:var(--danger);letter-spacing:0.1em;text-transform:uppercase;}
+
+    .diagram-cut{margin:0 0 28px 23px;font-size:11px;color:var(--muted);letter-spacing:0.08em;text-transform:uppercase;}
+    .diagram-footer{margin-top:24px;font-size:11px;color:var(--dim);letter-spacing:0.08em;text-align:right;}
 
     .closing{margin-top:60px;padding-left:20px;border-left:3px solid var(--gold);font-family:'Playfair Display',serif;font-size:18px;line-height:1.6;color:var(--text);}
 
@@ -74,6 +120,103 @@
     <p class="answer">No name exists.</p>
   </div>
 
+  <!-- DAR DIAGRAM — inserted after first scenario -->
+  <div class="dar-diagram">
+
+    <div class="diagram-bridge">
+      This is not a failure.<br><br>
+      This is how the system works.<br><br>
+      <em>Before it breaks, it operates as &ldquo;we&rdquo;.<br>
+      After it breaks, it becomes a name.</em>
+    </div>
+
+    <div class="diagram-cut">
+      No name defined. No stop.
+    </div>
+
+  <div class="diagram-section">
+      <div class="diagram-section-label">I — How protection is distributed</div>
+      <div class="layers">
+        <div class="layer">
+          <span class="layer-name">Board of Directors</span>
+          <span class="layer-badge badge-protected">Protected</span>
+        </div>
+        <div class="layer">
+          <span class="layer-name">Senior Management</span>
+          <span class="layer-badge badge-protected">Protected</span>
+        </div>
+        <div class="layer">
+          <span class="layer-name">Oversight Committees</span>
+          <span class="layer-badge badge-protected">Protected</span>
+        </div>
+        <div class="layer">
+          <span class="layer-name">Processes and Approvals</span>
+          <span class="layer-badge badge-protected">Protected</span>
+        </div>
+        <div class="layer">
+          <span class="layer-name">Reports and Findings</span>
+          <span class="layer-badge badge-protected">Protected</span>
+        </div>
+      </div>
+      <div class="arrow-down">↓</div>
+      <div class="responsibility-target">
+        <span class="layer-name">A name assigned after the damage</span>
+        <span class="layer-badge badge-exposed">Exposed</span>
+      </div>
+    </div>
+
+    <div class="diagram-section">
+      <div class="diagram-section-label">II — Before the break vs. after</div>
+      <div class="timeline">
+        <div class="timeline-col before">
+          <div class="timeline-header">What should exist</div>
+          <div class="timeline-item">
+            <strong>A named individual</strong>
+            Defined in advance. Authorized to stop before damage occurs.
+          </div>
+          <div class="timeline-item">
+            <strong>Commitment to refusal</strong>
+            The authority exists. The definition exists.
+          </div>
+          <div class="timeline-item">
+            <strong>Known exposure</strong>
+            Responsibility agreed upon before the decision.
+          </div>
+        </div>
+        <div class="timeline-divider">
+          <div class="divider-dot"></div>
+          <div class="divider-label">Break</div>
+          <div class="divider-line"></div>
+        </div>
+        <div class="timeline-col after">
+          <div class="timeline-header">What actually happens</div>
+          <div class="timeline-item">
+            <strong>Investigation committee</strong>
+            Who is responsible? The search begins after.
+          </div>
+          <div class="timeline-item">
+            <strong>Report and findings</strong>
+            Documentation of what was already known.
+          </div>
+          <div class="timeline-item">
+            <strong>A name is selected</strong>
+            Not defined in advance. Chosen after the damage.
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="diagram-section">
+      <div class="diagram-section-label">III — The question that is never asked</div>
+      <div class="missing-name">
+        <div class="question-text">At the critical moment, before the decision becomes irreversible — who, by name, is committed to stop it?</div>
+        <div class="answer-text">No name.<br>No stop.</div>
+      </div>
+    </div>
+
+    <div class="diagram-footer">DAR &mdash; Decision Authority Record</div>
+  </div>
+
   <div class="scenario">
     <div class="scenario-label">Financial Services</div>
     <p>An algorithmic trading system flags unusual market conditions. The model continues executing.</p>
@@ -107,8 +250,6 @@
     who is named to stop it?
   </div>
 
-  <p style="margin-top:16px;color:var(--text);font-weight:500;">When a decision becomes irreversible under uncertainty, someone must have the authority to stop it &mdash; by name.</p>
-
   <div style="margin-top:24px;border-left:3px solid var(--gold);padding:16px 20px;background:var(--surface);font-size:15px;color:var(--text);font-style:italic;font-family:'Playfair Display',serif;">
     If no one is named &mdash; no one stops.
   </div>
@@ -141,6 +282,6 @@
   <p class="copyright">&#169; 2026 Liran Bar-Shrim. All rights reserved.</p>
 
 </div>
-<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script data-cfasync="false">
-(function(){
-  var u=
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script>
+</body>
+</html>
