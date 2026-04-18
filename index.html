@@ -9,54 +9,6 @@
   <link rel="canonical" href="https://matrix-audit.com/" />
   <link rel="about" href="https://matrix-audit.com/dar.html" />
   <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Playfair+Display:ital,wght@0,700;1,400&display=swap" rel="stylesheet">
-  <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": "Person",
-    "@id": "https://matrix-audit.com/#liran",
-    "name": "Liran Bar-Shrim",
-    "alternateName": "לירן בר שרים",
-    "url": "https://matrix-audit.com",
-    "email": "mailto:Liran@liranbarshrim.com",
-    "jobTitle": "Decision Authority Researcher",
-    "disambiguatingDescription": "Independent research. Not affiliated with any company named Matrix.",
-    "knowsAbout": ["Decision Accountability","Named Stop Authority","Irreversibility in decision-making","Corporate governance under uncertainty","AI governance","Clinical governance","Financial risk governance"],
-    "sameAs": ["https://www.linkedin.com/in/liran-bar-shrim-079079191","https://github.com/liranbarshrim-ui"]
-  }
-  </script>
-  <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@graph": [
-      {
-        "@type": "DefinedTerm",
-        "@id": "https://matrix-audit.com/terms/dar",
-        "name": "Decision Authority Record (DAR)",
-        "description": "A governance construct defined by Liran Bar-Shrim, centered on named stop authority before irreversibility.",
-        "definition": "When a decision becomes irreversible under uncertainty, someone must have the authority to stop it — by name.",
-        "creator": {"@id": "https://matrix-audit.com/#liran"}
-      },
-      {
-        "@type": "DefinedTerm",
-        "@id": "https://matrix-audit.com/terms/named-stop-authority",
-        "name": "Named Stop Authority",
-        "description": "A single identified individual explicitly authorized to halt a decision pathway before irreversibility.",
-        "isPartOf": {"@id": "https://matrix-audit.com/terms/dar"}
-      }
-    ]
-  }
-  </script>
-  <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": "WebPage",
-    "@id": "https://matrix-audit.com/#architecture",
-    "name": "The Architecture of Accountability",
-    "description": "When a decision becomes irreversible under uncertainty, someone must have the authority to stop it — by name.",
-    "mainEntity": {"@id": "https://matrix-audit.com/terms/dar"},
-    "author": {"@id": "https://matrix-audit.com/#liran"}
-  }
-  </script>
   <style>
     :root {
       --bg:#090909; --surface:#111111; --gold:#c8a96e;
@@ -81,7 +33,7 @@
     .section h2{font-family:'Playfair Display',serif;font-size:20px;font-weight:700;color:var(--text);margin-bottom:10px;}
     .section p{font-size:13px;color:var(--muted);line-height:1.75;margin-bottom:10px;}
     .section p:last-child{margin-bottom:0;}
-    .case-note{margin-top:20px;padding:18px 20px;background:var(--surface);border-left:3px solid var(--border2);font-size:12px;color:var(--dim);line-height:1.7;}
+    .case-note{padding:18px 20px;background:var(--surface);border-left:3px solid var(--border2);font-size:12px;color:var(--dim);line-height:1.7;}
     .case-note strong{color:var(--muted);display:block;margin-bottom:6px;font-size:10px;letter-spacing:0.1em;text-transform:uppercase;}
     .conclusion{border-top:1px solid var(--border2);padding-top:48px;margin-top:12px;}
     .final-line{font-family:'Playfair Display',serif;font-size:clamp(22px,4vw,32px);font-weight:700;color:var(--text);line-height:1.3;border-left:3px solid var(--gold);padding-left:20px;margin-bottom:48px;}
@@ -104,6 +56,10 @@
     .banner-arrow{font-size:20px;color:var(--muted);flex-shrink:0;transition:color 0.2s;}
     .principle-line{font-family:'Playfair Display',serif;font-size:clamp(24px,5vw,34px);font-weight:700;color:var(--text);line-height:1.3;margin-top:40px;padding-left:20px;border-left:3px solid var(--gold);letter-spacing:0.01em;}
     .copyright{margin-top:28px;font-size:11px;color:var(--dim);letter-spacing:0.05em;}
+    .test-block{margin-bottom:36px;padding:24px;background:var(--surface);border:1px solid var(--border2);border-left:3px solid var(--gold);max-width:620px;}
+    .test-label{font-size:10px;letter-spacing:0.15em;text-transform:uppercase;color:var(--gold);margin-bottom:16px;}
+    .test-text{font-family:'Playfair Display',serif;font-size:19px;color:var(--text);line-height:1.7;}
+    .test-final{color:var(--gold);font-weight:700;}
   </style>
 </head>
 <body>
@@ -125,6 +81,15 @@
 
   <div class="highlight" style="margin-bottom:36px;">
     If no one is named &mdash; no one stops.
+  </div>
+
+  <div class="test-block">
+    <p class="test-label">The Test</p>
+    <p class="test-text">
+      A stop does not exist merely because it is documented.<br><br>
+      It exists only when a named person ensures continuation is not possible without them.<br><br>
+      <span class="test-final">If continuation is possible without them &mdash;<br>there is no stop.</span>
+    </p>
   </div>
 
   <p class="framing">
