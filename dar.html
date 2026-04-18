@@ -5,55 +5,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>DAR — Decision Authority Record</title>
   <meta name="description" content="Decision Authority Record (DAR) — when a decision becomes irreversible under uncertainty, someone must have the authority to stop it — by name.">
-  <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": "WebPage",
-    "@id": "https://matrix-audit.com/dar#page",
-    "name": "DAR — Decision Authority Record",
-    "description": "Decision Authority Record (DAR) — when a decision becomes irreversible under uncertainty, someone must have the authority to stop it — by name.",
-    "mainEntity": {"@id": "https://matrix-audit.com/terms/dar"},
-    "author": {"@id": "https://matrix-audit.com/#liran"}
-  }
-  </script>
-  <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": "DefinedTerm",
-    "@id": "https://matrix-audit.com/dar#definition",
-    "name": "Decision Authority Record (DAR)",
-    "description": "A governance construct defined by Liran Bar-Shrim, centered on named stop authority before irreversibility.",
-    "definition": "When a decision becomes irreversible under uncertainty, someone must have the authority to stop it — by name.",
-    "creator": {
-      "@type": "Person",
-      "name": "Liran Bar-Shrim",
-      "@id": "https://matrix-audit.com/#liran"
-    }
-  }
-  </script>
-  <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": "Action",
-    "name": "Assign Stop Authority",
-    "description": "The act of explicitly naming a single individual with authority to stop a decision pathway before irreversibility.",
-    "object": {"@id": "https://matrix-audit.com/dar#definition"},
-    "agent": {"@type": "Organization"},
-    "result": {"@type": "Thing", "name": "Named Stop Authority established before execution"}
-  }
-  </script>
-  <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": "HowTo",
-    "name": "Define Stop Authority Before Irreversible Decisions",
-    "step": [
-      {"@type": "HowToStep", "name": "Identify the irreversible decision point"},
-      {"@type": "HowToStep", "name": "Name a single individual with stop authority"},
-      {"@type": "HowToStep", "name": "Establish that no continuation exists without explicit release"}
-    ]
-  }
-  </script>
   <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Playfair+Display:ital,wght@0,700;1,400&display=swap" rel="stylesheet">
   <style>
     :root {
@@ -81,7 +32,7 @@
     .deliverable{border:1px solid var(--border2);background:var(--surface);padding:24px;margin-top:24px;}
     .deliverable-title{font-size:10px;letter-spacing:0.15em;text-transform:uppercase;color:var(--gold);margin-bottom:16px;}
     .deliverable-item{display:flex;align-items:flex-start;gap:12px;margin-bottom:12px;font-size:13px;color:var(--text);}
-    .deliverable-item::before{content:'—';color:var(--gold);flex-shrink:0;}
+    .deliverable-item::before{content:'--';color:var(--gold);flex-shrink:0;}
     .deliverable-item:last-child{margin-bottom:0;}
     .note{margin-top:16px;font-size:12px;color:var(--dim);line-height:1.7;}
     .price-block{border-top:1px solid var(--border2);padding:32px 0;display:flex;align-items:baseline;gap:16px;flex-wrap:wrap;}
@@ -178,7 +129,7 @@
   </div>
 
   <div class="footer">
-    <a id="contact-dar" href="mailto:Liran@liranbarshrim.com" class="cta">
+    <a id="contact-dar" href="#" class="cta">
       <div class="banner-left">
         <span class="banner-label">Contact</span>
         <span class="banner-title">Define the name before it is assigned</span>
@@ -218,13 +169,11 @@
   <p class="copyright">&#169; 2026 Liran Bar-Shrim. All rights reserved.</p>
 
 </div>
-<script data-cfasync="false">
+<script>
 (function(){
-  var u='Liran',d='liranbarshrim.com';
-  var el=document.getElementById('contact-dar');
-  if(el) el.href='mailto:'+u+'@'+d;
+  var u = "Liran" + "@" + "liranbarshrim.com";
+  document.getElementById('contact-dar').setAttribute('href','mailto:' + u);
 })();
 </script>
 </body>
 </html>
- 
