@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Failure Points — Decision Authority Research</title>
+  <meta name="description" content="Where accountability breaks. Three real failure patterns: clinical governance, financial services, agentic AI. No named stop authority.">
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Playfair+Display:ital,wght@0,700;1,400&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg:#090909; --surface:#111111; --gold:#c8a96e;
+      --danger:#c0392b; --green:#3d9970; --text:#e6e0d4; --muted:#b8b2ac;
+      --dim:#7a7570; --border:#1e1e1e; --border2:#2a2a2a;
+    }
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+    body{background:var(--bg);color:var(--text);font-family:'IBM Plex Mono',monospace;min-height:100vh;overflow-x:hidden;}
+    body::before{content:'';position:fixed;inset:0;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");pointer-events:none;z-index:0;opacity:0.6;}
+    .container{position:relative;z-index:1;max-width:760px;margin:0 auto;padding:60px 24px 80px;animation:fadeIn 0.8s ease both;}
+    @keyframes fadeIn{from{opacity:0;transform:translateY(12px);}to{opacity:1;transform:translateY(0);}}
+    .tag{font-size:10px;letter-spacing:0.15em;text-transform:uppercase;color:var(--muted);margin-bottom:40px;display:flex;align-items:center;gap:12px;}
+    .tag::before{content:'';display:inline-block;width:20px;height:1px;background:var(--gold);}
+    h1{font-family:'Playfair Display',serif;font-size:clamp(26px,5vw,40px);font-weight:700;line-height:1.2;color:var(--text);margin-bottom:16px;border-left:3px solid var(--gold);padding-left:20px;}
+    .intro{font-size:13px;color:var(--muted);line-height:1.9;margin-bottom:56px;padding-left:23px;}
+    .scenario{border-top:1px solid var(--border2);padding:40px 0;}
+    .scenario-label{font-size:10px;letter-spacing:0.15em;text-transform:uppercase;color:var(--gold);margin-bottom:20px;}
+    .scenario p{font-size:14px;color:var(--muted);line-height:1.8;margin-bottom:14px;}
+    .scenario p:last-of-type{margin-bottom:0;}
+    .damage{margin-top:24px;border-left:3px solid var(--danger);padding:16px 20px;background:var(--surface);font-size:13px;color:var(--muted);line-height:1.7;}
+    .damage strong{color:var(--danger);display:block;margin-bottom:6px;font-size:10px;letter-spacing:0.12em;text-transform:uppercase;}
+    .question{margin-top:28px;font-family:'Playfair Display',serif;font-size:17px;color:var(--text);line-height:1.5;}
+    .answer{margin-top:10px;font-size:13px;color:var(--muted);font-style:italic;}
+    .dar-diagram{margin:48px 0;border-top:1px solid var(--border2);border-bottom:1px solid var(--border2);padding:40px 0;}
+    .diagram-bridge{font-size:13px;color:var(--dim);line-height:1.7;margin-bottom:32px;padding-left:20px;border-left:3px solid var(--border2);}
+    .diagram-bridge em{color:var(--text);font-style:normal;}
+    .diagram-section{margin-bottom:36px;}
+    .diagram-section-label{font-size:10px;letter-spacing:0.2em;text-transform:uppercase;color:var(--dim);margin-bottom:16px;display:flex;align-items:center;gap:12px;}
+    .diagram-section-label::after{content:'';flex:1;height:1px;background:var(--border2);}
+    .layers{display:flex;flex-direction:column;}
+    .layer{background:var(--surface);border:1px solid var(--border2);border-bottom:none;padding:12px 16px;display:flex;align-items:center;justify-content:space-between;}
+    .layer:first-child{border-radius:4px 4px 0 0;}
+    .layer:last-child{border-bottom:1px solid var(--border2);border-radius:0 0 4px 4px;}
+    .layer-name{font-size:12px;color:var(--text);letter-spacing:0.04em;}
+    .layer-badge{font-size:9px;letter-spacing:0.1em;text-transform:uppercase;padding:2px 8px;border-radius:2px;border:1px solid;}
+    .badge-protected{color:var(--gold);border-color:var(--gold);background:rgba(200,169,110,0.06);}
+    .badge-exposed{color:var(--danger);border-color:var(--danger);background:rgba(192,57,43,0.08);}
+    .arrow-down{text-align:center;color:var(--danger);font-size:16px;padding:6px 0;opacity:0.6;}
+    .responsibility-target{background:rgba(192,57,43,0.06);border:1px solid rgba(192,57,43,0.35);border-radius:4px;padding:12px 16px;display:flex;align-items:center;justify-content:space-between;margin-top:4px;}
+    .responsibility-target .layer-name{color:var(--danger);}
+    .timeline{display:grid;grid-template-columns:1fr 36px 1fr;gap:0;align-items:start;}
+    .timeline-col{display:flex;flex-direction:column;gap:10px;}
+    .timeline-header{font-size:10px;letter-spacing:0.15em;text-transform:uppercase;padding:5px 10px;border-radius:2px;margin-bottom:2px;}
+    .before .timeline-header{color:var(--green);border:1px solid rgba(61,153,112,0.4);background:rgba(61,153,112,0.05);}
+    .after .timeline-header{color:var(--danger);border:1px solid rgba(192,57,43,0.35);background:rgba(192,57,43,0.05);}
+    .timeline-item{font-size:11px;color:var(--dim);line-height:1.5;padding:8px 10px;border-radius:2px;background:var(--surface);border:1px solid var(--border2);}
+    .timeline-item strong{display:block;color:var(--muted);font-weight:500;margin-bottom:2px;font-size:11px;}
+    .timeline-divider{display:flex;flex-direction:column;align-items:center;padding-top:28px;gap:4px;}
+    .divider-line{width:1px;flex:1;background:var(--border2);min-height:140px;}
+    .divider-dot{width:7px;height:7px;border-radius:50%;background:var(--gold);border:2px solid var(--bg);outline:1px solid var(--gold);}
+    .divider-label{font-size:8px;letter-spacing:0.15em;text-transform:uppercase;color:var(--gold);writing-mode:vertical-rl;text-orientation:mixed;margin:6px 0;}
+    .missing-name{background:var(--surface);border:1px solid var(--border2);border-left:3px solid var(--danger);border-radius:4px;padding:20px 18px;position:relative;overflow:hidden;}
+    .missing-name::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,rgba(192,57,43,0.4),transparent);}
+    .missing-name .question-text{font-family:'Playfair Display',serif;font-size:15px;color:var(--text);margin-bottom:12px;line-height:1.4;}
+    .missing-name .answer-text{font-size:11px;color:var(--danger);letter-spacing:0.1em;text-transform:uppercase;}
+    .diagram-cut{margin:0 0 28px 23px;font-size:11px;color:var(--muted);letter-spacing:0.08em;text-transform:uppercase;}
+    .diagram-footer{margin-top:24px;font-size:11px;color:var(--dim);letter-spacing:0.08em;text-align:right;}
+    .closing{margin-top:60px;padding-left:20px;border-left:3px solid var(--gold);font-family:'Playfair Display',serif;font-size:18px;line-height:1.6;color:var(--text);}
+    .footer{border-top:1px solid var(--border2);padding-top:36px;margin-top:48px;display:flex;flex-direction:column;gap:14px;}
+    .footer a{display:flex;align-items:center;justify-content:space-between;padding:18px 22px;text-decoration:none;border:1px solid var(--border2);background:var(--surface);transition:border-color 0.2s,background 0.2s;gap:16px;}
+    .footer a:hover{border-color:var(--gold);background:#161410;}
+    .footer a:hover .banner-arrow{color:var(--gold);}
+    .footer a.cta{border-color:var(--gold);background:#13110d;}
+    .footer a.cta .banner-title{color:var(--gold);}
+    .banner-left{display:flex;flex-direction:column;gap:4px;}
+    .banner-label{font-size:10px;letter-spacing:0.15em;text-transform:uppercase;color:var(--gold);}
+    .banner-title{font-size:14px;color:var(--text);font-family:'Playfair Display',serif;}
+    .banner-arrow{font-size:20px;color:var(--muted);flex-shrink:0;transition:color 0.2s;}
+    .copyright{margin-top:28px;font-size:11px;color:var(--dim);letter-spacing:0.05em;}
+  </style>
+</head>
+<body>
+<div class="container">
+
+  <div class="tag">decision authority research &mdash; failure points</div>
+  <h1>Where accountability breaks</h1>
+  <p style="font-size:14px;color:var(--dim);letter-spacing:0.12em;text-transform:uppercase;padding-left:23px;margin-top:8px;margin-bottom:32px;">Where no one was named to stop</p>
+  <p class="intro">These are normal operations.<br><br>What is missing is not data, policy, or review.<br><br>It is a named authority to stop.<br><br>When there is no named stop authority, even good people do not stop.</p>
+
+  <!-- CLINICAL GOVERNANCE — BEDSIDE -->
+  <div class="scenario">
+    <div class="scenario-label">Clinical Governance &mdash; From bedside to boardroom</div>
+    <p style="font-size:11px;color:var(--dim);letter-spacing:0.1em;text-transform:uppercase;margin-bottom:20px;">Small uncertainty. Continuous execution. Accumulated risk.</p>
+    <p>A nurse reviews a patient's file. The same medication has been administered every day.</p>
+    <p>She stops. Something no longer fits. She is not certain enough to stop it.</p>
+    <p>So the medication continues.</p>
+    <p>Not because it was approved.</p>
+    <p>Because nothing stopped it.</p>
+    <p class="question">She was not negligent.</p>
+    <p class="answer">She followed the structure.</p>
+    <div class="damage">
+      <strong>The gap</strong>
+      The structure had no named stop authority. Uncertainty was enough to continue.
+    </div>
+    <p class="question">Who was required to stop this before it became irreversible?</p>
+    <p class="answer">No single authority existed.</p>
+  </div>
+
+  <!-- CLINICAL GOVERNANCE — PROTOCOL -->
+  <div class="scenario">
+    <div class="scenario-label">Clinical Governance &mdash; Protocol level</div>
+    <p>A hospital protocol is updated. The change affects drug dosage for a specific patient population.</p>
+    <p>The update goes live automatically after approval by committee.</p>
+    <p>Three people reviewed it. No one was named to stop it.</p>
+    <p>Two weeks later, adverse events are reported.</p>
+    <div class="damage">
+      <strong>The damage</strong>
+      Patient harm. Regulatory investigation. No individual accountability. The committee approved. No one stopped.
+    </div>
+    <p class="question">Who was required to stop this before it became irreversible?</p>
+    <p class="answer">No name exists.</p>
+  </div>
+
+  <div class="dar-diagram">
+    <div class="diagram-bridge">
+      This is not a failure.<br><br>
+      This is how the system works.<br><br>
+      <em>Before it breaks, it operates as &ldquo;we&rdquo;.<br>
+      After it breaks, it becomes a name.</em>
+    </div>
+    <div class="diagram-cut">No name defined. No stop.</div>
+
+    <div class="diagram-section">
+      <div class="diagram-section-label">I &mdash; How protection is distributed</div>
+      <div class="layers">
+        <div class="layer"><span class="layer-name">Board of Directors</span><span class="layer-badge badge-protected">Protected</span></div>
+        <div class="layer"><span class="layer-name">Senior Management</span><span class="layer-badge badge-protected">Protected</span></div>
+        <div class="layer"><span class="layer-name">Oversight Committees</span><span class="layer-badge badge-protected">Protected</span></div>
+        <div class="layer"><span class="layer-name">Processes and Approvals</span><span class="layer-badge badge-protected">Protected</span></div>
+        <div class="layer"><span class="layer-name">Reports and Findings</span><span class="layer-badge badge-protected">Protected</span></div>
+      </div>
+      <div class="arrow-down">↓</div>
+      <div class="responsibility-target">
+        <span class="layer-name">A name assigned after the damage</span>
+        <span class="layer-badge badge-exposed">Exposed</span>
+      </div>
+    </div>
+
+    <div class="diagram-section">
+      <div class="diagram-section-label">II &mdash; Before the break vs. after</div>
+      <div class="timeline">
+        <div class="timeline-col before">
+          <div class="timeline-header">What should exist</div>
+          <div class="timeline-item"><strong>A named individual</strong>Defined in advance. Authorized to stop before damage occurs.</div>
+          <div class="timeline-item"><strong>Commitment to refusal</strong>The authority exists. The definition exists.</div>
+          <div class="timeline-item"><strong>Known exposure</strong>Responsibility agreed upon before the decision.</div>
+        </div>
+        <div class="timeline-divider">
+          <div class="divider-dot"></div>
+          <div class="divider-label">Break</div>
+          <div class="divider-line"></div>
+        </div>
+        <div class="timeline-col after">
+          <div class="timeline-header">What actually happens</div>
+          <div class="timeline-item"><strong>Investigation committee</strong>Who is responsible? The search begins after.</div>
+          <div class="timeline-item"><strong>Report and findings</strong>Documentation of what was already known.</div>
+          <div class="timeline-item"><strong>A name is selected</strong>Not defined in advance. Chosen after the damage.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="diagram-section">
+      <div class="diagram-section-label">III &mdash; The question that is never asked</div>
+      <div class="missing-name">
+        <div class="question-text">At the critical moment, before the decision becomes irreversible &mdash; who, by name, is committed to stop it?</div>
+        <div class="answer-text">No name.<br>No stop.</div>
+      </div>
+    </div>
+
+    <div class="diagram-footer">DAR &mdash; Decision Authority Record</div>
+  </div>
+
+  <!-- FINANCIAL SERVICES -->
+  <div class="scenario">
+    <div class="scenario-label">Financial Services</div>
+    <p>The system detects conditions it was never designed for. It continues executing.</p>
+    <p>The parameters were set six months ago.</p>
+    <p>The risk committee meets weekly. The next meeting is in four days.</p>
+    <p>By then, the position is irreversible.</p>
+    <div class="damage">
+      <strong>The damage</strong>
+      Significant financial exposure. Post-mortem review. Personal liability for the risk officer &mdash; who was never named to stop.
+    </div>
+    <p class="question">Who had the authority to stop execution before that point?</p>
+    <p class="answer">No one was named in advance.</p>
+  </div>
+
+  <!-- AGENTIC AI -->
+  <div class="scenario">
+    <div class="scenario-label">Agentic AI</div>
+    <p>A deployment pipeline pushes an updated model to production.</p>
+    <p>The model interacts with 40,000 users before anyone reviews outputs.</p>
+    <p>The team approved the release. No individual was named to halt it if behavior deviated.</p>
+    <p>Behavior deviated. The model acted faster than governance could respond. No one stopped it.</p>
+    <div class="damage">
+      <strong>The damage</strong>
+      Reputational and regulatory exposure at scale. Internal review finds no one with explicit stop authority. Everyone was responsible. No one was named.
+    </div>
+    <p class="question">Who was required to stop this before it reached scale?</p>
+    <p class="answer">The answer was &ldquo;the team.&rdquo; The team is not a name.</p>
+  </div>
+
+  <div class="closing">
+    When a decision becomes irreversible under uncertainty &mdash;<br>
+    who is named to stop it?
+  </div>
+
+  <div style="margin-top:24px;border-left:3px solid var(--gold);padding:16px 20px;background:var(--surface);font-size:15px;color:var(--text);font-style:italic;font-family:'Playfair Display',serif;">
+    If no one is named &mdash; no one stops.
+  </div>
+  <p style="font-size:13px;color:#c0392b;margin-top:16px;margin-bottom:4px;">If you cannot name the person &mdash; it is already happening.</p>
+  <p style="font-size:12px;color:var(--dim);margin-top:4px;margin-bottom:0;letter-spacing:0.05em;">Your exposure already exists.</p>
+
+  <div class="footer">
+    <a href="dar.html" class="cta">
+      <div class="banner-left"><span class="banner-label">DAR</span><span class="banner-title">Decision Authority Record</span></div>
+      <span class="banner-arrow">&#8594;</span>
+    </a>
+    <a href="index.html">
+      <div class="banner-left"><span class="banner-label">Home</span><span class="banner-title">The Architecture of Accountability</span></div>
+      <span class="banner-arrow">&#8594;</span>
+    </a>
+    <a id="contact-scenarios" href="#">
+      <div class="banner-left"><span class="banner-label">Contact</span><span class="banner-title">Discuss a scenario</span></div>
+      <span class="banner-arrow">&#8594;</span>
+    </a>
+  </div>
+
+  <p class="copyright">&#169; 2026 Liran Bar-Shrim. All rights reserved.</p>
+
+</div>
+<script>
+(function(){
+  var u = "Liran" + "@" + "liranbarshrim.com";
+  document.getElementById('contact-scenarios').setAttribute('href','mailto:' + u);
+})();
+</script>
+</body>
+</html>
