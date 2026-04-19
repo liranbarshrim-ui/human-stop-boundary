@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>FAQ — Decision Authority Research</title>
+  <meta name="description" content="Frequently asked questions about Decision Authority Record (DAR), named stop authority, AI governance, and irreversible decision accountability.">
+  <meta name="keywords" content="DAR FAQ, decision authority record, named stop authority, AI governance questions, irreversible decisions, who stops AI, executive accountability">
+  <link rel="canonical" href="https://matrix-audit.com/faq.html" />
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Playfair+Display:ital,wght@0,700;1,400&display=swap" rel="stylesheet">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "What is DAR — Decision Authority Record?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "DAR is a written record that names one individual with explicit authority to stop a specific irreversible decision before it executes. It is not a policy, framework, or software tool. It is a pre-commitment: one person, one decision pathway, defined in advance."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Who needs a Decision Authority Record?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Any organization where irreversible decisions can be made without a single named person having authority to stop them. This includes boards, CROs, General Counsel, AI governance teams, regulated financial operators, and executives carrying personal liability for high-stakes decisions."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Does DAR apply to AI systems?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Yes. Agentic AI systems can act, plan, and execute at machine speed. If no named individual has real-time authority to halt a model before its actions become irreversible, no stop authority exists. DAR maps who holds that authority before deployment, not after harm."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "What counts as an irreversible decision?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "A decision is irreversible when its consequences cannot be undone within a timeframe that prevents harm. Examples include: an AI model deployed to production at scale, a trading position that exceeds threshold, a clinical protocol that goes live before adverse events are detected, a regulatory filing once submitted."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Is this legal advice?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "No. Decision Authority Research is an independent advisory engagement. It does not constitute legal advice and does not create a legal relationship. Clients requiring legal counsel should engage qualified legal professionals."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Why can't organizations define stop authority internally?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Most organizations can explain their decision process. They fail when asked to name one person who can stop a critical decision in real time. Naming one person creates visible personal exposure — and most internal governance structures are designed, intentionally or not, to avoid that clarity."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "What is the difference between approval authority and stop authority?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Approval authority allows a decision to proceed. Stop authority makes continuation impossible without explicit release. Most organizations have approval structures. Very few define who can make continuation impossible. If continuation is available without a named release, no stop exists."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "How is DAR different from standard governance or risk committees?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Committees approve. DAR names one person who can stop. A committee can review, recommend, and document. It cannot make continuation impossible. DAR answers the question governance structures consistently leave open: who, by name, stops this before it becomes irreversible?"
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Who should have authority to stop an AI system?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "One named individual with the technical ability, organizational authority, and pre-committed obligation to halt the system before its actions become irreversible. Not a team. Not an escalation path. A person defined before deployment, not identified after harm."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "How long does an engagement take?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "A Decision Boundary Review (single pathway) is delivered in 5 to 7 business days. A Decision Accountability Review (multiple pathways) is delivered in 10 to 14 business days. Board Exposure Reviews are scoped individually."
+        }
+      }
+    ]
+  }
+  </script>
+  <style>
+    :root {
+      --bg:#090909; --surface:#111111; --gold:#c8a96e;
+      --danger:#c0392b; --text:#e6e0d4; --muted:#b8b2ac;
+      --dim:#7a7570; --faint:#52504c; --border:#1e1e1e; --border2:#2a2a2a;
+    }
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+    body{background:var(--bg);color:var(--text);font-family:'IBM Plex Mono',monospace;min-height:100vh;overflow-x:hidden;}
+    body::before{content:'';position:fixed;inset:0;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");pointer-events:none;z-index:0;opacity:0.6;}
+    .container{position:relative;z-index:1;max-width:760px;margin:0 auto;padding:60px 24px 80px;animation:fadeIn 0.8s ease both;}
+    @keyframes fadeIn{from{opacity:0;transform:translateY(12px);}to{opacity:1;transform:translateY(0);}}
+
+    .tag{font-size:10px;letter-spacing:0.15em;text-transform:uppercase;color:var(--dim);margin-bottom:44px;display:flex;align-items:center;gap:12px;}
+    .tag::before{content:'';display:inline-block;width:20px;height:1px;background:var(--gold);}
+
+    h1{font-family:'Playfair Display',serif;font-size:clamp(24px,5vw,38px);font-weight:700;line-height:1.2;color:var(--text);border-left:3px solid var(--gold);padding-left:20px;margin-bottom:12px;}
+    .header-sub{font-size:13px;color:var(--dim);padding-left:23px;margin-bottom:48px;font-style:italic;font-family:'Playfair Display',serif;}
+
+    .faq-list{display:flex;flex-direction:column;gap:2px;margin-bottom:56px;}
+
+    .faq-item{background:var(--surface);border:1px solid var(--border2);position:relative;overflow:hidden;}
+    .faq-item::before{content:'';position:absolute;top:0;left:0;width:3px;height:100%;background:var(--border2);}
+    .faq-item:hover::before{background:var(--gold);}
+    .faq-item{transition:border-color 0.2s;}
+    .faq-item:hover{border-color:rgba(200,169,110,0.25);}
+
+    .faq-inner{padding:22px 22px 22px 30px;}
+
+    .faq-q{font-family:'Playfair Display',serif;font-size:16px;color:var(--text);font-weight:700;line-height:1.35;margin-bottom:12px;}
+    .faq-a{font-size:13px;color:var(--muted);line-height:1.75;}
+
+    .faq-index{font-size:9px;letter-spacing:0.18em;text-transform:uppercase;color:var(--faint);margin-bottom:8px;}
+
+    .footer{border-top:1px solid var(--border2);padding-top:36px;display:flex;flex-direction:column;gap:14px;}
+    .footer a{display:flex;align-items:center;justify-content:space-between;padding:18px 22px;text-decoration:none;border:1px solid var(--border2);background:var(--surface);transition:border-color 0.2s,background 0.2s;gap:16px;}
+    .footer a:hover{border-color:var(--gold);background:#161410;}
+    .footer a:hover .banner-arrow{color:var(--gold);}
+    .footer a.cta{border-color:var(--gold);background:#13110d;}
+    .footer a.cta .banner-title{color:var(--gold);}
+    .banner-left{display:flex;flex-direction:column;gap:4px;}
+    .banner-label{font-size:10px;letter-spacing:0.15em;text-transform:uppercase;color:var(--gold);}
+    .banner-title{font-size:14px;color:var(--text);font-family:'Playfair Display',serif;}
+    .banner-arrow{font-size:20px;color:var(--muted);flex-shrink:0;transition:color 0.2s;}
+    .copyright{margin-top:28px;font-size:11px;color:var(--dim);letter-spacing:0.05em;}
+  </style>
+</head>
+<body>
+<div class="container">
+
+  <div class="tag">Decision Authority Research &mdash; FAQ</div>
+
+  <h1>Frequently Asked Questions</h1>
+  <p class="header-sub">On stop authority, irreversible decisions, and AI governance.</p>
+
+  <div class="faq-list">
+
+    <div class="faq-item">
+      <div class="faq-inner">
+        <div class="faq-index">01</div>
+        <div class="faq-q">What is DAR &mdash; Decision Authority Record?</div>
+        <p class="faq-a">DAR is a written record that names one individual with explicit authority to stop a specific irreversible decision before it executes. It is not a policy, framework, or software tool. It is a pre-commitment: one person, one decision pathway, defined in advance.</p>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-inner">
+        <div class="faq-index">02</div>
+        <div class="faq-q">Who needs a Decision Authority Record?</div>
+        <p class="faq-a">Any organization where irreversible decisions can be made without a single named person having authority to stop them. This includes boards, CROs, General Counsel, AI governance teams, regulated financial operators, and executives carrying personal liability for high-stakes decisions.</p>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-inner">
+        <div class="faq-index">03</div>
+        <div class="faq-q">Does DAR apply to AI systems?</div>
+        <p class="faq-a">Yes. Agentic AI systems can act, plan, and execute at machine speed. If no named individual has real-time authority to halt a model before its actions become irreversible, no stop authority exists. DAR maps who holds that authority before deployment &mdash; not after harm.</p>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-inner">
+        <div class="faq-index">04</div>
+        <div class="faq-q">What counts as an irreversible decision?</div>
+        <p class="faq-a">A decision is irreversible when its consequences cannot be undone within a timeframe that prevents harm. Examples: an AI model deployed to production at scale, a trading position that exceeds threshold, a clinical protocol that goes live before adverse events are detected, a regulatory filing once submitted.</p>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-inner">
+        <div class="faq-index">05</div>
+        <div class="faq-q">What is the difference between approval authority and stop authority?</div>
+        <p class="faq-a">Approval authority allows a decision to proceed. Stop authority makes continuation impossible without explicit release. Most organizations have approval structures. Very few define who can make continuation impossible. If continuation is available without a named release, no stop exists.</p>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-inner">
+        <div class="faq-index">06</div>
+        <div class="faq-q">How is DAR different from standard governance or risk committees?</div>
+        <p class="faq-a">Committees approve. DAR names one person who can stop. A committee can review, recommend, and document. It cannot make continuation impossible. DAR does not replace governance structures. It answers the question they consistently leave open: who, by name, stops this before it becomes irreversible?</p>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-inner">
+        <div class="faq-index">07</div>
+        <div class="faq-q">Who should have authority to stop an AI system?</div>
+        <p class="faq-a">One named individual with the technical ability, organizational authority, and pre-committed obligation to halt the system before its actions become irreversible. Not a team. Not an escalation path. A person defined before deployment, not identified after harm. This is what DAR establishes.</p>
+      </div>
+    </div>
+
+    <div style="background:var(--surface);border:1px solid var(--border2);border-left:3px solid var(--gold);padding:20px 22px;margin:4px 0;">
+      <p style="font-family:'Playfair Display',serif;font-size:14px;color:var(--text);line-height:1.55;margin-bottom:12px;">If stop authority already exists in your system, you should be able to name the person immediately.</p>
+      <a href="contact.html" style="font-size:11px;letter-spacing:0.12em;text-transform:uppercase;color:var(--gold);text-decoration:none;">Request a private review &#8594;</a>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-inner">
+        <div class="faq-index">08</div>
+        <div class="faq-q">Why can&rsquo;t organizations define stop authority internally?</div>
+        <p class="faq-a">Most organizations can explain their decision process. They fail when asked to name one person who can stop a critical decision in real time. Naming one person creates visible personal exposure &mdash; and most internal governance structures are designed, intentionally or not, to avoid that clarity.</p>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-inner">
+        <div class="faq-index">09</div>
+        <div class="faq-q">How long does an engagement take?</div>
+        <p class="faq-a">A Decision Boundary Review (single pathway) is delivered in 5 to 7 business days. A Decision Accountability Review (multiple pathways) is delivered in 10 to 14 business days. Board Exposure Reviews are scoped individually.</p>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-inner">
+        <div class="faq-index">10</div>
+        <div class="faq-q">Is this legal advice?</div>
+        <p class="faq-a">No. Decision Authority Research is an independent advisory engagement. It does not constitute legal advice and does not create a legal relationship. Clients requiring legal counsel should engage qualified legal professionals.</p>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="footer">
+    <a href="contact.html" class="cta">
+      <div class="banner-left">
+        <span class="banner-label">Contact</span>
+        <span class="banner-title">Discuss a live accountability risk</span>
+      </div>
+      <span class="banner-arrow">&#8594;</span>
+    </a>
+    <a href="services.html">
+      <div class="banner-left">
+        <span class="banner-label">Engagements</span>
+        <span class="banner-title">Three types of engagement. One question.</span>
+      </div>
+      <span class="banner-arrow">&#8594;</span>
+    </a>
+    <a href="dar.html">
+      <div class="banner-left">
+        <span class="banner-label">DAR</span>
+        <span class="banner-title">Decision Authority Record</span>
+      </div>
+      <span class="banner-arrow">&#8594;</span>
+    </a>
+    <a href="index.html">
+      <div class="banner-left">
+        <span class="banner-label">Home</span>
+        <span class="banner-title">The Architecture of Accountability</span>
+      </div>
+      <span class="banner-arrow">&#8594;</span>
+    </a>
+  </div>
+
+  <p class="copyright">&#169; 2026 Liran Bar-Shrim. All rights reserved.</p>
+
+</div>
+</body>
+</html>
