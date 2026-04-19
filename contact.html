@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Private Inquiry — Decision Authority Research</title>
+  <meta name="description" content="Confidential inquiries only. Select engagements accepted. Decision Authority Research — Liran Bar-Shrim.">
+  <meta name="robots" content="noindex">
+  <link rel="canonical" href="https://matrix-audit.com/contact.html" />
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Playfair+Display:ital,wght@0,700;1,400&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #090909;
+      --surface: #111111;
+      --surface2: #0d0d0d;
+      --gold: #c8a96e;
+      --gold-dim: #8a6e3e;
+      --danger: #c0392b;
+      --text: #e6e0d4;
+      --muted: #b8b2ac;
+      --dim: #7a7570;
+      --faint: #52504c;
+      --border: #1e1e1e;
+      --border2: #2a2a2a;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'IBM Plex Mono', monospace;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+      pointer-events: none;
+      z-index: 0;
+      opacity: 0.6;
+    }
+
+    .container {
+      position: relative;
+      z-index: 1;
+      max-width: 640px;
+      margin: 0 auto;
+      padding: 64px 24px 96px;
+      animation: fadeIn 0.8s ease both;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(12px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    .tag {
+      font-size: 10px;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--dim);
+      margin-bottom: 44px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .tag::before {
+      content: '';
+      display: inline-block;
+      width: 20px;
+      height: 1px;
+      background: var(--gold);
+    }
+
+    h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(24px, 4.5vw, 36px);
+      font-weight: 700;
+      line-height: 1.2;
+      color: var(--text);
+      border-left: 3px solid var(--gold);
+      padding-left: 20px;
+      margin-bottom: 12px;
+    }
+
+    .header-sub {
+      font-size: 12px;
+      color: var(--dim);
+      letter-spacing: 0.08em;
+      padding-left: 23px;
+      margin-bottom: 40px;
+    }
+
+    .premise {
+      background: var(--surface);
+      border: 1px solid var(--border2);
+      border-left: 3px solid var(--border2);
+      padding: 20px 22px;
+      margin-bottom: 48px;
+      font-size: 13px;
+      color: var(--dim);
+      line-height: 1.75;
+    }
+
+    /* FORM */
+    .form-block {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+      margin-bottom: 32px;
+    }
+
+    .field {
+      background: var(--surface);
+      border: 1px solid var(--border2);
+      position: relative;
+      transition: border-color 0.2s;
+    }
+
+    .field:focus-within {
+      border-color: var(--gold-dim);
+    }
+
+    .field-label {
+      font-size: 9px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--gold);
+      padding: 14px 16px 0;
+      display: block;
+    }
+
+    .field-hint {
+      font-size: 10px;
+      color: var(--faint);
+      letter-spacing: 0.04em;
+      padding: 4px 16px 0;
+      display: block;
+    }
+
+    .field input,
+    .field textarea {
+      width: 100%;
+      background: transparent;
+      border: none;
+      outline: none;
+      color: var(--text);
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 13px;
+      padding: 8px 16px 14px;
+      resize: none;
+      line-height: 1.6;
+    }
+
+    .field textarea { min-height: 80px; }
+
+    .field input::placeholder,
+    .field textarea::placeholder {
+      color: var(--faint);
+      font-style: italic;
+    }
+
+    /* SUBMIT */
+    .submit-btn {
+      width: 100%;
+      background: var(--surface);
+      border: 1px solid var(--gold);
+      color: var(--gold);
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 12px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      padding: 18px 24px;
+      cursor: pointer;
+      text-align: left;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      transition: background 0.2s, color 0.2s;
+      margin-bottom: 16px;
+    }
+
+    .submit-btn:hover {
+      background: #161410;
+    }
+
+    .submit-arrow {
+      font-size: 18px;
+      transition: transform 0.2s;
+    }
+
+    .submit-btn:hover .submit-arrow {
+      transform: translateX(4px);
+    }
+
+    .submit-note {
+      font-size: 11px;
+      color: var(--faint);
+      letter-spacing: 0.06em;
+      line-height: 1.6;
+      margin-bottom: 48px;
+    }
+
+    /* DIVIDER */
+    .divider {
+      height: 1px;
+      background: var(--border);
+      margin: 44px 0;
+      position: relative;
+    }
+    .divider::after {
+      content: '';
+      position: absolute;
+      left: 0; top: 0;
+      width: 28px; height: 1px;
+      background: var(--gold);
+    }
+
+    /* FOOTER */
+    .footer {
+      border-top: 1px solid var(--border2);
+      padding-top: 36px;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+
+    .footer a {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 18px 22px;
+      text-decoration: none;
+      border: 1px solid var(--border2);
+      background: var(--surface);
+      transition: border-color 0.2s, background 0.2s;
+      gap: 16px;
+    }
+
+    .footer a:hover { border-color: var(--gold); background: #161410; }
+    .footer a:hover .banner-arrow { color: var(--gold); }
+
+    .banner-left { display: flex; flex-direction: column; gap: 4px; }
+    .banner-label { font-size: 10px; letter-spacing: 0.15em; text-transform: uppercase; color: var(--gold); }
+    .banner-title { font-size: 14px; color: var(--text); font-family: 'Playfair Display', serif; }
+    .banner-arrow { font-size: 20px; color: var(--muted); flex-shrink: 0; transition: color 0.2s; }
+
+    .copyright {
+      margin-top: 28px;
+      font-size: 11px;
+      color: var(--faint);
+      letter-spacing: 0.05em;
+    }
+  </style>
+</head>
+<body>
+<div class="container">
+
+  <div class="tag">Decision Authority Research &mdash; Private Inquiry</div>
+
+  <h1>Confidential Inquiry</h1>
+  <p class="header-sub">Select engagements are accepted.</p>
+
+  <div class="premise">
+    This is not a sales form.<br><br>
+    Four questions. Your answers open the conversation.<br>
+    A response follows within two business days.
+  </div>
+
+  <div class="form-block">
+
+    <div class="field">
+      <label class="field-label" for="f-org">01 &mdash; Organization</label>
+      <span class="field-hint">Name and sector</span>
+      <input type="text" id="f-org" placeholder="e.g. Regional bank, AI platform, hospital group" autocomplete="off">
+    </div>
+
+    <div class="field">
+      <label class="field-label" for="f-decision">02 &mdash; Decision or process</label>
+      <span class="field-hint">What concerns you?</span>
+      <textarea id="f-decision" placeholder="e.g. AI model release, clinical protocol update, trading system threshold"></textarea>
+    </div>
+
+    <div class="field">
+      <label class="field-label" for="f-irreversible">03 &mdash; What becomes irreversible?</label>
+      <span class="field-hint">At what point can it no longer be stopped?</span>
+      <textarea id="f-irreversible" placeholder="e.g. Once deployed to production, once the committee approves, once the position exceeds threshold"></textarea>
+    </div>
+
+    <div class="field">
+      <label class="field-label" for="f-authority">04 &mdash; Who currently has authority to stop it?</label>
+      <span class="field-hint">A name, a role, or &ldquo;no one defined&rdquo;</span>
+      <input type="text" id="f-authority" placeholder="e.g. No one defined, the risk committee, unclear">
+    </div>
+
+  </div>
+
+  <button class="submit-btn" onclick="sendInquiry()">
+    <span>Submit private inquiry</span>
+    <span class="submit-arrow">&#8594;</span>
+  </button>
+
+  <p class="submit-note">
+    Clicking opens your email client with your answers pre-filled.<br>
+    Nothing is stored. Nothing is sent without your review.
+  </p>
+
+  <div class="divider"></div>
+
+  <p style="font-size:12px;color:var(--faint);line-height:1.8;margin-bottom:0;">
+    Confidential inquiries only.<br>
+    Select engagements are accepted.<br>
+    All conversations are private.
+  </p>
+
+  <div class="footer" style="margin-top:48px;">
+    <a href="services.html">
+      <div class="banner-left">
+        <span class="banner-label">Engagements</span>
+        <span class="banner-title">Three types of engagement. One question.</span>
+      </div>
+      <span class="banner-arrow">&#8594;</span>
+    </a>
+    <a href="index.html">
+      <div class="banner-left">
+        <span class="banner-label">Home</span>
+        <span class="banner-title">The Architecture of Accountability</span>
+      </div>
+      <span class="banner-arrow">&#8594;</span>
+    </a>
+  </div>
+
+  <p class="copyright">&#169; 2026 Liran Bar-Shrim. All rights reserved.</p>
+
+</div>
+<script>
+function sendInquiry() {
+  var org         = document.getElementById('f-org').value.trim();
+  var decision    = document.getElementById('f-decision').value.trim();
+  var irreversible= document.getElementById('f-irreversible').value.trim();
+  var authority   = document.getElementById('f-authority').value.trim();
+
+  if (!org && !decision && !irreversible && !authority) {
+    document.getElementById('f-org').focus();
+    return;
+  }
+
+  var subject = 'Private Inquiry — Decision Authority Review';
+
+  var body =
+    '01. Organization\n' +
+    (org || '(not provided)') + '\n\n' +
+    '02. Decision or process\n' +
+    (decision || '(not provided)') + '\n\n' +
+    '03. What becomes irreversible\n' +
+    (irreversible || '(not provided)') + '\n\n' +
+    '04. Who currently has authority to stop it\n' +
+    (authority || '(not provided)');
+
+  var u = 'Liran' + '@' + 'liranbarshrim.com';
+  window.location.href =
+    'mailto:' + u +
+    '?subject=' + encodeURIComponent(subject) +
+    '&body='    + encodeURIComponent(body);
+}
+
+// Allow Enter in single-line fields to move to next
+document.getElementById('f-org').addEventListener('keydown', function(e) {
+  if (e.key === 'Enter') { e.preventDefault(); document.getElementById('f-decision').focus(); }
+});
+document.getElementById('f-authority').addEventListener('keydown', function(e) {
+  if (e.key === 'Enter') { e.preventDefault(); sendInquiry(); }
+});
+</script>
+</body>
+</html>
