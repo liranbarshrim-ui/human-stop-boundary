@@ -1,305 +1,276 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>AI Governance &amp; Decision Accountability | Decision Authority Research</title>
-  <meta name="description" content="Decision Authority Record (DAR) — defined by Liran Bar-Shrim. When a decision becomes irreversible under uncertainty, someone must have the authority to stop it — by name.">
-  <meta name="keywords" content="AI governance advisor, decision accountability, human oversight for autonomous systems, irreversible decisions, executive risk advisory, named stop authority, AI deployment controls, stop authority mapping">
-  <meta property="og:title" content="AI Governance & Decision Accountability | Decision Authority Research">
-  <meta property="og:description" content="When a decision becomes irreversible under uncertainty, someone must have the authority to stop it — by name. Independent advisory for boards, executives, and AI governance teams.">
-  <meta property="og:url" content="https://matrix-audit.com/">
-  <meta property="og:type" content="website">
-  <meta property="og:site_name" content="Decision Authority Research">
-  <meta name="twitter:card" content="summary">
-  <meta name="twitter:title" content="AI Governance & Decision Accountability | Decision Authority Research">
-  <meta name="twitter:description" content="Named stop authority for irreversible decisions. Independent advisory for boards, executives, and AI governance teams.">
-  <link rel="alternate" hreflang="he" href="https://matrix-audit.com/he.html" />
-  <link rel="canonical" href="https://matrix-audit.com/" />
-  <link rel="about" href="https://matrix-audit.com/dar.html" />
-  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Playfair+Display:ital,wght@0,700;1,400&display=swap" rel="stylesheet">
-  <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@graph": [
-      {
-        "@type": "Organization",
-        "@id": "https://matrix-audit.com/#organization",
-        "name": "Decision Authority Research",
-        "url": "https://matrix-audit.com",
-        "description": "Independent advisory framework for boards, executives, and organizations managing high-stakes irreversible decisions under uncertainty.",
-        "founder": {
-          "@type": "Person",
-          "@id": "https://matrix-audit.com/#liran",
-          "name": "Liran Bar-Shrim",
-          "jobTitle": "Independent Advisor",
-          "knowsAbout": ["AI governance", "decision accountability", "named stop authority", "irreversible decisions", "executive risk", "autonomous systems governance"]
-        },
-        "areaServed": "Worldwide",
-        "serviceType": ["AI Governance Advisory", "Decision Accountability Review", "Stop Authority Mapping", "Board Exposure Review"]
-      },
-      {
-        "@type": "WebSite",
-        "@id": "https://matrix-audit.com/#website",
-        "url": "https://matrix-audit.com",
-        "name": "Decision Authority Research",
-        "description": "Named stop authority for irreversible decisions. Advisory framework for AI governance, financial services, and boards.",
-        "publisher": {"@id": "https://matrix-audit.com/#organization"}
-      },
-      {
-        "@type": "WebPage",
-        "@id": "https://matrix-audit.com/#webpage",
-        "url": "https://matrix-audit.com",
-        "name": "AI Governance & Decision Accountability | Decision Authority Research",
-        "isPartOf": {"@id": "https://matrix-audit.com/#website"},
-        "about": {
-          "@type": "Thing",
-          "name": "Named Stop Authority",
-          "description": "The principle that a named individual must be pre-committed to stop an irreversible decision before it occurs."
-        }
-      }
-    ]
-  }
-  </script>
-  <style>
-    :root {
-      --bg:#090909; --surface:#111111; --gold:#c8a96e;
-      --danger:#c0392b; --text:#e6e0d4; --muted:#a09a94;
-      --dim:#7a7570; --border:#1e1e1e; --border2:#2a2a2a;
-    }
-    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
-    body{background:var(--bg);color:var(--text);font-family:'IBM Plex Mono',monospace;min-height:100vh;overflow-x:hidden;}
-    body::before{content:'';position:fixed;inset:0;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");pointer-events:none;z-index:0;opacity:0.6;}
-    .container{position:relative;z-index:1;max-width:760px;margin:0 auto;padding:60px 24px 80px;animation:fadeIn 0.8s ease both;}
-    @keyframes fadeIn{from{opacity:0;transform:translateY(12px);}to{opacity:1;transform:translateY(0);}}
-    .tag{font-size:10px;letter-spacing:0.15em;text-transform:uppercase;color:var(--muted);margin-bottom:40px;display:flex;align-items:center;gap:12px;}
-    .tag::before{content:'';display:inline-block;width:20px;height:1px;background:var(--gold);}
-    h1{font-family:'Playfair Display',serif;font-size:clamp(26px,5vw,40px);font-weight:700;line-height:1.2;color:var(--text);margin-bottom:24px;border-left:3px solid var(--gold);padding-left:20px;}
-    .framing{font-family:'Playfair Display',serif;font-size:15px;color:var(--muted);padding-left:23px;margin-bottom:36px;line-height:1.75;font-style:italic;}
-    .lead{font-size:14px;line-height:1.8;color:var(--muted);margin-bottom:48px;padding-left:23px;}
-    .highlight{border-left:3px solid var(--gold);padding:16px 20px;margin-bottom:32px;background:var(--surface);font-size:15px;color:var(--text);font-style:italic;font-family:'Playfair Display',serif;}
-    .exposure{margin-bottom:48px;padding:20px;border-left:3px solid var(--danger);background:var(--surface);font-size:13px;color:var(--muted);line-height:1.7;}
-    .exposure strong{color:var(--text);display:block;margin-bottom:8px;font-size:10px;letter-spacing:0.12em;text-transform:uppercase;}
-    .section{border-top:1px solid var(--border2);padding:28px 0;}
-    .section-label{font-size:10px;letter-spacing:0.15em;text-transform:uppercase;color:var(--gold);margin-bottom:10px;}
-    .section h2{font-family:'Playfair Display',serif;font-size:20px;font-weight:700;color:var(--text);margin-bottom:10px;}
-    .section p{font-size:13px;color:var(--muted);line-height:1.75;margin-bottom:10px;}
-    .section p:last-child{margin-bottom:0;}
-    .case-note{padding:18px 20px;background:var(--surface);border-left:3px solid var(--border2);font-size:12px;color:var(--dim);line-height:1.7;}
-    .case-note strong{color:var(--muted);display:block;margin-bottom:6px;font-size:10px;letter-spacing:0.1em;text-transform:uppercase;}
-    .conclusion{border-top:1px solid var(--border2);padding-top:48px;margin-top:12px;}
-    .final-line{font-family:'Playfair Display',serif;font-size:clamp(22px,4vw,32px);font-weight:700;color:var(--text);line-height:1.3;border-left:3px solid var(--gold);padding-left:20px;margin-bottom:48px;}
-    .cta-section{border-top:1px solid var(--danger);margin-top:40px;padding-top:32px;}
-    .cta-label{font-size:10px;letter-spacing:0.15em;text-transform:uppercase;color:var(--danger);margin-bottom:10px;}
-    .cta-section h2{font-family:'Playfair Display',serif;font-size:20px;font-weight:700;color:var(--text);margin-bottom:16px;}
-    .cta-section p{font-size:13px;color:var(--muted);line-height:1.75;margin-bottom:10px;}
-    .cta-box{border-left:3px solid var(--danger);padding:16px 20px;background:var(--surface);font-size:15px;color:var(--text);font-style:italic;font-family:'Playfair Display',serif;margin-bottom:16px;}
-    .cta-link{display:block;margin-top:24px;text-decoration:none;border:1px solid var(--danger);padding:18px 20px;background:var(--surface);}
-    .cta-link:hover{background:#161410;}
-    .cta-link span.label{font-size:10px;letter-spacing:0.12em;text-transform:uppercase;color:var(--danger);display:block;margin-bottom:4px;}
-    .cta-link span.title{font-family:'Playfair Display',serif;color:var(--text);}
-    .footer{border-top:1px solid var(--border2);padding-top:36px;display:flex;flex-direction:column;gap:14px;}
-    .footer a{display:flex;align-items:center;justify-content:space-between;padding:18px 22px;text-decoration:none;border:1px solid var(--border2);background:var(--surface);transition:border-color 0.2s,background 0.2s;gap:16px;}
-    .footer a:hover{border-color:var(--gold);background:#161410;}
-    .footer a:hover .banner-arrow{color:var(--gold);}
-    .footer a.featured{border-color:rgba(200,169,110,0.35);background:#13110d;}
-    .footer a.featured .banner-title{color:var(--gold);}
-    .banner-left{display:flex;flex-direction:column;gap:4px;}
-    .banner-label{font-size:10px;letter-spacing:0.15em;text-transform:uppercase;color:var(--gold);}
-    .banner-title{font-size:14px;color:var(--text);font-family:'Playfair Display',serif;}
-    .banner-arrow{font-size:20px;color:var(--muted);flex-shrink:0;transition:color 0.2s;}
-    .principle-line{font-family:'Playfair Display',serif;font-size:clamp(24px,5vw,34px);font-weight:700;color:var(--text);line-height:1.3;margin-top:40px;padding-left:20px;border-left:3px solid var(--gold);letter-spacing:0.01em;}
-    .copyright{margin-top:28px;font-size:11px;color:var(--dim);letter-spacing:0.05em;}
-    .test-block{margin-bottom:36px;padding:24px;background:var(--surface);border:1px solid var(--border2);border-left:3px solid var(--gold);max-width:620px;}
-    .test-label{font-size:10px;letter-spacing:0.15em;text-transform:uppercase;color:var(--gold);margin-bottom:16px;}
-    .test-text{font-family:'Playfair Display',serif;font-size:19px;color:var(--text);line-height:1.7;}
-    .test-final{color:var(--gold);font-weight:700;}
-  </style>
-</head>
-<body>
-<div class="container">
-
-  <div class="tag">decision authority research</div>
-
-  <h1>The Architecture of Accountability</h1>
-  <p style="font-size:11px;color:var(--dim);letter-spacing:0.08em;padding-left:23px;margin-bottom:20px;">Decision Authority Research is an independent advisory framework for boards, executives, and organizations managing high-stakes irreversible decisions under uncertainty.</p>
-
-  <div class="highlight" style="border-left-color:var(--danger);">
-    When a decision becomes irreversible under uncertainty, someone must have the authority to stop it &mdash; by name.
-  </div>
-  <p style="font-size:11px;color:#7a7570;margin-top:6px;margin-bottom:36px;">Decision Authority Record (DAR) &mdash; defined by Liran Bar-Shrim.</p>
-
-  <div class="test-block">
-    <p class="test-label">The Test</p>
-    <p class="test-text">
-      A stop does not exist merely because it is documented.<br><br>
-      It exists only when a named person ensures continuation is not possible without them.<br><br>
-      <span class="test-final">If continuation is possible without them &mdash;<br>there is no stop.</span>
-    </p>
+<!DOCTYPE html>  <html lang="en">  
+<head>  
+  <meta charset="UTF-8" />  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>  
+  <title>AI Governance &amp; Decision Accountability | Decision Authority Research</title>  
+  <meta name="description" content="Decision Authority Record (DAR) — defined by Liran Bar-Shrim. When a decision becomes irreversible under uncertainty, someone must have the authority to stop it — by name.">  
+  <meta name="keywords" content="AI governance advisor, decision accountability, human oversight for autonomous systems, irreversible decisions, executive risk advisory, named stop authority, AI deployment controls, stop authority mapping">  
+  <meta property="og:title" content="AI Governance & Decision Accountability | Decision Authority Research">  
+  <meta property="og:description" content="When a decision becomes irreversible under uncertainty, someone must have the authority to stop it — by name. Independent advisory for boards, executives, and AI governance teams.">  
+  <meta property="og:url" content="https://matrix-audit.com/">  
+  <meta property="og:type" content="website">  
+  <meta property="og:site_name" content="Decision Authority Research">  
+  <meta name="twitter:card" content="summary">  
+  <meta name="twitter:title" content="AI Governance & Decision Accountability | Decision Authority Research">  
+  <meta name="twitter:description" content="Named stop authority for irreversible decisions. Independent advisory for boards, executives, and AI governance teams.">  
+  <link rel="alternate" hreflang="he" href="https://matrix-audit.com/he.html" />  
+  <link rel="canonical" href="https://matrix-audit.com/" />  
+  <link rel="about" href="https://matrix-audit.com/dar.html" />  
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Playfair+Display:ital,wght@0,700;1,400&display=swap" rel="stylesheet">  
+  <script type="application/ld+json">  
+  {  
+    "@context": "https://schema.org",  
+    "@graph": [  
+      {  
+        "@type": "Organization",  
+        "@id": "https://matrix-audit.com/#organization",  
+        "name": "Decision Authority Research",  
+        "url": "https://matrix-audit.com",  
+        "description": "Independent advisory framework for boards, executives, and organizations managing high-stakes irreversible decisions under uncertainty.",  
+        "founder": {  
+          "@type": "Person",  
+          "@id": "https://matrix-audit.com/#liran",  
+          "name": "Liran Bar-Shrim",  
+          "jobTitle": "Independent Advisor",  
+          "knowsAbout": ["AI governance", "decision accountability", "named stop authority", "irreversible decisions", "executive risk", "autonomous systems governance"]  
+        },  
+        "areaServed": "Worldwide",  
+        "serviceType": ["AI Governance Advisory", "Decision Accountability Review", "Stop Authority Mapping", "Board Exposure Review"]  
+      },  
+      {  
+        "@type": "WebSite",  
+        "@id": "https://matrix-audit.com/#website",  
+        "url": "https://matrix-audit.com",  
+        "name": "Decision Authority Research",  
+        "description": "Named stop authority for irreversible decisions. Advisory framework for AI governance, financial services, and boards.",  
+        "publisher": {"@id": "https://matrix-audit.com/#organization"}  
+      },  
+      {  
+        "@type": "WebPage",  
+        "@id": "https://matrix-audit.com/#webpage",  
+        "url": "https://matrix-audit.com",  
+        "name": "AI Governance & Decision Accountability | Decision Authority Research",  
+        "isPartOf": {"@id": "https://matrix-audit.com/#website"},  
+        "about": {  
+          "@type": "Thing",  
+          "name": "Named Stop Authority",  
+          "description": "The principle that a named individual must be pre-committed to stop an irreversible decision before it occurs."  
+        }  
+      }  
+    ]  
+  }  
+  </script>  
+  <style>  
+    :root {  
+      --bg:#090909; --surface:#111111; --gold:#c8a96e;  
+      --danger:#c0392b; --text:#e6e0d4; --muted:#a09a94;  
+      --dim:#7a7570; --border:#1e1e1e; --border2:#2a2a2a;  
+    }  
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}  
+    body{background:var(--bg);color:var(--text);font-family:'IBM Plex Mono',monospace;min-height:100vh;overflow-x:hidden;}  
+    body::before{content:'';position:fixed;inset:0;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");pointer-events:none;z-index:0;opacity:0.6;}  
+    .container{position:relative;z-index:1;max-width:760px;margin:0 auto;padding:60px 24px 80px;animation:fadeIn 0.8s ease both;}  
+    @keyframes fadeIn{from{opacity:0;transform:translateY(12px);}to{opacity:1;transform:translateY(0);}}  
+    .tag{font-size:10px;letter-spacing:0.15em;text-transform:uppercase;color:var(--muted);margin-bottom:40px;display:flex;align-items:center;gap:12px;}  
+    .tag::before{content:'';display:inline-block;width:20px;height:1px;background:var(--gold);}  
+    h1{font-family:'Playfair Display',serif;font-size:clamp(26px,5vw,40px);font-weight:700;line-height:1.2;color:var(--text);margin-bottom:24px;border-left:3px solid var(--gold);padding-left:20px;}  
+    .framing{font-family:'Playfair Display',serif;font-size:15px;color:var(--muted);padding-left:23px;margin-bottom:36px;line-height:1.75;font-style:italic;}  
+    .lead{font-size:14px;line-height:1.8;color:var(--muted);margin-bottom:48px;padding-left:23px;}  
+    .highlight{border-left:3px solid var(--gold);padding:16px 20px;margin-bottom:32px;background:var(--surface);font-size:15px;color:var(--text);font-style:italic;font-family:'Playfair Display',serif;}  
+    .exposure{margin-bottom:48px;padding:20px;border-left:3px solid var(--danger);background:var(--surface);font-size:13px;color:var(--muted);line-height:1.7;}  
+    .exposure strong{color:var(--text);display:block;margin-bottom:8px;font-size:10px;letter-spacing:0.12em;text-transform:uppercase;}  
+    .section{border-top:1px solid var(--border2);padding:28px 0;}  
+    .section-label{font-size:10px;letter-spacing:0.15em;text-transform:uppercase;color:var(--gold);margin-bottom:10px;}  
+    .section h2{font-family:'Playfair Display',serif;font-size:20px;font-weight:700;color:var(--text);margin-bottom:10px;}  
+    .section p{font-size:13px;color:var(--muted);line-height:1.75;margin-bottom:10px;}  
+    .section p:last-child{margin-bottom:0;}  
+    .case-note{padding:18px 20px;background:var(--surface);border-left:3px solid var(--border2);font-size:12px;color:var(--dim);line-height:1.7;}  
+    .case-note strong{color:var(--muted);display:block;margin-bottom:6px;font-size:10px;letter-spacing:0.1em;text-transform:uppercase;}  
+    .conclusion{border-top:1px solid var(--border2);padding-top:48px;margin-top:12px;}  
+    .final-line{font-family:'Playfair Display',serif;font-size:clamp(22px,4vw,32px);font-weight:700;color:var(--text);line-height:1.3;border-left:3px solid var(--gold);padding-left:20px;margin-bottom:48px;}  
+    .cta-section{border-top:1px solid var(--danger);margin-top:40px;padding-top:32px;}  
+    .cta-label{font-size:10px;letter-spacing:0.15em;text-transform:uppercase;color:var(--danger);margin-bottom:10px;}  
+    .cta-section h2{font-family:'Playfair Display',serif;font-size:20px;font-weight:700;color:var(--text);margin-bottom:16px;}  
+    .cta-section p{font-size:13px;color:var(--muted);line-height:1.75;margin-bottom:10px;}  
+    .cta-box{border-left:3px solid var(--danger);padding:16px 20px;background:var(--surface);font-size:15px;color:var(--text);font-style:italic;font-family:'Playfair Display',serif;margin-bottom:16px;}  
+    .cta-link{display:block;margin-top:24px;text-decoration:none;border:1px solid var(--danger);padding:18px 20px;background:var(--surface);}  
+    .cta-link:hover{background:#161410;}  
+    .cta-link span.label{font-size:10px;letter-spacing:0.12em;text-transform:uppercase;color:var(--danger);display:block;margin-bottom:4px;}  
+    .cta-link span.title{font-family:'Playfair Display',serif;color:var(--text);}  
+    .footer{border-top:1px solid var(--border2);padding-top:36px;display:flex;flex-direction:column;gap:14px;}  
+    .footer a{display:flex;align-items:center;justify-content:space-between;padding:18px 22px;text-decoration:none;border:1px solid var(--border2);background:var(--surface);transition:border-color 0.2s,background 0.2s;gap:16px;}  
+    .footer a:hover{border-color:var(--gold);background:#161410;}  
+    .footer a:hover .banner-arrow{color:var(--gold);}  
+    .footer a.featured{border-color:rgba(200,169,110,0.35);background:#13110d;}  
+    .footer a.featured .banner-title{color:var(--gold);}  
+    .banner-left{display:flex;flex-direction:column;gap:4px;}  
+    .banner-label{font-size:10px;letter-spacing:0.15em;text-transform:uppercase;color:var(--gold);}  
+    .banner-title{font-size:14px;color:var(--text);font-family:'Playfair Display',serif;}  
+    .banner-arrow{font-size:20px;color:var(--muted);flex-shrink:0;transition:color 0.2s;}  
+    .principle-line{font-family:'Playfair Display',serif;font-size:clamp(24px,5vw,34px);font-weight:700;color:var(--text);line-height:1.3;margin-top:40px;padding-left:20px;border-left:3px solid var(--gold);letter-spacing:0.01em;}  
+    .copyright{margin-top:28px;font-size:11px;color:var(--dim);letter-spacing:0.05em;}  
+    .test-block{margin-bottom:36px;padding:24px;background:var(--surface);border:1px solid var(--border2);border-left:3px solid var(--gold);max-width:620px;}  
+    .test-label{font-size:10px;letter-spacing:0.15em;text-transform:uppercase;color:var(--gold);margin-bottom:16px;}  
+    .test-text{font-family:'Playfair Display',serif;font-size:19px;color:var(--text);line-height:1.7;}  
+    .test-final{color:var(--gold);font-weight:700;}  
+  </style>  
+</head>  
+<body>  
+<div class="container">    <div class="tag">decision authority research</div>    <h1>The Architecture of Accountability</h1>  
+  <p style="font-size:11px;color:var(--dim);letter-spacing:0.08em;padding-left:23px;margin-bottom:20px;">Decision Authority Research is an independent advisory framework for boards, executives, and organizations managing high-stakes irreversible decisions under uncertainty.</p>    <div class="highlight" style="border-left-color:var(--danger);">  
+    When a decision becomes irreversible under uncertainty, someone must have the authority to stop it &mdash; by name.  
+  </div>  
+  <p style="font-size:11px;color:#7a7570;margin-top:6px;margin-bottom:36px;">Decision Authority Record (DAR) &mdash; defined by Liran Bar-Shrim.</p>    <div class="test-block">  
+    <p class="test-label">The Test</p>  
+    <p class="test-text">  
+      A stop does not exist merely because it is documented.<br><br>  
+      It exists only when a named person ensures continuation is not possible without them.<br><br>  
+      <span class="test-final">If continuation is possible without them &mdash;<br>there is no stop.</span>  
+    </p>  
+  </div>    <div class="case-note" style="margin-bottom:36px;">  
+    <strong>Knight Capital Group &mdash; August 1, 2012</strong>  
+    45 minutes. $440 million lost. No individual was named to stop execution.  
+  </div>    <div class="highlight" style="margin-bottom:36px;">  
+    If no one is named &mdash; no one stops.  
+  </div>    <p class="framing">  
+    This is not a tool.<br>  
+    This is the moment someone must decide whether to stop.<br><br>  
+    Most organizations avoid defining who that person is.  
+  </p>    <p class="lead">  
+    If this decision becomes irreversible &mdash;<br>  
+    your name will be the one that remains.<br><br>  
+    The only question is:<br>  
+    was it defined in advance &mdash; or assigned after?  
+  </p>    <div class="exposure">  
+    <strong>Exposure</strong>  
+    If this decision causes harm &mdash;<br>  
+    responsibility will not remain abstract.<br><br>  
+    It will not be &ldquo;we&rdquo;.<br><br>  
+    It will resolve to a name.<br><br>  
+    If no name was defined in advance, accountability will be assigned after the fact.<br><br>  
+    And it will not be the system.  
   </div>
 
   <div class="case-note" style="margin-bottom:36px;">
-    <strong>Knight Capital Group &mdash; August 1, 2012</strong>
-    45 minutes. $440 million lost. No individual was named to stop execution.
+    <strong>Real failures</strong>
+    Knight Capital. Boeing 737 MAX. Global outages. Market cascades.<br><br>
+    Different industries. Same structural failure.<br><br>
+    <a href="case-studies.html" style="color:var(--gold);text-decoration:none;">See how responsibility appeared too late &rarr;</a>
   </div>
 
-  <div class="highlight" style="margin-bottom:36px;">
-    If no one is named &mdash; no one stops.
-  </div>
-
-  <p class="framing">
-    This is not a tool.<br>
-    This is the moment someone must decide whether to stop.<br><br>
-    Most organizations avoid defining who that person is.
-  </p>
-
-  <p class="lead">
-    If this decision becomes irreversible &mdash;<br>
-    your name will be the one that remains.<br><br>
-    The only question is:<br>
-    was it defined in advance &mdash; or assigned after?
-  </p>
-
-  <div class="exposure">
-    <strong>Exposure</strong>
-    If this decision causes harm &mdash;<br>
-    responsibility will not remain abstract.<br><br>
-    It will not be &ldquo;we&rdquo;.<br><br>
-    It will resolve to a name.<br><br>
-    If no name was defined in advance, accountability will be assigned after the fact.<br><br>
-    And it will not be the system.
-  </div>
-  <p style="font-size:13px;color:var(--text);margin-top:-32px;margin-bottom:48px;">You already have decisions like this.<br>They just haven&rsquo;t failed yet.</p>
-
-  <div class="section">
-    <div class="section-label">The Problem</div>
-    <h2>No One Stops</h2>
-    <p>&ldquo;We&rdquo; is where responsibility disappears. It diffuses agency until no individual feels the weight of stopping.</p>
-    <p>Every organization has people who approve. No organization names the person required to stop.</p>
-    <p>When no name exists, no stop exists. The system continues until it cannot be undone.</p>
-  </div>
-
-  <div class="section">
-    <div class="section-label">The Principle</div>
-    <h2>One Name</h2>
-    <p>Critical outcomes must map to a single name. Not a function. Not a team. A person &mdash; pre-committed, in writing, before execution becomes irreversible.</p>
-    <p>Responsibility without authority is punishment. Authority without responsibility is risk.</p>
-    <p>If you are held responsible<br>
-for a decision you were not able to stop,<br>
-that is not accountability.<br><br>
-That is punishment.<br><br>
-If someone can approve a decision<br>
-without being accountable for its outcome,<br>
-that is not authority.<br><br>
-That is risk.</p>
-    <p>If authority cannot be exercised in real time, it does not exist.</p>
-    <div class="principle-line">Responsibility doesn&rsquo;t disappear.<br>It concentrates.</div>
-  </div>
-
-  <div class="section">
-    <div class="section-label">The Threshold</div>
-    <h2>Irreversibility</h2>
-    <p>A system can be technically safe and still proceed without anyone being required to stop it.</p>
-    <p>At the point of irreversibility, inaction is a decision.</p>
-    <p>The question is not how to stop. It is what makes continuation available. If continuation is available without a named release, there is no stop.</p>
-  </div>
-
-  <div class="section">
-    <div class="section-label">Reality</div>
-    <h2>After the fact</h2>
-    <p>After every failure, the same sentence appears: &ldquo;Someone should have stopped this.&rdquo;</p>
-    <p>No one asks what the process was. No one asks how many approved.</p>
-    <p>Only one question remains: who was supposed to stop it &mdash; and why wasn&rsquo;t that defined in advance?</p>
-  </div>
-
-  <div class="section">
-    <div class="section-label">The Illusion</div>
-    <h2>Documentation is not protection</h2>
-    <p>Documentation without a name is not protection.</p>
-    <p>It is evidence.</p>
-    <p>It proves you knew the gap existed &mdash; and continued anyway.</p>
-    <p>No one is named. The name will be assigned later.</p>
-    <p>And it won&rsquo;t be the system.</p>
-  </div>
-
-  <div class="conclusion">
-    <p class="final-line">
-      Who is named to stop an irreversible decision?<br>
-      If no one is named &mdash; no one stops.<br><br>
-      And when it fails &mdash; responsibility will not stay abstract.
-    </p>
-  </div>
-
-  <div class="section">
-    <p class="final-line">Who is that name in your system today?</p>
-  </div>
-
-  <div class="section cta-section">
-    <div class="cta-label">The Decision</div>
-    <h2>Name the stop &mdash; or accept the outcome</h2>
-    <p>If this applies to a real system &mdash; the question is no longer theoretical.</p>
-    <div class="cta-box">If you cannot name the person &mdash;<br>the system will not stop.</div>
-    <p style="color:#a09a94;">Who is explicitly named to stop your next irreversible decision?</p>
-    <p style="color:#c0392b;font-size:13px;margin-top:8px;">If you cannot name the person &mdash; it is already happening.</p>
-    <a href="dar.html" class="cta-link">
-      <span class="label">Decision</span>
-      <span class="title">Name the person who can stop it</span>
+  <p style="font-size:13px;color:var(--text);margin-bottom:48px;">You already have decisions like this.<br>They just haven&rsquo;t failed yet.</p>    <div class="section">  
+    <div class="section-label">The Problem</div>  
+    <h2>No One Stops</h2>  
+    <p>&ldquo;We&rdquo; is where responsibility disappears. It diffuses agency until no individual feels the weight of stopping.</p>  
+    <p>Every organization has people who approve. No organization names the person required to stop.</p>  
+    <p>When no name exists, no stop exists. The system continues until it cannot be undone.</p>  
+  </div>    <div class="section">  
+    <div class="section-label">The Principle</div>  
+    <h2>One Name</h2>  
+    <p>Critical outcomes must map to a single name. Not a function. Not a team. A person &mdash; pre-committed, in writing, before execution becomes irreversible.</p>  
+    <p>Responsibility without authority is punishment. Authority without responsibility is risk.</p>  
+    <p>If you are held responsible<br>  
+for a decision you were not able to stop,<br>  
+that is not accountability.<br><br>  
+That is punishment.<br><br>  
+If someone can approve a decision<br>  
+without being accountable for its outcome,<br>  
+that is not authority.<br><br>  
+That is risk.</p>  
+    <p>If authority cannot be exercised in real time, it does not exist.</p>  
+    <div class="principle-line">Responsibility doesn&rsquo;t disappear.<br>It concentrates.</div>  
+  </div>    <div class="section">  
+    <div class="section-label">The Threshold</div>  
+    <h2>Irreversibility</h2>  
+    <p>A system can be technically safe and still proceed without anyone being required to stop it.</p>  
+    <p>At the point of irreversibility, inaction is a decision.</p>  
+    <p>The question is not how to stop. It is what makes continuation available. If continuation is available without a named release, there is no stop.</p>  
+  </div>    <div class="section">  
+    <div class="section-label">Reality</div>  
+    <h2>After the fact</h2>  
+    <p>After every failure, the same sentence appears: &ldquo;Someone should have stopped this.&rdquo;</p>  
+    <p>No one asks what the process was. No one asks how many approved.</p>  
+    <p>Only one question remains: who was supposed to stop it &mdash; and why wasn&rsquo;t that defined in advance?</p>  
+  </div>    <div class="section">  
+    <div class="section-label">The Illusion</div>  
+    <h2>Documentation is not protection</h2>  
+    <p>Documentation without a name is not protection.</p>  
+    <p>It is evidence.</p>  
+    <p>It proves you knew the gap existed &mdash; and continued anyway.</p>  
+    <p>No one is named. The name will be assigned later.</p>  
+    <p>And it won&rsquo;t be the system.</p>  
+  </div>    <div class="conclusion">  
+    <p class="final-line">  
+      Who is named to stop an irreversible decision?<br>  
+      If no one is named &mdash; no one stops.<br><br>  
+      And when it fails &mdash; responsibility will not stay abstract.  
+    </p>  
+  </div>    <div class="section">  
+    <p class="final-line">Who is that name in your system today?</p>  
+  </div>    <div class="section cta-section">  
+    <div class="cta-label">The Decision</div>  
+    <h2>Name the stop &mdash; or accept the outcome</h2>  
+    <p>If this applies to a real system &mdash; the question is no longer theoretical.</p>  
+    <div class="cta-box">If you cannot name the person &mdash;<br>the system will not stop.</div>  
+    <p style="color:#a09a94;">Who is explicitly named to stop your next irreversible decision?</p>  
+    <p style="color:#c0392b;font-size:13px;margin-top:8px;">If you cannot name the person &mdash; it is already happening.</p>  
+    <a href="dar.html" class="cta-link">  
+      <span class="label">Decision</span>  
+      <span class="title">Name the person who can stop it</span>  
+    </a>  
+  </div>    <div class="footer">  
+    <a href="ai-governance.html" class="featured">  
+      <div class="banner-left"><span class="banner-label">AI Governance</span><span class="banner-title">Named stop authority for autonomous systems</span></div>  
+      <span class="banner-arrow">&#8594;</span>  
+    </a>  
+    <a href="dar.html">  
+      <div class="banner-left"><span class="banner-label">DAR Framework</span><span class="banner-title">Decision Authority Record</span></div>  
+      <span class="banner-arrow">&#8594;</span>  
     </a>
-  </div>
-
-  <div class="footer">
-    <a href="ai-governance.html" class="featured">
-      <div class="banner-left"><span class="banner-label">AI Governance</span><span class="banner-title">Named stop authority for autonomous systems</span></div>
+    <a href="case-studies.html">
+      <div class="banner-left"><span class="banner-label">Case Studies</span><span class="banner-title">Real failures. Same pattern.</span></div>
       <span class="banner-arrow">&#8594;</span>
     </a>
-    <a href="dar.html">
-      <div class="banner-left"><span class="banner-label">DAR Framework</span><span class="banner-title">Decision Authority Record</span></div>
-      <span class="banner-arrow">&#8594;</span>
-    </a>
-    <a href="services.html">
-      <div class="banner-left"><span class="banner-label">Engagements</span><span class="banner-title">Three types of engagement. One question.</span></div>
-      <span class="banner-arrow">&#8594;</span>
-    </a>
-    <a href="faq.html">
-      <div class="banner-left"><span class="banner-label">FAQ</span><span class="banner-title">Common questions on stop authority and DAR</span></div>
-      <span class="banner-arrow">&#8594;</span>
-    </a>
-    <a href="contact.html">
-      <div class="banner-left"><span class="banner-label">Contact</span><span class="banner-title">When this becomes real &mdash; you will know</span></div>
-      <span class="banner-arrow">&#8594;</span>
-    </a>
-    <a href="stop-authority.html">
-      <div class="banner-left"><span class="banner-label">Essay</span><span class="banner-title">A Name Appears</span></div>
-      <span class="banner-arrow">&#8594;</span>
-    </a>
-    <a href="exposure.html">
-      <div class="banner-left"><span class="banner-label">Essay</span><span class="banner-title">When Failure Lands on One Name</span></div>
-      <span class="banner-arrow">&#8594;</span>
-    </a>
-    <a href="failure-points.html">
-      <div class="banner-left"><span class="banner-label">Where it breaks</span><span class="banner-title">Find the breaking point</span></div>
-      <span class="banner-arrow">&#8594;</span>
-    </a>
-    <a href="we.html">
-      <div class="banner-left"><span class="banner-label">Essay</span><span class="banner-title">The Death of &ldquo;We&rdquo;</span></div>
-      <span class="banner-arrow">&#8594;</span>
-    </a>
-    <a href="about.html">
-      <div class="banner-left"><span class="banner-label">Research</span><span class="banner-title">Decision Authority Research</span></div>
-      <span class="banner-arrow">&#8594;</span>
-    </a>
-    <a href="goodfaith.html">
-      <div class="banner-left"><span class="banner-label">Good Faith Use</span><span class="banner-title">Understand the scope</span></div>
-      <span class="banner-arrow">&#8594;</span>
-    </a>
-    <a href="https://github.com/liranbarshrim-ui/human-stop-boundary" target="_blank" rel="noopener noreferrer">
-      <div class="banner-left"><span class="banner-label">Source</span><span class="banner-title">See how this is built</span></div>
-      <span class="banner-arrow">&#8594;</span>
-    </a>
-  </div>
-
-  <p class="copyright">&#169; 2026 Liran Bar-Shrim. All rights reserved.</p>
-
-</div>
-</body>
+    <a href="services.html">  
+      <div class="banner-left"><span class="banner-label">Engagements</span><span class="banner-title">Three types of engagement. One question.</span></div>  
+      <span class="banner-arrow">&#8594;</span>  
+    </a>  
+    <a href="faq.html">  
+      <div class="banner-left"><span class="banner-label">FAQ</span><span class="banner-title">Common questions on stop authority and DAR</span></div>  
+      <span class="banner-arrow">&#8594;</span>  
+    </a>  
+    <a href="contact.html">  
+      <div class="banner-left"><span class="banner-label">Contact</span><span class="banner-title">When this becomes real &mdash; you will know</span></div>  
+      <span class="banner-arrow">&#8594;</span>  
+    </a>  
+    <a href="stop-authority.html">  
+      <div class="banner-left"><span class="banner-label">Essay</span><span class="banner-title">A Name Appears</span></div>  
+      <span class="banner-arrow">&#8594;</span>  
+    </a>  
+    <a href="exposure.html">  
+      <div class="banner-left"><span class="banner-label">Essay</span><span class="banner-title">When Failure Lands on One Name</span></div>  
+      <span class="banner-arrow">&#8594;</span>  
+    </a>  
+    <a href="failure-points.html">  
+      <div class="banner-left"><span class="banner-label">Where it breaks</span><span class="banner-title">Find the breaking point</span></div>  
+      <span class="banner-arrow">&#8594;</span>  
+    </a>  
+    <a href="we.html">  
+      <div class="banner-left"><span class="banner-label">Essay</span><span class="banner-title">The Death of &ldquo;We&rdquo;</span></div>  
+      <span class="banner-arrow">&#8594;</span>  
+    </a>  
+    <a href="about.html">  
+      <div class="banner-left"><span class="banner-label">Research</span><span class="banner-title">Decision Authority Research</span></div>  
+      <span class="banner-arrow">&#8594;</span>  
+    </a>  
+    <a href="goodfaith.html">  
+      <div class="banner-left"><span class="banner-label">Good Faith Use</span><span class="banner-title">Understand the scope</span></div>  
+      <span class="banner-arrow">&#8594;</span>  
+    </a>  
+    <a href="https://github.com/liranbarshrim-ui/human-stop-boundary" target="_blank" rel="noopener noreferrer">  
+      <div class="banner-left"><span class="banner-label">Source</span><span class="banner-title">See how this is built</span></div>  
+      <span class="banner-arrow">&#8594;</span>  
+    </a>  
+  </div>    <p class="copyright">&#169; 2026 Liran Bar-Shrim. All rights reserved.</p>  </div>  
+</body>  
 </html>
