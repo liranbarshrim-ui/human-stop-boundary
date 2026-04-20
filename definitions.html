@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Decision Governance Definitions | Decision Authority Research</title>
+  <meta name="description" content="Core definitions in decision authority and named stop authority. The terminology behind DAR — Decision Authority Record — defined by Liran Bar-Shrim.">
+  <meta name="keywords" content="named stop authority definition, decision authority, irreversible decision, stop authority, DAR definition, decision governance, executive accountability, bound refusal">
+  <link rel="canonical" href="https://matrix-audit.com/definitions.html" />
+  <meta property="og:title" content="Decision Governance Definitions | Decision Authority Research">
+  <meta property="og:description" content="Core definitions in decision authority and named stop authority. The terminology behind DAR.">
+  <meta property="og:url" content="https://matrix-audit.com/definitions.html">
+  <meta property="og:type" content="article">
+  <meta property="og:site_name" content="Decision Authority Research">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "DefinedTermSet",
+    "@id": "https://matrix-audit.com/definitions.html#termset",
+    "name": "Decision Governance Definitions",
+    "description": "Core terminology in decision authority, named stop authority, and irreversible decision governance.",
+    "url": "https://matrix-audit.com/definitions.html",
+    "author": {
+      "@type": "Person",
+      "@id": "https://matrix-audit.com/#liran",
+      "name": "Liran Bar-Shrim"
+    },
+    "hasDefinedTerm": [
+      {
+        "@type": "DefinedTerm",
+        "name": "Named Stop Authority",
+        "description": "A single individual explicitly identified, in advance, as holding the obligation and authority to stop a specific irreversible decision before execution occurs. Not a role. Not a team. A name."
+      },
+      {
+        "@type": "DefinedTerm",
+        "name": "Irreversible Decision",
+        "description": "A decision that, once executed, cannot be undone without disproportionate cost, harm, or loss. The point at which continuation and stopping are no longer equivalent choices."
+      },
+      {
+        "@type": "DefinedTerm",
+        "name": "Decision Authority Record",
+        "description": "A written record identifying the single named individual holding stop authority over a specific irreversible decision pathway, defined before execution begins."
+      },
+      {
+        "@type": "DefinedTerm",
+        "name": "Bound Refusal",
+        "description": "The condition in which a named individual is formally committed, in advance, to refuse continuation of a decision pathway if specific conditions are met. The opposite of passive oversight."
+      },
+      {
+        "@type": "DefinedTerm",
+        "name": "Stop Authority Gap",
+        "description": "The structural absence of a named individual explicitly empowered to stop an irreversible decision. The gap between documented process and actual human authority at the point of execution."
+      }
+    ]
+  }
+  </script>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Playfair+Display:ital,wght@0,700;1,400&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg:#090909; --surface:#111111; --gold:#c8a96e;
+      --danger:#c0392b; --text:#e6e0d4; --muted:#a09a94;
+      --dim:#7a7570; --faint:#52504c; --border:#1e1e1e; --border2:#2a2a2a;
+    }
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+    body{background:var(--bg);color:var(--text);font-family:'IBM Plex Mono',monospace;min-height:100vh;overflow-x:hidden;}
+    body::before{content:'';position:fixed;inset:0;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");pointer-events:none;z-index:0;opacity:0.6;}
+    .container{position:relative;z-index:1;max-width:760px;margin:0 auto;padding:60px 24px 80px;animation:fadeIn 0.8s ease both;}
+    @keyframes fadeIn{from{opacity:0;transform:translateY(12px);}to{opacity:1;transform:translateY(0);}}
+    .tag{font-size:10px;letter-spacing:0.15em;text-transform:uppercase;color:var(--muted);margin-bottom:48px;display:flex;align-items:center;gap:12px;}
+    .tag::before{content:'';display:inline-block;width:20px;height:1px;background:var(--gold);}
+    .hero{border-left:3px solid var(--gold);padding-left:20px;margin-bottom:48px;}
+    .hero h1{font-family:'Playfair Display',serif;font-size:clamp(22px,4.5vw,36px);font-weight:700;line-height:1.25;color:var(--text);margin-bottom:12px;}
+    .hero-sub{font-size:13px;color:var(--muted);line-height:1.7;}
+    .term{border-top:1px solid var(--border2);padding:36px 0;}
+    .term-index{font-size:10px;letter-spacing:0.15em;text-transform:uppercase;color:var(--faint);margin-bottom:8px;}
+    .term-name{font-family:'Playfair Display',serif;font-size:22px;font-weight:700;color:var(--text);margin-bottom:16px;}
+    .term-def{font-size:13px;color:var(--muted);line-height:1.85;margin-bottom:12px;}
+    .term-def:last-child{margin-bottom:0;}
+    .term-note{margin-top:16px;font-size:12px;color:var(--dim);line-height:1.7;border-left:2px solid var(--border2);padding-left:14px;}
+    .closing{border-top:1px solid var(--border2);padding-top:40px;margin-top:8px;}
+    .closing p{font-size:13px;color:var(--muted);line-height:1.8;margin-bottom:10px;}
+    .closing p.strong{color:var(--text);}
+    .footer{border-top:1px solid var(--border2);padding-top:36px;margin-top:48px;display:flex;flex-direction:column;gap:14px;}
+    .footer a{display:flex;align-items:center;justify-content:space-between;padding:18px 22px;text-decoration:none;border:1px solid var(--border2);background:var(--surface);transition:border-color 0.2s,background 0.2s;gap:16px;}
+    .footer a:hover{border-color:var(--gold);background:#161410;}
+    .footer a:hover .banner-arrow{color:var(--gold);}
+    .footer a.cta{border-color:var(--gold);background:#13110d;}
+    .footer a.cta .banner-title{color:var(--gold);}
+    .banner-left{display:flex;flex-direction:column;gap:4px;}
+    .banner-label{font-size:10px;letter-spacing:0.15em;text-transform:uppercase;color:var(--gold);}
+    .banner-title{font-size:14px;color:var(--text);font-family:'Playfair Display',serif;}
+    .banner-arrow{font-size:20px;color:var(--muted);flex-shrink:0;transition:color 0.2s;}
+    .copyright{margin-top:28px;font-size:11px;color:var(--dim);letter-spacing:0.05em;}
+  </style>
+</head>
+<body>
+<div class="container">
+
+  <div class="tag">Decision Governance &mdash; Definitions</div>
+
+  <div class="hero">
+    <h1>Core terms in decision authority.</h1>
+    <p class="hero-sub">These definitions are not standard industry terminology. They describe a structural reality that existing frameworks have not named precisely.</p>
+    <p class="hero-sub" style="margin-top:8px;">A working vocabulary for decision governance.</p>
+    <p class="hero-sub" style="margin-top:8px;">Each term addresses the same gap: the absence of a named individual with the obligation to stop.</p>
+  </div>
+
+  <div class="term">
+    <div class="term-index">01</div>
+    <p class="term-name">Named Stop Authority</p>
+    <p class="term-def">A single individual explicitly identified, in advance, as holding the obligation and authority to stop a specific irreversible decision before execution occurs.</p>
+    <p class="term-def">Not a role. Not a team. A name — recorded before the decision moves.</p>
+    <div class="term-note">The word "named" is not rhetorical. It means a specific person, identified by name, in writing, prior to execution. Anything less is not stop authority. It is the appearance of stop authority.</div>
+  </div>
+
+  <div class="term">
+    <div class="term-index">02</div>
+    <p class="term-name">Irreversible Decision</p>
+    <p class="term-def">A decision that, once executed, cannot be undone without disproportionate cost, harm, or loss. The point at which continuation and stopping are no longer equivalent choices.</p>
+    <p class="term-def">Irreversibility is not binary. It is a threshold — and that threshold must be defined before it is reached.</p>
+    <div class="term-note">A system can be technically correct and still execute an irreversible decision without anyone being required to stop it. Technical correctness and stop authority are separate questions.</div>
+  </div>
+
+  <div class="term">
+    <div class="term-index">03</div>
+    <p class="term-name">Decision Authority Record (DAR)</p>
+    <p class="term-def">A written record identifying the single named individual holding stop authority over a specific irreversible decision pathway, defined before execution begins.</p>
+    <p class="term-def">The DAR does not approve the decision. It names who can stop it — and makes that person's obligation explicit, documented, and binding before the threshold is reached.</p>
+    <div class="term-note">A DAR is not a policy document. It is a commitment that names a person and defines the conditions under which that person is obligated to refuse continuation.</div>
+  </div>
+
+  <div class="term">
+    <div class="term-index">04</div>
+    <p class="term-name">Bound Refusal</p>
+    <p class="term-def">The condition in which a named individual is formally committed, in advance, to refuse continuation of a decision pathway if specific conditions are met.</p>
+    <p class="term-def">Bound refusal is the opposite of passive oversight. It requires the individual to act — to stop — not merely to observe and report.</p>
+    <div class="term-note">Most governance structures create the appearance of oversight without creating bound refusal. The difference determines whether a stop is structurally possible at all.</div>
+  </div>
+
+  <div class="term">
+    <div class="term-index">05</div>
+    <p class="term-name">Stop Authority Gap</p>
+    <p class="term-def">The structural absence of a named individual explicitly empowered to stop an irreversible decision at the moment it must be stopped.</p>
+    <p class="term-def">The gap is not a failure of process. It is a feature. Naming one person creates real accountability. Most systems are designed to avoid it.</p>
+    <div class="term-note">When a stop authority gap exists, continuation does not require permission. It requires only that no one refuses. And without a named individual bound to refuse, refusal is optional — which means it rarely happens.</div>
+  </div>
+
+  <div class="closing">
+    <p class="strong">These terms describe a structural question that regulation rarely asks and governance frameworks rarely answer.</p>
+    <p>Documentation describes what should happen. Regulation asks what happened. DAR asks who was supposed to stop it before it happened.</p>
+    <p>Not a team. Not a function. A person. Named. Accountable. Committed in advance.</p>
+  </div>
+
+  <div class="footer">
+    <a href="contact.html" class="cta">
+      <div class="banner-left">
+        <span class="banner-label">Contact</span>
+        <span class="banner-title">Identify one live decision with no named stop authority</span>
+      </div>
+      <span class="banner-arrow">&#8594;</span>
+    </a>
+    <a href="dar.html">
+      <div class="banner-left">
+        <span class="banner-label">DAR</span>
+        <span class="banner-title">Decision Authority Record</span>
+      </div>
+      <span class="banner-arrow">&#8594;</span>
+    </a>
+    <a href="case-studies.html">
+      <div class="banner-left">
+        <span class="banner-label">Case Studies</span>
+        <span class="banner-title">Real failures. Same pattern.</span>
+      </div>
+      <span class="banner-arrow">&#8594;</span>
+    </a>
+    <a href="about.html">
+      <div class="banner-left">
+        <span class="banner-label">About</span>
+        <span class="banner-title">Liran Bar-Shrim</span>
+      </div>
+      <span class="banner-arrow">&#8594;</span>
+    </a>
+    <a href="index.html">
+      <div class="banner-left">
+        <span class="banner-label">Home</span>
+        <span class="banner-title">The Architecture of Accountability</span>
+      </div>
+      <span class="banner-arrow">&#8594;</span>
+    </a>
+  </div>
+
+  <p class="copyright">&#169; 2026 Liran Bar-Shrim. All rights reserved.</p>
+
+</div>
+</body>
+</html>
