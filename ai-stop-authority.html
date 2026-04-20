@@ -4,13 +4,13 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 
-<title>A Name Appears | Stop Authority in the Autonomous Age</title>
+<title>A Name Appears | AI Governance & Stop Authority</title>
 
 <meta name="description" content="In success responsibility is shared. In failure it converges to one name. Why autonomous systems require real stop authority before irreversible harm begins.">
 
 <meta name="keywords" content="stop authority, AI governance, autonomous systems, accountability, named decision owner, irreversible decisions, human override, AI risk, governance failure">
 
-<link rel="canonical" href="https://matrix-audit.com/stop-authority.html" />
+<link rel="canonical" href="https://matrix-audit.com/ai-stop-authority.html" />
 
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Playfair+Display:ital,wght@0,700;1,400&display=swap" rel="stylesheet">
 
@@ -38,7 +38,6 @@ body{
   line-height:1.75;
 }
 
-/* grain overlay */
 body::before{
   content:'';
   position:fixed;
@@ -57,7 +56,6 @@ body::before{
   z-index:1;
 }
 
-/* nav */
 .nav{
   display:flex;
   align-items:center;
@@ -67,266 +65,57 @@ body::before{
   border-bottom:1px solid var(--border);
 }
 
-.nav-logo{
-  font-size:11px;
-  letter-spacing:.18em;
-  text-transform:uppercase;
-  color:var(--gold);
-  text-decoration:none;
-}
-
-.nav-back{
-  font-size:11px;
-  color:var(--dim);
-  text-decoration:none;
-  letter-spacing:.08em;
-  transition:.2s;
-}
-
+.nav-logo{font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--gold);text-decoration:none;}
+.nav-back{font-size:11px;color:var(--dim);text-decoration:none;letter-spacing:.08em;transition:.2s;}
 .nav-back:hover{color:var(--text);}
 
-/* tag */
-.tag{
-  font-size:10px;
-  letter-spacing:.18em;
-  text-transform:uppercase;
-  color:var(--dim);
-  margin-bottom:20px;
-  display:flex;
-  align-items:center;
-  gap:10px;
-}
+.tag{font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--dim);margin-bottom:20px;display:flex;align-items:center;gap:10px;}
+.tag::before{content:'';display:inline-block;width:18px;height:1px;background:var(--dim2);}
 
-.tag::before{
-  content:'';
-  display:inline-block;
-  width:18px;
-  height:1px;
-  background:var(--dim2);
-}
+h1{font-family:'Playfair Display',serif;font-size:clamp(30px,5vw,46px);line-height:1.12;border-left:3px solid var(--gold);padding-left:20px;margin-bottom:12px;color:var(--text);}
 
-/* heading */
-h1{
-  font-family:'Playfair Display',serif;
-  font-size:clamp(30px,5vw,46px);
-  line-height:1.12;
-  border-left:3px solid var(--gold);
-  padding-left:20px;
-  margin-bottom:12px;
-  color:var(--text);
-}
+.sub{font-size:13px;color:var(--dim);margin-bottom:48px;padding-left:23px;letter-spacing:.04em;}
 
-.sub{
-  font-size:13px;
-  color:var(--dim);
-  margin-bottom:48px;
-  padding-left:23px;
-  letter-spacing:.04em;
-}
+.hero{background:var(--surface);border:1px solid var(--border2);border-left:3px solid var(--gold);padding:24px 26px;margin-bottom:48px;}
+.hero-label{font-size:9px;letter-spacing:.2em;text-transform:uppercase;color:var(--gold);margin-bottom:12px;}
+.hero-text{font-family:'Playfair Display',serif;font-size:19px;line-height:1.5;color:var(--text);}
 
-/* hero block */
-.hero{
-  background:var(--surface);
-  border:1px solid var(--border2);
-  border-left:3px solid var(--gold);
-  padding:24px 26px;
-  margin-bottom:48px;
-}
+.article{display:flex;flex-direction:column;gap:20px;}
+.article p{font-size:14.5px;color:var(--muted);line-height:1.8;}
+.article strong{color:var(--text);font-weight:600;}
 
-.hero-label{
-  font-size:9px;
-  letter-spacing:.2em;
-  text-transform:uppercase;
-  color:var(--gold);
-  margin-bottom:12px;
-}
+.section-label{margin-top:14px;font-size:9px;letter-spacing:.2em;text-transform:uppercase;color:var(--gold);display:flex;align-items:center;gap:10px;}
+.section-label::after{content:'';flex:1;height:1px;background:var(--border2);}
 
-.hero-text{
-  font-family:'Playfair Display',serif;
-  font-size:19px;
-  line-height:1.5;
-  color:var(--text);
-}
+.pull{padding:20px 24px;background:var(--surface);border:1px solid var(--border2);border-left:3px solid var(--gold);font-family:'Playfair Display',serif;font-size:20px;color:var(--text);line-height:1.45;font-style:italic;}
 
-/* article body */
-.article{
-  display:flex;
-  flex-direction:column;
-  gap:20px;
-}
-
-.article p{
-  font-size:14.5px;
-  color:var(--muted);
-  line-height:1.8;
-}
-
-.article strong{
-  color:var(--text);
-  font-weight:600;
-}
-
-/* section label */
-.section-label{
-  margin-top:14px;
-  font-size:9px;
-  letter-spacing:.2em;
-  text-transform:uppercase;
-  color:var(--gold);
-  display:flex;
-  align-items:center;
-  gap:10px;
-}
-
-.section-label::after{
-  content:'';
-  flex:1;
-  height:1px;
-  background:var(--border2);
-}
-
-/* pull quote */
-.pull{
-  padding:20px 24px;
-  background:var(--surface);
-  border:1px solid var(--border2);
-  border-left:3px solid var(--gold);
-  font-family:'Playfair Display',serif;
-  font-size:20px;
-  color:var(--text);
-  line-height:1.45;
-  font-style:italic;
-}
-
-/* stacked list — vertical items no bullets */
-.stack{
-  display:flex;
-  flex-direction:column;
-  gap:0;
-  border:1px solid var(--border2);
-  background:var(--surface);
-}
-
-.stack-item{
-  padding:11px 18px;
-  font-size:13px;
-  color:var(--muted);
-  border-bottom:1px solid var(--border);
-  display:flex;
-  align-items:baseline;
-  gap:10px;
-}
-
+.stack{display:flex;flex-direction:column;gap:0;border:1px solid var(--border2);background:var(--surface);}
+.stack-item{padding:11px 18px;font-size:13px;color:var(--muted);border-bottom:1px solid var(--border);display:flex;align-items:baseline;gap:10px;}
 .stack-item:last-child{border-bottom:none;}
+.stack-item::before{content:'—';color:var(--dim2);font-size:11px;flex-shrink:0;}
 
-.stack-item::before{
-  content:'—';
-  color:var(--dim2);
-  font-size:11px;
-  flex-shrink:0;
-}
-
-/* question list */
-.q-block{
-  display:flex;
-  flex-direction:column;
-  gap:0;
-  border:1px solid var(--border2);
-  background:var(--surface);
-}
-
-.q-item{
-  padding:14px 18px;
-  font-size:13.5px;
-  color:var(--muted);
-  border-bottom:1px solid var(--border);
-  display:flex;
-  gap:14px;
-  line-height:1.65;
-}
-
+.q-block{display:flex;flex-direction:column;gap:0;border:1px solid var(--border2);background:var(--surface);}
+.q-item{padding:14px 18px;font-size:13.5px;color:var(--muted);border-bottom:1px solid var(--border);display:flex;gap:14px;line-height:1.65;}
 .q-item:last-child{border-bottom:none;}
+.q-num{color:var(--gold);font-size:11px;letter-spacing:.1em;flex-shrink:0;padding-top:2px;min-width:22px;}
 
-.q-num{
-  color:var(--gold);
-  font-size:11px;
-  letter-spacing:.1em;
-  flex-shrink:0;
-  padding-top:2px;
-  min-width:22px;
-}
+.q-divider{font-size:9px;letter-spacing:.18em;text-transform:uppercase;color:var(--dim2);padding:9px 18px;background:var(--bg);border:1px solid var(--border);border-top:none;border-bottom:none;}
 
-/* divider label between two question blocks */
-.q-divider{
-  font-size:9px;
-  letter-spacing:.18em;
-  text-transform:uppercase;
-  color:var(--dim2);
-  padding:9px 18px;
-  background:var(--bg);
-  border:1px solid var(--border);
-  border-top:none;
-  border-bottom:none;
-}
+.closing{margin-top:10px;padding:24px 26px;background:var(--surface);border:1px solid var(--border2);border-left:3px solid var(--gold);display:flex;flex-direction:column;gap:14px;}
+.closing p{font-size:14.5px;color:var(--muted);line-height:1.8;}
+.closing .final{font-family:'Playfair Display',serif;font-size:17px;color:var(--text);line-height:1.5;font-style:italic;}
 
-/* closing block */
-.closing{
-  margin-top:10px;
-  padding:24px 26px;
-  background:var(--surface);
-  border:1px solid var(--border2);
-  border-left:3px solid var(--gold);
-  display:flex;
-  flex-direction:column;
-  gap:14px;
-}
+/* footer — identical to index.html */
+.footer{margin-top:52px;padding-top:36px;border-top:1px solid var(--border2);display:flex;flex-direction:column;gap:14px;}
+.footer a{display:flex;align-items:center;justify-content:space-between;padding:18px 22px;text-decoration:none;border:1px solid var(--border2);background:var(--surface);transition:border-color 0.2s,background 0.2s;gap:16px;}
+.footer a:hover{border-color:var(--gold);background:#161410;}
+.footer a:hover .banner-arrow{color:var(--gold);}
+.banner-left{display:flex;flex-direction:column;gap:4px;}
+.banner-label{font-size:10px;letter-spacing:0.15em;text-transform:uppercase;color:var(--gold);}
+.banner-title{font-size:14px;color:var(--text);font-family:'Playfair Display',serif;}
+.banner-arrow{font-size:20px;color:var(--muted);flex-shrink:0;transition:color 0.2s;}
 
-.closing p{
-  font-size:14.5px;
-  color:var(--muted);
-  line-height:1.8;
-}
-
-.closing .final{
-  font-family:'Playfair Display',serif;
-  font-size:17px;
-  color:var(--text);
-  line-height:1.5;
-  font-style:italic;
-}
-
-/* footer links */
-.footer{
-  margin-top:52px;
-  padding-top:28px;
-  border-top:1px solid var(--border2);
-  display:flex;
-  flex-direction:column;
-  gap:10px;
-}
-
-.footer a{
-  text-decoration:none;
-  color:var(--muted);
-  border:1px solid var(--border2);
-  padding:15px 18px;
-  background:var(--surface);
-  font-size:13px;
-  transition:.2s;
-  display:block;
-}
-
-.footer a:hover{
-  border-color:var(--gold);
-  color:var(--text);
-}
-
-.copy{
-  margin-top:28px;
-  font-size:10px;
-  color:var(--dim2);
-  letter-spacing:.06em;
-}
+.copy{margin-top:28px;font-size:10px;color:var(--dim2);letter-spacing:.06em;}
 </style>
 </head>
 
@@ -353,7 +142,7 @@ h1{
 
   <div class="article">
 
-    <p>Most organizations have spent decades building approval systems. Far fewer have built real stop authority.</p>
+    <p>Most organizations built approval systems. Few built stop authority.</p>
 
     <p>They built escalation paths, review forums, control layers, and governance processes. All of these matter. But many were designed to answer one question: <strong>how do we proceed?</strong> Not the harder question: <strong>how do we stop?</strong></p>
 
@@ -502,12 +291,25 @@ h1{
   </div>
 
   <div class="footer">
-    <a href="contact.html">Contact → Discuss a live accountability risk</a>
-    <a href="services.html">Services → Governance and authority reviews</a>
-    <a href="index.html">Home → Decision Authority Research</a>
+    <a href="contact.html">
+      <div class="banner-left"><span class="banner-label">Contact</span><span class="banner-title">Discuss a live accountability risk</span></div>
+      <span class="banner-arrow">&#8594;</span>
+    </a>
+    <a href="ai-governance.html">
+      <div class="banner-left"><span class="banner-label">AI Governance</span><span class="banner-title">Named stop authority for autonomous systems</span></div>
+      <span class="banner-arrow">&#8594;</span>
+    </a>
+    <a href="services.html">
+      <div class="banner-left"><span class="banner-label">Engagements</span><span class="banner-title">Three types of engagement. One question.</span></div>
+      <span class="banner-arrow">&#8594;</span>
+    </a>
+    <a href="index.html">
+      <div class="banner-left"><span class="banner-label">Home</span><span class="banner-title">Decision Authority Research</span></div>
+      <span class="banner-arrow">&#8594;</span>
+    </a>
   </div>
 
-  <p class="copy">© 2026 Liran Bar-Shrim. All rights reserved.</p>
+  <p class="copy">&#169; 2026 Liran Bar-Shrim. All rights reserved.</p>
 
 </div>
 </body>
