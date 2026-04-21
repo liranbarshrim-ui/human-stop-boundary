@@ -68,7 +68,6 @@ background:var(--gold);
 display:block;
 }
 
-/* PREMIUM BANNER */
 .lux-banner{
 margin:0 0 34px;
 padding:20px 22px;
@@ -77,18 +76,6 @@ linear-gradient(135deg,rgba(200,169,110,.08),rgba(255,255,255,0) 45%),
 linear-gradient(180deg,#121212,#0d0d0d);
 border:1px solid #262626;
 border-left:3px solid var(--gold);
-position:relative;
-overflow:hidden;
-}
-
-.lux-banner:after{
-content:'';
-position:absolute;
-top:0;
-right:0;
-width:120px;
-height:100%;
-background:linear-gradient(90deg,transparent,rgba(200,169,110,.04));
 }
 
 .lux-label{
@@ -145,9 +132,7 @@ color:var(--muted);
 margin-bottom:12px;
 }
 
-.hero p:last-child{
-margin-bottom:0;
-}
+.hero p:last-child{margin-bottom:0;}
 
 .signal{
 background:var(--surface);
@@ -169,7 +154,6 @@ margin-bottom:26px;
 .field{
 background:var(--surface);
 border:1px solid var(--border2);
-transition:.2s;
 }
 
 .field:focus-within{
@@ -225,13 +209,11 @@ cursor:pointer;
 display:flex;
 justify-content:space-between;
 align-items:center;
-transition:.2s;
 margin-top:8px;
 }
 
 .btn:hover{
 background:#171512;
-transform:translateY(-2px);
 }
 
 .note{
@@ -255,33 +237,60 @@ color:var(--muted);
 margin-bottom:10px;
 }
 
-.meta div:last-child{
-margin-bottom:0;
-}
+.meta div:last-child{margin-bottom:0;}
+
+/* NEW MASTER FOOTER */
 
 .footer{
-border-top:1px solid var(--border2);
-padding-top:34px;
-display:grid;
-grid-template-columns:1fr;
-gap:1px;
-background:var(--border2);
+margin-top:42px;
 border:1px solid var(--border2);
+background:#0f0f0f;
 }
 
-.link{
-text-decoration:none;
-padding:18px 20px;
-background:var(--surface);
+.banner-card{
 display:flex;
 justify-content:space-between;
 align-items:center;
+gap:20px;
+padding:28px 24px;
+text-decoration:none;
 color:var(--text);
-transition:.2s;
+border-bottom:1px solid var(--border2);
+transition:.25s;
 }
 
-.link:hover{
-background:#161410;
+.banner-card:last-child{
+border-bottom:none;
+}
+
+.banner-card:hover{
+background:#151515;
+}
+
+.banner-left{
+display:flex;
+flex-direction:column;
+gap:8px;
+}
+
+.banner-label{
+font-size:10px;
+letter-spacing:.28em;
+text-transform:uppercase;
+color:var(--gold);
+}
+
+.banner-title{
+font-family:'Playfair Display',serif;
+font-size:18px;
+line-height:1.25;
+color:#f2ece2;
+}
+
+.banner-arrow{
+font-size:22px;
+color:#d8d2c8;
+flex-shrink:0;
 }
 
 .copy{
@@ -290,15 +299,11 @@ font-size:11px;
 color:var(--dim);
 }
 
-@media(min-width:760px){
-.footer{
-grid-template-columns:1fr 1fr;
-}
-}
-
 @media(max-width:700px){
 .lux-title{font-size:24px;}
 .lux-sub{font-size:12px;}
+.banner-card{padding:22px 18px;}
+.banner-title{font-size:16px;}
 }
 </style>
 </head>
@@ -379,13 +384,37 @@ Nothing is stored. Nothing is sent without your approval.
 
 <div class="footer">
 
-<a class="link" href="about.html"><span>About</span><span>→</span></a>
+<a class="banner-card" href="about.html">
+<div class="banner-left">
+<div class="banner-label">ABOUT</div>
+<div class="banner-title">Decision Authority Research</div>
+</div>
+<div class="banner-arrow">→</div>
+</a>
 
-<a class="link" href="dar.html"><span>DAR Engagement</span><span>→</span></a>
+<a class="banner-card" href="dar.html">
+<div class="banner-left">
+<div class="banner-label">DAR</div>
+<div class="banner-title">Decision Authority Record</div>
+</div>
+<div class="banner-arrow">→</div>
+</a>
 
-<a class="link" href="case-studies.html"><span>Public Failures</span><span>→</span></a>
+<a class="banner-card" href="case-studies.html">
+<div class="banner-left">
+<div class="banner-label">FAILURES</div>
+<div class="banner-title">Public Failure Patterns</div>
+</div>
+<div class="banner-arrow">→</div>
+</a>
 
-<a class="link" href="index.html"><span>Home</span><span>→</span></a>
+<a class="banner-card" href="index.html">
+<div class="banner-left">
+<div class="banner-label">HOME</div>
+<div class="banner-title">Return to Main Site</div>
+</div>
+<div class="banner-arrow">→</div>
+</a>
 
 </div>
 
