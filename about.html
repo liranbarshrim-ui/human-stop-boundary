@@ -10,6 +10,11 @@
 
 <link rel="canonical" href="https://matrix-audit.com/about.html">
 
+<meta property="og:title" content="About Liran Bar-Shrim">
+<meta property="og:description" content="Independent advisor focused on stop authority and irreversible decisions.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://matrix-audit.com/about.html">
+
 <script type="application/ld+json">
 {
   "@context":"https://schema.org",
@@ -34,6 +39,7 @@
 --surface:#111111;
 --surface2:#151515;
 --gold:#c8a96e;
+--danger:#c0392b;
 --text:#e6e0d4;
 --muted:#a09a94;
 --dim:#7a7570;
@@ -42,7 +48,11 @@
 --border2:#2a2a2a;
 }
 
-*{margin:0;padding:0;box-sizing:border-box;}
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+}
 
 body{
 background:var(--bg);
@@ -52,51 +62,98 @@ line-height:1.75;
 }
 
 .container{
-max-width:760px;
+max-width:860px;
 margin:0 auto;
-padding:60px 24px 120px;
+padding:60px 24px 100px;
 }
 
 .tag{
 font-size:10px;
-letter-spacing:.16em;
+letter-spacing:.18em;
 text-transform:uppercase;
 color:var(--muted);
 display:flex;
 align-items:center;
 gap:12px;
-margin-bottom:40px;
+margin-bottom:34px;
 }
 
 .tag:before{
 content:'';
-width:20px;
+width:22px;
 height:1px;
 background:var(--gold);
 display:block;
 }
 
+/* LUXURY BANNER */
+.lux-banner{
+margin:0 0 34px;
+padding:20px 22px;
+background:
+linear-gradient(135deg,rgba(200,169,110,.08),rgba(255,255,255,0) 45%),
+linear-gradient(180deg,#121212,#0d0d0d);
+border:1px solid #262626;
+border-left:3px solid var(--gold);
+position:relative;
+overflow:hidden;
+}
+
+.lux-banner:after{
+content:'';
+position:absolute;
+top:0;
+right:0;
+width:120px;
+height:100%;
+background:linear-gradient(90deg,transparent,rgba(200,169,110,.04));
+}
+
+.lux-label{
+font-size:10px;
+letter-spacing:.22em;
+text-transform:uppercase;
+color:var(--gold);
+margin-bottom:8px;
+}
+
+.lux-title{
+font-family:'Playfair Display',serif;
+font-size:26px;
+line-height:1.08;
+color:#f3ede3;
+margin-bottom:8px;
+}
+
+.lux-sub{
+font-size:13px;
+line-height:1.7;
+color:var(--muted);
+max-width:540px;
+}
+
+/* PROFILE */
 .profile{
 display:grid;
 grid-template-columns:1fr;
-gap:32px;
+gap:34px;
 margin-bottom:46px;
 }
 
-@media(min-width:600px){
+@media(min-width:700px){
 .profile{
-grid-template-columns:200px 1fr;
+grid-template-columns:220px 1fr;
 align-items:start;
 }
 }
 
 .photo-wrap img{
 width:100%;
-max-width:200px;
+max-width:220px;
 height:auto;
 display:block;
 border-left:3px solid var(--gold);
-filter:grayscale(8%) contrast(1.05);
+filter:grayscale(6%) contrast(1.04);
 }
 
 .photo-caption{
@@ -113,50 +170,50 @@ border-left:3px solid var(--gold);
 padding-left:20px;
 }
 
-@media(min-width:600px){
+@media(min-width:700px){
 .hero{
 border-left:none;
 padding-left:0;
 }
 }
 
-.hero h1{
-font-family:'Playfair Display',serif;
-font-size:clamp(28px,5vw,44px);
-line-height:1.2;
-margin-bottom:14px;
-}
-
 .hero-role{
 font-size:10px;
-letter-spacing:.16em;
+letter-spacing:.18em;
 text-transform:uppercase;
 color:var(--gold);
 margin-bottom:18px;
+}
+
+.hero h1{
+font-family:'Playfair Display',serif;
+font-size:clamp(30px,5vw,46px);
+line-height:1.15;
+margin-bottom:14px;
 }
 
 .hero p{
 font-size:14px;
 color:var(--muted);
 margin-bottom:12px;
-max-width:520px;
+max-width:560px;
 }
 
-.hero p strong{
+.hero strong{
 color:var(--text);
 }
 
 .section{
 border-top:1px solid var(--border2);
-padding:32px 0;
+padding:34px 0;
 }
 
 .label{
 font-size:10px;
-letter-spacing:.15em;
+letter-spacing:.18em;
 text-transform:uppercase;
 color:var(--gold);
-margin-bottom:14px;
+margin-bottom:12px;
 }
 
 .section p{
@@ -170,13 +227,14 @@ color:var(--text);
 }
 
 .quote{
+margin-top:16px;
 background:var(--surface);
+border:1px solid var(--border2);
 border-left:3px solid var(--gold);
-padding:22px;
+padding:24px;
 font-family:'Playfair Display',serif;
-font-size:22px;
+font-size:24px;
 line-height:1.45;
-margin-top:14px;
 }
 
 .cta-box{
@@ -211,10 +269,11 @@ background:#171512;
 transform:translateY(-2px);
 }
 
+/* FOOTER LINKS */
 .footer{
-border-top:1px solid var(--border2);
+margin-top:26px;
 padding-top:34px;
-margin-top:24px;
+border-top:1px solid var(--border2);
 display:grid;
 grid-template-columns:1fr;
 gap:1px;
@@ -230,7 +289,7 @@ display:flex;
 justify-content:space-between;
 align-items:center;
 color:var(--text);
-transition:background .2s;
+transition:.2s;
 gap:12px;
 }
 
@@ -238,8 +297,8 @@ gap:12px;
 background:#161410;
 }
 
-.link-card:hover .lc-arrow{
-color:var(--gold);
+.link-card.featured{
+border-left:3px solid var(--gold);
 }
 
 .lc-left{
@@ -258,29 +317,28 @@ color:var(--gold);
 .lc-title{
 font-family:'Playfair Display',serif;
 font-size:13px;
-color:var(--text);
 }
 
 .lc-arrow{
 font-size:16px;
 color:var(--muted);
-transition:.2s;
-}
-
-.link-card.featured{
-border-left:3px solid var(--gold);
-}
-
-@media(min-width:600px){
-.footer{
-grid-template-columns:1fr 1fr;
-}
 }
 
 .small{
 margin-top:28px;
 font-size:11px;
 color:var(--dim);
+}
+
+@media(min-width:700px){
+.footer{
+grid-template-columns:1fr 1fr;
+}
+}
+
+@media(max-width:700px){
+.lux-title{font-size:24px;}
+.lux-sub{font-size:12px;}
 }
 </style>
 </head>
@@ -291,14 +349,23 @@ color:var(--dim);
 
 <div class="tag">Decision Authority Research</div>
 
+<div class="lux-banner">
+<div class="lux-label">About</div>
+<div class="lux-title">Built Around One Question</div>
+<div class="lux-sub">
+If a critical decision must be stopped today, who has real authority to do it by name?
+</div>
+</div>
+
 <div class="profile">
 
 <div class="photo-wrap">
-<img src="https://i.ibb.co/nqp2MhYD/liran-1.jpg" alt="Liran Bar-Shrim" width="200" loading="eager">
+<img src="https://i.ibb.co/nqp2MhYD/liran-1.jpg" alt="Liran Bar-Shrim" loading="eager">
 <div class="photo-caption">Liran Bar-Shrim</div>
 </div>
 
 <div class="hero">
+
 <div class="hero-role">Independent Advisor · Named Stop Authority</div>
 
 <h1>Liran Bar-Shrim</h1>
@@ -309,10 +376,10 @@ Liran Bar-Shrim focuses on stop authority.
 </p>
 
 <p>
-Built outside institutions. Focused on one question that most governance structures cannot answer by name.
+Built outside institutions. Focused on a structural governance question many organizations prefer to avoid until consequences arrive.
 </p>
-</div>
 
+</div>
 </div>
 
 <div class="section">
@@ -320,7 +387,7 @@ Built outside institutions. Focused on one question that most governance structu
 
 <p>Many organizations define how decisions move forward. Far fewer define who can truly stop them.</p>
 
-<p>This work examines the structural gap between process approval and real human authority.</p>
+<p>This work examines the gap between process approval and real human authority.</p>
 
 <p><strong>When no one is clearly named in advance, responsibility is often assigned afterward.</strong></p>
 </div>
@@ -328,9 +395,9 @@ Built outside institutions. Focused on one question that most governance structu
 <div class="section">
 <div class="label">The Work</div>
 
-<p>Advisory engagements for boards, regulated firms, clinical leadership, and AI governance leaders facing irreversible decisions under uncertainty.</p>
+<p>Advisory engagements for boards, regulated firms, legal leadership, risk leaders, and AI governance teams facing irreversible decisions under uncertainty.</p>
 
-<p>Especially relevant where decisions can become costly, public, or irreversible before ownership becomes clear.</p>
+<p>Especially relevant where decisions can become costly, public, reputational, or difficult to reverse before ownership becomes clear.</p>
 </div>
 
 <div class="section">
@@ -339,6 +406,7 @@ Built outside institutions. Focused on one question that most governance structu
 <div class="quote">
 When a decision becomes irreversible under uncertainty, someone must have authority to stop it — by name.
 </div>
+
 </div>
 
 <div class="section">
@@ -357,20 +425,20 @@ When a decision becomes irreversible under uncertainty, someone must have author
 
 <div class="footer">
 
-<a class="link-card featured" href="stop-authority.html">
-<div class="lc-left">
-<span class="lc-label">Named Stop Authority</span>
-<span class="lc-title">The core concept</span>
-</div>
-<span class="lc-arrow">&#8594;</span>
-</a>
-
-<a class="link-card" href="dar.html">
+<a class="link-card featured" href="dar.html">
 <div class="lc-left">
 <span class="lc-label">Framework</span>
-<span class="lc-title">DAR Framework</span>
+<span class="lc-title">Decision Authority Record</span>
 </div>
-<span class="lc-arrow">&#8594;</span>
+<span class="lc-arrow">→</span>
+</a>
+
+<a class="link-card" href="stop-authority.html">
+<div class="lc-left">
+<span class="lc-label">Concept</span>
+<span class="lc-title">Named Stop Authority</span>
+</div>
+<span class="lc-arrow">→</span>
 </a>
 
 <a class="link-card" href="case-studies.html">
@@ -378,7 +446,7 @@ When a decision becomes irreversible under uncertainty, someone must have author
 <span class="lc-label">Case Studies</span>
 <span class="lc-title">Real Failures. Same Pattern.</span>
 </div>
-<span class="lc-arrow">&#8594;</span>
+<span class="lc-arrow">→</span>
 </a>
 
 <a class="link-card" href="index.html">
@@ -386,7 +454,7 @@ When a decision becomes irreversible under uncertainty, someone must have author
 <span class="lc-label">Home</span>
 <span class="lc-title">Decision Authority Research</span>
 </div>
-<span class="lc-arrow">&#8594;</span>
+<span class="lc-arrow">→</span>
 </a>
 
 </div>
