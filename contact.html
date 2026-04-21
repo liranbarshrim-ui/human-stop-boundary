@@ -1,380 +1,380 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Private Inquiry — Decision Authority Research</title>
-  <meta name="description" content="Private inquiry. Limited engagements accepted. Decision Authority Research — Liran Bar-Shrim.">
-  <meta name="robots" content="noindex">
-  <link rel="canonical" href="https://matrix-audit.com/contact.html" />
-  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Playfair+Display:ital,wght@0,700;1,400&display=swap" rel="stylesheet">
-  <style>
-    :root {
-      --bg: #090909;
-      --surface: #111111;
-      --surface2: #0d0d0d;
-      --gold: #c8a96e;
-      --gold-dim: #8a6e3e;
-      --danger: #c0392b;
-      --text: #e6e0d4;
-      --muted: #b8b2ac;
-      --dim: #7a7570;
-      --faint: #52504c;
-      --border: #1e1e1e;
-      --border2: #2a2a2a;
-    }
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+<title>Private Inquiry | Decision Authority Research</title>
 
-    body {
-      background: var(--bg);
-      color: var(--text);
-      font-family: 'IBM Plex Mono', monospace;
-      min-height: 100vh;
-      overflow-x: hidden;
-    }
+<meta name="description" content="Confidential private inquiry for executives facing irreversible decisions, accountability exposure, and unclear stop authority. Limited engagements accepted.">
 
-    body::before {
-      content: '';
-      position: fixed;
-      inset: 0;
-      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
-      pointer-events: none;
-      z-index: 0;
-      opacity: 0.6;
-    }
+<meta name="robots" content="index,follow">
+<link rel="canonical" href="https://matrix-audit.com/contact.html" />
 
-    .container {
-      position: relative;
-      z-index: 1;
-      max-width: 640px;
-      margin: 0 auto;
-      padding: 64px 24px 96px;
-      animation: fadeIn 0.8s ease both;
-    }
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Playfair+Display:wght@400;700&display=swap" rel="stylesheet">
 
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(12px); }
-      to   { opacity: 1; transform: translateY(0); }
-    }
-
-    .tag {
-      font-size: 10px;
-      letter-spacing: 0.15em;
-      text-transform: uppercase;
-      color: var(--dim);
-      margin-bottom: 44px;
-      display: flex;
-      align-items: center;
-      gap: 12px;
-    }
-    .tag::before {
-      content: '';
-      display: inline-block;
-      width: 20px;
-      height: 1px;
-      background: var(--gold);
-    }
-
-    h1 {
-      font-family: 'Playfair Display', serif;
-      font-size: clamp(24px, 4.5vw, 36px);
-      font-weight: 700;
-      line-height: 1.2;
-      color: var(--text);
-      border-left: 3px solid var(--gold);
-      padding-left: 20px;
-      margin-bottom: 12px;
-    }
-
-    .header-sub {
-      font-size: 12px;
-      color: var(--dim);
-      letter-spacing: 0.08em;
-      padding-left: 23px;
-      margin-bottom: 40px;
-    }
-
-    .premise {
-      background: var(--surface);
-      border: 1px solid var(--border2);
-      border-left: 3px solid var(--border2);
-      padding: 20px 22px;
-      margin-bottom: 48px;
-      font-size: 13px;
-      color: var(--muted);
-      line-height: 1.75;
-    }
-
-    /* FORM */
-    .form-block {
-      display: flex;
-      flex-direction: column;
-      gap: 2px;
-      margin-bottom: 32px;
-    }
-
-    .field {
-      background: var(--surface);
-      border: 1px solid var(--border2);
-      position: relative;
-      transition: border-color 0.2s;
-    }
-
-    .field:focus-within {
-      border-color: var(--gold-dim);
-    }
-
-    .field-label {
-      font-size: 9px;
-      letter-spacing: 0.18em;
-      text-transform: uppercase;
-      color: var(--gold);
-      padding: 14px 16px 0;
-      display: block;
-    }
-
-    .field-hint {
-      font-size: 11px;
-      color: var(--dim);
-      letter-spacing: 0.04em;
-      padding: 4px 16px 0;
-      display: block;
-    }
-
-    .field input,
-    .field textarea {
-      width: 100%;
-      background: transparent;
-      border: none;
-      outline: none;
-      color: var(--text);
-      font-family: 'IBM Plex Mono', monospace;
-      font-size: 14px;
-      padding: 8px 16px 14px;
-      resize: none;
-      line-height: 1.6;
-    }
-
-    .field textarea { min-height: 80px; }
-
-    .field input::placeholder,
-    .field textarea::placeholder {
-      color: var(--dim);
-      font-style: italic;
-    }
-
-    /* SUBMIT */
-    .submit-btn {
-      width: 100%;
-      background: var(--surface);
-      border: 1px solid var(--gold);
-      color: var(--gold);
-      font-family: 'IBM Plex Mono', monospace;
-      font-size: 12px;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      padding: 18px 24px;
-      cursor: pointer;
-      text-align: left;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      transition: background 0.2s, color 0.2s;
-      margin-bottom: 16px;
-    }
-
-    .submit-btn:hover {
-      background: #161410;
-    }
-
-    .submit-arrow {
-      font-size: 18px;
-      transition: transform 0.2s;
-    }
-
-    .submit-btn:hover .submit-arrow {
-      transform: translateX(4px);
-    }
-
-    .submit-note {
-      font-size: 11px;
-      color: var(--faint);
-      letter-spacing: 0.06em;
-      line-height: 1.6;
-      margin-bottom: 48px;
-    }
-
-    /* DIVIDER */
-    .divider {
-      height: 1px;
-      background: var(--border);
-      margin: 44px 0;
-      position: relative;
-    }
-    .divider::after {
-      content: '';
-      position: absolute;
-      left: 0; top: 0;
-      width: 28px; height: 1px;
-      background: var(--gold);
-    }
-
-    /* FOOTER */
-    .footer {
-      border-top: 1px solid var(--border2);
-      padding-top: 36px;
-      display: flex;
-      flex-direction: column;
-      gap: 14px;
-    }
-
-    .footer a {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 18px 22px;
-      text-decoration: none;
-      border: 1px solid var(--border2);
-      background: var(--surface);
-      transition: border-color 0.2s, background 0.2s;
-      gap: 16px;
-    }
-
-    .footer a:hover { border-color: var(--gold); background: #161410; }
-    .footer a:hover .banner-arrow { color: var(--gold); }
-
-    .banner-left { display: flex; flex-direction: column; gap: 4px; }
-    .banner-label { font-size: 10px; letter-spacing: 0.15em; text-transform: uppercase; color: var(--gold); }
-    .banner-title { font-size: 14px; color: var(--text); font-family: 'Playfair Display', serif; }
-    .banner-arrow { font-size: 20px; color: var(--muted); flex-shrink: 0; transition: color 0.2s; }
-
-    .copyright {
-      margin-top: 28px;
-      font-size: 11px;
-      color: var(--faint);
-      letter-spacing: 0.05em;
-    }
-  </style>
-</head>
-<body>
-<div class="container">
-
-  <div class="tag">Decision Authority Research &mdash; Private Inquiry</div>
-
-  <h1>Private Inquiry</h1>
-  <p class="header-sub">Confidential. Limited engagements accepted.</p>
-
-  <div class="premise">
-    This is not a sales form.<br><br>
-    Four questions. Your answers determine fit.<br>
-    Qualified inquiries receive a response within two business days.
-  </div>
-
-  <div class="form-block">
-
-    <div class="field">
-      <label class="field-label" for="f-org">01 &mdash; Organization</label>
-      <span class="field-hint">Name and sector</span>
-      <input type="text" id="f-org" placeholder="e.g. Regional bank, AI platform, hospital group" autocomplete="off">
-    </div>
-
-    <div class="field">
-      <label class="field-label" for="f-decision">02 &mdash; Decision or process</label>
-      <span class="field-hint">What concerns you?</span>
-      <textarea id="f-decision" placeholder="e.g. AI model release, clinical protocol update, trading system threshold"></textarea>
-    </div>
-
-    <div class="field">
-      <label class="field-label" for="f-irreversible">03 &mdash; What becomes irreversible?</label>
-      <span class="field-hint">At what point can it no longer be stopped?</span>
-      <textarea id="f-irreversible" placeholder="e.g. Once deployed to production, once the committee approves, once the position exceeds threshold"></textarea>
-    </div>
-
-    <div class="field">
-      <label class="field-label" for="f-authority">04 &mdash; Who currently has authority to stop it?</label>
-      <span class="field-hint">A name, a role, or &ldquo;no one defined&rdquo;</span>
-      <input type="text" id="f-authority" placeholder="e.g. No one defined, the risk committee, unclear">
-    </div>
-
-  </div>
-
-  <button class="submit-btn" onclick="sendInquiry()">
-    <span>Request private review</span>
-    <span class="submit-arrow">&#8594;</span>
-  </button>
-
-  <p class="submit-note">
-    Clicking opens your email client with your answers pre-filled.<br>
-    Nothing is stored. Nothing is sent without your review.
-  </p>
-
-  <div class="divider"></div>
-
-  <p style="font-size:12px;color:var(--faint);line-height:1.8;margin-bottom:0;">
-    Independent paid advisory engagements only.<br>
-    Suitable for boards, regulated firms, AI deployments, critical operations.<br>
-    All conversations are private.
-  </p>
-
-  <div class="footer" style="margin-top:48px;">
-    <a href="services.html">
-      <div class="banner-left">
-        <span class="banner-label">Engagements</span>
-        <span class="banner-title">Three types of engagement. One question.</span>
-      </div>
-      <span class="banner-arrow">&#8594;</span>
-    </a>
-    <a href="index.html">
-      <div class="banner-left">
-        <span class="banner-label">Home</span>
-        <span class="banner-title">The Architecture of Accountability</span>
-      </div>
-      <span class="banner-arrow">&#8594;</span>
-    </a>
-  </div>
-
-  <p class="copyright">&#169; 2026 Liran Bar-Shrim. All rights reserved.</p>
-
-</div>
-<script>
-function sendInquiry() {
-  var org         = document.getElementById('f-org').value.trim();
-  var decision    = document.getElementById('f-decision').value.trim();
-  var irreversible= document.getElementById('f-irreversible').value.trim();
-  var authority   = document.getElementById('f-authority').value.trim();
-
-  if (!org && !decision && !irreversible && !authority) {
-    document.getElementById('f-org').focus();
-    return;
-  }
-
-  var subject = 'Private Inquiry — Decision Authority Review';
-
-  var body =
-    '01. Organization\n' +
-    (org || '(not provided)') + '\n\n' +
-    '02. Decision or process\n' +
-    (decision || '(not provided)') + '\n\n' +
-    '03. What becomes irreversible\n' +
-    (irreversible || '(not provided)') + '\n\n' +
-    '04. Who currently has authority to stop it\n' +
-    (authority || '(not provided)');
-
-  var u = 'Liran' + '@' + 'liranbarshrim.com';
-  window.location.href =
-    'mailto:' + u +
-    '?subject=' + encodeURIComponent(subject) +
-    '&body='    + encodeURIComponent(body);
+<style>
+:root{
+--bg:#090909;
+--surface:#111111;
+--surface2:#151515;
+--gold:#c8a96e;
+--gold2:#e0c38c;
+--text:#e6e0d4;
+--muted:#b8b2ac;
+--dim:#7a7570;
+--faint:#52504c;
+--border:#1e1e1e;
+--border2:#2a2a2a;
 }
 
-// Allow Enter in single-line fields to move to next
-document.getElementById('f-org').addEventListener('keydown', function(e) {
-  if (e.key === 'Enter') { e.preventDefault(); document.getElementById('f-decision').focus(); }
-});
-document.getElementById('f-authority').addEventListener('keydown', function(e) {
-  if (e.key === 'Enter') { e.preventDefault(); sendInquiry(); }
-});
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+}
+
+body{
+background:var(--bg);
+color:var(--text);
+font-family:'IBM Plex Mono',monospace;
+min-height:100vh;
+line-height:1.7;
+}
+
+body:before{
+content:'';
+position:fixed;
+inset:0;
+background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.7' numOctaves='3'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
+pointer-events:none;
+opacity:.5;
+}
+
+.container{
+max-width:680px;
+margin:0 auto;
+padding:64px 24px 90px;
+position:relative;
+z-index:2;
+}
+
+.tag{
+font-size:10px;
+letter-spacing:.18em;
+text-transform:uppercase;
+color:var(--dim);
+display:flex;
+align-items:center;
+gap:12px;
+margin-bottom:38px;
+}
+
+.tag:before{
+content:'';
+width:22px;
+height:1px;
+background:var(--gold);
+display:block;
+}
+
+h1{
+font-family:'Playfair Display',serif;
+font-size:clamp(28px,5vw,42px);
+line-height:1.15;
+border-left:3px solid var(--gold);
+padding-left:18px;
+margin-bottom:14px;
+}
+
+.sub{
+font-size:12px;
+letter-spacing:.08em;
+color:var(--dim);
+padding-left:21px;
+margin-bottom:38px;
+}
+
+.hero{
+background:linear-gradient(180deg,#121212,#101010);
+border:1px solid rgba(200,169,110,.18);
+border-left:3px solid var(--gold);
+padding:24px;
+margin-bottom:42px;
+}
+
+.hero p{
+font-size:14px;
+color:var(--muted);
+margin-bottom:12px;
+}
+
+.hero p:last-child{
+margin-bottom:0;
+}
+
+.form{
+display:flex;
+flex-direction:column;
+gap:14px;
+margin-bottom:26px;
+}
+
+.field{
+background:var(--surface);
+border:1px solid var(--border2);
+transition:.2s;
+}
+
+.field:focus-within{
+border-color:var(--gold);
+}
+
+.label{
+display:block;
+font-size:10px;
+letter-spacing:.16em;
+text-transform:uppercase;
+color:var(--gold);
+padding:14px 16px 4px;
+}
+
+.hint{
+display:block;
+font-size:11px;
+color:var(--dim);
+padding:0 16px 4px;
+}
+
+input,textarea{
+width:100%;
+background:transparent;
+border:none;
+outline:none;
+padding:10px 16px 16px;
+font-family:'IBM Plex Mono',monospace;
+font-size:14px;
+color:var(--text);
+resize:none;
+line-height:1.6;
+}
+
+textarea{
+min-height:92px;
+}
+
+input::placeholder,
+textarea::placeholder{
+color:var(--dim);
+}
+
+.btn{
+width:100%;
+padding:18px 22px;
+border:1px solid var(--gold);
+background:var(--surface);
+color:var(--gold2);
+font-size:12px;
+letter-spacing:.14em;
+text-transform:uppercase;
+cursor:pointer;
+display:flex;
+justify-content:space-between;
+align-items:center;
+transition:.2s;
+margin-top:8px;
+}
+
+.btn:hover{
+background:#171512;
+transform:translateY(-2px);
+}
+
+.arrow{
+font-size:18px;
+}
+
+.note{
+font-size:11px;
+color:var(--faint);
+line-height:1.7;
+margin-top:14px;
+margin-bottom:44px;
+}
+
+.meta{
+padding:24px;
+background:var(--surface);
+border:1px solid var(--border);
+margin-bottom:42px;
+}
+
+.meta div{
+font-size:12px;
+color:var(--muted);
+margin-bottom:10px;
+}
+
+.meta div:last-child{
+margin-bottom:0;
+}
+
+.footer{
+border-top:1px solid var(--border2);
+padding-top:34px;
+display:grid;
+grid-template-columns:1fr;
+gap:14px;
+}
+
+.link{
+text-decoration:none;
+padding:18px 20px;
+background:var(--surface);
+border:1px solid var(--border);
+display:flex;
+justify-content:space-between;
+align-items:center;
+color:var(--text);
+transition:.2s;
+}
+
+.link:hover{
+border-color:var(--gold);
+background:var(--surface2);
+transform:translateY(-2px);
+}
+
+.copy{
+margin-top:26px;
+font-size:11px;
+color:var(--dim);
+}
+
+@media(min-width:760px){
+.footer{
+grid-template-columns:1fr 1fr;
+}
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+<div class="tag">Decision Authority Research</div>
+
+<h1>Private Inquiry</h1>
+
+<p class="sub">Confidential • Limited engagements accepted</p>
+
+<div class="hero">
+<p>A short private intake for qualified inquiries.</p>
+<p>Four questions determine fit, urgency, and whether meaningful stop authority risk exists.</p>
+<p>Typical response: within two business days.</p>
+</div>
+
+<div class="form">
+
+<div class="field">
+<label class="label">01 — Company / Institution</label>
+<span class="hint">Name and sector</span>
+<input id="org" type="text" placeholder="Regional bank, AI platform, hospital group">
+</div>
+
+<div class="field">
+<label class="label">02 — Decision or process</label>
+<span class="hint">What concerns you?</span>
+<textarea id="decision" placeholder="AI release, trading threshold, critical approval flow"></textarea>
+</div>
+
+<div class="field">
+<label class="label">03 — What becomes irreversible?</label>
+<span class="hint">At what point can it no longer be stopped?</span>
+<textarea id="irreversible" placeholder="Once deployed, once approved, once execution begins"></textarea>
+</div>
+
+<div class="field">
+<label class="label">04 — Who can currently stop it?</label>
+<span class="hint">A person, committee, or no one defined</span>
+<input id="authority" type="text" placeholder="Unclear / No one defined / CRO">
+</div>
+
+</div>
+
+<button class="btn" onclick="sendInquiry()">
+<span>Request Confidential Review</span>
+<span class="arrow">→</span>
+</button>
+
+<p class="note">
+Opens your email client with answers pre-filled.<br>
+Nothing is stored. Nothing is sent without your approval.
+</p>
+
+<div class="meta">
+<div>Independent paid advisory only.</div>
+<div>Suitable for boards, regulated firms, AI deployments, critical operations.</div>
+<div>All conversations remain private.</div>
+</div>
+
+<div class="footer">
+
+<a class="link" href="dar.html">
+<span>DAR Engagement</span>
+<span>→</span>
+</a>
+
+<a class="link" href="services.html">
+<span>Services</span>
+<span>→</span>
+</a>
+
+<a class="link" href="case-studies.html">
+<span>Public Failures</span>
+<span>→</span>
+</a>
+
+<a class="link" href="index.html">
+<span>Home</span>
+<span>→</span>
+</a>
+
+</div>
+
+<p class="copy">© 2026 Liran Bar-Shrim. All rights reserved.</p>
+
+</div>
+
+<script>
+function sendInquiry(){
+
+let org=document.getElementById('org').value.trim();
+let decision=document.getElementById('decision').value.trim();
+let irreversible=document.getElementById('irreversible').value.trim();
+let authority=document.getElementById('authority').value.trim();
+
+if(!org && !decision && !irreversible && !authority){
+document.getElementById('org').focus();
+return;
+}
+
+let subject="Private Inquiry — Decision Authority Review";
+
+let body=
+"01. Company / Institution\n"+(org||"(not provided)")+"\n\n"+
+"02. Decision or process\n"+(decision||"(not provided)")+"\n\n"+
+"03. What becomes irreversible\n"+(irreversible||"(not provided)")+"\n\n"+
+"04. Who can currently stop it\n"+(authority||"(not provided)");
+
+window.location.href=
+"mailto:Liran@liranbarshrim.com?subject="+
+encodeURIComponent(subject)+
+"&body="+
+encodeURIComponent(body);
+}
 </script>
+
 </body>
 </html>
