@@ -2,7 +2,8 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<meta name="viewport"
+ content="width=device-width,initial-scale=1.0">
 
 <title>Decision Authority Research | Named Stop Authority</title>
 
@@ -83,7 +84,6 @@ font-family:'Playfair Display',serif;
 font-size:28px;
 line-height:1.35;
 margin-bottom:26px;
-transition: all 0.3s ease;
 }
 
 .lux{
@@ -133,7 +133,7 @@ font-size:12px;
 letter-spacing:.12em;
 text-transform:uppercase;
 display:inline-block;
-transition:.2s ease;
+transition:.2s;
 }
 
 .primary{
@@ -149,8 +149,7 @@ background:var(--surface);
 }
 
 .btn:hover{
-transform:translateY(-3px);
-box-shadow:0 10px 20px -5px rgba(200,169,110,.3);
+transform:translateY(-2px);
 }
 
 .section{
@@ -181,21 +180,15 @@ margin-bottom:12px;
 .grid{
 display:grid;
 grid-template-columns:repeat(3,1fr);
-gap:18px;
+gap:14px;
 margin-top:20px;
 }
 
 .card{
 background:var(--surface);
 border:1px solid var(--border);
-padding:24px;
-min-height:180px;
-transition: all 0.3s ease;
-}
-
-.card:hover{
-transform:translateY(-4px);
-border-color:var(--gold);
+padding:20px;
+min-height:160px;
 }
 
 .card strong{
@@ -203,12 +196,6 @@ display:block;
 font-size:13px;
 margin-bottom:10px;
 color:var(--text);
-}
-
-.card p{
-font-size:13px;
-color:var(--muted);
-line-height:1.5;
 }
 
 .quote{
@@ -223,7 +210,7 @@ line-height:1.25;
 
 .final-cta{
 margin-top:38px;
-padding:32px;
+padding:28px;
 background:linear-gradient(180deg,#13110d,#0f0f0f);
 border:1px solid rgba(200,169,110,.24);
 border-left:3px solid var(--gold);
@@ -248,8 +235,6 @@ border-top:1px solid var(--border);
 display:flex;
 flex-wrap:wrap;
 gap:18px;
-justify-content:space-between;
-align-items:center;
 }
 
 .footer a{
@@ -262,29 +247,35 @@ color:var(--muted);
 margin-top:24px;
 font-size:11px;
 color:var(--dim);
-letter-spacing:0.5px;
 }
 
 @media(max-width:780px){
+
 .grid{
 grid-template-columns:1fr;
 }
+
 h1{
 font-size:clamp(34px,12vw,58px);
 }
+
 .signal{
 font-size:24px;
 }
+
 .quote{
 font-size:28px;
 }
+
 .btn{
 width:100%;
 text-align:center;
 }
+
 .container{
 padding:42px 18px 70px;
 }
+
 }
 </style>
 </head>
@@ -340,17 +331,17 @@ That gap becomes visible only after damage.
 
 <div class="card">
 <strong>Knight Capital</strong>
-<p>45 minutes.<br>$440M lost.<br><span style="color:#b73a2f;">No named stop authority.</span></p>
+45 minutes. $440M lost.
 </div>
 
 <div class="card">
 <strong>Boeing 737 MAX</strong>
-<p>Warnings existed.<br>Continuation remained.<br><span style="color:#b73a2f;">No named stop authority.</span></p>
+Warnings existed. Continuation remained.
 </div>
 
 <div class="card">
 <strong>Global outages</strong>
-<p>Technical release outran human interruption.<br><span style="color:#b73a2f;">No named stop authority.</span></p>
+Technical release outran human interruption.
 </div>
 
 </div>
@@ -365,7 +356,9 @@ Who is explicitly named to stop your next irreversible decision?
 
 <div class="final-cta">
 <h3>Private Advisory</h3>
-<p>Only a handful of organizations receive this advisory each year.</p>
+<p>
+Selective engagements for boards, executives and high-consequence organizations.
+</p>
 
 <a href="contact.html" class="btn primary">Private Contact</a>
 </div>
@@ -373,14 +366,13 @@ Who is explicitly named to stop your next irreversible decision?
 </div>
 
 <div class="footer">
-<div>
 <a href="dar.html">DAR</a>
 <a href="case-studies.html">Case Studies</a>
 <a href="ai-governance.html">AI Governance</a>
 <a href="about.html">About</a>
 </div>
-<p class="copy">© 2026 Matrix Audit • Liran Bar-Shrim</p>
-</div>
+
+<p class="copy">© 2026 Liran Bar-Shrim. All rights reserved.</p>
 
 </div>
 
