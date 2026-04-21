@@ -85,7 +85,7 @@ background:linear-gradient(180deg,#121212,#101010);
 border:1px solid rgba(200,169,110,.18);
 border-left:3px solid var(--gold);
 padding:24px;
-margin-bottom:42px;
+margin-bottom:26px;
 }
 
 .hero p{
@@ -98,6 +98,16 @@ margin-bottom:12px;
 margin-bottom:0;
 }
 
+.signal{
+background:var(--surface);
+border-left:3px solid var(--gold);
+padding:18px 22px;
+margin-bottom:38px;
+font-family:'Playfair Display',serif;
+font-size:22px;
+line-height:1.45;
+}
+
 .form{
 display:flex;
 flex-direction:column;
@@ -108,6 +118,7 @@ margin-bottom:26px;
 .field{
 background:var(--surface);
 border:1px solid var(--border2);
+transition:.2s;
 }
 
 .field:focus-within{
@@ -193,7 +204,9 @@ color:var(--muted);
 margin-bottom:10px;
 }
 
-.meta div:last-child{margin-bottom:0;}
+.meta div:last-child{
+margin-bottom:0;
+}
 
 .footer{
 border-top:1px solid var(--border2);
@@ -212,6 +225,7 @@ display:flex;
 justify-content:space-between;
 align-items:center;
 color:var(--text);
+transition:.2s;
 }
 
 .link:hover{
@@ -241,12 +255,17 @@ grid-template-columns:1fr 1fr;
 
 <h1>Private Inquiry</h1>
 
-<p class="sub">Confidential • Limited engagements accepted</p>
+<p class="sub">Confidential • Selective engagements accepted</p>
 
 <div class="hero">
 <p>Confidential inquiry for executives facing real accountability exposure.</p>
 <p>Four questions determine fit, urgency, and whether meaningful stop authority risk exists.</p>
 <p>Typical response: within two business days.</p>
+</div>
+
+<div class="signal">
+If no one is clearly named to stop it,<br>
+that is usually the first signal.
 </div>
 
 <div class="form">
@@ -278,7 +297,7 @@ grid-template-columns:1fr 1fr;
 </div>
 
 <button class="btn" onclick="sendInquiry()">
-<span>Request Private Assessment</span>
+<span>Discuss Live Exposure</span>
 <span>→</span>
 </button>
 
@@ -288,16 +307,20 @@ Nothing is stored. Nothing is sent without your approval.
 </p>
 
 <div class="meta">
-<div>Independent paid advisory only.</div>
+<div>Selective independent advisory.</div>
 <div>Suitable for boards, regulated firms, AI deployments, critical operations.</div>
+<div>Not intended for low-stakes matters.</div>
 <div>All conversations remain private.</div>
 </div>
 
 <div class="footer">
 
-<a class="link" href="dar.html"><span>DAR Engagement</span><span>→</span></a>
 <a class="link" href="about.html"><span>About</span><span>→</span></a>
+
+<a class="link" href="dar.html"><span>DAR Engagement</span><span>→</span></a>
+
 <a class="link" href="case-studies.html"><span>Public Failures</span><span>→</span></a>
+
 <a class="link" href="index.html"><span>Home</span><span>→</span></a>
 
 </div>
