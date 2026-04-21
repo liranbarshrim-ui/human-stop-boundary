@@ -1,223 +1,388 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Case Studies | When No One Was Named to Stop It</title>
-  <meta name="description" content="Real failures. Same pattern. When no one was named in advance to stop an irreversible decision.">
-  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Playfair+Display:ital,wght@0,700;1,400&display=swap" rel="stylesheet">
-  <style>
-    :root {
-      --bg:#090909; --surface:#111111; --gold:#c8a96e;
-      --danger:#c0392b; --text:#e6e0d4; --muted:#a09a94;
-      --dim:#7a7570; --faint:#52504c; --border:#1e1e1e; --border2:#2a2a2a;
-    }
-    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
-    body{background:var(--bg);color:var(--text);font-family:'IBM Plex Mono',monospace;min-height:100vh;overflow-x:hidden;}
-    body::before{content:'';position:fixed;inset:0;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");pointer-events:none;z-index:0;opacity:0.6;}
-    .container{position:relative;z-index:1;max-width:760px;margin:0 auto;padding:60px 24px 80px;animation:fadeIn 0.8s ease both;}
-    @keyframes fadeIn{from{opacity:0;transform:translateY(12px);}to{opacity:1;transform:translateY(0);}}
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 
-    .tag{font-size:10px;letter-spacing:0.15em;text-transform:uppercase;color:var(--muted);margin-bottom:48px;display:flex;align-items:center;gap:12px;}
-    .tag::before{content:'';display:inline-block;width:20px;height:1px;background:var(--gold);}
+<title>Case Studies | Real Failures. Same Pattern.</title>
 
-    .hero{border-left:3px solid var(--gold);padding-left:20px;margin-bottom:48px;}
-    .hero-question{font-family:'Playfair Display',serif;font-size:clamp(22px,4.5vw,36px);font-weight:700;line-height:1.25;color:var(--text);margin-bottom:16px;}
-    .hero-sub{font-size:13px;color:var(--muted);line-height:1.7;}
+<meta name="description" content="Real failures across finance, aviation, infrastructure, and markets. Same recurring pattern: no one clearly named in advance to stop irreversible continuation.">
 
-    .pattern-statement{margin-bottom:48px;font-size:13px;color:var(--muted);line-height:1.8;border-top:1px solid var(--border2);padding-top:32px;}
-    .pattern-statement strong{color:var(--text);}
+<meta name="keywords" content="case studies governance failure, stop authority, executive accountability, Knight Capital, Boeing 737 MAX, Wells Fargo, CrowdStrike outage, flash crash">
 
-    .case{border-top:1px solid var(--border2);padding:36px 0;}
-    .case:last-of-type{border-bottom:1px solid var(--border2);}
+<link rel="canonical" href="https://matrix-audit.com/case-studies.html" />
 
-    .case-meta{display:flex;align-items:baseline;gap:16px;margin-bottom:20px;flex-wrap:wrap;}
-    .case-index{font-size:10px;letter-spacing:0.15em;text-transform:uppercase;color:var(--faint);}
-    .case-sector{font-size:10px;letter-spacing:0.12em;text-transform:uppercase;color:var(--gold);border:1px solid var(--gold);padding:2px 8px;}
+<meta property="og:title" content="Case Studies | Real Failures. Same Pattern.">
+<meta property="og:description" content="When no one is clearly named to stop continuation, accountability arrives after failure.">
+<meta property="og:type" content="website">
 
-    .case-title{font-family:'Playfair Display',serif;font-size:22px;font-weight:700;color:var(--text);margin-bottom:8px;}
-    .case-stats{font-size:12px;color:var(--danger);letter-spacing:0.05em;margin-bottom:20px;}
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Playfair+Display:wght@400;700&display=swap" rel="stylesheet">
 
-    .case-body{font-size:13px;color:var(--muted);line-height:1.9;}
-    .case-body p{margin-bottom:10px;}
-    .case-body p:last-child{margin-bottom:0;}
+<style>
+:root{
+--bg:#090909;
+--surface:#111111;
+--surface2:#151515;
+--gold:#c8a96e;
+--danger:#c0392b;
+--text:#e6e0d4;
+--muted:#a09a94;
+--dim:#7a7570;
+--faint:#52504c;
+--border:#1e1e1e;
+--border2:#2a2a2a;
+}
 
-    .case-verdict{margin-top:20px;padding:16px 20px;border-left:3px solid var(--danger);background:var(--surface);font-size:12px;color:var(--text);line-height:1.7;}
-    .case-verdict-label{font-size:9px;letter-spacing:0.18em;text-transform:uppercase;color:var(--danger);margin-bottom:8px;}
+*{margin:0;padding:0;box-sizing:border-box;}
 
-    .closing{margin-top:48px;border-top:1px solid var(--border2);padding-top:36px;}
-    .closing p{font-size:13px;color:var(--muted);line-height:1.8;margin-bottom:12px;}
-    .closing strong{color:var(--text);}
+body{
+background:var(--bg);
+color:var(--text);
+font-family:'IBM Plex Mono',monospace;
+line-height:1.75;
+}
 
-    .footer{border-top:1px solid var(--border2);padding-top:36px;margin-top:48px;display:flex;flex-direction:column;gap:14px;}
-    .footer a{display:flex;align-items:center;justify-content:space-between;padding:18px 22px;text-decoration:none;border:1px solid var(--border2);background:var(--surface);transition:border-color 0.2s,background 0.2s;gap:16px;}
-    .footer a:hover{border-color:var(--gold);background:#161410;}
-    .footer a:hover .banner-arrow{color:var(--gold);}
-    .footer a.cta{border-color:var(--gold);background:#13110d;}
-    .footer a.cta .banner-title{color:var(--gold);}
-    .banner-left{display:flex;flex-direction:column;gap:4px;}
-    .banner-label{font-size:10px;letter-spacing:0.15em;text-transform:uppercase;color:var(--gold);}
-    .banner-title{font-size:14px;color:var(--text);font-family:'Playfair Display',serif;}
-    .banner-arrow{font-size:20px;color:var(--muted);flex-shrink:0;transition:color 0.2s;}
-    .copyright{margin-top:28px;font-size:11px;color:var(--dim);letter-spacing:0.05em;}
-  </style>
+.container{
+max-width:820px;
+margin:0 auto;
+padding:60px 24px 90px;
+}
+
+.tag{
+font-size:10px;
+letter-spacing:.18em;
+text-transform:uppercase;
+color:var(--muted);
+display:flex;
+align-items:center;
+gap:12px;
+margin-bottom:38px;
+}
+
+.tag:before{
+content:'';
+width:22px;
+height:1px;
+background:var(--gold);
+display:block;
+}
+
+.hero{
+border-left:3px solid var(--gold);
+padding-left:20px;
+margin-bottom:48px;
+}
+
+.hero h1{
+font-family:'Playfair Display',serif;
+font-size:clamp(34px,6vw,56px);
+line-height:1.08;
+margin-bottom:16px;
+}
+
+.hero p{
+font-size:14px;
+color:var(--muted);
+max-width:700px;
+margin-bottom:10px;
+}
+
+.statement{
+border-top:1px solid var(--border2);
+padding-top:32px;
+margin-bottom:34px;
+font-size:14px;
+color:var(--muted);
+}
+
+.statement strong{
+color:var(--text);
+}
+
+.case{
+border-top:1px solid var(--border2);
+padding:36px 0;
+}
+
+.case:last-of-type{
+border-bottom:1px solid var(--border2);
+}
+
+.meta{
+display:flex;
+gap:14px;
+flex-wrap:wrap;
+margin-bottom:16px;
+align-items:center;
+}
+
+.num{
+font-size:10px;
+letter-spacing:.16em;
+color:var(--faint);
+}
+
+.sector{
+font-size:10px;
+letter-spacing:.14em;
+text-transform:uppercase;
+color:var(--gold);
+border:1px solid var(--gold);
+padding:3px 8px;
+}
+
+.case h2{
+font-family:'Playfair Display',serif;
+font-size:26px;
+margin-bottom:8px;
+}
+
+.stats{
+font-size:12px;
+color:var(--danger);
+margin-bottom:18px;
+}
+
+.case p{
+font-size:14px;
+color:var(--muted);
+margin-bottom:12px;
+}
+
+.verdict{
+margin-top:20px;
+padding:18px 20px;
+background:var(--surface);
+border-left:3px solid var(--danger);
+}
+
+.verdict-label{
+font-size:9px;
+letter-spacing:.18em;
+text-transform:uppercase;
+color:var(--danger);
+margin-bottom:8px;
+}
+
+.verdict p{
+margin:0;
+color:var(--text);
+font-size:13px;
+line-height:1.7;
+}
+
+.cta-mid{
+margin-top:36px;
+padding:24px;
+background:linear-gradient(180deg,#13110d,#101010);
+border:1px solid rgba(200,169,110,.22);
+border-left:3px solid var(--gold);
+}
+
+.cta-mid p{
+font-size:14px;
+color:var(--muted);
+margin-bottom:14px;
+}
+
+.btn{
+display:inline-block;
+text-decoration:none;
+padding:16px 22px;
+font-size:12px;
+letter-spacing:.12em;
+text-transform:uppercase;
+border:1px solid var(--gold);
+background:var(--surface);
+color:var(--text);
+transition:.2s;
+}
+
+.btn:hover{
+background:#171512;
+transform:translateY(-2px);
+}
+
+.footer{
+margin-top:48px;
+padding-top:36px;
+border-top:1px solid var(--border2);
+display:grid;
+grid-template-columns:1fr;
+gap:14px;
+}
+
+.link{
+text-decoration:none;
+padding:20px;
+background:var(--surface);
+border:1px solid var(--border);
+display:flex;
+justify-content:space-between;
+align-items:center;
+color:var(--text);
+transition:.2s;
+}
+
+.link:hover{
+border-color:var(--gold);
+background:var(--surface2);
+transform:translateY(-2px);
+}
+
+.copy{
+margin-top:28px;
+font-size:11px;
+color:var(--dim);
+}
+
+@media(min-width:760px){
+.footer{
+grid-template-columns:1fr 1fr;
+}
+}
+</style>
 </head>
+
 <body>
+
 <div class="container">
 
-  <div class="tag">DAR &mdash; case studies</div>
+<div class="tag">Decision Authority Research</div>
 
-  <div class="hero">
-    <p class="hero-question">Real failures.<br>Same pattern.</p>
-    <p class="hero-sub" style="margin-top:12px;color:var(--text);font-weight:500;">Real failures rarely begin with missing data.<br>They begin with missing authority.</p>
-    <p class="hero-sub" style="margin-top:16px;">In each case below, the signals existed. The warnings existed. The process existed.</p>
-    <p class="hero-sub" style="margin-top:8px;">What did not exist was one named person obligated to stop continuation in time.</p>
-  </div>
+<div class="hero">
+<h1>Real Failures.<br>Same Pattern.</h1>
 
-  <div class="pattern-statement">
-    Approval is easy.<br>
-    <strong>Naming refusal is rare.</strong>
-  </div>
+<p>Across industries, catastrophic outcomes rarely begin with missing information.</p>
+<p>They begin when warning signals exist, but no one is clearly empowered and obligated to stop continuation in time.</p>
+</div>
 
-  <p style="font-size:13px;color:var(--text);line-height:1.8;margin-bottom:32px;">Different industries. Same missing authority.</p>
-  <div class="case">
-    <div class="case-meta">
-      <span class="case-index">01</span>
-      <span class="case-sector">Financial / Trading</span>
-    </div>
-    <p class="case-title">Knight Capital Group</p>
-    <p class="case-stats">45 minutes &nbsp;&middot;&nbsp; $440 million lost &nbsp;&middot;&nbsp; 2012</p>
-    <div class="case-body">
-      <p>A software deployment activated an obsolete trading algorithm. Within 45 minutes the firm had accumulated a position it could not absorb.</p>
-      <p>The system was visible. The loss was accumulating in real time. No single individual carried the explicit authority and obligation to halt execution immediately.</p>
-      <p>By the time intervention arrived, the loss was already compounding.</p>
-    </div>
-    <div class="case-verdict">
-      <div class="case-verdict-label">The stop authority question</div>
-      Who was named in advance to suspend deployment the moment execution diverged from intent?
-    </div>
-  </div>
+<div class="statement">
+Approval is common. <strong>Named refusal is rare.</strong>
+</div>
 
-  <!-- CASE 2 -->
-  <div class="case">
-    <div class="case-meta">
-      <span class="case-index">02</span>
-      <span class="case-sector">Aviation</span>
-    </div>
-    <p class="case-title">Boeing 737 MAX</p>
-    <p class="case-stats">346 fatalities &nbsp;&middot;&nbsp; Two crashes &nbsp;&middot;&nbsp; 2018&ndash;2019</p>
-    <div class="case-body">
-      <p>Warnings about the MCAS system existed internally. Escalation channels existed. Documentation existed.</p>
-      <p>Continuation of certification and delivery proceeded across multiple organizational layers. No clearly identified individual appears to have held final stop authority when the risk signal crossed a threshold.</p>
-      <p>Responsibility, when it resolved, was distributed. The harm was not.</p>
-    </div>
-    <div class="case-verdict">
-      <div class="case-verdict-label">The stop authority question</div>
-      Who held explicit, named authority to halt certification before the second aircraft flew?
-    </div>
-  </div>
+<div class="case">
+<div class="meta">
+<span class="num">01</span>
+<span class="sector">Financial Markets</span>
+</div>
 
-  <!-- CASE 3 -->
-  <div class="case">
-    <div class="case-meta">
-      <span class="case-index">03</span>
-      <span class="case-sector">Banking / Conduct</span>
-    </div>
-    <p class="case-title">Wells Fargo Account Fraud</p>
-    <p class="case-stats">3.5 million unauthorized accounts &nbsp;&middot;&nbsp; $3B+ in penalties &nbsp;&middot;&nbsp; 2016</p>
-    <div class="case-body">
-      <p>Unauthorized account creation continued for years across thousands of branch employees. Internal reports flagged the pattern. Compliance structures existed.</p>
-      <p>Continuation required no named individual to actively authorize it. It required only that no named individual was obligated to stop it.</p>
-      <p>The structure dispersed blame faster than it assigned responsibility.</p>
-    </div>
-    <div class="case-verdict">
-      <div class="case-verdict-label">The stop authority question</div>
-      Who was named, in advance, with the authority and obligation to halt the sales program when the pattern became visible?
-    </div>
-  </div>
+<h2>Knight Capital</h2>
+<div class="stats">45 minutes • $440 million lost • 2012</div>
 
-  <!-- CASE 4 -->
-  <div class="case">
-    <div class="case-meta">
-      <span class="case-index">04</span>
-      <span class="case-sector">Technology / Infrastructure</span>
-    </div>
-    <p class="case-title">CrowdStrike Global Outage</p>
-    <p class="case-stats">8.5 million devices &nbsp;&middot;&nbsp; Global operational disruption &nbsp;&middot;&nbsp; July 2024</p>
-    <div class="case-body">
-      <p>A single content configuration update was deployed globally without staged rollout controls. The update caused immediate system failure across critical infrastructure sectors worldwide.</p>
-      <p>The deployment pipeline had technical gates. No single named individual is publicly identified as having the obligation to stop the deployment before global execution.</p>
-      <p>Speed of deployment outran the speed of human judgment.</p>
-    </div>
-    <div class="case-verdict">
-      <div class="case-verdict-label">The stop authority question</div>
-      Who was personally obligated to authorize global deployment before it executed?
-    </div>
-  </div>
+<p>A deployment failure triggered uncontrolled trading activity at machine speed.</p>
+<p>The system was live. Losses were visible. Intervention lagged behind execution.</p>
 
-  <!-- CASE 5 -->
-  <div class="case">
-    <div class="case-meta">
-      <span class="case-index">05</span>
-      <span class="case-sector">Financial / Markets</span>
-    </div>
-    <p class="case-title">Flash Crash</p>
-    <p class="case-stats">Nearly $1 trillion briefly erased in market value &nbsp;&middot;&nbsp; May 6, 2010</p>
-    <div class="case-body">
-      <p>Algorithmic trading cascades erased nearly a trillion dollars of market value in under fifteen minutes. Human oversight existed at every participating firm.</p>
-      <p>The speed gap was technical.<br>The inability to interrupt it was human.</p>
-      <p>No named individual at any single point in the chain carried the obligation to stop continuation.</p>
-    </div>
-    <div class="case-verdict">
-      <div class="case-verdict-label">The stop authority question</div>
-      At what point was a human being named in advance to interrupt the cascade before it became self-reinforcing?
-    </div>
-  </div>
+<div class="verdict">
+<div class="verdict-label">The stop authority question</div>
+<p>Who was explicitly empowered to halt execution the moment behavior diverged from intent?</p>
+</div>
+</div>
 
-  <div style="border-top:1px solid var(--border2);padding:32px 0;font-size:13px;color:var(--text);line-height:1.8;">
-    If you had to stop one decision today &mdash; by name &mdash; which one would it be?
-  </div>
+<div class="case">
+<div class="meta">
+<span class="num">02</span>
+<span class="sector">Aviation</span>
+</div>
 
-  <div class="closing">
-    <p>These are not isolated incidents.</p>
-    <p><strong>They share one recurring absence: no individual was named in advance to carry the obligation to refuse.</strong></p>
-    <p style="margin-top:20px;color:var(--danger);font-size:13px;">If you cannot name that person today, the pattern already exists.</p>
-    <p style="margin-top:12px;color:var(--text);font-size:13px;">And when it fails, that name will still be required.</p>
-  </div>
+<h2>Boeing 737 MAX</h2>
+<div class="stats">346 fatalities • 2018–2019</div>
 
-  <div class="footer">
-    <a href="contact.html" class="cta">
-      <div class="banner-left">
-        <span class="banner-label">Contact</span>
-        <span class="banner-title">Identify one live decision no one is named to stop</span>
-      </div>
-      <span class="banner-arrow">&#8594;</span>
-    </a>
-    <a href="dar.html">
-      <div class="banner-left">
-        <span class="banner-label">DAR</span>
-        <span class="banner-title">Decision Authority Record</span>
-      </div>
-      <span class="banner-arrow">&#8594;</span>
-    </a>
-    <a href="services.html">
-      <div class="banner-left">
-        <span class="banner-label">Engagements</span>
-        <span class="banner-title">Three engagements. One accountable name.</span>
-      </div>
-      <span class="banner-arrow">&#8594;</span>
-    </a>
-    <a href="index.html">
-      <div class="banner-left">
-        <span class="banner-label">Home</span>
-        <span class="banner-title">The Architecture of Accountability</span>
-      </div>
-      <span class="banner-arrow">&#8594;</span>
-    </a>
-  </div>
+<p>Warnings, concerns, and escalation signals existed across multiple layers.</p>
+<p>Yet continuation persisted until tragedy forced a response.</p>
 
-  <p class="copyright">&#169; 2026 Liran Bar-Shrim. All rights reserved.</p>
+<div class="verdict">
+<div class="verdict-label">The stop authority question</div>
+<p>Who had clear authority to stop continuation before the second crash occurred?</p>
+</div>
+</div>
+
+<div class="case">
+<div class="meta">
+<span class="num">03</span>
+<span class="sector">Banking Conduct</span>
+</div>
+
+<h2>Wells Fargo</h2>
+<div class="stats">Millions of unauthorized accounts • Multi-billion penalties</div>
+
+<p>Problematic incentives continued for years while signals accumulated internally.</p>
+<p>Stopping required action from someone specific. That clarity was absent.</p>
+
+<div class="verdict">
+<div class="verdict-label">The stop authority question</div>
+<p>Who was obligated to stop the program once the pattern became visible?</p>
+</div>
+</div>
+
+<div class="case">
+<div class="meta">
+<span class="num">04</span>
+<span class="sector">Infrastructure</span>
+</div>
+
+<h2>CrowdStrike Global Outage</h2>
+<div class="stats">Millions of affected devices • 2024</div>
+
+<p>A global update propagated faster than human recovery capacity.</p>
+<p>Technical pipelines moved immediately. Human interruption came later.</p>
+
+<div class="verdict">
+<div class="verdict-label">The stop authority question</div>
+<p>Who personally owned the go / no-go decision before worldwide release?</p>
+</div>
+</div>
+
+<div class="case">
+<div class="meta">
+<span class="num">05</span>
+<span class="sector">Markets</span>
+</div>
+
+<h2>Flash Crash</h2>
+<div class="stats">Massive temporary market value destruction • 2010</div>
+
+<p>Automated cascades outran human oversight.</p>
+<p>Speed became a governance risk.</p>
+
+<div class="verdict">
+<div class="verdict-label">The stop authority question</div>
+<p>Who was named in advance to interrupt the cascade before it reinforced itself?</p>
+</div>
+</div>
+
+<div class="cta-mid">
+<p>If one irreversible decision in your organization had to be stopped today, by name, who would that be?</p>
+<a href="contact.html" class="btn">Private Inquiry</a>
+</div>
+
+<div class="footer">
+
+<a class="link" href="dar.html">
+<span>DAR Framework</span>
+<span>→</span>
+</a>
+
+<a class="link" href="about.html">
+<span>About</span>
+<span>→</span>
+</a>
+
+<a class="link" href="contact.html">
+<span>Private Inquiry</span>
+<span>→</span>
+</a>
+
+<a class="link" href="index.html">
+<span>Home</span>
+<span>→</span>
+</a>
 
 </div>
+
+<p class="copy">© 2026 Liran Bar-Shrim. All rights reserved.</p>
+
+</div>
+
 </body>
-</html> 
+</html>
