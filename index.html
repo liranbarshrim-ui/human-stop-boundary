@@ -36,6 +36,10 @@ padding:0;
 box-sizing:border-box;
 }
 
+html{
+scroll-behavior:smooth;
+}
+
 body{
 background:var(--bg);
 color:var(--text);
@@ -94,18 +98,20 @@ margin-bottom:28px;
 font-family:'Playfair Display',serif;
 font-size:24px;
 line-height:1.45;
+box-shadow:0 12px 28px rgba(0,0,0,.28);
 }
 
 .lux-banner{
 margin:0 0 34px;
 padding:20px 22px;
 background:
-linear-gradient(135deg,rgba(200,169,110,.08),rgba(255,255,255,0) 45%),
-linear-gradient(180deg,#121212,#0d0d0d);
-border:1px solid #262626;
+linear-gradient(135deg,rgba(200,169,110,.09),rgba(255,255,255,0) 45%),
+linear-gradient(180deg,#141414,#0d0d0d);
+border:1px solid #2a2a2a;
 border-left:3px solid var(--gold);
 position:relative;
 overflow:hidden;
+box-shadow:0 12px 28px rgba(0,0,0,.35);
 }
 
 .lux-banner:after{
@@ -174,7 +180,8 @@ padding:16px 22px;
 font-size:12px;
 letter-spacing:.12em;
 text-transform:uppercase;
-transition:.2s;
+transition:.25s;
+display:inline-block;
 }
 
 .btn-primary{
@@ -191,6 +198,7 @@ color:var(--text);
 
 .btn:hover{
 transform:translateY(-2px);
+opacity:.96;
 }
 
 .section{
@@ -229,6 +237,12 @@ margin-top:20px;
 background:var(--surface);
 border:1px solid var(--border);
 padding:20px;
+transition:.25s;
+}
+
+.card:hover{
+border-color:#35302a;
+transform:translateY(-2px);
 }
 
 .card strong{
@@ -247,6 +261,7 @@ padding:24px;
 font-family:'Playfair Display',serif;
 font-size:28px;
 line-height:1.35;
+box-shadow:0 10px 24px rgba(0,0,0,.18);
 }
 
 .footer{
@@ -268,10 +283,14 @@ display:flex;
 justify-content:space-between;
 align-items:center;
 color:var(--text);
+transition:.25s;
+border:1px solid transparent;
 }
 
 .link-card:hover{
 background:#161410;
+border-color:#2d2a25;
+transform:translateY(-2px);
 }
 
 .lc-left{
@@ -295,6 +314,12 @@ font-size:14px;
 .lc-arrow{
 font-size:18px;
 color:var(--muted);
+transition:.25s;
+}
+
+.link-card:hover .lc-arrow{
+color:var(--gold);
+transform:translateX(3px);
 }
 
 .link-card.featured{
@@ -308,14 +333,35 @@ color:var(--dim);
 }
 
 @media(min-width:760px){
-.grid{grid-template-columns:1fr 1fr 1fr;}
-.footer{grid-template-columns:1fr 1fr;}
+.grid{
+grid-template-columns:1fr 1fr 1fr;
+}
+.footer{
+grid-template-columns:1fr 1fr;
+}
 }
 
 @media(max-width:700px){
-.lux-banner{padding:18px;}
-.lux-title{font-size:24px;}
-.lux-sub{font-size:12px;}
+.container{
+padding:42px 18px 70px;
+}
+.hero{
+font-size:21px;
+padding:20px;
+}
+.lux-banner{
+padding:18px;
+}
+.lux-title{
+font-size:24px;
+}
+.lux-sub{
+font-size:12px;
+}
+.quote{
+font-size:24px;
+padding:20px;
+}
 }
 </style>
 </head>
@@ -438,5 +484,6 @@ Who is explicitly named to stop your next irreversible decision?
 <p class="small">© 2026 Liran Bar-Shrim. All rights reserved.</p>
 
 </div>
+
 </body>
 </html>
