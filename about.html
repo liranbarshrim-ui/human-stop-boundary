@@ -12,16 +12,16 @@
 
 <script type="application/ld+json">
 {
-  "@context": "https://schema.org",
-  "@type": "Person",
-  "name": "Liran Bar-Shrim",
-  "url": "https://matrix-audit.com/about.html",
-  "jobTitle": "Independent Advisor",
-  "description": "Liran Bar-Shrim focuses on stop authority. If no one is named in advance to stop a decision, the system does not actually know how to stop.",
-  "worksFor": {
-    "@type": "Organization",
-    "name": "Decision Authority Research",
-    "url": "https://matrix-audit.com"
+  "@context":"https://schema.org",
+  "@type":"Person",
+  "name":"Liran Bar-Shrim",
+  "url":"https://matrix-audit.com/about.html",
+  "jobTitle":"Independent Advisor",
+  "description":"Liran Bar-Shrim focuses on stop authority. If no one is named in advance to stop a decision, the system does not actually know how to stop.",
+  "worksFor":{
+    "@type":"Organization",
+    "name":"Decision Authority Research",
+    "url":"https://matrix-audit.com"
   }
 }
 </script>
@@ -30,15 +30,51 @@
 
 <style>
 :root{
---bg:#090909;--surface:#111111;--surface2:#151515;--gold:#c8a96e;
---text:#e6e0d4;--muted:#a09a94;--dim:#7a7570;--faint:#52504c;--border:#1e1e1e;--border2:#2a2a2a;
+--bg:#090909;
+--surface:#111111;
+--surface2:#151515;
+--gold:#c8a96e;
+--text:#e6e0d4;
+--muted:#a09a94;
+--dim:#7a7570;
+--faint:#52504c;
+--border:#1e1e1e;
+--border2:#2a2a2a;
 }
-*{margin:0;padding:0;box-sizing:border-box;}
-body{background:var(--bg);color:var(--text);font-family:'IBM Plex Mono',monospace;line-height:1.75;}
-.container{max-width:760px;margin:0 auto;padding:60px 24px 120px;}
 
-.tag{font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);display:flex;align-items:center;gap:12px;margin-bottom:40px;}
-.tag:before{content:'';width:20px;height:1px;background:var(--gold);display:block;}
+*{margin:0;padding:0;box-sizing:border-box;}
+
+body{
+background:var(--bg);
+color:var(--text);
+font-family:'IBM Plex Mono',monospace;
+line-height:1.75;
+}
+
+.container{
+max-width:760px;
+margin:0 auto;
+padding:60px 24px 120px;
+}
+
+.tag{
+font-size:10px;
+letter-spacing:.16em;
+text-transform:uppercase;
+color:var(--muted);
+display:flex;
+align-items:center;
+gap:12px;
+margin-bottom:40px;
+}
+
+.tag:before{
+content:'';
+width:20px;
+height:1px;
+background:var(--gold);
+display:block;
+}
 
 .profile{
 display:grid;
@@ -46,19 +82,21 @@ grid-template-columns:1fr;
 gap:32px;
 margin-bottom:46px;
 }
-@media(min-width:600px){
-.profile{grid-template-columns:200px 1fr;align-items:start;}
-}
 
-.photo-wrap{position:relative;}
+@media(min-width:600px){
+.profile{
+grid-template-columns:200px 1fr;
+align-items:start;
+}
+}
 
 .photo-wrap img{
 width:100%;
 max-width:200px;
+height:auto;
 display:block;
 border-left:3px solid var(--gold);
 filter:grayscale(8%) contrast(1.05);
-height:auto;
 }
 
 .photo-caption{
@@ -74,8 +112,12 @@ padding-left:3px;
 border-left:3px solid var(--gold);
 padding-left:20px;
 }
+
 @media(min-width:600px){
-.hero{border-left:none;padding-left:0;}
+.hero{
+border-left:none;
+padding-left:0;
+}
 }
 
 .hero h1{
@@ -100,7 +142,9 @@ margin-bottom:12px;
 max-width:520px;
 }
 
-.hero p strong{color:var(--text);}
+.hero p strong{
+color:var(--text);
+}
 
 .section{
 border-top:1px solid var(--border2);
@@ -121,7 +165,9 @@ color:var(--muted);
 margin-bottom:12px;
 }
 
-.section strong{color:var(--text);}
+.section strong{
+color:var(--text);
+}
 
 .quote{
 background:var(--surface);
@@ -188,8 +234,13 @@ transition:background .2s;
 gap:12px;
 }
 
-.link-card:hover{background:#161410;}
-.link-card:hover .lc-arrow{color:var(--gold);}
+.link-card:hover{
+background:#161410;
+}
+
+.link-card:hover .lc-arrow{
+color:var(--gold);
+}
 
 .lc-left{
 display:flex;
@@ -213,14 +264,17 @@ color:var(--text);
 .lc-arrow{
 font-size:16px;
 color:var(--muted);
-flex-shrink:0;
-transition:color .2s;
+transition:.2s;
 }
 
-.link-card.featured{border-left:3px solid var(--gold);}
+.link-card.featured{
+border-left:3px solid var(--gold);
+}
 
 @media(min-width:600px){
-.footer{grid-template-columns:1fr 1fr;}
+.footer{
+grid-template-columns:1fr 1fr;
+}
 }
 
 .small{
@@ -232,6 +286,7 @@ color:var(--dim);
 </head>
 
 <body>
+
 <div class="container">
 
 <div class="tag">Decision Authority Research</div>
@@ -239,15 +294,13 @@ color:var(--dim);
 <div class="profile">
 
 <div class="photo-wrap">
-<img src="liran.jpg?v=2"
-alt="Liran Bar-Shrim — Decision Authority Research"
-width="200"
-loading="eager">
+<img src="https://matrix-audit.com/liran.jpg" alt="Liran Bar-Shrim" width="200" loading="eager">
 <div class="photo-caption">Liran Bar-Shrim</div>
 </div>
 
 <div class="hero">
 <div class="hero-role">Independent Advisor · Named Stop Authority</div>
+
 <h1>Liran Bar-Shrim</h1>
 
 <p>
@@ -258,8 +311,8 @@ Liran Bar-Shrim focuses on stop authority.
 <p>
 Built outside institutions. Focused on one question that most governance structures cannot answer by name.
 </p>
-
 </div>
+
 </div>
 
 <div class="section">
@@ -299,6 +352,7 @@ When a decision becomes irreversible under uncertainty, someone must have author
 <p>Discuss a live governance gap, accountability exposure, or unclear stop authority.</p>
 <a class="btn" href="contact.html">Private Contact</a>
 </div>
+
 </div>
 
 <div class="footer">
@@ -340,5 +394,6 @@ When a decision becomes irreversible under uncertainty, someone must have author
 <p class="small">© 2026 Liran Bar-Shrim. All rights reserved.</p>
 
 </div>
+
 </body>
 </html>
