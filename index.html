@@ -4,75 +4,56 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
 
-<title>Decision Authority Research | Named Stop Authority for Irreversible Decisions</title>
-<meta name="description" content="When failure happens, one name remains. Independent advisory focused on named stop authority, executive accountability, and irreversible decisions under uncertainty.">
-<meta name="keywords" content="decision authority, named stop authority, executive accountability, irreversible decisions, AI governance, DAR, board risk">
-<link rel="canonical" href="https://matrix-audit.com/">
+<title>Decision Authority Research | Named Stop Authority</title>
 
-<meta property="og:title" content="Decision Authority Research">
-<meta property="og:description" content="When failure happens, one name remains.">
-<meta property="og:type" content="website">
-<meta property="og:url" content="https://matrix-audit.com/">
+<meta name="description" content="Private advisory for boards and executives facing irreversible decisions under uncertainty. Named stop authority before exposure becomes public.">
+
+<link rel="canonical" href="https://matrix-audit.com/">
 
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Playfair+Display:wght@400;700&display=swap" rel="stylesheet">
 
 <style>
 :root{
---bg:#090909;
---surface:#111111;
+--bg:#080808;
+--surface:#101010;
 --surface2:#151515;
 --gold:#c8a96e;
---danger:#c0392b;
---text:#e6e0d4;
---muted:#a09a94;
---dim:#7a7570;
---border:#1e1e1e;
---border2:#2a2a2a;
+--text:#ece5d8;
+--muted:#a29c95;
+--dim:#6f6a65;
+--border:#222;
+--danger:#b73a2f;
 }
 
 *{margin:0;padding:0;box-sizing:border-box;}
-html{scroll-behavior:smooth;}
 
 body{
 background:var(--bg);
 color:var(--text);
 font-family:'IBM Plex Mono',monospace;
 line-height:1.7;
-overflow-x:hidden;
-}
-
-body::before{
-content:'';
-position:fixed;
-inset:0;
-background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
-pointer-events:none;
-opacity:.5;
-z-index:0;
 }
 
 .container{
-position:relative;
-z-index:1;
-max-width:860px;
+max-width:900px;
 margin:0 auto;
-padding:60px 24px 90px;
+padding:54px 22px 80px;
 }
 
 .tag{
 font-size:10px;
-letter-spacing:.18em;
+letter-spacing:.22em;
 text-transform:uppercase;
 color:var(--muted);
 display:flex;
-align-items:center;
 gap:12px;
-margin-bottom:34px;
+align-items:center;
+margin-bottom:32px;
 }
 
-.tag::before{
+.tag:before{
 content:'';
-width:22px;
+width:24px;
 height:1px;
 background:var(--gold);
 display:block;
@@ -80,92 +61,68 @@ display:block;
 
 h1{
 font-family:'Playfair Display',serif;
-font-size:clamp(38px,6vw,62px);
-line-height:1.05;
-border-left:3px solid var(--gold);
-padding-left:18px;
+font-size:clamp(40px,7vw,70px);
+line-height:1.02;
 margin-bottom:20px;
+max-width:760px;
 }
 
 .sub{
 font-size:15px;
 color:var(--muted);
-max-width:700px;
-padding-left:21px;
+max-width:720px;
 margin-bottom:34px;
 }
 
-.hero{
-background:linear-gradient(180deg,#121212,#101010);
-border:1px solid var(--border2);
+.signal{
+background:linear-gradient(180deg,#121212,#0f0f0f);
+border:1px solid var(--border);
 border-left:3px solid var(--danger);
 padding:24px;
-margin-bottom:28px;
 font-family:'Playfair Display',serif;
-font-size:24px;
-line-height:1.45;
-box-shadow:0 12px 28px rgba(0,0,0,.28);
+font-size:28px;
+line-height:1.35;
+margin-bottom:26px;
 }
 
-.lux-banner{
-margin:0 0 34px;
-padding:20px 22px;
+.lux{
 background:
-linear-gradient(135deg,rgba(200,169,110,.09),rgba(255,255,255,0) 45%),
+linear-gradient(135deg,rgba(200,169,110,.08),transparent 45%),
 linear-gradient(180deg,#141414,#0d0d0d);
-border:1px solid var(--border2);
+border:1px solid var(--border);
 border-left:3px solid var(--gold);
-box-shadow:0 12px 28px rgba(0,0,0,.35);
+padding:22px;
+margin-bottom:34px;
 }
 
-.lux-label{
+.lux small{
+display:block;
 font-size:10px;
-letter-spacing:.22em;
+letter-spacing:.2em;
 text-transform:uppercase;
 color:var(--gold);
-margin-bottom:8px;
+margin-bottom:10px;
 }
 
-.lux-title{
+.lux strong{
+display:block;
 font-family:'Playfair Display',serif;
-font-size:26px;
-line-height:1.08;
-color:#f3ede3;
-margin-bottom:8px;
+font-size:28px;
+margin-bottom:10px;
+font-weight:700;
 }
 
-.lux-sub{
-font-size:13px;
-line-height:1.7;
+.lux p{
+font-size:14px;
 color:var(--muted);
-max-width:520px;
+max-width:620px;
 }
 
-.trust{
-display:flex;
-flex-wrap:wrap;
-gap:10px;
-margin-bottom:38px;
-}
-
-.trust span{
-font-size:11px;
-padding:9px 14px;
-background:var(--surface);
-border:1px solid var(--border2);
-color:var(--muted);
-}
-
-.trust span.gold{
-border-color:rgba(200,169,110,.3);
-color:var(--gold);
-}
-
-.cta-row{
+.cta{
 display:flex;
 gap:14px;
 flex-wrap:wrap;
-margin-bottom:54px;
+margin-bottom:50px;
 }
 
 .btn{
@@ -174,35 +131,34 @@ padding:16px 22px;
 font-size:12px;
 letter-spacing:.12em;
 text-transform:uppercase;
-transition:.25s;
 display:inline-block;
+transition:.2s;
 }
 
-.btn-primary{
+.primary{
 background:var(--gold);
 color:#111;
 font-weight:600;
 }
 
-.btn-secondary{
+.secondary{
 border:1px solid var(--gold);
-background:var(--surface);
 color:var(--text);
+background:var(--surface);
 }
 
 .btn:hover{
 transform:translateY(-2px);
-opacity:.96;
 }
 
 .section{
 padding:34px 0;
-border-top:1px solid var(--border2);
+border-top:1px solid var(--border);
 }
 
 .label{
 font-size:10px;
-letter-spacing:.16em;
+letter-spacing:.2em;
 text-transform:uppercase;
 color:var(--gold);
 margin-bottom:12px;
@@ -210,7 +166,7 @@ margin-bottom:12px;
 
 .section h2{
 font-family:'Playfair Display',serif;
-font-size:28px;
+font-size:30px;
 margin-bottom:14px;
 }
 
@@ -222,7 +178,7 @@ margin-bottom:12px;
 
 .grid{
 display:grid;
-grid-template-columns:1fr;
+grid-template-columns:repeat(3,1fr);
 gap:14px;
 margin-top:20px;
 }
@@ -231,98 +187,94 @@ margin-top:20px;
 background:var(--surface);
 border:1px solid var(--border);
 padding:20px;
+min-height:160px;
 }
 
 .card strong{
 display:block;
 font-size:13px;
-margin-bottom:8px;
+margin-bottom:10px;
 color:var(--text);
 }
 
 .quote{
 margin-top:18px;
-background:var(--surface);
-border:1px solid var(--border2);
-border-left:3px solid var(--gold);
 padding:24px;
+background:var(--surface);
+border-left:3px solid var(--gold);
 font-family:'Playfair Display',serif;
-font-size:28px;
-line-height:1.35;
+font-size:34px;
+line-height:1.25;
 }
 
-/* NEW PREMIUM FOOTER */
+.final-cta{
+margin-top:38px;
+padding:28px;
+background:linear-gradient(180deg,#13110d,#0f0f0f);
+border:1px solid rgba(200,169,110,.24);
+border-left:3px solid var(--gold);
+}
+
+.final-cta h3{
+font-family:'Playfair Display',serif;
+font-size:28px;
+margin-bottom:12px;
+}
+
+.final-cta p{
+font-size:14px;
+color:var(--muted);
+margin-bottom:18px;
+}
 
 .footer{
 margin-top:42px;
-border:1px solid var(--border2);
-background:#0f0f0f;
+padding-top:26px;
+border-top:1px solid var(--border);
+display:flex;
+flex-wrap:wrap;
+gap:18px;
 }
 
-.banner-card{
-display:flex;
-justify-content:space-between;
-align-items:center;
-gap:20px;
-padding:28px 24px;
+.footer a{
 text-decoration:none;
-color:var(--text);
-border-bottom:1px solid var(--border2);
-transition:.25s;
+font-size:12px;
+color:var(--muted);
 }
 
-.banner-card:last-child{
-border-bottom:none;
-}
-
-.banner-card:hover{
-background:#151515;
-}
-
-.banner-left{
-display:flex;
-flex-direction:column;
-gap:8px;
-}
-
-.banner-label{
-font-size:10px;
-letter-spacing:.28em;
-text-transform:uppercase;
-color:var(--gold);
-}
-
-.banner-title{
-font-family:'Playfair Display',serif;
-font-size:18px;
-line-height:1.25;
-color:#f2ece2;
-}
-
-.banner-arrow{
-font-size:22px;
-color:#d8d2c8;
-flex-shrink:0;
-}
-
-.small{
-margin-top:28px;
+.copy{
+margin-top:24px;
 font-size:11px;
 color:var(--dim);
 }
 
-@media(min-width:760px){
-.grid{grid-template-columns:1fr 1fr 1fr;}
+@media(max-width:780px){
+
+.grid{
+grid-template-columns:1fr;
 }
 
-@media(max-width:700px){
-.container{padding:42px 18px 70px;}
-h1{font-size:clamp(32px,11vw,54px);}
-.hero{font-size:21px;padding:20px;}
-.quote{font-size:24px;padding:20px;}
-.btn{width:100%;text-align:center;}
-.banner-card{padding:22px 18px;}
-.banner-title{font-size:16px;}
+h1{
+font-size:clamp(34px,12vw,58px);
+}
+
+.signal{
+font-size:24px;
+}
+
+.quote{
+font-size:28px;
+}
+
+.btn{
+width:100%;
+text-align:center;
+}
+
+.container{
+padding:42px 18px 70px;
+}
+
 }
 </style>
 </head>
@@ -336,113 +288,90 @@ h1{font-size:clamp(32px,11vw,54px);}
 <h1>When Failure Happens,<br>One Name Remains</h1>
 
 <p class="sub">
-Boards, executives, regulated firms, and AI leaders eventually face one question:
+Boards, executives, regulated firms and AI leaders eventually face one question:
 who had authority to stop the irreversible decision?
 </p>
 
-<div class="hero">
+<div class="signal">
 If no one was named to stop it,<br>
 responsibility will be assigned after failure.
 </div>
 
-<div class="lux-banner">
-<div class="lux-label">Executive Signal</div>
-<div class="lux-title">Named Stop Authority</div>
-<div class="lux-sub">
-If an irreversible decision must be stopped today, who holds that authority by name?
-</div>
-</div>
-
-<div class="trust">
-<span class="gold">Stop Is the Default State</span>
-<span class="gold">Named. In Advance. Bound to Refusal.</span>
-<span>Independent Advisory</span>
-<span>High-Consequence Decisions</span>
+<div class="lux">
+<small>Executive Signal</small>
+<strong>Named Stop Authority</strong>
+<p>
+When a decision becomes irreversible under uncertainty, one person must hold real authority to stop continuation — by name.
+</p>
 </div>
 
-<div class="cta-row">
-<a class="btn btn-primary" href="contact.html">Request Private Inquiry</a>
-<a class="btn btn-secondary" href="dar.html">Review DAR</a>
+<div class="cta">
+<a href="contact.html" class="btn primary">Request Private Inquiry</a>
+<a href="dar.html" class="btn secondary">Review DAR</a>
 </div>
 
 <div class="section">
 <div class="label">Core Principle</div>
-<h2>Named stop authority</h2>
-<p>When a decision becomes irreversible under uncertainty, someone must hold real authority to stop it — by name.</p>
-<p>Not a committee. Not a process. Not after the fact.</p>
+<h2>Approval is common. Refusal is rare.</h2>
+<p>
+Most organizations know how to approve decisions.
+Few define who can stop them.
+</p>
+<p>
+That gap becomes visible only after damage.
+</p>
 </div>
 
 <div class="section">
-<div class="label">Public examples</div>
+<div class="label">Public Examples</div>
 <h2>Real failures. Same pattern.</h2>
 
 <div class="grid">
-<div class="card"><strong>Knight Capital</strong>45 minutes. $440M lost.</div>
-<div class="card"><strong>Boeing 737 MAX</strong>Escalation failures.</div>
-<div class="card"><strong>Global outages</strong>No clear stop authority.</div>
+
+<div class="card">
+<strong>Knight Capital</strong>
+45 minutes. $440M lost.
+</div>
+
+<div class="card">
+<strong>Boeing 737 MAX</strong>
+Warnings existed. Continuation remained.
+</div>
+
+<div class="card">
+<strong>Global outages</strong>
+Technical release outran human interruption.
+</div>
+
 </div>
 </div>
 
 <div class="section">
-<div class="label">The question</div>
+<div class="label">The Question</div>
+
 <div class="quote">
 Who is explicitly named to stop your next irreversible decision?
 </div>
+
+<div class="final-cta">
+<h3>Private Advisory</h3>
+<p>
+Selective engagements for boards, executives and high-consequence organizations.
+</p>
+
+<a href="contact.html" class="btn primary">Private Contact</a>
+</div>
+
 </div>
 
 <div class="footer">
-
-<a class="banner-card" href="stop-authority.html">
-<div class="banner-left">
-<div class="banner-label">ESSAY</div>
-<div class="banner-title">Named Stop Authority</div>
-</div>
-<div class="banner-arrow">→</div>
-</a>
-
-<a class="banner-card" href="dar.html">
-<div class="banner-left">
-<div class="banner-label">FRAMEWORK</div>
-<div class="banner-title">Decision Authority Record</div>
-</div>
-<div class="banner-arrow">→</div>
-</a>
-
-<a class="banner-card" href="case-studies.html">
-<div class="banner-left">
-<div class="banner-label">CASE STUDIES</div>
-<div class="banner-title">Real Failures. Same Pattern.</div>
-</div>
-<div class="banner-arrow">→</div>
-</a>
-
-<a class="banner-card" href="contact.html">
-<div class="banner-left">
-<div class="banner-label">INQUIRY</div>
-<div class="banner-title">Private Contact</div>
-</div>
-<div class="banner-arrow">→</div>
-</a>
-
-<a class="banner-card" href="about.html">
-<div class="banner-left">
-<div class="banner-label">ABOUT</div>
-<div class="banner-title">Liran Bar-Shrim</div>
-</div>
-<div class="banner-arrow">→</div>
-</a>
-
-<a class="banner-card" href="ai-governance.html">
-<div class="banner-left">
-<div class="banner-label">VERTICAL</div>
-<div class="banner-title">AI Governance</div>
-</div>
-<div class="banner-arrow">→</div>
-</a>
-
+<a href="dar.html">DAR</a>
+<a href="case-studies.html">Case Studies</a>
+<a href="ai-governance.html">AI Governance</a>
+<a href="about.html">About</a>
 </div>
 
-<p class="small">© 2026 Liran Bar-Shrim. All rights reserved.</p>
+<p class="copy">© 2026 Liran Bar-Shrim. All rights reserved.</p>
 
 </div>
 
