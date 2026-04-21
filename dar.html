@@ -15,6 +15,7 @@
 <meta property="og:title" content="DAR — Decision Authority Record">
 <meta property="og:description" content="One accountable name. Before it moves.">
 <meta property="og:type" content="website">
+<meta property="og:url" content="https://matrix-audit.com/dar.html">
 
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Playfair+Display:wght@400;700&display=swap" rel="stylesheet">
 
@@ -73,7 +74,7 @@ display:block;
 .hero{
 border-left:3px solid var(--gold);
 padding-left:20px;
-margin-bottom:42px;
+margin-bottom:34px;
 }
 
 .hero h1{
@@ -89,12 +90,60 @@ color:var(--muted);
 max-width:650px;
 }
 
+/* PREMIUM BANNER */
+.lux-banner{
+margin:0 0 38px;
+padding:22px 24px;
+background:
+linear-gradient(135deg,rgba(200,169,110,.08),rgba(255,255,255,0) 45%),
+linear-gradient(180deg,#141414,#0d0d0d);
+border:1px solid #2a2a2a;
+border-left:3px solid var(--gold);
+position:relative;
+overflow:hidden;
+box-shadow:0 12px 28px rgba(0,0,0,.34);
+}
+
+.lux-banner:after{
+content:'';
+position:absolute;
+top:0;
+right:0;
+width:120px;
+height:100%;
+background:linear-gradient(90deg,transparent,rgba(200,169,110,.04));
+}
+
+.lux-label{
+font-size:10px;
+letter-spacing:.22em;
+text-transform:uppercase;
+color:var(--gold);
+margin-bottom:10px;
+}
+
+.lux-title{
+font-family:'Playfair Display',serif;
+font-size:28px;
+line-height:1.08;
+margin-bottom:10px;
+color:#f2ede2;
+}
+
+.lux-sub{
+font-size:13px;
+color:var(--muted);
+max-width:520px;
+line-height:1.7;
+}
+
 .alert{
 background:var(--surface);
 border:1px solid var(--border2);
 border-left:3px solid var(--danger);
 padding:24px;
 margin-bottom:40px;
+box-shadow:0 10px 24px rgba(0,0,0,.20);
 }
 
 .alert strong{
@@ -142,6 +191,12 @@ margin-top:20px;
 background:var(--surface);
 border:1px solid var(--border);
 padding:20px;
+transition:.25s;
+}
+
+.card:hover{
+border-color:#35302a;
+transform:translateY(-2px);
 }
 
 .card strong{
@@ -157,6 +212,7 @@ padding:30px;
 background:linear-gradient(180deg,#13110d,#111111);
 border:1px solid rgba(200,169,110,.28);
 border-left:3px solid var(--gold);
+box-shadow:0 12px 28px rgba(0,0,0,.22);
 }
 
 .price small{
@@ -184,6 +240,7 @@ border-left:3px solid var(--gold);
 font-family:'Playfair Display',serif;
 font-size:28px;
 line-height:1.35;
+box-shadow:0 10px 24px rgba(0,0,0,.18);
 }
 
 .cta-row{
@@ -200,6 +257,7 @@ font-size:12px;
 letter-spacing:.12em;
 text-transform:uppercase;
 transition:.25s;
+display:inline-block;
 }
 
 .primary{
@@ -254,6 +312,11 @@ transform:translateY(-2px);
 .arrow{
 color:var(--gold);
 font-size:18px;
+transition:.25s;
+}
+
+.link:hover .arrow{
+transform:translateX(3px);
 }
 
 .small{
@@ -265,6 +328,13 @@ color:var(--dim);
 @media(min-width:760px){
 .grid{grid-template-columns:1fr 1fr;}
 .footer{grid-template-columns:1fr 1fr;}
+}
+
+@media(max-width:700px){
+.container{padding:42px 18px 70px;}
+.lux-title{font-size:24px;}
+.quote{font-size:24px;}
+.amount{font-size:46px;}
 }
 </style>
 </head>
@@ -280,6 +350,14 @@ color:var(--dim);
 <p>
 Private advisory for boards, executives, CROs, General Counsel and AI governance leaders facing irreversible decisions under uncertainty.
 </p>
+</div>
+
+<div class="lux-banner">
+<div class="lux-label">Framework</div>
+<div class="lux-title">Decision Authority Record</div>
+<div class="lux-sub">
+Define one accountable owner before exposure becomes public, costly, or irreversible.
+</div>
 </div>
 
 <div class="alert">
