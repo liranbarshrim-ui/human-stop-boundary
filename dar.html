@@ -33,11 +33,7 @@
 --border2:#2a2a2a;
 }
 
-*{
-margin:0;
-padding:0;
-box-sizing:border-box;
-}
+*{margin:0;padding:0;box-sizing:border-box;}
 
 body{
 background:var(--bg);
@@ -90,7 +86,6 @@ color:var(--muted);
 max-width:650px;
 }
 
-/* PREMIUM BANNER */
 .lux-banner{
 margin:0 0 38px;
 padding:22px 24px;
@@ -99,19 +94,7 @@ linear-gradient(135deg,rgba(200,169,110,.08),rgba(255,255,255,0) 45%),
 linear-gradient(180deg,#141414,#0d0d0d);
 border:1px solid #2a2a2a;
 border-left:3px solid var(--gold);
-position:relative;
-overflow:hidden;
 box-shadow:0 12px 28px rgba(0,0,0,.34);
-}
-
-.lux-banner:after{
-content:'';
-position:absolute;
-top:0;
-right:0;
-width:120px;
-height:100%;
-background:linear-gradient(90deg,transparent,rgba(200,169,110,.04));
 }
 
 .lux-label{
@@ -143,7 +126,6 @@ border:1px solid var(--border2);
 border-left:3px solid var(--danger);
 padding:24px;
 margin-bottom:40px;
-box-shadow:0 10px 24px rgba(0,0,0,.20);
 }
 
 .alert strong{
@@ -191,12 +173,6 @@ margin-top:20px;
 background:var(--surface);
 border:1px solid var(--border);
 padding:20px;
-transition:.25s;
-}
-
-.card:hover{
-border-color:#35302a;
-transform:translateY(-2px);
 }
 
 .card strong{
@@ -212,7 +188,6 @@ padding:30px;
 background:linear-gradient(180deg,#13110d,#111111);
 border:1px solid rgba(200,169,110,.28);
 border-left:3px solid var(--gold);
-box-shadow:0 12px 28px rgba(0,0,0,.22);
 }
 
 .price small{
@@ -240,7 +215,6 @@ border-left:3px solid var(--gold);
 font-family:'Playfair Display',serif;
 font-size:28px;
 line-height:1.35;
-box-shadow:0 10px 24px rgba(0,0,0,.18);
 }
 
 .cta-row{
@@ -256,7 +230,6 @@ padding:16px 22px;
 font-size:12px;
 letter-spacing:.12em;
 text-transform:uppercase;
-transition:.25s;
 display:inline-block;
 }
 
@@ -266,57 +239,64 @@ color:#111;
 font-weight:600;
 }
 
-.primary:hover{
-transform:translateY(-2px);
-opacity:.95;
-}
-
 .secondary{
 border:1px solid var(--gold);
 background:var(--surface);
 color:var(--text);
 }
 
-.secondary:hover{
-background:var(--surface2);
-transform:translateY(-2px);
-}
+/* NEW FOOTER */
 
 .footer{
-margin-top:34px;
-padding-top:36px;
-border-top:1px solid var(--border2);
-display:grid;
-grid-template-columns:1fr;
-gap:14px;
+margin-top:42px;
+border:1px solid var(--border2);
+background:#0f0f0f;
 }
 
-.link{
-text-decoration:none;
-padding:20px;
-background:var(--surface);
-border:1px solid var(--border);
+.banner-card{
 display:flex;
 justify-content:space-between;
 align-items:center;
+gap:20px;
+padding:28px 24px;
+text-decoration:none;
 color:var(--text);
+border-bottom:1px solid var(--border2);
 transition:.25s;
 }
 
-.link:hover{
-border-color:var(--gold);
-background:var(--surface2);
-transform:translateY(-2px);
+.banner-card:last-child{
+border-bottom:none;
 }
 
-.arrow{
+.banner-card:hover{
+background:#151515;
+}
+
+.banner-left{
+display:flex;
+flex-direction:column;
+gap:8px;
+}
+
+.banner-label{
+font-size:10px;
+letter-spacing:.28em;
+text-transform:uppercase;
 color:var(--gold);
-font-size:18px;
-transition:.25s;
 }
 
-.link:hover .arrow{
-transform:translateX(3px);
+.banner-title{
+font-family:'Playfair Display',serif;
+font-size:18px;
+line-height:1.25;
+color:#f2ece2;
+}
+
+.banner-arrow{
+font-size:22px;
+color:#d8d2c8;
+flex-shrink:0;
 }
 
 .small{
@@ -327,7 +307,6 @@ color:var(--dim);
 
 @media(min-width:760px){
 .grid{grid-template-columns:1fr 1fr;}
-.footer{grid-template-columns:1fr 1fr;}
 }
 
 @media(max-width:700px){
@@ -335,6 +314,9 @@ color:var(--dim);
 .lux-title{font-size:24px;}
 .quote{font-size:24px;}
 .amount{font-size:46px;}
+.banner-card{padding:22px 18px;}
+.banner-title{font-size:16px;}
+.btn{width:100%;text-align:center;}
 }
 </style>
 </head>
@@ -346,7 +328,6 @@ color:var(--dim);
 
 <div class="hero">
 <h1>One Name.<br>Before It Moves.</h1>
-
 <p>
 Private advisory for boards, executives, CROs, General Counsel and AI governance leaders facing irreversible decisions under uncertainty.
 </p>
@@ -362,11 +343,8 @@ Define one accountable owner before exposure becomes public, costly, or irrevers
 
 <div class="alert">
 <strong>Exposure</strong>
-
 If failure happens, responsibility will not remain abstract.<br><br>
-
 It converges to one accountable name.<br><br>
-
 If no name was explicitly defined in advance, it may be assigned afterward.
 </div>
 
@@ -379,43 +357,18 @@ DAR identifies one critical decision pathway, one accountable owner, and one rea
 </p>
 
 <div class="grid">
-
-<div class="card">
-<strong>Pathway Review</strong>
-Map one irreversible decision process.
+<div class="card"><strong>Pathway Review</strong>Map one irreversible decision process.</div>
+<div class="card"><strong>Named Authority</strong>Define one accountable decision owner.</div>
+<div class="card"><strong>Stop Trigger</strong>Clarify when continuation must pause.</div>
+<div class="card"><strong>Written Record</strong>Issue formal Decision Authority Record.</div>
 </div>
-
-<div class="card">
-<strong>Named Authority</strong>
-Define one accountable decision owner.
-</div>
-
-<div class="card">
-<strong>Stop Trigger</strong>
-Clarify when continuation must pause.
-</div>
-
-<div class="card">
-<strong>Written Record</strong>
-Issue formal Decision Authority Record.
-</div>
-
-</div>
-
 </div>
 
 <div class="section">
 <div class="label">Why internal attempts fail</div>
 <h2>Most firms can explain the process</h2>
-
-<p>
-They struggle when asked who personally has authority to stop it.
-</p>
-
-<p>
-Because naming one person creates real accountability.
-</p>
-
+<p>They struggle when asked who personally has authority to stop it.</p>
+<p>Because naming one person creates real accountability.</p>
 </div>
 
 <div class="section">
@@ -425,7 +378,6 @@ Because naming one person creates real accountability.
 <div class="price">
 <small>Selected engagements begin at</small>
 <div class="amount">€12,000</div>
-
 <p>
 One critical pathway clarified.<br>
 One accountable name defined.<br>
@@ -437,39 +389,48 @@ Typical delivery: 7 to 10 business days.
 <a class="btn primary" href="contact.html">Discuss Live Exposure</a>
 <a class="btn secondary" href="case-studies.html">See Public Failures</a>
 </div>
-
 </div>
 
 <div class="section">
 <div class="label">The question</div>
-
 <div class="quote">
 If you cannot name the person,<br>
 it should not proceed.
 </div>
-
 </div>
 
 <div class="footer">
 
-<a class="link" href="index.html">
-<span>Home</span>
-<span class="arrow">→</span>
+<a class="banner-card" href="index.html">
+<div class="banner-left">
+<div class="banner-label">HOME</div>
+<div class="banner-title">Decision Authority Research</div>
+</div>
+<div class="banner-arrow">→</div>
 </a>
 
-<a class="link" href="contact.html">
-<span>Private Contact</span>
-<span class="arrow">→</span>
+<a class="banner-card" href="contact.html">
+<div class="banner-left">
+<div class="banner-label">CONTACT</div>
+<div class="banner-title">Private Contact</div>
+</div>
+<div class="banner-arrow">→</div>
 </a>
 
-<a class="link" href="case-studies.html">
-<span>Case Studies</span>
-<span class="arrow">→</span>
+<a class="banner-card" href="case-studies.html">
+<div class="banner-left">
+<div class="banner-label">CASE STUDIES</div>
+<div class="banner-title">Public Failure Patterns</div>
+</div>
+<div class="banner-arrow">→</div>
 </a>
 
-<a class="link" href="ai-governance.html">
-<span>AI Governance</span>
-<span class="arrow">→</span>
+<a class="banner-card" href="ai-governance.html">
+<div class="banner-left">
+<div class="banner-label">VERTICAL</div>
+<div class="banner-title">AI Governance</div>
+</div>
+<div class="banner-arrow">→</div>
 </a>
 
 </div>
