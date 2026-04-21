@@ -30,15 +30,9 @@
 --border2:#2a2a2a;
 }
 
-*{
-margin:0;
-padding:0;
-box-sizing:border-box;
-}
+*{margin:0;padding:0;box-sizing:border-box;}
 
-html{
-scroll-behavior:smooth;
-}
+html{scroll-behavior:smooth;}
 
 body{
 background:var(--bg);
@@ -278,67 +272,40 @@ box-shadow:0 10px 24px rgba(0,0,0,.18);
 }
 
 .footer{
-margin-top:28px;
+margin-top:34px;
 padding-top:36px;
 border-top:1px solid var(--border2);
 display:grid;
 grid-template-columns:1fr;
-gap:1px;
-background:var(--border2);
-border:1px solid var(--border2);
+gap:14px;
 }
 
-.link-card{
+.link{
 text-decoration:none;
-padding:20px 22px;
+padding:20px;
 background:var(--surface);
+border:1px solid var(--border);
 display:flex;
 justify-content:space-between;
 align-items:center;
-gap:16px;
 color:var(--text);
 transition:.25s;
-border:1px solid transparent;
 }
 
-.link-card:hover{
-background:#161410;
-border-color:#2d2a25;
+.link:hover{
+border-color:var(--gold);
+background:var(--surface2);
 transform:translateY(-2px);
 }
 
-.lc-left{
-display:flex;
-flex-direction:column;
-gap:3px;
-}
-
-.lc-label{
-font-size:9px;
-letter-spacing:.18em;
-text-transform:uppercase;
+.arrow{
 color:var(--gold);
-}
-
-.lc-title{
-font-family:'Playfair Display',serif;
-font-size:14px;
-}
-
-.lc-arrow{
 font-size:18px;
-color:var(--muted);
 transition:.25s;
-flex-shrink:0;
 }
 
-.link-card:hover .lc-arrow{
-color:var(--gold);
+.link:hover .arrow{
 transform:translateX(3px);
-}
-
-.link-card.featured{
-border-left:3px solid var(--gold);
 }
 
 .small{
@@ -348,45 +315,19 @@ color:var(--dim);
 }
 
 @media(min-width:760px){
-.grid{
-grid-template-columns:1fr 1fr 1fr;
-}
-.footer{
-grid-template-columns:1fr 1fr;
-}
+.grid{grid-template-columns:1fr 1fr 1fr;}
+.footer{grid-template-columns:1fr 1fr;}
 }
 
 @media(max-width:700px){
-.container{
-padding:42px 18px 70px;
-}
-h1{
-font-size:clamp(32px,11vw,54px);
-}
-.hero{
-font-size:21px;
-padding:20px;
-}
-.lux-banner{
-padding:18px;
-}
-.lux-title{
-font-size:24px;
-}
-.lux-sub{
-font-size:12px;
-}
-.quote{
-font-size:24px;
-padding:20px;
-}
-.btn{
-width:100%;
-text-align:center;
-}
-.link-card{
-padding:18px;
-}
+.container{padding:42px 18px 70px;}
+h1{font-size:clamp(32px,11vw,54px);}
+.hero{font-size:21px;padding:20px;}
+.lux-banner{padding:18px;}
+.lux-title{font-size:24px;}
+.lux-sub{font-size:12px;}
+.quote{font-size:24px;padding:20px;}
+.btn{width:100%;text-align:center;}
 }
 </style>
 </head>
@@ -456,52 +397,34 @@ Who is explicitly named to stop your next irreversible decision?
 
 <div class="footer">
 
-<a class="link-card featured" href="stop-authority.html">
-<div class="lc-left">
-<span class="lc-label">Named Stop Authority</span>
-<span class="lc-title">What it means. Why it is absent.</span>
-</div>
-<span class="lc-arrow">→</span>
+<a class="link" href="stop-authority.html">
+<span>Named Stop Authority</span>
+<span class="arrow">→</span>
 </a>
 
-<a class="link-card" href="dar.html">
-<div class="lc-left">
-<span class="lc-label">Framework</span>
-<span class="lc-title">Decision Authority Record</span>
-</div>
-<span class="lc-arrow">→</span>
+<a class="link" href="dar.html">
+<span>DAR Framework</span>
+<span class="arrow">→</span>
 </a>
 
-<a class="link-card" href="case-studies.html">
-<div class="lc-left">
-<span class="lc-label">Case Studies</span>
-<span class="lc-title">Real Failures. Same Pattern.</span>
-</div>
-<span class="lc-arrow">→</span>
+<a class="link" href="case-studies.html">
+<span>Case Studies</span>
+<span class="arrow">→</span>
 </a>
 
-<a class="link-card" href="contact.html">
-<div class="lc-left">
-<span class="lc-label">Inquiry</span>
-<span class="lc-title">Private Contact</span>
-</div>
-<span class="lc-arrow">→</span>
+<a class="link" href="contact.html">
+<span>Private Contact</span>
+<span class="arrow">→</span>
 </a>
 
-<a class="link-card" href="about.html">
-<div class="lc-left">
-<span class="lc-label">About</span>
-<span class="lc-title">Liran Bar-Shrim</span>
-</div>
-<span class="lc-arrow">→</span>
+<a class="link" href="about.html">
+<span>About</span>
+<span class="arrow">→</span>
 </a>
 
-<a class="link-card" href="ai-governance.html">
-<div class="lc-left">
-<span class="lc-label">Vertical</span>
-<span class="lc-title">AI Governance</span>
-</div>
-<span class="lc-arrow">→</span>
+<a class="link" href="ai-governance.html">
+<span>AI Governance</span>
+<span class="arrow">→</span>
 </a>
 
 </div>
