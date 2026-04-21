@@ -6,279 +6,263 @@
 
 <title>About Liran Bar-Shrim | Decision Authority Research</title>
 
-<meta name="description" content="Liran Bar-Shrim is an independent researcher focused on accountability, named stop authority, and irreversible decisions under uncertainty.">
+<meta name="description" content="Liran Bar-Shrim focuses on stop authority. If no one is named in advance to stop a decision, the system does not actually know how to stop.">
 
 <link rel="canonical" href="https://matrix-audit.com/about.html">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Person",
+  "name": "Liran Bar-Shrim",
+  "url": "https://matrix-audit.com/about.html",
+  "jobTitle": "Independent Advisor",
+  "description": "Liran Bar-Shrim focuses on stop authority. If no one is named in advance to stop a decision, the system does not actually know how to stop.",
+  "worksFor": {
+    "@type": "Organization",
+    "name": "Decision Authority Research",
+    "url": "https://matrix-audit.com"
+  }
+}
+</script>
 
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Playfair+Display:wght@400;700&display=swap" rel="stylesheet">
 
 <style>
 :root{
---bg:#090909;
---surface:#111111;
---surface2:#151515;
---gold:#c8a96e;
---text:#e6e0d4;
---muted:#a09a94;
---dim:#7a7570;
---border:#1e1e1e;
---border2:#2a2a2a;
+--bg:#090909;--surface:#111111;--surface2:#151515;--gold:#c8a96e;
+--text:#e6e0d4;--muted:#a09a94;--dim:#7a7570;--faint:#52504c;--border:#1e1e1e;--border2:#2a2a2a;
 }
-
 *{margin:0;padding:0;box-sizing:border-box;}
+body{background:var(--bg);color:var(--text);font-family:'IBM Plex Mono',monospace;line-height:1.75;}
+.container{max-width:760px;margin:0 auto;padding:60px 24px 120px;}
 
-body{
-background:var(--bg);
-color:var(--text);
-font-family:'IBM Plex Mono',monospace;
-line-height:1.75;
+.tag{font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);display:flex;align-items:center;gap:12px;margin-bottom:40px;}
+.tag:before{content:'';width:20px;height:1px;background:var(--gold);display:block;}
+
+/* PHOTO + HERO ROW */
+.profile{
+  display:grid;
+  grid-template-columns:1fr;
+  gap:32px;
+  margin-bottom:46px;
+}
+@media(min-width:600px){
+  .profile{grid-template-columns:200px 1fr;align-items:start;}
 }
 
-.container{
-max-width:760px;
-margin:0 auto;
-padding:60px 24px 90px;
+.photo-wrap{
+  position:relative;
 }
-
-.tag{
-font-size:10px;
-letter-spacing:.16em;
-text-transform:uppercase;
-color:var(--muted);
-display:flex;
-align-items:center;
-gap:12px;
-margin-bottom:40px;
+.photo-wrap img{
+  width:100%;
+  max-width:200px;
+  display:block;
+  border-left:3px solid var(--gold);
+  filter:grayscale(8%) contrast(1.05);
 }
-
-.tag:before{
-content:'';
-width:20px;
-height:1px;
-background:var(--gold);
-display:block;
+.photo-caption{
+  font-size:9px;
+  letter-spacing:.14em;
+  text-transform:uppercase;
+  color:var(--faint);
+  margin-top:10px;
+  padding-left:3px;
 }
 
 .hero{
-border-left:3px solid var(--gold);
-padding-left:20px;
-margin-bottom:46px;
+  border-left:3px solid var(--gold);
+  padding-left:20px;
+}
+@media(min-width:600px){
+  .hero{border-left:none;padding-left:0;}
 }
 
 .hero h1{
-font-family:'Playfair Display',serif;
-font-size:clamp(28px,5vw,44px);
-line-height:1.2;
-margin-bottom:14px;
+  font-family:'Playfair Display',serif;
+  font-size:clamp(28px,5vw,44px);
+  line-height:1.2;
+  margin-bottom:14px;
 }
-
+.hero-role{
+  font-size:10px;
+  letter-spacing:.16em;
+  text-transform:uppercase;
+  color:var(--gold);
+  margin-bottom:18px;
+}
 .hero p{
-font-size:14px;
-color:var(--muted);
-margin-bottom:12px;
-max-width:640px;
+  font-size:14px;
+  color:var(--muted);
+  margin-bottom:12px;
+  max-width:520px;
 }
+.hero p strong{color:var(--text);}
 
-.section{
-border-top:1px solid var(--border2);
-padding:32px 0;
-}
-
-.label{
-font-size:10px;
-letter-spacing:.15em;
-text-transform:uppercase;
-color:var(--gold);
-margin-bottom:14px;
-}
-
-.section p{
-font-size:14px;
-color:var(--muted);
-margin-bottom:12px;
-}
-
-.section strong{
-color:var(--text);
-}
+/* SECTIONS */
+.section{border-top:1px solid var(--border2);padding:32px 0;}
+.label{font-size:10px;letter-spacing:.15em;text-transform:uppercase;color:var(--gold);margin-bottom:14px;}
+.section p{font-size:14px;color:var(--muted);margin-bottom:12px;}
+.section strong{color:var(--text);}
 
 .quote{
-background:var(--surface);
-border-left:3px solid var(--gold);
-padding:22px;
-font-family:'Playfair Display',serif;
-font-size:24px;
-line-height:1.45;
-margin-top:14px;
+  background:var(--surface);
+  border-left:3px solid var(--gold);
+  padding:22px;
+  font-family:'Playfair Display',serif;
+  font-size:22px;
+  line-height:1.45;
+  margin-top:14px;
 }
 
 .cta-box{
-margin-top:14px;
-background:linear-gradient(180deg,#13110d,#111111);
-border:1px solid rgba(200,169,110,.22);
-border-left:3px solid var(--gold);
-padding:24px;
+  margin-top:14px;
+  background:linear-gradient(180deg,#13110d,#111111);
+  border:1px solid rgba(200,169,110,.22);
+  border-left:3px solid var(--gold);
+  padding:24px;
 }
-
-.cta-box p{
-font-size:14px;
-color:var(--muted);
-margin-bottom:16px;
-}
+.cta-box p{font-size:14px;color:var(--muted);margin-bottom:16px;}
 
 .btn{
-display:inline-block;
-text-decoration:none;
-padding:15px 22px;
-background:var(--surface);
-border:1px solid var(--gold);
-color:var(--text);
-font-size:12px;
-letter-spacing:.12em;
-text-transform:uppercase;
-transition:.2s;
+  display:inline-block;
+  text-decoration:none;
+  padding:15px 22px;
+  background:var(--surface);
+  border:1px solid var(--gold);
+  color:var(--text);
+  font-size:12px;
+  letter-spacing:.12em;
+  text-transform:uppercase;
+  transition:.2s;
 }
+.btn:hover{background:#171512;transform:translateY(-2px);}
 
-.btn:hover{
-background:#171512;
-transform:translateY(-2px);
-}
-
+/* FOOTER */
 .footer{
-border-top:1px solid var(--border2);
-padding-top:34px;
-margin-top:24px;
-display:flex;
-flex-direction:column;
-gap:14px;
+  border-top:1px solid var(--border2);
+  padding-top:34px;
+  margin-top:24px;
+  display:grid;
+  grid-template-columns:1fr;
+  gap:1px;
+  background:var(--border2);
+  border:1px solid var(--border2);
 }
+.link-card{
+  text-decoration:none;
+  padding:18px 20px;
+  background:var(--surface);
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  color:var(--text);
+  transition:background .2s;
+  gap:12px;
+}
+.link-card:hover{background:#161410;}
+.link-card:hover .lc-arrow{color:var(--gold);}
+.lc-left{display:flex;flex-direction:column;gap:3px;}
+.lc-label{font-size:9px;letter-spacing:.18em;text-transform:uppercase;color:var(--gold);}
+.lc-title{font-family:'Playfair Display',serif;font-size:13px;color:var(--text);}
+.lc-arrow{font-size:16px;color:var(--muted);flex-shrink:0;transition:color .2s;}
+.link-card.featured{border-left:3px solid var(--gold);}
 
-.footer a{
-text-decoration:none;
-padding:18px;
-background:var(--surface);
-border:1px solid var(--border);
-color:var(--text);
-display:flex;
-justify-content:space-between;
-align-items:center;
-transition:.2s;
-}
+@media(min-width:600px){.footer{grid-template-columns:1fr 1fr;}}
 
-.footer a:hover{
-border-color:var(--gold);
-background:var(--surface2);
-}
-
-.small{
-margin-top:28px;
-font-size:11px;
-color:var(--dim);
-}
+.small{margin-top:28px;font-size:11px;color:var(--dim);}
 </style>
 </head>
 
 <body>
-
 <div class="container">
 
-<div class="tag">Decision Authority Research</div>
+  <div class="tag">Decision Authority Research</div>
 
-<div class="hero">
-<h1>Liran Bar-Shrim</h1>
+  <div class="profile">
 
-<p>
-Independent researcher focused on accountability where complex systems move faster than ownership.
-</p>
+    <div class="photo-wrap">
+      <img src="liran.jpg" alt="Liran Bar-Shrim — Decision Authority Research" width="200">
+      <div class="photo-caption">Liran Bar-Shrim</div>
+    </div>
 
-<p>
-Built outside institutions around one unresolved question:
-who is explicitly empowered to stop an irreversible decision before it is too late?
-</p>
-</div>
+    <div class="hero">
+      <div class="hero-role">Independent Advisor · Named Stop Authority</div>
+      <h1>Liran Bar-Shrim</h1>
+      <p>Liran Bar-Shrim focuses on stop authority. <strong>If no one is named in advance to stop a decision, the system does not actually know how to stop.</strong></p>
+      <p>Built outside institutions. Focused on one question that most governance structures cannot answer by name.</p>
+    </div>
 
-<div class="section">
-<div class="label">Focus</div>
+  </div>
 
-<p>
-Many organizations define how decisions move forward.
-Far fewer define who can truly stop them.
-</p>
+  <div class="section">
+    <div class="label">Focus</div>
+    <p>Many organizations define how decisions move forward. Far fewer define who can truly stop them.</p>
+    <p>This work examines the structural gap between process approval and real human authority.</p>
+    <p><strong>When no one is clearly named in advance, responsibility is often assigned afterward.</strong></p>
+  </div>
 
-<p>
-This work examines the structural gap between process approval and real human authority.
-</p>
+  <div class="section">
+    <div class="label">The Work</div>
+    <p>Advisory engagements for boards, regulated firms, clinical leadership, and AI governance leaders facing irreversible decisions under uncertainty.</p>
+    <p>Especially relevant where decisions can become costly, public, or irreversible before ownership becomes clear.</p>
+  </div>
 
-<p><strong>
-When no one is clearly named in advance, responsibility is often assigned afterward.
-</strong></p>
-</div>
+  <div class="section">
+    <div class="label">Core Principle</div>
+    <div class="quote">
+      When a decision becomes irreversible under uncertainty, someone must have authority to stop it — by name.
+    </div>
+  </div>
 
-<div class="section">
-<div class="label">The Work</div>
+  <div class="section">
+    <div class="label">Why It Matters</div>
+    <p>Responsibility is often shared during success. It becomes personal during failure.</p>
+    <p>Clear authority before the event is stronger than explanation after it.</p>
+    <div class="cta-box">
+      <p>Discuss a live governance gap, accountability exposure, or unclear stop authority.</p>
+      <a class="btn" href="contact.html">Private Contact</a>
+    </div>
+  </div>
 
-<p>
-The research explores governance structures for boards, regulated sectors, critical operations, and AI systems where speed, automation, or complexity may outpace accountability.
-</p>
+  <div class="footer">
 
-<p>
-It is especially relevant where decisions can become costly, public, or irreversible before ownership becomes clear.
-</p>
-</div>
+    <a class="link-card featured" href="stop-authority.html">
+      <div class="lc-left">
+        <span class="lc-label">Named Stop Authority</span>
+        <span class="lc-title">The core concept</span>
+      </div>
+      <span class="lc-arrow">&#8594;</span>
+    </a>
 
-<div class="section">
-<div class="label">Core Principle</div>
+    <a class="link-card" href="dar.html">
+      <div class="lc-left">
+        <span class="lc-label">Framework</span>
+        <span class="lc-title">DAR Framework</span>
+      </div>
+      <span class="lc-arrow">&#8594;</span>
+    </a>
 
-<div class="quote">
-When a decision becomes irreversible under uncertainty, someone must have authority to stop it — by name.
-</div>
+    <a class="link-card" href="case-studies.html">
+      <div class="lc-left">
+        <span class="lc-label">Case Studies</span>
+        <span class="lc-title">Real Failures. Same Pattern.</span>
+      </div>
+      <span class="lc-arrow">&#8594;</span>
+    </a>
 
-</div>
+    <a class="link-card" href="index.html">
+      <div class="lc-left">
+        <span class="lc-label">Home</span>
+        <span class="lc-title">Decision Authority Research</span>
+      </div>
+      <span class="lc-arrow">&#8594;</span>
+    </a>
 
-<div class="section">
-<div class="label">Why It Matters</div>
+  </div>
 
-<p>
-Responsibility is often shared during success.
-It becomes personal during failure.
-</p>
-
-<p>
-Clear authority before the event is usually stronger than explanation after it.
-</p>
-
-<div class="cta-box">
-<p>
-Discuss a live governance gap, accountability exposure, or unclear stop authority.
-</p>
-
-<a class="btn" href="contact.html">Private Contact</a>
-</div>
-
-</div>
-
-<div class="footer">
-
-<a href="dar.html">
-<span>DAR Framework</span>
-<span>→</span>
-</a>
-
-<a href="case-studies.html">
-<span>Case Studies</span>
-<span>→</span>
-</a>
-
-<a href="index.html">
-<span>Home</span>
-<span>→</span>
-</a>
+  <p class="small">© 2026 Liran Bar-Shrim. All rights reserved.</p>
 
 </div>
-
-<p class="small">© 2026 Liran Bar-Shrim. All rights reserved.</p>
-
-</div>
-
 </body>
 </html>
