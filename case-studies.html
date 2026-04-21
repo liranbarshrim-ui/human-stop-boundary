@@ -68,7 +68,6 @@ background:var(--gold);
 display:block;
 }
 
-/* PREMIUM BANNER */
 .lux-banner{
 margin:0 0 34px;
 padding:20px 22px;
@@ -77,18 +76,6 @@ linear-gradient(135deg,rgba(200,169,110,.08),rgba(255,255,255,0) 45%),
 linear-gradient(180deg,#121212,#0d0d0d);
 border:1px solid #262626;
 border-left:3px solid var(--gold);
-position:relative;
-overflow:hidden;
-}
-
-.lux-banner:after{
-content:'';
-position:absolute;
-top:0;
-right:0;
-width:120px;
-height:100%;
-background:linear-gradient(90deg,transparent,rgba(200,169,110,.04));
 }
 
 .lux-label{
@@ -142,9 +129,7 @@ font-size:14px;
 color:var(--muted);
 }
 
-.statement strong{
-color:var(--text);
-}
+.statement strong{color:var(--text);}
 
 .case{
 border-top:1px solid var(--border2);
@@ -242,38 +227,64 @@ text-transform:uppercase;
 border:1px solid var(--gold);
 background:var(--surface);
 color:var(--text);
-transition:.2s;
 }
 
 .btn:hover{
 background:#171512;
-transform:translateY(-2px);
 }
+
+/* MASTER FOOTER */
 
 .footer{
 margin-top:48px;
-padding-top:36px;
-border-top:1px solid var(--border2);
-display:grid;
-grid-template-columns:1fr;
-gap:1px;
-background:var(--border2);
 border:1px solid var(--border2);
+background:#0f0f0f;
 }
 
-.link{
-text-decoration:none;
-padding:20px;
-background:var(--surface);
+.banner-card{
 display:flex;
 justify-content:space-between;
 align-items:center;
+gap:20px;
+padding:28px 24px;
+text-decoration:none;
 color:var(--text);
-transition:.2s;
+border-bottom:1px solid var(--border2);
+transition:.25s;
 }
 
-.link:hover{
-background:#161410;
+.banner-card:last-child{
+border-bottom:none;
+}
+
+.banner-card:hover{
+background:#151515;
+}
+
+.banner-left{
+display:flex;
+flex-direction:column;
+gap:8px;
+}
+
+.banner-label{
+font-size:10px;
+letter-spacing:.28em;
+text-transform:uppercase;
+color:var(--gold);
+}
+
+.banner-title{
+font-family:'Playfair Display',serif;
+font-size:18px;
+line-height:1.25;
+color:#f2ece2;
+}
+
+.banner-arrow{
+font-size:22px;
+color:#d8d2c8;
+flex-shrink:0;
 }
 
 .copy{
@@ -282,15 +293,11 @@ font-size:11px;
 color:var(--dim);
 }
 
-@media(min-width:760px){
-.footer{
-grid-template-columns:1fr 1fr;
-}
-}
-
 @media(max-width:700px){
 .lux-title{font-size:24px;}
 .lux-sub{font-size:12px;}
+.banner-card{padding:22px 18px;}
+.banner-title{font-size:16px;}
 }
 </style>
 </head>
@@ -325,13 +332,10 @@ Approval is common. <strong>Named refusal is rare.</strong>
 <span class="num">01</span>
 <span class="sector">Financial Markets</span>
 </div>
-
 <h2>Knight Capital</h2>
 <div class="stats">45 minutes • $440 million lost • 2012</div>
-
 <p>A deployment failure triggered uncontrolled trading activity at machine speed.</p>
 <p>The system was live. Losses were visible. Intervention lagged behind execution.</p>
-
 <div class="verdict">
 <div class="verdict-label">The stop authority question</div>
 <p>Who was explicitly empowered to halt execution the moment behavior diverged from intent?</p>
@@ -343,13 +347,10 @@ Approval is common. <strong>Named refusal is rare.</strong>
 <span class="num">02</span>
 <span class="sector">Aviation</span>
 </div>
-
 <h2>Boeing 737 MAX</h2>
 <div class="stats">346 fatalities • 2018–2019</div>
-
 <p>Warnings, concerns, and escalation signals existed across multiple layers.</p>
 <p>Yet continuation persisted until tragedy forced a response.</p>
-
 <div class="verdict">
 <div class="verdict-label">The stop authority question</div>
 <p>Who had clear authority to stop continuation before the second crash occurred?</p>
@@ -361,13 +362,10 @@ Approval is common. <strong>Named refusal is rare.</strong>
 <span class="num">03</span>
 <span class="sector">Banking Conduct</span>
 </div>
-
 <h2>Wells Fargo</h2>
 <div class="stats">Millions of unauthorized accounts • Multi-billion penalties</div>
-
 <p>Problematic incentives continued for years while signals accumulated internally.</p>
 <p>Stopping required action from someone specific. That clarity was absent.</p>
-
 <div class="verdict">
 <div class="verdict-label">The stop authority question</div>
 <p>Who was obligated to stop the program once the pattern became visible?</p>
@@ -379,13 +377,10 @@ Approval is common. <strong>Named refusal is rare.</strong>
 <span class="num">04</span>
 <span class="sector">Infrastructure</span>
 </div>
-
 <h2>CrowdStrike Global Outage</h2>
 <div class="stats">Millions of affected devices • 2024</div>
-
 <p>A global update propagated faster than human recovery capacity.</p>
 <p>Technical pipelines moved immediately. Human interruption came later.</p>
-
 <div class="verdict">
 <div class="verdict-label">The stop authority question</div>
 <p>Who personally owned the go / no-go decision before worldwide release?</p>
@@ -397,13 +392,10 @@ Approval is common. <strong>Named refusal is rare.</strong>
 <span class="num">05</span>
 <span class="sector">Markets</span>
 </div>
-
 <h2>Flash Crash</h2>
 <div class="stats">Massive temporary market value destruction • 2010</div>
-
 <p>Automated cascades outran human oversight.</p>
 <p>Speed became a governance risk.</p>
-
 <div class="verdict">
 <div class="verdict-label">The stop authority question</div>
 <p>Who was named in advance to interrupt the cascade before it reinforced itself?</p>
@@ -417,24 +409,36 @@ Approval is common. <strong>Named refusal is rare.</strong>
 
 <div class="footer">
 
-<a class="link" href="dar.html">
-<span>DAR Framework</span>
-<span>→</span>
+<a class="banner-card" href="dar.html">
+<div class="banner-left">
+<div class="banner-label">DAR</div>
+<div class="banner-title">Decision Authority Record</div>
+</div>
+<div class="banner-arrow">→</div>
 </a>
 
-<a class="link" href="about.html">
-<span>About</span>
-<span>→</span>
+<a class="banner-card" href="about.html">
+<div class="banner-left">
+<div class="banner-label">ABOUT</div>
+<div class="banner-title">Decision Authority Research</div>
+</div>
+<div class="banner-arrow">→</div>
 </a>
 
-<a class="link" href="contact.html">
-<span>Private Inquiry</span>
-<span>→</span>
+<a class="banner-card" href="contact.html">
+<div class="banner-left">
+<div class="banner-label">INQUIRY</div>
+<div class="banner-title">Private Executive Contact</div>
+</div>
+<div class="banner-arrow">→</div>
 </a>
 
-<a class="link" href="index.html">
-<span>Home</span>
-<span>→</span>
+<a class="banner-card" href="index.html">
+<div class="banner-left">
+<div class="banner-label">HOME</div>
+<div class="banner-title">Return to Main Site</div>
+</div>
+<div class="banner-arrow">→</div>
 </a>
 
 </div>
