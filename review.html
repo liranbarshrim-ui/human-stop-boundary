@@ -3,799 +3,340 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="description" content="Executive Authority Review — A private external review for leaders carrying personal accountability on decisions already in motion. Initial findings within 7 days.">
-<meta name="robots" content="index, follow">
-<meta name="author" content="Liran Bar-Shrim">
-<meta name="theme-color" content="#03030a">
-<meta property="og:title" content="Executive Authority Review — Matrix Audit">
-<meta property="og:description" content="Private advisory for leaders carrying personal accountability on decisions already in motion. Initial findings within 7 days.">
-<meta property="og:type" content="website">
-<meta property="og:url" content="https://matrix-audit.com/review">
-<link rel="canonical" href="https://matrix-audit.com/review">
-<title>Executive Authority Review — Matrix Audit</title>
 
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant:ital,wght@0,300;0,400;0,500;1,300;1,400;1,500&family=Geist:wght@300;400;500&display=swap" rel="stylesheet">
+<title>Executive Authority Review | Matrix Audit</title>
+<meta name="description" content="Private external review for leaders carrying accountability on consequential decisions already in motion. Initial findings within 7 days.">
+<meta name="robots" content="index,follow">
+<link rel="canonical" href="https://matrix-audit.com/review">
+
+<meta property="og:title" content="Executive Authority Review | Matrix Audit">
+<meta property="og:description" content="Private external review for leaders carrying accountability on consequential decisions already in motion.">
+<meta property="og:type" content="website">
+
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&family=Cormorant+Garamond:wght@300;400;500&display=swap" rel="stylesheet">
 
 <style>
-*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-
 :root{
-  --ink:   #03030a;
-  --ink1:  #06060f;
-  --ink2:  #0a0a17;
-  --ink3:  #0f0f1c;
-  --line:  rgba(255,255,255,0.06);
-  --ln2:   rgba(255,255,255,0.11);
-  --body:  #c6c2ba;
-  --muted: #5c5b64;
-  --dim:   #323140;
-  --cream: #e8e5de;
-  --gold:  #b49a6a;
-  --g2:    #7c6946;
-  --ga:    rgba(180,154,106,0.10);
-  --gb:    rgba(180,154,106,0.05);
-  --red:   rgba(180,60,60,0.08);
-  --serif: 'Cormorant',Georgia,serif;
-  --sans:  'Geist','Inter',system-ui,sans-serif;
-  --ease:  cubic-bezier(0.22,1,0.36,1);
-  --W:     1080px;
-  --p:     52px;
-  --pv:    96px;
+--bg:#070707;
+--bg2:#0f0f0f;
+--card:#131313;
+--line:#242424;
+--gold:#b89a63;
+--text:#ece4d7;
+--muted:#a59d91;
+--soft:#6f685d;
+--max:1120px;
 }
-
-html{scroll-behavior:smooth}
-
+*{margin:0;padding:0;box-sizing:border-box}
 body{
-  background:var(--ink);color:var(--body);
-  font-family:var(--sans);font-weight:300;
-  font-size:16px;line-height:1.65;
-  overflow-x:hidden;-webkit-font-smoothing:antialiased;
+background:var(--bg);
+color:var(--text);
+font-family:Inter,sans-serif;
+line-height:1.7;
+-webkit-font-smoothing:antialiased;
 }
-
-::selection{background:rgba(180,154,106,.22);color:var(--cream)}
-::-webkit-scrollbar{width:1px}
-::-webkit-scrollbar-thumb{background:var(--g2)}
-
-/* layout */
-.W{max-width:var(--W);margin:0 auto;padding:0 var(--p)}
-.S{padding:var(--pv) var(--p)}
-.St{background:var(--ink1)}
-.Sd{background:var(--ink2)}
-.rt{border-top:1px solid var(--line)}
-.rb{border-bottom:1px solid var(--line)}
-
-/* atoms */
+.wrap{max-width:var(--max);margin:auto;padding:0 26px}
+section{padding:90px 0;border-top:1px solid var(--line)}
+h1,h2,h3{font-family:"Cormorant Garamond",serif;font-weight:400}
+.hero{padding:130px 0 90px;border:none}
+.grid{
+display:grid;
+grid-template-columns:1.1fr .9fr;
+gap:40px;
+align-items:start;
+}
+@media(max-width:980px){.grid{grid-template-columns:1fr}}
 .tag{
-  display:inline-flex;align-items:center;gap:9px;
-  font-size:9.5px;font-weight:400;letter-spacing:.26em;text-transform:uppercase;color:var(--gold);
+font-size:11px;
+letter-spacing:.22em;
+text-transform:uppercase;
+color:var(--gold);
+margin-bottom:16px;
 }
-.tag::before{content:'';width:13px;height:1px;background:var(--gold);opacity:.5;flex-shrink:0}
-
-/* buttons */
-.Bp,.Bg,.Be{
-  display:inline-block;font-family:var(--sans);
-  font-size:10.5px;font-weight:400;letter-spacing:.18em;text-transform:uppercase;
-  text-decoration:none;cursor:pointer;border:none;
-  padding:14px 32px;
-  transition:background .28s var(--ease),color .28s var(--ease),
-             transform .28s var(--ease),box-shadow .28s var(--ease);
+h1{
+font-size:clamp(46px,7vw,84px);
+line-height:1.02;
+margin-bottom:18px;
 }
-.Bp:focus-visible,.Bg:focus-visible,.Be:focus-visible{outline:2px solid var(--gold);outline-offset:3px}
-
-.Bp{background:var(--gold);color:var(--ink);border:1px solid var(--gold)}
-.Bp:hover{background:transparent;color:var(--gold);transform:translateY(-2px);box-shadow:0 8px 28px rgba(180,154,106,.17)}
-
-.Bg{background:transparent;color:var(--body);border:1px solid var(--ln2)}
-.Bg:hover{border-color:rgba(255,255,255,.22);color:var(--cream);transform:translateY(-2px)}
-
-/* email button */
-.Be{
-  display:inline-flex;align-items:center;gap:9px;
-  background:transparent;color:var(--muted);border:1px solid var(--line);
-  font-size:10px;
+.hero p{
+font-size:18px;
+color:var(--muted);
+max-width:620px;
+margin-bottom:28px;
 }
-.Be svg{width:11px;height:11px;opacity:.55;transition:opacity .22s;flex-shrink:0}
-.Be:hover{border-color:rgba(255,255,255,.18);color:var(--body)}
-.Be:hover svg{opacity:.9}
-
-/* ── NAV ── */
-#nav{
-  position:fixed;inset:0 0 auto 0;z-index:500;height:66px;
-  border-bottom:1px solid var(--line);
-  background:rgba(3,3,10,.80);
-  backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);
-  transition:background .4s;
+.btns{display:flex;gap:12px;flex-wrap:wrap}
+.btn{
+display:inline-block;
+padding:14px 22px;
+text-decoration:none;
+font-size:12px;
+letter-spacing:.16em;
+text-transform:uppercase;
+border:1px solid var(--gold);
+transition:.2s;
 }
-#nav.dense{background:rgba(3,3,10,.97)}
+.btn.primary{background:var(--gold);color:#000}
+.btn.secondary{color:var(--text)}
+.btn:hover{transform:translateY(-2px)}
 
-.ni{max-width:var(--W);margin:0 auto;padding:0 var(--p);height:100%;display:flex;align-items:center;justify-content:space-between;gap:16px}
-
-.nb{text-decoration:none;flex-shrink:0}
-.nb-n{display:block;font-size:11px;font-weight:500;letter-spacing:.26em;text-transform:uppercase;color:var(--cream);line-height:1.1}
-.nb-s{display:block;font-size:8.5px;font-weight:300;letter-spacing:.14em;color:var(--muted);margin-top:3px}
-
-.nl{display:flex;align-items:center;gap:26px;list-style:none}
-.nl a{font-size:11.5px;font-weight:300;letter-spacing:.04em;color:var(--muted);text-decoration:none;transition:color .22s}
-.nl a:hover{color:var(--body)}
-.nl a.active{color:var(--gold)}
-
-.na{
-  font-family:var(--sans);font-size:10px;font-weight:400;letter-spacing:.17em;
-  text-transform:uppercase;text-decoration:none;
-  color:var(--gold);border:1px solid rgba(180,154,106,.26);
-  padding:8px 18px;transition:all .28s var(--ease);white-space:nowrap;
+.form{
+background:var(--card);
+border:1px solid var(--line);
+padding:28px;
 }
-.na:hover{background:var(--ga);border-color:var(--gold);color:var(--cream)}
-
-.nhm{display:none;flex-direction:column;gap:5px;cursor:pointer;background:none;border:none;padding:4px}
-.nhm span{display:block;width:20px;height:1px;background:var(--body);transition:all .28s}
-
-.drw{
-  display:none;position:fixed;top:66px;inset-inline:0;z-index:499;
-  background:rgba(3,3,10,.99);backdrop-filter:blur(20px);
-  border-bottom:1px solid var(--line);padding:28px var(--p) 44px;flex-direction:column;gap:18px;
+.form h3{
+font-size:34px;
+margin-bottom:8px;
 }
-.drw.open{display:flex}
-.drw a{font-size:14px;font-weight:300;letter-spacing:.04em;color:var(--muted);text-decoration:none;transition:color .22s}
-.drw a:hover{color:var(--body)}
-.drw .na{align-self:flex-start;margin-top:10px}
-
-/* ── HERO ── */
-.hero{
-  padding:144px var(--p) 80px;
-  display:grid;grid-template-columns:1fr 400px;gap:60px;align-items:start;
+.form small{
+display:block;
+color:var(--muted);
+margin-bottom:22px;
 }
-
-.hl{}
-.hl-tag{
-  font-size:9.5px;font-weight:400;letter-spacing:.28em;text-transform:uppercase;
-  color:var(--gold);margin-bottom:14px;
-  display:flex;align-items:center;gap:9px;
-  opacity:0;animation:U .85s var(--ease) .15s both;
+label{
+display:block;
+font-size:11px;
+letter-spacing:.18em;
+text-transform:uppercase;
+color:var(--gold);
+margin:14px 0 8px;
 }
-.hl-tag::before{content:'';width:13px;height:1px;background:var(--gold);opacity:.5}
-
-.hl-div{
-  width:30px;height:1px;background:var(--gold);opacity:.38;
-  margin-bottom:36px;
-  opacity:0;animation:F .8s var(--ease) .27s both;
+input,select,textarea{
+width:100%;
+padding:14px;
+background:#0c0c0c;
+border:1px solid var(--line);
+color:var(--text);
+font-size:15px;
+font-family:Inter,sans-serif;
+}
+textarea{min-height:120px;resize:vertical}
+.submit{
+width:100%;
+margin-top:18px;
+padding:15px;
+background:var(--gold);
+color:#000;
+border:none;
+font-size:12px;
+letter-spacing:.18em;
+text-transform:uppercase;
+cursor:pointer;
+}
+.note{
+font-size:12px;
+color:var(--soft);
+margin-top:12px;
+text-align:center;
 }
 
-.hl-h1{
-  font-family:var(--serif);
-  font-size:clamp(44px,5.2vw,78px);
-  font-weight:300;line-height:1.04;letter-spacing:-.01em;
-  color:var(--cream);margin-bottom:24px;
-  opacity:0;animation:U 1.05s var(--ease) .4s both;
+.intro p,.copy p{font-size:17px;color:var(--muted);max-width:860px}
+
+.cards{
+display:grid;
+grid-template-columns:repeat(2,1fr);
+gap:18px;
+margin-top:32px;
 }
-.hl-h1 em{font-style:italic;color:var(--gold)}
-
-.hl-sub{
-  font-size:clamp(14.5px,1.4vw,16.5px);font-weight:300;
-  color:var(--muted);line-height:1.82;max-width:480px;margin-bottom:20px;
-  opacity:0;animation:U 1.05s var(--ease) .54s both;
+@media(max-width:900px){.cards{grid-template-columns:1fr}}
+.card{
+background:var(--card);
+border:1px solid var(--line);
+padding:26px;
 }
-
-.hl-trust{
-  font-size:9.5px;font-weight:400;letter-spacing:.19em;text-transform:uppercase;
-  color:var(--dim);margin-bottom:40px;
-  opacity:0;animation:U 1.05s var(--ease) .67s both;
+.card h3{
+font-size:30px;
+margin-bottom:10px;
 }
+.card p{color:var(--muted);font-size:15px}
 
-.hl-btns{
-  display:flex;gap:10px;flex-wrap:wrap;
-  opacity:0;animation:U 1.05s var(--ease) .80s both;
+.list{
+display:grid;
+gap:1px;
+background:var(--line);
+margin-top:28px;
 }
-
-/* ── FORM ── */
-.form-wrap{opacity:0;animation:F 1.1s var(--ease) 1s both}
-
-.form-box{border:1px solid var(--ln2);background:var(--ink1);padding:32px 28px}
-
-.fb-title{font-family:var(--serif);font-size:18px;font-weight:300;color:var(--cream);margin-bottom:5px;line-height:1.2}
-.fb-sub{font-size:11.5px;font-weight:300;color:var(--muted);line-height:1.65;margin-bottom:24px;padding-bottom:20px;border-bottom:1px solid var(--line)}
-
-.field{display:flex;flex-direction:column;gap:5px;margin-bottom:13px}
-.field label{font-size:9px;font-weight:400;letter-spacing:.22em;text-transform:uppercase;color:var(--g2)}
-.field input,
-.field select,
-.field textarea{
-  background:var(--ink);color:var(--body);
-  border:1px solid var(--line);padding:10px 13px;
-  font-family:var(--sans);font-size:13px;font-weight:300;
-  line-height:1.5;width:100%;outline:none;
-  transition:border-color .22s;-webkit-appearance:none;
-}
-.field input::placeholder,.field textarea::placeholder{color:var(--dim)}
-.field input:focus,.field select:focus,.field textarea:focus{border-color:rgba(180,154,106,.38)}
-.field textarea{resize:vertical;min-height:80px}
-.field select{
-  cursor:pointer;
-  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='9' height='6'%3E%3Cpath d='M0 0l4.5 6L9 0' fill='none' stroke='%237c6946' stroke-width='1'/%3E%3C/svg%3E");
-  background-repeat:no-repeat;background-position:right 13px center;
-  padding-right:34px;color:var(--body);
-}
-.field select option{background:var(--ink2);color:var(--body)}
-
-.form-footer{margin-top:16px}
-.form-submit{
-  width:100%;padding:13px;
-  background:var(--gold);color:var(--ink);border:1px solid var(--gold);
-  font-family:var(--sans);font-size:10.5px;font-weight:400;letter-spacing:.18em;
-  text-transform:uppercase;cursor:pointer;
-  transition:background .28s var(--ease),color .28s var(--ease),transform .28s var(--ease);
-}
-.form-submit:hover{background:transparent;color:var(--gold);transform:translateY(-1px)}
-.form-submit:focus-visible{outline:2px solid var(--gold);outline-offset:3px}
-.form-response{
-  font-size:10.5px;font-weight:300;color:var(--muted);
-  line-height:1.65;margin-top:11px;text-align:center;
+.item{
+background:var(--card);
+padding:18px 20px;
+color:var(--muted);
 }
 
-/* ── SECTION 2 — PAIN ── */
-.pain-grid{display:grid;grid-template-columns:1fr 1fr;gap:72px;align-items:start}
-
-.pain-h{
-  font-family:var(--serif);
-  font-size:clamp(26px,3.2vw,44px);
-  font-weight:300;color:var(--cream);line-height:1.12;margin-top:14px;
+.price{
+background:linear-gradient(180deg,#15120d,#111);
+border:1px solid rgba(184,154,99,.28);
+padding:26px;
+margin-top:26px;
 }
-.pain-h em{font-style:italic;color:var(--gold)}
-
-.pain-right{}
-.pain-bullets{display:flex;flex-direction:column;gap:1px;background:var(--line);margin-bottom:24px}
-.pain-b{
-  background:var(--ink);padding:17px 20px;
-  display:flex;align-items:baseline;gap:14px;
-  transition:background .25s var(--ease);cursor:default;
+.price .num{
+font-family:"Cormorant Garamond",serif;
+font-size:56px;
+line-height:1;
+margin:8px 0;
 }
-.pain-b:hover{background:var(--ink2)}
-.pain-dot{width:4px;height:4px;border-radius:50%;background:var(--gold);flex-shrink:0;margin-top:6px;opacity:.8}
-.pain-t{font-size:14px;font-weight:300;color:var(--body);line-height:1.55}
+.center{text-align:center}
 
-.pain-pull{
-  padding:18px 20px;border-left:2px solid rgba(180,154,106,.3);
-  font-family:var(--serif);font-size:17px;font-weight:300;font-style:italic;
-  color:var(--body);line-height:1.5;
+footer{
+padding:40px 0 70px;
+border-top:1px solid var(--line);
 }
-
-/* ── SECTION 3 — COVERS ── */
-.cover-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:1px;background:var(--line);margin-top:48px}
-
-.cover-card{
-  background:var(--ink);padding:40px 36px;cursor:default;
-  position:relative;overflow:hidden;
-  transition:background .35s var(--ease);
-}
-.cover-card::before{
-  content:'';position:absolute;top:0;left:0;right:0;height:1px;
-  background:var(--gold);transform:scaleX(0);transform-origin:left;
-  transition:transform .45s var(--ease);
-}
-.cover-card:hover::before{transform:scaleX(1)}
-.cover-card:hover{background:var(--ink2)}
-
-.cc-n{
-  font-family:var(--serif);font-size:48px;font-weight:300;
-  color:rgba(180,154,106,.09);line-height:1;margin-bottom:14px;letter-spacing:-.02em;
-}
-.cc-q{
-  font-family:var(--serif);font-size:clamp(17px,1.8vw,22px);
-  font-weight:300;color:var(--cream);line-height:1.3;
-}
-
-/* ── SECTION 4 — WHY EXTERNAL ── */
-.why-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:1px;background:var(--line);margin-top:48px}
-
-.why-box{
-  background:var(--ink1);padding:32px 30px;cursor:default;
-  transition:background .3s var(--ease);
-}
-.why-box:hover{background:var(--ink3)}
-
-.wb-icon{
-  width:32px;height:32px;border:1px solid rgba(180,154,106,.18);
-  display:flex;align-items:center;justify-content:center;margin-bottom:20px;
-}
-.wb-icon svg{width:13px;height:13px;stroke:var(--gold);stroke-width:1.5;fill:none}
-.wb-t{font-family:var(--serif);font-size:18px;font-weight:300;color:var(--cream);margin-bottom:7px;line-height:1.2}
-.wb-s{font-size:13px;font-weight:300;color:var(--muted);line-height:1.7}
-
-/* ── SECTION 5 — DELIVERABLES ── */
-.del-grid{display:grid;grid-template-columns:1fr 1fr;gap:72px;align-items:start}
-
-.del-h{
-  font-family:var(--serif);
-  font-size:clamp(24px,2.8vw,40px);
-  font-weight:300;color:var(--cream);line-height:1.12;margin-top:14px;
-}
-.del-h em{font-style:italic;color:var(--gold)}
-.del-note{font-size:14.5px;font-weight:300;color:var(--muted);line-height:1.85;margin-top:16px;max-width:360px}
-
-.del-list{border:1px solid var(--line)}
-.del-row{
-  display:flex;align-items:center;gap:14px;
-  padding:15px 18px;border-bottom:1px solid var(--line);
-  transition:background .22s;
-}
-.del-row:last-child{border-bottom:none}
-.del-row:hover{background:rgba(255,255,255,.014)}
-.del-num{font-size:8.5px;letter-spacing:.18em;color:var(--g2);min-width:20px;flex-shrink:0}
-.del-t{font-size:13.5px;font-weight:300;color:var(--body)}
-
-/* ── SECTION 6 — TERMS ── */
-.terms-grid{display:grid;grid-template-columns:1fr 1fr;gap:72px;align-items:start}
-
-.terms-h{
-  font-family:var(--serif);
-  font-size:clamp(24px,2.8vw,38px);
-  font-weight:300;color:var(--cream);line-height:1.12;margin-top:14px;
-}
-
-.fee{
-  margin-top:28px;
-  border:1px solid rgba(180,154,106,.22);background:var(--gb);
-  padding:24px 22px;
-}
-.fee-lbl{font-size:9px;font-weight:400;letter-spacing:.22em;text-transform:uppercase;color:var(--gold);margin-bottom:8px}
-.fee-val{font-family:var(--serif);font-size:32px;font-weight:300;color:var(--cream);line-height:1;margin-bottom:4px}
-.fee-note{font-size:11px;font-weight:300;color:var(--muted)}
-
-.terms-note{font-size:14px;font-weight:300;color:var(--muted);line-height:1.85;margin-top:18px;max-width:360px}
-
-.terms-tbl{border:1px solid var(--line)}
-.tr{display:grid;grid-template-columns:120px 1fr;border-bottom:1px solid var(--line);transition:background .22s}
-.tr:last-child{border-bottom:none}
-.tr:hover{background:rgba(255,255,255,.01)}
-.tk{padding:14px 16px;border-right:1px solid var(--line);font-size:9px;font-weight:400;letter-spacing:.18em;text-transform:uppercase;color:var(--g2);line-height:1.4}
-.tv{padding:14px 16px;font-size:13px;font-weight:300;color:var(--body);line-height:1.4}
-.tv strong{color:var(--cream);font-weight:400}
-
-/* ── SECTION 7 — FILTER ── */
-.filter-h{
-  font-family:var(--serif);
-  font-size:clamp(22px,2.5vw,36px);
-  font-weight:300;color:var(--cream);line-height:1.15;margin-top:14px;
-  max-width:600px;
-}
-
-.filter-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:1px;background:var(--line);margin-top:44px}
-.fi{
-  background:var(--ink1);padding:24px 26px;
-  display:flex;align-items:flex-start;gap:12px;cursor:default;
-  transition:background .28s var(--ease);
-}
-.fi:hover{background:var(--ink2)}
-.fi-dot{width:5px;height:5px;border-radius:50%;background:var(--gold);flex-shrink:0;margin-top:6px;opacity:.75}
-.fi-t{font-size:13.5px;font-weight:300;color:var(--body);line-height:1.55}
-
-.filter-not{
-  margin-top:24px;padding:16px 20px;
-  border:1px solid var(--line);background:var(--ink1);
-  display:grid;grid-template-columns:auto 1fr;gap:16px;align-items:start;
-}
-.fn-label{font-size:9px;font-weight:400;letter-spacing:.2em;text-transform:uppercase;color:var(--muted);white-space:nowrap;padding-top:2px}
-.fn-items{font-size:12.5px;font-weight:300;color:var(--dim);line-height:1.75}
-
-/* ── CTA ── */
-.cta-inner{max-width:660px;margin:0 auto;text-align:center}
-.cta-h{
-  font-family:var(--serif);
-  font-size:clamp(26px,3.8vw,50px);
-  font-weight:300;font-style:italic;color:var(--cream);line-height:1.15;margin-top:14px;
-}
-.cta-sub{
-  font-family:var(--serif);
-  font-size:clamp(15px,1.8vw,20px);
-  font-weight:300;font-style:italic;color:var(--gold);margin-top:14px;
-}
-.cta-note{font-size:12.5px;font-weight:300;color:var(--muted);line-height:1.8;margin-top:14px;margin-bottom:40px}
-.cta-btns{display:flex;gap:10px;justify-content:center;flex-wrap:wrap}
-
-/* ── FOOTER ── */
-footer{border-top:1px solid var(--line);padding:38px var(--p)}
-.fi-in{max-width:var(--W);margin:0 auto;display:grid;grid-template-columns:1fr auto 1fr;align-items:center;gap:20px}
-.fn{display:block;font-size:10px;font-weight:500;letter-spacing:.22em;text-transform:uppercase;color:var(--muted);margin-bottom:2px}
-.fs{font-size:8.5px;font-weight:300;letter-spacing:.1em;color:var(--dim)}
-.fm{text-align:center;font-size:9.5px;font-weight:300;letter-spacing:.07em;color:var(--dim);line-height:1.75}
-.fr{text-align:right;font-size:9.5px;font-weight:300;color:var(--dim)}
-
-/* ── REVEAL ── */
-.r{opacity:0;transform:translateY(18px);transition:opacity .76s var(--ease),transform .76s var(--ease)}
-.r.on{opacity:1;transform:none}
-.d1{transition-delay:.06s}.d2{transition-delay:.12s}.d3{transition-delay:.18s}
-.d4{transition-delay:.24s}.d5{transition-delay:.30s}
-
-@keyframes U{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
-@keyframes F{from{opacity:0}to{opacity:1}}
-
-/* ── RESPONSIVE ── */
-@media(max-width:940px){
-  :root{--p:32px;--pv:76px}
-  .hero{grid-template-columns:1fr;gap:44px;padding-bottom:56px}
-  .pain-grid,.del-grid,.terms-grid{grid-template-columns:1fr;gap:44px}
-  .cover-grid,.why-grid,.filter-grid{grid-template-columns:1fr}
-  .fi-in{grid-template-columns:1fr;gap:10px}
-  .fr{text-align:left}
-}
-
-@media(max-width:640px){
-  :root{--p:20px;--pv:64px}
-  .nl,.na{display:none}
-  .nhm{display:flex}
-  .hero{padding-top:116px}
-  .hl-h1{font-size:40px}
-  .hl-btns{flex-direction:column;align-items:flex-start}
-  .cta-btns{flex-direction:column;align-items:center}
-  .filter-not{grid-template-columns:1fr}
-  .tr{grid-template-columns:100px 1fr}
+footer p{
+font-size:13px;
+color:var(--soft);
 }
 </style>
 </head>
 <body>
 
-<!-- NAV -->
-<nav id="nav" role="banner" aria-label="Main navigation">
-  <div class="ni">
-    <a href="/" class="nb" aria-label="Matrix Audit">
-      <span class="nb-n">Matrix Audit</span>
-      <span class="nb-s">Liran Bar-Shrim · Decision Authority</span>
-    </a>
-    <div style="display:flex;align-items:center;gap:26px">
-      <ul class="nl" role="list">
-        <li><a href="/review" class="active" aria-current="page">Executive Review</a></li>
-        <li><a href="/case-studies">Decision Failures</a></li>
-        <li><a href="/ai-governance">AI Governance</a></li>
-        <li><a href="/about">About</a></li>
-      </ul>
-      <a href="#form" class="na">Request Review</a>
-    </div>
-    <button class="nhm" id="ham" aria-label="Open navigation" aria-expanded="false">
-      <span></span><span></span><span></span>
-    </button>
-  </div>
-</nav>
+<section class="hero">
+<div class="wrap grid">
 
-<div class="drw" id="drw" aria-label="Mobile navigation">
-  <a href="/"             onclick="cd()">Home</a>
-  <a href="/case-studies" onclick="cd()">Decision Failures</a>
-  <a href="/ai-governance" onclick="cd()">AI Governance</a>
-  <a href="/about"        onclick="cd()">About</a>
-  <a href="#form"         onclick="cd()" class="na">Request Review</a>
+<div>
+<div class="tag">Private Engagement</div>
+<h1>Executive<br>Authority<br>Review</h1>
+
+<p>
+A private external review for leaders carrying personal accountability on consequential decisions already in motion.
+</p>
+
+<div class="btns">
+<a href="#inquiry" class="btn primary">Request Review</a>
+<a href="mailto:liran@liranbarshrim.com" class="btn secondary">Email Directly</a>
+</div>
 </div>
 
-<!-- ═══ HERO ═══ -->
-<section class="hero" aria-label="Executive Authority Review">
+<div class="form" id="inquiry">
+<h3>Request a private review</h3>
+<small>Direct principal contact. Initial response within 24 hours.</small>
 
-  <!-- LEFT -->
-  <div class="hl">
-    <p class="hl-tag">Private Engagement</p>
-    <div class="hl-div" aria-hidden="true"></div>
+<form action="mailto:liran@liranbarshrim.com" method="post" enctype="text/plain">
+<label>Name</label>
+<input type="text" name="name">
 
-    <h1 class="hl-h1">
-      Executive<br><em>Authority</em><br>Review
-    </h1>
+<label>Email</label>
+<input type="email" name="email">
 
-    <p class="hl-sub">
-      A private external review for leaders carrying personal accountability on decisions already in motion.
-    </p>
+<label>Role</label>
+<select name="role">
+<option>CEO / Founder</option>
+<option>Board Director</option>
+<option>General Counsel</option>
+<option>Chief Risk Officer</option>
+<option>Operator</option>
+<option>Other</option>
+</select>
 
-    <p class="hl-trust">Initial findings within 7 days &bull; Confidential &bull; Direct principal engagement</p>
+<label>What is moving now?</label>
+<textarea name="message"></textarea>
 
-    <div class="hl-btns">
-      <a href="#form" class="Bp">Request Private Review</a>
-      <a href="#what-it-covers" class="Bg">See What It Covers</a>
-    </div>
-  </div>
+<button class="submit" type="submit">Send Private Inquiry</button>
+</form>
 
-  <!-- RIGHT — FORM -->
-  <div class="form-wrap" id="form">
-    <div class="form-box">
-      <h2 class="fb-title">Request a private review</h2>
-      <p class="fb-sub">Direct principal contact. Initial response within 24 hours.</p>
+<div class="note">
+Strictly confidential · Direct reply from Liran Bar-Shrim
+</div>
+</div>
 
-      <form
-        action="https://formspree.io/f/your-form-id"
-        method="POST"
-        novalidate
-        aria-label="Private review inquiry form"
-      >
-        <div class="field">
-          <label for="f-name">Name</label>
-          <input type="text" id="f-name" name="name" placeholder="Full name" required autocomplete="name">
-        </div>
-
-        <div class="field">
-          <label for="f-email">Email</label>
-          <input type="email" id="f-email" name="email" placeholder="Direct email" required autocomplete="email">
-        </div>
-
-        <div class="field">
-          <label for="f-role">Role</label>
-          <select id="f-role" name="role" required>
-            <option value="" disabled selected>Select role</option>
-            <option>CEO / Founder</option>
-            <option>Board Director</option>
-            <option>General Counsel</option>
-            <option>Chief Risk Officer</option>
-            <option>COO / Senior Operator</option>
-            <option>AI Governance Leader</option>
-            <option>Other Principal</option>
-          </select>
-        </div>
-
-        <div class="field">
-          <label for="f-sit">What is moving now?</label>
-          <textarea id="f-sit" name="situation" placeholder="Briefly describe the decision, exposure, or pressure." rows="4"></textarea>
-        </div>
-
-        <div class="form-footer">
-          <button type="submit" class="form-submit">Send Private Inquiry</button>
-          <p class="form-response">Direct response within 24 hours. Strictly confidential.</p>
-        </div>
-      </form>
-    </div>
-  </div>
+</div>
 </section>
 
-<!-- ═══ SECTION 2 — PAIN ═══ -->
-<section class="S St rt" id="the-exposure" aria-labelledby="pain-h">
-  <div class="W">
-    <div class="pain-grid">
-      <div>
-        <p class="tag r">The exposure</p>
-        <h2 class="pain-h r d1" id="pain-h">
-          When decisions<br>move fast,<br><em>exposure moves faster.</em>
-        </h2>
-      </div>
-      <div class="pain-right r d2">
-        <div class="pain-bullets" role="list">
-          <div class="pain-b" role="listitem">
-            <div class="pain-dot" aria-hidden="true"></div>
-            <p class="pain-t">The decision is progressing, but authority is unclear.</p>
-          </div>
-          <div class="pain-b" role="listitem">
-            <div class="pain-dot" aria-hidden="true"></div>
-            <p class="pain-t">Multiple stakeholders approve. No one can stop.</p>
-          </div>
-          <div class="pain-b" role="listitem">
-            <div class="pain-dot" aria-hidden="true"></div>
-            <p class="pain-t">If failure occurs, accountability becomes personal.</p>
-          </div>
-          <div class="pain-b" role="listitem">
-            <div class="pain-dot" aria-hidden="true"></div>
-            <p class="pain-t">Delay reduces options, not risk.</p>
-          </div>
-        </div>
-        <blockquote class="pain-pull">
-          Responsibility is assigned after failure.<br>
-          Authority must be defined before it.
-        </blockquote>
-      </div>
-    </div>
-  </div>
+<section>
+<div class="wrap intro">
+<div class="tag">Why This Exists</div>
+<p>
+Many organizations know how to approve decisions. Far fewer know who can stop them while time still matters.
+When pressure rises, accountability becomes personal.
+</p>
+</div>
 </section>
 
-<!-- ═══ SECTION 3 — WHAT IT COVERS ═══ -->
-<section class="S rt" id="what-it-covers" aria-labelledby="cov-h">
-  <div class="W">
-    <p class="tag r">What it examines</p>
-    <h2 class="r d1" id="cov-h" style="font-family:var(--serif);font-size:clamp(24px,2.8vw,38px);font-weight:300;color:var(--cream);line-height:1.14;margin-top:14px">
-      Four questions your structure may not have answered.
-    </h2>
-    <div class="cover-grid r d2" role="list">
-      <div class="cover-card" role="listitem">
-        <div class="cc-n" aria-hidden="true">01</div>
-        <p class="cc-q">Who can stop this decision now, on named authority?</p>
-      </div>
-      <div class="cover-card" role="listitem">
-        <div class="cc-n" aria-hidden="true">02</div>
-        <p class="cc-q">Who carries accountability if it proceeds?</p>
-      </div>
-      <div class="cover-card" role="listitem">
-        <div class="cc-n" aria-hidden="true">03</div>
-        <p class="cc-q">Where does escalation fail under pressure?</p>
-      </div>
-      <div class="cover-card" role="listitem">
-        <div class="cc-n" aria-hidden="true">04</div>
-        <p class="cc-q">What must be clarified before execution?</p>
-      </div>
-    </div>
-  </div>
+<section>
+<div class="wrap">
+<div class="tag">What The Review Examines</div>
+
+<div class="cards">
+
+<div class="card">
+<h3>Authority</h3>
+<p>Who can pause, override, or stop the decision now — by name.</p>
+</div>
+
+<div class="card">
+<h3>Exposure</h3>
+<p>Who carries responsibility if the decision proceeds and fails.</p>
+</div>
+
+<div class="card">
+<h3>Escalation</h3>
+<p>Where internal processes fail under urgency or politics.</p>
+</div>
+
+<div class="card">
+<h3>Action</h3>
+<p>What must be clarified immediately before momentum decides for you.</p>
+</div>
+
+</div>
+</div>
 </section>
 
-<!-- ═══ SECTION 4 — WHY EXTERNAL ═══ -->
-<section class="S St rt rb" id="why-external" aria-labelledby="why-h">
-  <div class="W">
-    <p class="tag r">Why an external review</p>
-    <h2 class="r d1" id="why-h" style="font-family:var(--serif);font-size:clamp(24px,2.8vw,38px);font-weight:300;color:var(--cream);line-height:1.14;margin-top:14px">
-      Why leaders use an external review.
-    </h2>
-    <div class="why-grid r d2" role="list">
-      <div class="why-box" role="listitem">
-        <div class="wb-icon" aria-hidden="true">
-          <svg viewBox="0 0 14 14" aria-hidden="true"><circle cx="7" cy="7" r="5.5"/><line x1="7" y1="4" x2="7" y2="7.5"/><line x1="7" y1="9.5" x2="7" y2="10"/></svg>
-        </div>
-        <p class="wb-t">Independent perspective</p>
-        <p class="wb-s">Internal politics often hide real authority gaps. External review is not shaped by career incentive or organizational hierarchy.</p>
-      </div>
-      <div class="why-box" role="listitem">
-        <div class="wb-icon" aria-hidden="true">
-          <svg viewBox="0 0 14 14" aria-hidden="true"><circle cx="7" cy="7" r="5.5"/><polyline points="7,4 7,7 9.5,9"/></svg>
-        </div>
-        <p class="wb-t">Fast clarity</p>
-        <p class="wb-s">Initial findings within 7 days. Structured for decisions already in motion, not governance exercises that take quarters.</p>
-      </div>
-      <div class="why-box" role="listitem">
-        <div class="wb-icon" aria-hidden="true">
-          <svg viewBox="0 0 14 14" aria-hidden="true"><path d="M7 1.5L2 4v3.5c0 2.8 2.3 4.8 5 5 2.7-.2 5-2.2 5-5V4L7 1.5z"/></svg>
-        </div>
-        <p class="wb-t">Confidential process</p>
-        <p class="wb-s">Direct principal-only engagement. No public record. No institutional disclosure. Findings remain between you and the advisor.</p>
-      </div>
-      <div class="why-box" role="listitem">
-        <div class="wb-icon" aria-hidden="true">
-          <svg viewBox="0 0 14 14" aria-hidden="true"><rect x="1.5" y="3" width="11" height="8" rx=".8"/><polyline points="1.5,5 7,8.5 12.5,5"/></svg>
-        </div>
-        <p class="wb-t">Built for live decisions</p>
-        <p class="wb-s">Not a retrospective exercise. Designed for decisions under current pressure where authority clarity is needed now.</p>
-      </div>
-    </div>
-  </div>
+<section>
+<div class="wrap">
+<div class="tag">What You Receive</div>
+
+<div class="list">
+<div class="item">Named authority map</div>
+<div class="item">Accountability exposure summary</div>
+<div class="item">Escalation weakness diagnosis</div>
+<div class="item">Immediate executive actions</div>
+<div class="item">Confidential written findings</div>
+</div>
+</div>
 </section>
 
-<!-- ═══ SECTION 5 — DELIVERABLES ═══ -->
-<section class="S rt" id="deliverables" aria-labelledby="del-h">
-  <div class="W">
-    <div class="del-grid">
-      <div>
-        <p class="tag r">What you receive</p>
-        <h2 class="del-h r d1" id="del-h">
-          Private written<br>findings.<br><em>No abstractions.</em>
-        </h2>
-        <p class="del-note r d2">Specific to your decision, your structure, and your exposure.</p>
-      </div>
-      <div class="r d2">
-        <div class="del-list" role="list">
-          <div class="del-row" role="listitem"><span class="del-num">01</span><span class="del-t">Named authority map</span></div>
-          <div class="del-row" role="listitem"><span class="del-num">02</span><span class="del-t">Accountability exposure summary</span></div>
-          <div class="del-row" role="listitem"><span class="del-num">03</span><span class="del-t">Escalation weakness findings</span></div>
-          <div class="del-row" role="listitem"><span class="del-num">04</span><span class="del-t">Immediate executive actions</span></div>
-          <div class="del-row" role="listitem"><span class="del-num">05</span><span class="del-t">Confidential written brief</span></div>
-        </div>
-      </div>
-    </div>
-  </div>
+<section>
+<div class="wrap copy">
+<div class="tag">Engagement Terms</div>
+
+<p>
+No system access required. No committee process. Direct principal engagement only.
+Initial findings within 7 days.
+</p>
+
+<div class="price">
+<div class="tag">Minimum Engagement</div>
+<div class="num">€12,000</div>
+<p>Depending on scope, urgency, and complexity.</p>
+</div>
+</div>
 </section>
 
-<!-- ═══ SECTION 6 — TERMS ═══ -->
-<section class="S St rt" id="terms" aria-labelledby="terms-h">
-  <div class="W">
-    <div class="terms-grid">
-      <div>
-        <p class="tag r">Engagement terms</p>
-        <h2 class="terms-h r d1" id="terms-h">
-          Structured for principals.<br>Not committees.
-        </h2>
-        <p class="terms-note r d2">No system access. No internal sign-off. Direct conversation. Private findings.</p>
-        <div class="fee r d3">
-          <p class="fee-lbl">Minimum engagement</p>
-          <p class="fee-val">€12,000</p>
-          <p class="fee-note">Depending on scope and urgency</p>
-        </div>
-      </div>
-      <div class="r d2">
-        <div class="terms-tbl" role="list">
-          <div class="tr" role="listitem"><div class="tk">Format</div><div class="tv">Private mandate only</div></div>
-          <div class="tr" role="listitem"><div class="tk">Timeline</div><div class="tv"><strong>Initial findings within 7 days</strong></div></div>
-          <div class="tr" role="listitem"><div class="tk">Access</div><div class="tv">No system access required</div></div>
-          <div class="tr" role="listitem"><div class="tk">Contact</div><div class="tv">Direct principal only</div></div>
-          <div class="tr" role="listitem"><div class="tk">Disclosure</div><div class="tv">Strict confidentiality</div></div>
-          <div class="tr" role="listitem"><div class="tk">Capacity</div><div class="tv">Limited annual engagements</div></div>
-        </div>
-      </div>
-    </div>
-  </div>
+<section>
+<div class="wrap center">
+<div class="tag">The Question</div>
+<h2 style="font-size:58px;line-height:1.02;margin-bottom:16px;">
+If this decision failed publicly,<br>whose name would carry it?
+</h2>
+
+<p style="color:var(--muted);margin-bottom:28px;">
+If the answer matters, clarity should come first.
+</p>
+
+<div class="btns" style="justify-content:center">
+<a href="#inquiry" class="btn primary">Request Review</a>
+<a href="mailto:liran@liranbarshrim.com" class="btn secondary">Email Directly</a>
+</div>
+</div>
 </section>
 
-<!-- ═══ SECTION 7 — FILTER ═══ -->
-<section class="S rt rb" id="qualification" aria-labelledby="filt-h">
-  <div class="W">
-    <p class="tag r">Is this the right moment?</p>
-    <h2 class="filter-h r d1" id="filt-h">
-      This is relevant when the stakes are real.
-    </h2>
-    <div class="filter-grid r d2" role="list">
-      <div class="fi" role="listitem"><div class="fi-dot" aria-hidden="true"></div><p class="fi-t">Financial, regulatory, reputational, or irreversible downside is possible</p></div>
-      <div class="fi" role="listitem"><div class="fi-dot" aria-hidden="true"></div><p class="fi-t">Your name carries personal accountability for the outcome</p></div>
-      <div class="fi" role="listitem"><div class="fi-dot" aria-hidden="true"></div><p class="fi-t">The decision is already moving or imminent</p></div>
-      <div class="fi" role="listitem"><div class="fi-dot" aria-hidden="true"></div><p class="fi-t">Internal authority structure has not been explicitly defined or tested</p></div>
-    </div>
-    <div class="filter-not r d3">
-      <span class="fn-label">Not suitable for</span>
-      <span class="fn-items">Routine audits &nbsp;·&nbsp; Procurement-led requests &nbsp;·&nbsp; General consulting &nbsp;·&nbsp; Low-stakes decisions</span>
-    </div>
-  </div>
-</section>
-
-<!-- ═══ FINAL CTA ═══ -->
-<section class="S St rt" aria-label="Final CTA">
-  <div class="W">
-    <div class="cta-inner">
-      <p class="tag r" style="justify-content:center">The question</p>
-      <h2 class="cta-h r d1">
-        If this decision failed publicly, whose name would carry it?
-      </h2>
-      <p class="cta-sub r d2">If the answer matters, clarity should come first.</p>
-      <p class="cta-note r d3">
-        Private. No obligations. No system access.<br>Direct principal contact only.
-      </p>
-      <div class="cta-btns r d4">
-        <a href="#form" class="Bp">Request Private Review</a>
-        <a href="mailto:contact@matrix-audit.com" class="Be">
-          <svg viewBox="0 0 12 12" fill="none" aria-hidden="true">
-            <rect x=".5" y="1.5" width="11" height="9" rx=".8" stroke="currentColor"/>
-            <path d=".5 3l5.5 3.5 5.5-3.5" stroke="currentColor"/>
-          </svg>
-          Email Directly
-        </a>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- FOOTER -->
-<footer role="contentinfo">
-  <div class="fi-in">
-    <div>
-      <span class="fn">Matrix Audit</span>
-      <span class="fs">Liran Bar-Shrim · Founder</span>
-    </div>
-    <p class="fm">Decision Authority · Private Mandates<br>Confidential Engagements · Global Availability</p>
-    <p class="fr">&copy; 2026</p>
-  </div>
+<footer>
+<div class="wrap">
+<p>
+Private inquiries: liran@liranbarshrim.com<br>
+© 2026 Matrix Audit · Executive Authority Review
+</p>
+</div>
 </footer>
 
-<!-- JS -->
-<script>
-(function(){
-'use strict';
-
-/* REVEAL */
-const els=document.querySelectorAll('.r');
-if('IntersectionObserver' in window){
-  const io=new IntersectionObserver(
-    es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('on');io.unobserve(e.target)}}),
-    {threshold:.07,rootMargin:'0px 0px -16px 0px'}
-  );
-  els.forEach(el=>io.observe(el));
-}else{
-  els.forEach(el=>el.classList.add('on'));
-}
-
-/* NAV */
-const nav=document.getElementById('nav');
-const ham=document.getElementById('ham');
-const drw=document.getElementById('drw');
-
-window.addEventListener('scroll',()=>nav.classList.toggle('dense',scrollY>44),{passive:true});
-ham.addEventListener('click',()=>{const o=drw.classList.toggle('open');ham.setAttribute('aria-expanded',String(o))});
-window.cd=()=>{drw.classList.remove('open');ham.setAttribute('aria-expanded','false')};
-
-/* Smooth scroll + focus for #form anchors */
-document.querySelectorAll('a[href="#form"]').forEach(a=>{
-  a.addEventListener('click',e=>{
-    const el=document.getElementById('form');
-    if(!el)return;
-    e.preventDefault();
-    el.scrollIntoView({behavior:'smooth',block:'start'});
-    setTimeout(()=>{const i=el.querySelector('input');if(i)i.focus({preventScroll:true})},480);
-  });
-});
-
-}());
-</script>
 </body>
 </html>
