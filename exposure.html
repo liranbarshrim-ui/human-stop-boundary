@@ -1,755 +1,448 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>When Failure Lands on One Name — Decision Authority Research</title>
-  <meta name="description" content="During success, responsibility is shared. During failure, it lands on one name. The case for named stop authority before harm occurs.">
-  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Playfair+Display:ital,wght@0,700;1,400&display=swap" rel="stylesheet">
-  <style>
-    :root {
-      --bg: #090909;
-      --surface: #111111;
-      --gold: #c8a96e;
-      --danger: #c0392b;
-      --green: #3d9970;
-      --text: #e6e0d4;
-      --muted: #b8b2ac;
-      --dim: #7a7570;
-      --border: #1e1e1e;
-      --border2: #2a2a2a;
-    }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    *, *::before, *::after {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
+<title>Decision Authority Research | The Architecture of Accountability</title>
 
-    body {
-      background: var(--bg);
-      color: var(--text);
-      font-family: 'IBM Plex Mono', monospace;
-      min-height: 100vh;
-      overflow-x: hidden;
-    }
+<meta name="description" content="Decision Authority Research helps boards and executives define who can stop irreversible decisions before exposure begins. DAR, AI governance, accountability design.">
 
-    body::before {
-      content: '';
-      position: fixed;
-      inset: 0;
-      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
-      pointer-events: none;
-      z-index: 0;
-      opacity: 0.6;
-    }
+<meta name="keywords" content="decision authority, DAR, executive accountability, stop authority, AI governance, board risk, irreversible decisions">
 
-    .container {
-      position: relative;
-      z-index: 1;
-      max-width: 680px;
-      margin: 0 auto;
-      padding: 64px 24px 96px;
-      animation: fadeIn 0.9s ease both;
-    }
+<link rel="canonical" href="https://matrix-audit.com/index.html">
 
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(14px); }
-      to   { opacity: 1; transform: translateY(0); }
-    }
+<meta property="og:title" content="Decision Authority Research">
+<meta property="og:description" content="If no one is named to stop it, liability finds someone later.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://matrix-audit.com/index.html">
 
-    .tag {
-      font-size: 10px;
-      letter-spacing: 0.15em;
-      text-transform: uppercase;
-      color: var(--muted);
-      margin-bottom: 44px;
-      display: flex;
-      align-items: center;
-      gap: 12px;
-    }
-    .tag::before {
-      content: '';
-      display: inline-block;
-      width: 20px;
-      height: 1px;
-      background: var(--gold);
-    }
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Playfair+Display:wght@400;700&display=swap" rel="stylesheet">
 
-    h1 {
-      font-family: 'Playfair Display', serif;
-      font-size: clamp(28px, 5.5vw, 44px);
-      font-weight: 700;
-      line-height: 1.15;
-      color: var(--text);
-      border-left: 3px solid var(--gold);
-      padding-left: 20px;
-      margin-bottom: 14px;
-    }
+<style>
+:root{
+--bg:#090909;
+--surface:#111111;
+--surface2:#151515;
+--gold:#c8a96e;
+--danger:#c0392b;
+--text:#e6e0d4;
+--muted:#b8b2ac;
+--dim:#7a7570;
+--border:#1e1e1e;
+--border2:#2a2a2a;
+}
 
-    .subline {
-      font-size: 13px;
-      color: var(--dim);
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      padding-left: 23px;
-      margin-bottom: 56px;
-    }
+*{margin:0;padding:0;box-sizing:border-box;}
 
-    .essay {
-      display: flex;
-      flex-direction: column;
-      gap: 0;
-    }
+body{
+background:var(--bg);
+color:var(--text);
+font-family:'IBM Plex Mono',monospace;
+line-height:1.7;
+}
 
-    .graf {
-      font-size: 15px;
-      color: var(--muted);
-      line-height: 1.85;
-      margin-bottom: 22px;
-    }
+.container{
+max-width:980px;
+margin:0 auto;
+padding:60px 24px 90px;
+}
 
-    .punch {
-      font-family: 'Playfair Display', serif;
-      font-size: clamp(17px, 3vw, 22px);
-      color: var(--text);
-      line-height: 1.45;
-      margin: 36px 0 28px;
-      padding-left: 20px;
-      border-left: 3px solid var(--gold);
-    }
+.tag{
+font-size:10px;
+letter-spacing:.18em;
+text-transform:uppercase;
+color:var(--muted);
+display:flex;
+align-items:center;
+gap:12px;
+margin-bottom:42px;
+}
 
-    .mirror {
-      border: 1px solid var(--border2);
-      background: var(--surface);
-      padding: 28px 24px;
-      margin-bottom: 44px;
-      position: relative;
-    }
-    .mirror::before {
-      content: '';
-      position: absolute;
-      top: 0; left: 0; right: 0;
-      height: 1px;
-      background: linear-gradient(90deg, var(--gold), transparent);
-    }
-    .mirror-line {
-      font-family: 'Playfair Display', serif;
-      font-size: 16px;
-      color: var(--text);
-      line-height: 1.6;
-      margin-bottom: 10px;
-    }
-    .mirror-line:last-child {
-      margin-bottom: 0;
-      color: var(--danger);
-    }
+.tag:before{
+content:'';
+width:22px;
+height:1px;
+background:var(--gold);
+display:block;
+}
 
-    .ritual {
-      margin: 0 0 22px 0;
-      padding: 0;
-      list-style: none;
-      display: flex;
-      flex-direction: column;
-      gap: 4px;
-    }
-    .ritual li {
-      font-size: 14px;
-      color: var(--dim);
-      letter-spacing: 0.06em;
-      padding-left: 16px;
-      position: relative;
-    }
-    .ritual li::before {
-      content: '—';
-      position: absolute;
-      left: 0;
-      color: var(--border2);
-    }
+.hero{
+border-left:3px solid var(--gold);
+padding-left:22px;
+margin-bottom:38px;
+}
 
-    .one-name {
-      background: var(--surface);
-      border: 1px solid var(--border2);
-      border-left: 3px solid var(--danger);
-      padding: 24px 20px;
-      margin: 32px 0;
-      position: relative;
-      overflow: hidden;
-    }
-    .one-name::after {
-      content: '';
-      position: absolute;
-      bottom: 0; left: 0; right: 0;
-      height: 1px;
-      background: linear-gradient(90deg, rgba(192,57,43,0.3), transparent);
-    }
-    .one-name-label {
-      font-size: 9px;
-      letter-spacing: 0.18em;
-      text-transform: uppercase;
-      color: var(--danger);
-      margin-bottom: 12px;
-    }
-    .one-name-text {
-      font-family: 'Playfair Display', serif;
-      font-size: 20px;
-      color: var(--text);
-      margin-bottom: 16px;
-    }
-    .one-name-not {
-      display: flex;
-      flex-direction: column;
-      gap: 4px;
-    }
-    .not-item {
-      font-size: 12px;
-      color: var(--dim);
-      letter-spacing: 0.06em;
-      display: flex;
-      align-items: center;
-      gap: 10px;
-    }
-    .not-item::before {
-      content: '';
-      display: inline-block;
-      width: 12px;
-      height: 1px;
-      background: var(--border2);
-      flex-shrink: 0;
-    }
+.hero h1{
+font-family:'Playfair Display',serif;
+font-size:clamp(42px,7vw,74px);
+line-height:1.04;
+margin-bottom:18px;
+}
 
-    .collective-phrases {
-      margin: 24px 0 22px 0;
-      display: flex;
-      flex-direction: column;
-      gap: 6px;
-    }
-    .phrase {
-      font-size: 13px;
-      color: var(--dim);
-      font-style: italic;
-      padding-left: 16px;
-      border-left: 1px solid var(--border2);
-    }
+.hero p{
+font-size:15px;
+color:var(--muted);
+max-width:760px;
+}
 
-    .the-question {
-      text-align: center;
-      margin: 44px 0;
-      padding: 40px 20px;
-      border-top: 1px solid var(--border2);
-      border-bottom: 1px solid var(--border2);
-      position: relative;
-    }
-    .the-question::before {
-      content: '';
-      position: absolute;
-      top: -1px; left: 50%; transform: translateX(-50%);
-      width: 40px; height: 2px;
-      background: var(--gold);
-    }
-    .the-question-label {
-      font-size: 10px;
-      letter-spacing: 0.18em;
-      text-transform: uppercase;
-      color: var(--dim);
-      margin-bottom: 16px;
-    }
-    .the-question-text {
-      font-family: 'Playfair Display', serif;
-      font-size: clamp(20px, 4vw, 28px);
-      color: var(--text);
-      line-height: 1.4;
-    }
+.signal{
+margin-bottom:40px;
+padding:24px;
+background:linear-gradient(180deg,#141414,#0d0d0d);
+border:1px solid var(--border2);
+border-left:3px solid var(--gold);
+}
 
-    .transform {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 1px;
-      background: var(--border2);
-      margin: 32px 0;
-    }
-    .transform-cell {
-      background: var(--surface);
-      padding: 20px;
-    }
-    .transform-label {
-      font-size: 9px;
-      letter-spacing: 0.15em;
-      text-transform: uppercase;
-      color: var(--dim);
-      margin-bottom: 8px;
-    }
-    .transform-value {
-      font-family: 'Playfair Display', serif;
-      font-size: 15px;
-      color: var(--text);
-      line-height: 1.4;
-    }
-    .transform-cell:last-child .transform-value {
-      color: var(--danger);
-    }
+.signal small{
+display:block;
+font-size:10px;
+letter-spacing:.2em;
+text-transform:uppercase;
+color:var(--gold);
+margin-bottom:10px;
+}
 
-    .sectors {
-      margin: 24px 0;
-      display: flex;
-      flex-direction: column;
-      gap: 12px;
-    }
-    .sector {
-      display: flex;
-      align-items: baseline;
-      gap: 14px;
-      font-size: 13px;
-      color: var(--muted);
-      line-height: 1.6;
-    }
-    .sector-label {
-      font-size: 9px;
-      letter-spacing: 0.15em;
-      text-transform: uppercase;
-      color: var(--gold);
-      flex-shrink: 0;
-      width: 90px;
-    }
+.signal strong{
+display:block;
+font-family:'Playfair Display',serif;
+font-size:30px;
+margin-bottom:10px;
+}
 
-    .ai-block {
-      background: var(--surface);
-      border: 1px solid var(--border2);
-      padding: 28px 24px;
-      margin: 36px 0;
-      position: relative;
-    }
-    .ai-block::before {
-      content: '';
-      position: absolute;
-      top: 0; left: 0; right: 0;
-      height: 1px;
-      background: linear-gradient(90deg, transparent, rgba(200,169,110,0.3), transparent);
-    }
-    .ai-label {
-      font-size: 9px;
-      letter-spacing: 0.18em;
-      text-transform: uppercase;
-      color: var(--gold);
-      margin-bottom: 16px;
-    }
-    .ai-expose {
-      font-family: 'Playfair Display', serif;
-      font-size: 17px;
-      color: var(--text);
-      margin-bottom: 20px;
-      line-height: 1.4;
-    }
-    .ai-sequence {
-      display: flex;
-      flex-direction: column;
-      gap: 8px;
-    }
-    .ai-step {
-      font-size: 12px;
-      color: var(--dim);
-      letter-spacing: 0.04em;
-      display: flex;
-      align-items: baseline;
-      gap: 12px;
-    }
-    .ai-step-n {
-      font-size: 9px;
-      color: var(--border2);
-      letter-spacing: 0.15em;
-      flex-shrink: 0;
-      width: 24px;
-    }
+.signal p{
+font-size:14px;
+color:var(--muted);
+max-width:720px;
+}
 
-    .questions-block {
-      margin: 32px 0;
-      display: flex;
-      flex-direction: column;
-      gap: 1px;
-      background: var(--border2);
-    }
-    .q-item {
-      background: var(--surface);
-      padding: 18px 20px;
-      font-size: 14px;
-      color: var(--muted);
-      line-height: 1.6;
-      display: flex;
-      gap: 14px;
-      align-items: baseline;
-    }
-    .q-num {
-      font-size: 9px;
-      letter-spacing: 0.15em;
-      color: var(--gold);
-      flex-shrink: 0;
-      width: 20px;
-    }
+.section{
+padding:36px 0;
+border-top:1px solid var(--border2);
+}
 
-    .warning-line {
-      font-size: 12px;
-      color: var(--danger);
-      letter-spacing: 0.08em;
-      margin: 20px 0;
-      display: flex;
-      align-items: center;
-      gap: 10px;
-    }
-    .warning-line::before {
-      content: '';
-      display: inline-block;
-      width: 16px;
-      height: 1px;
-      background: var(--danger);
-      flex-shrink: 0;
-    }
+.label{
+font-size:10px;
+letter-spacing:.18em;
+text-transform:uppercase;
+color:var(--gold);
+margin-bottom:12px;
+}
 
-    .closing-block {
-      margin-top: 64px;
-      padding-top: 40px;
-      border-top: 1px solid var(--border2);
-      position: relative;
-    }
-    .closing-block::before {
-      content: '';
-      position: absolute;
-      top: -1px; left: 0;
-      width: 40px; height: 2px;
-      background: var(--gold);
-    }
+.section h2{
+font-family:'Playfair Display',serif;
+font-size:34px;
+margin-bottom:14px;
+line-height:1.2;
+}
 
-    .closing-main {
-      font-family: 'Playfair Display', serif;
-      font-size: clamp(20px, 4vw, 28px);
-      color: var(--text);
-      line-height: 1.45;
-      margin-bottom: 28px;
-      padding-left: 20px;
-      border-left: 3px solid var(--gold);
-    }
+.section p{
+font-size:14px;
+color:var(--muted);
+margin-bottom:12px;
+}
 
-    .closing-truth {
-      background: var(--surface);
-      border: 1px solid var(--border2);
-      border-left: 3px solid var(--danger);
-      padding: 22px 20px;
-      margin-bottom: 12px;
-      position: relative;
-      overflow: hidden;
-    }
-    .closing-truth::before {
-      content: '';
-      position: absolute;
-      top: 0; left: 0; right: 0;
-      height: 1px;
-      background: linear-gradient(90deg, rgba(192,57,43,0.4), transparent);
-    }
-    .closing-truth-text {
-      font-family: 'Playfair Display', serif;
-      font-size: 16px;
-      color: var(--text);
-      font-style: italic;
-      line-height: 1.55;
-      margin-bottom: 10px;
-    }
-    .closing-truth-sub {
-      font-size: 11px;
-      color: var(--danger);
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-    }
+.grid{
+display:grid;
+grid-template-columns:1fr;
+gap:16px;
+margin-top:22px;
+}
 
-    .footer {
-      border-top: 1px solid var(--border2);
-      padding-top: 36px;
-      margin-top: 56px;
-      display: flex;
-      flex-direction: column;
-      gap: 14px;
-    }
-    .footer a {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 18px 22px;
-      text-decoration: none;
-      border: 1px solid var(--border2);
-      background: var(--surface);
-      transition: border-color 0.2s, background 0.2s;
-      gap: 16px;
-    }
-    .footer a:hover {
-      border-color: var(--gold);
-      background: #161410;
-    }
-    .footer a:hover .banner-arrow { color: var(--gold); }
-    .footer a.cta {
-      border-color: var(--gold);
-      background: #13110d;
-    }
-    .footer a.cta .banner-title { color: var(--gold); }
-    .banner-left {
-      display: flex;
-      flex-direction: column;
-      gap: 4px;
-    }
-    .banner-label {
-      font-size: 10px;
-      letter-spacing: 0.15em;
-      text-transform: uppercase;
-      color: var(--gold);
-    }
-    .banner-title {
-      font-size: 14px;
-      color: var(--text);
-      font-family: 'Playfair Display', serif;
-    }
-    .banner-arrow {
-      font-size: 20px;
-      color: var(--muted);
-      flex-shrink: 0;
-      transition: color 0.2s;
-    }
+.card{
+background:var(--surface);
+border:1px solid var(--border2);
+padding:24px;
+transition:.2s;
+}
 
-    .copyright {
-      margin-top: 28px;
-      font-size: 11px;
-      color: var(--dim);
-      letter-spacing: 0.05em;
-    }
+.card:hover{
+border-color:#3a3328;
+transform:translateY(-2px);
+}
 
-    .divider {
-      height: 1px;
-      background: var(--border2);
-      margin: 40px 0;
-      position: relative;
-    }
-    .divider::after {
-      content: '';
-      position: absolute;
-      left: 0; top: 0;
-      width: 32px; height: 1px;
-      background: var(--gold);
-    }
-  </style>
+.card small{
+display:block;
+font-size:10px;
+letter-spacing:.16em;
+text-transform:uppercase;
+color:var(--gold);
+margin-bottom:10px;
+}
+
+.card h3{
+font-family:'Playfair Display',serif;
+font-size:24px;
+margin-bottom:10px;
+line-height:1.2;
+}
+
+.card p{
+font-size:13px;
+color:var(--muted);
+}
+
+.card a{
+display:inline-block;
+margin-top:14px;
+color:var(--text);
+text-decoration:none;
+font-size:12px;
+letter-spacing:.12em;
+text-transform:uppercase;
+}
+
+.quote{
+margin-top:18px;
+padding:26px;
+background:var(--surface);
+border:1px solid var(--border2);
+border-left:3px solid var(--gold);
+font-family:'Playfair Display',serif;
+font-size:30px;
+line-height:1.35;
+}
+
+.cta{
+margin-top:20px;
+display:flex;
+gap:14px;
+flex-wrap:wrap;
+}
+
+.btn{
+text-decoration:none;
+padding:16px 24px;
+font-size:12px;
+letter-spacing:.14em;
+text-transform:uppercase;
+transition:.2s;
+}
+
+.primary{
+background:var(--gold);
+color:#111;
+font-weight:700;
+}
+
+.secondary{
+border:1px solid var(--gold);
+color:var(--text);
+background:#121212;
+}
+
+.footer{
+margin-top:48px;
+border:1px solid var(--border2);
+background:#0f0f0f;
+}
+
+.link{
+display:flex;
+justify-content:space-between;
+align-items:center;
+padding:24px;
+text-decoration:none;
+color:var(--text);
+border-bottom:1px solid var(--border2);
+}
+
+.link:last-child{border-bottom:none;}
+
+.link:hover{
+background:#151515;
+}
+
+.left{
+display:flex;
+flex-direction:column;
+gap:6px;
+}
+
+.left small{
+font-size:10px;
+letter-spacing:.18em;
+text-transform:uppercase;
+color:var(--gold);
+}
+
+.left span{
+font-family:'Playfair Display',serif;
+font-size:18px;
+line-height:1.2;
+}
+
+.copy{
+margin-top:28px;
+font-size:11px;
+color:var(--dim);
+}
+
+@media(min-width:820px){
+.grid{
+grid-template-columns:1fr 1fr;
+}
+}
+
+@media(max-width:700px){
+.container{padding:42px 18px 70px;}
+.hero h1{font-size:44px;}
+.btn{width:100%;text-align:center;}
+.quote{font-size:24px;}
+}
+</style>
 </head>
+
 <body>
 <div class="container">
 
-  <div class="tag">Decision Authority Research &mdash; Exposure</div>
+<div class="tag">Decision Authority Research</div>
 
-  <h1>When Failure Lands on One Name</h1>
-  <p class="subline">Shared success hides personal exposure</p>
-  <p style="font-size:13px;color:var(--muted);padding-left:23px;margin-top:16px;line-height:1.7;">Most systems distribute approval.<br>Few distribute the right to stop.</p>
+<div class="hero">
+<h1>The Architecture<br>of Accountability</h1>
+<p>
+For boards, executives, legal leaders and AI governance teams facing irreversible decisions under uncertainty.
+</p>
+</div>
 
-  <div class="essay">
+<div class="signal">
+<small>Executive Signal</small>
+<strong>If no one is named to stop it, liability finds someone later.</strong>
+<p>
+Most organizations built approval systems. Far fewer built real stop authority.
+</p>
+</div>
 
-    <div class="mirror">
-      <div class="mirror-line">During success, responsibility is shared.</div>
-      <div class="mirror-line">During failure, it lands on one name.</div>
-    </div>
+<div class="section">
+<div class="label">Core Framework</div>
+<h2>Decision Authority Record (DAR)</h2>
+<p>
+A written accountability structure that defines one named authority before risk becomes public, expensive, or irreversible.
+</p>
 
-    <p class="graf">Most organizations know how to build approval systems. Very few know how to build real stop authority.</p>
-    <p class="graf">That gap was always dangerous. Autonomous AI systems now make it urgent.</p>
+<div class="cta">
+<a class="btn primary" href="dar.html">Explore DAR</a>
+<a class="btn secondary" href="contact.html">Private Inquiry</a>
+</div>
+</div>
 
-    <div class="divider"></div>
+<div class="section">
+<div class="label">Key Reading</div>
+<h2>Research & Essays</h2>
 
-    <p class="graf">When systems fail, the same sentence is often heard:</p>
+<div class="grid">
 
-    <div class="punch">"This was unexpected."</div>
+<div class="card">
+<small>Essay</small>
+<h3>Named Stop Authority</h3>
+<p>Why approval systems fail when no one can stop continuation.</p>
+<a href="stop-authority.html">Read →</a>
+</div>
 
-    <p class="graf">Then the familiar ritual begins.</p>
+<div class="card">
+<small>Article</small>
+<h3>The Death of “We”</h3>
+<p>How collective language collapses into one accountable name.</p>
+<a href="death-of-we.html">Read →</a>
+</div>
 
-    <ul class="ritual">
-      <li>Reviews</li>
-      <li>Timeline reconstruction</li>
-      <li>Statements issued</li>
-      <li>Committees</li>
-      <li>Damage control</li>
-    </ul>
+<div class="card">
+<small>Exposure</small>
+<h3>When Failure Lands on One Name</h3>
+<p>Shared success hides personal exposure until failure arrives.</p>
+<a href="exposure.html">Read →</a>
+</div>
 
-    <p class="graf">But beneath the formal process, something simpler happens.</p>
-
-    <div class="one-name">
-      <div class="one-name-label">What actually surfaces</div>
-      <div class="one-name-text">One name appears.</div>
-      <div class="one-name-not">
-        <div class="not-item">Not the system</div>
-        <div class="not-item">Not the process</div>
-        <div class="not-item">Not the committee</div>
-        <div class="not-item">Not the model</div>
-        <div class="not-item" style="color:var(--text);">A person.</div>
-      </div>
-    </div>
-
-    <p class="graf">The person who carries responsibility after failure is usually not the only cause.</p>
-    <p class="graf">Often, they are simply the last identifiable human before the irreversible step. The last point where someone could still have stopped it.</p>
-
-    <div class="divider"></div>
-
-    <div class="punch">Here is the truth many organizations prefer to blur.</div>
-
-    <div class="transform">
-      <div class="transform-cell">
-        <div class="transform-label">During success</div>
-        <div class="transform-value">Responsibility is shared</div>
-      </div>
-      <div class="transform-cell">
-        <div class="transform-label">During failure</div>
-        <div class="transform-value">It becomes personal</div>
-      </div>
-    </div>
-
-    <p class="graf">In normal operations, collective language is preferred.</p>
-
-    <div class="collective-phrases">
-      <div class="phrase">"Cross-functional."</div>
-      <div class="phrase">"Committee approved."</div>
-      <div class="phrase">"Aligned with policy."</div>
-      <div class="phrase">"Reviewed by all stakeholders."</div>
-    </div>
-
-    <p class="graf">Everyone was involved. No one truly owned the authority to stop.</p>
-    <p class="graf">That works while outcomes stay positive. Once harm occurs, it collapses quickly.</p>
-    <p class="graf">Investors, regulators, boards, customers, and the public do not accept "everyone" for long.</p>
-
-    <div class="the-question">
-      <div class="the-question-label">The only question that follows failure</div>
-      <div class="the-question-text">Who was responsible?</div>
-    </div>
-
-    <p class="graf">And in that moment, everything changes.</p>
-
-    <div class="transform">
-      <div class="transform-cell">
-        <div class="transform-label">Before</div>
-        <div class="transform-value">What was vague</div>
-      </div>
-      <div class="transform-cell">
-        <div class="transform-label">After</div>
-        <div class="transform-value">Becomes personal</div>
-      </div>
-    </div>
-    <div class="transform" style="margin-top:1px;">
-      <div class="transform-cell">
-        <div class="transform-label">Before</div>
-        <div class="transform-value">What was collective</div>
-      </div>
-      <div class="transform-cell">
-        <div class="transform-label">After</div>
-        <div class="transform-value">Becomes a name</div>
-      </div>
-    </div>
-
-    <p class="graf" style="margin-top:28px;">The most exposed person is not always the one who created the flaw. Often, it is the person who accepted responsibility without first ensuring they had authority to stop.</p>
-
-    <div class="divider"></div>
-
-    <div class="punch">That is why many governance structures create false comfort.</div>
-
-    <p class="graf">They document who approved. Who attended. Who was informed. But they do not define who can truly say "no" in the critical moment.</p>
-
-    <p class="graf">Real stop authority does not exist because it appears in a policy manual. It exists only when one clearly identified person can make continuation impossible until they explicitly release it.</p>
-
-    <p class="graf">If the default is to continue even under uncertainty, then the stop function was symbolic from the start.</p>
-
-    <div class="divider"></div>
-
-    <p class="graf">This applies everywhere.</p>
-
-    <div class="sectors">
-      <div class="sector">
-        <span class="sector-label">Healthcare</span>
-        <span>Processes continue because no one has real-time authority to pause.</span>
-      </div>
-      <div class="sector">
-        <span class="sector-label">Finance</span>
-        <span>Exposure grows because escalation exists, but stopping does not.</span>
-      </div>
-      <div class="sector">
-        <span class="sector-label">Technology</span>
-        <span>Organizations know how to approve release, but not how to stop it.</span>
-      </div>
-    </div>
-
-    <div class="ai-block">
-      <div class="ai-label">Autonomous AI</div>
-      <div class="ai-expose">Autonomous AI does not create this problem.<br>It exposes it at scale.</div>
-      <div class="ai-sequence">
-        <div class="ai-step"><span class="ai-step-n">01</span>A model is approved and deployed.</div>
-        <div class="ai-step"><span class="ai-step-n">02</span>Harm begins.</div>
-        <div class="ai-step"><span class="ai-step-n">03</span>No named person has immediate authority to shut it down.</div>
-        <div class="ai-step"><span class="ai-step-n">04</span>And even when authority exists, the more the system learns, the less it is used.</div>
-        <div class="ai-step"><span class="ai-step-n">05</span>By the time the emergency meeting starts, it is already late.</div>
-        <div class="ai-step" style="color:var(--danger);"><span class="ai-step-n" style="color:var(--danger);">06</span>One name has already appeared.</div>
-      </div>
-    </div>
-
-    <div class="divider"></div>
-
-    <div class="punch">The lesson is simple.</div>
-
-    <p class="graf">If you are close to any consequential decision, especially involving autonomous systems, do not ask only: "What am I responsible for?"</p>
-    <p class="graf">Also ask:</p>
-
-    <div class="questions-block">
-      <div class="q-item"><span class="q-num">01</span>Who can stop this now?</div>
-      <div class="q-item"><span class="q-num">02</span>Is that authority real or only on paper?</div>
-      <div class="q-item"><span class="q-num">03</span>Is continuation the default, or is stop the default under uncertainty?</div>
-    </div>
-
-    <div class="warning-line">If the answer is "the team" or "the process," the exposure already exists.</div>
-
-    <p class="graf">The organizations that earn trust in the coming years will not be those with the longest approval chains. They will be the ones disciplined enough to place one real human name on the stop button before it was ever needed.</p>
-
-    <p class="graf">Irreversible outcomes do not wait for committees.</p>
-
-  </div>
-
-  <div class="closing-block">
-    <div class="closing-main">
-      When a decision becomes irreversible under uncertainty,<br>
-      who is named to stop it?
-    </div>
-
-    <div class="closing-truth">
-      <div class="closing-truth-text">If no one is named, no one stops.</div>
-      <div class="closing-truth-sub">If you cannot name the person, it is already happening.</div>
-    </div>
-  </div>
-
-  <div class="footer">
-    <a href="dar.html" class="cta">
-      <div class="banner-left">
-        <span class="banner-label">DAR</span>
-        <span class="banner-title">Decision Authority Record</span>
-      </div>
-      <span class="banner-arrow">&#8594;</span>
-    </a>
-    <a href="scenarios.html">
-      <div class="banner-left">
-        <span class="banner-label">Failure Points</span>
-        <span class="banner-title">Where accountability breaks</span>
-      </div>
-      <span class="banner-arrow">&#8594;</span>
-    </a>
-    <a id="contact-exposure" href="#">
-      <div class="banner-left">
-        <span class="banner-label">Contact</span>
-        <span class="banner-title">Map a stop authority gap</span>
-      </div>
-      <span class="banner-arrow">&#8594;</span>
-    </a>
-  </div>
-
-  <p class="copyright">&#169; 2026 Liran Bar-Shrim. All rights reserved.</p>
+<div class="card">
+<small>Cases</small>
+<h3>Failure Points</h3>
+<p>Clinical, finance and AI examples with the same missing element.</p>
+<a href="failure-points.html">Read →</a>
+</div>
 
 </div>
-<script>
-(function(){
-  var u = "Liran" + "@" + "liranbarshrim.com";
-  document.getElementById('contact-exposure').setAttribute('href', 'mailto:' + u);
-})();
-</script>
+</div>
+
+<div class="section">
+<div class="label">Current Risk Domain</div>
+<h2>AI Governance</h2>
+<p>
+When systems move faster than governance can respond, control becomes theoretical.
+</p>
+
+<div class="cta">
+<a class="btn secondary" href="ai-governance.html">AI Governance →</a>
+</div>
+</div>
+
+<div class="section">
+<div class="label">Private Engagements</div>
+<h2>Executive Advisory</h2>
+<p>
+Fixed-scope private reviews for accountability gaps, named authority design, and decision exposure.
+</p>
+
+<div class="cta">
+<a class="btn primary" href="services.html">View Engagements</a>
+</div>
+</div>
+
+<div class="section">
+<div class="label">The Question</div>
+
+<div class="quote">
+When a decision becomes irreversible under uncertainty,<br>
+who is named to stop it?
+</div>
+
+</div>
+
+<div class="footer">
+
+<a class="link" href="dar.html">
+<div class="left">
+<small>Framework</small>
+<span>Decision Authority Record</span>
+</div>
+<div>→</div>
+</a>
+
+<a class="link" href="services.html">
+<div class="left">
+<small>Services</small>
+<span>Private Executive Engagements</span>
+</div>
+<div>→</div>
+</a>
+
+<a class="link" href="ai-governance.html">
+<div class="left">
+<small>Vertical</small>
+<span>AI Governance</span>
+</div>
+<div>→</div>
+</a>
+
+<a class="link" href="faq.html">
+<div class="left">
+<small>FAQ</small>
+<span>Questions & Answers</span>
+</div>
+<div>→</div>
+</a>
+
+<a class="link" href="contact.html">
+<div class="left">
+<small>Contact</small>
+<span>Private Inquiry</span>
+</div>
+<div>→</div>
+</a>
+
+</div>
+
+<p class="copy">© 2026 Liran Bar-Shrim. All rights reserved.</p>
+
+</div>
 </body>
 </html>
