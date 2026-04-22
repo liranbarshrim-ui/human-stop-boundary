@@ -5,7 +5,6 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <title>Decision Authority Research | Named Stop Authority for Irreversible Decisions</title>
-
 <meta name="description" content="Private advisory for boards, executives, General Counsel, CROs and AI governance leaders facing irreversible decisions under uncertainty.">
 <meta name="keywords" content="decision authority, named stop authority, executive accountability, AI governance, irreversible decisions, board risk">
 <link rel="canonical" href="https://matrix-audit.com/">
@@ -15,19 +14,19 @@
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://matrix-audit.com/">
 
-<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Playfair+Display:wght@400;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
 
 <style>
+
 :root{
 --bg:#090909;
 --surface:#111111;
 --surface2:#151515;
 --gold:#c8a96e;
---text:#e6e0d4;
---muted:#b6afa8;
---soft:#9f978f;
---dim:#77716c;
---border:#1f1f1f;
+--text:#e8e2d7;
+--muted:#a7a097;
+--soft:#8f8880;
+--border:#1d1d1d;
 --border2:#2a2a2a;
 --danger:#c0392b;
 }
@@ -45,27 +44,24 @@ scroll-behavior:smooth;
 body{
 background:var(--bg);
 color:var(--text);
-font-family:'IBM Plex Mono',monospace;
-line-height:1.7;
+font-family:Inter,system-ui,sans-serif;
 overflow-x:hidden;
 -webkit-font-smoothing:antialiased;
 text-rendering:optimizeLegibility;
+line-height:1.7;
 }
 
-body::before{
+body:before{
 content:'';
 position:fixed;
 inset:0;
-background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
-opacity:.45;
+background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 240 240' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.025'/%3E%3C/svg%3E");
+opacity:.55;
 pointer-events:none;
 z-index:0;
 }
 
-a{
-color:inherit;
-text-decoration:none;
-}
+/* top */
 
 .topbar{
 position:sticky;
@@ -77,17 +73,19 @@ align-items:center;
 padding:18px 24px;
 background:rgba(9,9,9,.92);
 backdrop-filter:blur(10px);
-border-bottom:1px solid rgba(255,255,255,.05);
+border-bottom:1px solid rgba(255,255,255,.04);
 }
 
 .brand{
 display:flex;
 align-items:center;
 gap:12px;
-font-size:10px;
-letter-spacing:.22em;
-text-transform:uppercase;
+text-decoration:none;
 color:var(--text);
+font-family:'IBM Plex Mono',monospace;
+font-size:10px;
+letter-spacing:.28em;
+text-transform:uppercase;
 }
 
 .brand-line{
@@ -98,15 +96,17 @@ background:var(--gold);
 
 .desktop-nav{
 display:flex;
-gap:24px;
+gap:22px;
 align-items:center;
 }
 
 .desktop-nav a{
+text-decoration:none;
+color:var(--muted);
+font-family:'IBM Plex Mono',monospace;
 font-size:10px;
 letter-spacing:.18em;
 text-transform:uppercase;
-color:var(--muted);
 transition:.2s;
 }
 
@@ -129,11 +129,13 @@ cursor:pointer;
 
 .menu-btn span{
 display:block;
-width:22px;
+width:24px;
 height:2px;
 background:var(--text);
-margin:4px 0;
+margin:5px 0;
 }
+
+/* mobile menu */
 
 .overlay{
 position:fixed;
@@ -152,15 +154,15 @@ visibility:visible;
 
 .side-menu{
 position:fixed;
-right:-340px;
 top:0;
+right:-340px;
 width:320px;
 max-width:90%;
 height:100vh;
 overflow-y:auto;
 background:#0f0f0f;
 border-left:1px solid var(--border);
-padding:26px 22px 40px;
+padding:28px 24px 40px;
 transition:.28s;
 z-index:999;
 }
@@ -173,9 +175,10 @@ right:0;
 display:flex;
 justify-content:space-between;
 align-items:center;
-margin-bottom:20px;
-font-size:12px;
-letter-spacing:.16em;
+margin-bottom:22px;
+font-family:'IBM Plex Mono',monospace;
+font-size:11px;
+letter-spacing:.18em;
 text-transform:uppercase;
 }
 
@@ -194,6 +197,7 @@ margin-top:18px;
 }
 
 .menu-label{
+font-family:'IBM Plex Mono',monospace;
 font-size:10px;
 letter-spacing:.18em;
 text-transform:uppercase;
@@ -204,69 +208,81 @@ margin-bottom:10px;
 .menu-group a{
 display:block;
 padding:8px 0;
-font-size:14px;
+text-decoration:none;
 color:var(--muted);
+font-size:15px;
 }
 
 .menu-group a:hover{
 color:var(--text);
 }
 
+/* layout */
+
 .container{
 position:relative;
 z-index:1;
-max-width:1080px;
+max-width:980px;
 margin:0 auto;
-padding:72px 28px 110px;
+padding:70px 28px 110px;
 }
+
+/* hero */
 
 .hero{
 border-left:3px solid var(--gold);
-padding-left:26px;
-margin-bottom:56px;
+padding-left:24px;
+margin-bottom:58px;
 }
 
 .hero-label{
+font-family:'IBM Plex Mono',monospace;
 font-size:10px;
-letter-spacing:.22em;
+letter-spacing:.24em;
 text-transform:uppercase;
-color:#baa57d;
-margin-bottom:16px;
+color:#b8aa8a;
+margin-bottom:18px;
 }
 
 .hero h1{
 font-family:'Playfair Display',serif;
-font-size:clamp(42px,7vw,78px);
+font-size:clamp(44px,7vw,74px);
 line-height:1.02;
 letter-spacing:-.02em;
-margin-bottom:22px;
-max-width:940px;
+margin-bottom:24px;
+max-width:920px;
 }
 
 .hero p{
-font-size:15px;
-line-height:2;
+font-size:18px;
+line-height:1.9;
 color:var(--muted);
 max-width:760px;
+font-weight:400;
 }
+
+/* statement */
 
 .statement{
 background:linear-gradient(180deg,#111,#0d0d0d);
 border:1px solid var(--border2);
 border-left:3px solid var(--danger);
 padding:34px;
-margin-bottom:64px;
+margin-bottom:62px;
 font-family:'Playfair Display',serif;
 font-size:34px;
-line-height:1.32;
+line-height:1.28;
 }
 
+/* sections */
+
 .section{
-padding:56px 0;
-border-top:1px solid rgba(255,255,255,.06);
+padding:54px 0;
+border-top:1px solid rgba(255,255,255,.05);
 }
 
 .section-label{
+font-family:'IBM Plex Mono',monospace;
 font-size:10px;
 letter-spacing:.22em;
 text-transform:uppercase;
@@ -276,17 +292,9 @@ margin-bottom:14px;
 
 .section h2{
 font-family:'Playfair Display',serif;
-font-size:44px;
+font-size:42px;
 line-height:1.12;
 margin-bottom:28px;
-}
-
-.section-intro{
-max-width:760px;
-font-size:14px;
-line-height:2;
-color:var(--muted);
-margin-bottom:26px;
 }
 
 .grid{
@@ -295,8 +303,12 @@ grid-template-columns:1fr 1fr;
 gap:18px;
 }
 
+/* cards */
+
 .card{
 display:block;
+text-decoration:none;
+color:var(--text);
 background:linear-gradient(180deg,#121212,#0d0d0d);
 border:1px solid #262626;
 border-left:3px solid var(--gold);
@@ -306,12 +318,13 @@ transition:.22s;
 
 .card:hover{
 transform:translateY(-3px);
-border-color:#3a3328;
+border-color:#3b3327;
 background:#171717;
 }
 
 .card small{
 display:block;
+font-family:'IBM Plex Mono',monospace;
 font-size:10px;
 letter-spacing:.22em;
 text-transform:uppercase;
@@ -323,29 +336,35 @@ margin-bottom:12px;
 display:block;
 font-family:'Playfair Display',serif;
 font-size:28px;
-line-height:1.08;
+line-height:1.1;
 margin-bottom:12px;
 font-weight:700;
 }
 
 .card span{
 display:block;
-font-size:13px;
-line-height:1.95;
-color:var(--soft);
+font-size:15px;
+line-height:1.85;
+color:var(--muted);
 }
+
+/* cta */
 
 .cta{
 display:inline-block;
-margin-top:26px;
+margin-top:24px;
 padding:18px 28px;
 background:var(--gold);
 color:#111;
+text-decoration:none;
+font-family:'IBM Plex Mono',monospace;
 font-size:11px;
 letter-spacing:.22em;
 text-transform:uppercase;
 font-weight:700;
 }
+
+/* footer */
 
 .footer{
 margin-top:74px;
@@ -353,33 +372,36 @@ padding-top:28px;
 border-top:1px solid var(--border2);
 font-size:11px;
 letter-spacing:.08em;
-color:var(--dim);
+color:#6e6964;
+font-family:'IBM Plex Mono',monospace;
 }
+
+/* mobile */
 
 @media(max-width:860px){
 
-.desktop-nav{
-display:none;
-}
-
-.menu-btn{
-display:block;
-}
+.desktop-nav{display:none;}
+.menu-btn{display:block;}
 
 .grid{
 grid-template-columns:1fr;
 }
 
 .container{
-padding:56px 18px 84px;
+padding:56px 18px 90px;
 }
 
 .hero h1{
-font-size:clamp(36px,12vw,58px);
+font-size:clamp(38px,12vw,58px);
+}
+
+.hero p{
+font-size:16px;
+line-height:1.85;
 }
 
 .statement{
-font-size:24px;
+font-size:25px;
 padding:26px 22px;
 }
 
@@ -387,13 +409,12 @@ padding:26px 22px;
 font-size:34px;
 }
 
-.hero p,
-.section-intro,
-.card span{
-line-height:1.8;
+.card strong{
+font-size:24px;
 }
 
 }
+
 </style>
 </head>
 
@@ -438,10 +459,10 @@ line-height:1.8;
 </div>
 
 <div class="menu-group">
-<div class="menu-label">Reading</div>
+<div class="menu-label">Insights</div>
 <a href="exposure.html">When Failure Lands on One Name</a>
-<a href="we.html">The Death of We</a>
 <a href="failure-points.html">Where Accountability Breaks</a>
+<a href="we.html">The Death of We</a>
 <a href="ai-governance.html">AI Governance</a>
 </div>
 
@@ -461,10 +482,7 @@ line-height:1.8;
 
 <div class="hero-label">Executive Decision Advisory</div>
 
-<h1>
-When no one is named to stop it,<br>
-liability finds someone later.
-</h1>
+<h1>When no one is named to stop it,<br>liability finds someone later.</h1>
 
 <p>
 Private advisory for boards, executives, General Counsel, CROs and AI governance leaders facing irreversible decisions under uncertainty.
@@ -481,10 +499,6 @@ Stop authority is rare.
 
 <div class="section-label">Primary</div>
 <h2>Executive Advisory</h2>
-
-<p class="section-intro">
-Define one accountable human name before exposure becomes costly, public, or irreversible.
-</p>
 
 <div class="grid">
 
@@ -529,16 +543,16 @@ Define one accountable human name before exposure becomes costly, public, or irr
 <span>Shared success hides personal exposure.</span>
 </a>
 
-<a href="we.html" class="card">
-<small>Essay</small>
-<strong>The Death of We</strong>
-<span>At some point, this will no longer be we.</span>
-</a>
-
 <a href="failure-points.html" class="card">
 <small>Cases</small>
 <strong>Where Accountability Breaks</strong>
 <span>Three patterns. One missing element.</span>
+</a>
+
+<a href="case-studies.html" class="card">
+<small>Public Cases</small>
+<strong>Case Studies</strong>
+<span>Real-world failures where ownership became visible too late.</span>
 </a>
 
 <a href="ai-governance.html" class="card">
@@ -566,20 +580,20 @@ Define one accountable human name before exposure becomes costly, public, or irr
 
 <a href="faq.html" class="card">
 <small>FAQ</small>
-<strong>Frequently Asked Questions</strong>
+<strong>Questions</strong>
 <span>What DAR is and what it is not.</span>
-</a>
-
-<a href="case-studies.html" class="card">
-<small>Cases</small>
-<strong>Case Studies</strong>
-<span>Public failures where unclear ownership became costly.</span>
 </a>
 
 <a href="goodfaith.html" class="card">
 <small>Policy</small>
 <strong>Good Faith Use</strong>
 <span>Use boundaries and advisory disclaimer.</span>
+</a>
+
+<a href="stop-authority.html" class="card">
+<small>Concept</small>
+<strong>Stop Authority</strong>
+<span>The most ignored control function in governance.</span>
 </a>
 
 </div>
@@ -591,7 +605,7 @@ Define one accountable human name before exposure becomes costly, public, or irr
 <div class="section-label">Private Intake</div>
 <h2>One question matters</h2>
 
-<p class="section-intro">
+<p style="font-size:18px;color:var(--muted);max-width:720px;line-height:1.9;">
 When a decision becomes irreversible under uncertainty, who is explicitly named to stop it?
 </p>
 
@@ -612,7 +626,7 @@ const overlay=document.getElementById('overlay');
 document.getElementById('openMenu').onclick=function(){
 menu.classList.add('active');
 overlay.classList.add('active');
-};
+}
 
 document.getElementById('closeMenu').onclick=closeMenu;
 overlay.onclick=closeMenu;
