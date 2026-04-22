@@ -1,0 +1,743 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Named Stop Authority in High-Risk Decisions | Decision Authority Research</title>
+<meta name="description" content="A practical governance white paper on named stop authority. For organizations facing high-risk decisions where speed, uncertainty, and accountability intersect.">
+<link rel="canonical" href="https://matrix-audit.com/white-paper.html">
+
+<meta property="og:title" content="Named Stop Authority in High-Risk Decisions">
+<meta property="og:description" content="A practical governance white paper by Liran Bar-Shrim. Who has the authority to stop a high-risk decision in time?">
+<meta property="og:type" content="article">
+
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+
+<style>
+
+:root{
+--bg:#090909;
+--surface:#111111;
+--gold:#c8a96e;
+--text:#e8e2d7;
+--muted:#a7a097;
+--soft:#8f8880;
+--dim:#6a6460;
+--border:#1d1d1d;
+--border2:#2a2a2a;
+--danger:#c0392b;
+}
+
+*{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+
+body{
+background:var(--bg);
+color:var(--text);
+font-family:Inter,system-ui,sans-serif;
+overflow-x:hidden;
+-webkit-font-smoothing:antialiased;
+line-height:1.7;
+}
+
+body:before{
+content:'';
+position:fixed;
+inset:0;
+background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 240 240' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.025'/%3E%3C/svg%3E");
+opacity:.55;
+pointer-events:none;
+z-index:0;
+}
+
+a{text-decoration:none;color:inherit;}
+
+/* ── topbar ── */
+
+.topbar{
+position:sticky;
+top:0;
+z-index:999;
+display:flex;
+justify-content:space-between;
+align-items:center;
+padding:18px 24px;
+background:rgba(9,9,9,.94);
+backdrop-filter:blur(10px);
+border-bottom:1px solid rgba(255,255,255,.04);
+}
+
+.brand{
+display:flex;
+align-items:center;
+gap:12px;
+text-decoration:none;
+color:var(--text);
+font-family:'IBM Plex Mono',monospace;
+font-size:10px;
+letter-spacing:.28em;
+text-transform:uppercase;
+}
+
+.brand-line{width:18px;height:1px;background:var(--gold);}
+
+.menu-btn{
+display:flex;
+flex-direction:column;
+justify-content:center;
+gap:5px;
+background:none;
+border:none;
+cursor:pointer;
+padding:6px;
+}
+
+.menu-btn span{
+display:block;
+width:22px;
+height:1.5px;
+background:var(--text);
+transition:background .2s;
+}
+
+.menu-btn:hover span{background:var(--gold);}
+
+.overlay{
+position:fixed;
+inset:0;
+background:rgba(0,0,0,.6);
+opacity:0;
+visibility:hidden;
+transition:.25s;
+z-index:998;
+}
+
+.overlay.active{opacity:1;visibility:visible;}
+
+.side-menu{
+position:fixed;
+top:0;
+right:-340px;
+width:300px;
+max-width:90%;
+height:100vh;
+overflow-y:auto;
+background:#0d0d0d;
+border-left:1px solid var(--border);
+padding:28px 24px 48px;
+transition:.28s cubic-bezier(.4,0,.2,1);
+z-index:999;
+}
+
+.side-menu.active{right:0;}
+
+.menu-head{
+display:flex;
+justify-content:space-between;
+align-items:center;
+margin-bottom:28px;
+}
+
+.menu-head-brand{
+font-family:'IBM Plex Mono',monospace;
+font-size:9px;
+letter-spacing:.24em;
+text-transform:uppercase;
+color:var(--gold);
+}
+
+.close-btn{
+background:none;
+border:none;
+font-size:26px;
+line-height:1;
+color:var(--muted);
+cursor:pointer;
+transition:.2s;
+}
+
+.close-btn:hover{color:var(--text);}
+
+.menu-group{
+border-top:1px solid var(--border);
+padding-top:20px;
+margin-top:20px;
+}
+
+.menu-label{
+font-family:'IBM Plex Mono',monospace;
+font-size:9px;
+letter-spacing:.22em;
+text-transform:uppercase;
+color:var(--gold);
+margin-bottom:12px;
+}
+
+.menu-group a{
+display:flex;
+align-items:center;
+gap:10px;
+padding:9px 0;
+text-decoration:none;
+color:var(--muted);
+font-size:14px;
+border-bottom:1px solid rgba(255,255,255,.03);
+transition:.18s;
+}
+
+.menu-group a:last-child{border-bottom:none;}
+.menu-group a:hover{color:var(--text);padding-left:4px;}
+.menu-group a.active{color:var(--gold);}
+
+.menu-divider-line{
+display:inline-block;
+width:12px;
+height:1px;
+background:var(--border2);
+flex-shrink:0;
+}
+
+.menu-cta{
+display:block;
+margin-top:28px;
+padding:14px 20px;
+border:1px solid var(--gold);
+color:var(--gold)!important;
+font-family:'IBM Plex Mono',monospace;
+font-size:10px;
+letter-spacing:.2em;
+text-transform:uppercase;
+text-align:center;
+text-decoration:none;
+transition:.2s;
+}
+
+.menu-cta:hover{background:var(--gold);color:#111!important;}
+
+.menu-email{
+display:block;
+margin-top:10px;
+padding:11px 20px;
+color:var(--muted)!important;
+font-family:Inter,system-ui,sans-serif;
+font-size:13px;
+text-align:center;
+text-decoration:none;
+border:1px solid var(--border);
+transition:.2s;
+}
+
+.menu-email:hover{color:var(--gold)!important;border-color:var(--border2);}
+
+/* ── layout ── */
+
+.container{
+position:relative;
+z-index:1;
+max-width:740px;
+margin:0 auto;
+padding:70px 28px 110px;
+}
+
+/* ── paper header ── */
+
+.paper-meta{
+font-family:'IBM Plex Mono',monospace;
+font-size:10px;
+letter-spacing:.22em;
+text-transform:uppercase;
+color:var(--gold);
+margin-bottom:20px;
+}
+
+.paper-title{
+font-family:'Playfair Display',serif;
+font-size:clamp(32px,6vw,52px);
+line-height:1.06;
+letter-spacing:-.02em;
+margin-bottom:12px;
+border-left:3px solid var(--gold);
+padding-left:24px;
+}
+
+.paper-subtitle{
+font-family:'IBM Plex Mono',monospace;
+font-size:11px;
+letter-spacing:.14em;
+text-transform:uppercase;
+color:var(--muted);
+padding-left:27px;
+margin-bottom:52px;
+}
+
+/* ── executive summary ── */
+
+.summary{
+background:linear-gradient(180deg,#111,#0d0d0d);
+border:1px solid var(--border2);
+border-left:3px solid var(--gold);
+padding:32px;
+margin-bottom:54px;
+}
+
+.summary-label{
+font-family:'IBM Plex Mono',monospace;
+font-size:9px;
+letter-spacing:.22em;
+text-transform:uppercase;
+color:var(--gold);
+margin-bottom:16px;
+}
+
+.summary p{
+font-size:16px;
+color:var(--muted);
+line-height:1.85;
+margin-bottom:14px;
+}
+
+.summary p:last-child{margin-bottom:0;}
+
+.summary strong{
+color:var(--text);
+font-weight:600;
+}
+
+/* ── sections ── */
+
+.section{
+padding:40px 0;
+border-top:1px solid rgba(255,255,255,.05);
+}
+
+.section-label{
+font-family:'IBM Plex Mono',monospace;
+font-size:9px;
+letter-spacing:.22em;
+text-transform:uppercase;
+color:var(--gold);
+margin-bottom:14px;
+}
+
+.section h2{
+font-family:'Playfair Display',serif;
+font-size:clamp(24px,4vw,36px);
+line-height:1.1;
+margin-bottom:20px;
+}
+
+.section p{
+font-size:16px;
+color:var(--muted);
+line-height:1.85;
+margin-bottom:14px;
+max-width:680px;
+}
+
+.section p:last-child{margin-bottom:0;}
+
+.section strong{color:var(--text);}
+
+/* ── list items ── */
+
+.list{
+display:grid;
+gap:0;
+margin:16px 0 20px;
+}
+
+.list-item{
+padding:10px 0;
+border-bottom:1px solid rgba(255,255,255,.04);
+font-size:15px;
+color:var(--muted);
+line-height:1.7;
+}
+
+.list-item:last-child{border-bottom:none;}
+
+/* ── principle block ── */
+
+.principle{
+background:linear-gradient(180deg,#121212,#0d0d0d);
+border:1px solid var(--border2);
+border-left:3px solid var(--gold);
+padding:28px;
+margin:28px 0;
+}
+
+.principle-num{
+font-family:'IBM Plex Mono',monospace;
+font-size:9px;
+letter-spacing:.22em;
+text-transform:uppercase;
+color:var(--gold);
+margin-bottom:10px;
+}
+
+.principle h3{
+font-family:'Playfair Display',serif;
+font-size:22px;
+margin-bottom:10px;
+}
+
+.principle p{
+font-size:15px;
+color:var(--muted);
+line-height:1.8;
+margin-bottom:8px;
+}
+
+.principle p:last-child{margin-bottom:0;}
+
+/* ── example block ── */
+
+.example{
+background:var(--surface);
+border:1px solid var(--border2);
+padding:24px;
+margin:12px 0;
+}
+
+.example-label{
+font-family:'IBM Plex Mono',monospace;
+font-size:9px;
+letter-spacing:.2em;
+text-transform:uppercase;
+color:var(--muted);
+margin-bottom:12px;
+}
+
+.example h4{
+font-family:'Playfair Display',serif;
+font-size:20px;
+margin-bottom:12px;
+}
+
+.example p{
+font-size:14px;
+color:var(--muted);
+line-height:1.8;
+margin-bottom:8px;
+}
+
+.example p:last-child{margin-bottom:0;}
+
+.example p strong{color:var(--text);}
+
+/* ── pull quote ── */
+
+.pull{
+margin:32px 0;
+padding:28px;
+background:linear-gradient(180deg,#111,#0d0d0d);
+border:1px solid var(--border2);
+border-left:3px solid var(--gold);
+font-family:'Playfair Display',serif;
+font-size:clamp(20px,3vw,26px);
+line-height:1.35;
+}
+
+/* ── closing ── */
+
+.closing{
+border-top:1px solid var(--border2);
+padding-top:40px;
+margin-top:8px;
+}
+
+.closing p{
+font-family:'Playfair Display',serif;
+font-size:clamp(22px,3vw,30px);
+line-height:1.35;
+color:var(--text);
+}
+
+/* ── footer banner ── */
+
+.footer-banner{
+margin-top:64px;
+border:1px solid var(--border2);
+background:#0d0d0d;
+}
+
+.footer-link{
+display:flex;
+justify-content:space-between;
+align-items:center;
+padding:20px 24px;
+text-decoration:none;
+color:var(--text);
+border-bottom:1px solid var(--border2);
+transition:.18s;
+}
+
+.footer-link:last-child{border-bottom:none;}
+.footer-link:hover{background:#151515;padding-left:28px;}
+.footer-link-left{display:flex;flex-direction:column;gap:4px;}
+
+.footer-link-label{
+font-family:'IBM Plex Mono',monospace;
+font-size:9px;
+letter-spacing:.22em;
+text-transform:uppercase;
+color:var(--gold);
+}
+
+.footer-link-title{font-family:'Playfair Display',serif;font-size:17px;line-height:1.2;}
+.footer-link-arrow{font-family:'IBM Plex Mono',monospace;font-size:14px;color:var(--muted);}
+
+.footer{
+margin-top:28px;
+padding-top:28px;
+border-top:1px solid var(--border2);
+font-size:11px;
+letter-spacing:.08em;
+color:#6e6964;
+font-family:'IBM Plex Mono',monospace;
+}
+
+@media(max-width:600px){
+.container{padding:48px 18px 72px;}
+.paper-title{font-size:clamp(28px,9vw,42px);padding-left:16px;}
+.paper-subtitle{padding-left:19px;}
+.summary{padding:22px;}
+.principle{padding:20px;}
+}
+
+</style>
+</head>
+
+<body>
+
+<header class="topbar">
+  <a href="index.html" class="brand">
+    <span class="brand-line"></span>
+    <span>Decision Authority Research</span>
+  </a>
+  <button class="menu-btn" id="openMenu" aria-label="Open menu">
+    <span></span>
+    <span></span>
+    <span></span>
+  </button>
+</header>
+
+<div class="overlay" id="overlay"></div>
+
+<aside class="side-menu" id="menu">
+  <div class="menu-head">
+    <span class="menu-head-brand">Matrix Audit</span>
+    <button class="close-btn" id="closeMenu">&times;</button>
+  </div>
+
+  <div class="menu-group" style="border-top:none;padding-top:0;margin-top:0;">
+    <div class="menu-label">Primary</div>
+    <a href="index.html"><span class="menu-divider-line"></span>Home</a>
+    <a href="dar.html"><span class="menu-divider-line"></span>DAR</a>
+    <a href="services.html"><span class="menu-divider-line"></span>Services</a>
+    <a href="about.html"><span class="menu-divider-line"></span>About</a>
+  </div>
+
+  <div class="menu-group">
+    <div class="menu-label">Research</div>
+    <a href="research.html"><span class="menu-divider-line"></span>Independent Research</a>
+  </div>
+
+  <div class="menu-group">
+    <div class="menu-label">Insights</div>
+    <a href="exposure.html"><span class="menu-divider-line"></span>When Failure Lands on One Name</a>
+    <a href="failure-points.html"><span class="menu-divider-line"></span>Where Accountability Breaks</a>
+    <a href="we.html"><span class="menu-divider-line"></span>The Death of We</a>
+    <a href="stop-authority.html"><span class="menu-divider-line"></span>Stop Authority</a>
+    <a href="ai-governance.html"><span class="menu-divider-line"></span>AI Governance</a>
+  </div>
+
+  <div class="menu-group">
+    <div class="menu-label">Knowledge</div>
+    <a href="definitions.html"><span class="menu-divider-line"></span>Definitions</a>
+    <a href="faq.html"><span class="menu-divider-line"></span>FAQ</a>
+    <a href="case-studies.html"><span class="menu-divider-line"></span>Case Studies</a>
+    <a href="goodfaith.html"><span class="menu-divider-line"></span>Good Faith Use</a>
+  </div>
+
+  <a href="contact.html" class="menu-cta">Private Intake</a>
+  <a href="mailto:Liran@liranbarshrim.com" class="menu-email">Liran@liranbarshrim.com</a>
+</aside>
+
+<main class="container">
+
+  <div class="paper-meta">White Paper &middot; Decision Authority Research &middot; 2026</div>
+  <h1 class="paper-title">Named Stop Authority<br>in High-Risk Decisions</h1>
+  <div class="paper-subtitle">A Practical Governance White Paper</div>
+
+  <div class="summary">
+    <div class="summary-label">Executive Summary</div>
+    <p>Modern organizations are increasingly optimized for speed. Automation accelerates execution, approval systems compress timelines, and operational pressure rewards motion.</p>
+    <p>Yet many organizations remain underprepared for one critical moment:</p>
+    <p><strong>When a high-risk decision must be stopped quickly, who has the clear authority to do so?</strong></p>
+    <p>This paper proposes a practical governance principle: for a narrow class of decisions involving meaningful uncertainty and serious downside, organizations should define Named Stop Authority in advance.</p>
+    <p>Named Stop Authority means one clearly identified person is empowered to pause, block, or escalate a critical decision before damage occurs.</p>
+    <p>This is not bureaucracy. It is structural clarity.</p>
+  </div>
+
+  <section class="section">
+    <div class="section-label">The Problem</div>
+    <h2>Most organizations define how decisions move forward. Few define how they are stopped.</h2>
+    <p>This gap becomes visible during:</p>
+    <div class="list">
+      <div class="list-item">Production incidents</div>
+      <div class="list-item">Cyber events</div>
+      <div class="list-item">Major financial transactions</div>
+      <div class="list-item">AI deployments</div>
+      <div class="list-item">Operational emergencies</div>
+      <div class="list-item">Executive crisis decisions</div>
+    </div>
+    <p>In these moments, multiple teams may be involved, yet no one may hold explicit stopping authority. As a result, momentum replaces judgment, escalation becomes slow, responsibility diffuses, and preventable damage expands.</p>
+  </section>
+
+  <section class="section">
+    <div class="section-label">Why Existing Governance Often Fails</div>
+    <h2>Traditional governance relies on hierarchy, committees, and approval chains.</h2>
+    <p>These tools are useful for routine operations. They are weaker under pressure.</p>
+    <p>In time-sensitive situations, shared responsibility often becomes unclear responsibility. Each function may own part of the process, while no one owns the stop decision.</p>
+  </section>
+
+  <section class="section">
+    <div class="section-label">The Proposed Principle</div>
+    <h2>Named Stop Authority</h2>
+    <p>For selected high-risk decisions, organizations should predefine five elements:</p>
+
+    <div class="principle">
+      <div class="principle-num">01</div>
+      <h3>The Trigger</h3>
+      <p>What condition creates stop-review authority?</p>
+      <p>Examples: abnormal error rate during rollout, unexplained financial anomaly, critical model behavior deviation, conflicting data in urgent operations.</p>
+    </div>
+
+    <div class="principle">
+      <div class="principle-num">02</div>
+      <h3>The Named Individual</h3>
+      <p>Who has authority to intervene immediately?</p>
+      <p>Not a department. Not a committee. <strong>A named person.</strong></p>
+    </div>
+
+    <div class="principle">
+      <div class="principle-num">03</div>
+      <h3>The Scope</h3>
+      <p>Can they pause, block, isolate, escalate, or require second review?</p>
+    </div>
+
+    <div class="principle">
+      <div class="principle-num">04</div>
+      <h3>The Backup</h3>
+      <p>Who acts if the primary authority is unavailable?</p>
+    </div>
+
+    <div class="principle">
+      <div class="principle-num">05</div>
+      <h3>The Documentation Path</h3>
+      <p>How is the intervention recorded?</p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="section-label">Illustrative Examples</div>
+    <h2>Three sectors. One pattern.</h2>
+
+    <div class="example">
+      <div class="example-label">Technology / SaaS</div>
+      <h4>A rollout begins causing cascading failures.</h4>
+      <p><strong>Without stop authority:</strong> teams debate ownership.</p>
+      <p><strong>With stop authority:</strong> the designated SRE pauses deployment immediately.</p>
+    </div>
+
+    <div class="example">
+      <div class="example-label">Cybersecurity</div>
+      <h4>A breach indicator appears across internal systems.</h4>
+      <p><strong>Without stop authority:</strong> escalation delays containment.</p>
+      <p><strong>With stop authority:</strong> network isolation begins at once.</p>
+    </div>
+
+    <div class="example">
+      <div class="example-label">AI Governance</div>
+      <h4>A model begins producing harmful outputs in production.</h4>
+      <p><strong>Without stop authority:</strong> teams argue over thresholds.</p>
+      <p><strong>With stop authority:</strong> the system is suspended pending review.</p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="section-label">Why This Matters Now</div>
+    <h2>Automation reduces the time between signal and consequence.</h2>
+    <p>As systems become faster, governance must become clearer.</p>
+    <p>The challenge is no longer only whether organizations can act quickly. It is whether they can interrupt quickly when needed.</p>
+  </section>
+
+  <section class="section">
+    <div class="section-label">Implementation Guidance</div>
+    <h2>Organizations do not need enterprise transformation.</h2>
+    <p>They can begin by identifying:</p>
+    <div class="list">
+      <div class="list-item">Three irreversible or high-impact decisions</div>
+      <div class="list-item">Current ambiguity around stopping authority</div>
+      <div class="list-item">A named owner for intervention</div>
+      <div class="list-item">Backup and escalation logic</div>
+    </div>
+    <p>Often, a one-page authority map is enough to reduce major confusion.</p>
+  </section>
+
+  <div class="closing">
+    <p>Strong organizations are not defined only by speed.<br><br>They are also defined by whether someone can legitimately and clearly say:<br><br><strong>Stop.</strong></p>
+  </div>
+
+  <div class="footer-banner">
+    <a href="dar.html" class="footer-link">
+      <div class="footer-link-left">
+        <span class="footer-link-label">Framework</span>
+        <span class="footer-link-title">Decision Authority Record</span>
+      </div>
+      <span class="footer-link-arrow">&rarr;</span>
+    </a>
+    <a href="research.html" class="footer-link">
+      <div class="footer-link-left">
+        <span class="footer-link-label">Research</span>
+        <span class="footer-link-title">Independent Research Archive</span>
+      </div>
+      <span class="footer-link-arrow">&rarr;</span>
+    </a>
+    <a href="contact.html" class="footer-link">
+      <div class="footer-link-left">
+        <span class="footer-link-label">Contact</span>
+        <span class="footer-link-title">Private Intake</span>
+      </div>
+      <span class="footer-link-arrow">&rarr;</span>
+    </a>
+  </div>
+
+  <div class="footer">
+    &copy; 2026 Liran Bar-Shrim. All rights reserved.
+  </div>
+
+</main>
+
+<script>
+const menu = document.getElementById('menu');
+const overlay = document.getElementById('overlay');
+
+document.getElementById('openMenu').onclick = function() {
+  menu.classList.add('active');
+  overlay.classList.add('active');
+};
+
+document.getElementById('closeMenu').onclick = closeMenu;
+overlay.onclick = closeMenu;
+
+function closeMenu() {
+  menu.classList.remove('active');
+  overlay.classList.remove('active');
+}
+</script>
+
+</body>
+</html>
