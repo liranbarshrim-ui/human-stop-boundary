@@ -378,10 +378,62 @@ background:var(--gold);
 color:#111;
 }
 
+/* ── footer banner ── */
+
+.footer-banner{
+margin-top:74px;
+border:1px solid var(--border2);
+background:#0d0d0d;
+}
+
+.footer-link{
+display:flex;
+justify-content:space-between;
+align-items:center;
+padding:20px 24px;
+text-decoration:none;
+color:var(--text);
+border-bottom:1px solid var(--border2);
+transition:.18s;
+}
+
+.footer-link:last-child{border-bottom:none;}
+
+.footer-link:hover{
+background:#151515;
+padding-left:28px;
+}
+
+.footer-link-left{
+display:flex;
+flex-direction:column;
+gap:4px;
+}
+
+.footer-link-label{
+font-family:'IBM Plex Mono',monospace;
+font-size:9px;
+letter-spacing:.22em;
+text-transform:uppercase;
+color:var(--gold);
+}
+
+.footer-link-title{
+font-family:'Playfair Display',serif;
+font-size:17px;
+line-height:1.2;
+}
+
+.footer-link-arrow{
+font-family:'IBM Plex Mono',monospace;
+font-size:14px;
+color:var(--muted);
+}
+
 /* ── footer ── */
 
 .footer{
-margin-top:74px;
+margin-top:28px;
 padding-top:28px;
 border-top:1px solid var(--border2);
 font-size:11px;
@@ -510,6 +562,38 @@ font-family:'IBM Plex Mono',monospace;
   </section>
 
   <a href="contact.html" class="btn">Private Inquiry</a>
+  <a href="mailto:Liran@liranbarshrim.com" class="btn" style="margin-top:12px;border-color:var(--border2);color:var(--muted);">Liran@liranbarshrim.com</a>
+
+  <div class="footer-banner">
+    <a href="dar.html" class="footer-link">
+      <div class="footer-link-left">
+        <span class="footer-link-label">Framework</span>
+        <span class="footer-link-title">Decision Authority Record</span>
+      </div>
+      <span class="footer-link-arrow">&rarr;</span>
+    </a>
+    <a href="services.html" class="footer-link">
+      <div class="footer-link-left">
+        <span class="footer-link-label">Services</span>
+        <span class="footer-link-title">Private Executive Engagements</span>
+      </div>
+      <span class="footer-link-arrow">&rarr;</span>
+    </a>
+    <a href="exposure.html" class="footer-link">
+      <div class="footer-link-left">
+        <span class="footer-link-label">Essay</span>
+        <span class="footer-link-title">When Failure Lands on One Name</span>
+      </div>
+      <span class="footer-link-arrow">&rarr;</span>
+    </a>
+    <a href="contact.html" class="footer-link">
+      <div class="footer-link-left">
+        <span class="footer-link-label">Contact</span>
+        <span class="footer-link-title">Private Intake</span>
+      </div>
+      <span class="footer-link-arrow">&rarr;</span>
+    </a>
+  </div>
 
   <div class="footer">
     &copy; 2026 Liran Bar Shrim. Independent work. All rights reserved.
@@ -537,4 +621,3 @@ function closeMenu() {
 
 </body>
 </html>
- 
