@@ -6,529 +6,691 @@
 
 <title>Decision Failures | Matrix Audit</title>
 <meta name="description" content="Real-world failures showing how unclear stop authority can become costly. Knight Capital, Boeing 737 MAX, CrowdStrike.">
-<meta name="theme-color" content="#05050a">
 <link rel="canonical" href="https://matrix-audit.com/case-studies.html">
 
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Cormorant+Garamond:wght@300;400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
 
 <style>
-*{margin:0;padding:0;box-sizing:border-box}
 
 :root{
---bg:#05050a;
---bg2:#0f0f16;
---card:#121219;
---line:rgba(255,255,255,.08);
---text:#d8d2ca;
---muted:#8e8880;
---gold:#b49a6a;
---white:#f3eee7;
---max:1120px;
+--bg:#090909;
+--surface:#111111;
+--gold:#c8a96e;
+--text:#e8e2d7;
+--muted:#a7a097;
+--soft:#8f8880;
+--border:#1d1d1d;
+--border2:#2a2a2a;
+--danger:#c0392b;
 }
+
+*{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
 
 body{
 background:var(--bg);
 color:var(--text);
-font-family:Inter,sans-serif;
-font-weight:300;
-line-height:1.72;
+font-family:Inter,system-ui,sans-serif;
 overflow-x:hidden;
+-webkit-font-smoothing:antialiased;
+text-rendering:optimizeLegibility;
+line-height:1.7;
 }
 
-a{text-decoration:none;color:inherit}
-
-.wrap{
-max-width:var(--max);
-margin:auto;
-padding:0 22px;
-}
-
-/* NAV */
-nav{
+body:before{
+content:'';
 position:fixed;
-top:0;left:0;right:0;
-height:72px;
-z-index:5000;
-background:rgba(5,5,10,.92);
-backdrop-filter:blur(14px);
-border-bottom:1px solid var(--line);
+inset:0;
+background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 240 240' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.025'/%3E%3C/svg%3E");
+opacity:.55;
+pointer-events:none;
+z-index:0;
 }
 
-.navin{
-height:100%;
+a{text-decoration:none;color:inherit;}
+
+/* ── topbar ── */
+
+.topbar{
+position:sticky;
+top:0;
+z-index:999;
 display:flex;
-align-items:center;
 justify-content:space-between;
+align-items:center;
+padding:18px 24px;
+background:rgba(9,9,9,.94);
+backdrop-filter:blur(10px);
+border-bottom:1px solid rgba(255,255,255,.04);
 }
 
 .brand{
 display:flex;
-flex-direction:column;
-}
-
-.brand b{
-font-size:12px;
-letter-spacing:.28em;
-font-weight:600;
-color:var(--white);
-}
-
-.brand span{
+align-items:center;
+gap:12px;
+text-decoration:none;
+color:var(--text);
+font-family:'IBM Plex Mono',monospace;
 font-size:10px;
-color:var(--muted);
-margin-top:3px;
+letter-spacing:.28em;
+text-transform:uppercase;
 }
 
-.burger{
-width:34px;
-height:26px;
+.brand-line{
+width:18px;
+height:1px;
+background:var(--gold);
+}
+
+.menu-btn{
+display:flex;
+flex-direction:column;
+justify-content:center;
+gap:5px;
 background:none;
 border:none;
-position:relative;
 cursor:pointer;
+padding:6px;
 }
 
-.burger span{
-position:absolute;
-left:0;right:0;
-height:2px;
-background:var(--white);
-transition:.25s;
+.menu-btn span{
+display:block;
+width:22px;
+height:1.5px;
+background:var(--text);
+transition:background .2s;
 }
 
-.burger span:nth-child(1){top:2px}
-.burger span:nth-child(2){top:11px}
-.burger span:nth-child(3){top:20px}
+.menu-btn:hover span{background:var(--gold);}
 
-body.menu .burger span:nth-child(1){top:11px;transform:rotate(45deg)}
-body.menu .burger span:nth-child(2){opacity:0}
-body.menu .burger span:nth-child(3){top:11px;transform:rotate(-45deg)}
+/* ── overlay ── */
 
 .overlay{
 position:fixed;
-inset:72px 0 0 0;
-background:rgba(0,0,0,.55);
+inset:0;
+background:rgba(0,0,0,.6);
 opacity:0;
-pointer-events:none;
+visibility:hidden;
 transition:.25s;
-z-index:3900;
+z-index:998;
 }
 
-.overlay.show{
-opacity:1;
-pointer-events:auto;
-}
+.overlay.active{opacity:1;visibility:visible;}
 
-.drawer{
+/* ── side menu ── */
+
+.side-menu{
 position:fixed;
-top:72px;
-right:0;
-width:88%;
-max-width:340px;
-height:calc(100dvh - 72px);
-background:#090910;
-border-left:1px solid var(--line);
-transform:translateX(100%);
-transition:.28s;
-z-index:4000;
+top:0;
+right:-340px;
+width:300px;
+max-width:90%;
+height:100vh;
 overflow-y:auto;
-padding:22px;
+background:#0d0d0d;
+border-left:1px solid var(--border);
+padding:28px 24px 48px;
+transition:.28s cubic-bezier(.4,0,.2,1);
+z-index:999;
 }
 
-.drawer.open{transform:translateX(0)}
+.side-menu.active{right:0;}
 
-.drawer h4{
-font-size:11px;
+.menu-head{
+display:flex;
+justify-content:space-between;
+align-items:center;
+margin-bottom:28px;
+}
+
+.menu-head-brand{
+font-family:'IBM Plex Mono',monospace;
+font-size:9px;
 letter-spacing:.24em;
 text-transform:uppercase;
 color:var(--gold);
-margin:18px 0 10px;
 }
 
-.drawer a{
-display:block;
-padding:14px 0;
-border-bottom:1px solid rgba(255,255,255,.05);
-font-size:16px;
+.close-btn{
+background:none;
+border:none;
+font-size:26px;
+line-height:1;
+color:var(--muted);
+cursor:pointer;
+transition:.2s;
 }
 
-body.menu{overflow:hidden}
+.close-btn:hover{color:var(--text);}
 
-/* CONTENT */
-main{
-padding-top:72px;
+.menu-group{
+border-top:1px solid var(--border);
+padding-top:20px;
+margin-top:20px;
 }
 
-section{
-padding:58px 0;
-border-top:1px solid var(--line);
-}
-
-.hero{
-padding:64px 0 42px;
-border-top:none;
-}
-
-.label{
-font-size:11px;
-letter-spacing:.28em;
+.menu-label{
+font-family:'IBM Plex Mono',monospace;
+font-size:9px;
+letter-spacing:.22em;
 text-transform:uppercase;
 color:var(--gold);
+margin-bottom:12px;
+}
+
+.menu-group a{
+display:flex;
+align-items:center;
+gap:10px;
+padding:9px 0;
+text-decoration:none;
+color:var(--muted);
+font-size:14px;
+border-bottom:1px solid rgba(255,255,255,.03);
+transition:.18s;
+}
+
+.menu-group a:last-child{border-bottom:none;}
+.menu-group a:hover{color:var(--text);padding-left:4px;}
+.menu-group a.active{color:var(--gold);}
+
+.menu-divider-line{
+display:inline-block;
+width:12px;
+height:1px;
+background:var(--border2);
+flex-shrink:0;
+}
+
+.menu-cta{
+display:block;
+margin-top:28px;
+padding:14px 20px;
+border:1px solid var(--gold);
+color:var(--gold)!important;
+font-family:'IBM Plex Mono',monospace;
+font-size:10px;
+letter-spacing:.2em;
+text-transform:uppercase;
+text-align:center;
+text-decoration:none;
+transition:.2s;
+}
+
+.menu-cta:hover{background:var(--gold);color:#111!important;}
+
+/* ── layout ── */
+
+.container{
+position:relative;
+z-index:1;
+max-width:980px;
+margin:0 auto;
+padding:70px 28px 110px;
+}
+
+/* ── hero ── */
+
+.hero{
+border-left:3px solid var(--gold);
+padding-left:24px;
+margin-bottom:58px;
+}
+
+.hero-label{
+font-family:'IBM Plex Mono',monospace;
+font-size:10px;
+letter-spacing:.24em;
+text-transform:uppercase;
+color:#b8aa8a;
 margin-bottom:18px;
 }
 
-h1,h2,h3{
-font-family:"Cormorant Garamond",serif;
-font-weight:400;
-color:var(--white);
-}
-
-h1{
-font-size:clamp(44px,8vw,82px);
+.hero h1{
+font-family:'Playfair Display',serif;
+font-size:clamp(44px,7vw,74px);
 line-height:1.02;
-margin-bottom:18px;
+letter-spacing:-.02em;
+margin-bottom:24px;
 }
 
 .hero p{
 font-size:18px;
-max-width:720px;
+line-height:1.9;
 color:var(--muted);
+max-width:760px;
 margin-bottom:28px;
 }
 
-.btns{
+.actions{
 display:flex;
-gap:12px;
+gap:14px;
 flex-wrap:wrap;
 }
 
 .btn{
 display:inline-block;
-padding:14px 22px;
-font-size:12px;
-letter-spacing:.15em;
+padding:16px 24px;
+font-family:'IBM Plex Mono',monospace;
+font-size:11px;
+letter-spacing:.18em;
 text-transform:uppercase;
-border:1px solid var(--gold);
+font-weight:500;
+transition:.2s;
+border:1px solid var(--border2);
+color:var(--text);
 }
 
-.primary{
+.btn-primary{
 background:var(--gold);
 color:#111;
+border-color:var(--gold);
 }
 
-.intro{
-font-size:16px;
-max-width:860px;
-color:var(--muted);
+.btn:hover,.btn-primary:hover{transform:translateY(-2px);}
+
+/* ── sections ── */
+
+.section{
+padding:54px 0;
+border-top:1px solid rgba(255,255,255,.05);
 }
+
+.section-label{
+font-family:'IBM Plex Mono',monospace;
+font-size:10px;
+letter-spacing:.22em;
+text-transform:uppercase;
+color:var(--gold);
+margin-bottom:14px;
+}
+
+.section h2{
+font-family:'Playfair Display',serif;
+font-size:clamp(32px,5vw,48px);
+line-height:1.08;
+margin-bottom:20px;
+}
+
+.section p{
+font-size:17px;
+color:var(--muted);
+max-width:760px;
+margin-bottom:14px;
+}
+
+/* ── case cards ── */
 
 .grid{
 display:grid;
 grid-template-columns:repeat(3,1fr);
 gap:18px;
-margin-top:28px;
+margin-top:32px;
 }
 
 .card{
-background:var(--card);
-border:1px solid var(--line);
-padding:24px;
+background:linear-gradient(180deg,#121212,#0d0d0d);
+border:1px solid #262626;
+border-left:3px solid var(--border2);
+padding:28px 24px;
 }
 
-.kicker{
-font-size:11px;
-letter-spacing:.18em;
+.card-year{
+font-family:'IBM Plex Mono',monospace;
+font-size:10px;
+letter-spacing:.22em;
 text-transform:uppercase;
 color:var(--gold);
-margin-bottom:10px;
+margin-bottom:12px;
 }
 
 .card h3{
-font-size:34px;
-line-height:1.05;
-margin-bottom:14px;
+font-family:'Playfair Display',serif;
+font-size:28px;
+line-height:1.1;
+margin-bottom:18px;
 }
 
-.small{
-font-size:12px;
-letter-spacing:.14em;
+.card-row-label{
+font-family:'IBM Plex Mono',monospace;
+font-size:9px;
+letter-spacing:.18em;
 text-transform:uppercase;
-color:var(--text);
-margin:14px 0 6px;
+color:var(--muted);
+margin-bottom:6px;
+margin-top:16px;
 }
 
 .card p{
-font-size:15px;
+font-size:14px;
 color:var(--muted);
+line-height:1.8;
 }
+
+/* ── two col ── */
 
 .two{
 display:grid;
 grid-template-columns:1fr 1fr;
-gap:42px;
+gap:48px;
 align-items:start;
 }
 
-h2{
-font-size:54px;
-line-height:1.03;
-margin-bottom:16px;
-}
+/* ── pattern list ── */
 
-.list{
+.pattern-list{
 display:grid;
-gap:12px;
+gap:0;
 }
 
-.item{
-padding:16px;
-background:var(--card);
-border:1px solid var(--line);
+.pattern-item{
+padding:16px 20px;
+background:linear-gradient(180deg,#121212,#0d0d0d);
+border:1px solid var(--border2);
+border-top:none;
+font-size:15px;
 color:var(--text);
 }
 
-.statement p{
+.pattern-item:first-child{
+border-top:1px solid var(--border2);
+}
+
+/* ── statement block ── */
+
+.statement{
+background:linear-gradient(180deg,#111,#0d0d0d);
+border:1px solid var(--border2);
+border-left:3px solid var(--danger);
+padding:34px;
+margin-top:32px;
+font-family:'Playfair Display',serif;
+font-size:clamp(22px,3vw,30px);
+line-height:1.3;
+}
+
+/* ── center ── */
+
+.center{text-align:center;}
+.center .section-label{display:inline-block;}
+.center h2{margin-left:auto;margin-right:auto;}
+.center p{margin-left:auto;margin-right:auto;}
+.center .actions{justify-content:center;}
+
+/* ── footer banner ── */
+
+.footer-banner{
+margin-top:74px;
+border:1px solid var(--border2);
+background:#0d0d0d;
+}
+
+.footer-link{
+display:flex;
+justify-content:space-between;
+align-items:center;
+padding:20px 24px;
+text-decoration:none;
+color:var(--text);
+border-bottom:1px solid var(--border2);
+transition:.18s;
+}
+
+.footer-link:last-child{border-bottom:none;}
+.footer-link:hover{background:#151515;padding-left:28px;}
+
+.footer-link-left{
+display:flex;
+flex-direction:column;
+gap:4px;
+}
+
+.footer-link-label{
+font-family:'IBM Plex Mono',monospace;
+font-size:9px;
+letter-spacing:.22em;
+text-transform:uppercase;
+color:var(--gold);
+}
+
+.footer-link-title{
+font-family:'Playfair Display',serif;
 font-size:17px;
-max-width:760px;
+line-height:1.2;
+}
+
+.footer-link-arrow{
+font-family:'IBM Plex Mono',monospace;
+font-size:14px;
 color:var(--muted);
 }
 
-.center{
-text-align:center;
+.footer{
+margin-top:28px;
+padding-top:28px;
+border-top:1px solid var(--border2);
+font-size:11px;
+letter-spacing:.08em;
+color:#6e6964;
+font-family:'IBM Plex Mono',monospace;
 }
 
-footer{
-padding:34px 0 60px;
-font-size:13px;
-color:#6f685f;
+/* ── mobile ── */
+
+@media(max-width:860px){
+.container{padding:56px 18px 90px;}
+.hero h1{font-size:clamp(38px,12vw,58px);}
+.hero p,.section p{font-size:16px;}
+.grid{grid-template-columns:1fr;}
+.two{grid-template-columns:1fr;gap:28px;}
+.btn{width:100%;text-align:center;}
 }
 
-/* MOBILE */
-@media(max-width:980px){
-.grid{grid-template-columns:1fr}
-.two{grid-template-columns:1fr}
-}
-
-@media(max-width:680px){
-
-.hero p,
-.statement p,
-.intro{
-font-size:15px;
-}
-
-h2{
-font-size:40px;
-}
-
-.btns{
-flex-direction:column;
-}
-
-.btn{
-width:100%;
-text-align:center;
-}
-
-}
 </style>
 </head>
 
 <body>
 
-<nav>
-<div class="wrap navin">
+<header class="topbar">
+  <a href="index.html" class="brand">
+    <span class="brand-line"></span>
+    <span>Decision Authority Research</span>
+  </a>
+  <button class="menu-btn" id="openMenu" aria-label="Open menu">
+    <span></span>
+    <span></span>
+    <span></span>
+  </button>
+</header>
 
-<a href="index.html" class="brand">
-<b>MATRIX AUDIT</b>
-<span>Liran Bar-Shrim · Decision Authority</span>
-</a>
+<div class="overlay" id="overlay"></div>
 
-<button class="burger" onclick="toggleMenu()" aria-label="Menu">
-<span></span>
-<span></span>
-<span></span>
-</button>
+<aside class="side-menu" id="menu">
+  <div class="menu-head">
+    <span class="menu-head-brand">Matrix Audit</span>
+    <button class="close-btn" id="closeMenu">&times;</button>
+  </div>
 
-</div>
-</nav>
+  <div class="menu-group" style="border-top:none;padding-top:0;margin-top:0;">
+    <div class="menu-label">Primary</div>
+    <a href="index.html"><span class="menu-divider-line"></span>Home</a>
+    <a href="dar.html"><span class="menu-divider-line"></span>DAR</a>
+    <a href="services.html"><span class="menu-divider-line"></span>Services</a>
+    <a href="about.html"><span class="menu-divider-line"></span>About</a>
+  </div>
 
-<div class="overlay" id="overlay" onclick="closeMenu()"></div>
+  <div class="menu-group">
+    <div class="menu-label">Insights</div>
+    <a href="exposure.html"><span class="menu-divider-line"></span>When Failure Lands on One Name</a>
+    <a href="failure-points.html"><span class="menu-divider-line"></span>Where Accountability Breaks</a>
+    <a href="we.html"><span class="menu-divider-line"></span>The Death of We</a>
+    <a href="stop-authority.html"><span class="menu-divider-line"></span>Stop Authority</a>
+    <a href="ai-governance.html"><span class="menu-divider-line"></span>AI Governance</a>
+  </div>
 
-<div class="drawer" id="drawer">
+  <div class="menu-group">
+    <div class="menu-label">Knowledge</div>
+    <a href="definitions.html"><span class="menu-divider-line"></span>Definitions</a>
+    <a href="faq.html"><span class="menu-divider-line"></span>FAQ</a>
+    <a href="case-studies.html" class="active"><span class="menu-divider-line"></span>Case Studies</a>
+    <a href="goodfaith.html"><span class="menu-divider-line"></span>Good Faith Use</a>
+  </div>
 
-<h4>Main</h4>
-<a href="index.html">Home</a>
-<a href="about.html">About</a>
-<a href="review.html">Executive Review</a>
-<a href="case-studies.html">Case Studies</a>
-<a href="ai-governance.html">AI Governance</a>
-<a href="contact.html">Contact</a>
+  <a href="contact.html" class="menu-cta">Private Intake</a>
+</aside>
 
-<h4>More</h4>
-<a href="services.html">Services</a>
-<a href="stop-authority.html">Stop Authority</a>
-<a href="faq.html">FAQ</a>
-<a href="goodfaith.html">Good Faith Use</a>
-<a href="scenarios.html">Scenarios</a>
+<main class="container">
 
-</div>
+  <section class="hero">
+    <div class="hero-label">Real Failures</div>
+    <h1>Different industries.<br>Same pattern.</h1>
+    <p>
+      When authority to stop is unclear, delayed, or unusable, consequences often become public.
+    </p>
+    <div class="actions">
+      <a href="contact.html" class="btn btn-primary">Request Private Review</a>
+      <a href="services.html" class="btn">View Services</a>
+    </div>
+  </section>
 
-<main class="wrap">
+  <section class="section">
+    <div class="section-label">Introduction</div>
+    <p>
+      Many failures are later described as technical breakdowns, operational mistakes, legal exposure, or market accidents. Often an earlier question receives less attention: who had real authority to pause, override, or stop the decision while there was still time?
+    </p>
+  </section>
 
-<section class="hero">
+  <section class="section">
+    <div class="section-label">Case Studies</div>
 
-<div class="label">Real Failures</div>
+    <div class="grid">
 
-<h1>Different industries.<br>Same pattern.</h1>
+      <div class="card">
+        <div class="card-year">2012</div>
+        <h3>Knight Capital</h3>
+        <div class="card-row-label">What happened</div>
+        <p>$440 million lost in roughly 45 minutes after a flawed deployment entered live markets.</p>
+        <div class="card-row-label">Where authority mattered</div>
+        <p>Whether someone could immediately halt execution paths before losses accelerated.</p>
+        <div class="card-row-label">Why leaders care</div>
+        <p>Fast systems compress the window for human judgment.</p>
+      </div>
 
-<p>
-When authority to stop is unclear, delayed, or unusable, consequences often become public.
-</p>
+      <div class="card">
+        <div class="card-year">2018&ndash;2019</div>
+        <h3>Boeing 737 MAX</h3>
+        <div class="card-row-label">What happened</div>
+        <p>Two crashes, global grounding, scrutiny, severe reputational damage.</p>
+        <div class="card-row-label">Where authority mattered</div>
+        <p>Whether concerns could decisively interrupt momentum across functions.</p>
+        <div class="card-row-label">Why leaders care</div>
+        <p>Complex organizations can diffuse responsibility until crisis concentrates it.</p>
+      </div>
 
-<div class="btns">
-<a href="contact.html" class="btn primary">Request Private Review</a>
-<a href="review.html" class="btn">View Executive Review</a>
-</div>
+      <div class="card">
+        <div class="card-year">2024</div>
+        <h3>CrowdStrike</h3>
+        <div class="card-row-label">What happened</div>
+        <p>A faulty update disrupted systems globally across critical operations.</p>
+        <div class="card-row-label">Where authority mattered</div>
+        <p>Who could contain rollout, pause spread, or reverse quickly enough.</p>
+        <div class="card-row-label">Why leaders care</div>
+        <p>Scale turns small decisions into systemic events.</p>
+      </div>
 
-</section>
+    </div>
+  </section>
 
-<section>
+  <section class="section">
+    <div class="two">
+      <div>
+        <div class="section-label">Structural Pattern</div>
+        <h2>Different headlines.<br>Same question.</h2>
+      </div>
+      <div class="pattern-list">
+        <div class="pattern-item">Who could pause the decision?</div>
+        <div class="pattern-item">Who could override momentum?</div>
+        <div class="pattern-item">Who owned final accountability?</div>
+        <div class="pattern-item">Was authority usable in time?</div>
+      </div>
+    </div>
+  </section>
 
-<div class="label">Introduction</div>
+  <section class="section">
+    <div class="section-label">Why It Matters</div>
+    <h2>If failure occurs,<br>accountability becomes personal.</h2>
+    <p>
+      During success, responsibility may appear distributed. During failure, names become specific. Clarity before the event is stronger than explanation after it.
+    </p>
+    <div class="statement">
+      Approval is common.<br>
+      Stop authority is rare.
+    </div>
+  </section>
 
-<p class="intro">
-Many failures are later described as technical breakdowns, operational mistakes, legal exposure, or market accidents. Often an earlier question receives less attention: who had real authority to pause, override, or stop the decision while there was still time?
-</p>
+  <section class="section center">
+    <div class="section-label">Next Decision</div>
+    <h2>Before the next decision<br>moves further.</h2>
+    <p>Private advisory for leaders facing consequential decisions already in motion.</p>
+    <div class="actions" style="margin-top:24px;">
+      <a href="contact.html" class="btn btn-primary">Request Private Review</a>
+      <a href="dar.html" class="btn">Explore DAR</a>
+    </div>
+  </section>
 
-</section>
+  <div class="footer-banner">
+    <a href="dar.html" class="footer-link">
+      <div class="footer-link-left">
+        <span class="footer-link-label">Framework</span>
+        <span class="footer-link-title">Decision Authority Record</span>
+      </div>
+      <span class="footer-link-arrow">&rarr;</span>
+    </a>
+    <a href="exposure.html" class="footer-link">
+      <div class="footer-link-left">
+        <span class="footer-link-label">Essay</span>
+        <span class="footer-link-title">When Failure Lands on One Name</span>
+      </div>
+      <span class="footer-link-arrow">&rarr;</span>
+    </a>
+    <a href="failure-points.html" class="footer-link">
+      <div class="footer-link-left">
+        <span class="footer-link-label">Cases</span>
+        <span class="footer-link-title">Where Accountability Breaks</span>
+      </div>
+      <span class="footer-link-arrow">&rarr;</span>
+    </a>
+    <a href="contact.html" class="footer-link">
+      <div class="footer-link-left">
+        <span class="footer-link-label">Contact</span>
+        <span class="footer-link-title">Private Intake</span>
+      </div>
+      <span class="footer-link-arrow">&rarr;</span>
+    </a>
+  </div>
 
-<section>
-
-<div class="label">Case Studies</div>
-
-<div class="grid">
-
-<div class="card">
-<div class="kicker">2012</div>
-<h3>Knight Capital</h3>
-
-<div class="small">What happened</div>
-<p>$440 million lost in roughly 45 minutes after a flawed deployment entered live markets.</p>
-
-<div class="small">Where authority mattered</div>
-<p>Whether someone could immediately halt execution paths before losses accelerated.</p>
-
-<div class="small">Why leaders care</div>
-<p>Fast systems compress the window for human judgment.</p>
-</div>
-
-<div class="card">
-<div class="kicker">2018–2019</div>
-<h3>Boeing 737 MAX</h3>
-
-<div class="small">What happened</div>
-<p>Two crashes, global grounding, scrutiny, severe reputational damage.</p>
-
-<div class="small">Where authority mattered</div>
-<p>Whether concerns could decisively interrupt momentum across functions.</p>
-
-<div class="small">Why leaders care</div>
-<p>Complex organizations can diffuse responsibility until crisis concentrates it.</p>
-</div>
-
-<div class="card">
-<div class="kicker">2024</div>
-<h3>CrowdStrike</h3>
-
-<div class="small">What happened</div>
-<p>A faulty update disrupted systems globally across critical operations.</p>
-
-<div class="small">Where authority mattered</div>
-<p>Who could contain rollout, pause spread, or reverse quickly enough.</p>
-
-<div class="small">Why leaders care</div>
-<p>Scale turns small decisions into systemic events.</p>
-</div>
-
-</div>
-
-</section>
-
-<section>
-
-<div class="two">
-
-<div>
-<div class="label">Structural Pattern</div>
-<h2>Different headlines.<br>Same question.</h2>
-</div>
-
-<div class="list">
-<div class="item">Who could pause the decision?</div>
-<div class="item">Who could override momentum?</div>
-<div class="item">Who owned final accountability?</div>
-<div class="item">Was authority usable in time?</div>
-</div>
-
-</div>
-
-</section>
-
-<section class="statement">
-
-<div class="label">Why It Matters</div>
-
-<h2>If failure occurs,<br>accountability becomes personal.</h2>
-
-<p>
-During success, responsibility may appear distributed. During failure, names become specific. Clarity before the event is stronger than explanation after it.
-</p>
-
-</section>
-
-<section class="center">
-
-<div class="label">Next Decision</div>
-
-<h2>Before the next decision<br>moves further.</h2>
-
-<p class="intro">
-Private advisory for leaders facing consequential decisions already in motion.
-</p>
-
-<div class="btns" style="justify-content:center;margin-top:20px">
-<a href="contact.html" class="btn primary">Request Private Review</a>
-<a href="mailto:contact@matrix-audit.com" class="btn">Email Directly</a>
-</div>
-
-</section>
-
-<footer>
-© 2026 Matrix Audit · Decision Authority Advisory
-</footer>
+  <div class="footer">
+    &copy; 2026 Liran Bar-Shrim. All rights reserved.
+  </div>
 
 </main>
 
 <script>
-function toggleMenu(){
-document.body.classList.toggle("menu");
-document.getElementById("drawer").classList.toggle("open");
-document.getElementById("overlay").classList.toggle("show");
-}
+const menu = document.getElementById('menu');
+const overlay = document.getElementById('overlay');
 
-function closeMenu(){
-document.body.classList.remove("menu");
-document.getElementById("drawer").classList.remove("open");
-document.getElementById("overlay").classList.remove("show");
-}
+document.getElementById('openMenu').onclick = function() {
+  menu.classList.add('active');
+  overlay.classList.add('active');
+};
 
-window.addEventListener("resize",function(){
-if(window.innerWidth>900){closeMenu();}
-});
+document.getElementById('closeMenu').onclick = closeMenu;
+overlay.onclick = closeMenu;
+
+function closeMenu() {
+  menu.classList.remove('active');
+  overlay.classList.remove('active');
+}
 </script>
 
 </body>
