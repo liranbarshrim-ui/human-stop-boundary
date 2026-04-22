@@ -1,277 +1,406 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>FAQ — Decision Authority Research</title>
-  <meta name="description" content="Frequently asked questions about Decision Authority Record (DAR), named stop authority, AI governance, and irreversible decision accountability.">
-  <meta name="keywords" content="DAR FAQ, decision authority record, named stop authority, AI governance questions, irreversible decisions, who stops AI, executive accountability">
-  <link rel="canonical" href="https://matrix-audit.com/faq.html" />
-  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Playfair+Display:ital,wght@0,700;1,400&display=swap" rel="stylesheet">
-  <script type="application/ld+json">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+
+<title>FAQ | Matrix Audit</title>
+<meta name="description" content="Frequently asked questions about Decision Authority Record (DAR), named stop authority, AI governance, executive accountability, and irreversible decisions.">
+<meta name="robots" content="index,follow">
+<link rel="canonical" href="https://matrix-audit.com/faq.html">
+
+<meta property="og:title" content="FAQ | Matrix Audit">
+<meta property="og:description" content="Answers on stop authority, DAR, AI governance, and irreversible decisions.">
+<meta property="og:type" content="website">
+
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Cormorant+Garamond:wght@400;500&display=swap" rel="stylesheet">
+
+<script type="application/ld+json">
+{
+ "@context":"https://schema.org",
+ "@type":"FAQPage",
+ "mainEntity":[
   {
-    "@context": "https://schema.org",
-    "@type": "FAQPage",
-    "mainEntity": [
-      {
-        "@type": "Question",
-        "name": "What is DAR — Decision Authority Record?",
-        "acceptedAnswer": {
-          "@type": "Answer",
-          "text": "DAR is a written record that names one individual with explicit authority to stop a specific irreversible decision before it executes. It is not a policy, framework, or software tool. It is a pre-commitment: one person, one decision pathway, defined in advance."
-        }
-      },
-      {
-        "@type": "Question",
-        "name": "Who needs a Decision Authority Record?",
-        "acceptedAnswer": {
-          "@type": "Answer",
-          "text": "Any organization where irreversible decisions can be made without a single named person having authority to stop them. This includes boards, CROs, General Counsel, AI governance teams, regulated financial operators, and executives carrying personal liability for high-stakes decisions."
-        }
-      },
-      {
-        "@type": "Question",
-        "name": "Does DAR apply to AI systems?",
-        "acceptedAnswer": {
-          "@type": "Answer",
-          "text": "Yes. Agentic AI systems can act, plan, and execute at machine speed. If no named individual has real-time authority to halt a model before its actions become irreversible, no stop authority exists. DAR maps who holds that authority before deployment, not after harm."
-        }
-      },
-      {
-        "@type": "Question",
-        "name": "What counts as an irreversible decision?",
-        "acceptedAnswer": {
-          "@type": "Answer",
-          "text": "A decision is irreversible when its consequences cannot be undone within a timeframe that prevents harm. Examples include: an AI model deployed to production at scale, a trading position that exceeds threshold, a clinical protocol that goes live before adverse events are detected, a regulatory filing once submitted."
-        }
-      },
-      {
-        "@type": "Question",
-        "name": "Is this legal advice?",
-        "acceptedAnswer": {
-          "@type": "Answer",
-          "text": "No. Decision Authority Research is an independent advisory engagement. It does not constitute legal advice and does not create a legal relationship. Clients requiring legal counsel should engage qualified legal professionals."
-        }
-      },
-      {
-        "@type": "Question",
-        "name": "Why can't organizations define stop authority internally?",
-        "acceptedAnswer": {
-          "@type": "Answer",
-          "text": "Most organizations can explain their decision process. They fail when asked to name one person who can stop a critical decision in real time. Naming one person creates visible personal exposure — and most internal governance structures are designed, intentionally or not, to avoid that clarity."
-        }
-      },
-      {
-        "@type": "Question",
-        "name": "What is the difference between approval authority and stop authority?",
-        "acceptedAnswer": {
-          "@type": "Answer",
-          "text": "Approval authority allows a decision to proceed. Stop authority makes continuation impossible without explicit release. Most organizations have approval structures. Very few define who can make continuation impossible. If continuation is available without a named release, no stop exists."
-        }
-      },
-      {
-        "@type": "Question",
-        "name": "How is DAR different from standard governance or risk committees?",
-        "acceptedAnswer": {
-          "@type": "Answer",
-          "text": "Committees approve. DAR names one person who can stop. A committee can review, recommend, and document. It cannot make continuation impossible. DAR answers the question governance structures consistently leave open: who, by name, stops this before it becomes irreversible?"
-        }
-      },
-      {
-        "@type": "Question",
-        "name": "Who should have authority to stop an AI system?",
-        "acceptedAnswer": {
-          "@type": "Answer",
-          "text": "One named individual with the technical ability, organizational authority, and pre-committed obligation to halt the system before its actions become irreversible. Not a team. Not an escalation path. A person defined before deployment, not identified after harm."
-        }
-      },
-      {
-        "@type": "Question",
-        "name": "How long does an engagement take?",
-        "acceptedAnswer": {
-          "@type": "Answer",
-          "text": "A Decision Boundary Review (single pathway) is delivered in 5 to 7 business days. A Decision Accountability Review (multiple pathways) is delivered in 10 to 14 business days. Board Exposure Reviews are scoped individually."
-        }
-      }
-    ]
+   "@type":"Question",
+   "name":"What is DAR — Decision Authority Record?",
+   "acceptedAnswer":{
+    "@type":"Answer",
+    "text":"DAR is a written record naming one individual with explicit authority to stop a specific irreversible decision before execution."
+   }
+  },
+  {
+   "@type":"Question",
+   "name":"Does DAR apply to AI systems?",
+   "acceptedAnswer":{
+    "@type":"Answer",
+    "text":"Yes. If no named person can halt a model before actions become irreversible, no real stop authority exists."
+   }
+  },
+  {
+   "@type":"Question",
+   "name":"What is the difference between approval authority and stop authority?",
+   "acceptedAnswer":{
+    "@type":"Answer",
+    "text":"Approval authority allows continuation. Stop authority makes continuation impossible until explicit release."
+   }
   }
-  </script>
-  <style>
-    :root {
-      --bg:#090909; --surface:#111111; --gold:#c8a96e;
-      --danger:#c0392b; --text:#e6e0d4; --muted:#b8b2ac;
-      --dim:#7a7570; --faint:#52504c; --border:#1e1e1e; --border2:#2a2a2a;
-    }
-    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
-    body{background:var(--bg);color:var(--text);font-family:'IBM Plex Mono',monospace;min-height:100vh;overflow-x:hidden;}
-    body::before{content:'';position:fixed;inset:0;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");pointer-events:none;z-index:0;opacity:0.6;}
-    .container{position:relative;z-index:1;max-width:760px;margin:0 auto;padding:60px 24px 80px;animation:fadeIn 0.8s ease both;}
-    @keyframes fadeIn{from{opacity:0;transform:translateY(12px);}to{opacity:1;transform:translateY(0);}}
+ ]
+}
+</script>
 
-    .tag{font-size:10px;letter-spacing:0.15em;text-transform:uppercase;color:var(--dim);margin-bottom:44px;display:flex;align-items:center;gap:12px;}
-    .tag::before{content:'';display:inline-block;width:20px;height:1px;background:var(--gold);}
+<style>
+:root{
+--bg:#070707;
+--bg2:#111111;
+--card:#151515;
+--line:#252525;
+--gold:#b89a63;
+--text:#f3eee7;
+--muted:#a69e93;
+--soft:#6d665c;
+--max:1120px;
+}
 
-    h1{font-family:'Playfair Display',serif;font-size:clamp(24px,5vw,38px);font-weight:700;line-height:1.2;color:var(--text);border-left:3px solid var(--gold);padding-left:20px;margin-bottom:12px;}
-    .header-sub{font-size:13px;color:var(--dim);padding-left:23px;margin-bottom:48px;font-style:italic;font-family:'Playfair Display',serif;}
+*{margin:0;padding:0;box-sizing:border-box;}
 
-    .faq-list{display:flex;flex-direction:column;gap:2px;margin-bottom:56px;}
+body{
+background:var(--bg);
+color:var(--text);
+font-family:Inter,sans-serif;
+line-height:1.72;
+-webkit-font-smoothing:antialiased;
+}
 
-    .faq-item{background:var(--surface);border:1px solid var(--border2);position:relative;overflow:hidden;}
-    .faq-item::before{content:'';position:absolute;top:0;left:0;width:3px;height:100%;background:var(--border2);}
-    .faq-item:hover::before{background:var(--gold);}
-    .faq-item{transition:border-color 0.2s;}
-    .faq-item:hover{border-color:rgba(200,169,110,0.25);}
+a{text-decoration:none;color:inherit;}
 
-    .faq-inner{padding:22px 22px 22px 30px;}
+.wrap{
+max-width:var(--max);
+margin:auto;
+padding:0 24px;
+}
 
-    .faq-q{font-family:'Playfair Display',serif;font-size:16px;color:var(--text);font-weight:700;line-height:1.35;margin-bottom:12px;}
-    .faq-a{font-size:13px;color:var(--muted);line-height:1.75;}
+/* HEADER */
+header{
+position:sticky;
+top:0;
+z-index:999;
+background:rgba(7,7,7,.92);
+backdrop-filter:blur(12px);
+border-bottom:1px solid var(--line);
+}
 
-    .faq-index{font-size:9px;letter-spacing:0.18em;text-transform:uppercase;color:var(--faint);margin-bottom:8px;}
+.nav{
+height:72px;
+display:flex;
+align-items:center;
+justify-content:space-between;
+gap:20px;
+}
 
-    .footer{border-top:1px solid var(--border2);padding-top:36px;display:flex;flex-direction:column;gap:14px;}
-    .footer a{display:flex;align-items:center;justify-content:space-between;padding:18px 22px;text-decoration:none;border:1px solid var(--border2);background:var(--surface);transition:border-color 0.2s,background 0.2s;gap:16px;}
-    .footer a:hover{border-color:var(--gold);background:#161410;}
-    .footer a:hover .banner-arrow{color:var(--gold);}
-    .footer a.cta{border-color:var(--gold);background:#13110d;}
-    .footer a.cta .banner-title{color:var(--gold);}
-    .banner-left{display:flex;flex-direction:column;gap:4px;}
-    .banner-label{font-size:10px;letter-spacing:0.15em;text-transform:uppercase;color:var(--gold);}
-    .banner-title{font-size:14px;color:var(--text);font-family:'Playfair Display',serif;}
-    .banner-arrow{font-size:20px;color:var(--muted);flex-shrink:0;transition:color 0.2s;}
-    .copyright{margin-top:28px;font-size:11px;color:var(--dim);letter-spacing:0.05em;}
-  </style>
+.brand{
+font-size:12px;
+letter-spacing:.24em;
+text-transform:uppercase;
+font-weight:600;
+}
+
+.links{
+display:flex;
+gap:22px;
+flex-wrap:wrap;
+}
+
+.links a{
+font-size:13px;
+color:var(--muted);
+}
+
+.links a:hover{
+color:var(--text);
+}
+
+.topbtn{
+padding:10px 14px;
+border:1px solid var(--gold);
+font-size:11px;
+letter-spacing:.16em;
+text-transform:uppercase;
+}
+
+/* HERO */
+.hero{
+padding:92px 0 58px;
+border-bottom:1px solid var(--line);
+}
+
+.tag{
+font-size:11px;
+letter-spacing:.24em;
+text-transform:uppercase;
+color:var(--gold);
+margin-bottom:18px;
+}
+
+h1,h2,h3{
+font-family:"Cormorant Garamond",serif;
+font-weight:500;
+line-height:1.04;
+}
+
+h1{
+font-size:clamp(44px,8vw,78px);
+margin-bottom:18px;
+}
+
+.lead{
+font-size:19px;
+color:var(--muted);
+max-width:760px;
+}
+
+.signal{
+margin-top:28px;
+background:#101010;
+border-left:3px solid var(--gold);
+padding:24px;
+font-family:"Cormorant Garamond",serif;
+font-size:32px;
+line-height:1.18;
+max-width:760px;
+}
+
+/* FAQ */
+section{
+padding:70px 0;
+border-bottom:1px solid var(--line);
+}
+
+.faq-list{
+display:grid;
+gap:16px;
+}
+
+.faq{
+background:var(--card);
+border:1px solid var(--line);
+padding:26px;
+}
+
+.num{
+font-size:11px;
+letter-spacing:.18em;
+text-transform:uppercase;
+color:var(--gold);
+margin-bottom:10px;
+}
+
+.q{
+font-size:34px;
+margin-bottom:12px;
+}
+
+.a{
+font-size:16px;
+color:var(--muted);
+}
+
+.cta{
+text-align:center;
+max-width:820px;
+margin:auto;
+}
+
+.btns{
+display:flex;
+gap:14px;
+justify-content:center;
+flex-wrap:wrap;
+margin-top:28px;
+}
+
+.btn{
+display:inline-block;
+padding:14px 22px;
+font-size:12px;
+letter-spacing:.16em;
+text-transform:uppercase;
+border:1px solid var(--gold);
+}
+
+.btn.primary{
+background:var(--gold);
+color:#000;
+}
+
+.btn.secondary{
+color:var(--text);
+}
+
+/* FOOTER */
+footer{
+padding:46px 0 60px;
+}
+
+.foot{
+display:flex;
+justify-content:space-between;
+gap:20px;
+flex-wrap:wrap;
+font-size:13px;
+color:var(--soft);
+}
+
+@media(max-width:900px){
+.links{display:none;}
+.q{font-size:28px;}
+}
+
+@media(max-width:760px){
+h1{font-size:48px;}
+.signal{font-size:26px;}
+}
+</style>
 </head>
+
 <body>
-<div class="container">
 
-  <div class="tag">Decision Authority Research &mdash; FAQ</div>
+<header>
+<div class="wrap nav">
 
-  <h1>Frequently Asked Questions</h1>
-  <p class="header-sub">On stop authority, irreversible decisions, and AI governance.</p>
+<div class="brand">Matrix Audit</div>
 
-  <div class="faq-list">
+<div class="links">
+<a href="index.html">Home</a>
+<a href="about.html">About</a>
+<a href="review.html">Review</a>
+<a href="case-studies.html">Case Studies</a>
+<a href="ai-governance.html">AI Governance</a>
+<a href="stop-authority.html">Stop Authority</a>
+<a href="faq.html">FAQ</a>
+</div>
 
-    <div class="faq-item">
-      <div class="faq-inner">
-        <div class="faq-index">01</div>
-        <div class="faq-q">What is DAR &mdash; Decision Authority Record?</div>
-        <p class="faq-a">DAR is a written record that names one individual with explicit authority to stop a specific irreversible decision before it executes. It is not a policy, framework, or software tool. It is a pre-commitment: one person, one decision pathway, defined in advance.</p>
-      </div>
-    </div>
-
-    <div class="faq-item">
-      <div class="faq-inner">
-        <div class="faq-index">02</div>
-        <div class="faq-q">Who needs a Decision Authority Record?</div>
-        <p class="faq-a">Any organization where irreversible decisions can be made without a single named person having authority to stop them. This includes boards, CROs, General Counsel, AI governance teams, regulated financial operators, and executives carrying personal liability for high-stakes decisions.</p>
-      </div>
-    </div>
-
-    <div class="faq-item">
-      <div class="faq-inner">
-        <div class="faq-index">03</div>
-        <div class="faq-q">Does DAR apply to AI systems?</div>
-        <p class="faq-a">Yes. Agentic AI systems can act, plan, and execute at machine speed. If no named individual has real-time authority to halt a model before its actions become irreversible, no stop authority exists. DAR maps who holds that authority before deployment &mdash; not after harm.</p>
-      </div>
-    </div>
-
-    <div class="faq-item">
-      <div class="faq-inner">
-        <div class="faq-index">04</div>
-        <div class="faq-q">What counts as an irreversible decision?</div>
-        <p class="faq-a">A decision is irreversible when its consequences cannot be undone within a timeframe that prevents harm. Examples: an AI model deployed to production at scale, a trading position that exceeds threshold, a clinical protocol that goes live before adverse events are detected, a regulatory filing once submitted.</p>
-      </div>
-    </div>
-
-    <div class="faq-item">
-      <div class="faq-inner">
-        <div class="faq-index">05</div>
-        <div class="faq-q">What is the difference between approval authority and stop authority?</div>
-        <p class="faq-a">Approval authority allows a decision to proceed. Stop authority makes continuation impossible without explicit release. Most organizations have approval structures. Very few define who can make continuation impossible. If continuation is available without a named release, no stop exists.</p>
-      </div>
-    </div>
-
-    <div class="faq-item">
-      <div class="faq-inner">
-        <div class="faq-index">06</div>
-        <div class="faq-q">How is DAR different from standard governance or risk committees?</div>
-        <p class="faq-a">Committees approve. DAR names one person who can stop. A committee can review, recommend, and document. It cannot make continuation impossible. DAR does not replace governance structures. It answers the question they consistently leave open: who, by name, stops this before it becomes irreversible?</p>
-      </div>
-    </div>
-
-    <div class="faq-item">
-      <div class="faq-inner">
-        <div class="faq-index">07</div>
-        <div class="faq-q">Who should have authority to stop an AI system?</div>
-        <p class="faq-a">One named individual with the technical ability, organizational authority, and pre-committed obligation to halt the system before its actions become irreversible. Not a team. Not an escalation path. A person defined before deployment, not identified after harm. This is what DAR establishes.</p>
-      </div>
-    </div>
-
-    <div style="background:var(--surface);border:1px solid var(--border2);border-left:3px solid var(--gold);padding:20px 22px;margin:4px 0;">
-      <p style="font-family:'Playfair Display',serif;font-size:14px;color:var(--text);line-height:1.55;margin-bottom:12px;">If stop authority already exists in your system, you should be able to name the person immediately.</p>
-      <a href="contact.html" style="font-size:11px;letter-spacing:0.12em;text-transform:uppercase;color:var(--gold);text-decoration:none;">Request a private review &#8594;</a>
-    </div>
-
-    <div class="faq-item">
-      <div class="faq-inner">
-        <div class="faq-index">08</div>
-        <div class="faq-q">Why can&rsquo;t organizations define stop authority internally?</div>
-        <p class="faq-a">Most organizations can explain their decision process. They fail when asked to name one person who can stop a critical decision in real time. Naming one person creates visible personal exposure &mdash; and most internal governance structures are designed, intentionally or not, to avoid that clarity.</p>
-      </div>
-    </div>
-
-    <div class="faq-item">
-      <div class="faq-inner">
-        <div class="faq-index">09</div>
-        <div class="faq-q">How long does an engagement take?</div>
-        <p class="faq-a">A Decision Boundary Review (single pathway) is delivered in 5 to 7 business days. A Decision Accountability Review (multiple pathways) is delivered in 10 to 14 business days. Board Exposure Reviews are scoped individually.</p>
-      </div>
-    </div>
-
-    <div class="faq-item">
-      <div class="faq-inner">
-        <div class="faq-index">10</div>
-        <div class="faq-q">Is this legal advice?</div>
-        <p class="faq-a">No. Decision Authority Research is an independent advisory engagement. It does not constitute legal advice and does not create a legal relationship. Clients requiring legal counsel should engage qualified legal professionals.</p>
-      </div>
-    </div>
-
-  </div>
-
-  <div class="footer">
-    <a href="contact.html" class="cta">
-      <div class="banner-left">
-        <span class="banner-label">Contact</span>
-        <span class="banner-title">Discuss a live accountability risk</span>
-      </div>
-      <span class="banner-arrow">&#8594;</span>
-    </a>
-    <a href="services.html">
-      <div class="banner-left">
-        <span class="banner-label">Engagements</span>
-        <span class="banner-title">Three types of engagement. One question.</span>
-      </div>
-      <span class="banner-arrow">&#8594;</span>
-    </a>
-    <a href="dar.html">
-      <div class="banner-left">
-        <span class="banner-label">DAR</span>
-        <span class="banner-title">Decision Authority Record</span>
-      </div>
-      <span class="banner-arrow">&#8594;</span>
-    </a>
-    <a href="index.html">
-      <div class="banner-left">
-        <span class="banner-label">Home</span>
-        <span class="banner-title">The Architecture of Accountability</span>
-      </div>
-      <span class="banner-arrow">&#8594;</span>
-    </a>
-  </div>
-
-  <p class="copyright">&#169; 2026 Liran Bar-Shrim. All rights reserved.</p>
+<a href="contact.html" class="topbtn">Private Inquiry</a>
 
 </div>
+</header>
+
+<section class="hero">
+<div class="wrap">
+
+<div class="tag">Frequently Asked Questions</div>
+
+<h1>Answers on Authority, Risk, and Irreversible Decisions</h1>
+
+<p class="lead">
+Common questions from boards, founders, operators, counsel, and leaders facing consequential decisions.
+</p>
+
+<div class="signal">
+If stop authority already exists,<br>
+you should be able to name it immediately.
+</div>
+
+</div>
+</section>
+
+<section>
+<div class="wrap faq-list">
+
+<div class="faq">
+<div class="num">01</div>
+<div class="q">What is DAR — Decision Authority Record?</div>
+<div class="a">
+DAR is a written record naming one individual with explicit authority to stop a specific irreversible decision before execution. It is clarity in advance.
+</div>
+</div>
+
+<div class="faq">
+<div class="num">02</div>
+<div class="q">Who needs this?</div>
+<div class="a">
+Boards, executives, AI teams, regulated operators, counsel, and organizations where critical decisions can move without one clearly named stop owner.
+</div>
+</div>
+
+<div class="faq">
+<div class="num">03</div>
+<div class="q">Does this apply to AI systems?</div>
+<div class="a">
+Yes. If systems act faster than governance can respond, human control may become symbolic unless one person can halt continuation in time.
+</div>
+</div>
+
+<div class="faq">
+<div class="num">04</div>
+<div class="q">What counts as irreversible?</div>
+<div class="a">
+Any decision whose consequences cannot be undone quickly enough to prevent material harm: deployment at scale, execution thresholds, filings, public releases, live automation.
+</div>
+</div>
+
+<div class="faq">
+<div class="num">05</div>
+<div class="q">Approval authority vs stop authority?</div>
+<div class="a">
+Approval authority allows continuation. Stop authority blocks continuation until explicit release.
+</div>
+</div>
+
+<div class="faq">
+<div class="num">06</div>
+<div class="q">Why not let committees handle it?</div>
+<div class="a">
+Committees review. In critical moments, time compresses. Someone must personally hold usable authority now.
+</div>
+</div>
+
+<div class="faq">
+<div class="num">07</div>
+<div class="q">Is this legal advice?</div>
+<div class="a">
+No. This is independent advisory work. Legal matters should be handled by qualified legal counsel.
+</div>
+</div>
+
+<div class="faq">
+<div class="num">08</div>
+<div class="q">How long does a review take?</div>
+<div class="a">
+Typical focused reviews begin with initial findings within days, depending on urgency and scope.
+</div>
+</div>
+
+</div>
+</section>
+
+<section>
+<div class="wrap cta">
+
+<div class="tag">Next Step</div>
+
+<h2 style="font-size:56px;margin-bottom:16px;">
+Discuss a Live Decision Before It Becomes Public
+</h2>
+
+<p style="font-size:18px;color:var(--muted);">
+Private conversations for consequential decisions already in motion.
+</p>
+
+<div class="btns">
+<a href="contact.html" class="btn primary">Request Private Review</a>
+<a href="review.html" class="btn secondary">View Executive Review</a>
+</div>
+
+</div>
+</section>
+
+<footer>
+<div class="wrap foot">
+<div>© 2026 Matrix Audit</div>
+<div>Liran Bar-Shrim</div>
+<div>Decision Authority Advisory</div>
+</div>
+</footer>
+
 </body>
-</html> 
+</html>
