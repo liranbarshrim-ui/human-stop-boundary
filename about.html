@@ -5,21 +5,23 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <title>About | Liran Bar-Shrim | Matrix Audit</title>
-
 <meta name="description" content="Independent researcher focused on authority gaps, stop power, and irreversible decisions under uncertainty.">
-
 <link rel="canonical" href="https://matrix-audit.com/about.html">
+
+<meta property="og:title" content="About | Liran Bar-Shrim">
+<meta property="og:description" content="Independent researcher focused on authority, accountability, and irreversible decisions.">
+<meta property="og:type" content="website">
 
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Cormorant+Garamond:wght@500;600&display=swap" rel="stylesheet">
 
 <style>
 :root{
---bg:#0a0a0a;
---surface:#111;
---line:#232323;
+--bg:#070707;
+--surface:#111111;
+--line:#242424;
 --text:#ece7df;
 --muted:#9f988f;
---gold:#c7a56a;
+--gold:#c6a46c;
 }
 
 *{
@@ -31,15 +33,15 @@ box-sizing:border-box;
 body{
 background:var(--bg);
 color:var(--text);
-font-family:Inter, sans-serif;
--webkit-font-smoothing:antialiased;
+font-family:Inter,Arial,sans-serif;
 line-height:1.75;
+-webkit-font-smoothing:antialiased;
 }
 
 .container{
-max-width:1080px;
+max-width:1120px;
 margin:auto;
-padding:56px 24px 90px;
+padding:52px 24px 90px;
 }
 
 .top{
@@ -52,17 +54,18 @@ margin-bottom:42px;
 
 .hero{
 display:grid;
-grid-template-columns:320px 1fr;
-gap:54px;
+grid-template-columns:300px 1fr;
+gap:58px;
 align-items:center;
 padding-bottom:64px;
 border-bottom:1px solid var(--line);
 }
 
 .photo{
+max-width:300px;
 border:1px solid var(--line);
+background:var(--surface);
 overflow:hidden;
-background:#111;
 }
 
 .photo img{
@@ -74,31 +77,34 @@ object-fit:cover;
 
 h1{
 font-family:"Cormorant Garamond",serif;
-font-size:clamp(42px,7vw,78px);
-line-height:0.95;
+font-size:clamp(44px,6vw,78px);
+line-height:1.02;
 font-weight:600;
-margin-bottom:18px;
+letter-spacing:-0.02em;
+margin-bottom:14px;
 }
 
 .role{
 font-size:11px;
-letter-spacing:.24em;
+letter-spacing:.26em;
 text-transform:uppercase;
 color:var(--gold);
-margin-bottom:24px;
+margin-bottom:26px;
 }
 
 .lead{
-font-size:18px;
-max-width:620px;
+font-size:22px;
+line-height:1.45;
+max-width:640px;
+margin-bottom:22px;
 color:var(--text);
-margin-bottom:18px;
 }
 
-.muted{
+.copy{
 font-size:16px;
+max-width:700px;
 color:var(--muted);
-max-width:620px;
+margin-bottom:16px;
 }
 
 .section{
@@ -108,7 +114,7 @@ border-bottom:1px solid var(--line);
 
 .label{
 font-size:11px;
-letter-spacing:.24em;
+letter-spacing:.26em;
 text-transform:uppercase;
 color:var(--gold);
 margin-bottom:14px;
@@ -119,6 +125,7 @@ font-family:"Cormorant Garamond",serif;
 font-size:42px;
 font-weight:600;
 margin-bottom:16px;
+line-height:1.05;
 }
 
 .section p{
@@ -132,23 +139,22 @@ margin-bottom:14px;
 margin-top:18px;
 padding-left:20px;
 border-left:2px solid var(--gold);
-font-size:24px;
 font-family:"Cormorant Garamond",serif;
+font-size:28px;
+line-height:1.3;
 color:var(--text);
-line-height:1.35;
 }
 
 .cta{
-padding-top:60px;
-text-align:left;
+padding-top:58px;
 }
 
 .btn{
 display:inline-block;
 padding:15px 22px;
 border:1px solid var(--gold);
-color:var(--text);
 text-decoration:none;
+color:var(--text);
 font-size:11px;
 letter-spacing:.24em;
 text-transform:uppercase;
@@ -161,38 +167,78 @@ color:#111;
 }
 
 .footer{
-padding-top:38px;
+padding-top:34px;
 font-size:11px;
-color:#6e675f;
+color:#6d675f;
 }
 
-@media(max-width:860px){
+@media(max-width:900px){
+
 .hero{
 grid-template-columns:1fr;
-gap:30px;
+gap:32px;
 }
 
 .photo{
-max-width:320px;
+max-width:260px;
 }
+
 }
 
 @media(max-width:640px){
-h1{
-font-size:52px;
+
+.container{
+padding:34px 20px 72px;
 }
 
-.section h2{
-font-size:34px;
+.top{
+margin-bottom:28px;
+}
+
+.photo{
+max-width:220px;
+}
+
+h1{
+font-size:46px;
+line-height:1.04;
+}
+
+.role{
+font-size:10px;
+margin-bottom:20px;
 }
 
 .lead{
-font-size:17px;
+font-size:18px;
+margin-bottom:18px;
+}
+
+.copy{
+font-size:15px;
+}
+
+.section{
+padding:42px 0;
+}
+
+.section h2{
+font-size:32px;
+}
+
+.section p{
+font-size:15px;
 }
 
 .quote{
 font-size:22px;
 }
+
+.btn{
+width:100%;
+text-align:center;
+}
+
 }
 </style>
 </head>
@@ -210,7 +256,8 @@ font-size:22px;
 </div>
 
 <div>
-<h1>Liran<br>Bar-Shrim</h1>
+
+<h1>Liran Bar-Shrim</h1>
 
 <div class="role">Independent Researcher</div>
 
@@ -218,12 +265,12 @@ font-size:22px;
 Outside the system. Focused on what it misses.
 </p>
 
-<p class="muted">
-My work centers on one structural question many institutions still avoid:
+<p class="copy">
+My work examines a structural question many institutions still avoid:
 who is explicitly empowered to stop irreversible decisions under uncertainty?
 </p>
 
-<p class="muted">
+<p class="copy">
 As systems accelerate, responsibility becomes diffuse. That gap becomes dangerous.
 </p>
 
@@ -234,14 +281,15 @@ As systems accelerate, responsibility becomes diffuse. That gap becomes dangerou
 <section class="section">
 
 <div class="label">Why Independent</div>
+
 <h2>Distance reveals what proximity normalizes.</h2>
 
 <p>
-Internal systems often adapt to their own blind spots. Process becomes routine. Risk becomes language. Momentum becomes culture.
+Internal systems often adapt to their own blind spots. Process becomes routine. Momentum becomes culture.
 </p>
 
 <p>
-An external view can identify authority gaps, escalation dead zones, and decisions that continue simply because no one is clearly empowered to stop them.
+An external perspective can identify authority gaps, escalation dead zones, and decisions that continue because no one is clearly empowered to stop them.
 </p>
 
 </section>
@@ -249,10 +297,11 @@ An external view can identify authority gaps, escalation dead zones, and decisio
 <section class="section">
 
 <div class="label">Why Now</div>
-<h2>Uncertainty scales faster than governance.</h2>
+
+<h2>Uncertainty now moves faster than governance.</h2>
 
 <p>
-AI systems, distributed teams, delegated approvals, and high-speed execution have changed how decisions move.
+AI systems, delegated approvals, distributed teams, and rapid execution changed how decisions move.
 </p>
 
 <p>
@@ -269,7 +318,8 @@ someone is blamed later.
 <section class="section">
 
 <div class="label">Focus</div>
-<h2>Areas of work</h2>
+
+<h2>Areas of Work</h2>
 
 <p>
 Decision authority. Stop power. Executive exposure. Irreversible pathways. Accountability under pressure.
@@ -287,5 +337,4 @@ Decision authority. Stop power. Executive exposure. Irreversible pathways. Accou
 
 </div>
 
-</body>
-</html>
+</body
