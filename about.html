@@ -52,6 +52,8 @@ z-index:0;
 
 a{text-decoration:none;color:inherit;}
 
+/* topbar */
+
 .topbar{
 position:sticky;
 top:0;
@@ -97,6 +99,8 @@ width:22px;
 height:1.5px;
 background:var(--text);
 }
+
+/* menu */
 
 .overlay{
 position:fixed;
@@ -189,27 +193,30 @@ background:var(--border2);
 flex-shrink:0;
 }
 
-.menu-cta,
-.menu-email{
-display:block;
-text-align:center;
-padding:14px 20px;
-margin-top:12px;
-font-size:12px;
-border:1px solid var(--border2);
-}
-
 .menu-cta{
+display:block;
 margin-top:28px;
-border-color:var(--gold);
+padding:14px 20px;
+border:1px solid var(--gold);
 color:var(--gold)!important;
 font-family:'IBM Plex Mono',monospace;
 font-size:10px;
 letter-spacing:.2em;
 text-transform:uppercase;
+text-align:center;
 }
 
-.menu-email{color:var(--muted)!important;}
+.menu-email{
+display:block;
+margin-top:10px;
+padding:11px 20px;
+border:1px solid var(--border2);
+font-size:13px;
+text-align:center;
+color:var(--muted)!important;
+}
+
+/* layout */
 
 .container{
 position:relative;
@@ -218,6 +225,8 @@ max-width:980px;
 margin:0 auto;
 padding:70px 28px 110px;
 }
+
+/* hero */
 
 .hero{
 display:grid;
@@ -281,6 +290,8 @@ margin-bottom:12px;
 max-width:640px;
 }
 
+/* sections */
+
 .section{
 padding:54px 0;
 border-top:1px solid rgba(255,255,255,.05);
@@ -334,6 +345,8 @@ text-transform:none;
 letter-spacing:0;
 }
 
+/* footer */
+
 .footer{
 margin-top:60px;
 padding-top:28px;
@@ -342,9 +355,13 @@ font-size:11px;
 letter-spacing:.08em;
 color:#6e6964;
 font-family:'IBM Plex Mono',monospace;
-text-align:center;
-line-height:1.8;
+text-align:left;
+white-space:nowrap;
+overflow:hidden;
+text-overflow:ellipsis;
 }
+
+/* mobile */
 
 @media(max-width:760px){
 .container{padding:56px 18px 90px;}
@@ -490,8 +507,7 @@ Decision authority. Stop power. Executive exposure. Irreversible pathways. Accou
 </section>
 
 <div class="footer">
-© 2026 Liran Bar Shrim<br>
-All rights reserved.
+&copy; 2026 Liran Bar Shrim. All rights reserved.
 </div>
 
 </main>
