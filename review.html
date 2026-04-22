@@ -5,26 +5,18 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <title>Executive Authority Review | Matrix Audit</title>
-<meta name="description" content="Private external review for leaders carrying accountability on consequential decisions already in motion. Initial findings within 7 days.">
-<meta name="robots" content="index,follow">
-<link rel="canonical" href="https://matrix-audit.com/review">
-
-<meta property="og:title" content="Executive Authority Review | Matrix Audit">
-<meta property="og:description" content="Private external review for leaders carrying accountability on consequential decisions already in motion.">
-<meta property="og:type" content="website">
+<meta name="description" content="Private external review for leaders carrying accountability on consequential decisions already in motion.">
 
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&family=Cormorant+Garamond:wght@300;400;500&display=swap" rel="stylesheet">
 
 <style>
 :root{
 --bg:#070707;
---bg2:#0f0f0f;
 --card:#131313;
 --line:#242424;
 --gold:#b89a63;
 --text:#ece4d7;
 --muted:#a59d91;
---soft:#6f685d;
 --max:1120px;
 }
 *{margin:0;padding:0;box-sizing:border-box}
@@ -33,19 +25,23 @@ background:var(--bg);
 color:var(--text);
 font-family:Inter,sans-serif;
 line-height:1.7;
--webkit-font-smoothing:antialiased;
 }
 .wrap{max-width:var(--max);margin:auto;padding:0 26px}
 section{padding:90px 0;border-top:1px solid var(--line)}
-h1,h2,h3{font-family:"Cormorant Garamond",serif;font-weight:400}
-.hero{padding:130px 0 90px;border:none}
+h1,h2,h3{
+font-family:"Cormorant Garamond",serif;
+font-weight:400;
+}
+.hero{padding:120px 0;border:none}
 .grid{
 display:grid;
 grid-template-columns:1.1fr .9fr;
 gap:40px;
 align-items:start;
 }
-@media(max-width:980px){.grid{grid-template-columns:1fr}}
+@media(max-width:980px){
+.grid{grid-template-columns:1fr}
+}
 .tag{
 font-size:11px;
 letter-spacing:.22em;
@@ -58,27 +54,28 @@ font-size:clamp(46px,7vw,84px);
 line-height:1.02;
 margin-bottom:18px;
 }
-.hero p{
-font-size:18px;
+p{
 color:var(--muted);
-max-width:620px;
-margin-bottom:28px;
+font-size:17px;
 }
-.btns{display:flex;gap:12px;flex-wrap:wrap}
 .btn{
 display:inline-block;
 padding:14px 22px;
+border:1px solid var(--gold);
 text-decoration:none;
 font-size:12px;
 letter-spacing:.16em;
 text-transform:uppercase;
-border:1px solid var(--gold);
-transition:.2s;
+margin-right:10px;
+margin-top:14px;
 }
-.btn.primary{background:var(--gold);color:#000}
-.btn.secondary{color:var(--text)}
-.btn:hover{transform:translateY(-2px)}
-
+.primary{
+background:var(--gold);
+color:#000;
+}
+.secondary{
+color:var(--text);
+}
 .form{
 background:var(--card);
 border:1px solid var(--line);
@@ -86,12 +83,7 @@ padding:28px;
 }
 .form h3{
 font-size:34px;
-margin-bottom:8px;
-}
-.form small{
-display:block;
-color:var(--muted);
-margin-bottom:22px;
+margin-bottom:10px;
 }
 label{
 display:block;
@@ -110,7 +102,10 @@ color:var(--text);
 font-size:15px;
 font-family:Inter,sans-serif;
 }
-textarea{min-height:120px;resize:vertical}
+textarea{
+min-height:120px;
+resize:vertical;
+}
 .submit{
 width:100%;
 margin-top:18px;
@@ -123,69 +118,56 @@ letter-spacing:.18em;
 text-transform:uppercase;
 cursor:pointer;
 }
-.note{
-font-size:12px;
-color:var(--soft);
-margin-top:12px;
-text-align:center;
-}
-
-.intro p,.copy p{font-size:17px;color:var(--muted);max-width:860px}
-
 .cards{
 display:grid;
 grid-template-columns:repeat(2,1fr);
 gap:18px;
-margin-top:32px;
+margin-top:30px;
 }
-@media(max-width:900px){.cards{grid-template-columns:1fr}}
+@media(max-width:900px){
+.cards{grid-template-columns:1fr}
+}
 .card{
 background:var(--card);
 border:1px solid var(--line);
-padding:26px;
+padding:24px;
 }
 .card h3{
-font-size:30px;
+font-size:28px;
 margin-bottom:10px;
 }
-.card p{color:var(--muted);font-size:15px}
-
 .list{
 display:grid;
 gap:1px;
 background:var(--line);
-margin-top:28px;
+margin-top:25px;
 }
 .item{
 background:var(--card);
 padding:18px 20px;
 color:var(--muted);
 }
-
 .price{
-background:linear-gradient(180deg,#15120d,#111);
+background:#111;
 border:1px solid rgba(184,154,99,.28);
 padding:26px;
 margin-top:26px;
 }
-.price .num{
+.num{
 font-family:"Cormorant Garamond",serif;
-font-size:56px;
-line-height:1;
-margin:8px 0;
+font-size:58px;
 }
 .center{text-align:center}
-
 footer{
 padding:40px 0 70px;
 border-top:1px solid var(--line);
 }
 footer p{
 font-size:13px;
-color:var(--soft);
 }
 </style>
 </head>
+
 <body>
 
 <section class="hero">
@@ -199,22 +181,21 @@ color:var(--soft);
 A private external review for leaders carrying personal accountability on consequential decisions already in motion.
 </p>
 
-<div class="btns">
 <a href="#inquiry" class="btn primary">Request Review</a>
 <a href="mailto:liran@liranbarshrim.com" class="btn secondary">Email Directly</a>
-</div>
 </div>
 
 <div class="form" id="inquiry">
 <h3>Request a private review</h3>
-<small>Direct principal contact. Initial response within 24 hours.</small>
+<p style="margin-bottom:20px;">Direct principal contact. Initial response within 24 hours.</p>
 
-<form action="mailto:liran@liranbarshrim.com" method="post" enctype="text/plain">
+<form action="https://formspree.io/f/your-form-id" method="POST">
+
 <label>Name</label>
-<input type="text" name="name">
+<input type="text" name="name" required>
 
 <label>Email</label>
-<input type="email" name="email">
+<input type="email" name="email" required>
 
 <label>Role</label>
 <select name="role">
@@ -227,25 +208,27 @@ A private external review for leaders carrying personal accountability on conseq
 </select>
 
 <label>What is moving now?</label>
-<textarea name="message"></textarea>
+<textarea name="message" required></textarea>
+
+<input type="hidden" name="_subject" value="Private Inquiry | Matrix Audit">
 
 <button class="submit" type="submit">Send Private Inquiry</button>
+
 </form>
 
-<div class="note">
+<p style="font-size:12px;margin-top:12px;text-align:center;">
 Strictly confidential · Direct reply from Liran Bar-Shrim
-</div>
+</p>
 </div>
 
 </div>
 </section>
 
 <section>
-<div class="wrap intro">
+<div class="wrap">
 <div class="tag">Why This Exists</div>
 <p>
-Many organizations know how to approve decisions. Far fewer know who can stop them while time still matters.
-When pressure rises, accountability becomes personal.
+Many organizations know how to approve decisions. Far fewer know who can stop them while time still matters. When pressure rises, accountability becomes personal.
 </p>
 </div>
 </section>
@@ -295,12 +278,11 @@ When pressure rises, accountability becomes personal.
 </section>
 
 <section>
-<div class="wrap copy">
+<div class="wrap">
 <div class="tag">Engagement Terms</div>
 
 <p>
-No system access required. No committee process. Direct principal engagement only.
-Initial findings within 7 days.
+No system access required. No committee process. Direct principal engagement only. Initial findings within 7 days.
 </p>
 
 <div class="price">
@@ -314,18 +296,18 @@ Initial findings within 7 days.
 <section>
 <div class="wrap center">
 <div class="tag">The Question</div>
-<h2 style="font-size:58px;line-height:1.02;margin-bottom:16px;">
+
+<h2 style="font-size:58px;line-height:1.02;margin-bottom:18px;">
 If this decision failed publicly,<br>whose name would carry it?
 </h2>
 
-<p style="color:var(--muted);margin-bottom:28px;">
+<p style="margin-bottom:28px;">
 If the answer matters, clarity should come first.
 </p>
 
-<div class="btns" style="justify-content:center">
 <a href="#inquiry" class="btn primary">Request Review</a>
 <a href="mailto:liran@liranbarshrim.com" class="btn secondary">Email Directly</a>
-</div>
+
 </div>
 </section>
 
@@ -333,7 +315,7 @@ If the answer matters, clarity should come first.
 <div class="wrap">
 <p>
 Private inquiries: liran@liranbarshrim.com<br>
-© 2026 Matrix Audit · Executive Authority Review
+© 2026 Matrix Audit
 </p>
 </div>
 </footer>
