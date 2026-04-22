@@ -5,10 +5,14 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <title>Decision Authority Research | Named Stop Authority for Irreversible Decisions</title>
-
 <meta name="description" content="Private advisory for boards, executives, General Counsel, CROs and AI governance leaders facing irreversible decisions under uncertainty.">
-
+<meta name="keywords" content="decision authority, named stop authority, executive accountability, AI governance, irreversible decisions, board risk">
 <link rel="canonical" href="https://matrix-audit.com/">
+
+<meta property="og:title" content="Decision Authority Research">
+<meta property="og:description" content="When no one is named to stop it, liability finds someone later.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://matrix-audit.com/">
 
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Playfair+Display:wght@400;700&display=swap" rel="stylesheet">
 
@@ -42,6 +46,8 @@ color:var(--text);
 font-family:'IBM Plex Mono',monospace;
 line-height:1.7;
 overflow-x:hidden;
+-webkit-font-smoothing:antialiased;
+text-rendering:optimizeLegibility;
 }
 
 body::before{
@@ -49,8 +55,8 @@ content:'';
 position:fixed;
 inset:0;
 background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
-pointer-events:none;
 opacity:.55;
+pointer-events:none;
 z-index:0;
 }
 
@@ -62,9 +68,9 @@ display:flex;
 justify-content:space-between;
 align-items:center;
 padding:18px 24px;
-background:rgba(9,9,9,.92);
-backdrop-filter:blur(8px);
-border-bottom:1px solid var(--border);
+background:rgba(9,9,9,.90);
+backdrop-filter:blur(10px);
+border-bottom:1px solid rgba(255,255,255,.05);
 }
 
 .brand{
@@ -73,13 +79,13 @@ align-items:center;
 gap:12px;
 text-decoration:none;
 color:var(--text);
-font-size:11px;
-letter-spacing:.16em;
+font-size:10px;
+letter-spacing:.26em;
 text-transform:uppercase;
 }
 
 .brand-line{
-width:20px;
+width:18px;
 height:1px;
 background:var(--gold);
 display:block;
@@ -87,15 +93,15 @@ display:block;
 
 .desktop-nav{
 display:flex;
-align-items:center;
 gap:24px;
+align-items:center;
 }
 
 .desktop-nav a{
 text-decoration:none;
 color:var(--muted);
-font-size:11px;
-letter-spacing:.14em;
+font-size:10px;
+letter-spacing:.18em;
 text-transform:uppercase;
 transition:.2s;
 }
@@ -128,7 +134,7 @@ margin:4px 0;
 .overlay{
 position:fixed;
 inset:0;
-background:rgba(0,0,0,.6);
+background:rgba(0,0,0,.55);
 opacity:0;
 visibility:hidden;
 transition:.25s;
@@ -163,7 +169,7 @@ right:0;
 display:flex;
 justify-content:space-between;
 align-items:center;
-margin-bottom:24px;
+margin-bottom:22px;
 font-size:12px;
 letter-spacing:.16em;
 text-transform:uppercase;
@@ -172,8 +178,8 @@ text-transform:uppercase;
 .close-btn{
 background:none;
 border:none;
-color:var(--text);
 font-size:30px;
+color:var(--text);
 cursor:pointer;
 }
 
@@ -185,7 +191,7 @@ margin-top:18px;
 
 .menu-label{
 font-size:10px;
-letter-spacing:.16em;
+letter-spacing:.18em;
 text-transform:uppercase;
 color:var(--gold);
 margin-bottom:10px;
@@ -193,9 +199,9 @@ margin-bottom:10px;
 
 .menu-group a{
 display:block;
+padding:8px 0;
 text-decoration:none;
 color:var(--muted);
-padding:8px 0;
 font-size:14px;
 }
 
@@ -206,72 +212,76 @@ color:var(--text);
 .container{
 position:relative;
 z-index:1;
-max-width:960px;
+max-width:980px;
 margin:0 auto;
-padding:60px 24px 90px;
+padding:72px 28px 110px;
 }
 
 .hero{
 border-left:3px solid var(--gold);
-padding-left:22px;
-margin-bottom:44px;
+padding-left:24px;
+margin-bottom:56px;
 }
 
 .hero-label{
 font-size:10px;
-letter-spacing:.16em;
+letter-spacing:.22em;
 text-transform:uppercase;
-color:var(--muted);
+color:#b8aa8a;
 margin-bottom:16px;
 }
 
 .hero h1{
 font-family:'Playfair Display',serif;
-font-size:clamp(34px,6vw,66px);
-line-height:1.06;
-margin-bottom:18px;
+font-size:clamp(42px,7vw,72px);
+line-height:1.02;
+letter-spacing:-.02em;
+margin-bottom:22px;
+max-width:900px;
 }
 
 .hero p{
 font-size:14px;
+line-height:2;
 color:var(--muted);
-max-width:720px;
+max-width:760px;
 }
 
 .statement{
-background:var(--surface);
+background:linear-gradient(180deg,#111,#0d0d0d);
 border:1px solid var(--border2);
 border-left:3px solid var(--danger);
-padding:26px;
-margin-bottom:44px;
+padding:34px;
+margin-bottom:62px;
 font-family:'Playfair Display',serif;
-font-size:30px;
-line-height:1.35;
+font-size:34px;
+line-height:1.3;
 }
 
 .section{
-padding:38px 0;
-border-top:1px solid var(--border2);
+padding:52px 0;
+border-top:1px solid rgba(255,255,255,.06);
 }
 
 .section-label{
 font-size:10px;
-letter-spacing:.18em;
+letter-spacing:.24em;
 text-transform:uppercase;
 color:var(--gold);
-margin-bottom:12px;
+margin-bottom:14px;
 }
 
 .section h2{
 font-family:'Playfair Display',serif;
-font-size:30px;
-margin-bottom:20px;
+font-size:42px;
+line-height:1.12;
+margin-bottom:28px;
 }
 
 .grid{
 display:grid;
 grid-template-columns:1fr 1fr;
-gap:16px;
+gap:18px;
 }
 
 .card{
@@ -281,12 +291,12 @@ color:var(--text);
 background:linear-gradient(180deg,#121212,#0d0d0d);
 border:1px solid #262626;
 border-left:3px solid var(--gold);
-padding:24px;
+padding:28px 26px;
 transition:.22s;
 }
 
 .card:hover{
-transform:translateY(-2px);
+transform:translateY(-3px);
 border-color:#3a3328;
 background:#171717;
 }
@@ -294,59 +304,59 @@ background:#171717;
 .card small{
 display:block;
 font-size:10px;
-letter-spacing:.16em;
+letter-spacing:.22em;
 text-transform:uppercase;
 color:var(--gold);
-margin-bottom:10px;
+margin-bottom:12px;
 }
 
 .card strong{
 display:block;
 font-family:'Playfair Display',serif;
-font-size:24px;
-line-height:1.2;
-margin-bottom:10px;
+font-size:28px;
+line-height:1.1;
+margin-bottom:12px;
 }
 
 .card span{
-font-size:13px;
-color:var(--muted);
-line-height:1.7;
 display:block;
+font-size:13px;
+line-height:1.9;
+color:#aaa39c;
 }
 
 .cta{
-margin-top:18px;
 display:inline-block;
-text-decoration:none;
-padding:16px 24px;
+margin-top:24px;
+padding:18px 28px;
 background:var(--gold);
 color:#111;
-font-size:12px;
-letter-spacing:.14em;
+text-decoration:none;
+font-size:11px;
+letter-spacing:.22em;
 text-transform:uppercase;
 font-weight:700;
 }
 
 .footer{
-margin-top:54px;
-padding-top:24px;
+margin-top:72px;
+padding-top:28px;
 border-top:1px solid var(--border2);
 font-size:11px;
-color:var(--dim);
+letter-spacing:.08em;
+color:#6e6964;
 }
 
 @media(max-width:860px){
 .desktop-nav{display:none;}
 .menu-btn{display:block;}
 .grid{grid-template-columns:1fr;}
+.container{padding:54px 18px 84px;}
+.hero h1{font-size:clamp(36px,12vw,56px);}
+.statement{font-size:24px;padding:26px 22px;}
+.section h2{font-size:34px;}
 }
 
-@media(max-width:700px){
-.container{padding:42px 18px 70px;}
-.statement{font-size:24px;}
-.hero h1{font-size:38px;}
-}
 </style>
 </head>
 
@@ -365,10 +375,8 @@ color:var(--dim);
 <a href="contact.html" class="nav-cta">Contact</a>
 </nav>
 
-<button class="menu-btn" id="openMenu" aria-label="Open menu">
-<span></span>
-<span></span>
-<span></span>
+<button class="menu-btn" id="openMenu">
+<span></span><span></span><span></span>
 </button>
 
 </header>
@@ -536,7 +544,7 @@ Stop authority is rare.
 <div class="section-label">Private Intake</div>
 <h2>One question matters</h2>
 
-<p style="color:var(--muted);font-size:14px;margin-bottom:18px;max-width:720px;">
+<p style="font-size:14px;color:var(--muted);max-width:720px;">
 When a decision becomes irreversible under uncertainty, who is explicitly named to stop it?
 </p>
 
@@ -553,22 +561,17 @@ When a decision becomes irreversible under uncertainty, who is explicitly named 
 <script>
 const menu=document.getElementById('menu');
 const overlay=document.getElementById('overlay');
-const openBtn=document.getElementById('openMenu');
-const closeBtn=document.getElementById('closeMenu');
-
-function openMenu(){
+document.getElementById('openMenu').onclick=function(){
 menu.classList.add('active');
 overlay.classList.add('active');
-}
+};
+document.getElementById('closeMenu').onclick=closeMenu;
+overlay.onclick=closeMenu;
 
-function closeMenuFn(){
+function closeMenu(){
 menu.classList.remove('active');
 overlay.classList.remove('active');
 }
-
-openBtn.addEventListener('click',openMenu);
-closeBtn.addEventListener('click',closeMenuFn);
-overlay.addEventListener('click',closeMenuFn);
 </script>
 
 </body>
