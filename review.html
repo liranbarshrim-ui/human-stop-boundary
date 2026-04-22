@@ -2,99 +2,215 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
 
 <title>Executive Authority Review | Matrix Audit</title>
 <meta name="description" content="Private external review for leaders carrying accountability on consequential decisions already in motion.">
+<meta name="theme-color" content="#05050a">
+<link rel="canonical" href="https://matrix-audit.com/review.html">
 
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Cormorant+Garamond:wght@400;500&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Cormorant+Garamond:wght@300;400;500&display=swap" rel="stylesheet">
 
 <style>
-:root{
---bg:#070707;
---card:#111111;
---line:#242424;
---gold:#b89a63;
---text:#f3eee7;
---muted:#a89f93;
-}
+*{margin:0;padding:0;box-sizing:border-box}
 
-*{
-margin:0;
-padding:0;
-box-sizing:border-box;
+:root{
+--bg:#05050a;
+--bg2:#0f0f16;
+--card:#121219;
+--line:rgba(255,255,255,.08);
+--text:#d8d2ca;
+--muted:#8e8880;
+--gold:#b49a6a;
+--white:#f3eee7;
+--max:1120px;
 }
 
 body{
 background:var(--bg);
 color:var(--text);
 font-family:Inter,sans-serif;
-line-height:1.6;
--webkit-font-smoothing:antialiased;
+font-weight:300;
+line-height:1.72;
+overflow-x:hidden;
 }
 
-.wrap{
-max-width:1120px;
-margin:auto;
-padding:0 24px;
+a{text-decoration:none;color:inherit}
+.wrap{max-width:var(--max);margin:auto;padding:0 22px}
+
+/* NAV */
+nav{
+position:fixed;top:0;left:0;right:0;
+height:72px;z-index:5000;
+background:rgba(5,5,10,.92);
+backdrop-filter:blur(14px);
+border-bottom:1px solid var(--line);
+}
+
+.navin{
+height:100%;
+display:flex;
+align-items:center;
+justify-content:space-between;
+}
+
+.brand{display:flex;flex-direction:column}
+
+.brand b{
+font-size:12px;
+letter-spacing:.28em;
+font-weight:600;
+color:var(--white);
+}
+
+.brand span{
+font-size:10px;
+color:var(--muted);
+margin-top:3px;
+}
+
+.burger{
+width:34px;height:26px;
+border:none;background:none;
+position:relative;cursor:pointer;
+}
+
+.burger span{
+position:absolute;
+left:0;right:0;
+height:2px;
+background:var(--white);
+transition:.25s;
+}
+
+.burger span:nth-child(1){top:2px}
+.burger span:nth-child(2){top:11px}
+.burger span:nth-child(3){top:20px}
+
+body.menu .burger span:nth-child(1){top:11px;transform:rotate(45deg)}
+body.menu .burger span:nth-child(2){opacity:0}
+body.menu .burger span:nth-child(3){top:11px;transform:rotate(-45deg)}
+
+.overlay{
+position:fixed;
+inset:72px 0 0 0;
+background:rgba(0,0,0,.55);
+opacity:0;
+pointer-events:none;
+transition:.25s;
+z-index:3900;
+}
+
+.overlay.show{
+opacity:1;
+pointer-events:auto;
+}
+
+.drawer{
+position:fixed;
+top:72px;right:0;
+width:88%;
+max-width:340px;
+height:calc(100dvh - 72px);
+background:#090910;
+border-left:1px solid var(--line);
+transform:translateX(100%);
+transition:.28s;
+z-index:4000;
+overflow-y:auto;
+padding:22px;
+}
+
+.drawer.open{transform:translateX(0)}
+
+.drawer h4{
+font-size:11px;
+letter-spacing:.24em;
+text-transform:uppercase;
+color:var(--gold);
+margin:18px 0 10px;
+}
+
+.drawer a{
+display:block;
+padding:14px 0;
+border-bottom:1px solid rgba(255,255,255,.05);
+font-size:16px;
+}
+
+body.menu{overflow:hidden}
+
+/* CONTENT */
+main{padding-top:72px}
+
+section{
+padding:58px 0;
+border-top:1px solid var(--line);
 }
 
 .hero{
-padding:90px 0;
+border-top:none;
+padding:64px 0 42px;
 }
 
 .grid{
 display:grid;
 grid-template-columns:1fr 1fr;
-gap:40px;
+gap:28px;
 align-items:start;
 }
 
-@media(max-width:900px){
-.grid{
-grid-template-columns:1fr;
-}
-}
-
-.tag{
+.label{
 font-size:11px;
-letter-spacing:.22em;
+letter-spacing:.28em;
 text-transform:uppercase;
 color:var(--gold);
-margin-bottom:16px;
+margin-bottom:18px;
 }
 
 h1,h2,h3{
 font-family:"Cormorant Garamond",serif;
-font-weight:500;
-line-height:1.05;
+font-weight:400;
+color:var(--white);
 }
 
 h1{
-font-size:clamp(46px,8vw,84px);
-margin-bottom:20px;
+font-size:clamp(46px,8vw,82px);
+line-height:1.02;
+margin-bottom:18px;
 }
 
+h2{
+font-size:52px;
+line-height:1.04;
+margin-bottom:16px;
+}
+
+.hero p,
 p{
+font-size:16px;
 color:var(--muted);
-font-size:18px;
 }
 
 .form{
 background:var(--card);
 border:1px solid var(--line);
-padding:30px;
+padding:24px;
 }
 
 .form h3{
-font-size:40px;
+font-size:38px;
 margin-bottom:8px;
 }
 
-.form small{
+small{
 display:block;
-margin-bottom:22px;
+font-size:14px;
 color:var(--muted);
+margin-bottom:18px;
 }
 
 label{
@@ -111,119 +227,140 @@ width:100%;
 padding:14px;
 background:#0c0c0c;
 border:1px solid var(--line);
-color:#ffffff;
+color:#fff;
 font-size:15px;
 font-family:Inter,sans-serif;
--webkit-text-fill-color:#ffffff;
-opacity:1;
-border-radius:0;
 outline:none;
+border-radius:0;
 }
 
 textarea{
-min-height:140px;
+min-height:130px;
 resize:vertical;
 }
 
-input::placeholder,
-textarea::placeholder{
-color:#888;
-}
-
-select option{
-background:#111;
-color:#fff;
-}
-
-input:-webkit-autofill,
-input:-webkit-autofill:hover,
-input:-webkit-autofill:focus,
-textarea:-webkit-autofill,
-select:-webkit-autofill{
--webkit-text-fill-color:#ffffff;
--webkit-box-shadow:0 0 0px 1000px #0c0c0c inset;
-transition:background-color 9999s ease-in-out 0s;
-}
-
-.submit{
-width:100%;
-margin-top:18px;
-padding:16px;
-background:var(--gold);
-color:#000;
-border:none;
+button,.btn{
+display:inline-block;
+padding:14px 22px;
 font-size:12px;
-letter-spacing:.24em;
+letter-spacing:.15em;
 text-transform:uppercase;
-font-weight:600;
+border:1px solid var(--gold);
 cursor:pointer;
 }
 
-.note{
-margin-top:14px;
-font-size:13px;
-text-align:center;
-color:var(--muted);
-}
-
-.section{
-padding:70px 0;
-border-top:1px solid var(--line);
+button{
+width:100%;
+background:var(--gold);
+color:#111;
+margin-top:18px;
 }
 
 .cards{
 display:grid;
 grid-template-columns:repeat(2,1fr);
 gap:18px;
-margin-top:30px;
-}
-
-@media(max-width:900px){
-.cards{
-grid-template-columns:1fr;
-}
+margin-top:24px;
 }
 
 .card{
 background:var(--card);
 border:1px solid var(--line);
-padding:24px;
+padding:22px;
 }
 
 .card h3{
 font-size:34px;
-margin-bottom:10px;
+margin-bottom:8px;
 }
 
 .price{
-margin-top:24px;
-padding:26px;
-border:1px solid rgba(184,154,99,.3);
-background:#111;
+margin-top:22px;
+padding:24px;
+background:var(--card);
+border:1px solid rgba(180,154,106,.24);
+border-left:3px solid var(--gold);
 }
 
 .num{
 font-family:"Cormorant Garamond",serif;
-font-size:60px;
+font-size:58px;
+line-height:1;
 margin:10px 0;
+color:var(--white);
 }
 
 footer{
-padding:40px 0 60px;
-border-top:1px solid var(--line);
+padding:34px 0 60px;
 font-size:13px;
-color:var(--muted);
+color:#6f685f;
+}
+
+/* MOBILE */
+@media(max-width:980px){
+.grid{grid-template-columns:1fr}
+.cards{grid-template-columns:1fr}
+}
+
+@media(max-width:680px){
+h2{font-size:40px}
+.form h3{font-size:32px}
 }
 </style>
 </head>
+
 <body>
 
+<nav>
+<div class="wrap navin">
+
+<a href="index.html" class="brand">
+<b>MATRIX AUDIT</b>
+<span>Liran Bar-Shrim · Decision Authority</span>
+</a>
+
+<button class="burger" onclick="toggleMenu()" aria-label="Menu">
+<span></span>
+<span></span>
+<span></span>
+</button>
+
+</div>
+</nav>
+
+<div class="overlay" id="overlay" onclick="closeMenu()"></div>
+
+<div class="drawer" id="drawer">
+<h4>Main</h4>
+<a href="index.html">Home</a>
+<a href="about.html">About</a>
+<a href="review.html">Executive Review</a>
+<a href="case-studies.html">Case Studies</a>
+<a href="ai-governance.html">AI Governance</a>
+<a href="contact.html">Contact</a>
+
+<h4>More</h4>
+<a href="services.html">Services</a>
+<a href="stop-authority.html">Stop Authority</a>
+<a href="faq.html">FAQ</a>
+<a href="goodfaith.html">Good Faith Use</a>
+<a href="scenarios.html">Scenarios</a>
+</div>
+
+<main class="wrap">
+
 <section class="hero">
-<div class="wrap grid">
+
+<div class="grid">
 
 <div>
-<div class="tag">Private Engagement</div>
-<h1>Executive<br>Authority<br>Review</h1>
+<div class="label">Private Engagement</div>
+
+<h1>
+Executive<br>
+Authority<br>
+Review
+</h1>
 
 <p>
 A private external review for leaders carrying personal accountability on consequential decisions already in motion.
@@ -231,6 +368,7 @@ A private external review for leaders carrying personal accountability on conseq
 </div>
 
 <div class="form">
+
 <h3>Request a private review</h3>
 <small>Direct principal contact. Initial response within 24 hours.</small>
 
@@ -255,21 +393,19 @@ A private external review for leaders carrying personal accountability on conseq
 <label>What is moving now?</label>
 <textarea name="message" required></textarea>
 
-<button class="submit" type="submit">Send Private Inquiry</button>
+<button type="submit">Send Private Inquiry</button>
 
 </form>
 
-<div class="note">
-Strictly confidential · Direct reply from Liran Bar-Shrim
-</div>
 </div>
 
 </div>
+
 </section>
 
-<section class="section">
-<div class="wrap">
-<div class="tag">What The Review Examines</div>
+<section>
+
+<div class="label">What The Review Examines</div>
 
 <div class="cards">
 
@@ -294,32 +430,45 @@ Strictly confidential · Direct reply from Liran Bar-Shrim
 </div>
 
 </div>
-</div>
+
 </section>
 
-<section class="section">
-<div class="wrap">
-<div class="tag">Engagement Terms</div>
+<section>
 
-<p>
-No system access required. No committee process. Direct principal engagement only.
-</p>
+<div class="label">Engagement Terms</div>
+
+<p>No system access required. No committee process. Direct principal engagement only.</p>
 
 <div class="price">
-<div class="tag">Minimum Engagement</div>
-<div class="num">€12,000</div>
-<p>Depending on scope, urgency, and complexity.</p>
+<div class="label">Private Engagement</div>
+<div class="num">From €12,000</div>
+<p>Based on scope, urgency, complexity, and fit assessment.</p>
 </div>
 
-</div>
 </section>
 
 <footer>
-<div class="wrap">
-Private inquiries: liran@liranbarshrim.com<br>
+Private inquiries: contact@matrix-audit.com<br>
 © 2026 Matrix Audit
-</div>
 </footer>
+
+</main>
+
+<script>
+function toggleMenu(){
+document.body.classList.toggle("menu");
+document.getElementById("drawer").classList.toggle("open");
+document.getElementById("overlay").classList.toggle("show");
+}
+function closeMenu(){
+document.body.classList.remove("menu");
+document.getElementById("drawer").classList.remove("open");
+document.getElementById("overlay").classList.remove("show");
+}
+window.addEventListener("resize",function(){
+if(window.innerWidth>900){closeMenu();}
+});
+</script>
 
 </body>
 </html>
