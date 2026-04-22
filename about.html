@@ -6,10 +6,13 @@
 
 <title>About | Liran Bar Shrim | Matrix Audit</title>
 <meta name="description" content="Independent researcher focused on authority gaps, executive accountability, and irreversible decisions under uncertainty.">
+<meta name="keywords" content="decision authority, DAR, executive accountability, AI governance, stop authority, irreversible decisions">
 <link rel="canonical" href="https://matrix-audit.com/about.html">
+
 <meta property="og:title" content="About | Liran Bar Shrim">
 <meta property="og:description" content="Independent researcher focused on decision authority and accountability.">
 <meta property="og:type" content="website">
+<meta property="og:url" content="https://matrix-audit.com/about.html">
 
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
 
@@ -21,7 +24,6 @@
 --gold:#c8a96e;
 --text:#e8e2d7;
 --muted:#a7a097;
---soft:#8f8880;
 --border:#1d1d1d;
 --border2:#2a2a2a;
 }
@@ -33,10 +35,9 @@ body{
 background:var(--bg);
 color:var(--text);
 font-family:Inter,system-ui,sans-serif;
-overflow-x:hidden;
 line-height:1.7;
+overflow-x:hidden;
 -webkit-font-smoothing:antialiased;
-text-rendering:optimizeLegibility;
 }
 
 body:before{
@@ -50,6 +51,8 @@ z-index:0;
 }
 
 a{text-decoration:none;color:inherit;}
+
+/* topbar */
 
 .topbar{
 position:sticky;
@@ -70,7 +73,7 @@ align-items:center;
 gap:12px;
 font-family:'IBM Plex Mono',monospace;
 font-size:10px;
-letter-spacing:.22em;
+letter-spacing:.28em;
 text-transform:uppercase;
 }
 
@@ -91,11 +94,13 @@ padding:6px;
 }
 
 .menu-btn span{
-display:block;
 width:22px;
 height:1.5px;
 background:var(--text);
+display:block;
 }
+
+/* overlay */
 
 .overlay{
 position:fixed;
@@ -112,6 +117,8 @@ opacity:1;
 visibility:visible;
 }
 
+/* side menu */
+
 .side-menu{
 position:fixed;
 top:0;
@@ -123,7 +130,7 @@ overflow-y:auto;
 background:#0d0d0d;
 border-left:1px solid var(--border);
 padding:28px 24px 48px;
-transition:.28s cubic-bezier(.4,0,.2,1);
+transition:.28s ease;
 z-index:999;
 }
 
@@ -147,7 +154,7 @@ color:var(--gold);
 .close-btn{
 background:none;
 border:none;
-font-size:26px;
+font-size:28px;
 color:var(--muted);
 cursor:pointer;
 }
@@ -178,14 +185,14 @@ border-bottom:1px solid rgba(255,255,255,.03);
 }
 
 .menu-group a:last-child{border-bottom:none;}
-.menu-group a:hover{color:var(--text);}
 .menu-group a.active{color:var(--gold);}
 
 .menu-divider-line{
-display:inline-block;
 width:12px;
 height:1px;
 background:var(--border2);
+display:inline-block;
+flex-shrink:0;
 }
 
 .menu-cta{
@@ -201,6 +208,18 @@ text-transform:uppercase;
 text-align:center;
 }
 
+.menu-email{
+display:block;
+margin-top:10px;
+padding:11px 20px;
+border:1px solid var(--border);
+font-size:13px;
+text-align:center;
+color:var(--muted)!important;
+}
+
+/* layout */
+
 .container{
 position:relative;
 z-index:1;
@@ -209,29 +228,21 @@ margin:0 auto;
 padding:70px 28px 110px;
 }
 
-.hero{
-display:flex;
-flex-direction:column;
-gap:36px;
-margin-bottom:58px;
-border-left:3px solid var(--gold);
-padding-left:24px;
-}
+/* hero */
 
-@media(min-width:760px){
 .hero{
 display:grid;
 grid-template-columns:240px 1fr;
 gap:54px;
 align-items:start;
-}
+border-left:3px solid var(--gold);
+padding-left:24px;
+margin-bottom:58px;
 }
 
 .photo{
-width:100%;
 max-width:240px;
 border:1px solid var(--border2);
-background:var(--surface);
 overflow:hidden;
 }
 
@@ -242,12 +253,13 @@ aspect-ratio:4/5;
 object-fit:cover;
 }
 
-.hero-label{
+.hero-label,
+.section-label{
 font-family:'IBM Plex Mono',monospace;
 font-size:10px;
 letter-spacing:.24em;
 text-transform:uppercase;
-color:#b8aa8a;
+color:var(--gold);
 margin-bottom:16px;
 }
 
@@ -269,38 +281,27 @@ margin-bottom:20px;
 
 .hero-lead{
 font-size:18px;
-line-height:1.8;
 color:var(--text);
 margin-bottom:14px;
-max-width:600px;
 }
 
 .hero-copy{
 font-size:15px;
-line-height:1.8;
 color:var(--muted);
 margin-bottom:12px;
 max-width:640px;
 }
+
+/* sections */
 
 .section{
 padding:54px 0;
 border-top:1px solid rgba(255,255,255,.05);
 }
 
-.section-label{
-font-family:'IBM Plex Mono',monospace;
-font-size:10px;
-letter-spacing:.22em;
-text-transform:uppercase;
-color:var(--gold);
-margin-bottom:14px;
-}
-
 .section h2{
 font-family:'Playfair Display',serif;
 font-size:clamp(28px,4vw,42px);
-line-height:1.1;
 margin-bottom:20px;
 }
 
@@ -314,7 +315,7 @@ max-width:720px;
 
 .quote{
 margin-top:24px;
-padding:28px 28px 28px 24px;
+padding:28px 24px;
 border-left:3px solid var(--gold);
 background:linear-gradient(180deg,#111,#0d0d0d);
 border:1px solid var(--border2);
@@ -324,9 +325,11 @@ line-height:1.35;
 color:var(--text);
 }
 
+/* buttons */
+
 .btn{
 display:inline-block;
-margin-top:32px;
+margin-top:28px;
 padding:16px 24px;
 border:1px solid var(--gold);
 color:var(--gold);
@@ -336,26 +339,42 @@ letter-spacing:.22em;
 text-transform:uppercase;
 }
 
+.btn.alt{
+margin-top:12px;
+border-color:var(--border2);
+color:var(--muted);
+}
+
+/* footer */
+
 .footer{
-margin-top:60px;
+margin-top:50px;
 padding-top:28px;
 border-top:1px solid var(--border2);
 font-size:11px;
 letter-spacing:.08em;
 color:#6e6964;
 font-family:'IBM Plex Mono',monospace;
-text-align:center;
 }
 
+/* mobile */
+
 @media(max-width:760px){
+
 .container{padding:56px 18px 90px;}
+
 .hero{
+grid-template-columns:1fr;
+gap:28px;
 border-left:none;
-padding-left:0;
 border-top:3px solid var(--gold);
+padding-left:0;
 padding-top:24px;
 }
+
 .photo{max-width:180px;}
+
+.hero h1{font-size:42px;}
 }
 </style>
 </head>
@@ -369,7 +388,9 @@ padding-top:24px;
 </a>
 
 <button class="menu-btn" id="openMenu" aria-label="Open menu">
-<span></span><span></span><span></span>
+<span></span>
+<span></span>
+<span></span>
 </button>
 </header>
 
@@ -384,6 +405,7 @@ padding-top:24px;
 
 <div class="menu-group" style="border-top:none;padding-top:0;margin-top:0;">
 <div class="menu-label">Primary</div>
+
 <a href="index.html"><span class="menu-divider-line"></span>Home</a>
 <a href="dar.html"><span class="menu-divider-line"></span>DAR</a>
 <a href="services.html"><span class="menu-divider-line"></span>Services</a>
@@ -392,7 +414,7 @@ padding-top:24px;
 
 <div class="menu-group">
 <div class="menu-label">Insights</div>
-<a href="accountability-gap.html"><span class="menu-divider-line"></span>The Accountability Gap</a>
+
 <a href="exposure.html"><span class="menu-divider-line"></span>When Failure Lands on One Name</a>
 <a href="failure-points.html"><span class="menu-divider-line"></span>Where Accountability Breaks</a>
 <a href="we.html"><span class="menu-divider-line"></span>The Death of We</a>
@@ -402,6 +424,7 @@ padding-top:24px;
 
 <div class="menu-group">
 <div class="menu-label">Knowledge</div>
+
 <a href="definitions.html"><span class="menu-divider-line"></span>Definitions</a>
 <a href="faq.html"><span class="menu-divider-line"></span>FAQ</a>
 <a href="case-studies.html"><span class="menu-divider-line"></span>Case Studies</a>
@@ -409,6 +432,7 @@ padding-top:24px;
 </div>
 
 <a href="contact.html" class="menu-cta">Private Intake</a>
+<a href="mailto:Liran@liranbarshrim.com" class="menu-email">Liran@liranbarshrim.com</a>
 
 </aside>
 
@@ -425,26 +449,18 @@ padding-top:24px;
 <h1>Liran Bar Shrim</h1>
 <div class="hero-role">Independent Researcher</div>
 
-<p class="hero-lead">
-I did not come through traditional consulting or corporate risk.
+<p class="hero-lead">Outside the system. Focused on what it misses.</p>
+
+<p class="hero-copy">
+My work examines a structural question many institutions still avoid:
+who is explicitly empowered to stop irreversible decisions under uncertainty?
 </p>
 
 <p class="hero-copy">
-My work began with one question:
-when a decision becomes irreversible, who is explicitly authorized to stop it?
+As systems accelerate, responsibility becomes diffuse. That gap becomes dangerous.
 </p>
-
-<p class="hero-copy">
-I help organizations identify where accountability is real, authority is unclear,
-and automated decisions can move faster than governance.
-</p>
-
-<p class="hero-copy">
-My focus includes AI systems, executive decision structures,
-and high-risk operating environments.
-</p>
-
 </div>
+
 </section>
 
 <section class="section">
@@ -452,33 +468,29 @@ and high-risk operating environments.
 <h2>Distance reveals what proximity normalizes.</h2>
 
 <p>
-Internal systems often adapt to their own blind spots.
-Process becomes routine. Momentum becomes culture.
+Internal systems often adapt to their own blind spots. Process becomes routine. Momentum becomes culture.
 </p>
 
 <p>
-An external perspective can identify authority gaps,
-escalation dead zones, and decisions that continue
-because no one is clearly empowered to stop them.
+An external perspective can identify authority gaps, escalation dead zones, and decisions that continue because no one is clearly empowered to stop them.
 </p>
 </section>
 
 <section class="section">
-<div class="section-label">Approach</div>
-<h2>Clarity before exposure.</h2>
+<div class="section-label">Why Now</div>
+<h2>Uncertainty moves faster than governance.</h2>
 
 <p>
-I do not focus on adding bureaucracy or expanding process.
+AI systems, delegated approvals, distributed teams, and rapid execution changed how decisions move.
 </p>
 
 <p>
-I focus on exposing where current structures may fail
-at the moment they matter most.
+Many organizations modernized execution before modernizing intervention.
 </p>
 
 <div class="quote">
-You do not hire me to build process.<br>
-You hire me to expose what process hides.
+When no one is named in advance,<br>
+someone is blamed later.
 </div>
 </section>
 
@@ -487,30 +499,31 @@ You hire me to expose what process hides.
 <h2>Areas of Work</h2>
 
 <p>
-Decision authority. Stop power. Executive exposure.
-Irreversible pathways. Accountability under pressure.
+Decision authority. Stop power. Executive exposure. Irreversible pathways. Accountability under pressure.
 </p>
+
+<a href="contact.html" class="btn">Private Inquiry</a><br>
+<a href="mailto:Liran@liranbarshrim.com" class="btn alt">Liran@liranbarshrim.com</a>
+
 </section>
 
-<a href="contact.html" class="btn">Private Inquiry</a>
-
 <div class="footer">
-&copy; 2026 Liran Bar Shrim. All rights reserved.
+&copy; 2026 Liran Bar Shrim. Independent work. All rights reserved.
 </div>
 
 </main>
 
 <script>
-const menu = document.getElementById('menu');
-const overlay = document.getElementById('overlay');
+const menu=document.getElementById('menu');
+const overlay=document.getElementById('overlay');
 
-document.getElementById('openMenu').onclick = function(){
+document.getElementById('openMenu').onclick=function(){
 menu.classList.add('active');
 overlay.classList.add('active');
 };
 
-document.getElementById('closeMenu').onclick = closeMenu;
-overlay.onclick = closeMenu;
+document.getElementById('closeMenu').onclick=closeMenu;
+overlay.onclick=closeMenu;
 
 function closeMenu(){
 menu.classList.remove('active');
