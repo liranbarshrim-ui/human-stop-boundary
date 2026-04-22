@@ -2,460 +2,426 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1.0">
-<meta name="description" content="Matrix Audit — Private advisory on decision authority, governance pressure, accountability exposure and executive risk.">
-<meta name="theme-color" content="#05050a">
-<title>Matrix Audit</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<title>Decision Authority Research | Named Accountability Before Exposure</title>
+
+<meta name="description" content="Private advisory for executives, boards and AI governance leaders facing irreversible decisions. Define one accountable name before exposure begins.">
+
+<meta name="keywords" content="decision authority, executive accountability, AI governance, board risk, stop authority, DAR, irreversible decisions">
+
+<link rel="canonical" href="https://matrix-audit.com/">
+
+<meta property="og:title" content="Decision Authority Research">
+<meta property="og:description" content="One accountable name. Before it moves.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://matrix-audit.com/">
+
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Playfair+Display:wght@400;700&display=swap" rel="stylesheet">
 
 <style>
-*{margin:0;padding:0;box-sizing:border-box}
-
 :root{
---bg:#05050a;
---bg2:#0d0d15;
---line:rgba(255,255,255,.08);
---text:#d7d2ca;
---muted:#8f8a82;
---gold:#b49a6a;
---white:#f3eee7;
---max:1180px;
+--bg:#090909;
+--surface:#111111;
+--surface2:#151515;
+--gold:#c8a96e;
+--text:#e6e0d4;
+--muted:#b8b2ac;
+--dim:#7a7570;
+--border:#1e1e1e;
+--border2:#2a2a2a;
 }
+
+*{margin:0;padding:0;box-sizing:border-box;}
 
 body{
 background:var(--bg);
 color:var(--text);
-font-family:Inter,sans-serif;
-font-weight:300;
+font-family:'IBM Plex Mono',monospace;
 line-height:1.7;
-overflow-x:hidden;
 }
 
-a{text-decoration:none;color:inherit}
-
-.wrap{
-max-width:var(--max);
-margin:auto;
-padding:0 22px;
+.container{
+max-width:1120px;
+margin:0 auto;
+padding:40px 24px 90px;
 }
 
-/* NAV */
-nav{
-position:fixed;
-top:0;left:0;right:0;
-height:72px;
-z-index:5000;
-background:rgba(5,5,10,.92);
-backdrop-filter:blur(14px);
-border-bottom:1px solid var(--line);
-}
-
-.navin{
-height:100%;
+.topbar{
 display:flex;
-align-items:center;
 justify-content:space-between;
-gap:18px;
+align-items:center;
+gap:20px;
+padding-bottom:24px;
+border-bottom:1px solid var(--border2);
+margin-bottom:60px;
+flex-wrap:wrap;
 }
 
 .brand{
-display:flex;
-flex-direction:column;
-min-width:0;
-}
-
-.brand b{
-font-size:12px;
-letter-spacing:.28em;
-font-weight:600;
-color:var(--white);
-white-space:nowrap;
-}
-
-.brand span{
-font-size:10px;
-color:var(--muted);
-white-space:nowrap;
-overflow:hidden;
-text-overflow:ellipsis;
-max-width:220px;
-margin-top:3px;
-}
-
-/* BURGER */
-.burger{
-width:34px;
-height:26px;
-border:none;
-background:none;
-cursor:pointer;
-position:relative;
-flex-shrink:0;
-}
-
-.burger span{
-position:absolute;
-left:0;
-right:0;
-height:2px;
-background:var(--white);
-transition:.25s;
-}
-
-.burger span:nth-child(1){top:2px}
-.burger span:nth-child(2){top:11px}
-.burger span:nth-child(3){top:20px}
-
-body.menu .burger span:nth-child(1){
-transform:rotate(45deg);
-top:11px;
-}
-
-body.menu .burger span:nth-child(2){
-opacity:0;
-}
-
-body.menu .burger span:nth-child(3){
-transform:rotate(-45deg);
-top:11px;
-}
-
-/* DRAWER */
-.overlay{
-position:fixed;
-inset:72px 0 0 0;
-background:rgba(0,0,0,.55);
-opacity:0;
-pointer-events:none;
-transition:.25s;
-z-index:3900;
-}
-
-.overlay.show{
-opacity:1;
-pointer-events:auto;
-}
-
-.drawer{
-position:fixed;
-top:72px;
-right:0;
-width:88%;
-max-width:340px;
-height:calc(100dvh - 72px);
-background:#090910;
-border-left:1px solid var(--line);
-transform:translateX(100%);
-transition:.28s;
-z-index:4000;
-overflow-y:auto;
-padding:22px;
-}
-
-.drawer.open{
-transform:translateX(0);
-}
-
-.drawer h4{
-font-size:11px;
-letter-spacing:.25em;
-text-transform:uppercase;
-color:var(--gold);
-margin:20px 0 10px;
-}
-
-.drawer a{
-display:block;
-padding:14px 0;
-border-bottom:1px solid rgba(255,255,255,.05);
-font-size:16px;
-color:var(--text);
-}
-
-.drawer a:last-child{
-border-bottom:none;
-}
-
-body.menu{
-overflow:hidden;
-}
-
-/* HERO */
-.hero{
-padding-top:72px;
-min-height:100vh;
-display:grid;
-grid-template-columns:1fr 360px;
-}
-
-.left{
-padding:80px 52px;
-display:flex;
-flex-direction:column;
-justify-content:center;
-}
-
-.label{
-font-size:11px;
-letter-spacing:.28em;
-text-transform:uppercase;
-color:var(--gold);
-margin-bottom:22px;
-}
-
-h1{
-font-family:"Cormorant Garamond",serif;
-font-weight:300;
-font-size:clamp(48px,7vw,88px);
-line-height:1.03;
-color:var(--white);
-margin-bottom:22px;
-}
-
-h1 em{
-font-style:italic;
-color:var(--gold);
-}
-
-.sub{
-font-size:20px;
-max-width:680px;
-margin-bottom:24px;
-color:#cfc8bf;
-}
-
-.meta{
 font-size:11px;
 letter-spacing:.22em;
 text-transform:uppercase;
-color:#6d685f;
-margin-bottom:34px;
-line-height:1.9;
+color:var(--gold);
 }
 
-.actions{
+.nav{
+display:flex;
+gap:18px;
+flex-wrap:wrap;
+}
+
+.nav a{
+text-decoration:none;
+color:var(--muted);
+font-size:12px;
+}
+
+.nav a:hover{color:var(--text);}
+
+.hero{
+display:grid;
+grid-template-columns:1.2fr .8fr;
+gap:40px;
+align-items:center;
+margin-bottom:70px;
+}
+
+.hero-left{
+border-left:3px solid var(--gold);
+padding-left:22px;
+}
+
+.hero h1{
+font-family:'Playfair Display',serif;
+font-size:clamp(42px,7vw,82px);
+line-height:1.02;
+margin-bottom:18px;
+}
+
+.hero p{
+font-size:16px;
+color:var(--muted);
+max-width:620px;
+margin-bottom:28px;
+}
+
+.btns{
 display:flex;
 gap:14px;
 flex-wrap:wrap;
 }
 
 .btn{
-padding:15px 26px;
+padding:15px 22px;
+text-decoration:none;
 font-size:12px;
 letter-spacing:.16em;
 text-transform:uppercase;
-border:1px solid var(--line);
 display:inline-block;
+transition:.2s;
 }
 
 .primary{
 background:var(--gold);
-border-color:var(--gold);
 color:#111;
+font-weight:700;
 }
 
-.side{
-border-left:1px solid var(--line);
-background:rgba(255,255,255,.02);
-padding:80px 28px;
-display:flex;
-flex-direction:column;
-justify-content:center;
+.secondary{
+border:1px solid var(--gold);
+color:var(--text);
+background:#111;
 }
 
-.side small{
-font-size:11px;
-letter-spacing:.24em;
-text-transform:uppercase;
-color:#6d685f;
-margin-bottom:16px;
+.btn:hover{
+transform:translateY(-2px);
 }
 
-.panel{
-display:grid;
-gap:1px;
-background:var(--line);
+.signal{
+background:linear-gradient(180deg,#141414,#0f0f0f);
+border:1px solid #262626;
+border-left:3px solid var(--gold);
+padding:26px;
 }
 
-.panel a{
-background:var(--bg2);
-padding:18px;
-}
-
-.panel strong{
+.signal small{
 display:block;
-font-family:"Cormorant Garamond",serif;
-font-size:26px;
-font-weight:400;
-color:var(--white);
-margin-bottom:6px;
+font-size:10px;
+letter-spacing:.18em;
+text-transform:uppercase;
+color:var(--gold);
+margin-bottom:12px;
 }
 
-.panel span{
-font-size:14px;
+.signal p{
+font-family:'Playfair Display',serif;
+font-size:30px;
+line-height:1.25;
+}
+
+.section{
+padding:55px 0;
+border-top:1px solid var(--border2);
+}
+
+.label{
+font-size:10px;
+letter-spacing:.18em;
+text-transform:uppercase;
+color:var(--gold);
+margin-bottom:14px;
+}
+
+.section h2{
+font-family:'Playfair Display',serif;
+font-size:42px;
+margin-bottom:14px;
+line-height:1.08;
+}
+
+.section p{
+color:var(--muted);
+font-size:15px;
+max-width:760px;
+}
+
+.grid{
+display:grid;
+grid-template-columns:repeat(3,1fr);
+gap:18px;
+margin-top:28px;
+}
+
+.card{
+background:var(--surface);
+border:1px solid var(--border2);
+padding:24px;
+text-decoration:none;
+color:var(--text);
+transition:.2s;
+}
+
+.card:hover{
+border-color:var(--gold);
+transform:translateY(-3px);
+}
+
+.card small{
+display:block;
+font-size:10px;
+letter-spacing:.16em;
+text-transform:uppercase;
+color:var(--gold);
+margin-bottom:10px;
+}
+
+.card h3{
+font-family:'Playfair Display',serif;
+font-size:28px;
+margin-bottom:10px;
+font-weight:700;
+}
+
+.card p{
+font-size:13px;
 color:var(--muted);
 }
 
-/* MOBILE */
-@media(max-width:900px){
-
-.hero{
-grid-template-columns:1fr;
+.quote{
+margin-top:24px;
+padding:26px;
+background:var(--surface);
+border-left:3px solid var(--gold);
+font-family:'Playfair Display',serif;
+font-size:30px;
+line-height:1.3;
 }
 
-.left{
-padding:56px 22px 34px;
-}
-
-.side{
-border-left:none;
-border-top:1px solid var(--line);
-padding:28px 22px 40px;
-}
-
-.sub{
-font-size:17px;
-}
-
-}
-
-@media(max-width:680px){
-
-h1{
-font-size:44px;
-}
-
-.actions{
-flex-direction:column;
-}
-
-.btn{
-width:100%;
+.cta{
 text-align:center;
+padding:70px 0 20px;
 }
 
-.brand span{
-max-width:160px;
+.cta h2{
+font-family:'Playfair Display',serif;
+font-size:56px;
+line-height:1.05;
+margin-bottom:16px;
 }
 
+.cta p{
+color:var(--muted);
+font-size:16px;
+margin-bottom:28px;
+}
+
+.footer{
+padding-top:36px;
+border-top:1px solid var(--border2);
+margin-top:40px;
+font-size:12px;
+color:var(--dim);
+}
+
+@media(max-width:980px){
+.hero{grid-template-columns:1fr;}
+.grid{grid-template-columns:1fr;}
+}
+
+@media(max-width:700px){
+.hero h1{font-size:46px;}
+.section h2{font-size:34px;}
+.cta h2{font-size:40px;}
+.container{padding:26px 18px 70px;}
+.btn{width:100%;text-align:center;}
 }
 </style>
 </head>
 
 <body>
 
-<nav>
-<div class="wrap navin">
+<div class="container">
 
-<a href="index.html" class="brand">
-<b>MATRIX AUDIT</b>
-<span>Liran Bar-Shrim · Decision Authority</span>
-</a>
+<div class="topbar">
+<div class="brand">Decision Authority Research</div>
 
-<button class="burger" onclick="toggleMenu()" aria-label="Menu">
-<span></span>
-<span></span>
-<span></span>
-</button>
-
-</div>
-</nav>
-
-<div class="overlay" id="overlay" onclick="closeMenu()"></div>
-
-<div class="drawer" id="drawer">
-
-<h4>Main</h4>
-<a href="index.html">Home</a>
-<a href="about.html">About</a>
-<a href="review.html">Executive Review</a>
-<a href="case-studies.html">Case Studies</a>
-<a href="ai-governance.html">AI Governance</a>
-<a href="contact.html">Contact</a>
-
-<h4>More</h4>
+<div class="nav">
+<a href="dar.html">DAR</a>
 <a href="services.html">Services</a>
-<a href="stop-authority.html">Stop Authority</a>
+<a href="ai-governance.html">AI Governance</a>
 <a href="faq.html">FAQ</a>
-<a href="goodfaith.html">Good Faith Use</a>
-<a href="scenarios.html">Scenarios</a>
-
+<a href="contact.html">Contact</a>
+</div>
 </div>
 
 <section class="hero">
 
-<div class="left">
+<div class="hero-left">
+<h1>One Name.<br>Before It Moves.</h1>
 
-<div class="label">Decision Authority & Executive Advisory</div>
-
-<h1>
-When decisions move fast,<br>
-<em>responsibility</em><br>
-is not enough.
-</h1>
-
-<p class="sub">
-Private advisory for leaders facing consequential decisions, governance pressure, or accountability exposure.
+<p>
+Private advisory for boards, executives, CROs, General Counsel and AI governance leaders facing irreversible decisions under uncertainty.
 </p>
 
-<p class="meta">
-Private mandates only · Limited capacity · Initial findings within 7 days
+<div class="btns">
+<a href="contact.html" class="btn primary">Request Private Inquiry</a>
+<a href="dar.html" class="btn secondary">View DAR</a>
+</div>
+</div>
+
+<div class="signal">
+<small>Core Signal</small>
+<p>
+If no one is clearly named to stop it, liability may name someone later.
 </p>
-
-<div class="actions">
-<a href="contact.html" class="btn primary">Request Private Review</a>
-<a href="review.html" class="btn">View Executive Review</a>
-</div>
-
-</div>
-
-<div class="side">
-
-<small>Further Reading</small>
-
-<div class="panel">
-
-<a href="stop-authority.html">
-<strong>Named Stop Authority</strong>
-<span>Define who can stop a consequential decision before it moves.</span>
-</a>
-
-<a href="case-studies.html">
-<strong>Real Failures</strong>
-<span>Knight Capital. Boeing 737 MAX. CrowdStrike.</span>
-</a>
-
-<a href="ai-governance.html">
-<strong>AI Governance</strong>
-<span>When systems move faster than governance can respond.</span>
-</a>
-
-</div>
-
 </div>
 
 </section>
 
-<script>
-function toggleMenu(){
-document.body.classList.toggle("menu");
-document.getElementById("drawer").classList.toggle("open");
-document.getElementById("overlay").classList.toggle("show");
-}
+<section class="section">
+<div class="label">Why This Exists</div>
+<h2>Most systems know how to approve.</h2>
+<p>
+Far fewer know who can stop continuation in time. That gap becomes critical in AI, regulated industries, boards, and high-speed operations.
+</p>
 
-function closeMenu(){
-document.body.classList.remove("menu");
-document.getElementById("drawer").classList.remove("open");
-document.getElementById("overlay").classList.remove("show");
-}
+<div class="quote">
+Approval is common.<br>
+Named accountability is rare.
+</div>
+</section>
 
-window.addEventListener("resize",function(){
-if(window.innerWidth>900){closeMenu();}
-});
-</script>
+<section class="section">
+<div class="label">Explore</div>
+<h2>Core Pages</h2>
+
+<div class="grid">
+
+<a href="dar.html" class="card">
+<small>Framework</small>
+<h3>DAR</h3>
+<p>Decision Authority Record. One accountable owner before exposure begins.</p>
+</a>
+
+<a href="services.html" class="card">
+<small>Engagements</small>
+<h3>Services</h3>
+<p>Private reviews for live decisions, board exposure, and unclear ownership.</p>
+</a>
+
+<a href="ai-governance.html" class="card">
+<small>Vertical</small>
+<h3>AI Governance</h3>
+<p>Human stop authority for fast-moving systems and autonomous operations.</p>
+</a>
+
+<a href="case-studies.html" class="card">
+<small>Failures</small>
+<h3>Case Studies</h3>
+<p>Different industries. Same pattern. No clear stop authority.</p>
+</a>
+
+<a href="stop-authority.html" class="card">
+<small>Essay</small>
+<h3>Stop Authority</h3>
+<p>Why approval systems fail when no one can interrupt continuation.</p>
+</a>
+
+<a href="faq.html" class="card">
+<small>Questions</small>
+<h3>FAQ</h3>
+<p>Answers on DAR, accountability, AI oversight, and executive exposure.</p>
+</a>
+
+</div>
+</section>
+
+<section class="section">
+<div class="label">Insights</div>
+<h2>Thought Leadership</h2>
+
+<div class="grid">
+
+<a href="death-of-we.html" class="card">
+<small>Essay</small>
+<h3>The Death of We</h3>
+<p>At some point, “we” becomes one name.</p>
+</a>
+
+<a href="failure-points.html" class="card">
+<small>Read</small>
+<h3>Failure Points</h3>
+<p>Where accountability breaks across sectors.</p>
+</a>
+
+<a href="good-faith.html" class="card">
+<small>Policy</small>
+<h3>Good Faith Use</h3>
+<p>Scope, limits and responsible use principles.</p>
+</a>
+
+</div>
+</section>
+
+<section class="cta">
+<h2>If a live decision failed tonight,<br>whose name remains tomorrow?</h2>
+
+<p>
+If the answer is unclear, distributed, or delayed — the exposure may already exist.
+</p>
+
+<div class="btns" style="justify-content:center;">
+<a href="contact.html" class="btn primary">Discuss Live Exposure</a>
+<a href="services.html" class="btn secondary">View Services</a>
+</div>
+</section>
+
+<div class="footer">
+© 2026 Liran Bar-Shrim. All rights reserved.
+</div>
+
+</div>
 
 </body>
 </html>
