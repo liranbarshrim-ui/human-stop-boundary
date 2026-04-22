@@ -2,22 +2,113 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="description" content="Liran Bar-Shrim — Private advisory on decision authority, accountability clarity, and governance under pressure. For boards, CEOs, and senior executives. Founder of Matrix Audit.">
-<meta name="robots" content="index, follow">
-<meta name="author" content="Liran Bar-Shrim">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<meta name="description" content="Matrix Audit — Private advisory on decision authority, accountability clarity, governance pressure, and executive exposure.">
 <meta name="theme-color" content="#03030a">
 <title>Matrix Audit — Decision Authority Advisory</title>
 
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+
 <style>
-*{margin:0;padding:0;box-sizing:border-box}
+*,
+*::before,
+*::after{
+box-sizing:border-box;
+margin:0;
+padding:0;
+}
+
+:root{
+--bg:#03030a;
+--bg2:#0a0a14;
+--bg3:#11111b;
+--line:rgba(255,255,255,.08);
+--text:#d6d0c8;
+--muted:#8e8a83;
+--gold:#b49a6a;
+--gold2:#8f764a;
+--white:#f2eee8;
+--max:1120px;
+--pad:56px;
+--padm:22px;
+}
+
+html{
+scroll-behavior:smooth;
+}
 
 body{
-background:#03030a;
-color:#d7d2c8;
-font-family:Arial,Helvetica,sans-serif;
+background:var(--bg);
+color:var(--text);
+font-family:Inter,system-ui,sans-serif;
+font-weight:300;
 line-height:1.7;
 overflow-x:hidden;
+-webkit-font-smoothing:antialiased;
+}
+
+a{
+color:inherit;
+text-decoration:none;
+}
+
+img{
+max-width:100%;
+display:block;
+}
+
+.wrap{
+max-width:var(--max);
+margin:auto;
+padding:0 var(--pad);
+}
+
+section{
+padding:110px 0;
+}
+
+h1,h2,h3{
+font-family:"Cormorant Garamond",serif;
+font-weight:300;
+letter-spacing:.01em;
+}
+
+small.label{
+display:inline-block;
+font-size:11px;
+letter-spacing:.28em;
+text-transform:uppercase;
+color:var(--gold);
+margin-bottom:18px;
+}
+
+.btn{
+display:inline-block;
+padding:14px 28px;
+font-size:12px;
+letter-spacing:.18em;
+text-transform:uppercase;
+border:1px solid var(--line);
+transition:.25s;
+cursor:pointer;
+}
+
+.btn.primary{
+background:var(--gold);
+border-color:var(--gold);
+color:#090909;
+}
+
+.btn.primary:hover{
+background:transparent;
+color:var(--gold);
+}
+
+.btn.ghost:hover{
+border-color:var(--gold);
+color:var(--white);
 }
 
 /* NAV */
@@ -26,72 +117,98 @@ position:fixed;
 top:0;
 left:0;
 right:0;
-height:66px;
-background:rgba(3,3,10,.95);
+height:68px;
+z-index:1000;
+background:rgba(3,3,10,.86);
+backdrop-filter:blur(16px);
+border-bottom:1px solid var(--line);
+}
+
+.navin{
+height:100%;
+max-width:var(--max);
+margin:auto;
+padding:0 var(--pad);
 display:flex;
 align-items:center;
 justify-content:space-between;
-padding:0 20px;
-z-index:999;
-border-bottom:1px solid rgba(255,255,255,.06);
+gap:20px;
 }
 
-.logo{
-font-size:13px;
-letter-spacing:2px;
-text-transform:uppercase;
-color:#fff;
-font-weight:bold;
-}
-
-.menu{
+.brand{
 display:flex;
-gap:24px;
+flex-direction:column;
+line-height:1.1;
 }
 
-.menu a{
-color:#aaa;
-text-decoration:none;
-font-size:14px;
+.brand b{
+font-size:12px;
+letter-spacing:.28em;
+text-transform:uppercase;
+color:var(--white);
+font-weight:600;
 }
 
-.menu a:hover{
-color:#fff;
+.brand span{
+font-size:10px;
+color:var(--muted);
+margin-top:4px;
+}
+
+.links{
+display:flex;
+align-items:center;
+gap:26px;
+}
+
+.links a{
+font-size:13px;
+color:var(--muted);
+}
+
+.links a:hover{
+color:var(--white);
 }
 
 .burger{
 display:none;
-flex-direction:column;
-gap:4px;
 background:none;
 border:none;
+width:30px;
+height:26px;
+position:relative;
 cursor:pointer;
 }
 
 .burger span{
-width:22px;
-height:2px;
+position:absolute;
+left:0;
+right:0;
+height:1px;
 background:#fff;
-display:block;
+transition:.25s;
 }
 
-/* MOBILE DRAWER RIGHT */
+.burger span:nth-child(1){top:4px;}
+.burger span:nth-child(2){top:12px;}
+.burger span:nth-child(3){top:20px;}
+
 .drawer{
 position:fixed;
-top:66px;
+top:68px;
 right:0;
-width:85%;
+width:84%;
 max-width:320px;
-height:calc(100vh - 66px);
-background:#080810;
-padding:25px;
+height:calc(100vh - 68px);
+background:rgba(3,3,10,.98);
+border-left:1px solid var(--line);
+padding:26px 22px;
 display:flex;
 flex-direction:column;
 gap:18px;
 transform:translateX(100%);
-transition:.3s;
-z-index:998;
-border-left:1px solid rgba(255,255,255,.08);
+transition:.28s;
+z-index:999;
 }
 
 .drawer.open{
@@ -99,174 +216,289 @@ transform:translateX(0);
 }
 
 .drawer a{
-color:#ddd;
-text-decoration:none;
-font-size:17px;
+font-size:16px;
+color:var(--text);
+padding:4px 0;
 }
 
 /* HERO */
 .hero{
-padding:130px 22px 70px;
-max-width:1100px;
-margin:auto;
+min-height:100vh;
+display:grid;
+grid-template-columns:1fr 360px;
+position:relative;
+overflow:hidden;
+}
+
+.bgfx{
+position:absolute;
+inset:0;
+background:
+radial-gradient(circle at 20% 20%,rgba(180,154,106,.08),transparent 30%),
+radial-gradient(circle at 80% 40%,rgba(180,154,106,.05),transparent 26%),
+linear-gradient(to bottom,#05050b,#03030a 70%);
+z-index:0;
+}
+
+.hero-left,
+.hero-right{
+position:relative;
+z-index:1;
+}
+
+.hero-left{
+display:flex;
+flex-direction:column;
+justify-content:center;
+padding:140px var(--pad) 80px;
 }
 
 .hero h1{
-font-size:48px;
-line-height:1.1;
-margin-bottom:25px;
-color:#fff;
+font-size:clamp(46px,6vw,84px);
+line-height:1.02;
+color:var(--white);
+margin-bottom:26px;
 }
 
-.hero h1 span{
-color:#b49a6a;
+.hero h1 em{
 font-style:italic;
+color:var(--gold);
 }
 
-.hero p{
+.hero p.sub{
 font-size:18px;
-max-width:700px;
-color:#c6c1b8;
-margin-bottom:30px;
+max-width:620px;
+color:#c7c0b8;
+margin-bottom:28px;
 }
 
-.buttons{
+.hero p.meta{
+font-size:11px;
+letter-spacing:.2em;
+text-transform:uppercase;
+color:#6f6a64;
+margin-bottom:40px;
+}
+
+.actions{
 display:flex;
 gap:14px;
 flex-wrap:wrap;
 }
 
-.btn{
-padding:14px 24px;
-text-decoration:none;
-font-size:14px;
-border:1px solid #b49a6a;
+.hero-right{
+border-left:1px solid var(--line);
+background:rgba(255,255,255,.02);
+padding:140px 34px 70px;
+display:flex;
+flex-direction:column;
+justify-content:center;
 }
 
-.gold{
-background:#b49a6a;
-color:#000;
-}
-
-.ghost{
-color:#fff;
-background:transparent;
-}
-
-/* SECTIONS */
-section{
-padding:70px 22px;
-max-width:1100px;
-margin:auto;
-border-top:1px solid rgba(255,255,255,.06);
-}
-
-h2{
-font-size:38px;
-margin-bottom:22px;
-color:#fff;
-line-height:1.2;
-}
-
-h2 span{
-color:#b49a6a;
-font-style:italic;
-}
-
-p{
-font-size:17px;
-color:#c8c4bc;
+.panel-title{
+font-size:11px;
+letter-spacing:.28em;
+text-transform:uppercase;
+color:#6f6a64;
 margin-bottom:18px;
 }
 
-.grid{
+.panel{
+display:grid;
+gap:1px;
+background:var(--line);
+}
+
+.panel a{
+background:var(--bg2);
+padding:22px 18px;
+transition:.25s;
+}
+
+.panel a:hover{
+background:var(--bg3);
+}
+
+.panel a strong{
+display:block;
+font-family:"Cormorant Garamond",serif;
+font-size:22px;
+color:var(--white);
+font-weight:400;
+margin-bottom:6px;
+}
+
+.panel a span{
+font-size:14px;
+color:var(--muted);
+line-height:1.6;
+}
+
+/* CONTENT */
+.two{
 display:grid;
 grid-template-columns:1fr 1fr;
-gap:40px;
+gap:80px;
+}
+
+h2{
+font-size:56px;
+line-height:1.05;
+color:var(--white);
+margin-top:10px;
+margin-bottom:18px;
+}
+
+h2 em{
+font-style:italic;
+color:var(--gold);
+}
+
+.copy p{
+font-size:17px;
+color:#bdb8b0;
+margin-bottom:18px;
+}
+
+.quote{
+border-left:2px solid rgba(180,154,106,.4);
+padding:18px 20px;
+margin-top:14px;
+font-family:"Cormorant Garamond",serif;
+font-size:28px;
+line-height:1.25;
+color:var(--white);
+}
+
+.cards{
+display:grid;
+grid-template-columns:1fr 1fr 1fr;
+gap:1px;
+background:var(--line);
+margin-top:36px;
 }
 
 .card{
-padding:22px;
-border:1px solid rgba(255,255,255,.06);
-background:#0a0a14;
+background:var(--bg2);
+padding:28px;
 }
 
 .card h3{
-font-size:22px;
-margin-bottom:10px;
-color:#fff;
+font-size:28px;
+color:var(--white);
+margin-bottom:8px;
 }
 
 .card p{
 font-size:15px;
-margin:0;
+color:var(--muted);
 }
 
-/* TABLE */
-table{
-width:100%;
-border-collapse:collapse;
-margin-top:20px;
-overflow-x:auto;
-display:block;
-white-space:nowrap;
-}
-
-th,td{
-padding:14px;
-border:1px solid rgba(255,255,255,.08);
-color:#eee;
-font-size:15px;
-}
-
-th{
-background:#14141e;
-color:#b49a6a;
-}
-
-/* FOOTER */
-footer{
-padding:45px 22px;
-border-top:1px solid rgba(255,255,255,.06);
+.cta{
 text-align:center;
-font-size:14px;
-color:#777;
+max-width:760px;
+margin:auto;
+}
+
+.cta h2{
+font-size:62px;
+}
+
+footer{
+border-top:1px solid var(--line);
+padding:38px var(--pad);
+font-size:13px;
+color:#6f6a64;
+}
+
+.foot{
+max-width:var(--max);
+margin:auto;
+display:flex;
+justify-content:space-between;
+gap:20px;
+flex-wrap:wrap;
 }
 
 /* MOBILE */
-@media(max-width:780px){
-
-.menu{
-display:none;
+@media(max-width:980px){
+.wrap{padding:0 32px;}
+.navin{padding:0 32px;}
+.hero{
+grid-template-columns:1fr;
+}
+.hero-right{
+border-left:none;
+border-top:1px solid var(--line);
+padding:34px 32px 56px;
+}
+.hero-left{
+padding:130px 32px 50px;
+}
+.two{
+grid-template-columns:1fr;
+gap:44px;
+}
+.cards{
+grid-template-columns:1fr 1fr;
+}
 }
 
-.burger{
-display:flex;
+@media(max-width:680px){
+.wrap{padding:0 var(--padm);}
+.navin{padding:0 var(--padm);}
+.links{display:none;}
+.burger{display:block;}
+
+.hero-left{
+padding:118px var(--padm) 42px;
 }
 
 .hero h1{
-font-size:40px;
+font-size:42px;
+line-height:1.06;
 }
 
-.grid{
-grid-template-columns:1fr;
+.hero p.sub,
+.copy p,
+.card p{
+font-size:16px;
+line-height:1.82;
 }
 
-.buttons a{
+.hero-right{
+padding:30px var(--padm) 52px;
+}
+
+.panel a strong{
+font-size:20px;
+}
+
+.actions{
+flex-direction:column;
+align-items:stretch;
+}
+
+.actions .btn{
 width:100%;
 text-align:center;
 }
 
-section{
-padding:60px 22px;
+.cards{
+grid-template-columns:1fr;
 }
 
 h2{
-font-size:32px;
+font-size:40px;
+line-height:1.12;
 }
 
-p{
-font-size:16px;
+.cta h2{
+font-size:42px;
+}
+
+footer{
+padding:32px 22px;
 }
 }
 </style>
@@ -275,159 +507,262 @@ font-size:16px;
 <body>
 
 <nav>
-<div class="logo">Matrix Audit</div>
+<div class="navin">
+<a href="#" class="brand">
+<b>Matrix Audit</b>
+<span>Liran Bar-Shrim · Decision Authority</span>
+</a>
 
-<div class="menu">
-<a href="#">Home</a>
-<a href="#">Review</a>
-<a href="#">Cases</a>
-<a href="#">About</a>
-<a href="#">Contact</a>
+<div class="links">
+<a href="#review">Executive Review</a>
+<a href="#problem">Decision Failures</a>
+<a href="#who">Who Engages</a>
+<a href="#contact">Contact</a>
+<a href="#contact" class="btn">Request Review</a>
 </div>
 
-<button class="burger" onclick="toggleMenu()">
+<button class="burger" onclick="menuToggle()">
 <span></span>
 <span></span>
 <span></span>
 </button>
+</div>
 </nav>
 
 <div class="drawer" id="drawer">
-<a href="#">Home</a>
-<a href="#">Executive Review</a>
-<a href="#">Decision Failures</a>
-<a href="#">AI Governance</a>
-<a href="#">About</a>
-<a href="#">Contact</a>
+<a href="#review" onclick="menuClose()">Executive Review</a>
+<a href="#problem" onclick="menuClose()">Decision Failures</a>
+<a href="#who" onclick="menuClose()">Who Engages</a>
+<a href="#contact" onclick="menuClose()">Contact</a>
+<a href="#contact" onclick="menuClose()" class="btn primary">Request Review</a>
 </div>
 
 <section class="hero">
+<div class="bgfx"></div>
+
+<div class="hero-left">
+<small class="label">Decision Authority & Executive Advisory</small>
+
 <h1>
 When decisions move fast,<br>
-<span>responsibility</span> is not enough.
+<em>responsibility</em><br>
+is not enough.
 </h1>
 
-<p>
+<p class="sub">
 Private advisory for leaders facing consequential decisions, governance pressure, or accountability exposure.
 </p>
 
-<div class="buttons">
-<a href="#" class="btn gold">Request Private Review</a>
-<a href="#" class="btn ghost">View Review</a>
+<p class="meta">
+Private mandates only · Limited capacity · Initial findings within 7 days
+</p>
+
+<div class="actions">
+<a href="#contact" class="btn primary">Request Private Review</a>
+<a href="#review" class="btn ghost">View Executive Review</a>
+</div>
+</div>
+
+<div class="hero-right">
+<div class="panel-title">Further Reading</div>
+
+<div class="panel">
+<a href="#">
+<strong>Named Stop Authority</strong>
+<span>The structural case for defining who can stop a consequential decision before it moves.</span>
+</a>
+
+<a href="#">
+<strong>Real Failures</strong>
+<span>Knight Capital. Boeing 737 MAX. CrowdStrike. Same gap, different consequences.</span>
+</a>
+
+<a href="#">
+<strong>AI Governance</strong>
+<span>When systems move faster than governance can respond, control becomes theoretical.</span>
+</a>
+</div>
 </div>
 </section>
 
-<section>
-<h2>Most organizations assign responsibility.<br><span>Few define who can stop.</span></h2>
+<section id="problem">
+<div class="wrap two">
 
+<div>
+<small class="label">The Problem</small>
+<h2>
+Most organizations assign responsibility.<br>
+Few define <em>who can stop.</em>
+</h2>
+</div>
+
+<div class="copy">
 <p>
-Organizations are built to move decisions forward.  
-The harder function is defining who can interrupt a decision already in motion.
+Organizations are designed to move decisions forward. Approval paths, escalation chains, review committees — all built for continuation.
 </p>
 
 <p>
-When something fails, accountability converges to a name.
+The harder function is deciding who can interrupt a decision already in motion, on named authority, within the window that matters.
 </p>
-</section>
 
-<section>
-<h2>Executive <span>Authority</span> Review</h2>
+<p>
+When something goes wrong, accountability converges to a name.
+</p>
 
-<div class="grid">
-
-<div class="card">
-<h3>What you receive</h3>
-<p>Named authority map</p>
-<p>Exposure summary</p>
-<p>Escalation diagnosis</p>
-<p>Immediate actions</p>
-<p>Written findings</p>
+<div class="quote">
+Silent executive exposure is not the absence of responsibility. It is the absence of a named stop.
 </div>
-
-<div class="card">
-<h3>Terms</h3>
-<p>Initial findings in 7 days</p>
-<p>No system access required</p>
-<p>Direct principal only</p>
-<p>Private engagement</p>
 </div>
 
 </div>
 </section>
 
-<section>
-<h2>Who this is for</h2>
+<section id="review">
+<div class="wrap two">
 
-<div class="grid">
+<div>
+<small class="label">The Engagement</small>
 
+<h2>
+Executive<br>
+<em>Authority</em> Review
+</h2>
+
+<div class="copy">
+<p>
+A private external review structured around one question: if this decision had to stop today, who can stop it, on what authority, and within what time window?
+</p>
+
+<p>
+No system access required. Direct principal engagement only.
+</p>
+
+<div class="actions" style="margin-top:26px;">
+<a href="#contact" class="btn primary">Begin Review</a>
+</div>
+</div>
+</div>
+
+<div>
+<div class="cards">
+<div class="card">
+<h3>01</h3>
+<p>Named decision authority map</p>
+</div>
+
+<div class="card">
+<h3>02</h3>
+<p>Accountability exposure summary</p>
+</div>
+
+<div class="card">
+<h3>03</h3>
+<p>Escalation weakness diagnosis</p>
+</div>
+
+<div class="card">
+<h3>04</h3>
+<p>Immediate prioritized actions</p>
+</div>
+
+<div class="card">
+<h3>05</h3>
+<p>Confidential written findings</p>
+</div>
+
+<div class="card">
+<h3>07d</h3>
+<p>Initial findings within seven days</p>
+</div>
+</div>
+</div>
+
+</div>
+</section>
+
+<section id="who">
+<div class="wrap">
+<small class="label">Who Engages</small>
+
+<h2>
+Leaders carrying named accountability for consequential outcomes.
+</h2>
+
+<div class="cards">
 <div class="card">
 <h3>Boards</h3>
-<p>Governance responsibility with unclear stop authority.</p>
+<p>Governance responsibility without clarity on who holds stop authority.</p>
 </div>
 
 <div class="card">
 <h3>CEOs</h3>
-<p>Personal accountability for irreversible decisions.</p>
+<p>Personal accountability for decisions that cannot be undone.</p>
 </div>
 
 <div class="card">
 <h3>General Counsel</h3>
-<p>Legal exposure after failure.</p>
+<p>Legal exposure when authority structure fails post-event.</p>
 </div>
 
 <div class="card">
-<h3>AI Leaders</h3>
-<p>Systems moving faster than human override.</p>
+<h3>Risk Leaders</h3>
+<p>Escalation paths that exist on paper but fail under pressure.</p>
 </div>
 
+<div class="card">
+<h3>AI Governance</h3>
+<p>Automated systems outpacing human override capacity.</p>
 </div>
-</section>
 
-<section>
-<h2>If a critical decision escalated tomorrow,<br><span>would authority hold?</span></h2>
-
-<p>
-Private conversation. No obligations. Direct principal contact only.
-</p>
-
-<div class="buttons">
-<a href="#" class="btn gold">Request Review</a>
-<a href="mailto:contact@matrix-audit.com" class="btn ghost">Email Directly</a>
+<div class="card">
+<h3>Regulated Ops</h3>
+<p>Structures that must hold under scrutiny.</p>
+</div>
+</div>
 </div>
 </section>
 
-<section>
-<h2>Sample Table</h2>
+<section id="contact">
+<div class="wrap cta">
+<small class="label">Begin a Conversation</small>
 
-<table>
-<tr>
-<th>Risk</th>
-<th>Authority</th>
-<th>Status</th>
-</tr>
+<h2>
+If a critical decision escalated tomorrow, would authority hold in the first hour?
+</h2>
 
-<tr>
-<td>Operational Failure</td>
-<td>Undefined</td>
-<td>High</td>
-</tr>
+<div class="copy" style="margin-top:16px;">
+<p>If not, this is where to start.</p>
+<p>Private. No obligations. Direct principal contact only.</p>
+</div>
 
-<tr>
-<td>Board Exposure</td>
-<td>Named</td>
-<td>Lower</td>
-</tr>
-</table>
+<div class="actions" style="justify-content:center;margin-top:20px;">
+<a href="mailto:contact@matrix-audit.com" class="btn primary">Email Directly</a>
+<a href="#" class="btn ghost">Request Review</a>
+</div>
+</div>
 </section>
 
 <footer>
-© 2026 Matrix Audit
+<div class="foot">
+<div>Matrix Audit · Liran Bar-Shrim</div>
+<div>Decision Authority · Private Mandates · Global Availability</div>
+<div>© 2026</div>
+</div>
 </footer>
 
 <script>
-function toggleMenu(){
+function menuToggle(){
 document.getElementById("drawer").classList.toggle("open");
 }
+
+function menuClose(){
+document.getElementById("drawer").classList.remove("open");
+}
+
+window.addEventListener("scroll",function(){
+const d=document.getElementById("drawer");
+if(window.innerWidth<681){d.classList.remove("open");}
+});
 </script>
 
 </body>
