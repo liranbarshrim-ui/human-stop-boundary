@@ -4,10 +4,10 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>DAR — Decision Authority Record | Executive Decision Accountability</title>
+<title>DAR — Decision Authority Record | Executive Accountability Before Irreversible Decisions</title>
 
-<meta name="description" content="Private advisory for executives facing irreversible decisions. One accountable name defined before exposure.">
-<meta name="keywords" content="decision authority record, executive accountability, named stop authority, AI governance advisory, board risk, irreversible decisions">
+<meta name="description" content="Decision Authority Record (DAR): private advisory for boards and executives facing irreversible decisions, AI governance exposure, and unclear stop authority.">
+<meta name="keywords" content="DAR, Decision Authority Record, executive accountability, named stop authority, AI governance, board risk, irreversible decisions">
 <link rel="canonical" href="https://matrix-audit.com/dar.html">
 
 <meta property="og:title" content="DAR — Decision Authority Record">
@@ -25,7 +25,7 @@
 --gold:#c8a96e;
 --danger:#c0392b;
 --text:#e6e0d4;
---muted:#a09a94;
+--muted:#b8b2ac;
 --dim:#7a7570;
 --border:#1e1e1e;
 --border2:#2a2a2a;
@@ -41,7 +41,7 @@ line-height:1.7;
 }
 
 .container{
-max-width:820px;
+max-width:860px;
 margin:0 auto;
 padding:60px 24px 90px;
 }
@@ -73,41 +73,27 @@ margin-bottom:34px;
 
 .hero h1{
 font-family:'Playfair Display',serif;
-font-size:clamp(36px,6vw,56px);
+font-size:clamp(38px,6vw,60px);
 line-height:1.08;
-margin-bottom:18px;
+margin-bottom:16px;
 }
 
 .hero p{
 font-size:14px;
 color:var(--muted);
-max-width:650px;
+max-width:680px;
 }
 
-.lux-banner{
-margin:0 0 38px;
-padding:22px 24px;
-background:
-linear-gradient(135deg,rgba(200,169,110,.08),rgba(255,255,255,0) 45%),
-linear-gradient(180deg,#141414,#0d0d0d);
-border:1px solid #2a2a2a;
+.banner{
+margin-bottom:38px;
+padding:24px;
+background:linear-gradient(180deg,#141414,#0d0d0d);
+border:1px solid var(--border2);
 border-left:3px solid var(--gold);
-box-shadow:0 12px 28px rgba(0,0,0,.34);
-position:relative;
-overflow:hidden;
 }
 
-.lux-banner:after{
-content:'';
-position:absolute;
-top:0;
-right:0;
-width:120px;
-height:100%;
-background:linear-gradient(90deg,transparent,rgba(200,169,110,.04));
-}
-
-.lux-label{
+.banner small{
+display:block;
 font-size:10px;
 letter-spacing:.22em;
 text-transform:uppercase;
@@ -115,19 +101,16 @@ color:var(--gold);
 margin-bottom:10px;
 }
 
-.lux-title{
+.banner h2{
 font-family:'Playfair Display',serif;
 font-size:28px;
-line-height:1.08;
 margin-bottom:10px;
-color:#f2ede2;
 }
 
-.lux-sub{
+.banner p{
 font-size:13px;
 color:var(--muted);
-max-width:520px;
-line-height:1.7;
+max-width:560px;
 }
 
 .alert{
@@ -135,8 +118,7 @@ background:var(--surface);
 border:1px solid var(--border2);
 border-left:3px solid var(--danger);
 padding:24px;
-margin-bottom:40px;
-box-shadow:0 10px 24px rgba(0,0,0,.22);
+margin-bottom:42px;
 }
 
 .alert strong{
@@ -144,8 +126,7 @@ display:block;
 font-size:10px;
 letter-spacing:.18em;
 text-transform:uppercase;
-margin-bottom:10px;
-color:var(--text);
+margin-bottom:12px;
 }
 
 .section{
@@ -161,7 +142,7 @@ color:var(--gold);
 margin-bottom:12px;
 }
 
-.section h2{
+.section h3{
 font-family:'Playfair Display',serif;
 font-size:30px;
 margin-bottom:14px;
@@ -181,32 +162,10 @@ margin-top:20px;
 }
 
 .card{
-background:linear-gradient(180deg,#121212,#0d0d0d);
-border:1px solid #262626;
+background:var(--surface);
+border:1px solid var(--border2);
 border-left:3px solid var(--gold);
-padding:26px 24px;
-position:relative;
-overflow:hidden;
-transition:.25s;
-box-shadow:0 10px 24px rgba(0,0,0,.25);
-font-size:15px;
-line-height:1.8;
-color:var(--muted);
-}
-
-.card:after{
-content:'';
-position:absolute;
-top:0;
-right:0;
-width:110px;
-height:100%;
-background:linear-gradient(90deg,transparent,rgba(200,169,110,.04));
-}
-
-.card:hover{
-transform:translateY(-2px);
-border-color:#3a3328;
+padding:24px;
 }
 
 .card strong{
@@ -214,17 +173,16 @@ display:block;
 font-size:11px;
 letter-spacing:.14em;
 text-transform:uppercase;
-margin-bottom:14px;
-color:#f2ece2;
+margin-bottom:12px;
+color:var(--text);
 }
 
 .price{
-margin-top:10px;
+margin-top:16px;
 padding:30px;
-background:linear-gradient(180deg,#13110d,#111111);
+background:#13110d;
 border:1px solid rgba(200,169,110,.28);
 border-left:3px solid var(--gold);
-box-shadow:0 12px 28px rgba(0,0,0,.22);
 }
 
 .price small{
@@ -244,7 +202,7 @@ margin-bottom:12px;
 }
 
 .quote{
-margin-top:18px;
+margin-top:16px;
 padding:24px;
 background:var(--surface);
 border:1px solid var(--border2);
@@ -252,102 +210,77 @@ border-left:3px solid var(--gold);
 font-family:'Playfair Display',serif;
 font-size:28px;
 line-height:1.35;
-box-shadow:0 10px 24px rgba(0,0,0,.18);
 }
 
-.cta-row{
+.cta{
 display:flex;
 gap:14px;
 flex-wrap:wrap;
-margin-top:20px;
+margin-top:22px;
 }
 
 .btn{
 text-decoration:none;
-padding:16px 24px;
+padding:15px 22px;
 font-size:12px;
 letter-spacing:.14em;
 text-transform:uppercase;
-display:inline-block;
-transition:.25s;
+transition:.2s;
 }
 
 .primary{
 background:var(--gold);
 color:#111;
 font-weight:700;
-box-shadow:0 10px 22px rgba(0,0,0,.25);
-}
-
-.primary:hover{
-transform:translateY(-2px);
-opacity:.96;
 }
 
 .secondary{
 border:1px solid var(--gold);
-background:#121212;
 color:var(--text);
-}
-
-.secondary:hover{
-background:#171512;
-transform:translateY(-2px);
+background:#121212;
 }
 
 .footer{
-margin-top:42px;
+margin-top:44px;
 border:1px solid var(--border2);
 background:#0f0f0f;
 }
 
-.banner-card{
+.link{
 display:flex;
 justify-content:space-between;
 align-items:center;
-gap:20px;
-padding:28px 24px;
+padding:24px;
 text-decoration:none;
 color:var(--text);
 border-bottom:1px solid var(--border2);
-transition:.25s;
 }
 
-.banner-card:last-child{
-border-bottom:none;
-}
+.link:last-child{border-bottom:none;}
 
-.banner-card:hover{
+.link:hover{
 background:#151515;
 }
 
-.banner-left{
+.left{
 display:flex;
 flex-direction:column;
-gap:8px;
+gap:6px;
 }
 
-.banner-label{
+.left small{
 font-size:10px;
-letter-spacing:.28em;
+letter-spacing:.18em;
 text-transform:uppercase;
 color:var(--gold);
 }
 
-.banner-title{
+.left span{
 font-family:'Playfair Display',serif;
 font-size:18px;
-line-height:1.25;
-color:#f2ece2;
 }
 
-.banner-arrow{
-font-size:22px;
-color:#d8d2c8;
-flex-shrink:0;
-}
-
-.small{
+.copy{
 margin-top:28px;
 font-size:11px;
 color:var(--dim);
@@ -359,11 +292,7 @@ color:var(--dim);
 
 @media(max-width:700px){
 .container{padding:42px 18px 70px;}
-.lux-title{font-size:24px;}
-.quote{font-size:24px;}
-.amount{font-size:46px;}
-.banner-card{padding:22px 18px;}
-.banner-title{font-size:16px;}
+.amount{font-size:44px;}
 .btn{width:100%;text-align:center;}
 }
 </style>
@@ -377,113 +306,163 @@ color:var(--dim);
 <div class="hero">
 <h1>One Name.<br>Before It Moves.</h1>
 <p>
-Private advisory for boards, executives, CROs, General Counsel and AI governance leaders facing irreversible decisions under uncertainty.
+DAR helps boards, executives, legal leaders and AI governance teams define who is accountable to stop an irreversible decision before exposure begins.
 </p>
 </div>
 
-<div class="lux-banner">
-<div class="lux-label">Framework</div>
-<div class="lux-title">Decision Authority Record</div>
-<div class="lux-sub">
-Define one accountable owner before exposure becomes public, costly, or irreversible.
-</div>
+<div class="banner">
+<small>Framework</small>
+<h2>Decision Authority Record</h2>
+<p>
+A written accountability record naming one real authority holder before risk becomes public, expensive, or irreversible.
+</p>
 </div>
 
 <div class="alert">
-<strong>Exposure</strong>
-If failure happens, responsibility will not remain abstract.<br><br>
-It converges to one accountable name.<br><br>
-If no name was explicitly defined in advance, it may be assigned afterward.
+<strong>Exposure Pattern</strong>
+When failure happens, responsibility rarely remains collective.  
+It converges toward one accountable person.  
+If no one was named in advance, that name may be chosen afterward.
 </div>
 
 <div class="section">
 <div class="label">What DAR does</div>
-<h2>Executive clarity before consequences</h2>
-
-<p>
-DAR identifies one critical decision pathway, one accountable owner, and one real stop authority before exposure occurs.
-</p>
+<h3>Clarity before consequences</h3>
+<p>DAR identifies one critical pathway, one accountable owner, and one operational stop authority.</p>
 
 <div class="grid">
-<div class="card"><strong>Pathway Review</strong>Map one irreversible decision process.</div>
-<div class="card"><strong>Named Authority</strong>Define one accountable decision owner.</div>
-<div class="card"><strong>Stop Trigger</strong>Clarify when continuation must pause.</div>
-<div class="card"><strong>Written Record</strong>Issue formal Decision Authority Record.</div>
+<div class="card">
+<strong>Decision Pathway</strong>
+Map how one irreversible decision actually moves.
+</div>
+
+<div class="card">
+<strong>Named Owner</strong>
+Define who carries final accountability.
+</div>
+
+<div class="card">
+<strong>Stop Trigger</strong>
+Clarify when continuation must pause.
+</div>
+
+<div class="card">
+<strong>Written Record</strong>
+Produce a formal authority document.
+</div>
 </div>
 </div>
 
 <div class="section">
-<div class="label">Why internal attempts fail</div>
-<h2>Most firms can explain the process</h2>
-<p>They struggle when asked who personally has authority to stop it.</p>
-<p>Because naming one person creates real accountability.</p>
+<div class="label">Why internal systems fail</div>
+<h3>Most firms explain process</h3>
+<p>They struggle when asked one harder question:</p>
+<p><strong>Who personally can stop it right now?</strong></p>
 </div>
 
 <div class="section">
-<div class="label">Selected engagements</div>
-<h2>Private fixed-scope advisory</h2>
+<div class="label">Private engagements</div>
+<h3>Fixed-scope advisory</h3>
 
 <div class="price">
-<small>Selected engagements begin at</small>
+<small>Selected engagements from</small>
 <div class="amount">€12,000</div>
 <p>
-One critical pathway clarified.<br>
-One accountable name defined.<br>
-Typical delivery: 7 to 10 business days.
+Single pathway review.<br>
+Named authority clarity.<br>
+Typical delivery: 7–10 business days.
 </p>
 </div>
 
-<div class="cta-row">
+<div class="cta">
 <a class="btn primary" href="contact.html">Discuss Live Exposure</a>
-<a class="btn secondary" href="case-studies.html">See Public Failures</a>
+<a class="btn secondary" href="services.html">View Engagements</a>
 </div>
 </div>
 
 <div class="section">
 <div class="label">The question</div>
+
 <div class="quote">
 If you cannot name the person,<br>
 it should not proceed.
 </div>
+
+<p style="margin-top:18px;color:var(--dim);font-size:13px;">
+Related reading: AI Governance, Named Stop Authority, Failure Points, The Death of “We”.
+</p>
+
 </div>
 
 <div class="footer">
 
-<a class="banner-card" href="index.html">
-<div class="banner-left">
-<div class="banner-label">HOME</div>
-<div class="banner-title">Decision Authority Research</div>
+<a class="link" href="services.html">
+<div class="left">
+<small>Services</small>
+<span>Private Executive Engagements</span>
 </div>
-<div class="banner-arrow">→</div>
+<div>→</div>
 </a>
 
-<a class="banner-card" href="contact.html">
-<div class="banner-left">
-<div class="banner-label">CONTACT</div>
-<div class="banner-title">Private Contact</div>
+<a class="link" href="ai-governance.html">
+<div class="left">
+<small>Vertical</small>
+<span>AI Governance</span>
 </div>
-<div class="banner-arrow">→</div>
+<div>→</div>
 </a>
 
-<a class="banner-card" href="case-studies.html">
-<div class="banner-left">
-<div class="banner-label">CASE STUDIES</div>
-<div class="banner-title">Public Failure Patterns</div>
+<a class="link" href="stop-authority.html">
+<div class="left">
+<small>Essay</small>
+<span>Named Stop Authority</span>
 </div>
-<div class="banner-arrow">→</div>
+<div>→</div>
 </a>
 
-<a class="banner-card" href="ai-governance.html">
-<div class="banner-left">
-<div class="banner-label">VERTICAL</div>
-<div class="banner-title">AI Governance</div>
+<a class="link" href="failure-points.html">
+<div class="left">
+<small>Failures</small>
+<span>Where Accountability Breaks</span>
 </div>
-<div class="banner-arrow">→</div>
+<div>→</div>
+</a>
+
+<a class="link" href="death-of-we.html">
+<div class="left">
+<small>Article</small>
+<span>The Death of “We”</span>
+</div>
+<div>→</div>
+</a>
+
+<a class="link" href="faq.html">
+<div class="left">
+<small>FAQ</small>
+<span>Questions & Answers</span>
+</div>
+<div>→</div>
+</a>
+
+<a class="link" href="contact.html">
+<div class="left">
+<small>Contact</small>
+<span>Private Inquiry</span>
+</div>
+<div>→</div>
+</a>
+
+<a class="link" href="index.html">
+<div class="left">
+<small>Home</small>
+<span>Decision Authority Research</span>
+</div>
+<div>→</div>
 </a>
 
 </div>
 
-<p class="small">© 2026 Liran Bar-Shrim. All rights reserved.</p>
+<p class="copy">© 2026 Liran Bar-Shrim. All rights reserved.</p>
 
 </div>
 </body>
