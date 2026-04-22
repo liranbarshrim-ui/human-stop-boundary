@@ -4,445 +4,680 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Decision Authority Research | The Architecture of Accountability</title>
+<title>When Failure Lands on One Name | Decision Authority Research</title>
+<meta name="description" content="In success, responsibility is shared. In failure, it converges to one name. The anatomy of stop authority in the autonomous age.">
+<link rel="canonical" href="https://matrix-audit.com/exposure.html">
 
-<meta name="description" content="Decision Authority Research helps boards and executives define who can stop irreversible decisions before exposure begins. DAR, AI governance, accountability design.">
+<meta property="og:title" content="When Failure Lands on One Name">
+<meta property="og:description" content="In success, responsibility is shared. In failure, it converges to one name.">
+<meta property="og:type" content="article">
 
-<meta name="keywords" content="decision authority, DAR, executive accountability, stop authority, AI governance, board risk, irreversible decisions">
-
-<link rel="canonical" href="https://matrix-audit.com/index.html">
-
-<meta property="og:title" content="Decision Authority Research">
-<meta property="og:description" content="If no one is named to stop it, liability finds someone later.">
-<meta property="og:type" content="website">
-<meta property="og:url" content="https://matrix-audit.com/index.html">
-
-<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Playfair+Display:wght@400;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
 
 <style>
+
 :root{
 --bg:#090909;
 --surface:#111111;
---surface2:#151515;
 --gold:#c8a96e;
---danger:#c0392b;
---text:#e6e0d4;
---muted:#b8b2ac;
---dim:#7a7570;
---border:#1e1e1e;
+--text:#e8e2d7;
+--muted:#a7a097;
+--soft:#8f8880;
+--border:#1d1d1d;
 --border2:#2a2a2a;
+--danger:#c0392b;
 }
 
 *{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
 
 body{
 background:var(--bg);
 color:var(--text);
-font-family:'IBM Plex Mono',monospace;
+font-family:Inter,system-ui,sans-serif;
+overflow-x:hidden;
+-webkit-font-smoothing:antialiased;
+text-rendering:optimizeLegibility;
 line-height:1.7;
 }
 
-.container{
-max-width:980px;
-margin:0 auto;
-padding:60px 24px 90px;
+body:before{
+content:'';
+position:fixed;
+inset:0;
+background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 240 240' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.025'/%3E%3C/svg%3E");
+opacity:.55;
+pointer-events:none;
+z-index:0;
 }
 
-.tag{
-font-size:10px;
-letter-spacing:.18em;
-text-transform:uppercase;
-color:var(--muted);
+/* ── topbar ── */
+
+.topbar{
+position:sticky;
+top:0;
+z-index:999;
+display:flex;
+justify-content:space-between;
+align-items:center;
+padding:18px 24px;
+background:rgba(9,9,9,.94);
+backdrop-filter:blur(10px);
+border-bottom:1px solid rgba(255,255,255,.04);
+}
+
+.brand{
 display:flex;
 align-items:center;
 gap:12px;
-margin-bottom:42px;
+text-decoration:none;
+color:var(--text);
+font-family:'IBM Plex Mono',monospace;
+font-size:10px;
+letter-spacing:.28em;
+text-transform:uppercase;
 }
 
-.tag:before{
-content:'';
-width:22px;
+.brand-line{
+width:18px;
 height:1px;
 background:var(--gold);
+}
+
+.menu-btn{
+display:flex;
+flex-direction:column;
+justify-content:center;
+gap:5px;
+background:none;
+border:none;
+cursor:pointer;
+padding:6px;
+}
+
+.menu-btn span{
 display:block;
+width:22px;
+height:1.5px;
+background:var(--text);
+transition:background .2s;
 }
 
-.hero{
-border-left:3px solid var(--gold);
-padding-left:22px;
-margin-bottom:38px;
+.menu-btn:hover span{background:var(--gold);}
+
+/* ── overlay ── */
+
+.overlay{
+position:fixed;
+inset:0;
+background:rgba(0,0,0,.6);
+opacity:0;
+visibility:hidden;
+transition:.25s;
+z-index:998;
 }
 
-.hero h1{
-font-family:'Playfair Display',serif;
-font-size:clamp(42px,7vw,74px);
-line-height:1.04;
-margin-bottom:18px;
+.overlay.active{opacity:1;visibility:visible;}
+
+/* ── side menu ── */
+
+.side-menu{
+position:fixed;
+top:0;
+right:-340px;
+width:300px;
+max-width:90%;
+height:100vh;
+overflow-y:auto;
+background:#0d0d0d;
+border-left:1px solid var(--border);
+padding:28px 24px 48px;
+transition:.28s cubic-bezier(.4,0,.2,1);
+z-index:999;
 }
 
-.hero p{
-font-size:15px;
-color:var(--muted);
-max-width:760px;
+.side-menu.active{right:0;}
+
+.menu-head{
+display:flex;
+justify-content:space-between;
+align-items:center;
+margin-bottom:28px;
 }
 
-.signal{
-margin-bottom:40px;
-padding:24px;
-background:linear-gradient(180deg,#141414,#0d0d0d);
-border:1px solid var(--border2);
-border-left:3px solid var(--gold);
-}
-
-.signal small{
-display:block;
-font-size:10px;
-letter-spacing:.2em;
+.menu-head-brand{
+font-family:'IBM Plex Mono',monospace;
+font-size:9px;
+letter-spacing:.24em;
 text-transform:uppercase;
 color:var(--gold);
-margin-bottom:10px;
 }
 
-.signal strong{
-display:block;
-font-family:'Playfair Display',serif;
-font-size:30px;
-margin-bottom:10px;
-}
-
-.signal p{
-font-size:14px;
+.close-btn{
+background:none;
+border:none;
+font-size:26px;
+line-height:1;
 color:var(--muted);
-max-width:720px;
-}
-
-.section{
-padding:36px 0;
-border-top:1px solid var(--border2);
-}
-
-.label{
-font-size:10px;
-letter-spacing:.18em;
-text-transform:uppercase;
-color:var(--gold);
-margin-bottom:12px;
-}
-
-.section h2{
-font-family:'Playfair Display',serif;
-font-size:34px;
-margin-bottom:14px;
-line-height:1.2;
-}
-
-.section p{
-font-size:14px;
-color:var(--muted);
-margin-bottom:12px;
-}
-
-.grid{
-display:grid;
-grid-template-columns:1fr;
-gap:16px;
-margin-top:22px;
-}
-
-.card{
-background:var(--surface);
-border:1px solid var(--border2);
-padding:24px;
+cursor:pointer;
 transition:.2s;
 }
 
-.card:hover{
-border-color:#3a3328;
-transform:translateY(-2px);
+.close-btn:hover{color:var(--text);}
+
+.menu-group{
+border-top:1px solid var(--border);
+padding-top:20px;
+margin-top:20px;
 }
 
-.card small{
-display:block;
-font-size:10px;
-letter-spacing:.16em;
+.menu-label{
+font-family:'IBM Plex Mono',monospace;
+font-size:9px;
+letter-spacing:.22em;
 text-transform:uppercase;
 color:var(--gold);
-margin-bottom:10px;
+margin-bottom:12px;
 }
 
-.card h3{
-font-family:'Playfair Display',serif;
-font-size:24px;
-margin-bottom:10px;
-line-height:1.2;
-}
-
-.card p{
-font-size:13px;
-color:var(--muted);
-}
-
-.card a{
-display:inline-block;
-margin-top:14px;
-color:var(--text);
+.menu-group a{
+display:flex;
+align-items:center;
+gap:10px;
+padding:9px 0;
 text-decoration:none;
-font-size:12px;
-letter-spacing:.12em;
-text-transform:uppercase;
+color:var(--muted);
+font-size:14px;
+border-bottom:1px solid rgba(255,255,255,.03);
+transition:.18s;
 }
 
-.quote{
-margin-top:18px;
-padding:26px;
-background:var(--surface);
+.menu-group a:last-child{border-bottom:none;}
+.menu-group a:hover{color:var(--text);padding-left:4px;}
+.menu-group a.active{color:var(--gold);}
+
+.menu-divider-line{
+display:inline-block;
+width:12px;
+height:1px;
+background:var(--border2);
+flex-shrink:0;
+}
+
+.menu-cta{
+display:block;
+margin-top:28px;
+padding:14px 20px;
+border:1px solid var(--gold);
+color:var(--gold)!important;
+font-family:'IBM Plex Mono',monospace;
+font-size:10px;
+letter-spacing:.2em;
+text-transform:uppercase;
+text-align:center;
+text-decoration:none;
+transition:.2s;
+}
+
+.menu-cta:hover{background:var(--gold);color:#111!important;}
+
+/* ── layout ── */
+
+.container{
+position:relative;
+z-index:1;
+max-width:740px;
+margin:0 auto;
+padding:70px 28px 110px;
+}
+
+/* ── essay header ── */
+
+.essay-meta{
+font-family:'IBM Plex Mono',monospace;
+font-size:10px;
+letter-spacing:.22em;
+text-transform:uppercase;
+color:var(--gold);
+margin-bottom:20px;
+}
+
+.essay-title{
+font-family:'Playfair Display',serif;
+font-size:clamp(36px,6vw,62px);
+line-height:1.04;
+letter-spacing:-.02em;
+margin-bottom:16px;
+}
+
+.essay-subtitle{
+font-family:'IBM Plex Mono',monospace;
+font-size:11px;
+letter-spacing:.14em;
+text-transform:uppercase;
+color:var(--muted);
+margin-bottom:48px;
+}
+
+/* ── opening statement ── */
+
+.opening{
+border-left:3px solid var(--gold);
+padding-left:24px;
+margin-bottom:52px;
+}
+
+.opening p{
+font-family:'Playfair Display',serif;
+font-size:clamp(22px,3vw,30px);
+line-height:1.35;
+color:var(--text);
+}
+
+/* ── body text ── */
+
+.essay-body p{
+font-size:17px;
+line-height:1.95;
+color:var(--muted);
+margin-bottom:28px;
+}
+
+.essay-body p.prominent{
+font-size:19px;
+color:var(--text);
+}
+
+/* ── pull quotes ── */
+
+.pull{
+margin:44px 0;
+padding:28px 28px 28px 24px;
+background:linear-gradient(180deg,#111,#0d0d0d);
 border:1px solid var(--border2);
 border-left:3px solid var(--gold);
 font-family:'Playfair Display',serif;
-font-size:30px;
+font-size:clamp(20px,3vw,26px);
 line-height:1.35;
+color:var(--text);
 }
 
-.cta{
-margin-top:20px;
+.pull-danger{
+border-left-color:var(--danger);
+}
+
+/* ── section break ── */
+
+.break{
+margin:52px 0;
+border-top:1px solid rgba(255,255,255,.06);
+}
+
+/* ── name moment ── */
+
+.name-appears{
+margin:44px 0;
+padding:36px;
+background:linear-gradient(180deg,#111,#0d0d0d);
+border:1px solid var(--border2);
+text-align:center;
+}
+
+.name-appears p{
+font-family:'Playfair Display',serif;
+font-size:clamp(24px,4vw,38px);
+line-height:1.2;
+color:var(--text);
+margin:0;
+}
+
+/* ── inline emphasis ── */
+
+.word-list{
+margin:20px 0 28px 0;
+padding-left:0;
+list-style:none;
+}
+
+.word-list li{
+font-family:'IBM Plex Mono',monospace;
+font-size:13px;
+letter-spacing:.12em;
+color:var(--muted);
+padding:8px 0;
+border-bottom:1px solid rgba(255,255,255,.04);
+}
+
+.word-list li:last-child{border-bottom:none;}
+
+/* ── questions block ── */
+
+.questions{
+margin:44px 0;
+padding:32px;
+background:var(--surface);
+border:1px solid var(--border2);
+border-left:3px solid var(--gold);
+}
+
+.questions-label{
+font-family:'IBM Plex Mono',monospace;
+font-size:9px;
+letter-spacing:.22em;
+text-transform:uppercase;
+color:var(--gold);
+margin-bottom:20px;
+}
+
+.questions p{
+font-size:16px;
+line-height:1.85;
+color:var(--text);
+margin-bottom:14px;
+padding-bottom:14px;
+border-bottom:1px solid rgba(255,255,255,.04);
+}
+
+.questions p:last-child{
+margin-bottom:0;
+padding-bottom:0;
+border-bottom:none;
+}
+
+/* ── closing ── */
+
+.closing{
+margin-top:64px;
+padding-top:40px;
+border-top:1px solid rgba(255,255,255,.06);
+}
+
+.closing p{
+font-family:'Playfair Display',serif;
+font-size:clamp(20px,3vw,26px);
+line-height:1.4;
+color:var(--text);
+margin-bottom:0;
+}
+
+/* ── footer nav ── */
+
+.footer-nav{
+margin-top:64px;
+padding-top:28px;
+border-top:1px solid var(--border2);
 display:flex;
 gap:14px;
 flex-wrap:wrap;
 }
 
-.btn{
+.footer-nav a{
 text-decoration:none;
-padding:16px 24px;
-font-size:12px;
-letter-spacing:.14em;
-text-transform:uppercase;
-transition:.2s;
-}
-
-.primary{
-background:var(--gold);
-color:#111;
-font-weight:700;
-}
-
-.secondary{
-border:1px solid var(--gold);
-color:var(--text);
-background:#121212;
-}
-
-.footer{
-margin-top:48px;
-border:1px solid var(--border2);
-background:#0f0f0f;
-}
-
-.link{
-display:flex;
-justify-content:space-between;
-align-items:center;
-padding:24px;
-text-decoration:none;
-color:var(--text);
-border-bottom:1px solid var(--border2);
-}
-
-.link:last-child{border-bottom:none;}
-
-.link:hover{
-background:#151515;
-}
-
-.left{
-display:flex;
-flex-direction:column;
-gap:6px;
-}
-
-.left small{
+font-family:'IBM Plex Mono',monospace;
 font-size:10px;
 letter-spacing:.18em;
 text-transform:uppercase;
-color:var(--gold);
+color:var(--muted);
+transition:.2s;
 }
 
-.left span{
-font-family:'Playfair Display',serif;
-font-size:18px;
-line-height:1.2;
-}
+.footer-nav a:hover{color:var(--gold);}
 
-.copy{
+.footer{
 margin-top:28px;
+padding-top:28px;
+border-top:1px solid var(--border2);
 font-size:11px;
-color:var(--dim);
+letter-spacing:.08em;
+color:#6e6964;
+font-family:'IBM Plex Mono',monospace;
 }
 
-@media(min-width:820px){
-.grid{
-grid-template-columns:1fr 1fr;
-}
+/* ── mobile ── */
+
+@media(max-width:760px){
+.container{padding:56px 18px 90px;}
+.essay-body p{font-size:16px;}
+.name-appears{padding:24px;}
+.questions{padding:22px;}
 }
 
-@media(max-width:700px){
-.container{padding:42px 18px 70px;}
-.hero h1{font-size:44px;}
-.btn{width:100%;text-align:center;}
-.quote{font-size:24px;}
-}
 </style>
 </head>
 
 <body>
-<div class="container">
 
-<div class="tag">Decision Authority Research</div>
+<header class="topbar">
+  <a href="index.html" class="brand">
+    <span class="brand-line"></span>
+    <span>Decision Authority Research</span>
+  </a>
+  <button class="menu-btn" id="openMenu" aria-label="Open menu">
+    <span></span>
+    <span></span>
+    <span></span>
+  </button>
+</header>
 
-<div class="hero">
-<h1>The Architecture<br>of Accountability</h1>
-<p>
-For boards, executives, legal leaders and AI governance teams facing irreversible decisions under uncertainty.
-</p>
-</div>
+<div class="overlay" id="overlay"></div>
 
-<div class="signal">
-<small>Executive Signal</small>
-<strong>If no one is named to stop it, liability finds someone later.</strong>
-<p>
-Most organizations built approval systems. Far fewer built real stop authority.
-</p>
-</div>
+<aside class="side-menu" id="menu">
+  <div class="menu-head">
+    <span class="menu-head-brand">Matrix Audit</span>
+    <button class="close-btn" id="closeMenu">&times;</button>
+  </div>
 
-<div class="section">
-<div class="label">Core Framework</div>
-<h2>Decision Authority Record (DAR)</h2>
-<p>
-A written accountability structure that defines one named authority before risk becomes public, expensive, or irreversible.
-</p>
+  <div class="menu-group" style="border-top:none;padding-top:0;margin-top:0;">
+    <div class="menu-label">Primary</div>
+    <a href="index.html"><span class="menu-divider-line"></span>Home</a>
+    <a href="dar.html"><span class="menu-divider-line"></span>DAR</a>
+    <a href="services.html"><span class="menu-divider-line"></span>Services</a>
+    <a href="about.html"><span class="menu-divider-line"></span>About</a>
+  </div>
 
-<div class="cta">
-<a class="btn primary" href="dar.html">Explore DAR</a>
-<a class="btn secondary" href="contact.html">Private Inquiry</a>
-</div>
-</div>
+  <div class="menu-group">
+    <div class="menu-label">Insights</div>
+    <a href="exposure.html" class="active"><span class="menu-divider-line"></span>When Failure Lands on One Name</a>
+    <a href="failure-points.html"><span class="menu-divider-line"></span>Where Accountability Breaks</a>
+    <a href="we.html"><span class="menu-divider-line"></span>The Death of We</a>
+    <a href="stop-authority.html"><span class="menu-divider-line"></span>Stop Authority</a>
+    <a href="ai-governance.html"><span class="menu-divider-line"></span>AI Governance</a>
+  </div>
 
-<div class="section">
-<div class="label">Key Reading</div>
-<h2>Research & Essays</h2>
+  <div class="menu-group">
+    <div class="menu-label">Knowledge</div>
+    <a href="definitions.html"><span class="menu-divider-line"></span>Definitions</a>
+    <a href="faq.html"><span class="menu-divider-line"></span>FAQ</a>
+    <a href="case-studies.html"><span class="menu-divider-line"></span>Case Studies</a>
+    <a href="goodfaith.html"><span class="menu-divider-line"></span>Good Faith Use</a>
+  </div>
 
-<div class="grid">
+  <a href="contact.html" class="menu-cta">Private Intake</a>
+</aside>
 
-<div class="card">
-<small>Essay</small>
-<h3>Named Stop Authority</h3>
-<p>Why approval systems fail when no one can stop continuation.</p>
-<a href="stop-authority.html">Read →</a>
-</div>
+<main class="container">
 
-<div class="card">
-<small>Article</small>
-<h3>The Death of “We”</h3>
-<p>How collective language collapses into one accountable name.</p>
-<a href="death-of-we.html">Read →</a>
-</div>
+  <div class="essay-meta">Essay &middot; Decision Authority Research</div>
 
-<div class="card">
-<small>Exposure</small>
-<h3>When Failure Lands on One Name</h3>
-<p>Shared success hides personal exposure until failure arrives.</p>
-<a href="exposure.html">Read →</a>
-</div>
+  <h1 class="essay-title">A Name Appears</h1>
+  <div class="essay-subtitle">The anatomy of stop authority in the autonomous age</div>
 
-<div class="card">
-<small>Cases</small>
-<h3>Failure Points</h3>
-<p>Clinical, finance and AI examples with the same missing element.</p>
-<a href="failure-points.html">Read →</a>
-</div>
+  <div class="opening">
+    <p>In success, responsibility is shared.<br>In failure, it converges to one name.</p>
+  </div>
 
-</div>
-</div>
+  <div class="essay-body">
 
-<div class="section">
-<div class="label">Current Risk Domain</div>
-<h2>AI Governance</h2>
-<p>
-When systems move faster than governance can respond, control becomes theoretical.
-</p>
+    <p class="prominent">Most organizations built approval systems. Few built stop authority.</p>
 
-<div class="cta">
-<a class="btn secondary" href="ai-governance.html">AI Governance →</a>
-</div>
-</div>
+    <p>They built escalation paths, review forums, control layers, and governance processes. All of these matter. But many were designed to answer one question: how do we proceed? Not the harder question: how do we stop?</p>
 
-<div class="section">
-<div class="label">Private Engagements</div>
-<h2>Executive Advisory</h2>
-<p>
-Fixed-scope private reviews for accountability gaps, named authority design, and decision exposure.
-</p>
+    <div class="pull">
+      Approval enables continuation. Stop authority interrupts continuation. They are not the same function.
+    </div>
 
-<div class="cta">
-<a class="btn primary" href="services.html">View Engagements</a>
-</div>
-</div>
+    <p>That gap was always dangerous. Autonomous AI systems now make it urgent.</p>
 
-<div class="section">
-<div class="label">The Question</div>
+    <div class="break"></div>
 
-<div class="quote">
-When a decision becomes irreversible under uncertainty,<br>
-who is named to stop it?
-</div>
+    <p>When systems fail, organizations often begin with the same phrase: "This was unforeseen."</p>
 
-</div>
+    <p>Then the ritual starts. Reviews. Timelines. Committees. External counsel. Internal investigations.</p>
 
-<div class="footer">
+    <p>But beneath the formal process, something simpler happens.</p>
 
-<a class="link" href="dar.html">
-<div class="left">
-<small>Framework</small>
-<span>Decision Authority Record</span>
-</div>
-<div>→</div>
-</a>
+    <div class="name-appears">
+      <p>A name appears.</p>
+    </div>
 
-<a class="link" href="services.html">
-<div class="left">
-<small>Services</small>
-<span>Private Executive Engagements</span>
-</div>
-<div>→</div>
-</a>
+    <p>Not the system. Not the model. Not the committee. Not the workflow. A person.</p>
 
-<a class="link" href="ai-governance.html">
-<div class="left">
-<small>Vertical</small>
-<span>AI Governance</span>
-</div>
-<div>→</div>
-</a>
+    <p>The person carrying responsibility after failure is rarely the sole cause of it. More often, they are simply the last identifiable human point before an irreversible step &mdash; the moment institutional abstraction could no longer absorb the consequence.</p>
 
-<a class="link" href="faq.html">
-<div class="left">
-<small>FAQ</small>
-<span>Questions & Answers</span>
-</div>
-<div>→</div>
-</a>
+    <div class="break"></div>
 
-<a class="link" href="contact.html">
-<div class="left">
-<small>Contact</small>
-<span>Private Inquiry</span>
-</div>
-<div>→</div>
-</a>
+    <p>During normal operations, institutions prefer collective language:</p>
 
-</div>
+    <ul class="word-list">
+      <li>Cross-functional.</li>
+      <li>Reviewed by all stakeholders.</li>
+      <li>Approved through governance channels.</li>
+      <li>Passed all required stages.</li>
+    </ul>
 
-<p class="copy">© 2026 Liran Bar-Shrim. All rights reserved.</p>
+    <p>Everyone participated. No one fully owned the decision to stop.</p>
 
-</div>
+    <p>That language survives while outcomes remain positive. The moment harm appears, it collapses. Investors, regulators, boards, and courts do not accept "we" for long.</p>
+
+    <p>At that moment, ambiguity ends. What was distributed becomes personal.</p>
+
+    <div class="pull pull-danger">
+      The most exposed person is often not the one who caused the failure, but the one who accepted responsibility without first demanding explicit authority to stop.
+    </div>
+
+    <div class="break"></div>
+
+    <p>Many governance systems create procedural comfort instead of real control. They document who approved, who attended, who was informed. They rarely define who can truly say no at the decisive moment.</p>
+
+    <p>Without named stop authority, accountability becomes retrospective theater.</p>
+
+    <p>A stop function is not real because it appears in policy. It is real only when a specifically identified person can make continuation impossible without their explicit release.</p>
+
+    <div class="pull">
+      If continuation remains the default under uncertainty, stopping was symbolic from the beginning.
+    </div>
+
+    <p>If stopping requires more approvals, more coordination, or another meeting &mdash; it is not stopping. It is delay.</p>
+
+    <div class="break"></div>
+
+    <p>In many failures, damage is not created in the first second. It grows in the minutes while everyone waits for someone else to decide.</p>
+
+    <p>An organization where continuation remains the default long enough stops producing people who know stopping is an option. Not people who fear stopping. People to whom stopping no longer occurs.</p>
+
+    <p>That is how institutional drift forms. Not through malice. Through repetition.</p>
+
+    <p>When systems reward motion, continuity, and uninterrupted execution, human judgment adapts to those incentives.</p>
+
+    <ul class="word-list">
+      <li>Escalation becomes normal.</li>
+      <li>Stopping becomes abnormal.</li>
+      <li>Silence is mistaken for alignment.</li>
+      <li>Caution is treated as disruption.</li>
+    </ul>
+
+    <p>An organization that treats stopping as deviant conditions its people never to use the authority they were given. Everyone assumes someone else already checked.</p>
+
+    <div class="pull">
+      The greater risk is not that machines replace human beings. The greater risk is that human beings lose the habit of stopping.
+    </div>
+
+    <p>Named stop authority means little if the person holding it has been conditioned never to act.</p>
+
+    <div class="break"></div>
+
+    <p>In most organizations, the problem is not lack of information. The problem is lack of ownership over doubt.</p>
+
+    <p>Everyone sees warning signs. Few hold authority to act on them.</p>
+
+    <ul class="word-list">
+      <li>In healthcare, treatment pathways continue under uncertainty because no clearly empowered hand can halt them in real time.</li>
+      <li>In finance, automated exposure grows because escalation paths exist, but immediate stop authority does not.</li>
+      <li>In technology, systems are deployed because release was carefully designed. Shutdown was barely designed at all.</li>
+    </ul>
+
+    <div class="break"></div>
+
+    <p>Autonomous systems plan, optimize, escalate, and continue by default &mdash; at machine speed, at global scale. Faster than any governance structure designed for human tempo.</p>
+
+    <p>A model is deployed because a committee approved it. Harmful outputs begin. Monitoring detects it. Teams are aware. No single person has immediate authority to suspend it.</p>
+
+    <p>By the time the emergency meeting starts, the mechanism is already moving.</p>
+
+    <div class="name-appears">
+      <p>A name appears.</p>
+    </div>
+
+    <p>The question is no longer only: who is responsible for failure? It is now also: who is responsible for speed?</p>
+
+    <div class="pull pull-danger">
+      When a system can act faster than an institution can interrupt it, speed itself becomes a governance risk.
+    </div>
+
+    <p>The new question is not only time to market. It is time to stop. And when no name is assigned to the stop button, that time belongs to the mechanism.</p>
+
+    <div class="break"></div>
+
+    <div class="questions">
+      <div class="questions-label">If you are close to any material decision involving automation or autonomy</div>
+      <p>Who, by name, can stop this immediately?</p>
+      <p>Is that authority real, personal, and executable in real time?</p>
+      <p>Under uncertainty, is continuation the default &mdash; or is stopping the default?</p>
+      <p>Who owns the gap between system speed and oversight speed?</p>
+      <p>If harm begins now, who can stop it within thirty seconds?</p>
+      <p>Would that person be protected for stopping too early?</p>
+      <p>Is stopping faster than escalation?</p>
+    </div>
+
+    <p>If no answer exists by name, that is already an answer.</p>
+
+  </div>
+
+  <div class="closing">
+    <p>The organizations that earn durable trust will not be those with the longest approval chains. They will be those that placed a real human name on the stop button before it was needed.</p>
+    <br>
+    <p>Because responsibility cannot be delegated to a speed no one can stop.</p>
+  </div>
+
+  <div class="footer-nav">
+    <a href="dar.html">DAR &rarr;</a>
+    <a href="failure-points.html">Where Accountability Breaks &rarr;</a>
+    <a href="contact.html">Private Intake &rarr;</a>
+  </div>
+
+  <div class="footer">
+    &copy; 2026 Liran Bar-Shrim. All rights reserved.
+  </div>
+
+</main>
+
+<script>
+const menu = document.getElementById('menu');
+const overlay = document.getElementById('overlay');
+
+document.getElementById('openMenu').onclick = function() {
+  menu.classList.add('active');
+  overlay.classList.add('active');
+};
+
+document.getElementById('closeMenu').onclick = closeMenu;
+overlay.onclick = closeMenu;
+
+function closeMenu() {
+  menu.classList.remove('active');
+  overlay.classList.remove('active');
+}
+</script>
+
 </body>
 </html>
