@@ -4,24 +4,26 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>About | Liran Bar-Shrim | Matrix Audit</title>
-<meta name="description" content="Independent researcher focused on authority gaps, stop power, and irreversible decisions under uncertainty.">
+<title>About | Liran Bar Shrim | Matrix Audit</title>
+
+<meta name="description" content="Independent researcher focused on authority gaps, executive accountability, and irreversible decisions under uncertainty.">
+
 <link rel="canonical" href="https://matrix-audit.com/about.html">
 
-<meta property="og:title" content="About | Liran Bar-Shrim">
-<meta property="og:description" content="Independent researcher focused on authority, accountability, and irreversible decisions.">
+<meta property="og:title" content="About | Liran Bar Shrim">
+<meta property="og:description" content="Independent researcher focused on decision authority and accountability.">
 <meta property="og:type" content="website">
 
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Cormorant+Garamond:wght@500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=DM+Serif+Display&display=swap" rel="stylesheet">
 
 <style>
 :root{
---bg:#070707;
+--bg:#060606;
 --surface:#111111;
 --line:#242424;
 --text:#ece7df;
---muted:#9f988f;
---gold:#c6a46c;
+--muted:#9d978f;
+--gold:#c8a96e;
 }
 
 *{
@@ -34,35 +36,36 @@ body{
 background:var(--bg);
 color:var(--text);
 font-family:Inter,Arial,sans-serif;
-line-height:1.75;
+line-height:1.7;
 -webkit-font-smoothing:antialiased;
+overflow-x:hidden;
 }
 
 .container{
 max-width:1120px;
 margin:auto;
-padding:52px 24px 90px;
+padding:28px 20px 72px;
 }
 
 .top{
-font-size:11px;
+font-size:10px;
 letter-spacing:.28em;
 text-transform:uppercase;
 color:var(--gold);
-margin-bottom:42px;
+margin-bottom:24px;
 }
 
 .hero{
-display:grid;
-grid-template-columns:300px 1fr;
-gap:58px;
-align-items:center;
-padding-bottom:64px;
+display:flex;
+flex-direction:column;
+gap:28px;
+padding-bottom:44px;
 border-bottom:1px solid var(--line);
 }
 
 .photo{
-max-width:300px;
+width:100%;
+max-width:230px;
 border:1px solid var(--line);
 background:var(--surface);
 overflow:hidden;
@@ -76,87 +79,94 @@ object-fit:cover;
 }
 
 h1{
-font-family:"Cormorant Garamond",serif;
-font-size:clamp(44px,6vw,78px);
+font-family:"DM Serif Display",serif;
+font-size:44px;
 line-height:1.02;
-font-weight:600;
+font-weight:400;
 letter-spacing:-0.02em;
-margin-bottom:14px;
+margin-bottom:12px;
+max-width:100%;
+word-break:normal;
 }
 
 .role{
-font-size:11px;
-letter-spacing:.26em;
+font-size:10px;
+letter-spacing:.28em;
 text-transform:uppercase;
 color:var(--gold);
-margin-bottom:26px;
+margin-bottom:18px;
 }
 
 .lead{
-font-size:22px;
+font-size:18px;
 line-height:1.45;
-max-width:640px;
-margin-bottom:22px;
+margin-bottom:16px;
 color:var(--text);
+max-width:620px;
 }
 
 .copy{
-font-size:16px;
-max-width:700px;
+font-size:15px;
+line-height:1.75;
 color:var(--muted);
-margin-bottom:16px;
+margin-bottom:14px;
+max-width:680px;
 }
 
 .section{
-padding:58px 0;
+padding:42px 0;
 border-bottom:1px solid var(--line);
 }
 
 .label{
-font-size:11px;
+font-size:10px;
 letter-spacing:.26em;
 text-transform:uppercase;
 color:var(--gold);
-margin-bottom:14px;
+margin-bottom:12px;
 }
 
 .section h2{
-font-family:"Cormorant Garamond",serif;
-font-size:42px;
-font-weight:600;
-margin-bottom:16px;
-line-height:1.05;
-}
-
-.section p{
-font-size:16px;
-max-width:760px;
-color:var(--muted);
+font-family:"DM Serif Display",serif;
+font-size:30px;
+line-height:1.08;
+font-weight:400;
 margin-bottom:14px;
 }
 
+.section p{
+font-size:15px;
+line-height:1.75;
+color:var(--muted);
+margin-bottom:14px;
+max-width:720px;
+}
+
 .quote{
-margin-top:18px;
-padding-left:20px;
+margin-top:14px;
+padding-left:16px;
 border-left:2px solid var(--gold);
-font-family:"Cormorant Garamond",serif;
-font-size:28px;
-line-height:1.3;
+font-family:"DM Serif Display",serif;
+font-size:22px;
+line-height:1.35;
 color:var(--text);
 }
 
 .cta{
-padding-top:58px;
+padding-top:42px;
 }
 
 .btn{
-display:inline-block;
-padding:15px 22px;
+display:block;
+width:100%;
+max-width:320px;
+text-align:center;
+padding:15px 20px;
 border:1px solid var(--gold);
 text-decoration:none;
 color:var(--text);
-font-size:11px;
-letter-spacing:.24em;
+font-size:10px;
+letter-spacing:.26em;
 text-transform:uppercase;
 transition:.2s;
 }
@@ -167,76 +177,66 @@ color:#111;
 }
 
 .footer{
-padding-top:34px;
+padding-top:28px;
 font-size:11px;
-color:#6d675f;
+color:#6f695f;
+line-height:1.6;
 }
 
-@media(max-width:900px){
-
-.hero{
-grid-template-columns:1fr;
-gap:32px;
-}
-
-.photo{
-max-width:260px;
-}
-
-}
-
-@media(max-width:640px){
+@media(min-width:760px){
 
 .container{
-padding:34px 20px 72px;
+padding:52px 26px 90px;
 }
 
-.top{
-margin-bottom:28px;
+.hero{
+display:grid;
+grid-template-columns:280px 1fr;
+gap:54px;
+align-items:center;
 }
 
 .photo{
-max-width:220px;
+max-width:280px;
 }
 
 h1{
-font-size:46px;
-line-height:1.04;
+font-size:70px;
 }
 
 .role{
-font-size:10px;
-margin-bottom:20px;
+font-size:11px;
 }
 
 .lead{
-font-size:18px;
-margin-bottom:18px;
-}
-
-.copy{
-font-size:15px;
-}
-
-.section{
-padding:42px 0;
-}
-
-.section h2{
-font-size:32px;
-}
-
-.section p{
-font-size:15px;
-}
-
-.quote{
 font-size:22px;
 }
 
+.copy{
+font-size:16px;
+}
+
+.section{
+padding:58px 0;
+}
+
+.section h2{
+font-size:42px;
+}
+
+.section p{
+font-size:16px;
+}
+
+.quote{
+font-size:28px;
+}
+
 .btn{
-width:100%;
-text-align:center;
+display:inline-block;
+width:auto;
+min-width:230px;
+font-size:11px;
 }
 
 }
@@ -252,12 +252,12 @@ text-align:center;
 <section class="hero">
 
 <div class="photo">
-<img src="https://i.postimg.cc/mkCYFrxr/liran-1.jpg" alt="Liran Bar-Shrim">
+<img src="https://i.postimg.cc/mkCYFrxr/liran-1.jpg" alt="Liran Bar Shrim">
 </div>
 
 <div>
 
-<h1>Liran Bar-Shrim</h1>
+<h1>Liran Bar Shrim</h1>
 
 <div class="role">Independent Researcher</div>
 
@@ -298,7 +298,7 @@ An external perspective can identify authority gaps, escalation dead zones, and 
 
 <div class="label">Why Now</div>
 
-<h2>Uncertainty now moves faster than governance.</h2>
+<h2>Uncertainty moves faster than governance.</h2>
 
 <p>
 AI systems, delegated approvals, distributed teams, and rapid execution changed how decisions move.
@@ -332,9 +332,10 @@ Decision authority. Stop power. Executive exposure. Irreversible pathways. Accou
 </div>
 
 <div class="footer">
-© 2026 Liran Bar-Shrim. Independent work. All rights reserved.
+© 2026 Liran Bar Shrim. Independent work. All rights reserved.
 </div>
 
 </div>
 
-</body
+</body>
+</html>
