@@ -1,20 +1,18 @@
-<!-- index.html -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Decision Authority Research | Named Stop Authority for Irreversible Decisions</title>
-<meta name="description" content="Private advisory for boards, executives, General Counsel, CROs and AI governance leaders facing irreversible decisions under uncertainty.">
-<meta name="keywords" content="decision authority, executive accountability, AI governance, stop authority">
-<meta name="robots" content="index,follow">
-<link rel="canonical" href="https://matrix-audit.com/">
+<title>About | Liran Bar Shrim | Matrix Audit</title>
+<meta name="description" content="Independent researcher focused on authority gaps, executive accountability, and irreversible decisions under uncertainty.">
+<meta name="keywords" content="decision authority, DAR, executive accountability, AI governance, stop authority">
+<link rel="canonical" href="https://matrix-audit.com/about.html">
 
-<meta property="og:title" content="Decision Authority Research">
-<meta property="og:description" content="When no one is named to stop a decision, liability finds someone later.">
+<meta property="og:title" content="About | Liran Bar Shrim">
+<meta property="og:description" content="Independent researcher focused on decision authority and accountability.">
 <meta property="og:type" content="website">
-<meta property="og:url" content="https://matrix-audit.com/">
+<meta property="og:url" content="https://matrix-audit.com/about.html">
 
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
 
@@ -22,13 +20,11 @@
 :root{
 --bg:#090909;
 --surface:#111111;
---surface2:#151515;
 --gold:#c8a96e;
 --text:#e8e2d7;
 --muted:#a7a097;
 --border:#1d1d1d;
 --border2:#2a2a2a;
---danger:#c0392b;
 }
 
 *{margin:0;padding:0;box-sizing:border-box;}
@@ -48,15 +44,15 @@ body:before{
 content:'';
 position:fixed;
 inset:0;
+background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 240 240' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.025'/%3E%3C/svg%3E");
+opacity:.55;
 pointer-events:none;
-opacity:.05;
-background-image:
-radial-gradient(circle at 20% 20%, rgba(255,255,255,.08), transparent 22%),
-radial-gradient(circle at 80% 80%, rgba(255,255,255,.05), transparent 20%);
 z-index:0;
 }
 
 a{text-decoration:none;color:inherit;}
+
+/* topbar */
 
 .topbar{
 position:sticky;
@@ -104,6 +100,8 @@ height:1.5px;
 background:var(--text);
 }
 
+/* menu */
+
 .overlay{
 position:fixed;
 inset:0;
@@ -130,7 +128,7 @@ overflow-y:auto;
 background:#0d0d0d;
 border-left:1px solid var(--border);
 padding:28px 24px 48px;
-transition:.28s cubic-bezier(.4,0,.2,1);
+transition:.28s ease;
 z-index:999;
 }
 
@@ -154,7 +152,7 @@ color:var(--gold);
 .close-btn{
 background:none;
 border:none;
-font-size:26px;
+font-size:28px;
 color:var(--muted);
 cursor:pointer;
 }
@@ -185,7 +183,6 @@ border-bottom:1px solid rgba(255,255,255,.03);
 }
 
 .menu-group a:last-child{border-bottom:none;}
-.menu-group a:hover{color:var(--text);}
 .menu-group a.active{color:var(--gold);}
 
 .menu-divider-line{
@@ -193,6 +190,7 @@ display:inline-block;
 width:12px;
 height:1px;
 background:var(--border2);
+flex-shrink:0;
 }
 
 .menu-cta{
@@ -212,11 +210,13 @@ text-align:center;
 display:block;
 margin-top:10px;
 padding:11px 20px;
-color:var(--muted)!important;
+border:1px solid var(--border2);
 font-size:13px;
 text-align:center;
-border:1px solid var(--border);
+color:var(--muted)!important;
 }
+
+/* layout */
 
 .container{
 position:relative;
@@ -226,178 +226,157 @@ margin:0 auto;
 padding:70px 28px 110px;
 }
 
+/* hero */
+
 .hero{
+display:grid;
+grid-template-columns:240px 1fr;
+gap:54px;
+align-items:start;
 border-left:3px solid var(--gold);
 padding-left:24px;
 margin-bottom:58px;
 }
 
-.hero-label{
+.photo{
+max-width:240px;
+border:1px solid var(--border2);
+overflow:hidden;
+background:var(--surface);
+}
+
+.photo img{
+width:100%;
+display:block;
+aspect-ratio:4/5;
+object-fit:cover;
+}
+
+.hero-label,
+.section-label{
 font-family:'IBM Plex Mono',monospace;
 font-size:10px;
 letter-spacing:.24em;
 text-transform:uppercase;
-color:#b8aa8a;
-margin-bottom:18px;
+color:var(--gold);
+margin-bottom:16px;
 }
 
 .hero h1{
 font-family:'Playfair Display',serif;
-font-size:clamp(44px,7vw,74px);
+font-size:clamp(38px,7vw,68px);
 line-height:1.02;
-margin-bottom:24px;
+margin-bottom:16px;
 }
 
-.hero p{
+.hero-role{
+font-family:'IBM Plex Mono',monospace;
+font-size:10px;
+letter-spacing:.24em;
+text-transform:uppercase;
+color:var(--gold);
+margin-bottom:20px;
+}
+
+.hero-lead{
 font-size:18px;
-line-height:1.9;
-color:var(--muted);
-max-width:760px;
+margin-bottom:14px;
 }
 
-.statement{
-background:linear-gradient(180deg,#111,#0d0d0d);
-border:1px solid var(--border2);
-border-left:3px solid var(--danger);
-padding:34px;
-margin-bottom:62px;
-font-family:'Playfair Display',serif;
-font-size:34px;
-line-height:1.28;
+.hero-copy{
+font-size:15px;
+color:var(--muted);
+margin-bottom:12px;
+max-width:640px;
 }
+
+/* sections */
 
 .section{
 padding:54px 0;
 border-top:1px solid rgba(255,255,255,.05);
 }
 
-.section-label{
-font-family:'IBM Plex Mono',monospace;
-font-size:10px;
-letter-spacing:.22em;
-text-transform:uppercase;
-color:var(--gold);
-margin-bottom:14px;
-}
-
 .section h2{
 font-family:'Playfair Display',serif;
-font-size:42px;
-margin-bottom:28px;
+font-size:clamp(28px,4vw,42px);
+line-height:1.1;
+margin-bottom:20px;
 }
 
-.grid{
-display:grid;
-grid-template-columns:1fr 1fr;
-gap:18px;
+.section p{
+font-size:16px;
+line-height:1.85;
+color:var(--muted);
+margin-bottom:14px;
+max-width:720px;
 }
 
-.card{
-display:block;
-background:linear-gradient(180deg,#121212,#0d0d0d);
-border:1px solid #262626;
+.quote{
+margin-top:24px;
+padding:28px 24px;
 border-left:3px solid var(--gold);
-padding:28px 26px;
-transition:.22s;
+background:linear-gradient(180deg,#111,#0d0d0d);
+border:1px solid var(--border2);
+font-family:'Playfair Display',serif;
+font-size:clamp(20px,3vw,28px);
+line-height:1.35;
 }
 
-.card:hover{
-transform:translateY(-3px);
-background:#171717;
-}
-
-.card small{
-display:block;
+.btn{
+display:inline-block;
+margin-top:28px;
+padding:16px 24px;
+border:1px solid var(--gold);
+color:var(--gold);
 font-family:'IBM Plex Mono',monospace;
 font-size:10px;
 letter-spacing:.22em;
 text-transform:uppercase;
-color:var(--gold);
-margin-bottom:12px;
 }
 
-.card strong{
-display:block;
-font-family:'Playfair Display',serif;
-font-size:28px;
-line-height:1.1;
-margin-bottom:12px;
-}
-
-.card span{
-display:block;
-font-size:15px;
-line-height:1.85;
+.btn.alt{
+margin-top:12px;
+border-color:var(--border2);
 color:var(--muted);
+font-family:Inter,system-ui,sans-serif;
+font-size:14px;
+text-transform:none;
+letter-spacing:0;
 }
 
-.cta{
-display:inline-block;
-margin-top:24px;
-padding:18px 28px;
-background:var(--gold);
-color:#111;
-font-family:'IBM Plex Mono',monospace;
-font-size:11px;
-letter-spacing:.22em;
-text-transform:uppercase;
-font-weight:700;
-}
-
-.footer-banner{
-margin-top:74px;
-border:1px solid var(--border2);
-background:#0d0d0d;
-}
-
-.footer-link{
-display:flex;
-justify-content:space-between;
-align-items:center;
-padding:20px 24px;
-border-bottom:1px solid var(--border2);
-}
-
-.footer-link:last-child{border-bottom:none;}
-.footer-link:hover{background:#151515;}
-
-.footer-link-left{
-display:flex;
-flex-direction:column;
-gap:4px;
-}
-
-.footer-link-label{
-font-family:'IBM Plex Mono',monospace;
-font-size:9px;
-letter-spacing:.22em;
-text-transform:uppercase;
-color:var(--gold);
-}
-
-.footer-link-title{
-font-family:'Playfair Display',serif;
-font-size:17px;
-}
+/* footer */
 
 .footer{
-margin-top:28px;
+margin-top:60px;
 padding-top:28px;
 border-top:1px solid var(--border2);
 font-size:11px;
 letter-spacing:.08em;
 color:#6e6964;
 font-family:'IBM Plex Mono',monospace;
+text-align:left;
+white-space:nowrap;
+overflow:hidden;
+text-overflow:ellipsis;
 }
 
-@media(max-width:860px){
-.grid{grid-template-columns:1fr;}
+/* mobile */
+
+@media(max-width:760px){
 .container{padding:56px 18px 90px;}
-.hero h1{font-size:clamp(38px,12vw,58px);}
-.hero p{font-size:16px;}
-.statement{font-size:25px;padding:26px 22px;}
-.section h2{font-size:34px;}
-.card strong{font-size:24px;}
+
+.hero{
+grid-template-columns:1fr;
+gap:28px;
+border-left:none;
+border-top:3px solid var(--gold);
+padding-left:0;
+padding-top:24px;
+}
+
+.photo{max-width:180px;}
+.hero h1{font-size:42px;}
 }
 </style>
 </head>
@@ -411,7 +390,9 @@ font-family:'IBM Plex Mono',monospace;
 </a>
 
 <button class="menu-btn" id="openMenu" aria-label="Open menu">
-<span></span><span></span><span></span>
+<span></span>
+<span></span>
+<span></span>
 </button>
 </header>
 
@@ -426,21 +407,14 @@ font-family:'IBM Plex Mono',monospace;
 
 <div class="menu-group" style="border-top:none;padding-top:0;margin-top:0;">
 <div class="menu-label">Primary</div>
-<a href="index.html" class="active"><span class="menu-divider-line"></span>Home</a>
+<a href="index.html"><span class="menu-divider-line"></span>Home</a>
 <a href="dar.html"><span class="menu-divider-line"></span>DAR</a>
 <a href="services.html"><span class="menu-divider-line"></span>Services</a>
-<a href="about.html"><span class="menu-divider-line"></span>About</a>
-</div>
-
-<div class="menu-group">
-<div class="menu-label">Research</div>
-<a href="research.html"><span class="menu-divider-line"></span>Independent Research</a>
-<a href="whitepaper.html"><span class="menu-divider-line"></span>White Paper</a>
+<a href="about.html" class="active"><span class="menu-divider-line"></span>About</a>
 </div>
 
 <div class="menu-group">
 <div class="menu-label">Insights</div>
-<a href="accountability-gap.html"><span class="menu-divider-line"></span>The Accountability Gap</a>
 <a href="exposure.html"><span class="menu-divider-line"></span>When Failure Lands on One Name</a>
 <a href="failure-points.html"><span class="menu-divider-line"></span>Where Accountability Breaks</a>
 <a href="we.html"><span class="menu-divider-line"></span>The Death of We</a>
@@ -464,105 +438,91 @@ font-family:'IBM Plex Mono',monospace;
 <main class="container">
 
 <section class="hero">
-<div class="hero-label">Executive Decision Advisory</div>
-<h1>When no one is named to stop a decision,<br>liability finds someone later.</h1>
+
+<div class="photo">
+<img src="https://i.postimg.cc/mkCYFrxr/liran-1.jpg" alt="Liran Bar Shrim">
+</div>
+
+<div>
+<div class="hero-label">About</div>
+<h1>Liran Bar Shrim</h1>
+<div class="hero-role">Independent Researcher</div>
+
+<p class="hero-lead">Outside the system. Focused on what it misses.</p>
+
+<p class="hero-copy">
+My work examines a structural question many institutions still avoid:
+who is explicitly empowered to stop irreversible decisions under uncertainty?
+</p>
+
+<p class="hero-copy">
+As systems accelerate, responsibility becomes diffuse. That gap becomes dangerous.
+</p>
+</div>
+
+</section>
+
+<section class="section">
+<div class="section-label">Why Independent</div>
+<h2>Distance reveals what proximity normalizes.</h2>
+
 <p>
-Private advisory for boards, executives, General Counsel, CROs and AI governance leaders facing irreversible decisions under uncertainty.
+Internal systems often adapt to their own blind spots. Process becomes routine. Momentum becomes culture.
+</p>
+
+<p>
+An external perspective can identify authority gaps, escalation dead zones, and decisions that continue because no one is clearly empowered to stop them.
 </p>
 </section>
 
-<div class="statement">
-Approval is common.<br>
-Stop authority is rare.
-</div>
-
 <section class="section">
-<div class="section-label">Executive Reading</div>
-<h2>Failure Patterns</h2>
+<div class="section-label">Why Now</div>
+<h2>Uncertainty moves faster than governance.</h2>
 
-<div class="grid">
+<p>
+AI systems, delegated approvals, distributed teams, and rapid execution changed how decisions move.
+</p>
 
-<a href="accountability-gap.html" class="card">
-<small>Essay</small>
-<strong>The Accountability Gap</strong>
-<span>The most exposed person is often not the one who caused the failure.</span>
-</a>
+<p>
+Many organizations modernized execution before modernizing intervention.
+</p>
 
-<a href="exposure.html" class="card">
-<small>Essay</small>
-<strong>When Failure Lands on One Name</strong>
-<span>Shared success hides personal exposure.</span>
-</a>
-
-<a href="failure-points.html" class="card">
-<small>Cases</small>
-<strong>Where Accountability Breaks</strong>
-<span>Three patterns. One missing element.</span>
-</a>
-
-<a href="ai-governance.html" class="card">
-<small>Vertical</small>
-<strong>AI Governance</strong>
-<span>Autonomous systems move faster than governance.</span>
-</a>
-
+<div class="quote">
+When no one is named in advance,<br>
+someone is blamed later.
 </div>
 </section>
 
 <section class="section">
-<div class="section-label">Private Intake</div>
-<h2>One question matters</h2>
-<p style="font-size:18px;color:var(--muted);max-width:720px;line-height:1.9;">
-When a decision becomes irreversible under uncertainty, who is explicitly named to stop it?
+<div class="section-label">Focus</div>
+<h2>Areas of Work</h2>
+
+<p>
+Decision authority. Stop power. Executive exposure. Irreversible pathways. Accountability under pressure.
 </p>
-<a href="contact.html" class="cta">Request Private Intake</a>
+
+<a href="contact.html" class="btn">Private Inquiry</a><br>
+<a href="mailto:Liran@liranbarshrim.com" class="btn alt">Liran@liranbarshrim.com</a>
+
 </section>
-
-<div class="footer-banner">
-
-<a href="dar.html" class="footer-link">
-<div class="footer-link-left">
-<span class="footer-link-label">Framework</span>
-<span class="footer-link-title">Decision Authority Record</span>
-</div>
-<span>&rarr;</span>
-</a>
-
-<a href="accountability-gap.html" class="footer-link">
-<div class="footer-link-left">
-<span class="footer-link-label">Essay</span>
-<span class="footer-link-title">The Accountability Gap</span>
-</div>
-<span>&rarr;</span>
-</a>
-
-<a href="contact.html" class="footer-link">
-<div class="footer-link-left">
-<span class="footer-link-label">Contact</span>
-<span class="footer-link-title">Private Intake</span>
-</div>
-<span>&rarr;</span>
-</a>
-
-</div>
 
 <div class="footer">
-&copy; 2026 Liran Bar-Shrim. All rights reserved.
+&copy; 2026 Liran Bar Shrim. All rights reserved.
 </div>
 
 </main>
 
 <script>
-const menu = document.getElementById('menu');
-const overlay = document.getElementById('overlay');
+const menu=document.getElementById('menu');
+const overlay=document.getElementById('overlay');
 
-document.getElementById('openMenu').onclick = function(){
+document.getElementById('openMenu').onclick=function(){
 menu.classList.add('active');
 overlay.classList.add('active');
 };
 
-document.getElementById('closeMenu').onclick = closeMenu;
-overlay.onclick = closeMenu;
+document.getElementById('closeMenu').onclick=closeMenu;
+overlay.onclick=closeMenu;
 
 function closeMenu(){
 menu.classList.remove('active');
