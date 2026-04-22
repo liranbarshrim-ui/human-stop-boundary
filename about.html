@@ -6,7 +6,7 @@
 
 <title>About | Liran Bar Shrim | Matrix Audit</title>
 <meta name="description" content="Independent researcher focused on authority gaps, executive accountability, and irreversible decisions under uncertainty.">
-<meta name="keywords" content="decision authority, DAR, executive accountability, AI governance, stop authority, irreversible decisions">
+<meta name="keywords" content="decision authority, DAR, executive accountability, AI governance, stop authority">
 <link rel="canonical" href="https://matrix-audit.com/about.html">
 
 <meta property="og:title" content="About | Liran Bar Shrim">
@@ -20,7 +20,6 @@
 :root{
 --bg:#090909;
 --surface:#111111;
---surface2:#151515;
 --gold:#c8a96e;
 --text:#e8e2d7;
 --muted:#a7a097;
@@ -38,6 +37,7 @@ font-family:Inter,system-ui,sans-serif;
 line-height:1.7;
 overflow-x:hidden;
 -webkit-font-smoothing:antialiased;
+text-rendering:optimizeLegibility;
 }
 
 body:before{
@@ -51,8 +51,6 @@ z-index:0;
 }
 
 a{text-decoration:none;color:inherit;}
-
-/* topbar */
 
 .topbar{
 position:sticky;
@@ -94,13 +92,11 @@ padding:6px;
 }
 
 .menu-btn span{
+display:block;
 width:22px;
 height:1.5px;
 background:var(--text);
-display:block;
 }
-
-/* overlay */
 
 .overlay{
 position:fixed;
@@ -116,8 +112,6 @@ z-index:998;
 opacity:1;
 visibility:visible;
 }
-
-/* side menu */
 
 .side-menu{
 position:fixed;
@@ -188,37 +182,34 @@ border-bottom:1px solid rgba(255,255,255,.03);
 .menu-group a.active{color:var(--gold);}
 
 .menu-divider-line{
+display:inline-block;
 width:12px;
 height:1px;
 background:var(--border2);
-display:inline-block;
 flex-shrink:0;
 }
 
-.menu-cta{
+.menu-cta,
+.menu-email{
 display:block;
-margin-top:28px;
+text-align:center;
 padding:14px 20px;
-border:1px solid var(--gold);
+margin-top:12px;
+font-size:12px;
+border:1px solid var(--border2);
+}
+
+.menu-cta{
+margin-top:28px;
+border-color:var(--gold);
 color:var(--gold)!important;
 font-family:'IBM Plex Mono',monospace;
 font-size:10px;
 letter-spacing:.2em;
 text-transform:uppercase;
-text-align:center;
 }
 
-.menu-email{
-display:block;
-margin-top:10px;
-padding:11px 20px;
-border:1px solid var(--border);
-font-size:13px;
-text-align:center;
-color:var(--muted)!important;
-}
-
-/* layout */
+.menu-email{color:var(--muted)!important;}
 
 .container{
 position:relative;
@@ -227,8 +218,6 @@ max-width:980px;
 margin:0 auto;
 padding:70px 28px 110px;
 }
-
-/* hero */
 
 .hero{
 display:grid;
@@ -244,6 +233,7 @@ margin-bottom:58px;
 max-width:240px;
 border:1px solid var(--border2);
 overflow:hidden;
+background:var(--surface);
 }
 
 .photo img{
@@ -281,7 +271,6 @@ margin-bottom:20px;
 
 .hero-lead{
 font-size:18px;
-color:var(--text);
 margin-bottom:14px;
 }
 
@@ -292,8 +281,6 @@ margin-bottom:12px;
 max-width:640px;
 }
 
-/* sections */
-
 .section{
 padding:54px 0;
 border-top:1px solid rgba(255,255,255,.05);
@@ -302,6 +289,7 @@ border-top:1px solid rgba(255,255,255,.05);
 .section h2{
 font-family:'Playfair Display',serif;
 font-size:clamp(28px,4vw,42px);
+line-height:1.1;
 margin-bottom:20px;
 }
 
@@ -322,10 +310,7 @@ border:1px solid var(--border2);
 font-family:'Playfair Display',serif;
 font-size:clamp(20px,3vw,28px);
 line-height:1.35;
-color:var(--text);
 }
-
-/* buttons */
 
 .btn{
 display:inline-block;
@@ -343,24 +328,25 @@ text-transform:uppercase;
 margin-top:12px;
 border-color:var(--border2);
 color:var(--muted);
+font-family:Inter,system-ui,sans-serif;
+font-size:14px;
+text-transform:none;
+letter-spacing:0;
 }
 
-/* footer */
-
 .footer{
-margin-top:50px;
+margin-top:60px;
 padding-top:28px;
 border-top:1px solid var(--border2);
 font-size:11px;
 letter-spacing:.08em;
 color:#6e6964;
 font-family:'IBM Plex Mono',monospace;
+text-align:center;
+line-height:1.8;
 }
 
-/* mobile */
-
 @media(max-width:760px){
-
 .container{padding:56px 18px 90px;}
 
 .hero{
@@ -373,7 +359,6 @@ padding-top:24px;
 }
 
 .photo{max-width:180px;}
-
 .hero h1{font-size:42px;}
 }
 </style>
@@ -405,7 +390,6 @@ padding-top:24px;
 
 <div class="menu-group" style="border-top:none;padding-top:0;margin-top:0;">
 <div class="menu-label">Primary</div>
-
 <a href="index.html"><span class="menu-divider-line"></span>Home</a>
 <a href="dar.html"><span class="menu-divider-line"></span>DAR</a>
 <a href="services.html"><span class="menu-divider-line"></span>Services</a>
@@ -414,7 +398,6 @@ padding-top:24px;
 
 <div class="menu-group">
 <div class="menu-label">Insights</div>
-
 <a href="exposure.html"><span class="menu-divider-line"></span>When Failure Lands on One Name</a>
 <a href="failure-points.html"><span class="menu-divider-line"></span>Where Accountability Breaks</a>
 <a href="we.html"><span class="menu-divider-line"></span>The Death of We</a>
@@ -424,7 +407,6 @@ padding-top:24px;
 
 <div class="menu-group">
 <div class="menu-label">Knowledge</div>
-
 <a href="definitions.html"><span class="menu-divider-line"></span>Definitions</a>
 <a href="faq.html"><span class="menu-divider-line"></span>FAQ</a>
 <a href="case-studies.html"><span class="menu-divider-line"></span>Case Studies</a>
@@ -508,7 +490,8 @@ Decision authority. Stop power. Executive exposure. Irreversible pathways. Accou
 </section>
 
 <div class="footer">
-&copy; 2026 Liran Bar Shrim. Independent work. All rights reserved.
+© 2026 Liran Bar Shrim<br>
+All rights reserved.
 </div>
 
 </main>
