@@ -1,160 +1,382 @@
-<!-- =========================
-ADD THIS TO ABOUT PAGE
-Keeps clean design / minimal layout
-========================= -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
 
-<section class="about-principal">
-  <div class="container">
-    <span class="eyebrow">The Principal</span>
-
-    <h2>Liran Bar-Shrim</h2>
-
-    <p>
-      Independent advisor focused on decision authority, escalation risk,
-      and irreversible decisions.
-    </p>
-
-    <p>
-      Matrix Audit was created for situations where responsibility is real,
-      timelines are short, and authority must be clear before action.
-    </p>
-
-    <p>
-      Direct engagement. Limited scope. Confidential process.
-    </p>
-  </div>
-</section>
-
-
-
-<!-- =========================
-ADD THIS TO SERVICES PAGE
-========================= -->
-
-<section class="service-outputs">
-  <div class="container">
-    <span class="eyebrow">Typical Outputs</span>
-
-    <h2>What You Receive</h2>
-
-    <ul class="clean-list">
-      <li>Decision Authority Record</li>
-      <li>Named Stop Review</li>
-      <li>Escalation Gap Findings</li>
-      <li>Confidential Executive Memo</li>
-    </ul>
-  </div>
-</section>
-
-
-
-<!-- =========================
-ADD THIS TO PRIVATE INQUIRY PAGE
-Place above form
-========================= -->
-
-<section class="inquiry-note">
-  <div class="container narrow">
-    <p>
-      Direct review by the principal.<br>
-      Confidential reply within 24 hours.
-    </p>
-  </div>
-</section>
-
-
-
-<!-- =========================
-ADD THIS TO FOOTER
-========================= -->
-
-<div class="footer-note">
-  Independent advisory practice led by Liran Bar-Shrim
-</div>
-
-
-
-<!-- =========================
-MINIMAL CSS
-Paste into style.css
-========================= -->
+<title>About | Matrix Audit</title>
+<meta name="description" content="Independent advisory focused on decision authority, escalation risk, and irreversible decisions.">
 
 <style>
-.about-principal,
-.service-outputs,
-.inquiry-note {
-  padding: 72px 24px;
+:root{
+--bg:#0b0b0b;
+--card:#121212;
+--line:rgba(255,255,255,.08);
+--text:#f5f5f5;
+--muted:rgba(255,255,255,.62);
+--soft:rgba(255,255,255,.82);
 }
 
-.container {
-  max-width: 980px;
-  margin: 0 auto;
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
 }
 
-.container.narrow {
-  max-width: 680px;
+html{
+scroll-behavior:smooth;
 }
 
-.eyebrow {
-  display: inline-block;
-  font-size: 12px;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  opacity: 0.6;
-  margin-bottom: 18px;
+body{
+font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;
+background:var(--bg);
+color:var(--text);
+line-height:1.65;
+-webkit-font-smoothing:antialiased;
 }
 
-.about-principal h2,
-.service-outputs h2 {
-  font-size: 34px;
-  line-height: 1.15;
-  margin-bottom: 22px;
-  font-weight: 600;
+a{
+color:inherit;
+text-decoration:none;
 }
 
-.about-principal p,
-.inquiry-note p,
-.clean-list li {
-  font-size: 18px;
-  line-height: 1.75;
-  opacity: 0.9;
-  margin-bottom: 14px;
+.container{
+width:100%;
+max-width:1120px;
+margin:0 auto;
+padding:0 24px;
 }
 
-.clean-list {
-  list-style: none;
-  padding: 0;
-  margin: 0;
+header{
+position:sticky;
+top:0;
+z-index:50;
+backdrop-filter:blur(12px);
+background:rgba(11,11,11,.78);
+border-bottom:1px solid var(--line);
 }
 
-.clean-list li {
-  padding: 10px 0;
-  border-bottom: 1px solid rgba(255,255,255,0.08);
+.nav{
+display:flex;
+justify-content:space-between;
+align-items:center;
+height:72px;
 }
 
-.footer-note {
-  margin-top: 18px;
-  font-size: 14px;
-  opacity: 0.55;
-  text-align: center;
+.logo{
+font-size:15px;
+font-weight:600;
+letter-spacing:.08em;
+text-transform:uppercase;
 }
 
-@media (max-width: 768px) {
-  .about-principal,
-  .service-outputs,
-  .inquiry-note {
-    padding: 54px 20px;
-  }
+.menu{
+display:flex;
+gap:26px;
+align-items:center;
+}
 
-  .about-principal h2,
-  .service-outputs h2 {
-    font-size: 28px;
-  }
+.menu a{
+font-size:14px;
+color:var(--muted);
+transition:.2s;
+}
 
-  .about-principal p,
-  .inquiry-note p,
-  .clean-list li {
-    font-size: 16px;
-  }
+.menu a:hover{
+color:var(--text);
+}
+
+.btn{
+padding:12px 18px;
+border:1px solid var(--line);
+border-radius:999px;
+font-size:14px;
+font-weight:600;
+transition:.2s;
+}
+
+.btn:hover{
+background:#fff;
+color:#000;
+}
+
+.hero{
+padding:110px 0 80px;
+}
+
+.eyebrow{
+font-size:12px;
+letter-spacing:.16em;
+text-transform:uppercase;
+color:var(--muted);
+margin-bottom:18px;
+display:block;
+}
+
+h1{
+font-size:54px;
+line-height:1.05;
+font-weight:600;
+max-width:760px;
+margin-bottom:24px;
+}
+
+.lead{
+font-size:20px;
+color:var(--soft);
+max-width:760px;
+}
+
+.section{
+padding:72px 0;
+border-top:1px solid var(--line);
+}
+
+.grid{
+display:grid;
+grid-template-columns:1.1fr .9fr;
+gap:48px;
+}
+
+.card{
+background:var(--card);
+border:1px solid var(--line);
+border-radius:22px;
+padding:34px;
+}
+
+h2{
+font-size:32px;
+line-height:1.1;
+margin-bottom:20px;
+font-weight:600;
+}
+
+p{
+font-size:18px;
+color:var(--soft);
+margin-bottom:16px;
+}
+
+.small{
+font-size:15px;
+color:var(--muted);
+}
+
+.list{
+list-style:none;
+display:grid;
+gap:14px;
+margin-top:8px;
+}
+
+.list li{
+padding:14px 0;
+border-bottom:1px solid var(--line);
+font-size:17px;
+color:var(--soft);
+}
+
+.cta{
+padding:84px 0;
+text-align:center;
+border-top:1px solid var(--line);
+}
+
+.cta h2{
+max-width:760px;
+margin:0 auto 18px;
+}
+
+.cta p{
+max-width:700px;
+margin:0 auto 28px;
+}
+
+footer{
+padding:36px 0 60px;
+border-top:1px solid var(--line);
+}
+
+.footer-row{
+display:flex;
+justify-content:space-between;
+gap:20px;
+flex-wrap:wrap;
+}
+
+@media(max-width:900px){
+h1{
+font-size:42px;
+}
+
+.grid{
+grid-template-columns:1fr;
+}
+
+.menu{
+display:none;
+}
+}
+
+@media(max-width:640px){
+.hero{
+padding:84px 0 60px;
+}
+
+h1{
+font-size:34px;
+}
+
+.lead{
+font-size:18px;
+}
+
+h2{
+font-size:26px;
+}
+
+p{
+font-size:16px;
+}
 }
 </style>
+</head>
+<body>
+
+<header>
+<div class="container nav">
+<a href="#" class="logo">Matrix Audit</a>
+
+<nav class="menu">
+<a href="#">Services</a>
+<a href="#">Private Inquiry</a>
+<a href="#">About</a>
+<a href="#" class="btn">Request Inquiry</a>
+</nav>
+</div>
+</header>
+
+<main>
+
+<section class="hero">
+<div class="container">
+<span class="eyebrow">About</span>
+
+<h1>Independent judgment for decisions that cannot be easily undone.</h1>
+
+<p class="lead">
+Matrix Audit exists for organizations facing consequential decisions,
+unclear authority lines, escalation friction, and increasing operational speed.
+</p>
+</div>
+</section>
+
+<section class="section">
+<div class="container grid">
+
+<div>
+<span class="eyebrow">The Principal</span>
+<h2>Liran Bar-Shrim</h2>
+
+<p>
+Independent advisor focused on decision authority,
+escalation risk, and irreversible decisions.
+</p>
+
+<p>
+The practice was built around a simple observation:
+many organizations accelerate execution faster than they clarify
+who can intervene when pressure rises.
+</p>
+
+<p>
+Where ownership becomes unclear, risk compounds.
+Where authority is explicit, decisions improve.
+</p>
+
+<p class="small">
+Direct engagement. Limited scope. Confidential process.
+</p>
+</div>
+
+<div class="card">
+<span class="eyebrow">Core Focus</span>
+
+<ul class="list">
+<li>Named stop authority clarity</li>
+<li>Escalation path weaknesses</li>
+<li>Executive accountability under pressure</li>
+<li>AI governance intervention gaps</li>
+<li>Irreversible decision review</li>
+</ul>
+</div>
+
+</div>
+</section>
+
+<section class="section">
+<div class="container grid">
+
+<div class="card">
+<span class="eyebrow">Why Independent</span>
+
+<p>
+No junior handoffs. No internal politics.
+No incentive to preserve weak structures.
+</p>
+
+<p>
+The value is direct attention, outside perspective,
+and clear written judgment.
+</p>
+</div>
+
+<div>
+<span class="eyebrow">How Engagements Work</span>
+<h2>Focused, discreet, time-bound.</h2>
+
+<p>
+Projects are structured around specific moments:
+launches, governance changes, board decisions,
+AI deployments, or unresolved ownership risk.
+</p>
+
+<p>
+Each engagement is private, principal-led,
+and designed to produce usable clarity quickly.
+</p>
+</div>
+
+</div>
+</section>
+
+<section class="cta">
+<div class="container">
+<span class="eyebrow">Private Inquiry</span>
+
+<h2>
+If authority is unclear before action,
+it usually becomes clear after failure.
+</h2>
+
+<p>
+Confidential first contact for executives and boards
+facing consequential decisions.
+</p>
+
+<a href="#" class="btn">Request Confidential Inquiry</a>
+</div>
+</section>
+
+</main>
+
+<footer>
+<div class="container footer-row">
+<div class="small">© 2026 Matrix Audit</div>
+<div class="small">Independent advisory practice led by Liran Bar-Shrim</div>
+</div>
+</footer>
+
+</body>
+</html>
