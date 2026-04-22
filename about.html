@@ -1,523 +1,160 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<!-- =========================
+ADD THIS TO ABOUT PAGE
+Keeps clean design / minimal layout
+========================= -->
 
-<title>About | Matrix Audit</title>
-<meta name="description" content="About Liran Bar-Shrim — Independent advisor focused on decision authority, accountability exposure, and governance under pressure.">
-<meta name="theme-color" content="#05050a">
-<link rel="canonical" href="https://matrix-audit.com/about.html">
+<section class="about-principal">
+  <div class="container">
+    <span class="eyebrow">The Principal</span>
 
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <h2>Liran Bar-Shrim</h2>
 
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Cormorant+Garamond:wght@300;400;500&display=swap" rel="stylesheet">
+    <p>
+      Independent advisor focused on decision authority, escalation risk,
+      and irreversible decisions.
+    </p>
+
+    <p>
+      Matrix Audit was created for situations where responsibility is real,
+      timelines are short, and authority must be clear before action.
+    </p>
+
+    <p>
+      Direct engagement. Limited scope. Confidential process.
+    </p>
+  </div>
+</section>
+
+
+
+<!-- =========================
+ADD THIS TO SERVICES PAGE
+========================= -->
+
+<section class="service-outputs">
+  <div class="container">
+    <span class="eyebrow">Typical Outputs</span>
+
+    <h2>What You Receive</h2>
+
+    <ul class="clean-list">
+      <li>Decision Authority Record</li>
+      <li>Named Stop Review</li>
+      <li>Escalation Gap Findings</li>
+      <li>Confidential Executive Memo</li>
+    </ul>
+  </div>
+</section>
+
+
+
+<!-- =========================
+ADD THIS TO PRIVATE INQUIRY PAGE
+Place above form
+========================= -->
+
+<section class="inquiry-note">
+  <div class="container narrow">
+    <p>
+      Direct review by the principal.<br>
+      Confidential reply within 24 hours.
+    </p>
+  </div>
+</section>
+
+
+
+<!-- =========================
+ADD THIS TO FOOTER
+========================= -->
+
+<div class="footer-note">
+  Independent advisory practice led by Liran Bar-Shrim
+</div>
+
+
+
+<!-- =========================
+MINIMAL CSS
+Paste into style.css
+========================= -->
 
 <style>
-*{margin:0;padding:0;box-sizing:border-box}
-
-:root{
---bg:#05050a;
---bg2:#0f0f16;
---card:#121219;
---line:rgba(255,255,255,.08);
---text:#d8d2ca;
---muted:#8e8880;
---gold:#b49a6a;
---white:#f3eee7;
---max:1120px;
+.about-principal,
+.service-outputs,
+.inquiry-note {
+  padding: 72px 24px;
 }
 
-body{
-background:var(--bg);
-color:var(--text);
-font-family:Inter,sans-serif;
-font-weight:300;
-line-height:1.72;
-overflow-x:hidden;
+.container {
+  max-width: 980px;
+  margin: 0 auto;
 }
 
-a{text-decoration:none;color:inherit}
-
-.wrap{
-max-width:var(--max);
-margin:auto;
-padding:0 22px;
+.container.narrow {
+  max-width: 680px;
 }
 
-/* NAV */
-nav{
-position:fixed;
-top:0;left:0;right:0;
-height:72px;
-z-index:5000;
-background:rgba(5,5,10,.92);
-backdrop-filter:blur(14px);
-border-bottom:1px solid var(--line);
+.eyebrow {
+  display: inline-block;
+  font-size: 12px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  opacity: 0.6;
+  margin-bottom: 18px;
 }
 
-.navin{
-height:100%;
-display:flex;
-align-items:center;
-justify-content:space-between;
+.about-principal h2,
+.service-outputs h2 {
+  font-size: 34px;
+  line-height: 1.15;
+  margin-bottom: 22px;
+  font-weight: 600;
 }
 
-.brand{
-display:flex;
-flex-direction:column;
+.about-principal p,
+.inquiry-note p,
+.clean-list li {
+  font-size: 18px;
+  line-height: 1.75;
+  opacity: 0.9;
+  margin-bottom: 14px;
 }
 
-.brand b{
-font-size:12px;
-letter-spacing:.28em;
-font-weight:600;
-color:var(--white);
+.clean-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
 }
 
-.brand span{
-font-size:10px;
-color:var(--muted);
-margin-top:3px;
+.clean-list li {
+  padding: 10px 0;
+  border-bottom: 1px solid rgba(255,255,255,0.08);
 }
 
-.burger{
-width:34px;
-height:26px;
-background:none;
-border:none;
-position:relative;
-cursor:pointer;
+.footer-note {
+  margin-top: 18px;
+  font-size: 14px;
+  opacity: 0.55;
+  text-align: center;
 }
 
-.burger span{
-position:absolute;
-left:0;right:0;
-height:2px;
-background:var(--white);
-transition:.25s;
-}
+@media (max-width: 768px) {
+  .about-principal,
+  .service-outputs,
+  .inquiry-note {
+    padding: 54px 20px;
+  }
 
-.burger span:nth-child(1){top:2px}
-.burger span:nth-child(2){top:11px}
-.burger span:nth-child(3){top:20px}
+  .about-principal h2,
+  .service-outputs h2 {
+    font-size: 28px;
+  }
 
-body.menu .burger span:nth-child(1){top:11px;transform:rotate(45deg)}
-body.menu .burger span:nth-child(2){opacity:0}
-body.menu .burger span:nth-child(3){top:11px;transform:rotate(-45deg)}
-
-.overlay{
-position:fixed;
-inset:72px 0 0 0;
-background:rgba(0,0,0,.55);
-opacity:0;
-pointer-events:none;
-transition:.25s;
-z-index:3900;
-}
-
-.overlay.show{
-opacity:1;
-pointer-events:auto;
-}
-
-.drawer{
-position:fixed;
-top:72px;
-right:0;
-width:88%;
-max-width:340px;
-height:calc(100dvh - 72px);
-background:#090910;
-border-left:1px solid var(--line);
-transform:translateX(100%);
-transition:.28s;
-z-index:4000;
-overflow-y:auto;
-padding:22px;
-}
-
-.drawer.open{transform:translateX(0)}
-
-.drawer h4{
-font-size:11px;
-letter-spacing:.24em;
-text-transform:uppercase;
-color:var(--gold);
-margin:18px 0 10px;
-}
-
-.drawer a{
-display:block;
-padding:14px 0;
-border-bottom:1px solid rgba(255,255,255,.05);
-font-size:16px;
-}
-
-body.menu{overflow:hidden}
-
-/* CONTENT */
-main{
-padding-top:72px;
-}
-
-section{
-padding:44px 0;
-border-top:1px solid var(--line);
-}
-
-.hero{
-border-top:none;
-padding:56px 0 34px;
-}
-
-.label{
-font-size:11px;
-letter-spacing:.28em;
-text-transform:uppercase;
-color:var(--gold);
-margin-bottom:18px;
-}
-
-.banner{
-padding:24px;
-border:1px solid var(--line);
-border-left:3px solid var(--gold);
-background:linear-gradient(180deg,#14141b,#0d0d12);
-margin-bottom:34px;
-}
-
-.banner h2,
-h1,h2,h3{
-font-family:"Cormorant Garamond",serif;
-font-weight:400;
-color:var(--white);
-}
-
-.banner h2{
-font-size:38px;
-line-height:1.04;
-margin-bottom:8px;
-}
-
-.banner p{
-font-size:15px;
-color:var(--muted);
-}
-
-.grid{
-display:grid;
-grid-template-columns:260px 1fr;
-gap:40px;
-align-items:start;
-}
-
-img{
-width:100%;
-display:block;
-border-left:3px solid var(--gold);
-}
-
-.caption{
-font-size:11px;
-color:#6f685f;
-margin-top:8px;
-}
-
-.role{
-font-size:11px;
-letter-spacing:.2em;
-text-transform:uppercase;
-color:var(--gold);
-margin-bottom:14px;
-}
-
-h1{
-font-size:clamp(42px,7vw,64px);
-line-height:1.02;
-margin-bottom:14px;
-}
-
-p{
-font-size:16px;
-margin-bottom:14px;
-color:var(--muted);
-}
-
-strong{
-color:var(--text);
-font-weight:500;
-}
-
-.quote{
-padding:26px;
-background:var(--card);
-border:1px solid var(--line);
-border-left:3px solid var(--gold);
-font-family:"Cormorant Garamond",serif;
-font-size:34px;
-line-height:1.18;
-color:var(--white);
-}
-
-.list{
-display:grid;
-gap:1px;
-background:var(--line);
-margin-top:16px;
-}
-
-.item{
-padding:18px;
-background:var(--card);
-font-size:16px;
-color:var(--text);
-}
-
-.cta{
-padding:24px;
-background:linear-gradient(180deg,#15120d,#111);
-border:1px solid rgba(180,154,106,.24);
-border-left:3px solid var(--gold);
-margin-top:18px;
-}
-
-.btns{
-display:flex;
-gap:12px;
-flex-wrap:wrap;
-margin-top:18px;
-}
-
-.btn{
-display:inline-block;
-padding:14px 22px;
-font-size:12px;
-letter-spacing:.15em;
-text-transform:uppercase;
-border:1px solid var(--gold);
-}
-
-.primary{
-background:var(--gold);
-color:#111;
-}
-
-.links{
-display:grid;
-grid-template-columns:1fr 1fr;
-gap:1px;
-background:var(--line);
-margin-top:18px;
-}
-
-.link{
-display:flex;
-justify-content:space-between;
-padding:18px;
-background:var(--card);
-}
-
-footer{
-padding:36px 0 60px;
-font-size:13px;
-color:#6f685f;
-}
-
-/* MOBILE */
-@media(max-width:860px){
-.grid{grid-template-columns:1fr}
-}
-
-@media(max-width:680px){
-
-.banner h2{font-size:32px}
-
-p{font-size:15px}
-
-.quote{
-font-size:28px;
-padding:22px;
-}
-
-.links{
-grid-template-columns:1fr;
-}
-
-.btns{
-flex-direction:column;
-}
-
-.btn{
-width:100%;
-text-align:center;
-}
-
+  .about-principal p,
+  .inquiry-note p,
+  .clean-list li {
+    font-size: 16px;
+  }
 }
 </style>
-</head>
-
-<body>
-
-<nav>
-<div class="wrap navin">
-
-<a href="index.html" class="brand">
-<b>MATRIX AUDIT</b>
-<span>Liran Bar-Shrim · Decision Authority</span>
-</a>
-
-<button class="burger" onclick="toggleMenu()" aria-label="Menu">
-<span></span>
-<span></span>
-<span></span>
-</button>
-
-</div>
-</nav>
-
-<div class="overlay" id="overlay" onclick="closeMenu()"></div>
-
-<div class="drawer" id="drawer">
-
-<h4>Main</h4>
-<a href="index.html">Home</a>
-<a href="about.html">About</a>
-<a href="review.html">Executive Review</a>
-<a href="case-studies.html">Case Studies</a>
-<a href="ai-governance.html">AI Governance</a>
-<a href="contact.html">Contact</a>
-
-<h4>More</h4>
-<a href="services.html">Services</a>
-<a href="stop-authority.html">Stop Authority</a>
-<a href="faq.html">FAQ</a>
-<a href="goodfaith.html">Good Faith Use</a>
-<a href="scenarios.html">Scenarios</a>
-
-</div>
-
-<main class="wrap">
-
-<section class="hero">
-
-<div class="label">Matrix Audit</div>
-
-<div class="banner">
-<h2>Built Around One Question</h2>
-<p>If a critical decision had to stop today, who has real authority to do it by name?</p>
-</div>
-
-<div class="grid">
-
-<div>
-<img src="https://i.ibb.co/nqp2MhYD/liran-1.jpg" alt="Liran Bar-Shrim">
-<div class="caption">Liran Bar-Shrim</div>
-</div>
-
-<div>
-<div class="role">Independent Advisor · Decision Authority</div>
-
-<h1>Liran Bar-Shrim</h1>
-
-<p>Liran Bar-Shrim focuses on decision authority under pressure.</p>
-
-<p><strong>Critical decisions often move forward while no one is clearly empowered to stop them in time.</strong></p>
-
-<p>Built independently and shaped by direct observation of how accountability behaves when consequences become personal.</p>
-</div>
-
-</div>
-</section>
-
-<section>
-<div class="label">Why This Perspective</div>
-
-<p>Built through direct observation of how accountability behaves under urgency, reputational pressure, and executive exposure.</p>
-
-<p>Not based on committee language. Based on what happens when leaders need clarity fast.</p>
-
-<p><strong>When consequences arrive, theory is late.</strong></p>
-</section>
-
-<section>
-<div class="label">Focus</div>
-
-<p>Many organizations define how decisions move forward.</p>
-<p>Far fewer define who can truly stop them.</p>
-<p><strong>When no one is clearly named in advance, responsibility is often assigned afterward.</strong></p>
-</section>
-
-<section>
-<div class="label">Who This Helps</div>
-
-<div class="list">
-<div class="item">CEOs facing live decisions</div>
-<div class="item">Boards under scrutiny</div>
-<div class="item">General Counsel managing exposure</div>
-<div class="item">Risk leaders confronting escalation gaps</div>
-<div class="item">AI governance teams needing real human override authority</div>
-</div>
-</section>
-
-<section>
-<div class="label">Core Principle</div>
-
-<div class="quote">
-When a decision is already moving,<br>
-authority matters more than process.
-</div>
-</section>
-
-<section>
-<div class="label">Private Inquiry</div>
-
-<div class="cta">
-<p>Discuss a live decision, accountability exposure, or unclear authority before momentum decides for you.</p>
-
-<div class="btns">
-<a href="contact.html" class="btn primary">Request Private Review</a>
-<a href="mailto:contact@matrix-audit.com" class="btn">Email Directly</a>
-</div>
-</div>
-</section>
-
-<section>
-<div class="label">Explore</div>
-
-<div class="links">
-<a href="review.html" class="link"><span>Executive Review</span><span>→</span></a>
-<a href="case-studies.html" class="link"><span>Decision Failures</span><span>→</span></a>
-<a href="ai-governance.html" class="link"><span>AI Governance</span><span>→</span></a>
-<a href="index.html" class="link"><span>Home</span><span>→</span></a>
-</div>
-</section>
-
-<footer>
-Private inquiries: contact@matrix-audit.com<br>
-© 2026 Matrix Audit · Liran Bar-Shrim
-</footer>
-
-</main>
-
-<script>
-function toggleMenu(){
-document.body.classList.toggle("menu");
-document.getElementById("drawer").classList.toggle("open");
-document.getElementById("overlay").classList.toggle("show");
-}
-
-function closeMenu(){
-document.body.classList.remove("menu");
-document.getElementById("drawer").classList.remove("open");
-document.getElementById("overlay").classList.remove("show");
-}
-
-window.addEventListener("resize",function(){
-if(window.innerWidth>900){closeMenu();}
-});
-</script>
-
-</body>
-</html>
