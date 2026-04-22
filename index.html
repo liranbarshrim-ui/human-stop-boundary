@@ -53,8 +53,8 @@ body:before{
 content:'';
 position:fixed;
 inset:0;
-pointer-events:none;
 opacity:.05;
+pointer-events:none;
 background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 240 240' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
 }
 
@@ -102,13 +102,13 @@ padding:6px;
 }
 
 .menu-btn span{
+display:block;
 width:22px;
 height:1.5px;
 background:var(--text);
-display:block;
 }
 
-/* side menu */
+/* menu */
 
 .overlay{
 position:fixed;
@@ -255,9 +255,9 @@ margin-bottom:22px;
 
 .hero p{
 font-size:18px;
+line-height:1.9;
 color:var(--muted);
 max-width:760px;
-line-height:1.9;
 }
 
 .statement{
@@ -336,8 +336,8 @@ margin-bottom:12px;
 .card span{
 display:block;
 font-size:15px;
-color:var(--muted);
 line-height:1.8;
+color:var(--muted);
 }
 
 .cta{
@@ -353,8 +353,6 @@ letter-spacing:.22em;
 text-transform:uppercase;
 font-weight:700;
 }
-
-/* footer */
 
 .footer{
 margin-top:70px;
@@ -413,7 +411,7 @@ font-size:24px;
 <span>Decision Authority Research</span>
 </a>
 
-<button class="menu-btn" id="openMenu">
+<button class="menu-btn" id="openMenu" aria-label="Open menu">
 <span></span>
 <span></span>
 <span></span>
@@ -436,6 +434,12 @@ font-size:24px;
 <a href="dar.html">DAR</a>
 <a href="services.html">Services</a>
 <a href="about.html">About</a>
+</div>
+
+<div class="menu-group">
+<div class="menu-label">Research</div>
+<a href="research.html">Independent Research</a>
+<a href="whitepaper.html">White Paper</a>
 </div>
 
 <div class="menu-group">
@@ -508,16 +512,43 @@ Stop authority is rare.
 </section>
 
 <section class="section">
-<div class="section-label">Authority Essays</div>
-<h2>Failure Patterns</h2>
+<div class="section-label">Research</div>
+<h2>Independent Work</h2>
 
 <div class="grid">
+
+<a href="research.html" class="card">
+<small>Research</small>
+<strong>Independent Research</strong>
+<span>Original work on authority gaps, stop power and accountability systems.</span>
+</a>
+
+<a href="whitepaper.html" class="card">
+<small>Paper</small>
+<strong>White Paper</strong>
+<span>Structured framework for irreversible decisions under uncertainty.</span>
+</a>
 
 <a href="accountability-gap.html" class="card">
 <small>Essay</small>
 <strong>The Accountability Gap</strong>
 <span>The most exposed person is often not the one who caused the failure.</span>
 </a>
+
+<a href="ai-governance.html" class="card">
+<small>Vertical</small>
+<strong>AI Governance</strong>
+<span>Modern systems accelerate faster than governance.</span>
+</a>
+
+</div>
+</section>
+
+<section class="section">
+<div class="section-label">Essays</div>
+<h2>Failure Patterns</h2>
+
+<div class="grid">
 
 <a href="exposure.html" class="card">
 <small>Essay</small>
@@ -537,20 +568,20 @@ Stop authority is rare.
 <span>Collective language often disappears when failure begins.</span>
 </a>
 
+<a href="case-studies.html" class="card">
+<small>Cases</small>
+<strong>Case Studies</strong>
+<span>Real failures where ownership became visible too late.</span>
+</a>
+
 </div>
 </section>
 
 <section class="section">
-<div class="section-label">Knowledge Base</div>
-<h2>Governance & Support</h2>
+<div class="section-label">Knowledge</div>
+<h2>Definitions & Support</h2>
 
 <div class="grid">
-
-<a href="ai-governance.html" class="card">
-<small>Vertical</small>
-<strong>AI Governance</strong>
-<span>Autonomous systems move faster than governance.</span>
-</a>
 
 <a href="definitions.html" class="card">
 <small>Definitions</small>
@@ -564,10 +595,16 @@ Stop authority is rare.
 <span>What DAR is and what it is not.</span>
 </a>
 
-<a href="case-studies.html" class="card">
-<small>Cases</small>
-<strong>Case Studies</strong>
-<span>Real failures where ownership became visible too late.</span>
+<a href="services.html" class="card">
+<small>Advisory</small>
+<strong>Private Services</strong>
+<span>Confidential decision-risk engagements.</span>
+</a>
+
+<a href="contact.html" class="card">
+<small>Contact</small>
+<strong>Private Intake</strong>
+<span>Start a confidential conversation.</span>
 </a>
 
 </div>
