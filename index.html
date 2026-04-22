@@ -1,318 +1,243 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<!-- HEADER / TOP NAV / HAMBURGER -->
+<header class="topbar">
 
-<title>Decision Authority Research | Named Stop Authority for Irreversible Decisions</title>
+  <a href="index.html" class="brand">
+    <span class="brand-mark"></span>
+    <span class="brand-text">Decision Authority Research</span>
+  </a>
 
-<meta name="description" content="When no one is named to stop a critical decision, liability finds someone later. Private advisory for boards, executives and AI governance leaders.">
+  <nav class="desktop-nav">
+    <a href="dar.html">DAR</a>
+    <a href="services.html">Services</a>
+    <a href="contact.html" class="nav-cta">Contact</a>
+  </nav>
 
-<link rel="canonical" href="https://matrix-audit.com/">
+  <button class="menu-btn" id="menuBtn" aria-label="Open menu">
+    <span></span>
+    <span></span>
+    <span></span>
+  </button>
 
-<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Playfair+Display:wght@400;700&display=swap" rel="stylesheet">
+</header>
+
+<!-- MOBILE / SIDE MENU -->
+<div class="menu-overlay" id="menuOverlay"></div>
+
+<aside class="side-menu" id="sideMenu">
+
+  <div class="menu-head">
+    <span>Menu</span>
+    <button class="close-btn" id="closeBtn">&times;</button>
+  </div>
+
+  <div class="menu-group">
+    <div class="menu-label">Primary</div>
+    <a href="dar.html">DAR</a>
+    <a href="services.html">Services</a>
+    <a href="contact.html">Private Contact</a>
+  </div>
+
+  <div class="menu-group">
+    <div class="menu-label">Insights</div>
+    <a href="exposure.html">When Failure Lands on One Name</a>
+    <a href="we.html">The Death of We</a>
+    <a href="failure-points.html">Where Accountability Breaks</a>
+    <a href="ai-governance.html">AI Governance</a>
+  </div>
+
+  <div class="menu-group">
+    <div class="menu-label">Knowledge</div>
+    <a href="definitions.html">Definitions</a>
+    <a href="faq.html">FAQ</a>
+    <a href="goodfaith.html">Good Faith Use</a>
+  </div>
+
+  <div class="menu-group">
+    <div class="menu-label">About</div>
+    <a href="about.html">About</a>
+  </div>
+
+</aside>
 
 <style>
-:root{
---bg:#090909;
---surface:#111111;
---surface2:#151515;
---gold:#c8a96e;
---text:#e6e0d4;
---muted:#a09a94;
---dim:#7a7570;
---border:#1e1e1e;
---border2:#2a2a2a;
---danger:#c0392b;
-}
-
-*{margin:0;padding:0;box-sizing:border-box;}
-
-body{
-background:var(--bg);
-color:var(--text);
-font-family:'IBM Plex Mono',monospace;
-line-height:1.7;
-}
-
-.container{
-max-width:900px;
-margin:0 auto;
-padding:60px 24px 90px;
-}
-
-.tag{
-font-size:10px;
-letter-spacing:.18em;
-text-transform:uppercase;
-color:var(--muted);
+.topbar{
+position:sticky;
+top:0;
+z-index:999;
 display:flex;
-gap:12px;
 align-items:center;
-margin-bottom:40px;
+justify-content:space-between;
+gap:20px;
+padding:18px 24px;
+background:rgba(9,9,9,.92);
+backdrop-filter:blur(8px);
+border-bottom:1px solid #1e1e1e;
 }
 
-.tag:before{
-content:'';
-width:22px;
-height:1px;
-background:var(--gold);
-display:block;
-}
-
-.hero{
-border-left:3px solid var(--gold);
-padding-left:20px;
-margin-bottom:40px;
-}
-
-.hero h1{
-font-family:'Playfair Display',serif;
-font-size:clamp(34px,6vw,62px);
-line-height:1.08;
-margin-bottom:18px;
-}
-
-.hero p{
-font-size:14px;
-color:var(--muted);
-max-width:700px;
-}
-
-.statement{
-background:var(--surface);
-border:1px solid var(--border2);
-border-left:3px solid var(--danger);
-padding:26px;
-margin-bottom:42px;
-font-family:'Playfair Display',serif;
-font-size:28px;
-line-height:1.35;
-}
-
-.section{
-padding:34px 0;
-border-top:1px solid var(--border2);
-}
-
-.label{
-font-size:10px;
-letter-spacing:.18em;
-text-transform:uppercase;
-color:var(--gold);
-margin-bottom:12px;
-}
-
-.section h2{
-font-family:'Playfair Display',serif;
-font-size:30px;
-margin-bottom:18px;
-}
-
-.grid{
-display:grid;
-grid-template-columns:1fr;
-gap:14px;
-}
-
-.card{
-display:block;
+.brand{
+display:flex;
+align-items:center;
+gap:12px;
 text-decoration:none;
-color:var(--text);
-background:linear-gradient(180deg,#121212,#0d0d0d);
-border:1px solid #262626;
-border-left:3px solid var(--gold);
-padding:24px;
-transition:.25s;
+color:#e6e0d4;
+font-size:11px;
+letter-spacing:.14em;
+text-transform:uppercase;
 }
 
-.card:hover{
-transform:translateY(-2px);
-background:#171717;
-border-color:#3b3327;
-}
-
-.card small{
+.brand-mark{
+width:18px;
+height:1px;
+background:#c8a96e;
 display:block;
+}
+
+.desktop-nav{
+display:flex;
+align-items:center;
+gap:22px;
+}
+
+.desktop-nav a{
+text-decoration:none;
+color:#a09a94;
+font-size:11px;
+letter-spacing:.14em;
+text-transform:uppercase;
+transition:.2s;
+}
+
+.desktop-nav a:hover{
+color:#e6e0d4;
+}
+
+.nav-cta{
+padding:10px 14px;
+border:1px solid #c8a96e;
+color:#e6e0d4!important;
+}
+
+.menu-btn{
+display:none;
+background:none;
+border:none;
+cursor:pointer;
+padding:0;
+}
+
+.menu-btn span{
+display:block;
+width:22px;
+height:2px;
+background:#e6e0d4;
+margin:4px 0;
+}
+
+.menu-overlay{
+position:fixed;
+inset:0;
+background:rgba(0,0,0,.55);
+opacity:0;
+visibility:hidden;
+transition:.25s;
+z-index:998;
+}
+
+.menu-overlay.active{
+opacity:1;
+visibility:visible;
+}
+
+.side-menu{
+position:fixed;
+top:0;
+right:-360px;
+width:320px;
+max-width:90%;
+height:100vh;
+background:#0f0f0f;
+border-left:1px solid #1e1e1e;
+padding:26px 22px 40px;
+overflow-y:auto;
+transition:.28s;
+z-index:999;
+}
+
+.side-menu.active{
+right:0;
+}
+
+.menu-head{
+display:flex;
+justify-content:space-between;
+align-items:center;
+margin-bottom:26px;
+color:#e6e0d4;
+font-size:12px;
+letter-spacing:.16em;
+text-transform:uppercase;
+}
+
+.close-btn{
+background:none;
+border:none;
+color:#e6e0d4;
+font-size:30px;
+cursor:pointer;
+line-height:1;
+}
+
+.menu-group{
+border-top:1px solid #1e1e1e;
+padding-top:18px;
+margin-top:18px;
+}
+
+.menu-label{
 font-size:10px;
 letter-spacing:.16em;
 text-transform:uppercase;
-color:var(--gold);
-margin-bottom:10px;
+color:#c8a96e;
+margin-bottom:12px;
 }
 
-.card strong{
+.menu-group a{
 display:block;
-font-family:'Playfair Display',serif;
-font-size:22px;
-margin-bottom:10px;
-font-weight:700;
+text-decoration:none;
+color:#b8b2ac;
+padding:8px 0;
+font-size:14px;
+line-height:1.45;
+transition:.2s;
 }
 
-.card span{
-font-size:13px;
-color:var(--muted);
-line-height:1.7;
-display:block;
+.menu-group a:hover{
+color:#e6e0d4;
 }
 
-.footer{
-margin-top:50px;
-border-top:1px solid var(--border2);
-padding-top:24px;
-font-size:11px;
-color:var(--dim);
-}
-
-@media(min-width:760px){
-.grid{
-grid-template-columns:1fr 1fr;
-}
-}
-
-@media(max-width:700px){
-.container{padding:42px 18px 70px;}
-.statement{font-size:24px;}
+@media(max-width:860px){
+.desktop-nav{display:none;}
+.menu-btn{display:block;}
 }
 </style>
-</head>
 
-<body>
-<div class="container">
+<script>
+const menuBtn = document.getElementById('menuBtn');
+const closeBtn = document.getElementById('closeBtn');
+const sideMenu = document.getElementById('sideMenu');
+const menuOverlay = document.getElementById('menuOverlay');
 
-<div class="tag">Decision Authority Research</div>
+function openMenu(){
+sideMenu.classList.add('active');
+menuOverlay.classList.add('active');
+}
 
-<div class="hero">
-<h1>When no one is named to stop it,<br>liability finds someone later.</h1>
+function closeMenu(){
+sideMenu.classList.remove('active');
+menuOverlay.classList.remove('active');
+}
 
-<p>
-Private advisory for boards, executives, General Counsel, CROs and AI governance leaders facing irreversible decisions under uncertainty.
-</p>
-</div>
-
-<div class="statement">
-Approval is common.<br>
-Stop authority is rare.
-</div>
-
-<!-- PRIMARY -->
-<div class="section">
-<div class="label">Primary</div>
-<h2>Executive Advisory</h2>
-
-<div class="grid">
-
-<a href="dar.html" class="card">
-<small>Framework</small>
-<strong>DAR</strong>
-<span>Decision Authority Record. One accountable name before exposure.</span>
-</a>
-
-<a href="services.html" class="card">
-<small>Services</small>
-<strong>Engagements</strong>
-<span>Private fixed-scope advisory for live decision risk.</span>
-</a>
-
-<a href="contact.html" class="card">
-<small>Contact</small>
-<strong>Private Contact</strong>
-<span>Discuss a live accountability gap confidentially.</span>
-</a>
-
-<a href="about.html" class="card">
-<small>About</small>
-<strong>Decision Authority Research</strong>
-<span>Independent advisory focused on stop authority.</span>
-</a>
-
-</div>
-</div>
-
-<!-- INSIGHTS -->
-<div class="section">
-<div class="label">Executive Reading</div>
-<h2>Failure Patterns</h2>
-
-<div class="grid">
-
-<a href="exposure.html" class="card">
-<small>Essay</small>
-<strong>When Failure Lands on One Name</strong>
-<span>Shared success hides personal exposure.</span>
-</a>
-
-<a href="failure-points.html" class="card">
-<small>Cases</small>
-<strong>Where Accountability Breaks</strong>
-<span>Three patterns. One missing element.</span>
-</a>
-
-<a href="we.html" class="card">
-<small>Essay</small>
-<strong>The Death of We</strong>
-<span>At some point, this will no longer be we.</span>
-</a>
-
-<a href="ai-governance.html" class="card">
-<small>Vertical</small>
-<strong>AI Governance</strong>
-<span>Autonomous systems move faster than governance.</span>
-</a>
-
-</div>
-</div>
-
-<!-- KNOWLEDGE -->
-<div class="section">
-<div class="label">Knowledge Base</div>
-<h2>Definitions & Support</h2>
-
-<div class="grid">
-
-<a href="faq.html" class="card">
-<small>FAQ</small>
-<strong>Frequently Asked Questions</strong>
-<span>What DAR is and what it is not.</span>
-</a>
-
-<a href="definitions.html" class="card">
-<small>Definitions</small>
-<strong>Core Terms</strong>
-<span>Named authority, stop trigger, exposure and more.</span>
-</a>
-
-<a href="stop-authority.html" class="card">
-<small>Concept</small>
-<strong>Stop Authority</strong>
-<span>The most ignored control function.</span>
-</a>
-
-<a href="why-internal.html" class="card">
-<small>Insight</small>
-<strong>Why Internal Attempts Fail</strong>
-<span>Why organizations avoid naming one person.</span>
-</a>
-
-<a href="case-studies.html" class="card">
-<small>Cases</small>
-<strong>Public Failures</strong>
-<span>Examples where unclear ownership became costly.</span>
-</a>
-
-<a href="goodfaith.html" class="card">
-<small>Policy</small>
-<strong>Good Faith Use</strong>
-<span>Use boundaries and advisory disclaimer.</span>
-</a>
-
-</div>
-</div>
-
-<div class="footer">
-© 2026 Liran Bar-Shrim. All rights reserved.
-</div>
-
-</div>
-</body>
-</html>
+menuBtn.addEventListener('click', openMenu);
+closeBtn.addEventListener('click', closeMenu);
+menuOverlay.addEventListener('click', closeMenu);
+</script>
