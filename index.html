@@ -68,7 +68,7 @@ display:flex;
 justify-content:space-between;
 align-items:center;
 padding:18px 24px;
-background:rgba(9,9,9,.90);
+background:rgba(9,9,9,.92);
 backdrop-filter:blur(10px);
 border-bottom:1px solid rgba(255,255,255,.05);
 }
@@ -88,7 +88,6 @@ text-transform:uppercase;
 width:18px;
 height:1px;
 background:var(--gold);
-display:block;
 }
 
 .desktop-nav{
@@ -241,10 +240,16 @@ max-width:900px;
 }
 
 .hero p{
-font-size:14px;
-line-height:2;
-color:var(--muted);
+font-family:'IBM Plex Mono',monospace;
+font-size:16px;
+line-height:2.05;
+font-weight:500;
+letter-spacing:.01em;
+color:#c4beb6;
 max-width:760px;
+opacity:.96;
+margin-top:6px;
+text-shadow:0 0 1px rgba(255,255,255,.03);
 }
 
 .statement{
@@ -353,10 +358,14 @@ color:#6e6964;
 .grid{grid-template-columns:1fr;}
 .container{padding:54px 18px 84px;}
 .hero h1{font-size:clamp(36px,12vw,56px);}
+.hero p{
+font-size:15px;
+line-height:1.95;
+color:#beb8b0;
+}
 .statement{font-size:24px;padding:26px 22px;}
 .section h2{font-size:34px;}
 }
-
 </style>
 </head>
 
@@ -418,15 +427,11 @@ color:#6e6964;
 <main class="container">
 
 <section class="hero">
-
 <div class="hero-label">Executive Decision Advisory</div>
-
 <h1>When no one is named to stop it,<br>liability finds someone later.</h1>
-
 <p>
 Private advisory for boards, executives, General Counsel, CROs and AI governance leaders facing irreversible decisions under uncertainty.
 </p>
-
 </section>
 
 <div class="statement">
@@ -435,7 +440,6 @@ Stop authority is rare.
 </div>
 
 <section class="section">
-
 <div class="section-label">Primary</div>
 <h2>Executive Advisory</h2>
 
@@ -466,90 +470,6 @@ Stop authority is rare.
 </a>
 
 </div>
-
-</section>
-
-<section class="section">
-
-<div class="section-label">Executive Reading</div>
-<h2>Failure Patterns</h2>
-
-<div class="grid">
-
-<a href="exposure.html" class="card">
-<small>Essay</small>
-<strong>When Failure Lands on One Name</strong>
-<span>Shared success hides personal exposure.</span>
-</a>
-
-<a href="we.html" class="card">
-<small>Essay</small>
-<strong>The Death of We</strong>
-<span>At some point, this will no longer be we.</span>
-</a>
-
-<a href="failure-points.html" class="card">
-<small>Cases</small>
-<strong>Where Accountability Breaks</strong>
-<span>Three patterns. One missing element.</span>
-</a>
-
-<a href="ai-governance.html" class="card">
-<small>Vertical</small>
-<strong>AI Governance</strong>
-<span>Autonomous systems move faster than governance.</span>
-</a>
-
-</div>
-
-</section>
-
-<section class="section">
-
-<div class="section-label">Knowledge Base</div>
-<h2>Definitions & Support</h2>
-
-<div class="grid">
-
-<a href="definitions.html" class="card">
-<small>Definitions</small>
-<strong>Core Terms</strong>
-<span>Named authority, stop trigger, exposure and more.</span>
-</a>
-
-<a href="faq.html" class="card">
-<small>FAQ</small>
-<strong>Frequently Asked Questions</strong>
-<span>What DAR is and what it is not.</span>
-</a>
-
-<a href="goodfaith.html" class="card">
-<small>Policy</small>
-<strong>Good Faith Use</strong>
-<span>Use boundaries and advisory disclaimer.</span>
-</a>
-
-<a href="case-studies.html" class="card">
-<small>Cases</small>
-<strong>Public Failures</strong>
-<span>Examples where unclear ownership became costly.</span>
-</a>
-
-</div>
-
-</section>
-
-<section class="section">
-
-<div class="section-label">Private Intake</div>
-<h2>One question matters</h2>
-
-<p style="font-size:14px;color:var(--muted);max-width:720px;">
-When a decision becomes irreversible under uncertainty, who is explicitly named to stop it?
-</p>
-
-<a href="contact.html" class="cta">Request Private Intake</a>
-
 </section>
 
 <div class="footer">
@@ -561,10 +481,12 @@ When a decision becomes irreversible under uncertainty, who is explicitly named 
 <script>
 const menu=document.getElementById('menu');
 const overlay=document.getElementById('overlay');
+
 document.getElementById('openMenu').onclick=function(){
 menu.classList.add('active');
 overlay.classList.add('active');
 };
+
 document.getElementById('closeMenu').onclick=closeMenu;
 overlay.onclick=closeMenu;
 
@@ -575,4 +497,4 @@ overlay.classList.remove('active');
 </script>
 
 </body>
-</html> 
+</html>
