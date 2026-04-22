@@ -2,36 +2,30 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
 
-<title>Named Stop Authority | Decision Authority Research</title>
-
-<meta name="description" content="Why approval systems fail when no one is clearly empowered to stop continuation. Named stop authority for irreversible decisions, AI governance, and executive accountability.">
-
-<meta name="keywords" content="named stop authority, decision authority, stop authority, AI governance, executive accountability, irreversible decisions, human override">
-
+<title>Named Stop Authority | Matrix Audit</title>
+<meta name="description" content="Why approval systems fail when no one is clearly empowered to stop continuation. Private perspective on stop authority, executive accountability, AI governance, and irreversible decisions.">
+<meta name="robots" content="index,follow">
 <link rel="canonical" href="https://matrix-audit.com/stop-authority.html">
 
-<meta property="og:title" content="Named Stop Authority">
+<meta property="og:title" content="Named Stop Authority | Matrix Audit">
 <meta property="og:description" content="Approval enables continuation. Stop authority interrupts continuation.">
 <meta property="og:type" content="website">
-<meta property="og:url" content="https://matrix-audit.com/stop-authority.html">
 
-<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Playfair+Display:wght@400;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Cormorant+Garamond:wght@400;500&display=swap" rel="stylesheet">
 
 <style>
 :root{
---bg:#090909;
---surface:#111111;
---surface2:#151515;
---gold:#c8a96e;
---danger:#c0392b;
---text:#e6e0d4;
---muted:#b8b2ac;
---dim:#7a7570;
---faint:#52504c;
---border:#1e1e1e;
---border2:#2a2a2a;
+--bg:#070707;
+--bg2:#101010;
+--card:#151515;
+--line:#252525;
+--gold:#b89a63;
+--text:#f3eee7;
+--muted:#a69e93;
+--soft:#6d665c;
+--max:1120px;
 }
 
 *{margin:0;padding:0;box-sizing:border-box;}
@@ -39,370 +33,404 @@
 body{
 background:var(--bg);
 color:var(--text);
-font-family:'IBM Plex Mono',monospace;
-line-height:1.75;
+font-family:Inter,sans-serif;
+line-height:1.72;
+-webkit-font-smoothing:antialiased;
 }
 
-.container{
-max-width:860px;
-margin:0 auto;
-padding:60px 24px 90px;
+a{text-decoration:none;color:inherit;}
+
+.wrap{
+max-width:var(--max);
+margin:auto;
+padding:0 24px;
+}
+
+/* HEADER */
+header{
+position:sticky;
+top:0;
+z-index:999;
+background:rgba(7,7,7,.92);
+backdrop-filter:blur(12px);
+border-bottom:1px solid var(--line);
 }
 
 .nav{
+height:72px;
 display:flex;
-justify-content:space-between;
 align-items:center;
-margin-bottom:38px;
-padding-bottom:18px;
-border-bottom:1px solid var(--border2);
+justify-content:space-between;
+gap:20px;
 }
 
-.nav a{
-text-decoration:none;
+.brand{
+font-size:12px;
+letter-spacing:.24em;
+text-transform:uppercase;
+font-weight:600;
+}
+
+.links{
+display:flex;
+gap:22px;
+flex-wrap:wrap;
+}
+
+.links a{
+font-size:13px;
 color:var(--muted);
-font-size:11px;
-letter-spacing:.08em;
 }
 
-.nav a:hover{color:var(--text);}
+.links a:hover{
+color:var(--text);
+}
+
+.topbtn{
+padding:10px 14px;
+border:1px solid var(--gold);
+font-size:11px;
+letter-spacing:.16em;
+text-transform:uppercase;
+}
+
+/* HERO */
+.hero{
+padding:92px 0 64px;
+border-bottom:1px solid var(--line);
+}
 
 .tag{
-font-size:10px;
-letter-spacing:.18em;
+font-size:11px;
+letter-spacing:.24em;
 text-transform:uppercase;
-color:var(--muted);
-display:flex;
-align-items:center;
-gap:12px;
-margin-bottom:30px;
+color:var(--gold);
+margin-bottom:18px;
 }
 
-.tag:before{
-content:'';
-width:22px;
-height:1px;
-background:var(--gold);
-display:block;
+h1,h2,h3{
+font-family:"Cormorant Garamond",serif;
+font-weight:500;
+line-height:1.04;
 }
 
 h1{
-font-family:'Playfair Display',serif;
-font-size:clamp(36px,6vw,58px);
-line-height:1.08;
+font-size:clamp(46px,8vw,82px);
+margin-bottom:18px;
+max-width:900px;
+}
+
+.lead{
+font-size:19px;
+color:var(--muted);
+max-width:760px;
+margin-bottom:34px;
+}
+
+.signal{
+background:linear-gradient(180deg,#151515,#101010);
+border:1px solid rgba(184,154,99,.25);
 border-left:3px solid var(--gold);
-padding-left:18px;
+padding:28px;
+font-family:"Cormorant Garamond",serif;
+font-size:34px;
+line-height:1.18;
+max-width:760px;
+}
+
+/* CONTENT */
+section{
+padding:72px 0;
+border-bottom:1px solid var(--line);
+}
+
+.grid2{
+display:grid;
+grid-template-columns:1fr 1fr;
+gap:34px;
+}
+
+.copy p{
+font-size:17px;
+color:var(--muted);
 margin-bottom:14px;
 }
 
-.sub{
-font-size:14px;
+.box{
+background:var(--card);
+border:1px solid var(--line);
+padding:28px;
+}
+
+.box h3{
+font-size:34px;
+margin-bottom:10px;
+}
+
+.box p{
+font-size:16px;
 color:var(--muted);
-padding-left:21px;
-margin-bottom:34px;
-max-width:720px;
-}
-
-/* PREMIUM BANNER */
-.lux-banner{
-margin:0 0 38px;
-padding:22px 24px;
-background:
-linear-gradient(135deg,rgba(200,169,110,.08),rgba(255,255,255,0) 45%),
-linear-gradient(180deg,#121212,#0d0d0d);
-border:1px solid #262626;
-border-left:3px solid var(--gold);
-position:relative;
-overflow:hidden;
-}
-
-.lux-banner:after{
-content:'';
-position:absolute;
-top:0;
-right:0;
-width:120px;
-height:100%;
-background:linear-gradient(90deg,transparent,rgba(200,169,110,.04));
-}
-
-.lux-label{
-font-size:10px;
-letter-spacing:.22em;
-text-transform:uppercase;
-color:var(--gold);
-margin-bottom:8px;
-}
-
-.lux-title{
-font-family:'Playfair Display',serif;
-font-size:28px;
-line-height:1.08;
-margin-bottom:8px;
-color:#f3ede3;
-}
-
-.lux-sub{
-font-size:13px;
-color:var(--muted);
-max-width:560px;
-line-height:1.7;
-}
-
-.hero{
-background:var(--surface);
-border:1px solid var(--border2);
-border-left:3px solid var(--gold);
-padding:24px;
-margin-bottom:42px;
-font-family:'Playfair Display',serif;
-font-size:24px;
-line-height:1.45;
-}
-
-.article{
-display:flex;
-flex-direction:column;
-gap:18px;
-}
-
-.article p{
-font-size:14px;
-color:var(--muted);
-}
-
-.article strong{
-color:var(--text);
-}
-
-.section-label{
-margin-top:18px;
-font-size:10px;
-letter-spacing:.18em;
-text-transform:uppercase;
-color:var(--gold);
-padding-bottom:10px;
-border-bottom:1px solid var(--border2);
-}
-
-.pull{
-background:var(--surface);
-border-left:3px solid var(--gold);
-padding:20px;
-font-family:'Playfair Display',serif;
-font-size:22px;
-line-height:1.45;
-color:var(--text);
 }
 
 .stack{
 display:grid;
-gap:1px;
-background:var(--border2);
-border:1px solid var(--border2);
+gap:12px;
+margin-top:18px;
 }
 
-.stack div{
-background:var(--surface);
-padding:14px 18px;
-font-size:13px;
+.item{
+padding:18px;
+background:#101010;
+border:1px solid var(--line);
+font-size:15px;
 color:var(--muted);
 }
 
-.footer{
-margin-top:48px;
-padding-top:36px;
-border-top:1px solid var(--border2);
-display:grid;
-grid-template-columns:1fr;
-gap:1px;
-background:var(--border2);
-border:1px solid var(--border2);
+.quote{
+margin-top:22px;
+padding:24px;
+background:#101010;
+border-left:3px solid var(--gold);
+font-family:"Cormorant Garamond",serif;
+font-size:32px;
+line-height:1.18;
 }
 
-.link-card{
-text-decoration:none;
-padding:20px 22px;
-background:var(--surface);
+.center{
+text-align:center;
+max-width:820px;
+margin:auto;
+}
+
+.btns{
+display:flex;
+gap:14px;
+justify-content:center;
+flex-wrap:wrap;
+margin-top:28px;
+}
+
+.btn{
+display:inline-block;
+padding:14px 22px;
+font-size:12px;
+letter-spacing:.16em;
+text-transform:uppercase;
+border:1px solid var(--gold);
+}
+
+.btn.primary{
+background:var(--gold);
+color:#000;
+}
+
+.btn.secondary{
+color:var(--text);
+}
+
+/* FOOTER */
+footer{
+padding:46px 0 60px;
+}
+
+.foot{
 display:flex;
 justify-content:space-between;
-align-items:center;
-color:var(--text);
-gap:12px;
-transition:.2s;
+gap:20px;
+flex-wrap:wrap;
+font-size:13px;
+color:var(--soft);
 }
 
-.link-card:hover{
-background:#161410;
+@media(max-width:960px){
+.grid2{grid-template-columns:1fr;}
 }
 
-.link-card:hover .arrow{
-color:var(--gold);
-}
-
-.left{
-display:flex;
-flex-direction:column;
-gap:4px;
-}
-
-.small-label{
-font-size:9px;
-letter-spacing:.18em;
-text-transform:uppercase;
-color:var(--gold);
-}
-
-.big-label{
-font-family:'Playfair Display',serif;
-font-size:14px;
-}
-
-.arrow{
-font-size:18px;
-color:var(--muted);
-}
-
-.copy{
-margin-top:28px;
-font-size:11px;
-color:var(--dim);
-}
-
-@media(min-width:760px){
-.footer{
-grid-template-columns:1fr 1fr;
-}
+@media(max-width:760px){
+.links{display:none;}
+h1{font-size:48px;}
+.signal{font-size:28px;}
+.box h3{font-size:28px;}
+.quote{font-size:26px;}
 }
 </style>
 </head>
 
 <body>
 
-<div class="container">
+<header>
+<div class="wrap nav">
 
-<div class="nav">
-<a href="index.html">← Home</a>
-<a href="contact.html">Private Inquiry</a>
+<div class="brand">Matrix Audit</div>
+
+<div class="links">
+<a href="index.html">Home</a>
+<a href="about.html">About</a>
+<a href="review.html">Review</a>
+<a href="case-studies.html">Case Studies</a>
+<a href="ai-governance.html">AI Governance</a>
+<a href="stop-authority.html">Stop Authority</a>
+<a href="contact.html">Contact</a>
 </div>
 
-<div class="tag">Decision Authority Research</div>
+<a href="contact.html" class="topbtn">Private Inquiry</a>
 
-<h1>Named Stop Authority</h1>
+</div>
+</header>
 
-<p class="sub">
-Why approval systems fail when no one can stop continuation at the critical moment.
+<section class="hero">
+<div class="wrap">
+
+<div class="tag">Named Stop Authority</div>
+
+<h1>Most organizations define how decisions proceed. Far fewer define who can stop them.</h1>
+
+<p class="lead">
+A private perspective on governance failure, executive exposure, AI systems, and why authority matters most when momentum is already moving.
 </p>
 
-<div class="lux-banner">
-<div class="lux-label">Executive Signal</div>
-<div class="lux-title">Approval Is Common</div>
-<div class="lux-sub">
-Named refusal is rare. Most organizations know how decisions proceed. Far fewer know exactly who can stop them.
-</div>
+<div class="signal">
+Approval enables continuation.<br>
+Stop authority interrupts continuation.
 </div>
 
-<div class="hero">
-When success happens, responsibility is shared.<br>
-When failure happens, it converges to one name.
 </div>
+</section>
 
-<div class="article">
+<section>
+<div class="wrap grid2">
 
-<p>Most governance systems were designed to answer one question: <strong>how do we proceed?</strong></p>
+<div>
+<div class="tag">The Illusion of Shared Ownership</div>
 
-<p>Far fewer were designed to answer the harder question: <strong>how do we stop?</strong></p>
-
-<p>Approval enables continuation. Stop authority interrupts continuation. They are not the same function.</p>
-
-<div class="section-label">The illusion of shared ownership</div>
-
-<p>During normal operations, institutions prefer collective language:</p>
-
-<div class="stack">
-<div>Reviewed by stakeholders</div>
-<div>Approved through governance channels</div>
-<div>Passed all required stages</div>
-<div>Aligned across teams</div>
-</div>
-
+<div class="copy">
+<p>During normal operations, responsibility often appears distributed.</p>
+<p>Stakeholders reviewed it. Committees approved it. Teams aligned on it.</p>
 <p>That language survives while outcomes remain positive.</p>
+<p>When failure appears, shared ownership often collapses into one question:</p>
+</div>
 
-<p>When harm appears, it collapses.</p>
-
-<div class="pull">
+<div class="quote">
 Who was responsible?
 </div>
 
-<p>At that moment, distributed ownership becomes personal accountability.</p>
-
-<div class="section-label">Stop authority is not policy</div>
-
-<p>A stop function is not real because it appears in policy.</p>
-
-<p>It is real only when a specifically identified person can make continuation impossible without explicit release.</p>
-
-<p>If continuation remains the default under uncertainty, stopping was symbolic from the beginning.</p>
-
-<div class="pull">
-If no answer exists by name, that is already an answer.
 </div>
 
-<div class="section-label">Why AI changes the stakes</div>
+<div>
+<div class="tag">What Changes Under Pressure</div>
 
-<p>Autonomous systems act at machine speed and global scale.</p>
-
-<p>When systems move faster than institutions can interrupt them, speed itself becomes a governance risk.</p>
-
-<p>The question is no longer only who owns failure.</p>
-
-<p>It is also who owns the ability to stop.</p>
-
-<div class="pull">
-Who is explicitly named to stop your next irreversible decision?
+<div class="copy">
+<p>Once consequences become personal, names matter more than process maps.</p>
+<p>Boards, regulators, investors, and counterparties rarely ask which slide deck existed.</p>
+<p>They ask who knew, who approved, and who could have stopped continuation.</p>
 </div>
 
 </div>
 
-<div class="footer">
-
-<a class="link-card" href="dar.html">
-<div class="left">
-<span class="small-label">Framework</span>
-<span class="big-label">Decision Authority Record</span>
 </div>
-<span class="arrow">→</span>
-</a>
+</section>
 
-<a class="link-card" href="case-studies.html">
-<div class="left">
-<span class="small-label">Case Studies</span>
-<span class="big-label">Real Failures. Same Pattern.</span>
-</div>
-<span class="arrow">→</span>
-</a>
+<section>
+<div class="wrap grid2">
 
-<a class="link-card" href="contact.html">
-<div class="left">
-<span class="small-label">Inquiry</span>
-<span class="big-label">Private Contact</span>
-</div>
-<span class="arrow">→</span>
-</a>
-
-<a class="link-card" href="about.html">
-<div class="left">
-<span class="small-label">About</span>
-<span class="big-label">Liran Bar-Shrim</span>
-</div>
-<span class="arrow">→</span>
-</a>
-
+<div class="box">
+<h3>Stop Authority Is Not Policy</h3>
+<p>
+A stop function is not real because it appears in governance documents.
+</p>
+<p>
+It is real only when a specifically identified person can make continuation impossible without explicit release.
+</p>
 </div>
 
-<p class="copy">© 2026 Liran Bar-Shrim. All rights reserved.</p>
+<div class="box">
+<h3>Symbolic vs Operational</h3>
+<p>
+If continuation remains the default during uncertainty, stopping may have been symbolic from the beginning.
+</p>
+<p>
+Real authority must be usable in time.
+</p>
+</div>
 
 </div>
+</section>
+
+<section>
+<div class="wrap">
+
+<div class="tag">Where This Appears</div>
+
+<div class="stack">
+
+<div class="item">AI systems moving faster than oversight.</div>
+<div class="item">Financial execution paths with compressed reaction windows.</div>
+<div class="item">Product launches under deadline pressure.</div>
+<div class="item">Regulated operations under escalation stress.</div>
+<div class="item">Board decisions with irreversible downstream effects.</div>
+
+</div>
+
+<div class="quote">
+If no answer exists by name,<br>
+that is already an answer.
+</div>
+
+</div>
+</section>
+
+<section>
+<div class="wrap grid2">
+
+<div>
+<div class="tag">Executive Question</div>
+
+<div class="copy">
+<p>Who is explicitly named to stop your next irreversible decision?</p>
+<p>If the answer requires meetings, escalation chains, or interpretation, time may already be lost.</p>
+</div>
+</div>
+
+<div>
+<div class="tag">Practical Principle</div>
+
+<div class="copy">
+<p>When uncertainty rises and reversibility falls, authority becomes more valuable than process.</p>
+<p>Clarity before the event is stronger than explanation after it.</p>
+</div>
+</div>
+
+</div>
+</section>
+
+<section>
+<div class="wrap center">
+
+<div class="tag">Private Inquiry</div>
+
+<h2 style="font-size:58px;margin-bottom:16px;">
+Discuss a Live Decision Before Responsibility Becomes Personal
+</h2>
+
+<p style="font-size:18px;color:var(--muted);">
+For boards, executives, founders, counsel, and operators facing consequential decisions already in motion.
+</p>
+
+<div class="btns">
+<a href="contact.html" class="btn primary">Request Private Review</a>
+<a href="review.html" class="btn secondary">View Executive Review</a>
+</div>
+
+</div>
+</section>
+
+<footer>
+<div class="wrap foot">
+<div>© 2026 Matrix Audit</div>
+<div>Liran Bar-Shrim</div>
+<div>Decision Authority Advisory</div>
+</div>
+</footer>
 
 </body>
 </html>
