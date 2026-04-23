@@ -12,6 +12,7 @@
 <meta property="og:title" content="About | Liran Bar-Shrim">
 <meta property="og:description" content="Independent research on decision authority and accountability.">
 <meta property="og:type" content="website">
+<meta property="og:url" content="https://matrix-audit.com/about.html">
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -134,7 +135,9 @@ transition:.28s ease;
 z-index:999;
 }
 
-.side-menu.active{right:0;}
+.side-menu.active{
+right:0;
+}
 
 .menu-head{
 display:flex;
@@ -181,22 +184,32 @@ font-size:14px;
 color:var(--muted);
 }
 
-.menu-group a.active,
-.menu-group a:hover{
+.menu-group a:hover,
+.menu-group a.active{
 color:var(--gold);
 }
 
-.menu-cta{
+.menu-cta,
+.menu-email{
 display:block;
-margin-top:22px;
-padding:14px;
 text-align:center;
+padding:14px;
+margin-top:18px;
+}
+
+.menu-cta{
 border:1px solid var(--gold);
 color:var(--gold);
 font-family:'IBM Plex Mono',monospace;
 font-size:10px;
 letter-spacing:.2em;
 text-transform:uppercase;
+}
+
+.menu-email{
+border:1px solid var(--border2);
+color:var(--muted);
+font-size:13px;
 }
 
 /* layout */
@@ -342,7 +355,9 @@ font-family:'IBM Plex Mono',monospace;
 
 @media(max-width:860px){
 
-.container{padding:56px 18px 90px;}
+.container{
+padding:56px 18px 90px;
+}
 
 .hero{
 grid-template-columns:1fr;
@@ -405,13 +420,34 @@ text-align:center;
 </div>
 
 <div class="menu-group">
+<div class="menu-label">Research</div>
+<a href="research.html">Independent Research</a>
+<a href="whitepaper.html">White Paper</a>
+</div>
+
+<div class="menu-group">
+<div class="menu-label">Concepts</div>
+<a href="stop-authority.html">Stop Authority</a>
+<a href="accountability-gap.html">The Accountability Gap</a>
+</div>
+
+<div class="menu-group">
+<div class="menu-label">Essays</div>
+<a href="exposure.html">When Failure Lands on One Name</a>
+<a href="failure-points.html">Where Accountability Breaks</a>
+<a href="we.html">The Death of We</a>
+</div>
+
+<div class="menu-group">
 <div class="menu-label">Knowledge</div>
+<a href="ai-governance.html">AI Governance</a>
 <a href="definitions.html">Definitions</a>
 <a href="faq.html">FAQ</a>
 <a href="case-studies.html">Case Studies</a>
 </div>
 
 <a href="contact.html" class="menu-cta">Private Intake</a>
+<a href="mailto:Liran@liranbarshrim.com" class="menu-email">Liran@liranbarshrim.com</a>
 
 </aside>
 
@@ -515,6 +551,10 @@ overlay.classList.add('active');
 
 document.getElementById('closeMenu').onclick=closeMenu;
 overlay.onclick=closeMenu;
+
+document.addEventListener('keydown',function(e){
+if(e.key==='Escape'){closeMenu();}
+});
 
 function closeMenu(){
 menu.classList.remove('active');
