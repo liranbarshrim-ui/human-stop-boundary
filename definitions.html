@@ -2,47 +2,36 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
 
 <title>Definitions | Decision Authority Research</title>
-<meta name="description" content="Core definitions in decision authority, stop authority, escalation control, accountability gaps, and irreversible decisions. The conceptual language behind DAR.">
-<meta name="keywords" content="decision authority, stop authority, DAR, governance definitions, accountability gap, irreversible decision">
-<meta name="robots" content="index,follow">
+<meta name="description" content="Core definitions in decision authority, stop authority, accountability gaps, escalation windows, oversight triggers, and irreversible decisions.">
+<meta name="keywords" content="decision authority, DAR, stop authority, governance definitions, accountability gap">
 <link rel="canonical" href="https://matrix-audit.com/definitions.html">
 
 <meta property="og:title" content="Definitions | Decision Authority Research">
-<meta property="og:description" content="Core definitions in stop authority, governance accountability, escalation control, and irreversible decisions.">
+<meta property="og:description" content="Core terms in stop authority, governance, accountability, and irreversible decisions.">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://matrix-audit.com/definitions.html">
 
-<script type="application/ld+json">
-{
-"@context":"https://schema.org",
-"@type":"DefinedTermSet",
-"name":"Decision Governance Definitions",
-"url":"https://matrix-audit.com/definitions.html",
-"description":"Core terms in stop authority, escalation control, governance accountability and irreversible decisions.",
-"author":{
-"@type":"Person",
-"name":"Liran Bar-Shrim"
-}
-}
-</script>
-
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
 
 <style>
 :root{
---bg:#090909;
---surface:#111111;
+--bg:#070707;
+--surface:#101010;
+--surface2:#151515;
 --gold:#c8a96e;
---text:#e8e2d7;
---muted:#a7a097;
---dim:#6a6460;
---border:#1d1d1d;
---border2:#2a2a2a;
+--text:#ece6dc;
+--muted:#aaa39a;
+--dim:#6f6a64;
+--border:#242424;
+--shadow:0 20px 50px rgba(0,0,0,.35);
 }
-*{margin:0;padding:0;box-sizing:border-box;}
+
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+
 body{
 background:var(--bg);
 color:var(--text);
@@ -51,17 +40,33 @@ line-height:1.7;
 overflow-x:hidden;
 -webkit-font-smoothing:antialiased;
 }
-a{text-decoration:none;color:inherit;}
+
+body:before{
+content:"";
+position:fixed;
+inset:0;
+background:
+radial-gradient(circle at 12% 12%, rgba(200,169,110,.06), transparent 24%),
+radial-gradient(circle at 88% 8%, rgba(255,255,255,.025), transparent 18%),
+linear-gradient(180deg, rgba(255,255,255,.01), transparent 20%);
+pointer-events:none;
+z-index:0;
+}
+
+a{text-decoration:none;color:inherit}
+
+/* TOPBAR */
 
 .topbar{
 position:sticky;
 top:0;
 z-index:999;
 display:flex;
+justify-content:space-between;
 align-items:center;
 padding:18px 24px;
-background:rgba(9,9,9,.94);
-backdrop-filter:blur(10px);
+background:rgba(7,7,7,.92);
+backdrop-filter:blur(14px);
 border-bottom:1px solid rgba(255,255,255,.04);
 }
 
@@ -81,16 +86,133 @@ height:1px;
 background:var(--gold);
 }
 
-.container{
-max-width:1120px;
-margin:0 auto;
-padding:72px 28px 110px;
+.menu-btn{
+background:none;
+border:none;
+display:flex;
+flex-direction:column;
+gap:5px;
+cursor:pointer;
+padding:6px;
 }
 
+.menu-btn span{
+width:24px;
+height:1.5px;
+background:var(--text);
+transition:.2s;
+}
+
+.menu-btn:hover span{background:var(--gold)}
+
+/* SIDE MENU */
+
+.overlay{
+position:fixed;
+inset:0;
+background:rgba(0,0,0,.6);
+opacity:0;
+visibility:hidden;
+transition:.25s;
+z-index:998;
+}
+
+.overlay.active{opacity:1;visibility:visible;}
+
+.side-menu{
+position:fixed;
+top:0;
+right:-340px;
+width:300px;
+max-width:90%;
+height:100vh;
+overflow-y:auto;
+background:#0d0d0d;
+border-left:1px solid var(--border);
+padding:28px 24px 48px;
+transition:.28s ease;
+z-index:999;
+}
+
+.side-menu.active{right:0}
+
+.menu-head{
+display:flex;
+justify-content:space-between;
+align-items:center;
+margin-bottom:28px;
+}
+
+.menu-brand{
+font-family:'IBM Plex Mono',monospace;
+font-size:10px;
+letter-spacing:.22em;
+text-transform:uppercase;
+color:var(--gold);
+}
+
+.close-btn{
+background:none;
+border:none;
+font-size:28px;
+color:var(--muted);
+cursor:pointer;
+}
+
+.menu-group{
+border-top:1px solid var(--border);
+padding-top:18px;
+margin-top:18px;
+}
+
+.menu-label{
+font-family:'IBM Plex Mono',monospace;
+font-size:9px;
+letter-spacing:.22em;
+text-transform:uppercase;
+color:var(--gold);
+margin-bottom:12px;
+}
+
+.side-menu a{
+display:block;
+padding:8px 0;
+font-size:14px;
+color:var(--muted);
+border-bottom:1px solid rgba(255,255,255,.03);
+}
+
+.side-menu a:hover{color:var(--text)}
+
+.menu-cta{
+display:block;
+margin-top:24px;
+padding:14px;
+border:1px solid var(--gold);
+color:var(--gold)!important;
+text-align:center;
+font-family:'IBM Plex Mono',monospace;
+font-size:10px;
+letter-spacing:.18em;
+text-transform:uppercase;
+}
+
+/* LAYOUT */
+
+.container{
+position:relative;
+z-index:1;
+max-width:1180px;
+margin:0 auto;
+padding:78px 28px 120px;
+}
+
+/* HERO */
+
 .hero{
-border-left:3px solid var(--gold);
-padding-left:24px;
-margin-bottom:58px;
+padding:0 0 60px;
+margin-bottom:20px;
+border-bottom:1px solid rgba(255,255,255,.04);
 }
 
 .hero-label{
@@ -104,9 +226,10 @@ margin-bottom:16px;
 
 .hero h1{
 font-family:'Playfair Display',serif;
-font-size:clamp(44px,7vw,76px);
-line-height:1.02;
+font-size:clamp(50px,8vw,92px);
+line-height:1;
 margin-bottom:18px;
+max-width:900px;
 }
 
 .hero p{
@@ -116,32 +239,61 @@ max-width:760px;
 margin-bottom:10px;
 }
 
+.hero-mini{
+margin-top:18px;
+font-family:'IBM Plex Mono',monospace;
+font-size:11px;
+letter-spacing:.18em;
+text-transform:uppercase;
+color:var(--dim);
+}
+
+/* GRID */
+
 .grid{
 display:grid;
 grid-template-columns:repeat(2,1fr);
 gap:18px;
+margin-top:28px;
 }
 
 .term{
-background:linear-gradient(180deg,#121212,#0d0d0d);
-border:1px solid var(--border2);
-border-left:3px solid var(--gold);
+background:linear-gradient(180deg,var(--surface2),var(--surface));
+border:1px solid var(--border);
 padding:28px;
+box-shadow:var(--shadow);
+transition:.22s ease;
+position:relative;
+overflow:hidden;
+}
+
+.term:before{
+content:"";
+position:absolute;
+left:0;
+top:0;
+bottom:0;
+width:3px;
+background:var(--gold);
+}
+
+.term:hover{
+transform:translateY(-3px);
+border-color:#383838;
 }
 
 .term-index{
 font-family:'IBM Plex Mono',monospace;
 font-size:10px;
 letter-spacing:.2em;
-text-transform:uppercase;
 color:var(--dim);
 margin-bottom:10px;
 }
 
 .term-name{
 font-family:'Playfair Display',serif;
-font-size:28px;
-line-height:1.1;
+font-size:30px;
+line-height:1.08;
 margin-bottom:14px;
 }
 
@@ -152,30 +304,49 @@ margin-bottom:10px;
 }
 
 .term-note{
-margin-top:16px;
+margin-top:14px;
 padding-left:12px;
-border-left:2px solid var(--border2);
+border-left:2px solid rgba(255,255,255,.05);
 font-family:'IBM Plex Mono',monospace;
 font-size:11px;
-color:var(--dim);
 line-height:1.8;
+color:var(--dim);
 }
+
+/* QUOTE */
 
 .pull{
-margin-top:28px;
-padding:34px;
-background:#111;
-border:1px solid var(--border2);
-border-left:3px solid var(--gold);
-font-family:'Playfair Display',serif;
-font-size:30px;
-line-height:1.3;
+margin-top:34px;
+padding:38px;
+background:linear-gradient(180deg,#121212,#0d0d0d);
+border:1px solid var(--border);
+box-shadow:var(--shadow);
+position:relative;
 }
 
+.pull:before{
+content:"";
+position:absolute;
+left:0;
+top:0;
+bottom:0;
+width:3px;
+background:var(--gold);
+}
+
+.pull-text{
+font-family:'Playfair Display',serif;
+font-size:clamp(28px,3vw,40px);
+line-height:1.25;
+max-width:900px;
+}
+
+/* CLOSING */
+
 .closing{
-margin-top:52px;
+margin-top:60px;
 padding-top:34px;
-border-top:1px solid var(--border2);
+border-top:1px solid rgba(255,255,255,.04);
 }
 
 .closing p{
@@ -190,52 +361,68 @@ color:var(--text);
 font-weight:600;
 }
 
-.links{
-margin-top:52px;
-display:grid;
-grid-template-columns:repeat(2,1fr);
-gap:14px;
+/* CTA */
+
+.bottom-cta{
+margin-top:60px;
+padding:30px;
+display:flex;
+justify-content:space-between;
+align-items:center;
+gap:20px;
+background:linear-gradient(180deg,#121212,#0d0d0d);
+border:1px solid var(--border);
+box-shadow:var(--shadow);
 }
 
-.linkbox{
-padding:22px;
-border:1px solid var(--border2);
-background:#111;
-transition:.18s;
-}
-
-.linkbox:hover{
-border-color:#3a3328;
-transform:translateY(-2px);
-}
-
-.linkbox small{
-display:block;
-font-family:'IBM Plex Mono',monospace;
-font-size:10px;
-letter-spacing:.2em;
-text-transform:uppercase;
-color:var(--gold);
+.bottom-cta h3{
+font-family:'Playfair Display',serif;
+font-size:30px;
 margin-bottom:8px;
 }
 
-.linkbox span{
-font-size:17px;
+.bottom-cta p{
+font-size:15px;
+color:var(--muted);
+max-width:580px;
 }
+
+.bottom-btn{
+padding:16px 22px;
+border:1px solid var(--gold);
+color:var(--gold);
+font-family:'IBM Plex Mono',monospace;
+font-size:10px;
+letter-spacing:.18em;
+text-transform:uppercase;
+white-space:nowrap;
+}
+
+/* FOOTER */
 
 .footer{
 margin-top:72px;
 padding-top:28px;
-border-top:1px solid var(--border2);
+border-top:1px solid rgba(255,255,255,.04);
 font-family:'IBM Plex Mono',monospace;
 font-size:11px;
-color:#6e6964;
+color:var(--dim);
 }
 
-@media(max-width:860px){
-.grid,.links{grid-template-columns:1fr;}
-.container{padding:56px 18px 90px;}
-.hero h1{font-size:44px;}
+/* MOBILE */
+
+@media(max-width:900px){
+.grid{grid-template-columns:1fr}
+.bottom-cta{flex-direction:column;align-items:flex-start}
+}
+
+@media(max-width:760px){
+.container{padding:56px 18px 90px}
+.hero h1{font-size:52px}
+.hero p{font-size:16px}
+.term-name{font-size:25px}
+.pull{padding:28px}
+.pull-text{font-size:30px}
 }
 </style>
 </head>
@@ -247,7 +434,41 @@ color:#6e6964;
 <span class="brand-line"></span>
 <span>Decision Authority Research</span>
 </a>
+
+<button class="menu-btn" id="openMenu" aria-label="Open Menu">
+<span></span>
+<span></span>
+<span></span>
+</button>
 </header>
+
+<div class="overlay" id="overlay"></div>
+
+<aside class="side-menu" id="menu">
+
+<div class="menu-head">
+<div class="menu-brand">Matrix Audit</div>
+<button class="close-btn" id="closeMenu">&times;</button>
+</div>
+
+<div class="menu-group">
+<div class="menu-label">Primary</div>
+<a href="index.html">Home</a>
+<a href="about.html">About</a>
+<a href="dar.html">DAR</a>
+<a href="services.html">Services</a>
+</div>
+
+<div class="menu-group">
+<div class="menu-label">Research</div>
+<a href="whitepaper.html">White Paper</a>
+<a href="case-studies.html">Case Studies</a>
+<a href="faq.html">FAQ</a>
+</div>
+
+<a href="contact.html" class="menu-cta">Private Inquiry</a>
+
+</aside>
 
 <main class="container">
 
@@ -256,7 +477,7 @@ color:#6e6964;
 <h1>Core Terms</h1>
 <p>These are not standard corporate terms.</p>
 <p>They describe recurring governance failures that existing language often avoids naming clearly.</p>
-<p>Independent conceptual research in accountability and stop authority.</p>
+<div class="hero-mini">Framework Language for Real-World Decision Exposure</div>
 </section>
 
 <section class="grid">
@@ -287,97 +508,35 @@ color:#6e6964;
 
 <div class="term">
 <div class="term-index">04</div>
-<div class="term-name">Bound Refusal</div>
-<p>A formal obligation requiring intervention when defined risk conditions appear.</p>
-<p>Authority includes duty, not only permission.</p>
-<div class="term-note">Observation alone is not governance.</div>
+<div class="term-name">Escalation Window</div>
+<p>A defined response period granted to the named authority once a stop issue appears.</p>
+<p>If unused, authority transfers automatically.</p>
+<div class="term-note">Example: 24 hours.</div>
 </div>
 
 <div class="term">
 <div class="term-index">05</div>
-<div class="term-name">Stop Authority Gap</div>
-<p>No clearly named person can stop the decision when needed.</p>
-<p>Momentum continues by default.</p>
-<div class="term-note">One of the most common hidden failure modes.</div>
-</div>
-
-<div class="term">
-<div class="term-index">06</div>
-<div class="term-name">Escalation Window</div>
-<p>A defined response period granted once a stop issue appears.</p>
-<p>If unused, authority transfers automatically.</p>
-<div class="term-note">Timing is determined by operational risk.</div>
-</div>
-
-<div class="term">
-<div class="term-index">07</div>
 <div class="term-name">Alternate Authority</div>
-<p>A predefined successor who receives stop authority if the primary holder fails to act.</p>
-<p>No critical control should depend on one unavailable person.</p>
+<p>A predefined successor receives authority if the primary holder fails to act.</p>
+<p>No control should depend on one unavailable person.</p>
 <div class="term-note">Redundancy prevents paralysis.</div>
 </div>
 
 <div class="term">
-<div class="term-index">08</div>
+<div class="term-index">06</div>
 <div class="term-name">Oversight Trigger</div>
-<p>Use of stop authority, refusal to act, delay, or transfer creates a mandatory review event.</p>
-<p>The purpose is verification, governance integrity, and learning.</p>
-<div class="term-note">Every stop event should leave a documented trail.</div>
-</div>
-
-<div class="term">
-<div class="term-index">09</div>
-<div class="term-name">Abuse Review</div>
-<p>Every stop action may be reviewed for legitimacy, evidence basis, timing, and proportionality.</p>
-<p>This protects the organization while preserving real stop power.</p>
-<div class="term-note">Review misuse. Do not remove authority.</div>
-</div>
-
-<div class="term">
-<div class="term-index">10</div>
-<div class="term-name">Distributed Permission</div>
-<p>Many people can approve continuation, yet no single person can stop.</p>
-<p>Consensus often dissolves accountability.</p>
-<div class="term-note">Everyone approves. Nobody owns.</div>
-</div>
-
-<div class="term">
-<div class="term-index">11</div>
-<div class="term-name">Hostile Hold</div>
-<p>Misuse of stop authority for political, personal, or unrelated motives.</p>
-<p>Unchecked obstruction can damage the organization as much as absent authority.</p>
-<div class="term-note">Bad use requires controls.</div>
-</div>
-
-<div class="term">
-<div class="term-index">12</div>
-<div class="term-name">Cosmetic Governance</div>
-<p>Processes that appear rigorous yet cannot interrupt dangerous momentum.</p>
-<p>Documentation exists, but no real stop path exists.</p>
-<div class="term-note">Looks safe. Stops nothing.</div>
-</div>
-
-<div class="term">
-<div class="term-index">13</div>
-<div class="term-name">Momentum Trap</div>
-<p>A decision continues because it has already started, not because it remains justified.</p>
-<p>Movement is mistaken for validity.</p>
-<div class="term-note">Past effort becomes false evidence.</div>
-</div>
-
-<div class="term">
-<div class="term-index">14</div>
-<div class="term-name">Liability Drift</div>
-<p>Responsibility shifts downward while decision power remains elsewhere.</p>
-<p>Exposure moves faster than authority.</p>
-<div class="term-note">Common before visible failure.</div>
+<p>Use of stop authority, refusal to act, or expiry of the response window creates an automatic review event.</p>
+<p>The purpose is verification, not punishment.</p>
+<div class="term-note">Every stop event should leave an audit trail.</div>
 </div>
 
 </section>
 
-<div class="pull">
-If no one can clearly identify who may stop it, the gap already exists.
+<section class="pull">
+<div class="pull-text">
+If no one can clearly say who may stop it, the gap already exists.
 </div>
+</section>
 
 <section class="closing">
 <p class="strong">Most frameworks explain approval.</p>
@@ -385,28 +544,12 @@ If no one can clearly identify who may stop it, the gap already exists.
 <p>DAR begins there.</p>
 </section>
 
-<section class="links">
-
-<a href="dar.html" class="linkbox">
-<small>DAR</small>
-<span>Decision Authority Record</span>
-</a>
-
-<a href="about.html" class="linkbox">
-<small>About</small>
-<span>Liran Bar-Shrim</span>
-</a>
-
-<a href="contact.html" class="linkbox">
-<small>Contact</small>
-<span>Identify one live irreversible decision with no named stop authority</span>
-</a>
-
-<a href="failure-points.html" class="linkbox">
-<small>Essay</small>
-<span>Where Accountability Breaks</span>
-</a>
-
+<section class="bottom-cta">
+<div>
+<h3>Private Inquiry</h3>
+<p>Identify one live decision where no named person can stop momentum in time.</p>
+</div>
+<a href="contact.html" class="bottom-btn">Contact</a>
 </section>
 
 <div class="footer">
@@ -414,6 +557,24 @@ If no one can clearly identify who may stop it, the gap already exists.
 </div>
 
 </main>
+
+<script>
+const menu=document.getElementById('menu');
+const overlay=document.getElementById('overlay');
+
+document.getElementById('openMenu').onclick=()=>{
+menu.classList.add('active');
+overlay.classList.add('active');
+};
+
+document.getElementById('closeMenu').onclick=closeMenu;
+overlay.onclick=closeMenu;
+
+function closeMenu(){
+menu.classList.remove('active');
+overlay.classList.remove('active');
+}
+</script>
 
 </body>
 </html>
