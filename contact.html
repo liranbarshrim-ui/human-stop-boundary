@@ -4,18 +4,25 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
 
-<title>Private Inquiry | Matrix Audit</title>
-<meta name="description" content="Confidential private inquiry for executives facing accountability exposure, unclear authority, and consequential decisions already in motion.">
+<title>Confidential Executive Intake | Matrix Audit</title>
+<meta name="description" content="Private inquiry for executives, boards, founders and leaders facing consequential decisions, unclear authority, personal exposure, or fast-moving risk.">
 <meta name="robots" content="index,follow">
 <link rel="canonical" href="https://matrix-audit.com/contact.html">
 
+<meta property="og:title" content="Confidential Executive Intake | Matrix Audit">
+<meta property="og:description" content="Selective private advisory for high-stakes decisions already in motion.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://matrix-audit.com/contact.html">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
 
 <style>
-
 :root{
 --bg:#090909;
 --surface:#111111;
+--surface2:#151515;
 --gold:#c8a96e;
 --text:#e8e2d7;
 --muted:#a7a097;
@@ -32,25 +39,22 @@ body{
 background:var(--bg);
 color:var(--text);
 font-family:Inter,system-ui,sans-serif;
+line-height:1.7;
 overflow-x:hidden;
 -webkit-font-smoothing:antialiased;
 text-rendering:optimizeLegibility;
-line-height:1.7;
 }
 
 body:before{
 content:'';
 position:fixed;
 inset:0;
-background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 240 240' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.025'/%3E%3C/svg%3E");
-opacity:.55;
+background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 240 240' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.02'/%3E%3C/svg%3E");
 pointer-events:none;
 z-index:0;
 }
 
 a{text-decoration:none;color:inherit;}
-
-/* ── topbar ── */
 
 .topbar{
 position:sticky;
@@ -69,8 +73,6 @@ border-bottom:1px solid rgba(255,255,255,.04);
 display:flex;
 align-items:center;
 gap:12px;
-text-decoration:none;
-color:var(--text);
 font-family:'IBM Plex Mono',monospace;
 font-size:10px;
 letter-spacing:.28em;
@@ -86,7 +88,6 @@ background:var(--gold);
 .menu-btn{
 display:flex;
 flex-direction:column;
-justify-content:center;
 gap:5px;
 background:none;
 border:none;
@@ -95,30 +96,26 @@ padding:6px;
 }
 
 .menu-btn span{
-display:block;
 width:22px;
 height:1.5px;
 background:var(--text);
-transition:background .2s;
+display:block;
 }
-
-.menu-btn:hover span{background:var(--gold);}
-
-/* ── overlay ── */
 
 .overlay{
 position:fixed;
 inset:0;
-background:rgba(0,0,0,.6);
+background:rgba(0,0,0,.62);
 opacity:0;
 visibility:hidden;
 transition:.25s;
 z-index:998;
 }
 
-.overlay.active{opacity:1;visibility:visible;}
-
-/* ── side menu ── */
+.overlay.active{
+opacity:1;
+visibility:visible;
+}
 
 .side-menu{
 position:fixed;
@@ -131,7 +128,7 @@ overflow-y:auto;
 background:#0d0d0d;
 border-left:1px solid var(--border);
 padding:28px 24px 48px;
-transition:.28s cubic-bezier(.4,0,.2,1);
+transition:.28s;
 z-index:999;
 }
 
@@ -155,19 +152,15 @@ color:var(--gold);
 .close-btn{
 background:none;
 border:none;
-font-size:26px;
-line-height:1;
+font-size:28px;
 color:var(--muted);
 cursor:pointer;
-transition:.2s;
 }
-
-.close-btn:hover{color:var(--text);}
 
 .menu-group{
 border-top:1px solid var(--border);
-padding-top:20px;
-margin-top:20px;
+padding-top:18px;
+margin-top:18px;
 }
 
 .menu-label{
@@ -180,62 +173,42 @@ margin-bottom:12px;
 }
 
 .menu-group a{
-display:flex;
-align-items:center;
-gap:10px;
-padding:9px 0;
-text-decoration:none;
-color:var(--muted);
+display:block;
+padding:8px 0;
 font-size:14px;
-border-bottom:1px solid rgba(255,255,255,.03);
-transition:.18s;
+color:var(--muted);
 }
 
-.menu-group a:last-child{border-bottom:none;}
-.menu-group a:hover{color:var(--text);padding-left:4px;}
-.menu-group a.active{color:var(--gold);}
-
-.menu-divider-line{
-display:inline-block;
-width:12px;
-height:1px;
-background:var(--border2);
-flex-shrink:0;
+.menu-group a.active,
+.menu-group a:hover{
+color:var(--gold);
 }
 
 .menu-cta{
 display:block;
-margin-top:28px;
-padding:14px 20px;
+margin-top:24px;
+padding:14px;
+text-align:center;
 border:1px solid var(--gold);
-color:var(--gold)!important;
+color:var(--gold);
 font-family:'IBM Plex Mono',monospace;
 font-size:10px;
 letter-spacing:.2em;
 text-transform:uppercase;
-text-align:center;
-text-decoration:none;
-transition:.2s;
 }
-
-.menu-cta:hover{background:var(--gold);color:#111!important;}
-
-/* ── layout ── */
 
 .container{
 position:relative;
 z-index:1;
-max-width:980px;
-margin:0 auto;
-padding:70px 28px 110px;
+max-width:1080px;
+margin:auto;
+padding:72px 28px 110px;
 }
-
-/* ── hero ── */
 
 .hero{
 border-left:3px solid var(--gold);
 padding-left:24px;
-margin-bottom:58px;
+margin-bottom:56px;
 }
 
 .hero-label{
@@ -243,16 +216,16 @@ font-family:'IBM Plex Mono',monospace;
 font-size:10px;
 letter-spacing:.24em;
 text-transform:uppercase;
-color:#b8aa8a;
-margin-bottom:18px;
+color:var(--gold);
+margin-bottom:16px;
 }
 
 .hero h1{
 font-family:'Playfair Display',serif;
-font-size:clamp(44px,7vw,74px);
+font-size:clamp(46px,7vw,76px);
 line-height:1.02;
-letter-spacing:-.02em;
-margin-bottom:24px;
+margin-bottom:22px;
+max-width:920px;
 }
 
 .hero p{
@@ -260,56 +233,50 @@ font-size:18px;
 line-height:1.9;
 color:var(--muted);
 max-width:760px;
-margin-bottom:28px;
+margin-bottom:16px;
 }
 
-/* ── notice ── */
+.trust{
+display:flex;
+flex-wrap:wrap;
+gap:10px;
+margin-top:14px;
+}
 
-.notice{
-background:linear-gradient(180deg,#121212,#0d0d0d);
+.badge{
+padding:8px 12px;
 border:1px solid var(--border2);
-border-left:3px solid var(--gold);
-padding:28px;
-max-width:720px;
-}
-
-.notice p{
-font-size:15px;
+font-size:11px;
 color:var(--muted);
-margin-bottom:8px;
-line-height:1.7;
+font-family:'IBM Plex Mono',monospace;
+letter-spacing:.08em;
+text-transform:uppercase;
 }
-
-.notice p:last-child{margin-bottom:0;}
-
-/* ── grid ── */
 
 .section{
-padding:54px 0;
+padding:56px 0;
 border-top:1px solid rgba(255,255,255,.05);
 }
 
 .grid{
 display:grid;
 grid-template-columns:1.1fr .9fr;
-gap:32px;
+gap:26px;
 align-items:start;
 }
-
-/* ── form box ── */
 
 .box{
 background:linear-gradient(180deg,#121212,#0d0d0d);
 border:1px solid var(--border2);
 border-left:3px solid var(--gold);
-padding:32px 28px;
+padding:34px 28px;
 }
 
 .box-title{
 font-family:'Playfair Display',serif;
-font-size:32px;
-line-height:1.1;
+font-size:34px;
 margin-bottom:10px;
+line-height:1.1;
 }
 
 .box-desc{
@@ -330,68 +297,58 @@ color:var(--gold);
 
 input,textarea,select{
 width:100%;
-padding:13px 14px;
+padding:14px;
 background:#0a0a0a;
 border:1px solid var(--border2);
 color:var(--text);
 font-size:15px;
-font-family:Inter,system-ui,sans-serif;
+font-family:Inter,sans-serif;
 outline:none;
-transition:border-color .2s;
 }
 
 input:focus,textarea:focus,select:focus{
 border-color:var(--gold);
 }
 
-select{
-appearance:none;
-cursor:pointer;
-}
-
 textarea{
-min-height:130px;
+min-height:140px;
 resize:vertical;
 }
 
-input::placeholder,textarea::placeholder{color:#555;}
-
 .submit{
 width:100%;
-margin-top:20px;
-padding:16px;
+margin-top:22px;
+padding:17px;
 border:none;
 background:var(--gold);
 color:#111;
 font-family:'IBM Plex Mono',monospace;
 font-size:11px;
 font-weight:700;
-letter-spacing:.2em;
+letter-spacing:.22em;
 text-transform:uppercase;
 cursor:pointer;
-transition:.2s;
 }
 
-.submit:hover{opacity:.88;}
+.submit:hover{opacity:.92;}
 
-/* ── side box ── */
+.micro{
+margin-top:14px;
+font-size:13px;
+color:var(--soft);
+line-height:1.7;
+}
 
 .side-box{
 background:linear-gradient(180deg,#121212,#0d0d0d);
 border:1px solid var(--border2);
-padding:32px 28px;
+padding:34px 28px;
 }
 
-.side-box-title{
+.side-title{
 font-family:'Playfair Display',serif;
-font-size:28px;
-line-height:1.1;
-margin-bottom:20px;
-}
-
-.item-list{
-display:grid;
-gap:0;
+font-size:30px;
+margin-bottom:18px;
 }
 
 .item{
@@ -408,78 +365,28 @@ font-size:9px;
 letter-spacing:.2em;
 text-transform:uppercase;
 color:var(--gold);
-margin-bottom:5px;
+margin-bottom:6px;
 }
 
 .item span{
 font-size:14px;
 color:var(--muted);
-line-height:1.7;
+line-height:1.75;
 }
 
-/* ── pull quote ── */
-
 .pull{
-margin-top:24px;
-padding:28px;
-background:linear-gradient(180deg,#111,#0d0d0d);
+margin-top:22px;
+padding:26px;
+background:#101010;
 border:1px solid var(--border2);
 border-left:3px solid var(--gold);
 font-family:'Playfair Display',serif;
-font-size:clamp(20px,3vw,26px);
-line-height:1.35;
-}
-
-/* ── footer banner ── */
-
-.footer-banner{
-margin-top:74px;
-border:1px solid var(--border2);
-background:#0d0d0d;
-}
-
-.footer-link{
-display:flex;
-justify-content:space-between;
-align-items:center;
-padding:20px 24px;
-text-decoration:none;
-color:var(--text);
-border-bottom:1px solid var(--border2);
-transition:.18s;
-}
-
-.footer-link:last-child{border-bottom:none;}
-.footer-link:hover{background:#151515;padding-left:28px;}
-
-.footer-link-left{
-display:flex;
-flex-direction:column;
-gap:4px;
-}
-
-.footer-link-label{
-font-family:'IBM Plex Mono',monospace;
-font-size:9px;
-letter-spacing:.22em;
-text-transform:uppercase;
-color:var(--gold);
-}
-
-.footer-link-title{
-font-family:'Playfair Display',serif;
-font-size:17px;
-line-height:1.2;
-}
-
-.footer-link-arrow{
-font-family:'IBM Plex Mono',monospace;
-font-size:14px;
-color:var(--muted);
+font-size:28px;
+line-height:1.28;
 }
 
 .footer{
-margin-top:28px;
+margin-top:74px;
 padding-top:28px;
 border-top:1px solid var(--border2);
 font-size:11px;
@@ -488,192 +395,180 @@ color:#6e6964;
 font-family:'IBM Plex Mono',monospace;
 }
 
-/* ── mobile ── */
-
 @media(max-width:860px){
 .container{padding:56px 18px 90px;}
+.grid{grid-template-columns:1fr;}
 .hero h1{font-size:clamp(38px,12vw,58px);}
 .hero p{font-size:16px;}
-.grid{grid-template-columns:1fr;}
+.pull{font-size:24px;}
 }
-
 </style>
 </head>
 
 <body>
 
 <header class="topbar">
-  <a href="index.html" class="brand">
-    <span class="brand-line"></span>
-    <span>Decision Authority Research</span>
-  </a>
-  <button class="menu-btn" id="openMenu" aria-label="Open menu">
-    <span></span>
-    <span></span>
-    <span></span>
-  </button>
+<a href="index.html" class="brand">
+<span class="brand-line"></span>
+<span>Decision Authority Research</span>
+</a>
+
+<button class="menu-btn" id="openMenu">
+<span></span><span></span><span></span>
+</button>
 </header>
 
 <div class="overlay" id="overlay"></div>
 
 <aside class="side-menu" id="menu">
-  <div class="menu-head">
-    <span class="menu-head-brand">Matrix Audit</span>
-    <button class="close-btn" id="closeMenu">&times;</button>
-  </div>
 
-  <div class="menu-group" style="border-top:none;padding-top:0;margin-top:0;">
-    <div class="menu-label">Primary</div>
-    <a href="index.html"><span class="menu-divider-line"></span>Home</a>
-    <a href="dar.html"><span class="menu-divider-line"></span>DAR</a>
-    <a href="services.html"><span class="menu-divider-line"></span>Services</a>
-    <a href="about.html"><span class="menu-divider-line"></span>About</a>
-  </div>
+<div class="menu-head">
+<span class="menu-head-brand">Matrix Audit</span>
+<button class="close-btn" id="closeMenu">&times;</button>
+</div>
 
-  <div class="menu-group">
-    <div class="menu-label">Insights</div>
-    <a href="exposure.html"><span class="menu-divider-line"></span>When Failure Lands on One Name</a>
-    <a href="failure-points.html"><span class="menu-divider-line"></span>Where Accountability Breaks</a>
-    <a href="we.html"><span class="menu-divider-line"></span>The Death of We</a>
-    <a href="stop-authority.html"><span class="menu-divider-line"></span>Stop Authority</a>
-    <a href="ai-governance.html"><span class="menu-divider-line"></span>AI Governance</a>
-  </div>
+<div class="menu-group" style="border-top:none;margin-top:0;padding-top:0;">
+<div class="menu-label">Primary</div>
+<a href="index.html">Home</a>
+<a href="dar.html">DAR</a>
+<a href="services.html">Services</a>
+<a href="about.html">About</a>
+<a href="contact.html" class="active">Private Intake</a>
+</div>
 
-  <div class="menu-group">
-    <div class="menu-label">Knowledge</div>
-    <a href="definitions.html"><span class="menu-divider-line"></span>Definitions</a>
-    <a href="faq.html"><span class="menu-divider-line"></span>FAQ</a>
-    <a href="case-studies.html"><span class="menu-divider-line"></span>Case Studies</a>
-    <a href="goodfaith.html"><span class="menu-divider-line"></span>Good Faith Use</a>
-  </div>
+<div class="menu-group">
+<div class="menu-label">Knowledge</div>
+<a href="definitions.html">Definitions</a>
+<a href="faq.html">FAQ</a>
+<a href="case-studies.html">Case Studies</a>
+</div>
 
-  <a href="contact.html" class="menu-cta active">Private Intake</a>
+<a href="contact.html" class="menu-cta">Request Review</a>
+
 </aside>
 
 <main class="container">
 
-  <section class="hero">
-    <div class="hero-label">Confidential Intake</div>
-    <h1>Private Inquiry</h1>
-    <p>
-      For leaders facing consequential decisions, unclear stop authority, personal accountability exposure, or fast-moving operational risk.
-    </p>
-    <div class="notice">
-      <p>Selective independent advisory.</p>
-      <p>Direct principal contact only.</p>
-      <p>Initial response typically within two business days.</p>
-    </div>
-  </section>
+<section class="hero">
+<div class="hero-label">Confidential Executive Intake</div>
+<h1>When exposure is rising,<br>clarity cannot wait.</h1>
 
-  <section class="section">
-    <div class="grid">
+<p>
+Private inquiry for executives, boards, founders, counsel, and leaders facing consequential decisions already in motion.
+</p>
 
-      <div class="box">
-        <div class="box-title">Request Review</div>
-        <p class="box-desc">Share only what is necessary. Short summaries are enough.</p>
+<p>
+Minimal information required. Sensitive situations welcome.
+</p>
 
-        <form action="https://formspree.io/f/xgorndnl" method="POST">
+<div class="trust">
+<div class="badge">Selective Mandates</div>
+<div class="badge">Direct Principal Access</div>
+<div class="badge">Confidential</div>
+<div class="badge">Limited Capacity</div>
+</div>
+</section>
 
-          <label>Name</label>
-          <input type="text" name="name" required>
+<section class="section">
 
-          <label>Email</label>
-          <input type="email" name="email" required>
+<div class="grid">
 
-          <label>Role</label>
-          <select name="role">
-            <option>CEO / Founder</option>
-            <option>Board Director</option>
-            <option>General Counsel</option>
-            <option>Chief Risk Officer</option>
-            <option>Executive Operator</option>
-            <option>Other</option>
-          </select>
+<div class="box">
+<div class="box-title">Request Private Review</div>
+<div class="box-desc">Short summaries are enough. Share only what matters now.</div>
 
-          <label>What is moving now?</label>
-          <textarea name="message" placeholder="Decision, exposure, timing, uncertainty..." required></textarea>
+<form action="https://formspree.io/f/xgorndnl" method="POST">
 
-          <button class="submit" type="submit">Send Private Inquiry</button>
+<label>Name</label>
+<input type="text" name="name" required>
 
-        </form>
-      </div>
+<label>Email</label>
+<input type="email" name="email" required>
 
-      <div class="side-box">
-        <div class="side-box-title">What This Is For</div>
+<label>Role</label>
+<select name="role">
+<option>CEO / Founder</option>
+<option>Board Director</option>
+<option>General Counsel</option>
+<option>Chief Risk Officer</option>
+<option>Executive Operator</option>
+<option>Other</option>
+</select>
 
-        <div class="item-list">
-          <div class="item">
-            <strong>Authority Gap</strong>
-            <span>No one clearly empowered to stop a critical decision.</span>
-          </div>
-          <div class="item">
-            <strong>Executive Exposure</strong>
-            <span>Responsibility may become personal if outcomes fail.</span>
-          </div>
-          <div class="item">
-            <strong>Governance Pressure</strong>
-            <span>Board, regulator, investor, or internal escalation risk.</span>
-          </div>
-          <div class="item">
-            <strong>Time Compression</strong>
-            <span>Decisions moving faster than internal process can handle.</span>
-          </div>
-        </div>
+<label>Situation</label>
+<textarea name="message" placeholder="What is moving now? What is unclear? What is at risk?" required></textarea>
 
-        <div class="pull">
-          When momentum rises,<br>
-          clarity matters.
-        </div>
-      </div>
+<button class="submit" type="submit">Request Confidential Review</button>
 
-    </div>
-  </section>
+</form>
 
-  <div class="footer-banner">
-    <a href="dar.html" class="footer-link">
-      <div class="footer-link-left">
-        <span class="footer-link-label">Framework</span>
-        <span class="footer-link-title">Decision Authority Record</span>
-      </div>
-      <span class="footer-link-arrow">&rarr;</span>
-    </a>
-    <a href="services.html" class="footer-link">
-      <div class="footer-link-left">
-        <span class="footer-link-label">Services</span>
-        <span class="footer-link-title">Private Executive Engagements</span>
-      </div>
-      <span class="footer-link-arrow">&rarr;</span>
-    </a>
-    <a href="about.html" class="footer-link">
-      <div class="footer-link-left">
-        <span class="footer-link-label">About</span>
-        <span class="footer-link-title">Liran Bar-Shrim</span>
-      </div>
-      <span class="footer-link-arrow">&rarr;</span>
-    </a>
-  </div>
+<div class="micro">
+Initial response typically within two business days.<br>
+No unnecessary disclosure expected.
+</div>
+</div>
 
-  <div class="footer">
-    &copy; 2026 Liran Bar-Shrim. All rights reserved.
-  </div>
+<div class="side-box">
+
+<div class="side-title">Common Triggers</div>
+
+<div class="item">
+<strong>Authority Gap</strong>
+<span>No one clearly empowered to stop a critical decision.</span>
+</div>
+
+<div class="item">
+<strong>Executive Exposure</strong>
+<span>Responsibility may become personal if outcomes fail.</span>
+</div>
+
+<div class="item">
+<strong>Governance Pressure</strong>
+<span>Board, regulator, investor, or internal escalation risk.</span>
+</div>
+
+<div class="item">
+<strong>Time Compression</strong>
+<span>Decisions moving faster than internal process.</span>
+</div>
+
+<div class="item">
+<strong>Reputational Risk</strong>
+<span>Public narrative may form before facts are clear.</span>
+</div>
+
+<div class="pull">
+When momentum rises,<br>
+clarity becomes leverage.
+</div>
+
+</div>
+
+</div>
+
+</section>
+
+<div class="footer">
+&copy; 2026 Liran Bar-Shrim. All rights reserved.
+</div>
 
 </main>
 
 <script>
-const menu = document.getElementById('menu');
-const overlay = document.getElementById('overlay');
+const menu=document.getElementById('menu');
+const overlay=document.getElementById('overlay');
 
-document.getElementById('openMenu').onclick = function() {
-  menu.classList.add('active');
-  overlay.classList.add('active');
+document.getElementById('openMenu').onclick=function(){
+menu.classList.add('active');
+overlay.classList.add('active');
 };
 
-document.getElementById('closeMenu').onclick = closeMenu;
-overlay.onclick = closeMenu;
+document.getElementById('closeMenu').onclick=closeMenu;
+overlay.onclick=closeMenu;
 
-function closeMenu() {
-  menu.classList.remove('active');
-  overlay.classList.remove('active');
+function closeMenu(){
+menu.classList.remove('active');
+overlay.classList.remove('active');
 }
 </script>
 
