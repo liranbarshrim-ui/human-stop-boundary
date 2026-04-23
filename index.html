@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <title>Decision Authority Research | Named Stop Authority for Irreversible Decisions</title>
-<meta name="description" content="Private advisory for boards, executives, General Counsel, CROs and AI governance leaders facing irreversible decisions under uncertainty.">
+<meta name="description" content="Independent research on authority gaps, executive accountability, and irreversible decisions under uncertainty.">
 <meta name="keywords" content="decision authority, stop authority, executive accountability, AI governance, irreversible decisions">
 <link rel="canonical" href="https://matrix-audit.com/">
 
@@ -37,7 +37,10 @@ color:var(--text);
 font-family:Inter,system-ui,sans-serif;
 line-height:1.7;
 overflow-x:hidden;
+-webkit-font-smoothing:antialiased;
 }
+
+a{text-decoration:none;color:inherit;}
 
 .topbar{
 position:sticky;
@@ -56,8 +59,6 @@ border-bottom:1px solid rgba(255,255,255,.04);
 display:flex;
 align-items:center;
 gap:12px;
-text-decoration:none;
-color:var(--text);
 font-family:'IBM Plex Mono',monospace;
 font-size:10px;
 letter-spacing:.28em;
@@ -160,7 +161,6 @@ margin-bottom:12px;
 .menu-group a{
 display:block;
 padding:8px 0;
-text-decoration:none;
 color:var(--muted);
 font-size:14px;
 }
@@ -170,11 +170,9 @@ font-size:14px;
 color:var(--gold);
 }
 
-.menu-cta,
-.menu-email{
+.menu-cta,.menu-email{
 display:block;
 text-align:center;
-text-decoration:none;
 padding:14px;
 margin-top:16px;
 }
@@ -206,12 +204,12 @@ padding-left:24px;
 margin-bottom:58px;
 }
 
-.hero-label{
+.hero-label,.section-label{
 font-family:'IBM Plex Mono',monospace;
 font-size:10px;
 letter-spacing:.24em;
 text-transform:uppercase;
-color:#b8aa8a;
+color:var(--gold);
 margin-bottom:16px;
 }
 
@@ -245,15 +243,6 @@ padding:54px 0;
 border-top:1px solid rgba(255,255,255,.05);
 }
 
-.section-label{
-font-family:'IBM Plex Mono',monospace;
-font-size:10px;
-letter-spacing:.22em;
-text-transform:uppercase;
-color:var(--gold);
-margin-bottom:14px;
-}
-
 .section h2{
 font-family:'Playfair Display',serif;
 font-size:42px;
@@ -268,8 +257,6 @@ gap:18px;
 
 .card{
 display:block;
-text-decoration:none;
-color:var(--text);
 background:linear-gradient(180deg,#121212,#0d0d0d);
 border:1px solid #262626;
 border-left:3px solid var(--gold);
@@ -313,7 +300,6 @@ margin-top:24px;
 padding:18px 28px;
 background:var(--gold);
 color:#111;
-text-decoration:none;
 font-family:'IBM Plex Mono',monospace;
 font-size:11px;
 letter-spacing:.22em;
@@ -332,24 +318,13 @@ font-family:'IBM Plex Mono',monospace;
 }
 
 @media(max-width:860px){
-
 .grid{grid-template-columns:1fr;}
-
 .container{padding:56px 18px 90px;}
-
 .hero h1{font-size:clamp(38px,12vw,58px);}
-
 .hero p{font-size:16px;}
-
-.statement{
-font-size:25px;
-padding:26px 22px;
-}
-
+.statement{font-size:25px;padding:26px 22px;}
 .section h2{font-size:34px;}
-
 .card strong{font-size:24px;}
-
 }
 </style>
 </head>
@@ -362,10 +337,8 @@ padding:26px 22px;
 <span>Decision Authority Research</span>
 </a>
 
-<button class="menu-btn" id="openMenu">
-<span></span>
-<span></span>
-<span></span>
+<button class="menu-btn" id="openMenu" aria-label="Open menu">
+<span></span><span></span><span></span>
 </button>
 </header>
 
@@ -421,98 +394,116 @@ padding:26px 22px;
 <main class="container">
 
 <section class="hero">
-<div class="hero-label">Executive Decision Advisory</div>
+<div class="hero-label">Decision Authority Research</div>
+
 <h1>When no one is named to stop it,<br>liability finds someone later.</h1>
+
 <p>
-Private advisory for boards, executives, General Counsel, CROs and AI governance leaders facing irreversible decisions under uncertainty.
+Independent work focused on authority gaps, executive accountability, and irreversible decisions under uncertainty.
+</p>
+
+<p style="margin-top:16px;font-size:15px;color:#8f8880;max-width:720px;">
+Created by Liran Bar-Shrim. Research centered on named stop authority before exposure becomes visible.
 </p>
 </section>
 
 <div class="statement">
-Approval is common.<br>
-Stop authority is rare.
+Approval systems scale.<br>
+Stop systems decide survival.
 </div>
 
 <section class="section">
-<div class="section-label">Core Concepts</div>
+<div class="section-label">Core Thesis</div>
+<h2>Most organizations define motion better than restraint.</h2>
+
+<p style="font-size:18px;color:var(--muted);max-width:760px;line-height:1.9;">
+Approvals, committees, workflows, and delegation are common. Far fewer systems define who can intervene in real time when risk rises and momentum is already moving.
+</p>
+
+<p style="font-size:18px;color:var(--muted);max-width:760px;line-height:1.9;margin-top:14px;">
+That gap often remains invisible until accountability becomes personal.
+</p>
+</section>
+
+<section class="section">
+<div class="section-label">Frameworks</div>
 <h2>Authority Before Exposure</h2>
 
 <div class="grid">
 
-<a href="stop-authority.html" class="card">
-<small>Concept</small>
-<strong>Stop Authority</strong>
-<span>The most ignored control function in modern governance.</span>
-</a>
-
-<a href="accountability-gap.html" class="card">
-<small>Essay</small>
-<strong>The Accountability Gap</strong>
-<span>The most exposed person is often not the one who caused the failure.</span>
-</a>
-
 <a href="dar.html" class="card">
 <small>Framework</small>
 <strong>DAR</strong>
-<span>Decision Authority Record. One accountable name before exposure.</span>
-</a>
-
-<a href="whitepaper.html" class="card">
-<small>Paper</small>
-<strong>White Paper</strong>
-<span>Structured framework for irreversible decisions under uncertainty.</span>
-</a>
-
-</div>
-</section>
-
-<section class="section">
-<div class="section-label">Research</div>
-<h2>Independent Work</h2>
-
-<div class="grid">
-
-<a href="research.html" class="card">
-<small>Research</small>
-<strong>Independent Research</strong>
-<span>Original work on authority gaps and executive accountability systems.</span>
-</a>
-
-<a href="ai-governance.html" class="card">
-<small>Vertical</small>
-<strong>AI Governance</strong>
-<span>Modern systems accelerate faster than governance.</span>
-</a>
-
-<a href="case-studies.html" class="card">
-<small>Cases</small>
-<strong>Case Studies</strong>
-<span>Real failures where ownership became visible too late.</span>
+<span>Decision Authority Record. One named authority before irreversible exposure.</span>
 </a>
 
 <a href="definitions.html" class="card">
 <small>Definitions</small>
 <strong>Core Terms</strong>
-<span>Named authority, stop trigger, exposure and more.</span>
+<span>Named stop authority, escalation windows, exposure triggers, and structural gaps.</span>
+</a>
+
+<a href="stop-authority.html" class="card">
+<small>Concept</small>
+<strong>Stop Authority</strong>
+<span>The missing control function in many modern institutions.</span>
+</a>
+
+<a href="accountability-gap.html" class="card">
+<small>Essay</small>
+<strong>The Accountability Gap</strong>
+<span>When the most exposed person is not the real decision owner.</span>
 </a>
 
 </div>
 </section>
 
 <section class="section">
-<div class="section-label">Private Intake</div>
+<div class="section-label">Research Areas</div>
+<h2>Where this matters now</h2>
+
+<div class="grid">
+
+<a href="ai-governance.html" class="card">
+<small>AI</small>
+<strong>AI Governance</strong>
+<span>Systems move faster than responsibility frameworks.</span>
+</a>
+
+<a href="case-studies.html" class="card">
+<small>Cases</small>
+<strong>Case Studies</strong>
+<span>Moments where ownership became visible too late.</span>
+</a>
+
+<a href="whitepaper.html" class="card">
+<small>Paper</small>
+<strong>White Paper</strong>
+<span>Structured model for irreversible decisions under uncertainty.</span>
+</a>
+
+<a href="about.html" class="card">
+<small>About</small>
+<strong>Liran Bar-Shrim</strong>
+<span>Independent research on authority, escalation, and decision exposure.</span>
+</a>
+
+</div>
+</section>
+
+<section class="section">
+<div class="section-label">Private Inquiry</div>
 <h2>One question matters</h2>
 
 <p style="font-size:18px;color:var(--muted);max-width:720px;line-height:1.9;">
 When a decision becomes irreversible under uncertainty, who is explicitly named to stop it?
 </p>
 
-<a href="contact.html" class="cta">Request Private Intake</a>
-
+<a href="contact.html" class="cta">Request Confidential Intake</a>
 </section>
 
 <div class="footer">
-&copy; 2026 Liran Bar Shrim. All rights reserved.
+&copy; 2026 Liran Bar-Shrim. All rights reserved.
 </div>
 
 </main>
@@ -536,4 +527,4 @@ overlay.classList.remove('active');
 </script>
 
 </body>
-</html> 
+</html>
