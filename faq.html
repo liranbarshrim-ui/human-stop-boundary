@@ -5,30 +5,58 @@
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
 
 <title>FAQ | Matrix Audit</title>
-<meta name="description" content="Answers on Decision Authority Record, stop authority, AI governance, executive accountability, and irreversible decisions.">
+<meta name="description" content="Answers on authority, risk, DAR, AI governance, executive accountability, and irreversible decisions.">
 <meta name="robots" content="index,follow">
+<meta name="theme-color" content="#050505">
 <link rel="canonical" href="https://matrix-audit.com/faq.html">
 
 <meta property="og:title" content="FAQ | Matrix Audit">
-<meta property="og:description" content="Answers on authority, risk, DAR, AI governance, and consequential decisions.">
+<meta property="og:description" content="Answers on authority, risk, DAR, AI governance, executive accountability, and irreversible decisions.">
 <meta property="og:type" content="website">
+<meta property="og:url" content="https://matrix-audit.com/faq.html">
+
+<script type="application/ld+json">
+{
+"@context":"https://schema.org",
+"@type":"FAQPage",
+"mainEntity":[
+{"@type":"Question","name":"What is DAR?","acceptedAnswer":{"@type":"Answer","text":"DAR is a written record naming one person with authority to stop a specific irreversible decision before execution."}},
+{"@type":"Question","name":"Who needs this?","acceptedAnswer":{"@type":"Answer","text":"Boards, executives, founders, AI teams, regulated operators, and organizations where many approve but no one clearly owns stop authority."}},
+{"@type":"Question","name":"Does this apply to AI systems?","acceptedAnswer":{"@type":"Answer","text":"Yes. If no named person can halt continuation in time, control may be symbolic rather than real."}},
+{"@type":"Question","name":"What counts as irreversible?","acceptedAnswer":{"@type":"Answer","text":"Deployments at scale, live automation, filings, public releases, critical transactions, and actions whose consequences cannot be undone quickly enough."}},
+{"@type":"Question","name":"Approval authority vs stop authority?","acceptedAnswer":{"@type":"Answer","text":"Approval authority allows continuation. Stop authority prevents continuation until explicit release."}},
+{"@type":"Question","name":"What if approval already happened?","acceptedAnswer":{"@type":"Answer","text":"Approval does not always solve live execution risk. Conditions can change after approval."}},
+{"@type":"Question","name":"Who is exposed if failure happens?","acceptedAnswer":{"@type":"Answer","text":"Often the visible signatory, executive owner, director, or function leader."}},
+{"@type":"Question","name":"Is this legal advice?","acceptedAnswer":{"@type":"Answer","text":"No. Independent advisory work only. Legal matters belong to qualified counsel."}}
+]
+}
+</script>
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
 
 <style>
 :root{
---bg:#080808;
---surface:#101010;
+--bg:#050505;
+--surface:#0a0a0a;
 --gold:#c8a96e;
---text:#ece6dc;
---muted:#a69e94;
---line:#1d1d1d;
+--text:#e8e2d7;
+--soft:#b6afa5;
+--muted:#8e877e;
+--line:#151515;
 }
 
-*{margin:0;padding:0;box-sizing:border-box}
-html{scroll-behavior:smooth}
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+}
+
+html{
+scroll-behavior:smooth;
+}
 
 body{
 background:var(--bg);
@@ -39,29 +67,33 @@ overflow-x:hidden;
 -webkit-font-smoothing:antialiased;
 }
 
-a{text-decoration:none;color:inherit}
+a{
+color:inherit;
+text-decoration:none;
+}
 
 body:before{
-content:"";
+content:'';
 position:fixed;
 inset:0;
-background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 220 220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='4'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
-opacity:.45;
 pointer-events:none;
-z-index:0;
+opacity:.04;
+background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
 }
+
+/* top */
 
 .topbar{
 position:sticky;
 top:0;
-z-index:999;
+z-index:990;
 display:flex;
 justify-content:space-between;
 align-items:center;
-padding:18px 22px;
-background:rgba(8,8,8,.94);
-backdrop-filter:blur(10px);
-border-bottom:1px solid rgba(255,255,255,.04);
+padding:18px 24px;
+background:rgba(5,5,5,.94);
+backdrop-filter:blur(8px);
+border-bottom:1px solid rgba(255,255,255,.03);
 }
 
 .brand{
@@ -93,24 +125,28 @@ padding:6px;
 .menu-btn span{
 width:22px;
 height:1.5px;
-background:var(--text);
+background:#ddd4c7;
 display:block;
 }
+
+/* overlay */
 
 .overlay{
 position:fixed;
 inset:0;
-background:rgba(0,0,0,.66);
+background:rgba(0,0,0,.65);
 opacity:0;
 visibility:hidden;
 transition:.25s;
-z-index:998;
+z-index:995;
 }
 
 .overlay.active{
 opacity:1;
 visibility:visible;
 }
+
+/* menu */
 
 .side-menu{
 position:fixed;
@@ -120,8 +156,8 @@ width:320px;
 max-width:92%;
 height:100vh;
 overflow-y:auto;
-background:#090909;
-border-left:1px solid var(--line);
+background:#060606;
+border-left:1px solid #141414;
 padding:28px 24px 44px;
 transition:.28s ease;
 z-index:999;
@@ -141,9 +177,9 @@ margin-bottom:26px;
 .menu-head-brand{
 font-family:'IBM Plex Mono',monospace;
 font-size:10px;
-letter-spacing:.24em;
+letter-spacing:.28em;
 text-transform:uppercase;
-color:var(--gold);
+color:#b8965c;
 }
 
 .close-btn{
@@ -152,11 +188,11 @@ border:none;
 font-size:34px;
 line-height:1;
 cursor:pointer;
-color:#bcb4a8;
+color:#8d8579;
 }
 
 .menu-group{
-border-top:1px solid var(--line);
+border-top:1px solid #151515;
 padding-top:18px;
 margin-top:18px;
 }
@@ -170,9 +206,9 @@ margin-top:0;
 .menu-label{
 font-family:'IBM Plex Mono',monospace;
 font-size:10px;
-letter-spacing:.24em;
+letter-spacing:.28em;
 text-transform:uppercase;
-color:var(--gold);
+color:#b8965c;
 margin-bottom:14px;
 }
 
@@ -180,119 +216,135 @@ margin-bottom:14px;
 display:block;
 padding:8px 0;
 font-size:15px;
-color:#d9d3c9;
+font-weight:400;
+color:#b6afa5;
 }
 
-.menu-group a:hover,
+.menu-group a:hover{
+color:#ece6dc;
+}
+
 .menu-group a.active{
-color:var(--gold);
+color:#c8a96e;
 }
 
 .menu-cta{
 display:block;
-margin-top:22px;
+margin-top:24px;
 padding:14px;
 text-align:center;
-border:1px solid var(--gold);
+border:1px solid #b8965c;
 font-family:'IBM Plex Mono',monospace;
 font-size:11px;
-letter-spacing:.2em;
+letter-spacing:.22em;
 text-transform:uppercase;
-color:var(--gold)!important;
+color:#c8a96e!important;
 }
 
+.menu-email{
+display:block;
+margin-top:18px;
+padding:14px;
+border:1px solid #151515;
+text-align:center;
+font-size:14px;
+color:#9e978e;
+word-break:break-word;
+}
+
+/* page */
+
 .container{
-position:relative;
-z-index:1;
 max-width:980px;
 margin:auto;
-padding:64px 28px 110px;
+padding:64px 28px 100px;
+position:relative;
+z-index:1;
 }
 
 .hero{
 border-left:3px solid var(--gold);
-padding-left:24px;
-margin-bottom:56px;
+padding-left:22px;
+margin-bottom:54px;
 }
 
 .label{
 font-family:'IBM Plex Mono',monospace;
 font-size:10px;
-letter-spacing:.24em;
+letter-spacing:.26em;
 text-transform:uppercase;
 color:var(--gold);
-margin-bottom:16px;
+margin-bottom:14px;
 }
 
 .hero h1{
 font-family:'Playfair Display',serif;
-font-size:clamp(32px,5vw,54px);
-line-height:1.05;
+font-size:clamp(34px,5vw,58px);
+line-height:1.04;
 margin-bottom:18px;
-max-width:820px;
 }
 
 .hero p{
-font-size:18px;
-line-height:1.9;
-color:var(--muted);
 max-width:760px;
+font-size:18px;
+color:var(--soft);
+line-height:1.9;
 }
 
 .statement{
 margin-bottom:56px;
-padding:32px;
-border:1px solid var(--line);
+padding:28px;
+border:1px solid #1a1a1a;
 border-left:3px solid var(--gold);
-background:linear-gradient(180deg,#111,#0c0c0c);
+background:linear-gradient(180deg,#0c0c0c,#080808);
 font-family:'Playfair Display',serif;
 font-size:28px;
 line-height:1.32;
 }
 
 .section{
-padding:52px 0;
-border-top:1px solid rgba(255,255,255,.05);
+border-top:1px solid rgba(255,255,255,.04);
+padding:54px 0;
 }
 
 .faq{
 padding:26px 0;
-border-top:1px solid rgba(255,255,255,.05);
+border-top:1px solid rgba(255,255,255,.04);
 }
 
 .faq:first-child{
 border-top:none;
+padding-top:0;
 }
 
 .num{
 font-family:'IBM Plex Mono',monospace;
 font-size:10px;
-letter-spacing:.22em;
-text-transform:uppercase;
+letter-spacing:.24em;
 color:var(--gold);
 margin-bottom:10px;
 }
 
 .q{
 font-family:'Playfair Display',serif;
-font-size:28px;
-line-height:1.15;
-margin-bottom:12px;
+font-size:26px;
+line-height:1.18;
+margin-bottom:10px;
 }
 
 .a{
 font-size:16px;
 line-height:1.9;
-color:var(--muted);
 max-width:760px;
+color:var(--soft);
 }
 
 .quote{
 margin-top:24px;
-padding:32px;
-border:1px solid var(--line);
+padding:28px;
+border:1px solid #1a1a1a;
 border-left:3px solid var(--gold);
-background:linear-gradient(180deg,#111,#0c0c0c);
+background:linear-gradient(180deg,#0c0c0c,#080808);
 font-family:'Playfair Display',serif;
 font-size:28px;
 line-height:1.3;
@@ -302,49 +354,50 @@ line-height:1.3;
 display:flex;
 gap:14px;
 flex-wrap:wrap;
-margin-top:28px;
+margin-top:24px;
 }
 
 .btn{
-padding:16px 24px;
-border:1px solid #2a2a2a;
+padding:15px 22px;
 font-family:'IBM Plex Mono',monospace;
 font-size:11px;
 letter-spacing:.18em;
 text-transform:uppercase;
+border:1px solid #232323;
 }
 
-.btn-primary{
+.btn.primary{
 background:var(--gold);
 border-color:var(--gold);
 color:#111;
 }
 
 .footer{
-margin-top:72px;
+margin-top:70px;
 padding-top:26px;
-border-top:1px solid #222;
+border-top:1px solid #161616;
 font-family:'IBM Plex Mono',monospace;
 font-size:11px;
-letter-spacing:.08em;
-color:#726c65;
+color:#726b63;
 }
 
 @media(max-width:860px){
 
 .container{
-padding:54px 18px 90px;
+padding:52px 18px 88px;
 }
 
 .hero h1{
-font-size:clamp(28px,9vw,42px);
+font-size:clamp(30px,10vw,46px);
 }
 
-.hero p,.a{
+.hero p,
+.a{
 font-size:16px;
 }
 
-.statement,.quote{
+.statement,
+.quote{
 font-size:23px;
 padding:24px 20px;
 }
@@ -373,7 +426,7 @@ text-align:center;
 <span>Decision Authority Research</span>
 </a>
 
-<button class="menu-btn" id="openMenu" aria-label="Open menu">
+<button class="menu-btn" id="openMenu" aria-label="Open Menu">
 <span></span>
 <span></span>
 <span></span>
@@ -406,7 +459,7 @@ text-align:center;
 <div class="menu-group">
 <div class="menu-label">Insights</div>
 <a href="failure-one-name.html">When Failure Lands on One Name</a>
-<a href="accountability-breaks.html">Where Accountability Breaks</a>
+<a href="where-accountability-breaks.html">Where Accountability Breaks</a>
 <a href="death-of-we.html">The Death of We</a>
 <a href="stop-authority.html">Stop Authority</a>
 <a href="ai-governance.html">AI Governance</a>
@@ -420,6 +473,10 @@ text-align:center;
 </div>
 
 <a href="contact.html" class="menu-cta">Private Intake</a>
+
+<a href="mailto:Liran@liranbarshrim.com" class="menu-email">
+Liran@liranbarshrim.com
+</a>
 
 </aside>
 
@@ -440,33 +497,53 @@ the authority gap is already active.
 
 <section class="section">
 
-<div class="faq"><div class="num">01</div><div class="q">What is DAR?</div><div class="a">A written record naming one person with explicit authority to stop a specific irreversible decision before execution.</div></div>
+<div class="faq">
+<div class="num">01</div>
+<div class="q">What is DAR?</div>
+<div class="a">A written record naming one individual with explicit authority to stop a specific irreversible decision before execution begins.</div>
+</div>
 
-<div class="faq"><div class="num">02</div><div class="q">Who usually needs this?</div><div class="a">Boards, executives, founders, regulated operators, AI teams, and firms where many approve but no one owns the final stop decision.</div></div>
+<div class="faq">
+<div class="num">02</div>
+<div class="q">Who usually needs this?</div>
+<div class="a">Boards, executives, founders, AI teams, regulated operators, and organizations where multiple people approve but no one clearly owns the final stop decision.</div>
+</div>
 
-<div class="faq"><div class="num">03</div><div class="q">Does this apply to AI systems?</div><div class="a">Yes. If systems move faster than governance responds, human control may become symbolic.</div></div>
+<div class="faq">
+<div class="num">03</div>
+<div class="q">Does this apply to AI systems?</div>
+<div class="a">Yes. If systems move faster than governance can respond, human control may become symbolic unless one named person can halt continuation in time.</div>
+</div>
 
-<div class="faq"><div class="num">04</div><div class="q">What counts as irreversible?</div><div class="a">Any decision whose consequences cannot be undone quickly enough to avoid material harm.</div></div>
+<div class="faq">
+<div class="num">04</div>
+<div class="q">What counts as irreversible?</div>
+<div class="a">Any decision whose consequences cannot be undone quickly enough to prevent material harm.</div>
+</div>
 
-<div class="faq"><div class="num">05</div><div class="q">Approval authority vs stop authority?</div><div class="a">Approval allows continuation. Stop authority prevents continuation until explicit release.</div></div>
+<div class="faq">
+<div class="num">05</div>
+<div class="q">Approval authority vs stop authority?</div>
+<div class="a">Approval authority permits continuation. Stop authority prevents continuation until explicit release.</div>
+</div>
 
-<div class="faq"><div class="num">06</div><div class="q">What if the board already approved it?</div><div class="a">Conditions may change after approval. Execution risk can still require active stop authority.</div></div>
+<div class="faq">
+<div class="num">06</div>
+<div class="q">What if approval already happened?</div>
+<div class="a">Approval does not always solve live execution risk. Conditions can change after approval.</div>
+</div>
 
-<div class="faq"><div class="num">07</div><div class="q">Who is exposed if failure happens?</div><div class="a">Often the visible signatory, executive owner, director, or function leader.</div></div>
+<div class="faq">
+<div class="num">07</div>
+<div class="q">Who is exposed if failure happens?</div>
+<div class="a">Often the visible signatory, executive owner, director, or function leader.</div>
+</div>
 
-<div class="faq"><div class="num">08</div><div class="q">Is this legal advice?</div><div class="a">No. This is independent advisory work. Legal matters belong with qualified counsel.</div></div>
-
-<div class="faq"><div class="num">09</div><div class="q">What if nobody is named?</div><div class="a">Then accountability often becomes unclear until after damage occurs.</div></div>
-
-<div class="faq"><div class="num">10</div><div class="q">Can authority be delegated?</div><div class="a">Yes, if delegation is explicit, documented, and operationally real.</div></div>
-
-<div class="faq"><div class="num">11</div><div class="q">Who can override stop authority?</div><div class="a">Only a clearly defined superior authority under known conditions.</div></div>
-
-<div class="faq"><div class="num">12</div><div class="q">Is this only for large firms?</div><div class="a">No. Smaller companies often need clarity even more because roles overlap.</div></div>
-
-<div class="faq"><div class="num">13</div><div class="q">Can this help after failure?</div><div class="a">It can help reconstruct responsibility gaps and improve future governance.</div></div>
-
-<div class="faq"><div class="num">14</div><div class="q">What sectors need this most?</div><div class="a">Finance, AI, healthcare, cyber, critical infrastructure, public companies, and high velocity startups.</div></div>
+<div class="faq">
+<div class="num">08</div>
+<div class="q">Is this legal advice?</div>
+<div class="a">No. This is independent advisory work only. Legal matters belong to qualified counsel.</div>
+</div>
 
 </section>
 
@@ -480,7 +557,7 @@ before the narrative writes itself.
 </div>
 
 <div class="actions">
-<a href="contact.html" class="btn btn-primary">Evaluate Active Exposure</a>
+<a href="contact.html" class="btn primary">Evaluate Active Exposure</a>
 <a href="dar.html" class="btn">Explore DAR</a>
 </div>
 
@@ -493,8 +570,10 @@ before the narrative writes itself.
 </main>
 
 <script>
-const menu=document.getElementById('menu');
-const overlay=document.getElementById('overlay');
+const menu = document.getElementById('menu');
+const overlay = document.getElementById('overlay');
+const openBtn = document.getElementById('openMenu');
+const closeBtn = document.getElementById('closeMenu');
 
 function openMenu(){
 menu.classList.add('active');
@@ -508,8 +587,8 @@ overlay.classList.remove('active');
 document.body.style.overflow='';
 }
 
-document.getElementById('openMenu').onclick=openMenu;
-document.getElementById('closeMenu').onclick=closeMenu;
+openBtn.onclick=openMenu;
+closeBtn.onclick=closeMenu;
 overlay.onclick=closeMenu;
 
 document.addEventListener('keydown',function(e){
