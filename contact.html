@@ -4,37 +4,26 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
 
-<title>Confidential Executive Intake | Matrix Audit</title>
-<meta name="description" content="Private inquiry for executives, boards, founders and leaders facing consequential decisions, unclear authority, personal exposure, or fast-moving risk.">
+<title>Private Inquiry | Matrix Audit</title>
+<meta name="description" content="Confidential private inquiry for executives facing accountability exposure, unclear authority, and consequential decisions already in motion.">
 <meta name="robots" content="index,follow">
 <link rel="canonical" href="https://matrix-audit.com/contact.html">
 
-<meta property="og:title" content="Confidential Executive Intake | Matrix Audit">
-<meta property="og:description" content="Selective private advisory for high-stakes decisions already in motion.">
-<meta property="og:type" content="website">
-<meta property="og:url" content="https://matrix-audit.com/contact.html">
-
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
 
 <style>
 :root{
 --bg:#090909;
 --surface:#111111;
---surface2:#151515;
 --gold:#c8a96e;
 --text:#e8e2d7;
 --muted:#a7a097;
---soft:#8f8880;
 --border:#1d1d1d;
 --border2:#2a2a2a;
---danger:#c0392b;
 }
 
 *{margin:0;padding:0;box-sizing:border-box;}
 html{scroll-behavior:smooth;}
-
 body{
 background:var(--bg);
 color:var(--text);
@@ -42,20 +31,9 @@ font-family:Inter,system-ui,sans-serif;
 line-height:1.7;
 overflow-x:hidden;
 -webkit-font-smoothing:antialiased;
-text-rendering:optimizeLegibility;
 }
 
-body:before{
-content:'';
-position:fixed;
-inset:0;
-background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 240 240' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.02'/%3E%3C/svg%3E");
-pointer-events:none;
-z-index:0;
-}
-
-a{text-decoration:none;color:inherit;}
-
+/* topbar */
 .topbar{
 position:sticky;
 top:0;
@@ -63,7 +41,7 @@ z-index:999;
 display:flex;
 justify-content:space-between;
 align-items:center;
-padding:18px 24px;
+padding:16px 18px;
 background:rgba(9,9,9,.94);
 backdrop-filter:blur(10px);
 border-bottom:1px solid rgba(255,255,255,.04);
@@ -72,17 +50,23 @@ border-bottom:1px solid rgba(255,255,255,.04);
 .brand{
 display:flex;
 align-items:center;
-gap:12px;
+gap:10px;
 font-family:'IBM Plex Mono',monospace;
-font-size:10px;
-letter-spacing:.28em;
+font-size:9px;
+letter-spacing:.22em;
 text-transform:uppercase;
+color:var(--text);
+text-decoration:none;
+white-space:nowrap;
+max-width:78%;
+overflow:hidden;
 }
 
 .brand-line{
 width:18px;
 height:1px;
 background:var(--gold);
+flex-shrink:0;
 }
 
 .menu-btn{
@@ -92,16 +76,17 @@ gap:5px;
 background:none;
 border:none;
 cursor:pointer;
-padding:6px;
+padding:4px;
 }
 
 .menu-btn span{
-width:22px;
+width:24px;
 height:1.5px;
 background:var(--text);
 display:block;
 }
 
+/* overlay */
 .overlay{
 position:fixed;
 inset:0;
@@ -111,42 +96,42 @@ visibility:hidden;
 transition:.25s;
 z-index:998;
 }
+.overlay.active{opacity:1;visibility:visible;}
 
-.overlay.active{
-opacity:1;
-visibility:visible;
-}
-
+/* menu */
 .side-menu{
 position:fixed;
 top:0;
-right:-340px;
-width:300px;
-max-width:90%;
-height:100vh;
+right:-360px;
+width:340px;
+max-width:90vw;
+height:100dvh;
 overflow-y:auto;
 background:#0d0d0d;
 border-left:1px solid var(--border);
-padding:28px 24px 48px;
-transition:.28s;
+padding:22px 18px 42px;
+transition:.28s ease;
 z-index:999;
 }
-
 .side-menu.active{right:0;}
 
 .menu-head{
 display:flex;
 justify-content:space-between;
 align-items:center;
-margin-bottom:28px;
+margin-bottom:18px;
+position:sticky;
+top:0;
+background:#0d0d0d;
+padding-bottom:12px;
 }
 
 .menu-head-brand{
 font-family:'IBM Plex Mono',monospace;
 font-size:9px;
 letter-spacing:.24em;
-text-transform:uppercase;
 color:var(--gold);
+text-transform:uppercase;
 }
 
 .close-btn{
@@ -159,24 +144,26 @@ cursor:pointer;
 
 .menu-group{
 border-top:1px solid var(--border);
-padding-top:18px;
-margin-top:18px;
+padding-top:14px;
+margin-top:14px;
 }
 
 .menu-label{
 font-family:'IBM Plex Mono',monospace;
 font-size:9px;
 letter-spacing:.22em;
-text-transform:uppercase;
 color:var(--gold);
-margin-bottom:12px;
+text-transform:uppercase;
+margin-bottom:10px;
 }
 
 .menu-group a{
 display:block;
-padding:8px 0;
-font-size:14px;
+padding:12px 0;
+font-size:15px;
 color:var(--muted);
+text-decoration:none;
+border-bottom:1px solid rgba(255,255,255,.03);
 }
 
 .menu-group a.active,
@@ -186,108 +173,111 @@ color:var(--gold);
 
 .menu-cta{
 display:block;
-margin-top:24px;
-padding:14px;
-text-align:center;
+margin-top:18px;
+padding:15px;
 border:1px solid var(--gold);
 color:var(--gold);
+text-align:center;
+text-decoration:none;
 font-family:'IBM Plex Mono',monospace;
 font-size:10px;
-letter-spacing:.2em;
+letter-spacing:.18em;
 text-transform:uppercase;
 }
 
+/* layout */
 .container{
-position:relative;
-z-index:1;
-max-width:1080px;
+max-width:980px;
 margin:auto;
-padding:72px 28px 110px;
+padding:42px 16px 80px;
 }
 
+/* hero */
 .hero{
 border-left:3px solid var(--gold);
-padding-left:24px;
-margin-bottom:56px;
+padding-left:16px;
+margin-bottom:36px;
 }
 
 .hero-label{
 font-family:'IBM Plex Mono',monospace;
 font-size:10px;
-letter-spacing:.24em;
-text-transform:uppercase;
+letter-spacing:.22em;
 color:var(--gold);
-margin-bottom:16px;
+text-transform:uppercase;
+margin-bottom:14px;
 }
 
 .hero h1{
 font-family:'Playfair Display',serif;
-font-size:clamp(46px,7vw,76px);
-line-height:1.02;
-margin-bottom:22px;
-max-width:920px;
+font-size:clamp(34px,10vw,58px);
+line-height:.96;
+letter-spacing:-.03em;
+margin-bottom:16px;
+max-width:700px;
 }
 
 .hero p{
-font-size:18px;
-line-height:1.9;
+font-size:16px;
 color:var(--muted);
-max-width:760px;
-margin-bottom:16px;
+line-height:1.7;
+max-width:700px;
+margin-bottom:18px;
 }
 
-.trust{
-display:flex;
-flex-wrap:wrap;
-gap:10px;
-margin-top:14px;
-}
-
-.badge{
-padding:8px 12px;
+.notice{
+background:linear-gradient(180deg,#121212,#0d0d0d);
 border:1px solid var(--border2);
-font-size:11px;
-color:var(--muted);
-font-family:'IBM Plex Mono',monospace;
-letter-spacing:.08em;
-text-transform:uppercase;
+border-left:3px solid var(--gold);
+padding:18px;
+max-width:720px;
 }
 
+.notice p{
+font-size:14px;
+color:var(--muted);
+margin-bottom:6px;
+}
+.notice p:last-child{margin-bottom:0;}
+
+/* section */
 .section{
-padding:56px 0;
+padding-top:28px;
 border-top:1px solid rgba(255,255,255,.05);
 }
 
 .grid{
 display:grid;
-grid-template-columns:1.1fr .9fr;
-gap:26px;
-align-items:start;
+grid-template-columns:1fr;
+gap:18px;
+}
+
+.box,.side-box{
+background:linear-gradient(180deg,#121212,#0d0d0d);
+border:1px solid var(--border2);
+padding:22px 16px;
 }
 
 .box{
-background:linear-gradient(180deg,#121212,#0d0d0d);
-border:1px solid var(--border2);
 border-left:3px solid var(--gold);
-padding:34px 28px;
 }
 
-.box-title{
+.box-title,.side-box-title{
 font-family:'Playfair Display',serif;
-font-size:34px;
+font-size:26px;
 margin-bottom:10px;
-line-height:1.1;
+line-height:1.08;
 }
 
 .box-desc{
-font-size:15px;
+font-size:14px;
 color:var(--muted);
-margin-bottom:24px;
+margin-bottom:18px;
 }
 
 label{
 display:block;
-margin:16px 0 7px;
+margin:14px 0 7px;
 font-family:'IBM Plex Mono',monospace;
 font-size:9px;
 letter-spacing:.22em;
@@ -302,12 +292,7 @@ background:#0a0a0a;
 border:1px solid var(--border2);
 color:var(--text);
 font-size:15px;
-font-family:Inter,sans-serif;
 outline:none;
-}
-
-input:focus,textarea:focus,select:focus{
-border-color:var(--gold);
 }
 
 textarea{
@@ -315,44 +300,27 @@ min-height:140px;
 resize:vertical;
 }
 
+input:focus,textarea:focus,select:focus{
+border-color:var(--gold);
+}
+
 .submit{
 width:100%;
-margin-top:22px;
-padding:17px;
+margin-top:18px;
+padding:16px;
 border:none;
 background:var(--gold);
 color:#111;
 font-family:'IBM Plex Mono',monospace;
-font-size:11px;
-font-weight:700;
-letter-spacing:.22em;
+font-size:10px;
+letter-spacing:.18em;
 text-transform:uppercase;
+font-weight:700;
 cursor:pointer;
 }
 
-.submit:hover{opacity:.92;}
-
-.micro{
-margin-top:14px;
-font-size:13px;
-color:var(--soft);
-line-height:1.7;
-}
-
-.side-box{
-background:linear-gradient(180deg,#121212,#0d0d0d);
-border:1px solid var(--border2);
-padding:34px 28px;
-}
-
-.side-title{
-font-family:'Playfair Display',serif;
-font-size:30px;
-margin-bottom:18px;
-}
-
 .item{
-padding:16px 0;
+padding:14px 0;
 border-bottom:1px solid rgba(255,255,255,.05);
 }
 
@@ -371,36 +339,38 @@ margin-bottom:6px;
 .item span{
 font-size:14px;
 color:var(--muted);
-line-height:1.75;
+line-height:1.65;
 }
 
 .pull{
-margin-top:22px;
-padding:26px;
-background:#101010;
-border:1px solid var(--border2);
+margin-top:18px;
+padding:20px;
+background:#0e0e0e;
 border-left:3px solid var(--gold);
 font-family:'Playfair Display',serif;
-font-size:28px;
+font-size:22px;
 line-height:1.28;
 }
 
-.footer{
-margin-top:74px;
-padding-top:28px;
-border-top:1px solid var(--border2);
-font-size:11px;
-letter-spacing:.08em;
-color:#6e6964;
-font-family:'IBM Plex Mono',monospace;
+/* desktop */
+@media(min-width:861px){
+.container{padding:70px 28px 110px;}
+.grid{grid-template-columns:1.05fr .95fr;gap:28px;}
+.hero{padding-left:22px;}
+.hero h1{font-size:72px;max-width:820px;}
+.hero p{font-size:18px;}
+.notice{padding:24px;}
+.box,.side-box{padding:28px 24px;}
 }
 
-@media(max-width:860px){
-.container{padding:56px 18px 90px;}
-.grid{grid-template-columns:1fr;}
-.hero h1{font-size:clamp(38px,12vw,58px);}
-.hero p{font-size:16px;}
-.pull{font-size:24px;}
+/* footer */
+.footer{
+margin-top:44px;
+padding-top:22px;
+border-top:1px solid var(--border2);
+font-size:11px;
+font-family:'IBM Plex Mono',monospace;
+color:#6e6964;
 }
 </style>
 </head>
@@ -413,7 +383,7 @@ font-family:'IBM Plex Mono',monospace;
 <span>Decision Authority Research</span>
 </a>
 
-<button class="menu-btn" id="openMenu">
+<button class="menu-btn" id="openMenu" aria-label="Open Menu">
 <span></span><span></span><span></span>
 </button>
 </header>
@@ -427,7 +397,7 @@ font-family:'IBM Plex Mono',monospace;
 <button class="close-btn" id="closeMenu">&times;</button>
 </div>
 
-<div class="menu-group" style="border-top:none;margin-top:0;padding-top:0;">
+<div class="menu-group">
 <div class="menu-label">Primary</div>
 <a href="index.html">Home</a>
 <a href="dar.html">DAR</a>
@@ -451,31 +421,26 @@ font-family:'IBM Plex Mono',monospace;
 
 <section class="hero">
 <div class="hero-label">Confidential Executive Intake</div>
-<h1>When exposure is rising,<br>clarity cannot wait.</h1>
+
+<h1>When exposure is rising, clarity cannot wait.</h1>
 
 <p>
 Private inquiry for executives, boards, founders, counsel, and leaders facing consequential decisions already in motion.
 </p>
 
-<p>
-Minimal information required. Sensitive situations welcome.
-</p>
-
-<div class="trust">
-<div class="badge">Selective Mandates</div>
-<div class="badge">Direct Principal Access</div>
-<div class="badge">Confidential</div>
-<div class="badge">Limited Capacity</div>
+<div class="notice">
+<p>Selective independent advisory.</p>
+<p>Direct principal contact only.</p>
+<p>Initial response typically within two business days.</p>
 </div>
 </section>
 
 <section class="section">
-
 <div class="grid">
 
 <div class="box">
-<div class="box-title">Request Private Review</div>
-<div class="box-desc">Short summaries are enough. Share only what matters now.</div>
+<div class="box-title">Request Review</div>
+<p class="box-desc">Minimal information required. Sensitive situations welcome.</p>
 
 <form action="https://formspree.io/f/xgorndnl" method="POST">
 
@@ -495,22 +460,17 @@ Minimal information required. Sensitive situations welcome.
 <option>Other</option>
 </select>
 
-<label>Situation</label>
-<textarea name="message" placeholder="What is moving now? What is unclear? What is at risk?" required></textarea>
+<label>What is moving now?</label>
+<textarea name="message" required placeholder="Decision, exposure, timing, uncertainty..."></textarea>
 
-<button class="submit" type="submit">Request Confidential Review</button>
+<button type="submit" class="submit">Send Private Inquiry</button>
 
 </form>
-
-<div class="micro">
-Initial response typically within two business days.<br>
-No unnecessary disclosure expected.
-</div>
 </div>
 
 <div class="side-box">
 
-<div class="side-title">Common Triggers</div>
+<div class="side-box-title">What This Is For</div>
 
 <div class="item">
 <strong>Authority Gap</strong>
@@ -524,7 +484,7 @@ No unnecessary disclosure expected.
 
 <div class="item">
 <strong>Governance Pressure</strong>
-<span>Board, regulator, investor, or internal escalation risk.</span>
+<span>Board, regulator, investor, or escalation risk.</span>
 </div>
 
 <div class="item">
@@ -532,24 +492,17 @@ No unnecessary disclosure expected.
 <span>Decisions moving faster than internal process.</span>
 </div>
 
-<div class="item">
-<strong>Reputational Risk</strong>
-<span>Public narrative may form before facts are clear.</span>
-</div>
-
 <div class="pull">
-When momentum rises,<br>
-clarity becomes leverage.
+When momentum rises,<br>clarity matters.
 </div>
 
 </div>
 
 </div>
-
 </section>
 
 <div class="footer">
-&copy; 2026 Liran Bar-Shrim. All rights reserved.
+© 2026 Liran Bar-Shrim. All rights reserved.
 </div>
 
 </main>
@@ -558,10 +511,10 @@ clarity becomes leverage.
 const menu=document.getElementById('menu');
 const overlay=document.getElementById('overlay');
 
-document.getElementById('openMenu').onclick=function(){
+document.getElementById('openMenu').onclick=()=>{
 menu.classList.add('active');
 overlay.classList.add('active');
-};
+}
 
 document.getElementById('closeMenu').onclick=closeMenu;
 overlay.onclick=closeMenu;
