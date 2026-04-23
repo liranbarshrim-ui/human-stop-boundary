@@ -7,10 +7,11 @@
 <title>DAR | Decision Authority Record | Matrix Audit</title>
 <meta name="description" content="Decision Authority Record (DAR): define who can stop an irreversible decision before exposure begins. Select private engagements for executives, boards and AI governance leaders.">
 <meta name="keywords" content="DAR, decision authority record, executive accountability, stop authority, AI governance">
+<meta name="robots" content="index,follow">
 <link rel="canonical" href="https://matrix-audit.com/dar.html">
 
 <meta property="og:title" content="DAR | Decision Authority Record">
-<meta property="og:description" content="When no one can stop it, ownership arrives later.">
+<meta property="og:description" content="When no one is named to stop it, ownership becomes personal.">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://matrix-audit.com/dar.html">
 
@@ -22,11 +23,9 @@
 :root{
 --bg:#090909;
 --surface:#111111;
---surface2:#151515;
 --gold:#c8a96e;
 --text:#e8e2d7;
 --muted:#a7a097;
---soft:#8f8880;
 --border:#1d1d1d;
 --border2:#2a2a2a;
 --danger:#c0392b;
@@ -45,18 +44,18 @@ overflow-x:hidden;
 text-rendering:optimizeLegibility;
 }
 
+a{text-decoration:none;color:inherit;}
+
 body:before{
 content:'';
 position:fixed;
 inset:0;
-background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 240 240' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.025'/%3E%3C/svg%3E");
-opacity:.55;
+background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 240 240' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.02'/%3E%3C/svg%3E");
 pointer-events:none;
 z-index:0;
 }
 
-a{text-decoration:none;color:inherit;}
-
+/* topbar */
 .topbar{
 position:sticky;
 top:0;
@@ -76,14 +75,16 @@ align-items:center;
 gap:12px;
 font-family:'IBM Plex Mono',monospace;
 font-size:10px;
-letter-spacing:.28em;
+letter-spacing:.26em;
 text-transform:uppercase;
+white-space:nowrap;
 }
 
 .brand-line{
 width:18px;
 height:1px;
 background:var(--gold);
+flex-shrink:0;
 }
 
 .menu-btn{
@@ -97,19 +98,17 @@ padding:6px;
 }
 
 .menu-btn span{
+display:block;
 width:22px;
 height:1.5px;
 background:var(--text);
-display:block;
-transition:.2s;
 }
 
-.menu-btn:hover span{background:var(--gold);}
-
+/* overlay */
 .overlay{
 position:fixed;
 inset:0;
-background:rgba(0,0,0,.68);
+background:rgba(0,0,0,.65);
 opacity:0;
 visibility:hidden;
 transition:.25s;
@@ -121,11 +120,12 @@ opacity:1;
 visibility:visible;
 }
 
+/* menu */
 .side-menu{
 position:fixed;
 top:0;
 right:-340px;
-width:310px;
+width:300px;
 max-width:90%;
 height:100vh;
 overflow-y:auto;
@@ -142,7 +142,7 @@ z-index:999;
 display:flex;
 justify-content:space-between;
 align-items:center;
-margin-bottom:28px;
+margin-bottom:26px;
 }
 
 .menu-head-brand{
@@ -156,18 +156,15 @@ color:var(--gold);
 .close-btn{
 background:none;
 border:none;
-font-size:30px;
-line-height:1;
+font-size:28px;
 color:var(--muted);
 cursor:pointer;
 }
 
-.close-btn:hover{color:var(--gold);}
-
 .menu-group{
 border-top:1px solid var(--border);
-padding-top:18px;
-margin-top:18px;
+padding-top:16px;
+margin-top:16px;
 }
 
 .menu-label{
@@ -176,7 +173,7 @@ font-size:9px;
 letter-spacing:.22em;
 text-transform:uppercase;
 color:var(--gold);
-margin-bottom:12px;
+margin-bottom:10px;
 }
 
 .menu-group a{
@@ -184,7 +181,6 @@ display:block;
 padding:8px 0;
 font-size:14px;
 color:var(--muted);
-transition:.18s;
 }
 
 .menu-group a:hover,
@@ -202,19 +198,20 @@ margin-top:16px;
 
 .menu-cta{
 border:1px solid var(--gold);
-color:var(--gold)!important;
+color:var(--gold);
 font-family:'IBM Plex Mono',monospace;
 font-size:10px;
-letter-spacing:.2em;
+letter-spacing:.18em;
 text-transform:uppercase;
 }
 
 .menu-email{
 border:1px solid var(--border2);
 font-size:13px;
-color:var(--muted)!important;
+color:var(--muted);
 }
 
+/* layout */
 .container{
 position:relative;
 z-index:1;
@@ -223,13 +220,15 @@ margin:auto;
 padding:70px 28px 110px;
 }
 
+/* hero */
 .hero{
 border-left:3px solid var(--gold);
 padding-left:24px;
-margin-bottom:58px;
+margin-bottom:56px;
 }
 
-.hero-label,.section-label{
+.hero-label,
+.section-label{
 font-family:'IBM Plex Mono',monospace;
 font-size:10px;
 letter-spacing:.24em;
@@ -240,10 +239,11 @@ margin-bottom:16px;
 
 .hero h1{
 font-family:'Playfair Display',serif;
-font-size:clamp(46px,7vw,76px);
-line-height:1.02;
-margin-bottom:22px;
-max-width:920px;
+font-size:clamp(38px,5.6vw,62px);
+line-height:1.04;
+letter-spacing:-0.01em;
+margin-bottom:20px;
+max-width:760px;
 }
 
 .hero p{
@@ -253,17 +253,19 @@ color:var(--muted);
 max-width:760px;
 }
 
+/* statement */
 .statement{
 margin-bottom:62px;
-padding:34px;
+padding:32px;
 background:linear-gradient(180deg,#111,#0d0d0d);
 border:1px solid var(--border2);
 border-left:3px solid var(--danger);
 font-family:'Playfair Display',serif;
-font-size:34px;
+font-size:clamp(24px,3vw,32px);
 line-height:1.28;
 }
 
+/* section */
 .section{
 padding:54px 0;
 border-top:1px solid rgba(255,255,255,.05);
@@ -271,9 +273,9 @@ border-top:1px solid rgba(255,255,255,.05);
 
 .section h2{
 font-family:'Playfair Display',serif;
-font-size:42px;
-margin-bottom:28px;
-line-height:1.1;
+font-size:clamp(30px,4vw,42px);
+line-height:1.12;
+margin-bottom:24px;
 }
 
 .section p{
@@ -284,11 +286,12 @@ max-width:760px;
 margin-bottom:14px;
 }
 
+/* grid */
 .grid{
 display:grid;
 grid-template-columns:1fr 1fr;
 gap:18px;
-margin-top:20px;
+margin-top:24px;
 }
 
 .card{
@@ -296,6 +299,12 @@ background:linear-gradient(180deg,#121212,#0d0d0d);
 border:1px solid #262626;
 border-left:3px solid var(--gold);
 padding:28px 24px;
+transition:.2s;
+}
+
+.card:hover{
+transform:translateY(-3px);
+background:#171717;
 }
 
 .card small{
@@ -312,8 +321,8 @@ margin-bottom:12px;
 display:block;
 font-family:'Playfair Display',serif;
 font-size:28px;
-margin-bottom:12px;
 line-height:1.1;
+margin-bottom:12px;
 }
 
 .card span{
@@ -323,9 +332,10 @@ line-height:1.8;
 color:var(--muted);
 }
 
+/* price */
 .price{
 margin-top:24px;
-padding:34px;
+padding:32px;
 background:linear-gradient(180deg,#121212,#0e0e0e);
 border:1px solid var(--border2);
 border-left:3px solid var(--gold);
@@ -334,10 +344,12 @@ border-left:3px solid var(--gold);
 .price strong{
 display:block;
 font-family:'Playfair Display',serif;
-font-size:54px;
+font-size:50px;
 margin-bottom:14px;
+line-height:1;
 }
 
+/* buttons */
 .actions{
 display:flex;
 gap:14px;
@@ -366,13 +378,15 @@ color:var(--text);
 
 .btn:hover{transform:translateY(-2px);}
 
+/* quote */
 .quote{
 font-family:'Playfair Display',serif;
-font-size:clamp(30px,4vw,42px);
+font-size:clamp(28px,4vw,40px);
 line-height:1.24;
 max-width:760px;
 }
 
+/* footer */
 .footer{
 margin-top:74px;
 padding-top:28px;
@@ -383,16 +397,53 @@ color:#6e6964;
 font-family:'IBM Plex Mono',monospace;
 }
 
+/* mobile */
 @media(max-width:860px){
-.grid{grid-template-columns:1fr;}
+
 .container{padding:56px 18px 90px;}
-.hero h1{font-size:clamp(38px,12vw,58px);}
-.hero p,.section p{font-size:16px;}
-.statement{font-size:25px;padding:26px 22px;}
-.section h2{font-size:34px;}
-.card strong{font-size:24px;}
-.price strong{font-size:42px;}
-.btn{width:100%;text-align:center;}
+.grid{grid-template-columns:1fr;}
+
+.hero h1{
+font-size:clamp(32px,8.2vw,48px);
+line-height:1.04;
+max-width:100%;
+}
+
+.hero p,
+.section p{
+font-size:16px;
+line-height:1.85;
+}
+
+.statement{
+font-size:22px;
+padding:24px 20px;
+}
+
+.section h2{
+font-size:34px;
+}
+
+.card strong{
+font-size:24px;
+}
+
+.price strong{
+font-size:40px;
+}
+
+.btn{
+width:100%;
+text-align:center;
+}
+
+.brand{
+font-size:9px;
+letter-spacing:.2em;
+max-width:78%;
+overflow:hidden;
+}
+
 }
 </style>
 </head>
@@ -440,13 +491,6 @@ font-family:'IBM Plex Mono',monospace;
 </div>
 
 <div class="menu-group">
-<div class="menu-label">Essays</div>
-<a href="exposure.html">When Failure Lands on One Name</a>
-<a href="failure-points.html">Where Accountability Breaks</a>
-<a href="we.html">The Death of We</a>
-</div>
-
-<div class="menu-group">
 <div class="menu-label">Knowledge</div>
 <a href="ai-governance.html">AI Governance</a>
 <a href="definitions.html">Definitions</a>
@@ -464,7 +508,10 @@ font-family:'IBM Plex Mono',monospace;
 <section class="hero">
 <div class="hero-label">Decision Authority Record</div>
 
-<h1>When no one can stop it,<br>ownership arrives later.</h1>
+<h1>
+When no one is named to stop it,<br>
+ownership becomes personal.
+</h1>
 
 <p>
 DAR helps boards, executives, legal leaders and AI governance teams define who holds real authority to halt an irreversible decision before exposure begins.
@@ -481,7 +528,7 @@ Real stop power is rare.
 <h2>Clarity before consequences.</h2>
 
 <p>
-Many institutions can explain how decisions get approved. Far fewer can identify who can personally stop one in motion.
+Many institutions can explain how decisions get approved. Far fewer can identify who can personally stop one already in motion.
 </p>
 
 <div class="grid">
@@ -518,7 +565,7 @@ Many institutions can explain how decisions get approved. Far fewer can identify
 <h2>High stakes by nature.</h2>
 
 <p>
-Irreversible, regulated, reputationally exposed, financially material, or executive-owned.
+Irreversible, regulated, reputationally exposed, financially material, or executive-owned decisions.
 </p>
 </section>
 
