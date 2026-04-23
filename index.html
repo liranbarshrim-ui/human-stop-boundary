@@ -38,6 +38,7 @@ font-family:Inter,system-ui,sans-serif;
 line-height:1.7;
 overflow-x:hidden;
 -webkit-font-smoothing:antialiased;
+text-rendering:optimizeLegibility;
 }
 
 a{text-decoration:none;color:inherit;}
@@ -63,12 +64,14 @@ font-family:'IBM Plex Mono',monospace;
 font-size:10px;
 letter-spacing:.28em;
 text-transform:uppercase;
+white-space:nowrap;
 }
 
 .brand-line{
 width:18px;
 height:1px;
 background:var(--gold);
+flex-shrink:0;
 }
 
 .menu-btn{
@@ -114,7 +117,7 @@ overflow-y:auto;
 background:#0d0d0d;
 border-left:1px solid var(--border);
 padding:28px 24px 48px;
-transition:.28s;
+transition:.28s ease;
 z-index:999;
 }
 
@@ -161,16 +164,17 @@ margin-bottom:12px;
 .menu-group a{
 display:block;
 padding:8px 0;
-color:var(--muted);
 font-size:14px;
+color:var(--muted);
 }
 
-.menu-group a:hover,
-.menu-group a.active{
+.menu-group a.active,
+.menu-group a:hover{
 color:var(--gold);
 }
 
-.menu-cta,.menu-email{
+.menu-cta,
+.menu-email{
 display:block;
 text-align:center;
 padding:14px;
@@ -198,13 +202,16 @@ margin:auto;
 padding:70px 28px 110px;
 }
 
+/* HERO */
+
 .hero{
 border-left:3px solid var(--gold);
 padding-left:24px;
 margin-bottom:58px;
 }
 
-.hero-label,.section-label{
+.hero-label,
+.section-label{
 font-family:'IBM Plex Mono',monospace;
 font-size:10px;
 letter-spacing:.24em;
@@ -215,9 +222,11 @@ margin-bottom:16px;
 
 .hero h1{
 font-family:'Playfair Display',serif;
-font-size:clamp(44px,7vw,74px);
-line-height:1.03;
-margin-bottom:22px;
+font-size:clamp(38px,5.6vw,62px);
+line-height:1.05;
+letter-spacing:-0.01em;
+margin-bottom:20px;
+max-width:700px;
 }
 
 .hero p{
@@ -234,7 +243,7 @@ background:linear-gradient(180deg,#111,#0d0d0d);
 border:1px solid var(--border2);
 border-left:3px solid var(--danger);
 font-family:'Playfair Display',serif;
-font-size:34px;
+font-size:32px;
 line-height:1.28;
 }
 
@@ -247,20 +256,29 @@ border-top:1px solid rgba(255,255,255,.05);
 font-family:'Playfair Display',serif;
 font-size:42px;
 margin-bottom:28px;
+line-height:1.12;
+}
+
+.section p{
+font-size:18px;
+line-height:1.9;
+color:var(--muted);
+max-width:760px;
 }
 
 .grid{
 display:grid;
 grid-template-columns:1fr 1fr;
 gap:18px;
+margin-top:28px;
 }
 
 .card{
 display:block;
+padding:28px 26px;
 background:linear-gradient(180deg,#121212,#0d0d0d);
 border:1px solid #262626;
 border-left:3px solid var(--gold);
-padding:28px 26px;
 transition:.2s;
 }
 
@@ -317,14 +335,50 @@ color:#6e6964;
 font-family:'IBM Plex Mono',monospace;
 }
 
+/* MOBILE */
+
 @media(max-width:860px){
-.grid{grid-template-columns:1fr;}
-.container{padding:56px 18px 90px;}
-.hero h1{font-size:clamp(38px,12vw,58px);}
-.hero p{font-size:16px;}
-.statement{font-size:25px;padding:26px 22px;}
-.section h2{font-size:34px;}
-.card strong{font-size:24px;}
+
+.container{
+padding:56px 18px 90px;
+}
+
+.brand{
+font-size:9px;
+letter-spacing:.22em;
+max-width:78%;
+overflow:hidden;
+}
+
+.hero h1{
+font-size:clamp(32px,8.2vw,48px);
+line-height:1.04;
+max-width:100%;
+}
+
+.hero p,
+.section p{
+font-size:16px;
+line-height:1.85;
+}
+
+.statement{
+font-size:24px;
+padding:26px 22px;
+}
+
+.section h2{
+font-size:34px;
+}
+
+.grid{
+grid-template-columns:1fr;
+}
+
+.card strong{
+font-size:24px;
+}
+
 }
 </style>
 </head>
@@ -372,13 +426,6 @@ font-family:'IBM Plex Mono',monospace;
 </div>
 
 <div class="menu-group">
-<div class="menu-label">Essays</div>
-<a href="exposure.html">When Failure Lands on One Name</a>
-<a href="failure-points.html">Where Accountability Breaks</a>
-<a href="we.html">The Death of We</a>
-</div>
-
-<div class="menu-group">
 <div class="menu-label">Knowledge</div>
 <a href="ai-governance.html">AI Governance</a>
 <a href="definitions.html">Definitions</a>
@@ -396,7 +443,10 @@ font-family:'IBM Plex Mono',monospace;
 <section class="hero">
 <div class="hero-label">Decision Authority Research</div>
 
-<h1>When no one is named to stop it,<br>liability finds someone later.</h1>
+<h1>
+When no one is named to stop it,<br>
+liability finds someone later.
+</h1>
 
 <p>
 Independent work focused on authority gaps, executive accountability, and irreversible decisions under uncertainty.
@@ -416,11 +466,11 @@ Stop systems decide survival.
 <div class="section-label">Core Thesis</div>
 <h2>Most organizations define motion better than restraint.</h2>
 
-<p style="font-size:18px;color:var(--muted);max-width:760px;line-height:1.9;">
+<p>
 Approvals, committees, workflows, and delegation are common. Far fewer systems define who can intervene in real time when risk rises and momentum is already moving.
 </p>
 
-<p style="font-size:18px;color:var(--muted);max-width:760px;line-height:1.9;margin-top:14px;">
+<p style="margin-top:14px;">
 That gap often remains invisible until accountability becomes personal.
 </p>
 </section>
@@ -437,32 +487,11 @@ That gap often remains invisible until accountability becomes personal.
 <span>Decision Authority Record. One named authority before irreversible exposure.</span>
 </a>
 
-<a href="definitions.html" class="card">
-<small>Definitions</small>
-<strong>Core Terms</strong>
-<span>Named stop authority, escalation windows, exposure triggers, and structural gaps.</span>
-</a>
-
 <a href="stop-authority.html" class="card">
 <small>Concept</small>
 <strong>Stop Authority</strong>
 <span>The missing control function in many modern institutions.</span>
 </a>
-
-<a href="accountability-gap.html" class="card">
-<small>Essay</small>
-<strong>The Accountability Gap</strong>
-<span>When the most exposed person is not the real decision owner.</span>
-</a>
-
-</div>
-</section>
-
-<section class="section">
-<div class="section-label">Research Areas</div>
-<h2>Where this matters now</h2>
-
-<div class="grid">
 
 <a href="ai-governance.html" class="card">
 <small>AI</small>
@@ -470,22 +499,10 @@ That gap often remains invisible until accountability becomes personal.
 <span>Systems move faster than responsibility frameworks.</span>
 </a>
 
-<a href="case-studies.html" class="card">
-<small>Cases</small>
-<strong>Case Studies</strong>
-<span>Moments where ownership became visible too late.</span>
-</a>
-
-<a href="whitepaper.html" class="card">
-<small>Paper</small>
-<strong>White Paper</strong>
-<span>Structured model for irreversible decisions under uncertainty.</span>
-</a>
-
-<a href="about.html" class="card">
-<small>About</small>
-<strong>Liran Bar-Shrim</strong>
-<span>Independent research on authority, escalation, and decision exposure.</span>
+<a href="contact.html" class="card">
+<small>Private</small>
+<strong>Confidential Intake</strong>
+<span>For live decisions, executive exposure, and urgent authority gaps.</span>
 </a>
 
 </div>
@@ -495,7 +512,7 @@ That gap often remains invisible until accountability becomes personal.
 <div class="section-label">Private Inquiry</div>
 <h2>One question matters</h2>
 
-<p style="font-size:18px;color:var(--muted);max-width:720px;line-height:1.9;">
+<p>
 When a decision becomes irreversible under uncertainty, who is explicitly named to stop it?
 </p>
 
