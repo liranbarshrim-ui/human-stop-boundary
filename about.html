@@ -27,8 +27,15 @@
 --border2:#2a2a2a;
 }
 
-*{margin:0;padding:0;box-sizing:border-box;}
-html{scroll-behavior:smooth;}
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+}
+
+html{
+scroll-behavior:smooth;
+}
 
 body{
 background:var(--bg);
@@ -50,7 +57,10 @@ pointer-events:none;
 z-index:0;
 }
 
-a{text-decoration:none;color:inherit;}
+a{
+text-decoration:none;
+color:inherit;
+}
 
 /* topbar */
 
@@ -100,7 +110,7 @@ height:1.5px;
 background:var(--text);
 }
 
-/* menu */
+/* overlay */
 
 .overlay{
 position:fixed;
@@ -117,6 +127,8 @@ opacity:1;
 visibility:visible;
 }
 
+/* side menu */
+
 .side-menu{
 position:fixed;
 top:0;
@@ -132,7 +144,9 @@ transition:.28s ease;
 z-index:999;
 }
 
-.side-menu.active{right:0;}
+.side-menu.active{
+right:0;
+}
 
 .menu-head{
 display:flex;
@@ -182,8 +196,13 @@ color:var(--muted);
 border-bottom:1px solid rgba(255,255,255,.03);
 }
 
-.menu-group a:last-child{border-bottom:none;}
-.menu-group a.active{color:var(--gold);}
+.menu-group a:last-child{
+border-bottom:none;
+}
+
+.menu-group a.active{
+color:var(--gold);
+}
 
 .menu-divider-line{
 display:inline-block;
@@ -355,16 +374,16 @@ font-size:11px;
 letter-spacing:.08em;
 color:#6e6964;
 font-family:'IBM Plex Mono',monospace;
-text-align:left;
 white-space:nowrap;
-overflow:hidden;
-text-overflow:ellipsis;
 }
 
 /* mobile */
 
 @media(max-width:760px){
-.container{padding:56px 18px 90px;}
+
+.container{
+padding:56px 18px 90px;
+}
 
 .hero{
 grid-template-columns:1fr;
@@ -375,8 +394,19 @@ padding-left:0;
 padding-top:24px;
 }
 
-.photo{max-width:180px;}
-.hero h1{font-size:42px;}
+.photo{
+max-width:180px;
+}
+
+.hero h1{
+font-size:42px;
+}
+
+.footer{
+white-space:normal;
+line-height:1.6;
+}
+
 }
 </style>
 </head>
@@ -384,6 +414,7 @@ padding-top:24px;
 <body>
 
 <header class="topbar">
+
 <a href="index.html" class="brand">
 <span class="brand-line"></span>
 <span>Decision Authority Research</span>
@@ -394,6 +425,7 @@ padding-top:24px;
 <span></span>
 <span></span>
 </button>
+
 </header>
 
 <div class="overlay" id="overlay"></div>
@@ -448,7 +480,9 @@ padding-top:24px;
 <h1>Liran Bar Shrim</h1>
 <div class="hero-role">Independent Researcher</div>
 
-<p class="hero-lead">Outside the system. Focused on what it misses.</p>
+<p class="hero-lead">
+Outside the system. Focused on what it misses.
+</p>
 
 <p class="hero-copy">
 My work examines a structural question many institutions still avoid:
@@ -463,6 +497,7 @@ As systems accelerate, responsibility becomes diffuse. That gap becomes dangerou
 </section>
 
 <section class="section">
+
 <div class="section-label">Why Independent</div>
 <h2>Distance reveals what proximity normalizes.</h2>
 
@@ -473,9 +508,11 @@ Internal systems often adapt to their own blind spots. Process becomes routine. 
 <p>
 An external perspective can identify authority gaps, escalation dead zones, and decisions that continue because no one is clearly empowered to stop them.
 </p>
+
 </section>
 
 <section class="section">
+
 <div class="section-label">Why Now</div>
 <h2>Uncertainty moves faster than governance.</h2>
 
@@ -491,9 +528,11 @@ Many organizations modernized execution before modernizing intervention.
 When no one is named in advance,<br>
 someone is blamed later.
 </div>
+
 </section>
 
 <section class="section">
+
 <div class="section-label">Focus</div>
 <h2>Areas of Work</h2>
 
@@ -513,16 +552,16 @@ Decision authority. Stop power. Executive exposure. Irreversible pathways. Accou
 </main>
 
 <script>
-const menu=document.getElementById('menu');
-const overlay=document.getElementById('overlay');
+const menu = document.getElementById('menu');
+const overlay = document.getElementById('overlay');
 
-document.getElementById('openMenu').onclick=function(){
+document.getElementById('openMenu').onclick = function(){
 menu.classList.add('active');
 overlay.classList.add('active');
 };
 
-document.getElementById('closeMenu').onclick=closeMenu;
-overlay.onclick=closeMenu;
+document.getElementById('closeMenu').onclick = closeMenu;
+overlay.onclick = closeMenu;
 
 function closeMenu(){
 menu.classList.remove('active');
