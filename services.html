@@ -74,6 +74,7 @@ font-family:'IBM Plex Mono',monospace;
 font-size:10px;
 letter-spacing:.28em;
 text-transform:uppercase;
+white-space:nowrap;
 }
 
 .brand-line{
@@ -97,10 +98,7 @@ display:block;
 width:22px;
 height:1.5px;
 background:var(--text);
-transition:.2s;
 }
-
-.menu-btn:hover span{background:var(--gold);}
 
 .overlay{
 position:fixed;
@@ -178,7 +176,6 @@ display:block;
 padding:8px 0;
 font-size:14px;
 color:var(--muted);
-transition:.18s;
 }
 
 .menu-group a:hover,
@@ -186,17 +183,27 @@ transition:.18s;
 color:var(--gold);
 }
 
-.menu-cta{
+.menu-cta,
+.menu-email{
 display:block;
-margin-top:22px;
+margin-top:16px;
 padding:14px;
 text-align:center;
+}
+
+.menu-cta{
 border:1px solid var(--gold);
-color:var(--gold)!important;
+color:var(--gold);
 font-family:'IBM Plex Mono',monospace;
 font-size:10px;
 letter-spacing:.2em;
 text-transform:uppercase;
+}
+
+.menu-email{
+border:1px solid var(--border2);
+font-size:13px;
+color:var(--muted);
 }
 
 .container{
@@ -467,6 +474,7 @@ font-family:'IBM Plex Mono',monospace;
 </div>
 
 <a href="contact.html" class="menu-cta">Request Confidential Intake</a>
+<a href="mailto:Liran@liranbarshrim.com" class="menu-email">Liran@liranbarshrim.com</a>
 
 </aside>
 
@@ -487,7 +495,7 @@ consequences become personal.
 
 <section class="section">
 <div class="section-label">Engagement Models</div>
-<h2>Three ways to engage.</h2>
+<h2>Choose the right level of intervention.</h2>
 
 <div class="grid">
 
@@ -502,12 +510,12 @@ consequences become personal.
 <div>Written findings</div>
 <div>5–7 business days</div>
 </div>
-<a href="contact.html" class="card-cta">Request Review</a>
+<a href="contact.html" class="card-cta">Review This Decision</a>
 </div>
 
 <div class="card featured">
 <small>02 · Core</small>
-<h3>Authority Mandate</h3>
+<h3>Authority Design</h3>
 <div class="price">From €12,000</div>
 <p>For organizations where multiple teams share responsibility but no final stop owner exists.</p>
 <div class="list">
@@ -516,12 +524,12 @@ consequences become personal.
 <div>Executive summary</div>
 <div>10–14 business days</div>
 </div>
-<a href="contact.html" class="card-cta">Begin Engagement</a>
+<a href="contact.html" class="card-cta">Define Authority</a>
 </div>
 
 <div class="card">
 <small>03 · Board</small>
-<h3>Confidential Advisory</h3>
+<h3>Executive Advisory</h3>
 <div class="price">Private Scope</div>
 <p>Direct support for directors, officers, or founders carrying visible personal accountability.</p>
 <div class="list">
@@ -530,7 +538,7 @@ consequences become personal.
 <div>Custom mandate</div>
 <div>Confidential terms</div>
 </div>
-<a href="contact.html" class="card-cta">Private Inquiry</a>
+<a href="contact.html" class="card-cta">Discuss Exposure</a>
 </div>
 
 </div>
@@ -556,6 +564,10 @@ Unclear authority creates aftermath.
 
 <p>
 All engagements are principal-led, limited in number, and confidential by design. No junior staffing. No generic consulting layers.
+</p>
+
+<p style="font-size:14px;color:#8f8880;margin-top:8px;">
+Limited active mandates each quarter.
 </p>
 
 <div class="actions">
