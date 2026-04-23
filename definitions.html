@@ -3,83 +3,61 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Decision Governance Definitions | Decision Authority Research</title>
-<meta name="description" content="Core definitions in decision authority and named stop authority. The terminology behind DAR — Decision Authority Record — defined by Liran Bar-Shrim.">
-<meta name="keywords" content="named stop authority definition, decision authority, irreversible decision, stop authority, DAR definition, decision governance, executive accountability, bound refusal">
+
+<title>Definitions | Decision Authority Research</title>
+<meta name="description" content="Core definitions in decision authority, stop authority, escalation control, accountability gaps, and irreversible decisions. The conceptual language behind DAR.">
+<meta name="keywords" content="decision authority, stop authority, DAR, governance definitions, accountability gap, irreversible decision">
+<meta name="robots" content="index,follow">
 <link rel="canonical" href="https://matrix-audit.com/definitions.html">
-<meta property="og:title" content="Decision Governance Definitions | Decision Authority Research">
-<meta property="og:description" content="Core definitions in decision authority and named stop authority. The terminology behind DAR.">
+
+<meta property="og:title" content="Definitions | Decision Authority Research">
+<meta property="og:description" content="Core definitions in stop authority, governance accountability, escalation control, and irreversible decisions.">
+<meta property="og:type" content="website">
 <meta property="og:url" content="https://matrix-audit.com/definitions.html">
-<meta property="og:type" content="article">
 
 <script type="application/ld+json">
 {
-  "@context":"https://schema.org",
-  "@type":"DefinedTermSet",
-  "@id":"https://matrix-audit.com/definitions.html#termset",
-  "name":"Decision Governance Definitions",
-  "description":"Core terminology in decision authority, named stop authority, and irreversible decision governance.",
-  "url":"https://matrix-audit.com/definitions.html",
-  "author":{"@type":"Person","@id":"https://matrix-audit.com/#liran","name":"Liran Bar-Shrim"},
-  "hasDefinedTerm":[
-    {"@type":"DefinedTerm","name":"Named Stop Authority","description":"A single individual explicitly identified, in advance, as holding the obligation and authority to stop a specific irreversible decision before execution occurs. Not a role. Not a team. A name."},
-    {"@type":"DefinedTerm","name":"Irreversible Decision","description":"A decision that, once executed, cannot be undone without disproportionate cost, harm, or loss."},
-    {"@type":"DefinedTerm","name":"Decision Authority Record","description":"A written record identifying the single named individual holding stop authority over a specific irreversible decision pathway, defined before execution begins."},
-    {"@type":"DefinedTerm","name":"Bound Refusal","description":"The condition in which a named individual is formally committed, in advance, to refuse continuation of a decision pathway if specific conditions are met."},
-    {"@type":"DefinedTerm","name":"Stop Authority Gap","description":"The structural absence of a named individual explicitly empowered to stop an irreversible decision."}
-  ]
+"@context":"https://schema.org",
+"@type":"DefinedTermSet",
+"name":"Decision Governance Definitions",
+"url":"https://matrix-audit.com/definitions.html",
+"description":"Core terms in stop authority, escalation control, governance accountability and irreversible decisions.",
+"author":{
+"@type":"Person",
+"name":"Liran Bar-Shrim"
+}
 }
 </script>
 
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&family=Playfair+Display:ital,wght@0,600;0,700;1,400&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
 
 <style>
-
 :root{
 --bg:#090909;
 --surface:#111111;
 --gold:#c8a96e;
 --text:#e8e2d7;
 --muted:#a7a097;
---soft:#8f8880;
 --dim:#6a6460;
 --border:#1d1d1d;
 --border2:#2a2a2a;
---danger:#c0392b;
 }
-
 *{margin:0;padding:0;box-sizing:border-box;}
-html{scroll-behavior:smooth;}
-
 body{
 background:var(--bg);
 color:var(--text);
 font-family:Inter,system-ui,sans-serif;
+line-height:1.7;
 overflow-x:hidden;
 -webkit-font-smoothing:antialiased;
-line-height:1.7;
 }
-
-body:before{
-content:'';
-position:fixed;
-inset:0;
-background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 240 240' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.025'/%3E%3C/svg%3E");
-opacity:.55;
-pointer-events:none;
-z-index:0;
-}
-
 a{text-decoration:none;color:inherit;}
-
-/* ── topbar ── */
 
 .topbar{
 position:sticky;
 top:0;
 z-index:999;
 display:flex;
-justify-content:space-between;
 align-items:center;
 padding:18px 24px;
 background:rgba(9,9,9,.94);
@@ -91,165 +69,23 @@ border-bottom:1px solid rgba(255,255,255,.04);
 display:flex;
 align-items:center;
 gap:12px;
-text-decoration:none;
-color:var(--text);
 font-family:'IBM Plex Mono',monospace;
 font-size:10px;
 letter-spacing:.28em;
 text-transform:uppercase;
 }
 
-.brand-line{width:18px;height:1px;background:var(--gold);}
-
-.menu-btn{
-display:flex;
-flex-direction:column;
-justify-content:center;
-gap:5px;
-background:none;
-border:none;
-cursor:pointer;
-padding:6px;
+.brand-line{
+width:18px;
+height:1px;
+background:var(--gold);
 }
-
-.menu-btn span{
-display:block;
-width:22px;
-height:1.5px;
-background:var(--text);
-transition:background .2s;
-}
-
-.menu-btn:hover span{background:var(--gold);}
-
-.overlay{
-position:fixed;
-inset:0;
-background:rgba(0,0,0,.6);
-opacity:0;
-visibility:hidden;
-transition:.25s;
-z-index:998;
-}
-
-.overlay.active{opacity:1;visibility:visible;}
-
-.side-menu{
-position:fixed;
-top:0;
-right:-340px;
-width:300px;
-max-width:90%;
-height:100vh;
-overflow-y:auto;
-background:#0d0d0d;
-border-left:1px solid var(--border);
-padding:28px 24px 48px;
-transition:.28s cubic-bezier(.4,0,.2,1);
-z-index:999;
-}
-
-.side-menu.active{right:0;}
-
-.menu-head{
-display:flex;
-justify-content:space-between;
-align-items:center;
-margin-bottom:28px;
-}
-
-.menu-head-brand{
-font-family:'IBM Plex Mono',monospace;
-font-size:9px;
-letter-spacing:.24em;
-text-transform:uppercase;
-color:var(--gold);
-}
-
-.close-btn{
-background:none;
-border:none;
-font-size:26px;
-line-height:1;
-color:var(--muted);
-cursor:pointer;
-transition:.2s;
-}
-
-.close-btn:hover{color:var(--text);}
-
-.menu-group{
-border-top:1px solid var(--border);
-padding-top:20px;
-margin-top:20px;
-}
-
-.menu-label{
-font-family:'IBM Plex Mono',monospace;
-font-size:9px;
-letter-spacing:.22em;
-text-transform:uppercase;
-color:var(--gold);
-margin-bottom:12px;
-}
-
-.menu-group a{
-display:block;
-padding:8px 0;
-text-decoration:none;
-color:var(--muted);
-font-size:14px;
-border-bottom:1px solid rgba(255,255,255,.03);
-transition:.18s;
-}
-
-.menu-group a:last-child{border-bottom:none;}
-.menu-group a:hover{color:var(--text);}
-.menu-group a.active{color:var(--gold);}
-
-.menu-cta{
-display:block;
-margin-top:28px;
-padding:14px 20px;
-border:1px solid var(--gold);
-color:var(--gold)!important;
-font-family:'IBM Plex Mono',monospace;
-font-size:10px;
-letter-spacing:.2em;
-text-transform:uppercase;
-text-align:center;
-text-decoration:none;
-transition:.2s;
-}
-
-.menu-cta:hover{background:var(--gold);color:#111!important;}
-
-.menu-email{
-display:block;
-margin-top:10px;
-padding:11px 20px;
-color:var(--muted)!important;
-font-family:Inter,system-ui,sans-serif;
-font-size:13px;
-text-align:center;
-text-decoration:none;
-border:1px solid var(--border);
-transition:.2s;
-}
-
-.menu-email:hover{color:var(--gold)!important;border-color:var(--border2);}
-
-/* ── layout ── */
 
 .container{
-position:relative;
-z-index:1;
-max-width:980px;
+max-width:1120px;
 margin:0 auto;
-padding:70px 28px 110px;
+padding:72px 28px 110px;
 }
-
-/* ── hero ── */
 
 .hero{
 border-left:3px solid var(--gold);
@@ -268,26 +104,22 @@ margin-bottom:16px;
 
 .hero h1{
 font-family:'Playfair Display',serif;
-font-size:clamp(42px,7vw,70px);
+font-size:clamp(44px,7vw,76px);
 line-height:1.02;
-margin-bottom:20px;
+margin-bottom:18px;
 }
 
 .hero p{
-font-size:17px;
+font-size:18px;
 color:var(--muted);
 max-width:760px;
-line-height:1.9;
-margin-bottom:8px;
+margin-bottom:10px;
 }
-
-/* ── grid ── */
 
 .grid{
 display:grid;
-grid-template-columns:1fr 1fr;
+grid-template-columns:repeat(2,1fr);
 gap:18px;
-margin-bottom:18px;
 }
 
 .term{
@@ -299,8 +131,8 @@ padding:28px;
 
 .term-index{
 font-family:'IBM Plex Mono',monospace;
-font-size:9px;
-letter-spacing:.18em;
+font-size:10px;
+letter-spacing:.2em;
 text-transform:uppercase;
 color:var(--dim);
 margin-bottom:10px;
@@ -308,7 +140,7 @@ margin-bottom:10px;
 
 .term-name{
 font-family:'Playfair Display',serif;
-font-size:clamp(22px,3vw,28px);
+font-size:28px;
 line-height:1.1;
 margin-bottom:14px;
 }
@@ -316,314 +148,272 @@ margin-bottom:14px;
 .term p{
 font-size:15px;
 color:var(--muted);
-line-height:1.8;
 margin-bottom:10px;
 }
 
-.term p:last-of-type{margin-bottom:0;}
-
 .term-note{
 margin-top:16px;
+padding-left:12px;
+border-left:2px solid var(--border2);
 font-family:'IBM Plex Mono',monospace;
 font-size:11px;
 color:var(--dim);
 line-height:1.8;
-border-left:2px solid var(--border2);
-padding-left:12px;
 }
-
-/* ── pull ── */
 
 .pull{
-margin-top:8px;
-padding:30px;
+margin-top:28px;
+padding:34px;
+background:#111;
 border:1px solid var(--border2);
 border-left:3px solid var(--gold);
-background:linear-gradient(180deg,#111,#0d0d0d);
 font-family:'Playfair Display',serif;
-font-size:clamp(22px,3vw,30px);
-line-height:1.35;
+font-size:30px;
+line-height:1.3;
 }
 
-/* ── closing ── */
-
 .closing{
+margin-top:52px;
+padding-top:34px;
 border-top:1px solid var(--border2);
-padding-top:40px;
-margin-top:54px;
 }
 
 .closing p{
-font-size:15px;
+font-size:16px;
 color:var(--muted);
-line-height:1.8;
-margin-bottom:10px;
-max-width:720px;
+margin-bottom:12px;
+max-width:760px;
 }
 
-.closing p.strong{
+.closing .strong{
 color:var(--text);
-font-weight:500;
+font-weight:600;
 }
 
-/* ── footer banner ── */
+.links{
+margin-top:52px;
+display:grid;
+grid-template-columns:repeat(2,1fr);
+gap:14px;
+}
 
-.footer-banner{
-margin-top:64px;
+.linkbox{
+padding:22px;
 border:1px solid var(--border2);
-background:#0d0d0d;
-}
-
-.footer-link{
-display:flex;
-justify-content:space-between;
-align-items:center;
-padding:20px 24px;
-text-decoration:none;
-color:var(--text);
-border-bottom:1px solid var(--border2);
+background:#111;
 transition:.18s;
 }
 
-.footer-link:last-child{border-bottom:none;}
-.footer-link:hover{background:#151515;padding-left:28px;}
-.footer-link.cta{border-left:3px solid var(--gold);}
-
-.footer-link-left{display:flex;flex-direction:column;gap:4px;}
-
-.footer-link-label{
-font-family:'IBM Plex Mono',monospace;
-font-size:9px;
-letter-spacing:.22em;
-text-transform:uppercase;
-color:var(--gold);
+.linkbox:hover{
+border-color:#3a3328;
+transform:translateY(-2px);
 }
 
-.footer-link-title{font-family:'Playfair Display',serif;font-size:17px;line-height:1.2;}
-.footer-link-arrow{font-family:'IBM Plex Mono',monospace;font-size:14px;color:var(--muted);}
+.linkbox small{
+display:block;
+font-family:'IBM Plex Mono',monospace;
+font-size:10px;
+letter-spacing:.2em;
+text-transform:uppercase;
+color:var(--gold);
+margin-bottom:8px;
+}
+
+.linkbox span{
+font-size:17px;
+}
 
 .footer{
-margin-top:28px;
+margin-top:72px;
 padding-top:28px;
 border-top:1px solid var(--border2);
-font-size:11px;
-letter-spacing:.08em;
-color:#6e6964;
 font-family:'IBM Plex Mono',monospace;
+font-size:11px;
+color:#6e6964;
 }
 
 @media(max-width:860px){
+.grid,.links{grid-template-columns:1fr;}
 .container{padding:56px 18px 90px;}
-.grid{grid-template-columns:1fr;}
-.hero h1{font-size:42px;}
-.hero p,.term p{font-size:16px;}
+.hero h1{font-size:44px;}
 }
-
 </style>
 </head>
 
 <body>
 
 <header class="topbar">
-  <a href="index.html" class="brand">
-    <span class="brand-line"></span>
-    <span>Decision Authority Research</span>
-  </a>
-  <button class="menu-btn" id="openMenu" aria-label="Open menu">
-    <span></span>
-    <span></span>
-    <span></span>
-  </button>
+<a href="index.html" class="brand">
+<span class="brand-line"></span>
+<span>Decision Authority Research</span>
+</a>
 </header>
-
-<div class="overlay" id="overlay"></div>
-
-<aside class="side-menu" id="menu">
-  <div class="menu-head">
-    <span class="menu-head-brand">Matrix Audit</span>
-    <button class="close-btn" id="closeMenu">&times;</button>
-  </div>
-
-  <div class="menu-group" style="border-top:none;padding-top:0;margin-top:0;">
-    <div class="menu-label">Primary</div>
-    <a href="index.html">Home</a>
-    <a href="dar.html">DAR</a>
-    <a href="services.html">Services</a>
-    <a href="about.html">About</a>
-  </div>
-
-  <div class="menu-group">
-    <div class="menu-label">Research</div>
-    <a href="research.html">Independent Research</a>
-    <a href="whitepaper.html">White Paper</a>
-  </div>
-
-  <div class="menu-group">
-    <div class="menu-label">Concepts</div>
-    <a href="stop-authority.html">Stop Authority</a>
-    <a href="accountability-gap.html">The Accountability Gap</a>
-  </div>
-
-  <div class="menu-group">
-    <div class="menu-label">Essays</div>
-    <a href="exposure.html">When Failure Lands on One Name</a>
-    <a href="failure-points.html">Where Accountability Breaks</a>
-    <a href="we.html">The Death of We</a>
-  </div>
-
-  <div class="menu-group">
-    <div class="menu-label">Knowledge</div>
-    <a href="ai-governance.html">AI Governance</a>
-    <a href="definitions.html" class="active">Definitions</a>
-    <a href="faq.html">FAQ</a>
-    <a href="case-studies.html">Case Studies</a>
-  </div>
-
-  <a href="contact.html" class="menu-cta">Private Intake</a>
-  <a href="mailto:Liran@liranbarshrim.com" class="menu-email">Liran@liranbarshrim.com</a>
-</aside>
 
 <main class="container">
 
-  <div class="hero">
-    <div class="hero-label">Definitions</div>
-    <h1>Core Terms</h1>
-    <p>These definitions are not standard industry terminology. They describe a structural reality that existing frameworks have not named precisely.</p>
-    <p>Each term addresses the same gap: the absence of a named individual with the obligation to stop.</p>
-  </div>
+<section class="hero">
+<div class="hero-label">Definitions</div>
+<h1>Core Terms</h1>
+<p>These are not standard corporate terms.</p>
+<p>They describe recurring governance failures that existing language often avoids naming clearly.</p>
+<p>Independent conceptual research in accountability and stop authority.</p>
+</section>
 
-  <div class="grid">
+<section class="grid">
 
-    <div class="term">
-      <div class="term-index">01</div>
-      <div class="term-name">Named Stop Authority</div>
-      <p>A single individual explicitly identified, in advance, as holding the obligation and authority to stop a specific irreversible decision before execution occurs.</p>
-      <p>Not a role. Not a team. A name, recorded before the decision moves.</p>
-      <div class="term-note">The word "named" is not rhetorical. It means a specific person, identified by name, in writing, prior to execution. Anything less is not stop authority. It is the appearance of stop authority.</div>
-    </div>
+<div class="term">
+<div class="term-index">01</div>
+<div class="term-name">Named Stop Authority</div>
+<p>A single identified person formally empowered to stop a specific irreversible decision.</p>
+<p>Named before execution begins.</p>
+<div class="term-note">Not a team. Not a role. A person.</div>
+</div>
 
-    <div class="term">
-      <div class="term-index">02</div>
-      <div class="term-name">Irreversible Decision</div>
-      <p>A decision that, once executed, cannot be undone without disproportionate cost, harm, or loss. The point at which continuation and stopping are no longer equivalent choices.</p>
-      <p>Irreversibility is not binary. It is a threshold, and that threshold must be defined before it is reached.</p>
-      <div class="term-note">A system can be technically correct and still execute an irreversible decision without anyone being required to stop it. Technical correctness and stop authority are separate questions.</div>
-    </div>
+<div class="term">
+<div class="term-index">02</div>
+<div class="term-name">Irreversible Decision</div>
+<p>A decision that cannot be undone without disproportionate cost, harm, or loss.</p>
+<p>The threshold should be recognized before it is crossed.</p>
+<div class="term-note">Late awareness is structurally useless.</div>
+</div>
 
-    <div class="term">
-      <div class="term-index">03</div>
-      <div class="term-name">Decision Authority Record (DAR)</div>
-      <p>A written record identifying the single named individual holding stop authority over a specific irreversible decision pathway, defined before execution begins.</p>
-      <p>The DAR does not approve the decision. It names who can stop it, and makes that person's obligation explicit, documented, and binding before the threshold is reached.</p>
-      <div class="term-note">A DAR is not a policy document. It is a commitment that names a person and defines the conditions under which that person is obligated to refuse continuation.</div>
-    </div>
+<div class="term">
+<div class="term-index">03</div>
+<div class="term-name">Decision Authority Record (DAR)</div>
+<p>A written record identifying who holds stop authority over a decision pathway.</p>
+<p>Created before execution begins.</p>
+<div class="term-note">DAR names who can stop.</div>
+</div>
 
-    <div class="term">
-      <div class="term-index">04</div>
-      <div class="term-name">Bound Refusal</div>
-      <p>The condition in which a named individual is formally committed, in advance, to refuse continuation of a decision pathway if specific conditions are met.</p>
-      <p>Bound refusal is the opposite of passive oversight. It requires the individual to act, to stop, not merely to observe and report.</p>
-      <div class="term-note">Most governance structures create the appearance of oversight without creating bound refusal. The difference determines whether a stop is structurally possible at all.</div>
-    </div>
+<div class="term">
+<div class="term-index">04</div>
+<div class="term-name">Bound Refusal</div>
+<p>A formal obligation requiring intervention when defined risk conditions appear.</p>
+<p>Authority includes duty, not only permission.</p>
+<div class="term-note">Observation alone is not governance.</div>
+</div>
 
-    <div class="term">
-      <div class="term-index">05</div>
-      <div class="term-name">Stop Authority Gap</div>
-      <p>The structural absence of a named individual explicitly empowered to stop an irreversible decision at the moment it must be stopped.</p>
-      <p>The gap is not a failure of process. It is a feature. Naming one person creates real accountability. Most systems are designed to avoid it.</p>
-      <div class="term-note">When a stop authority gap exists, continuation does not require permission. It requires only that no one refuses. And without a named individual bound to refuse, refusal is optional, which means it rarely happens.</div>
-    </div>
+<div class="term">
+<div class="term-index">05</div>
+<div class="term-name">Stop Authority Gap</div>
+<p>No clearly named person can stop the decision when needed.</p>
+<p>Momentum continues by default.</p>
+<div class="term-note">One of the most common hidden failure modes.</div>
+</div>
 
-    <div class="term">
-      <div class="term-index">06</div>
-      <div class="term-name">Frozen Authority</div>
-      <p>A situation where authority formally exists, but no timely action is taken while exposure grows.</p>
-      <p>When the named person delays, momentum continues by default.</p>
-      <div class="term-note">Authority without a defined decision window is not control. It is drift.</div>
-    </div>
+<div class="term">
+<div class="term-index">06</div>
+<div class="term-name">Escalation Window</div>
+<p>A defined response period granted once a stop issue appears.</p>
+<p>If unused, authority transfers automatically.</p>
+<div class="term-note">Timing is determined by operational risk.</div>
+</div>
 
-    <div class="term">
-      <div class="term-index">07</div>
-      <div class="term-name">Distributed Permission</div>
-      <p>A structure where many people must approve, yet no single person can stop.</p>
-      <p>Consensus on continuation does not create stop authority. It eliminates it.</p>
-      <div class="term-note">The more approvals required, the more diffuse the accountability. No one stops because everyone assumes someone else will.</div>
-    </div>
+<div class="term">
+<div class="term-index">07</div>
+<div class="term-name">Alternate Authority</div>
+<p>A predefined successor who receives stop authority if the primary holder fails to act.</p>
+<p>No critical control should depend on one unavailable person.</p>
+<div class="term-note">Redundancy prevents paralysis.</div>
+</div>
 
-    <div class="term">
-      <div class="term-index">08</div>
-      <div class="term-name">Decision Exposure</div>
-      <p>The personal, institutional, legal, or financial consequences attached to a moving decision, regardless of who formally authorized it.</p>
-      <p>Exposure does not follow intent. It follows outcomes.</p>
-      <div class="term-note">When no one is named to stop, exposure does not disappear. It accumulates, and eventually lands on whoever is most visible when the damage becomes undeniable.</div>
-    </div>
+<div class="term">
+<div class="term-index">08</div>
+<div class="term-name">Oversight Trigger</div>
+<p>Use of stop authority, refusal to act, delay, or transfer creates a mandatory review event.</p>
+<p>The purpose is verification, governance integrity, and learning.</p>
+<div class="term-note">Every stop event should leave a documented trail.</div>
+</div>
 
-  </div>
+<div class="term">
+<div class="term-index">09</div>
+<div class="term-name">Abuse Review</div>
+<p>Every stop action may be reviewed for legitimacy, evidence basis, timing, and proportionality.</p>
+<p>This protects the organization while preserving real stop power.</p>
+<div class="term-note">Review misuse. Do not remove authority.</div>
+</div>
 
-  <div class="pull">
-    If no one can clearly name who may stop it, the gap already exists.
-  </div>
+<div class="term">
+<div class="term-index">10</div>
+<div class="term-name">Distributed Permission</div>
+<p>Many people can approve continuation, yet no single person can stop.</p>
+<p>Consensus often dissolves accountability.</p>
+<div class="term-note">Everyone approves. Nobody owns.</div>
+</div>
 
-  <div class="closing">
-    <p class="strong">These terms describe a structural question that regulation rarely asks and governance frameworks rarely answer.</p>
-    <p>Documentation describes what should happen. Regulation asks what happened. DAR asks who was supposed to stop it before it happened.</p>
-    <p>Not a team. Not a function. A person. Named. Accountable. Committed in advance.</p>
-  </div>
+<div class="term">
+<div class="term-index">11</div>
+<div class="term-name">Hostile Hold</div>
+<p>Misuse of stop authority for political, personal, or unrelated motives.</p>
+<p>Unchecked obstruction can damage the organization as much as absent authority.</p>
+<div class="term-note">Bad use requires controls.</div>
+</div>
 
-  <div class="footer-banner">
-    <a href="contact.html" class="footer-link cta">
-      <div class="footer-link-left">
-        <span class="footer-link-label">Contact</span>
-        <span class="footer-link-title">Identify one live decision with no named stop authority</span>
-      </div>
-      <span class="footer-link-arrow">&rarr;</span>
-    </a>
-    <a href="dar.html" class="footer-link">
-      <div class="footer-link-left">
-        <span class="footer-link-label">DAR</span>
-        <span class="footer-link-title">Decision Authority Record</span>
-      </div>
-      <span class="footer-link-arrow">&rarr;</span>
-    </a>
-    <a href="failure-points.html" class="footer-link">
-      <div class="footer-link-left">
-        <span class="footer-link-label">Essays</span>
-        <span class="footer-link-title">Where Accountability Breaks</span>
-      </div>
-      <span class="footer-link-arrow">&rarr;</span>
-    </a>
-    <a href="about.html" class="footer-link">
-      <div class="footer-link-left">
-        <span class="footer-link-label">About</span>
-        <span class="footer-link-title">Liran Bar-Shrim</span>
-      </div>
-      <span class="footer-link-arrow">&rarr;</span>
-    </a>
-  </div>
+<div class="term">
+<div class="term-index">12</div>
+<div class="term-name">Cosmetic Governance</div>
+<p>Processes that appear rigorous yet cannot interrupt dangerous momentum.</p>
+<p>Documentation exists, but no real stop path exists.</p>
+<div class="term-note">Looks safe. Stops nothing.</div>
+</div>
 
-  <div class="footer">
-    &copy; 2026 Liran Bar-Shrim. All rights reserved.
-  </div>
+<div class="term">
+<div class="term-index">13</div>
+<div class="term-name">Momentum Trap</div>
+<p>A decision continues because it has already started, not because it remains justified.</p>
+<p>Movement is mistaken for validity.</p>
+<div class="term-note">Past effort becomes false evidence.</div>
+</div>
+
+<div class="term">
+<div class="term-index">14</div>
+<div class="term-name">Liability Drift</div>
+<p>Responsibility shifts downward while decision power remains elsewhere.</p>
+<p>Exposure moves faster than authority.</p>
+<div class="term-note">Common before visible failure.</div>
+</div>
+
+</section>
+
+<div class="pull">
+If no one can clearly identify who may stop it, the gap already exists.
+</div>
+
+<section class="closing">
+<p class="strong">Most frameworks explain approval.</p>
+<p>Far fewer define who must stop continuation when risk rises.</p>
+<p>DAR begins there.</p>
+</section>
+
+<section class="links">
+
+<a href="dar.html" class="linkbox">
+<small>DAR</small>
+<span>Decision Authority Record</span>
+</a>
+
+<a href="about.html" class="linkbox">
+<small>About</small>
+<span>Liran Bar-Shrim</span>
+</a>
+
+<a href="contact.html" class="linkbox">
+<small>Contact</small>
+<span>Identify one live irreversible decision with no named stop authority</span>
+</a>
+
+<a href="failure-points.html" class="linkbox">
+<small>Essay</small>
+<span>Where Accountability Breaks</span>
+</a>
+
+</section>
+
+<div class="footer">
+&copy; 2026 Liran Bar-Shrim. All rights reserved.
+</div>
 
 </main>
-
-<script>
-const menu = document.getElementById('menu');
-const overlay = document.getElementById('overlay');
-
-document.getElementById('openMenu').onclick = function() {
-  menu.classList.add('active');
-  overlay.classList.add('active');
-};
-
-document.getElementById('closeMenu').onclick = closeMenu;
-overlay.onclick = closeMenu;
-
-function closeMenu() {
-  menu.classList.remove('active');
-  overlay.classList.remove('active');
-}
-</script>
 
 </body>
 </html>
