@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
 
 <title>FAQ | Matrix Audit</title>
-<meta name="description" content="Answers on Decision Authority Record, named stop authority, AI governance, executive accountability, and irreversible decisions.">
+<meta name="description" content="Answers on Decision Authority Record, stop authority, AI governance, executive accountability, and irreversible decisions.">
 <meta name="robots" content="index,follow">
 <link rel="canonical" href="https://matrix-audit.com/faq.html">
 
@@ -23,7 +23,7 @@
 --surface:#101010;
 --gold:#c8a96e;
 --text:#ece6dc;
---muted:#a79f95;
+--muted:#a69e94;
 --line:#1d1d1d;
 }
 
@@ -100,7 +100,7 @@ display:block;
 .overlay{
 position:fixed;
 inset:0;
-background:rgba(0,0,0,.7);
+background:rgba(0,0,0,.66);
 opacity:0;
 visibility:hidden;
 transition:.25s;
@@ -122,7 +122,7 @@ height:100vh;
 overflow-y:auto;
 background:#090909;
 border-left:1px solid var(--line);
-padding:28px 24px 50px;
+padding:28px 24px 44px;
 transition:.28s ease;
 z-index:999;
 }
@@ -141,7 +141,7 @@ margin-bottom:26px;
 .menu-head-brand{
 font-family:'IBM Plex Mono',monospace;
 font-size:10px;
-letter-spacing:.25em;
+letter-spacing:.24em;
 text-transform:uppercase;
 color:var(--gold);
 }
@@ -152,7 +152,7 @@ border:none;
 font-size:34px;
 line-height:1;
 cursor:pointer;
-color:#b8b0a4;
+color:#bcb4a8;
 }
 
 .menu-group{
@@ -163,8 +163,8 @@ margin-top:18px;
 
 .menu-group.first{
 border-top:none;
-margin-top:0;
 padding-top:0;
+margin-top:0;
 }
 
 .menu-label{
@@ -180,7 +180,7 @@ margin-bottom:14px;
 display:block;
 padding:8px 0;
 font-size:15px;
-color:#d7d1c7;
+color:#d9d3c9;
 }
 
 .menu-group a:hover,
@@ -190,24 +190,15 @@ color:var(--gold);
 
 .menu-cta{
 display:block;
-margin-top:24px;
-padding:15px;
+margin-top:22px;
+padding:14px;
 text-align:center;
 border:1px solid var(--gold);
 font-family:'IBM Plex Mono',monospace;
 font-size:11px;
-letter-spacing:.22em;
+letter-spacing:.2em;
 text-transform:uppercase;
 color:var(--gold)!important;
-}
-
-.menu-mail{
-margin-top:18px;
-padding:14px;
-border:1px solid var(--line);
-font-size:14px;
-color:#cfc7bb;
-word-break:break-word;
 }
 
 .container{
@@ -235,9 +226,9 @@ margin-bottom:16px;
 
 .hero h1{
 font-family:'Playfair Display',serif;
-font-size:clamp(34px,5vw,56px);
+font-size:clamp(32px,5vw,54px);
 line-height:1.05;
-margin-bottom:20px;
+margin-bottom:18px;
 max-width:820px;
 }
 
@@ -249,7 +240,7 @@ max-width:760px;
 }
 
 .statement{
-margin-bottom:58px;
+margin-bottom:56px;
 padding:32px;
 border:1px solid var(--line);
 border-left:3px solid var(--gold);
@@ -336,7 +327,7 @@ border-top:1px solid #222;
 font-family:'IBM Plex Mono',monospace;
 font-size:11px;
 letter-spacing:.08em;
-color:#716b64;
+color:#726c65;
 }
 
 @media(max-width:860px){
@@ -346,7 +337,7 @@ padding:54px 18px 90px;
 }
 
 .hero h1{
-font-size:clamp(30px,9vw,44px);
+font-size:clamp(28px,9vw,42px);
 }
 
 .hero p,.a{
@@ -368,12 +359,6 @@ flex-direction:column;
 
 .btn{
 text-align:center;
-}
-
-.side-menu{
-width:100%;
-max-width:100%;
-right:-100%;
 }
 
 }
@@ -436,8 +421,6 @@ right:-100%;
 
 <a href="contact.html" class="menu-cta">Private Intake</a>
 
-<div class="menu-mail">Liran@liranbarshrim.com</div>
-
 </aside>
 
 <main class="container">
@@ -457,53 +440,33 @@ the authority gap is already active.
 
 <section class="section">
 
-<div class="faq">
-<div class="num">01</div>
-<div class="q">What is DAR?</div>
-<div class="a">A written record naming one person with explicit authority to stop a specific irreversible decision before execution begins.</div>
-</div>
+<div class="faq"><div class="num">01</div><div class="q">What is DAR?</div><div class="a">A written record naming one person with explicit authority to stop a specific irreversible decision before execution.</div></div>
 
-<div class="faq">
-<div class="num">02</div>
-<div class="q">Who usually needs this?</div>
-<div class="a">Boards, executives, founders, regulated operators, AI teams, and organizations where many approve but nobody clearly owns the final stop decision.</div>
-</div>
+<div class="faq"><div class="num">02</div><div class="q">Who usually needs this?</div><div class="a">Boards, executives, founders, regulated operators, AI teams, and firms where many approve but no one owns the final stop decision.</div></div>
 
-<div class="faq">
-<div class="num">03</div>
-<div class="q">Does this apply to AI systems?</div>
-<div class="a">Yes. If systems move faster than governance can respond, control may become symbolic unless one named person can halt continuation in time.</div>
-</div>
+<div class="faq"><div class="num">03</div><div class="q">Does this apply to AI systems?</div><div class="a">Yes. If systems move faster than governance responds, human control may become symbolic.</div></div>
 
-<div class="faq">
-<div class="num">04</div>
-<div class="q">What counts as irreversible?</div>
-<div class="a">Any decision whose consequences cannot be undone quickly enough to prevent material harm.</div>
-</div>
+<div class="faq"><div class="num">04</div><div class="q">What counts as irreversible?</div><div class="a">Any decision whose consequences cannot be undone quickly enough to avoid material harm.</div></div>
 
-<div class="faq">
-<div class="num">05</div>
-<div class="q">Approval authority vs stop authority?</div>
-<div class="a">Approval authority permits continuation. Stop authority prevents continuation until explicit release.</div>
-</div>
+<div class="faq"><div class="num">05</div><div class="q">Approval authority vs stop authority?</div><div class="a">Approval allows continuation. Stop authority prevents continuation until explicit release.</div></div>
 
-<div class="faq">
-<div class="num">06</div>
-<div class="q">What if approval already happened?</div>
-<div class="a">Conditions can change after approval. Real stop authority may still be required during execution.</div>
-</div>
+<div class="faq"><div class="num">06</div><div class="q">What if the board already approved it?</div><div class="a">Conditions may change after approval. Execution risk can still require active stop authority.</div></div>
 
-<div class="faq">
-<div class="num">07</div>
-<div class="q">Who is exposed if failure happens?</div>
-<div class="a">Often the visible signatory, executive owner, director, or function leader.</div>
-</div>
+<div class="faq"><div class="num">07</div><div class="q">Who is exposed if failure happens?</div><div class="a">Often the visible signatory, executive owner, director, or function leader.</div></div>
 
-<div class="faq">
-<div class="num">08</div>
-<div class="q">Is this legal advice?</div>
-<div class="a">No. This is independent advisory work. Legal matters belong with qualified counsel.</div>
-</div>
+<div class="faq"><div class="num">08</div><div class="q">Is this legal advice?</div><div class="a">No. This is independent advisory work. Legal matters belong with qualified counsel.</div></div>
+
+<div class="faq"><div class="num">09</div><div class="q">What if nobody is named?</div><div class="a">Then accountability often becomes unclear until after damage occurs.</div></div>
+
+<div class="faq"><div class="num">10</div><div class="q">Can authority be delegated?</div><div class="a">Yes, if delegation is explicit, documented, and operationally real.</div></div>
+
+<div class="faq"><div class="num">11</div><div class="q">Who can override stop authority?</div><div class="a">Only a clearly defined superior authority under known conditions.</div></div>
+
+<div class="faq"><div class="num">12</div><div class="q">Is this only for large firms?</div><div class="a">No. Smaller companies often need clarity even more because roles overlap.</div></div>
+
+<div class="faq"><div class="num">13</div><div class="q">Can this help after failure?</div><div class="a">It can help reconstruct responsibility gaps and improve future governance.</div></div>
+
+<div class="faq"><div class="num">14</div><div class="q">What sectors need this most?</div><div class="a">Finance, AI, healthcare, cyber, critical infrastructure, public companies, and high velocity startups.</div></div>
 
 </section>
 
@@ -530,8 +493,8 @@ before the narrative writes itself.
 </main>
 
 <script>
-const menu = document.getElementById('menu');
-const overlay = document.getElementById('overlay');
+const menu=document.getElementById('menu');
+const overlay=document.getElementById('overlay');
 
 function openMenu(){
 menu.classList.add('active');
