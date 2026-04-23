@@ -5,43 +5,40 @@
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
 
 <title>Services | Matrix Audit</title>
-<meta name="description" content="Private advisory services for executives, boards, AI governance teams, and organizations facing irreversible decisions.">
+<meta name="description" content="Selective private engagements for executives, boards, AI governance leaders, and organizations facing irreversible decisions under uncertainty.">
 <meta name="robots" content="index,follow">
 <link rel="canonical" href="https://matrix-audit.com/services.html">
 
 <meta property="og:title" content="Services | Matrix Audit">
-<meta property="og:description" content="Three private engagements built around authority, accountability, and consequential decisions.">
+<meta property="og:description" content="Private engagements built around authority, accountability, and consequential decisions.">
 <meta property="og:type" content="website">
 
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
 
 <style>
-
 :root{
 --bg:#090909;
 --surface:#111111;
---surface2:#151515;
 --gold:#c8a96e;
 --text:#e8e2d7;
 --muted:#a7a097;
---soft:#8f8880;
 --border:#1d1d1d;
 --border2:#2a2a2a;
 --danger:#c0392b;
 }
 
 *{margin:0;padding:0;box-sizing:border-box;}
-
 html{scroll-behavior:smooth;}
 
 body{
 background:var(--bg);
 color:var(--text);
 font-family:Inter,system-ui,sans-serif;
+line-height:1.7;
 overflow-x:hidden;
 -webkit-font-smoothing:antialiased;
-text-rendering:optimizeLegibility;
-line-height:1.7;
 }
 
 body:before{
@@ -55,8 +52,6 @@ z-index:0;
 }
 
 a{text-decoration:none;color:inherit;}
-
-/* ── topbar ── */
 
 .topbar{
 position:sticky;
@@ -75,24 +70,17 @@ border-bottom:1px solid rgba(255,255,255,.04);
 display:flex;
 align-items:center;
 gap:12px;
-text-decoration:none;
-color:var(--text);
 font-family:'IBM Plex Mono',monospace;
 font-size:10px;
 letter-spacing:.28em;
 text-transform:uppercase;
 }
 
-.brand-line{
-width:18px;
-height:1px;
-background:var(--gold);
-}
+.brand-line{width:18px;height:1px;background:var(--gold);}
 
 .menu-btn{
 display:flex;
 flex-direction:column;
-justify-content:center;
 gap:5px;
 background:none;
 border:none;
@@ -105,17 +93,15 @@ display:block;
 width:22px;
 height:1.5px;
 background:var(--text);
-transition:background .2s;
+transition:.2s;
 }
 
 .menu-btn:hover span{background:var(--gold);}
 
-/* ── overlay ── */
-
 .overlay{
 position:fixed;
 inset:0;
-background:rgba(0,0,0,.6);
+background:rgba(0,0,0,.68);
 opacity:0;
 visibility:hidden;
 transition:.25s;
@@ -124,20 +110,18 @@ z-index:998;
 
 .overlay.active{opacity:1;visibility:visible;}
 
-/* ── side menu ── */
-
 .side-menu{
 position:fixed;
 top:0;
 right:-340px;
-width:300px;
+width:310px;
 max-width:90%;
 height:100vh;
 overflow-y:auto;
 background:#0d0d0d;
 border-left:1px solid var(--border);
 padding:28px 24px 48px;
-transition:.28s cubic-bezier(.4,0,.2,1);
+transition:.28s ease;
 z-index:999;
 }
 
@@ -161,19 +145,16 @@ color:var(--gold);
 .close-btn{
 background:none;
 border:none;
-font-size:26px;
+font-size:30px;
 line-height:1;
 color:var(--muted);
 cursor:pointer;
-transition:.2s;
 }
-
-.close-btn:hover{color:var(--text);}
 
 .menu-group{
 border-top:1px solid var(--border);
-padding-top:20px;
-margin-top:20px;
+padding-top:18px;
+margin-top:18px;
 }
 
 .menu-label{
@@ -186,57 +167,38 @@ margin-bottom:12px;
 }
 
 .menu-group a{
-display:flex;
-align-items:center;
-gap:10px;
-padding:9px 0;
-text-decoration:none;
-color:var(--muted);
+display:block;
+padding:8px 0;
 font-size:14px;
-border-bottom:1px solid rgba(255,255,255,.03);
+color:var(--muted);
 transition:.18s;
 }
 
-.menu-group a:last-child{border-bottom:none;}
-.menu-group a:hover{color:var(--text);padding-left:4px;}
-.menu-group a.active{color:var(--gold);}
-
-.menu-divider-line{
-display:inline-block;
-width:12px;
-height:1px;
-background:var(--border2);
-flex-shrink:0;
+.menu-group a:hover,
+.menu-group a.active{
+color:var(--gold);
 }
 
 .menu-cta{
 display:block;
-margin-top:28px;
-padding:14px 20px;
+margin-top:22px;
+padding:14px;
+text-align:center;
 border:1px solid var(--gold);
 color:var(--gold)!important;
 font-family:'IBM Plex Mono',monospace;
 font-size:10px;
 letter-spacing:.2em;
 text-transform:uppercase;
-text-align:center;
-text-decoration:none;
-transition:.2s;
 }
-
-.menu-cta:hover{background:var(--gold);color:#111!important;}
-
-/* ── layout ── */
 
 .container{
 position:relative;
 z-index:1;
-max-width:980px;
-margin:0 auto;
+max-width:1020px;
+margin:auto;
 padding:70px 28px 110px;
 }
-
-/* ── hero ── */
 
 .hero{
 border-left:3px solid var(--gold);
@@ -244,21 +206,20 @@ padding-left:24px;
 margin-bottom:58px;
 }
 
-.hero-label{
+.hero-label,.section-label{
 font-family:'IBM Plex Mono',monospace;
 font-size:10px;
 letter-spacing:.24em;
 text-transform:uppercase;
-color:#b8aa8a;
-margin-bottom:18px;
+color:var(--gold);
+margin-bottom:16px;
 }
 
 .hero h1{
 font-family:'Playfair Display',serif;
-font-size:clamp(44px,7vw,74px);
+font-size:clamp(46px,7vw,78px);
 line-height:1.02;
-letter-spacing:-.02em;
-margin-bottom:24px;
+margin-bottom:22px;
 max-width:920px;
 }
 
@@ -269,56 +230,42 @@ color:var(--muted);
 max-width:760px;
 }
 
-/* ── statement ── */
-
 .statement{
+margin-bottom:62px;
+padding:34px;
 background:linear-gradient(180deg,#111,#0d0d0d);
 border:1px solid var(--border2);
 border-left:3px solid var(--danger);
-padding:34px;
-margin-bottom:62px;
 font-family:'Playfair Display',serif;
-font-size:clamp(22px,3vw,32px);
+font-size:34px;
 line-height:1.28;
 }
-
-/* ── sections ── */
 
 .section{
 padding:54px 0;
 border-top:1px solid rgba(255,255,255,.05);
 }
 
-.section-label{
-font-family:'IBM Plex Mono',monospace;
-font-size:10px;
-letter-spacing:.22em;
-text-transform:uppercase;
-color:var(--gold);
-margin-bottom:14px;
-}
-
 .section h2{
 font-family:'Playfair Display',serif;
-font-size:clamp(32px,5vw,48px);
-line-height:1.08;
+font-size:42px;
+line-height:1.1;
 margin-bottom:18px;
 }
 
 .section p{
 font-size:18px;
+line-height:1.9;
 color:var(--muted);
 max-width:760px;
-margin-bottom:16px;
+margin-bottom:14px;
 }
-
-/* ── service cards ── */
 
 .grid{
 display:grid;
 grid-template-columns:repeat(3,1fr);
 gap:18px;
-margin-top:32px;
+margin-top:30px;
 }
 
 .card{
@@ -336,12 +283,13 @@ border-left-color:var(--gold);
 }
 
 .card:hover{
-transform:translateY(-3px);
-border-color:#3b3327;
+transform:translateY(-4px);
 background:#171717;
+border-color:#3b3327;
 }
 
-.card-kicker{
+.card small{
+display:block;
 font-family:'IBM Plex Mono',monospace;
 font-size:10px;
 letter-spacing:.22em;
@@ -352,12 +300,12 @@ margin-bottom:14px;
 
 .card h3{
 font-family:'Playfair Display',serif;
-font-size:28px;
-line-height:1.1;
+font-size:30px;
+line-height:1.08;
 margin-bottom:10px;
 }
 
-.card-price{
+.price{
 font-family:'IBM Plex Mono',monospace;
 font-size:13px;
 letter-spacing:.1em;
@@ -367,38 +315,32 @@ margin-bottom:16px;
 
 .card p{
 font-size:15px;
-color:var(--muted);
 line-height:1.8;
+color:var(--muted);
 margin-bottom:18px;
 }
 
-.card-list{
-display:grid;
-gap:0;
-margin-bottom:24px;
-}
-
-.card-list div{
+.list div{
+padding:9px 0;
 font-size:13px;
 color:var(--muted);
-padding:9px 0;
 border-bottom:1px solid rgba(255,255,255,.05);
 }
 
-.card-list div:last-child{border-bottom:none;}
+.list div:last-child{border-bottom:none;}
 
 .card-cta{
 margin-top:auto;
 display:block;
-padding:13px 16px;
 text-align:center;
+padding:13px 16px;
 border:1px solid var(--border2);
-color:var(--muted);
 font-family:'IBM Plex Mono',monospace;
 font-size:10px;
 letter-spacing:.18em;
 text-transform:uppercase;
-transition:.2s;
+color:var(--muted);
+margin-top:24px;
 }
 
 .card.featured .card-cta{
@@ -409,77 +351,41 @@ color:var(--gold);
 .card-cta:hover{
 background:var(--gold);
 color:#111;
-border-color:var(--gold);
 }
 
-/* ── center section ── */
-
-.center{
-text-align:center;
-}
-
-.center .section-label{
-display:inline-block;
-}
-
-.center h2{
-margin-left:auto;
-margin-right:auto;
-}
-
-.center p{
-margin-left:auto;
-margin-right:auto;
-}
-
-/* ── quote block ── */
-
-.quote-block{
-margin-top:32px;
+.quote{
+margin-top:28px;
 padding:34px;
 background:linear-gradient(180deg,#111,#0d0d0d);
 border:1px solid var(--border2);
 border-left:3px solid var(--gold);
 font-family:'Playfair Display',serif;
-font-size:clamp(22px,3vw,32px);
+font-size:32px;
 line-height:1.28;
-text-align:left;
 }
-
-/* ── action buttons ── */
 
 .actions{
 display:flex;
 gap:14px;
 flex-wrap:wrap;
-margin-top:28px;
-justify-content:center;
+margin-top:26px;
 }
 
 .btn{
-display:inline-block;
 padding:16px 24px;
 font-family:'IBM Plex Mono',monospace;
 font-size:11px;
 letter-spacing:.18em;
 text-transform:uppercase;
-font-weight:500;
-transition:.2s;
 border:1px solid var(--border2);
 color:var(--text);
 }
 
 .btn-primary{
 background:var(--gold);
-color:#111;
 border-color:var(--gold);
+color:#111;
 }
-
-.btn:hover,.btn-primary:hover{
-transform:translateY(-2px);
-}
-
-/* ── footer ── */
 
 .footer{
 margin-top:74px;
@@ -491,194 +397,193 @@ color:#6e6964;
 font-family:'IBM Plex Mono',monospace;
 }
 
-/* ── mobile ── */
-
 @media(max-width:860px){
-
-.container{padding:56px 18px 90px;}
-
-.hero h1{font-size:clamp(38px,12vw,58px);}
-.hero p,.section p{font-size:16px;line-height:1.85;}
-
-.statement{font-size:22px;padding:26px 22px;}
-.section h2{font-size:32px;}
-
 .grid{grid-template-columns:1fr;}
-
-.actions{justify-content:flex-start;}
-
+.container{padding:56px 18px 90px;}
+.hero h1{font-size:clamp(38px,12vw,58px);}
+.hero p,.section p{font-size:16px;}
+.statement{font-size:24px;padding:26px 22px;}
+.section h2{font-size:34px;}
+.actions{flex-direction:column;}
+.btn{text-align:center;}
 }
-
 </style>
 </head>
 
 <body>
 
 <header class="topbar">
-  <a href="index.html" class="brand">
-    <span class="brand-line"></span>
-    <span>Decision Authority Research</span>
-  </a>
-  <button class="menu-btn" id="openMenu" aria-label="Open menu">
-    <span></span>
-    <span></span>
-    <span></span>
-  </button>
+<a href="index.html" class="brand">
+<span class="brand-line"></span>
+<span>Decision Authority Research</span>
+</a>
+
+<button class="menu-btn" id="openMenu" aria-label="Open menu">
+<span></span><span></span><span></span>
+</button>
 </header>
 
 <div class="overlay" id="overlay"></div>
 
 <aside class="side-menu" id="menu">
-  <div class="menu-head">
-    <span class="menu-head-brand">Matrix Audit</span>
-    <button class="close-btn" id="closeMenu">&times;</button>
-  </div>
 
-  <div class="menu-group" style="border-top:none;padding-top:0;margin-top:0;">
-    <div class="menu-label">Primary</div>
-    <a href="index.html"><span class="menu-divider-line"></span>Home</a>
-    <a href="dar.html"><span class="menu-divider-line"></span>DAR</a>
-    <a href="services.html" class="active"><span class="menu-divider-line"></span>Services</a>
-    <a href="about.html"><span class="menu-divider-line"></span>About</a>
-  </div>
+<div class="menu-head">
+<span class="menu-head-brand">Matrix Audit</span>
+<button class="close-btn" id="closeMenu">&times;</button>
+</div>
 
-  <div class="menu-group">
-    <div class="menu-label">Insights</div>
-    <a href="exposure.html"><span class="menu-divider-line"></span>When Failure Lands on One Name</a>
-    <a href="failure-points.html"><span class="menu-divider-line"></span>Where Accountability Breaks</a>
-    <a href="we.html"><span class="menu-divider-line"></span>The Death of We</a>
-    <a href="stop-authority.html"><span class="menu-divider-line"></span>Stop Authority</a>
-    <a href="ai-governance.html"><span class="menu-divider-line"></span>AI Governance</a>
-  </div>
+<div class="menu-group" style="border-top:none;margin-top:0;padding-top:0;">
+<div class="menu-label">Primary</div>
+<a href="index.html">Home</a>
+<a href="dar.html">DAR</a>
+<a href="services.html" class="active">Services</a>
+<a href="about.html">About</a>
+</div>
 
-  <div class="menu-group">
-    <div class="menu-label">Knowledge</div>
-    <a href="definitions.html"><span class="menu-divider-line"></span>Definitions</a>
-    <a href="faq.html"><span class="menu-divider-line"></span>FAQ</a>
-    <a href="case-studies.html"><span class="menu-divider-line"></span>Case Studies</a>
-    <a href="goodfaith.html"><span class="menu-divider-line"></span>Good Faith Use</a>
-  </div>
+<div class="menu-group">
+<div class="menu-label">Research</div>
+<a href="research.html">Independent Research</a>
+<a href="whitepaper.html">White Paper</a>
+</div>
 
-  <a href="contact.html" class="menu-cta">Private Intake</a>
+<div class="menu-group">
+<div class="menu-label">Concepts</div>
+<a href="stop-authority.html">Stop Authority</a>
+<a href="accountability-gap.html">The Accountability Gap</a>
+</div>
+
+<div class="menu-group">
+<div class="menu-label">Knowledge</div>
+<a href="definitions.html">Definitions</a>
+<a href="faq.html">FAQ</a>
+<a href="case-studies.html">Case Studies</a>
+</div>
+
+<a href="contact.html" class="menu-cta">Request Confidential Intake</a>
+
 </aside>
 
 <main class="container">
 
-  <section class="hero">
-    <div class="hero-label">Private Engagements</div>
-    <h1>Services Built For<br>High-Stakes Decisions</h1>
-    <p>
-      Independent advisory for leaders carrying accountability where speed, uncertainty, or irreversible consequences are already in play.
-    </p>
-  </section>
+<section class="hero">
+<div class="hero-label">Selective Engagements</div>
+<h1>Services For Decisions<br>That Cannot Be Easily Reversed</h1>
+<p>
+Private principal-led advisory for executives, boards, and organizations carrying exposure where uncertainty, speed, or unclear authority already exists.
+</p>
+</section>
 
-  <div class="statement">
-    When no one is clearly named to stop a decision,<br>
-    risk usually names someone later.
-  </div>
+<div class="statement">
+When authority is unclear,<br>
+consequences become personal.
+</div>
 
-  <section class="section">
-    <div class="section-label">Engagements</div>
-    <h2>Three entry points.<br>One question each.</h2>
+<section class="section">
+<div class="section-label">Engagement Models</div>
+<h2>Three ways to engage.</h2>
 
-    <div class="grid">
+<div class="grid">
 
-      <div class="card">
-        <div class="card-kicker">01 &middot; Entry</div>
-        <h3>Boundary Review</h3>
-        <div class="card-price">&euro;6,000+</div>
-        <p>Focused review of one release, approval path, or consequential internal decision.</p>
-        <div class="card-list">
-          <div>Single pathway analysis</div>
-          <div>Named authority check</div>
-          <div>Escalation weak points</div>
-          <div>Written findings</div>
-          <div>5&ndash;7 business days</div>
-        </div>
-        <a href="contact.html" class="card-cta">Request Review</a>
-      </div>
+<div class="card">
+<small>01 · Rapid</small>
+<h3>Exposure Review</h3>
+<div class="price">From €6,000</div>
+<p>Focused review of one live decision, release, approval, or risk pathway.</p>
+<div class="list">
+<div>Single pathway review</div>
+<div>Authority gap analysis</div>
+<div>Written findings</div>
+<div>5–7 business days</div>
+</div>
+<a href="contact.html" class="card-cta">Request Review</a>
+</div>
 
-      <div class="card featured">
-        <div class="card-kicker">02 &middot; Core</div>
-        <h3>Authority Review</h3>
-        <div class="card-price">&euro;12,000+</div>
-        <p>For organizations where multiple teams share ownership but no clear final authority exists.</p>
-        <div class="card-list">
-          <div>3&ndash;5 pathways reviewed</div>
-          <div>Authority map by function</div>
-          <div>Exposure summary</div>
-          <div>Executive recommendations</div>
-          <div>10&ndash;14 business days</div>
-        </div>
-        <a href="contact.html" class="card-cta">Begin Engagement</a>
-      </div>
+<div class="card featured">
+<small>02 · Core</small>
+<h3>Authority Mandate</h3>
+<div class="price">From €12,000</div>
+<p>For organizations where multiple teams share responsibility but no final stop owner exists.</p>
+<div class="list">
+<div>3–5 pathways reviewed</div>
+<div>Named authority structure</div>
+<div>Executive summary</div>
+<div>10–14 business days</div>
+</div>
+<a href="contact.html" class="card-cta">Begin Engagement</a>
+</div>
 
-      <div class="card">
-        <div class="card-kicker">03 &middot; Board</div>
-        <h3>Exposure Review</h3>
-        <div class="card-price">Private Scope</div>
-        <p>Confidential board-level review for directors and officers carrying personal accountability.</p>
-        <div class="card-list">
-          <div>Board decision exposure</div>
-          <div>AI governance oversight</div>
-          <div>Critical authority gaps</div>
-          <div>Private mandate terms</div>
-          <div>Custom scope</div>
-        </div>
-        <a href="contact.html" class="card-cta">Private Inquiry</a>
-      </div>
+<div class="card">
+<small>03 · Board</small>
+<h3>Confidential Advisory</h3>
+<div class="price">Private Scope</div>
+<p>Direct support for directors, officers, or founders carrying visible personal accountability.</p>
+<div class="list">
+<div>Board-level exposure review</div>
+<div>AI governance oversight</div>
+<div>Custom mandate</div>
+<div>Confidential terms</div>
+</div>
+<a href="contact.html" class="card-cta">Private Inquiry</a>
+</div>
 
-    </div>
-  </section>
+</div>
+</section>
 
-  <section class="section center">
-    <div class="section-label">Why This Matters</div>
-    <h2>Systems move faster.<br>Governance often doesn't.</h2>
-    <p>
-      AI releases, market systems, regulated approvals, and executive decisions can create exposure long before crisis becomes visible.
-    </p>
-    <div class="quote-block">
-      Clear authority protects execution.<br>
-      Unclear authority creates aftermath.
-    </div>
-  </section>
+<section class="section">
+<div class="section-label">Used When</div>
+<h2>The decision is already moving.</h2>
 
-  <section class="section center">
-    <div class="section-label">Next Step</div>
-    <h2>Before the next decision<br>moves further.</h2>
-    <p>
-      Private conversations only. Limited capacity. Direct principal contact.
-    </p>
-    <div class="actions">
-      <a href="contact.html" class="btn btn-primary">Request Private Review</a>
-      <a href="faq.html" class="btn">Read FAQ</a>
-    </div>
-  </section>
+<p>
+Common triggers include regulated approvals, AI deployment, executive signoff, cross-functional deadlock, public visibility, or unclear stop authority.
+</p>
 
-  <div class="footer">
-    &copy; 2026 Liran Bar-Shrim. All rights reserved.
-  </div>
+<div class="quote">
+Clear authority protects execution.<br>
+Unclear authority creates aftermath.
+</div>
+</section>
+
+<section class="section">
+<div class="section-label">How Work Is Done</div>
+<h2>Selective. Direct. Senior.</h2>
+
+<p>
+All engagements are principal-led, limited in number, and confidential by design. No junior staffing. No generic consulting layers.
+</p>
+
+<div class="actions">
+<a href="contact.html" class="btn btn-primary">Request Private Review</a>
+<a href="faq.html" class="btn">Read FAQ</a>
+</div>
+</section>
+
+<div class="footer">
+&copy; 2026 Liran Bar-Shrim. All rights reserved.
+</div>
 
 </main>
 
 <script>
-const menu = document.getElementById('menu');
-const overlay = document.getElementById('overlay');
+const menu=document.getElementById('menu');
+const overlay=document.getElementById('overlay');
 
-document.getElementById('openMenu').onclick = function() {
-  menu.classList.add('active');
-  overlay.classList.add('active');
+document.getElementById('openMenu').onclick=function(){
+menu.classList.add('active');
+overlay.classList.add('active');
 };
 
-document.getElementById('closeMenu').onclick = closeMenu;
-overlay.onclick = closeMenu;
+document.getElementById('closeMenu').onclick=closeMenu;
+overlay.onclick=closeMenu;
 
-function closeMenu() {
-  menu.classList.remove('active');
-  overlay.classList.remove('active');
+document.addEventListener('keydown',function(e){
+if(e.key==='Escape'){closeMenu();}
+});
+
+function closeMenu(){
+menu.classList.remove('active');
+overlay.classList.remove('active');
 }
 </script>
 
 </body>
 </html>
- 
