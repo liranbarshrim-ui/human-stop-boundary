@@ -19,18 +19,14 @@
 <style>
 :root{
 --bg:#090909;
---surface:#111111;
 --gold:#c8a96e;
 --text:#e8e2d7;
 --muted:#a7a097;
 --border:#1d1d1d;
 --border2:#2a2a2a;
---danger:#c0392b;
 }
-
 *{margin:0;padding:0;box-sizing:border-box;}
 html{scroll-behavior:smooth;}
-
 body{
 background:var(--bg);
 color:var(--text);
@@ -38,7 +34,6 @@ font-family:Inter,system-ui,sans-serif;
 line-height:1.7;
 overflow-x:hidden;
 }
-
 a{text-decoration:none;color:inherit;}
 
 .topbar{
@@ -53,7 +48,6 @@ background:rgba(9,9,9,.94);
 backdrop-filter:blur(10px);
 border-bottom:1px solid rgba(255,255,255,.04);
 }
-
 .brand{
 display:flex;
 align-items:center;
@@ -63,12 +57,7 @@ font-size:10px;
 letter-spacing:.28em;
 text-transform:uppercase;
 }
-
-.brand-line{
-width:18px;
-height:1px;
-background:var(--gold);
-}
+.brand-line{width:18px;height:1px;background:var(--gold);}
 
 .menu-btn{
 display:flex;
@@ -79,7 +68,6 @@ border:none;
 cursor:pointer;
 padding:6px;
 }
-
 .menu-btn span{
 display:block;
 width:22px;
@@ -96,11 +84,7 @@ visibility:hidden;
 transition:.25s;
 z-index:998;
 }
-
-.overlay.active{
-opacity:1;
-visibility:visible;
-}
+.overlay.active{opacity:1;visibility:visible;}
 
 .side-menu{
 position:fixed;
@@ -116,7 +100,6 @@ padding:28px 24px 48px;
 transition:.28s;
 z-index:999;
 }
-
 .side-menu.active{right:0;}
 
 .menu-head{
@@ -125,7 +108,6 @@ justify-content:space-between;
 align-items:center;
 margin-bottom:28px;
 }
-
 .menu-head-brand{
 font-family:'IBM Plex Mono',monospace;
 font-size:9px;
@@ -133,7 +115,6 @@ letter-spacing:.24em;
 text-transform:uppercase;
 color:var(--gold);
 }
-
 .close-btn{
 background:none;
 border:none;
@@ -147,7 +128,6 @@ border-top:1px solid var(--border);
 padding-top:18px;
 margin-top:18px;
 }
-
 .menu-label{
 font-family:'IBM Plex Mono',monospace;
 font-size:9px;
@@ -156,27 +136,21 @@ text-transform:uppercase;
 color:var(--gold);
 margin-bottom:12px;
 }
-
 .menu-group a{
 display:block;
 padding:8px 0;
 font-size:14px;
 color:var(--muted);
 }
-
 .menu-group a:hover,
-.menu-group a.active{
-color:var(--gold);
-}
+.menu-group a.active{color:var(--gold);}
 
-.menu-cta,
-.menu-email{
+.menu-cta,.menu-email{
 display:block;
 text-align:center;
 padding:14px;
 margin-top:16px;
 }
-
 .menu-cta{
 border:1px solid var(--gold);
 color:var(--gold);
@@ -185,7 +159,6 @@ font-size:10px;
 letter-spacing:.2em;
 text-transform:uppercase;
 }
-
 .menu-email{
 border:1px solid var(--border);
 font-size:13px;
@@ -203,7 +176,6 @@ border-left:3px solid var(--gold);
 padding-left:24px;
 margin-bottom:56px;
 }
-
 .hero-label{
 font-family:'IBM Plex Mono',monospace;
 font-size:10px;
@@ -212,14 +184,12 @@ text-transform:uppercase;
 color:var(--gold);
 margin-bottom:16px;
 }
-
 .hero h1{
 font-family:'Playfair Display',serif;
 font-size:clamp(44px,7vw,74px);
 line-height:1.03;
 margin-bottom:18px;
 }
-
 .hero p{
 font-size:18px;
 color:var(--muted);
@@ -229,7 +199,7 @@ max-width:760px;
 .pull{
 margin-bottom:54px;
 padding:34px;
-background:linear-gradient(180deg,#111,#0d0d0d);
+background:#111;
 border:1px solid var(--border2);
 border-left:3px solid var(--gold);
 font-family:'Playfair Display',serif;
@@ -249,7 +219,6 @@ border:1px solid #262626;
 border-left:3px solid var(--gold);
 padding:28px;
 }
-
 .term small{
 display:block;
 font-family:'IBM Plex Mono',monospace;
@@ -259,21 +228,18 @@ text-transform:uppercase;
 color:var(--gold);
 margin-bottom:12px;
 }
-
 .term h3{
 font-family:'Playfair Display',serif;
 font-size:28px;
 line-height:1.1;
 margin-bottom:12px;
 }
-
 .term p{
 font-size:15px;
 color:var(--muted);
 line-height:1.8;
 margin-bottom:8px;
 }
-
 .term-note{
 margin-top:12px;
 padding-left:12px;
@@ -295,13 +261,11 @@ font-family:'IBM Plex Mono',monospace;
 }
 
 @media(max-width:860px){
-
 .grid{grid-template-columns:1fr;}
 .container{padding:56px 18px 90px;}
 .hero h1{font-size:44px;}
 .hero p{font-size:16px;}
 .pull{font-size:24px;padding:26px;}
-
 }
 </style>
 </head>
@@ -315,9 +279,7 @@ font-family:'IBM Plex Mono',monospace;
 </a>
 
 <button class="menu-btn" id="openMenu">
-<span></span>
-<span></span>
-<span></span>
+<span></span><span></span><span></span>
 </button>
 </header>
 
@@ -384,75 +346,33 @@ If no one is clearly named to stop it, the gap already exists.
 
 <section class="grid">
 
-<div class="term">
-<small>01</small>
-<h3>Named Stop Authority</h3>
-<p>A single identified person formally empowered to stop a specific irreversible decision.</p>
-<div class="term-note">Not a team. Not a role. A person.</div>
-</div>
+<div class="term"><small>01</small><h3>Named Stop Authority</h3><p>A single identified person formally empowered to stop a specific irreversible decision.</p><div class="term-note">Not a team. Not a role. A person.</div></div>
 
-<div class="term">
-<small>02</small>
-<h3>Decision Authority Record (DAR)</h3>
-<p>A written record naming who holds stop authority before execution begins.</p>
-<div class="term-note">Clarity before exposure.</div>
-</div>
+<div class="term"><small>02</small><h3>Decision Authority Record (DAR)</h3><p>A written record naming who holds stop authority before execution begins.</p><div class="term-note">Clarity before exposure.</div></div>
 
-<div class="term">
-<small>03</small>
-<h3>Irreversible Decision</h3>
-<p>A decision that cannot be undone without disproportionate cost, harm, or loss.</p>
-<div class="term-note">Threshold must be recognized early.</div>
-</div>
+<div class="term"><small>03</small><h3>Irreversible Decision</h3><p>A decision that cannot be undone without disproportionate cost, harm, or loss.</p><div class="term-note">Threshold must be recognized early.</div></div>
 
-<div class="term">
-<small>04</small>
-<h3>Stop Authority Gap</h3>
-<p>No clearly named person can stop the decision when needed.</p>
-<div class="term-note">Momentum rules by default.</div>
-</div>
+<div class="term"><small>04</small><h3>Stop Authority Gap</h3><p>No clearly named person can stop the decision when needed.</p><div class="term-note">Momentum rules by default.</div></div>
 
-<div class="term">
-<small>05</small>
-<h3>Escalation Window</h3>
-<p>A defined response period granted to the named authority once a stop issue appears.</p>
-<div class="term-note">Example: 24 hours.</div>
-</div>
+<div class="term"><small>05</small><h3>Escalation Window</h3><p>A defined response period granted to the named authority once a stop issue appears.</p><div class="term-note">Example: 24 hours.</div></div>
 
-<div class="term">
-<small>06</small>
-<h3>Replacement Authority</h3>
-<p>If no action is taken within the escalation window, authority transfers automatically.</p>
-<div class="term-note">No paralysis. No symbolic ownership.</div>
-</div>
+<div class="term"><small>06</small><h3>Replacement Authority</h3><p>If no action is taken within the escalation window, authority transfers automatically.</p><div class="term-note">No paralysis. No symbolic ownership.</div></div>
 
-<div class="term">
-<small>07</small>
-<h3>Oversight Trigger</h3>
-<p>Any use of stop authority, refusal to act, or expiry of the window creates automatic review.</p>
-<div class="term-note">Verification, not punishment.</div>
-</div>
+<div class="term"><small>07</small><h3>Oversight Trigger</h3><p>Any use of stop authority, refusal to act, or expiry of the window creates automatic review.</p><div class="term-note">Verification, not punishment.</div></div>
 
-<div class="term">
-<small>08</small>
-<h3>Frozen Authority</h3>
-<p>Authority exists formally, but no timely action is taken while exposure grows.</p>
-<div class="term-note">Delay becomes decision.</div>
-</div>
+<div class="term"><small>08</small><h3>Frozen Authority</h3><p>Authority exists formally, but no timely action is taken while exposure grows.</p><div class="term-note">Delay becomes decision.</div></div>
 
-<div class="term">
-<small>09</small>
-<h3>Distributed Permission</h3>
-<p>Many can approve continuation, yet no single person can stop.</p>
-<div class="term-note">Everyone approves. Nobody owns.</div>
-</div>
+<div class="term"><small>09</small><h3>Distributed Permission</h3><p>Many can approve continuation, yet no single person can stop.</p><div class="term-note">Everyone approves. Nobody owns.</div></div>
 
-<div class="term">
-<small>10</small>
-<h3>Decision Exposure</h3>
-<p>The legal, financial, reputational, or personal consequences attached to a moving decision.</p>
-<div class="term-note">Risk always lands somewhere.</div>
-</div>
+<div class="term"><small>10</small><h3>Decision Exposure</h3><p>The legal, financial, reputational, or personal consequences attached to a moving decision.</p><div class="term-note">Risk always lands somewhere.</div></div>
+
+<div class="term"><small>11</small><h3>Bound Refusal</h3><p>A formal obligation requiring intervention when defined risk conditions appear.</p><div class="term-note">Authority includes duty, not only permission.</div></div>
+
+<div class="term"><small>12</small><h3>Alternate Authority</h3><p>A predefined successor who receives stop authority if the primary holder is unavailable or conflicted.</p><div class="term-note">Redundancy prevents control failure.</div></div>
+
+<div class="term"><small>13</small><h3>Hostile Hold</h3><p>Misuse of stop authority for political, personal, or unrelated motives.</p><div class="term-note">Bad use needs controls. Absence creates larger risk.</div></div>
+
+<div class="term"><small>14</small><h3>Cosmetic Governance</h3><p>Processes that appear rigorous but cannot interrupt dangerous momentum.</p><div class="term-note">Looks safe. Stops nothing.</div></div>
 
 </section>
 
