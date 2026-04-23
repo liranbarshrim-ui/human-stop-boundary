@@ -4,8 +4,15 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>DAR | Decision Authority Record</title>
+<title>DAR | Decision Authority Record | Matrix Audit</title>
 <meta name="description" content="Decision Authority Record (DAR): define who can stop an irreversible decision before exposure begins. Private advisory for executives, boards and AI governance leaders.">
+<meta name="keywords" content="DAR, decision authority record, executive accountability, stop authority, AI governance">
+<link rel="canonical" href="https://matrix-audit.com/dar.html">
+
+<meta property="og:title" content="DAR | Decision Authority Record">
+<meta property="og:description" content="One accountable name. Before it moves.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://matrix-audit.com/dar.html">
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -56,7 +63,12 @@ pointer-events:none;
 z-index:0;
 }
 
-/* ── topbar ── */
+a{
+text-decoration:none;
+color:inherit;
+}
+
+/* topbar */
 
 .topbar{
 position:sticky;
@@ -75,8 +87,6 @@ border-bottom:1px solid rgba(255,255,255,.04);
 display:flex;
 align-items:center;
 gap:12px;
-text-decoration:none;
-color:var(--text);
 font-family:'IBM Plex Mono',monospace;
 font-size:10px;
 letter-spacing:.28em;
@@ -88,8 +98,6 @@ width:18px;
 height:1px;
 background:var(--gold);
 }
-
-/* ── hamburger ── */
 
 .menu-btn{
 display:flex;
@@ -107,14 +115,9 @@ display:block;
 width:22px;
 height:1.5px;
 background:var(--text);
-transition:background .2s;
 }
 
-.menu-btn:hover span{
-background:var(--gold);
-}
-
-/* ── overlay ── */
+/* overlay */
 
 .overlay{
 position:fixed;
@@ -131,7 +134,7 @@ opacity:1;
 visibility:visible;
 }
 
-/* ── side menu ── */
+/* side menu */
 
 .side-menu{
 position:fixed;
@@ -144,7 +147,7 @@ overflow-y:auto;
 background:#0d0d0d;
 border-left:1px solid var(--border);
 padding:28px 24px 48px;
-transition:.28s cubic-bezier(.4,0,.2,1);
+transition:.28s ease;
 z-index:999;
 }
 
@@ -170,15 +173,9 @@ color:var(--gold);
 .close-btn{
 background:none;
 border:none;
-font-size:26px;
-line-height:1;
+font-size:28px;
 color:var(--muted);
 cursor:pointer;
-transition:.2s;
-}
-
-.close-btn:hover{
-color:var(--text);
 }
 
 .menu-group{
@@ -201,20 +198,13 @@ display:flex;
 align-items:center;
 gap:10px;
 padding:9px 0;
-text-decoration:none;
-color:var(--muted);
 font-size:14px;
+color:var(--muted);
 border-bottom:1px solid rgba(255,255,255,.03);
-transition:.18s;
 }
 
 .menu-group a:last-child{
 border-bottom:none;
-}
-
-.menu-group a:hover{
-color:var(--text);
-padding-left:4px;
 }
 
 .menu-group a.active{
@@ -240,16 +230,19 @@ font-size:10px;
 letter-spacing:.2em;
 text-transform:uppercase;
 text-align:center;
-text-decoration:none;
-transition:.2s;
 }
 
-.menu-cta:hover{
-background:var(--gold);
-color:#111!important;
+.menu-email{
+display:block;
+margin-top:10px;
+padding:11px 20px;
+border:1px solid var(--border2);
+font-size:13px;
+text-align:center;
+color:var(--muted)!important;
 }
 
-/* ── layout ── */
+/* layout */
 
 .container{
 position:relative;
@@ -259,7 +252,7 @@ margin:0 auto;
 padding:70px 28px 110px;
 }
 
-/* ── hero ── */
+/* hero */
 
 .hero{
 border-left:3px solid var(--gold);
@@ -290,10 +283,9 @@ font-size:18px;
 line-height:1.9;
 color:var(--muted);
 max-width:760px;
-font-weight:400;
 }
 
-/* ── statement ── */
+/* statement */
 
 .statement{
 background:linear-gradient(180deg,#111,#0d0d0d);
@@ -306,7 +298,7 @@ font-size:34px;
 line-height:1.28;
 }
 
-/* ── sections ── */
+/* sections */
 
 .section{
 padding:54px 0;
@@ -331,17 +323,16 @@ margin-bottom:28px;
 
 .section p{
 font-size:18px;
+line-height:1.9;
 color:var(--muted);
 max-width:760px;
 margin-bottom:16px;
 }
 
-/* ── rows ── */
+/* rows */
 
 .rows{
 margin-top:28px;
-display:grid;
-gap:0;
 }
 
 .row{
@@ -361,18 +352,17 @@ font-family:'IBM Plex Mono',monospace;
 font-size:10px;
 letter-spacing:.18em;
 text-transform:uppercase;
-font-weight:500;
 color:var(--text);
 padding-top:3px;
 }
 
 .row span{
 font-size:17px;
-color:var(--muted);
 line-height:1.8;
+color:var(--muted);
 }
 
-/* ── price ── */
+/* price */
 
 .price-block{
 margin-top:32px;
@@ -387,17 +377,16 @@ font-family:'Playfair Display',serif;
 font-size:58px;
 line-height:1;
 margin-bottom:16px;
-color:var(--text);
 }
 
 .price-block p{
 font-size:17px;
-color:var(--muted);
 line-height:1.9;
+color:var(--muted);
 margin:0;
 }
 
-/* ── actions ── */
+/* buttons */
 
 .actions{
 display:flex;
@@ -407,13 +396,11 @@ margin-top:28px;
 }
 
 .btn{
-text-decoration:none;
 padding:16px 24px;
 font-family:'IBM Plex Mono',monospace;
 font-size:11px;
 letter-spacing:.18em;
 text-transform:uppercase;
-font-weight:500;
 transition:.2s;
 }
 
@@ -425,25 +412,22 @@ color:#111;
 .btn-secondary{
 border:1px solid var(--border2);
 color:var(--text);
-background:transparent;
 }
 
-.btn-primary:hover,
-.btn-secondary:hover{
+.btn:hover{
 transform:translateY(-2px);
 }
 
-/* ── quote ── */
+/* quote */
 
 .quote{
 font-family:'Playfair Display',serif;
 font-size:clamp(28px,4vw,40px);
 line-height:1.25;
 max-width:760px;
-color:var(--text);
 }
 
-/* ── footer ── */
+/* footer */
 
 .footer{
 margin-top:74px;
@@ -453,9 +437,10 @@ font-size:11px;
 letter-spacing:.08em;
 color:#6e6964;
 font-family:'IBM Plex Mono',monospace;
+white-space:nowrap;
 }
 
-/* ── mobile ── */
+/* mobile */
 
 @media(max-width:860px){
 
@@ -500,161 +485,189 @@ width:100%;
 text-align:center;
 }
 
+.footer{
+white-space:normal;
+line-height:1.6;
 }
 
+}
 </style>
 </head>
 
 <body>
 
 <header class="topbar">
-  <a href="index.html" class="brand">
-    <span class="brand-line"></span>
-    <span>Decision Authority Research</span>
-  </a>
-  <button class="menu-btn" id="openMenu" aria-label="Open menu">
-    <span></span>
-    <span></span>
-    <span></span>
-  </button>
+
+<a href="index.html" class="brand">
+<span class="brand-line"></span>
+<span>Decision Authority Research</span>
+</a>
+
+<button class="menu-btn" id="openMenu" aria-label="Open menu">
+<span></span>
+<span></span>
+<span></span>
+</button>
+
 </header>
 
 <div class="overlay" id="overlay"></div>
 
 <aside class="side-menu" id="menu">
 
-  <div class="menu-head">
-    <span class="menu-head-brand">Matrix Audit</span>
-    <button class="close-btn" id="closeMenu">&times;</button>
-  </div>
+<div class="menu-head">
+<span class="menu-head-brand">Matrix Audit</span>
+<button class="close-btn" id="closeMenu">&times;</button>
+</div>
 
-  <div class="menu-group" style="border-top:none;padding-top:0;margin-top:0;">
-    <div class="menu-label">Primary</div>
-    <a href="index.html"><span class="menu-divider-line"></span>Home</a>
-    <a href="dar.html" class="active"><span class="menu-divider-line"></span>DAR</a>
-    <a href="services.html"><span class="menu-divider-line"></span>Services</a>
-    <a href="about.html"><span class="menu-divider-line"></span>About</a>
-  </div>
+<div class="menu-group" style="border-top:none;padding-top:0;margin-top:0;">
+<div class="menu-label">Primary</div>
+<a href="index.html"><span class="menu-divider-line"></span>Home</a>
+<a href="dar.html" class="active"><span class="menu-divider-line"></span>DAR</a>
+<a href="services.html"><span class="menu-divider-line"></span>Services</a>
+<a href="about.html"><span class="menu-divider-line"></span>About</a>
+</div>
 
-  <div class="menu-group">
-    <div class="menu-label">Insights</div>
-    <a href="exposure.html"><span class="menu-divider-line"></span>When Failure Lands on One Name</a>
-    <a href="failure-points.html"><span class="menu-divider-line"></span>Where Accountability Breaks</a>
-    <a href="we.html"><span class="menu-divider-line"></span>The Death of We</a>
-    <a href="stop-authority.html"><span class="menu-divider-line"></span>Stop Authority</a>
-    <a href="ai-governance.html"><span class="menu-divider-line"></span>AI Governance</a>
-  </div>
+<div class="menu-group">
+<div class="menu-label">Insights</div>
+<a href="exposure.html"><span class="menu-divider-line"></span>When Failure Lands on One Name</a>
+<a href="failure-points.html"><span class="menu-divider-line"></span>Where Accountability Breaks</a>
+<a href="we.html"><span class="menu-divider-line"></span>The Death of We</a>
+<a href="stop-authority.html"><span class="menu-divider-line"></span>Stop Authority</a>
+<a href="ai-governance.html"><span class="menu-divider-line"></span>AI Governance</a>
+</div>
 
-  <div class="menu-group">
-    <div class="menu-label">Knowledge</div>
-    <a href="definitions.html"><span class="menu-divider-line"></span>Definitions</a>
-    <a href="faq.html"><span class="menu-divider-line"></span>FAQ</a>
-    <a href="case-studies.html"><span class="menu-divider-line"></span>Case Studies</a>
-    <a href="goodfaith.html"><span class="menu-divider-line"></span>Good Faith Use</a>
-  </div>
+<div class="menu-group">
+<div class="menu-label">Knowledge</div>
+<a href="definitions.html"><span class="menu-divider-line"></span>Definitions</a>
+<a href="faq.html"><span class="menu-divider-line"></span>FAQ</a>
+<a href="case-studies.html"><span class="menu-divider-line"></span>Case Studies</a>
+<a href="goodfaith.html"><span class="menu-divider-line"></span>Good Faith Use</a>
+</div>
 
-  <a href="contact.html" class="menu-cta">Private Intake</a>
+<a href="contact.html" class="menu-cta">Private Intake</a>
+<a href="mailto:Liran@liranbarshrim.com" class="menu-email">Liran@liranbarshrim.com</a>
 
 </aside>
 
 <main class="container">
 
-  <section class="hero">
-    <div class="hero-label">Decision Authority Record</div>
-    <h1>One accountable name.<br>Before it moves.</h1>
-    <p>
-      DAR helps boards, executives, legal leaders and AI governance teams define who holds real authority to stop an irreversible decision before exposure begins.
-    </p>
-  </section>
+<section class="hero">
+<div class="hero-label">Decision Authority Record</div>
+<h1>One accountable name.<br>Before it moves.</h1>
 
-  <div class="statement">
-    Approval is common.<br>
-    Stop authority is rare.
-  </div>
+<p>
+DAR helps boards, executives, legal leaders and AI governance teams define who holds real authority to stop an irreversible decision before exposure begins.
+</p>
+</section>
 
-  <section class="section">
-    <div class="section-label">What DAR does</div>
-    <h2>Clarity before consequences.</h2>
-    <p>
-      DAR identifies one critical pathway, one accountable owner, and one real stop authority before a decision becomes costly, public, or irreversible.
-    </p>
-    <div class="rows">
-      <div class="row">
-        <strong>Pathway</strong>
-        <span>Map how one consequential decision actually moves.</span>
-      </div>
-      <div class="row">
-        <strong>Owner</strong>
-        <span>Define one named accountable authority.</span>
-      </div>
-      <div class="row">
-        <strong>Threshold</strong>
-        <span>Clarify when continuation must pause.</span>
-      </div>
-      <div class="row">
-        <strong>Record</strong>
-        <span>Create a formal written authority record.</span>
-      </div>
-    </div>
-  </section>
+<div class="statement">
+Approval is common.<br>
+Stop authority is rare.
+</div>
 
-  <section class="section">
-    <div class="section-label">Why systems fail</div>
-    <h2>Most firms can explain process.</h2>
-    <p>
-      They struggle when asked a harder question: <strong style="color:var(--text)">Who personally can stop it now?</strong>
-    </p>
-  </section>
+<section class="section">
 
-  <section class="section">
-    <div class="section-label">Private Engagement</div>
-    <h2>Fixed-scope executive advisory.</h2>
-    <div class="price-block">
-      <div class="amount">€12,000</div>
-      <p>
-        Single pathway review.<br>
-        Named authority clarity.<br>
-        Typical delivery: 7&ndash;10 business days.
-      </p>
-    </div>
-    <div class="actions">
-      <a href="contact.html" class="btn btn-primary">Discuss Live Exposure</a>
-      <a href="services.html" class="btn btn-secondary">View Services</a>
-    </div>
-  </section>
+<div class="section-label">What DAR does</div>
+<h2>Clarity before consequences.</h2>
 
-  <section class="section">
-    <div class="section-label">The question</div>
-    <div class="quote">
-      If you cannot name the person,<br>
-      it should not proceed.
-    </div>
-  </section>
+<p>
+DAR identifies one critical pathway, one accountable owner, and one real stop authority before a decision becomes costly, public, or irreversible.
+</p>
 
-  <div class="footer">
-    &copy; 2026 Liran Bar-Shrim. All rights reserved.
-  </div>
+<div class="rows">
+
+<div class="row">
+<strong>Pathway</strong>
+<span>Map how one consequential decision actually moves.</span>
+</div>
+
+<div class="row">
+<strong>Owner</strong>
+<span>Define one named accountable authority.</span>
+</div>
+
+<div class="row">
+<strong>Threshold</strong>
+<span>Clarify when continuation must pause.</span>
+</div>
+
+<div class="row">
+<strong>Record</strong>
+<span>Create a formal written authority record.</span>
+</div>
+
+</div>
+</section>
+
+<section class="section">
+
+<div class="section-label">Why systems fail</div>
+<h2>Most firms can explain process.</h2>
+
+<p>
+They struggle when asked a harder question:
+<strong style="color:var(--text)">Who personally can stop it now?</strong>
+</p>
+
+</section>
+
+<section class="section">
+
+<div class="section-label">Private Engagement</div>
+<h2>Fixed-scope executive advisory.</h2>
+
+<div class="price-block">
+<div class="amount">€12,000</div>
+
+<p>
+Single pathway review.<br>
+Named authority clarity.<br>
+Typical delivery: 7–10 business days.
+</p>
+</div>
+
+<div class="actions">
+<a href="contact.html" class="btn btn-primary">Discuss Live Exposure</a>
+<a href="services.html" class="btn btn-secondary">View Services</a>
+</div>
+
+</section>
+
+<section class="section">
+
+<div class="section-label">The Question</div>
+
+<div class="quote">
+If you cannot name the person,<br>
+it should not proceed.
+</div>
+
+</section>
+
+<div class="footer">
+&copy; 2026 Liran Bar-Shrim. All rights reserved.
+</div>
 
 </main>
 
 <script>
-const menu = document.getElementById('menu');
-const overlay = document.getElementById('overlay');
+const menu=document.getElementById('menu');
+const overlay=document.getElementById('overlay');
 
-document.getElementById('openMenu').onclick = function() {
-  menu.classList.add('active');
-  overlay.classList.add('active');
+document.getElementById('openMenu').onclick=function(){
+menu.classList.add('active');
+overlay.classList.add('active');
 };
 
-document.getElementById('closeMenu').onclick = closeMenu;
-overlay.onclick = closeMenu;
+document.getElementById('closeMenu').onclick=closeMenu;
+overlay.onclick=closeMenu;
 
-function closeMenu() {
-  menu.classList.remove('active');
-  overlay.classList.remove('active');
+function closeMenu(){
+menu.classList.remove('active');
+overlay.classList.remove('active');
 }
 </script>
 
 </body>
 </html>
- 
