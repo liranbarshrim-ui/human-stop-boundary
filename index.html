@@ -449,4 +449,218 @@ min-width:260px;
 }
 
 .grid{
-grid
+grid-template-columns:1fr;
+}
+
+.card h3{
+font-size:30px;
+}
+
+}
+
+@media(max-width:640px){
+
+.topbar{
+padding:0 18px;
+height:72px;
+}
+
+.hero{
+padding:120px 18px 60px;
+}
+
+.section{
+padding:0 18px 80px;
+}
+
+.hero h1{
+font-size:52px;
+}
+
+.hero p,
+.copy,
+.card p,
+.cta-block p{
+font-size:17px;
+}
+
+.statement{
+font-size:34px;
+}
+
+.side-menu{
+width:50%;
+min-width:220px;
+padding:20px;
+}
+
+.nav a{
+font-size:22px;
+padding:12px 0;
+}
+
+.menu-mail{
+font-size:10px;
+}
+
+.site-footer{
+padding:28px 18px;
+}
+
+.footer-copy{
+font-size:10px;
+letter-spacing:.05em;
+}
+
+}
+
+</style>
+</head>
+<body>
+
+<header class="topbar">
+<a href="index.html" class="brand">
+<span class="brand-line"></span>
+<span>Decision Authority Research</span>
+</a>
+
+<button class="menu-btn" id="openMenu" aria-label="Open Menu">
+<span></span>
+<span></span>
+<span></span>
+</button>
+</header>
+
+<div class="overlay" id="overlay"></div>
+
+<aside class="side-menu" id="menu">
+
+<div class="menu-top">
+<div class="menu-title">Matrix Audit</div>
+<button class="close-btn" id="closeMenu">Close</button>
+</div>
+
+<nav class="nav">
+<a href="index.html">Home</a>
+<a href="dar.html">DAR</a>
+<a href="services.html">Services</a>
+<a href="contact.html">Contact</a>
+<a href="about.html">About</a>
+</nav>
+
+<div class="menu-bottom">
+<a href="contact.html" class="menu-cta">Private Intake</a>
+<a href="mailto:Liran@liranbarshrim.com" class="menu-mail">Liran@liranbarshrim.com</a>
+</div>
+
+</aside>
+
+<section class="hero">
+<div class="hero-inner">
+<div class="eyebrow">Private Advisory</div>
+
+<h1>
+Authority must exist<br>
+before <em>exposure</em><br>
+begins.
+</h1>
+
+<p>
+For boards, executives, founders and counsel facing irreversible decisions already in motion.
+</p>
+
+<a href="contact.html" class="hero-link">
+Request Private Access →
+</a>
+</div>
+</section>
+
+<section class="section">
+<div class="label">The Problem</div>
+
+<div class="statement">
+Most organizations define how decisions <em>proceed.</em><br>
+Almost none define who can stop them.
+</div>
+
+<div class="copy">
+When responsibility arrives after failure, it usually lands on a person, not a committee.
+</div>
+
+<div class="grid">
+
+<div class="card">
+<div class="card-tag">Framework</div>
+<h3>Decision Authority Record</h3>
+<p>Define one named individual with explicit stop authority before a decision becomes irreversible.</p>
+</div>
+
+<div class="card">
+<div class="card-tag">Research</div>
+<h3>Independent Analysis</h3>
+<p>Essays, case studies and governance notes on accountability under pressure.</p>
+</div>
+
+<div class="card">
+<div class="card-tag">Use Cases</div>
+<h3>Boards · AI · Finance</h3>
+<p>High-speed environments where approval exists, but stop authority does not.</p>
+</div>
+
+<div class="card">
+<div class="card-tag">Engagement</div>
+<h3>Private & Selective</h3>
+<p>Confidential pathway reviews for consequential decisions already in motion.</p>
+</div>
+
+</div>
+
+<div class="cta-block">
+<h2>
+When no one is named<br>
+to stop it,<br>
+someone is named after.
+</h2>
+
+<p>
+Confidential engagements for serious decision-makers facing real exposure.
+</p>
+
+<a href="contact.html" class="cta-link">Confidential Inquiry →</a>
+</div>
+
+</section>
+
+<footer class="site-footer">
+<div class="footer-copy">
+<span>© 2026 Liran Bar-Shrim</span> · Decision Authority Research · Independent Governance Research · Confidential Advisory
+</div>
+</footer>
+
+<script>
+const menu = document.getElementById('menu');
+const overlay = document.getElementById('overlay');
+const openBtn = document.getElementById('openMenu');
+const closeBtn = document.getElementById('closeMenu');
+
+function openMenu(){
+menu.classList.add('active');
+overlay.classList.add('active');
+}
+
+function closeMenu(){
+menu.classList.remove('active');
+overlay.classList.remove('active');
+}
+
+openBtn.addEventListener('click',openMenu);
+closeBtn.addEventListener('click',closeMenu);
+overlay.addEventListener('click',closeMenu);
+
+document.addEventListener('keydown',function(e){
+if(e.key === 'Escape'){closeMenu();}
+});
+</script>
+
+</body>
+</html>
