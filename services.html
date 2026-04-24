@@ -4,73 +4,72 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
 
-<title>Services | Matrix Audit</title>
-<meta name="description" content="Selective private engagements for executives, boards, AI governance leaders, and organizations facing consequential decisions under uncertainty.">
-<meta name="robots" content="index,follow">
-<link rel="canonical" href="https://matrix-audit.com/services.html">
-
-<meta property="og:title" content="Services | Matrix Audit">
-<meta property="og:description" content="Private engagements built around authority, accountability, and consequential decisions.">
-<meta property="og:type" content="website">
+<title>Private Mandates | Decision Authority Research</title>
+<meta name="description" content="Selective private mandates for executives, boards, founders and counsel facing consequential decisions under uncertainty.">
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Cormorant+Garamond:wght@500;600;700&family=IBM+Plex+Mono:wght@300;400;500&display=swap" rel="stylesheet">
 
 <style>
 :root{
---bg:#090909;
---surface:#111111;
---gold:#c8a96e;
---text:#e8e2d7;
---muted:#a7a097;
---border:#1d1d1d;
---border2:#2a2a2a;
---danger:#c0392b;
+--bg:#030404;
+--bg2:#081111;
+--gold:#c8a15b;
+--gold2:#f0dfb7;
+--text:#edf2ef;
+--muted:#92a09a;
+--line:rgba(255,255,255,.08);
 }
 
 *{margin:0;padding:0;box-sizing:border-box;}
 html{scroll-behavior:smooth;}
 
 body{
-background:var(--bg);
+font-family:Inter,sans-serif;
+background:
+radial-gradient(circle at 15% 10%, rgba(10,45,35,.52), transparent 28%),
+radial-gradient(circle at 82% 0%, rgba(200,161,91,.12), transparent 22%),
+linear-gradient(180deg,#020303,#061010 55%,#020303);
 color:var(--text);
-font-family:Inter,system-ui,sans-serif;
-line-height:1.7;
 overflow-x:hidden;
--webkit-font-smoothing:antialiased;
 }
 
 body:before{
-content:'';
+content:"";
 position:fixed;
 inset:0;
-background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 240 240' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.025'/%3E%3C/svg%3E");
-opacity:.55;
 pointer-events:none;
-z-index:0;
+opacity:.12;
+background-image:
+linear-gradient(rgba(255,255,255,.03) 1px, transparent 1px),
+linear-gradient(90deg, rgba(255,255,255,.03) 1px, transparent 1px);
+background-size:42px 42px;
 }
 
-a{text-decoration:none;color:inherit;}
+a{text-decoration:none;color:inherit}
 
+/* topbar */
 .topbar{
-position:sticky;
-top:0;
-z-index:999;
+position:fixed;
+top:0;left:0;right:0;
+height:74px;
 display:flex;
-justify-content:space-between;
 align-items:center;
-padding:18px 24px;
-background:rgba(9,9,9,.94);
-backdrop-filter:blur(10px);
-border-bottom:1px solid rgba(255,255,255,.04);
+justify-content:space-between;
+padding:0 18px;
+z-index:1000;
+background:rgba(4,7,8,.82);
+backdrop-filter:blur(14px);
+border-bottom:1px solid var(--line);
 }
 
 .brand{
 display:flex;
 align-items:center;
 gap:12px;
-font-family:'IBM Plex Mono',monospace;
+font-family:"IBM Plex Mono",monospace;
 font-size:10px;
 letter-spacing:.28em;
 text-transform:uppercase;
@@ -78,32 +77,38 @@ white-space:nowrap;
 }
 
 .brand-line{
-width:18px;
-height:1px;
+width:34px;
+height:2px;
+border-radius:4px;
 background:var(--gold);
 }
 
 .menu-btn{
+width:42px;height:42px;
+border:none;background:none;
+cursor:pointer;
 display:flex;
 flex-direction:column;
-gap:5px;
-background:none;
-border:none;
-cursor:pointer;
-padding:6px;
+justify-content:center;
+gap:6px;
 }
 
 .menu-btn span{
-display:block;
-width:22px;
-height:1.5px;
-background:var(--text);
+height:2px;
+background:#fff;
+border-radius:4px;
 }
 
+.menu-btn span:nth-child(2){
+width:72%;
+margin-left:auto;
+}
+
+/* drawer */
 .overlay{
 position:fixed;
 inset:0;
-background:rgba(0,0,0,.68);
+background:rgba(0,0,0,.55);
 opacity:0;
 visibility:hidden;
 transition:.25s;
@@ -115,311 +120,275 @@ opacity:1;
 visibility:visible;
 }
 
-.side-menu{
+.drawer{
 position:fixed;
 top:0;
-right:-340px;
-width:310px;
-max-width:90%;
+right:-100%;
+width:86%;
+max-width:420px;
 height:100vh;
 overflow-y:auto;
-background:#0d0d0d;
-border-left:1px solid var(--border);
-padding:28px 24px 48px;
-transition:.28s ease;
 z-index:999;
+padding:24px;
+transition:.3s ease;
+background:linear-gradient(180deg,#071010,#071313 70%,#050707);
+border-left:1px solid rgba(255,255,255,.08);
 }
 
-.side-menu.active{right:0;}
+.drawer.active{right:0;}
 
-.menu-head{
+.drawer-top{
 display:flex;
 justify-content:space-between;
 align-items:center;
-margin-bottom:28px;
+margin-bottom:18px;
 }
 
-.menu-head-brand{
-font-family:'IBM Plex Mono',monospace;
-font-size:9px;
-letter-spacing:.24em;
+.drawer-title{
+font-family:"IBM Plex Mono",monospace;
+font-size:11px;
+letter-spacing:.28em;
 text-transform:uppercase;
-color:var(--gold);
+color:var(--gold2);
 }
 
 .close-btn{
+font-size:38px;
+line-height:1;
 background:none;
 border:none;
-font-size:30px;
-line-height:1;
-color:var(--muted);
+color:#fff;
 cursor:pointer;
 }
 
-.menu-group{
-border-top:1px solid var(--border);
-padding-top:18px;
-margin-top:18px;
-}
+.group{margin-top:18px;}
 
-.menu-label{
-font-family:'IBM Plex Mono',monospace;
-font-size:9px;
-letter-spacing:.22em;
+.group small{
+display:block;
+font-family:"IBM Plex Mono",monospace;
+font-size:10px;
+letter-spacing:.26em;
 text-transform:uppercase;
 color:var(--gold);
-margin-bottom:12px;
+margin-bottom:10px;
 }
 
-.menu-group a{
+.drawer a.link{
 display:block;
-padding:8px 0;
-font-size:14px;
-color:var(--muted);
+padding:14px 0;
+font-size:20px;
+border-bottom:1px solid rgba(255,255,255,.05);
 }
 
-.menu-group a:hover,
-.menu-group a.active{
-color:var(--gold);
+.drawer a.link:hover,
+.drawer a.link.active{
+color:var(--gold2);
 }
 
-.menu-cta,
-.menu-email{
+.private-btn{
 display:block;
-margin-top:16px;
+margin-top:22px;
+padding:16px;
+border-radius:16px;
+text-align:center;
+font-weight:800;
+letter-spacing:.18em;
+font-size:13px;
+text-transform:uppercase;
+background:linear-gradient(135deg,#d9bb79,#b88e45);
+color:#111;
+}
+
+.mail-btn{
+display:block;
+margin-top:14px;
 padding:14px;
 text-align:center;
+border-radius:16px;
+border:1px solid rgba(255,255,255,.08);
+color:#f3dfb4;
+font-size:15px;
+word-break:break-word;
 }
 
-.menu-cta{
-border:1px solid var(--gold);
-color:var(--gold);
-font-family:'IBM Plex Mono',monospace;
+/* hero */
+.hero{
+padding:118px 18px 42px;
+max-width:1200px;
+margin:auto;
+}
+
+.eyebrow{
+font-family:"IBM Plex Mono",monospace;
 font-size:10px;
-letter-spacing:.2em;
+letter-spacing:.30em;
+text-transform:uppercase;
+color:var(--gold2);
+margin-bottom:18px;
+}
+
+.hero h1{
+font-family:"Cormorant Garamond",serif;
+font-size:60px;
+line-height:.9;
+font-weight:700;
+letter-spacing:-.03em;
+max-width:980px;
+}
+
+.hero h1 span{color:var(--gold2);}
+
+.hero p{
+margin-top:20px;
+font-size:18px;
+line-height:1.8;
+color:var(--muted);
+max-width:760px;
+}
+
+.hero-cta{
+display:inline-block;
+margin-top:28px;
+padding:16px 24px;
+border-radius:16px;
+background:linear-gradient(135deg,#d9bb79,#b88e45);
+color:#111;
+font-weight:800;
+letter-spacing:.18em;
+font-size:13px;
 text-transform:uppercase;
 }
 
-.menu-email{
-border:1px solid var(--border2);
-font-size:13px;
-color:var(--muted);
-}
-
-.container{
-position:relative;
-z-index:1;
-max-width:1020px;
+/* section */
+.section{
+max-width:1200px;
 margin:auto;
-padding:70px 28px 110px;
+padding:20px 18px 0;
 }
 
-.hero{
-border-left:3px solid var(--gold);
-padding-left:24px;
-margin-bottom:58px;
-}
-
-.hero-label,.section-label{
-font-family:'IBM Plex Mono',monospace;
+.label{
+font-family:"IBM Plex Mono",monospace;
 font-size:10px;
-letter-spacing:.24em;
+letter-spacing:.28em;
 text-transform:uppercase;
 color:var(--gold);
 margin-bottom:16px;
 }
 
-.hero h1{
-font-family:'Playfair Display',serif;
-font-size:clamp(38px,5.8vw,62px);
-line-height:1.06;
-margin-bottom:20px;
-max-width:820px;
-}
-
-.hero p{
-font-size:18px;
-line-height:1.9;
-color:var(--muted);
-max-width:760px;
+.statement,
+.panel{
+border-radius:26px;
+padding:28px;
+background:
+radial-gradient(circle at 85% 15%, rgba(200,161,91,.08), transparent 22%),
+linear-gradient(135deg,#081111,#0c1718);
+border:1px solid rgba(255,255,255,.07);
 }
 
 .statement{
-margin-bottom:62px;
-padding:34px;
-background:linear-gradient(180deg,#111,#0d0d0d);
-border:1px solid var(--border2);
-border-left:3px solid var(--danger);
-font-family:'Playfair Display',serif;
-font-size:30px;
-line-height:1.3;
-}
-
-.section{
-padding:54px 0;
-border-top:1px solid rgba(255,255,255,.05);
-}
-
-.section h2{
-font-family:'Playfair Display',serif;
-font-size:40px;
-line-height:1.1;
-margin-bottom:18px;
-}
-
-.section p{
-font-size:18px;
-line-height:1.9;
-color:var(--muted);
-max-width:760px;
-margin-bottom:14px;
+font-family:"Cormorant Garamond",serif;
+font-size:42px;
+line-height:1;
+color:var(--gold2);
 }
 
 .grid{
 display:grid;
-grid-template-columns:repeat(3,1fr);
-gap:22px;
-margin-top:30px;
+grid-template-columns:1fr;
+gap:16px;
+margin-top:18px;
 }
 
 .card{
-background:linear-gradient(180deg,#121212,#0d0d0d);
-border:1px solid #262626;
-border-left:3px solid var(--border2);
-padding:28px 24px;
-display:flex;
-flex-direction:column;
-transition:.22s;
+border-radius:24px;
+padding:24px;
+background:
+radial-gradient(circle at 85% 18%, rgba(200,161,91,.08), transparent 24%),
+radial-gradient(circle at 15% 90%, rgba(10,45,35,.40), transparent 28%),
+linear-gradient(135deg,#071010,#0a1516);
+border:1px solid rgba(255,255,255,.07);
 }
 
-.card.featured{
-border-left-color:var(--gold);
-}
-
-.card:hover{
-transform:translateY(-4px);
-background:#171717;
-border-color:#3b3327;
-}
-
-.card small{
-display:block;
-font-family:'IBM Plex Mono',monospace;
-font-size:10px;
+.num{
+font-family:"IBM Plex Mono",monospace;
+font-size:12px;
 letter-spacing:.22em;
-text-transform:uppercase;
-color:var(--gold);
-margin-bottom:14px;
+color:var(--gold2);
+margin-bottom:12px;
 }
 
 .card h3{
-font-family:'Playfair Display',serif;
-font-size:28px;
-line-height:1.08;
-margin-bottom:10px;
+font-family:"Cormorant Garamond",serif;
+font-size:48px;
+line-height:.92;
+font-weight:700;
+color:#e7c98f;
+margin-bottom:12px;
 }
 
 .price{
-font-family:'IBM Plex Mono',monospace;
-font-size:13px;
-letter-spacing:.1em;
-color:var(--gold);
-margin-bottom:16px;
+font-family:"IBM Plex Mono",monospace;
+font-size:12px;
+letter-spacing:.18em;
+opacity:.85;
+margin-bottom:14px;
 }
 
-.card p{
-font-size:15px;
-line-height:1.8;
-color:var(--muted);
-margin-bottom:18px;
+.card p,.panel p{
+font-size:17px;
+line-height:1.75;
+color:#cfd6d1;
+}
+
+.list{
+margin-top:14px;
 }
 
 .list div{
-padding:9px 0;
-font-size:13px;
-color:var(--muted);
+padding:8px 0;
+font-size:14px;
+color:#9aa6a0;
 border-bottom:1px solid rgba(255,255,255,.05);
 }
 
 .list div:last-child{border-bottom:none;}
 
-.card-cta{
-margin-top:auto;
+.cta{
 display:block;
+margin-top:18px;
+padding:14px;
+border-radius:14px;
 text-align:center;
-padding:13px 16px;
-border:1px solid var(--border2);
-font-family:'IBM Plex Mono',monospace;
-font-size:10px;
+font-size:12px;
+font-weight:800;
 letter-spacing:.18em;
 text-transform:uppercase;
-color:var(--muted);
-margin-top:24px;
-}
-
-.card.featured .card-cta{
-border-color:var(--gold);
-color:var(--gold);
-}
-
-.card-cta:hover{
-background:var(--gold);
+background:linear-gradient(135deg,#d9bb79,#b88e45);
 color:#111;
 }
 
-.quote{
-margin-top:28px;
-padding:34px;
-background:linear-gradient(180deg,#111,#0d0d0d);
-border:1px solid var(--border2);
-border-left:3px solid var(--gold);
-font-family:'Playfair Display',serif;
-font-size:30px;
-line-height:1.3;
+footer{
+max-width:1200px;
+margin:auto;
+padding:42px 18px 70px;
+border-top:1px solid var(--line);
+font-size:14px;
+color:#8f9a95;
+margin-top:60px;
 }
 
-.actions{
-display:flex;
-gap:14px;
-flex-wrap:wrap;
-margin-top:26px;
-}
-
-.btn{
-padding:16px 24px;
-font-family:'IBM Plex Mono',monospace;
-font-size:11px;
-letter-spacing:.18em;
-text-transform:uppercase;
-border:1px solid var(--border2);
-color:var(--text);
-}
-
-.btn-primary{
-background:var(--gold);
-border-color:var(--gold);
-color:#111;
-}
-
-.footer{
-margin-top:74px;
-padding-top:28px;
-border-top:1px solid var(--border2);
-font-size:11px;
-letter-spacing:.08em;
-color:#6e6964;
-font-family:'IBM Plex Mono',monospace;
-}
-
-@media(max-width:860px){
-.grid{grid-template-columns:1fr;}
-.container{padding:56px 18px 90px;}
-.hero h1{font-size:clamp(34px,10vw,52px);}
-.hero p,.section p{font-size:16px;}
-.statement{font-size:24px;padding:26px 22px;}
-.section h2{font-size:34px;}
-.actions{flex-direction:column;}
-.btn{text-align:center;}
+@media(min-width:900px){
+.topbar{padding:0 34px;}
+.hero{padding:150px 34px 50px;}
+.hero h1{font-size:96px;}
+.hero p{font-size:22px;}
+.section{padding:34px 34px 0;}
+.grid{grid-template-columns:repeat(3,1fr);gap:22px;}
+.card{padding:34px;min-height:520px;}
+.card h3{font-size:58px;}
+.statement{font-size:68px;padding:40px;}
+.panel{padding:38px;}
+footer{padding:34px 34px 70px;}
 }
 </style>
 </head>
@@ -432,175 +401,149 @@ font-family:'IBM Plex Mono',monospace;
 <span>Decision Authority Research</span>
 </a>
 
-<button class="menu-btn" id="openMenu" aria-label="Open menu">
+<button class="menu-btn" id="openMenu">
 <span></span><span></span><span></span>
 </button>
 </header>
 
 <div class="overlay" id="overlay"></div>
 
-<aside class="side-menu" id="menu">
-
-<div class="menu-head">
-<span class="menu-head-brand">Matrix Audit</span>
-<button class="close-btn" id="closeMenu">&times;</button>
+<aside class="drawer" id="drawer">
+<div class="drawer-top">
+<div class="drawer-title">Navigation</div>
+<button class="close-btn" id="closeMenu">×</button>
 </div>
 
-<div class="menu-group" style="border-top:none;margin-top:0;padding-top:0;">
-<div class="menu-label">Primary</div>
-<a href="index.html">Home</a>
-<a href="dar.html">DAR</a>
-<a href="services.html" class="active">Services</a>
-<a href="about.html">About</a>
+<div class="group">
+<small>Primary</small>
+<a class="link" href="index.html">Home</a>
+<a class="link" href="dar.html">DAR</a>
+<a class="link active" href="services.html">Services</a>
+<a class="link" href="about.html">About</a>
+<a class="link" href="contact.html">Contact</a>
 </div>
 
-<div class="menu-group">
-<div class="menu-label">Research</div>
-<a href="research.html">Independent Research</a>
-<a href="whitepaper.html">White Paper</a>
+<div class="group">
+<small>Research</small>
+<a class="link" href="research.html">Independent Research</a>
+<a class="link" href="whitepaper.html">White Paper</a>
 </div>
 
-<div class="menu-group">
-<div class="menu-label">Concepts</div>
-<a href="stop-authority.html">Stop Authority</a>
-<a href="accountability-gap.html">The Accountability Gap</a>
+<div class="group">
+<small>Reference</small>
+<a class="link" href="definitions.html">Definitions</a>
+<a class="link" href="faq.html">FAQ</a>
+<a class="link" href="goodfaith.html">Good Faith Use</a>
 </div>
 
-<div class="menu-group">
-<div class="menu-label">Knowledge</div>
-<a href="definitions.html">Definitions</a>
-<a href="faq.html">FAQ</a>
-<a href="case-studies.html">Case Studies</a>
-</div>
-
-<a href="contact.html" class="menu-cta">Request Confidential Intake</a>
-<a href="mailto:Liran@liranbarshrim.com" class="menu-email">Liran@liranbarshrim.com</a>
-
+<a href="contact.html" class="private-btn">Private Intake</a>
+<a href="mailto:Liran@liranbarshrim.com" class="mail-btn">Liran@liranbarshrim.com</a>
 </aside>
 
-<main class="container">
-
 <section class="hero">
-<div class="hero-label">Selective Engagements</div>
-<h1>Private Services For<br>Consequential Decisions</h1>
+<div class="eyebrow">Selective Private Mandates</div>
+
+<h1>
+When decisions carry exposure,<br>
+<span>clarity becomes expensive.</span>
+</h1>
+
 <p>
-Principal-led advisory for executives, boards, and organizations carrying exposure where uncertainty, speed, or unclear authority already exists.
+For executives, boards, founders and counsel who prefer defined authority before pressure becomes public accountability.
 </p>
+
+<a href="contact.html" class="hero-cta">Private Inquiry</a>
 </section>
 
+<section class="section">
+<div class="label">Position</div>
 <div class="statement">
-When authority is unclear,<br>
-consequences become personal.
+If no one can stop it now,<br>
+someone may explain it later.
 </div>
+</section>
 
 <section class="section">
-<div class="section-label">Engagement Models</div>
-<h2>Choose the right level of intervention.</h2>
+<div class="label">Mandates</div>
 
 <div class="grid">
 
 <div class="card">
-<small>01 · Rapid</small>
+<div class="num">01</div>
 <h3>Exposure Review</h3>
-<div class="price">From €6,000</div>
-<p>Focused review of one live decision, release, approval, or risk pathway.</p>
+<div class="price">FROM €6,000</div>
+<p>For one active decision already moving where responsibility is visible and authority is uncertain.</p>
 <div class="list">
 <div>Single pathway review</div>
-<div>Authority gap analysis</div>
-<div>Written findings</div>
+<div>Approval vs stop authority</div>
+<div>Written observations</div>
 <div>5–7 business days</div>
 </div>
-<a href="contact.html" class="card-cta">Review This Decision</a>
-</div>
-
-<div class="card featured">
-<small>02 · Core</small>
-<h3>Authority Design</h3>
-<div class="price">From €12,000</div>
-<p>For organizations where multiple teams share responsibility but no final stop owner exists.</p>
-<div class="list">
-<div>3–5 pathways reviewed</div>
-<div>Named authority structure</div>
-<div>Executive summary</div>
-<div>10–14 business days</div>
-</div>
-<a href="contact.html" class="card-cta">Define Authority</a>
+<a href="contact.html" class="cta">Review This Matter</a>
 </div>
 
 <div class="card">
-<small>03 · Board</small>
-<h3>Executive Advisory</h3>
-<div class="price">Private Scope</div>
-<p>Direct support for directors, officers, or founders carrying visible personal accountability.</p>
+<div class="num">02</div>
+<h3>Authority Design</h3>
+<div class="price">FROM €12,000</div>
+<p>For organizations where multiple functions participate, yet no single person clearly owns the final stop decision.</p>
 <div class="list">
-<div>Board-level exposure review</div>
-<div>AI governance oversight</div>
-<div>Custom mandate</div>
-<div>Confidential terms</div>
+<div>3–5 pathways assessed</div>
+<div>Named authority structure</div>
+<div>Escalation thresholds</div>
+<div>10–14 business days</div>
 </div>
-<a href="contact.html" class="card-cta">Discuss Exposure</a>
+<a href="contact.html" class="cta">Define Authority</a>
+</div>
+
+<div class="card">
+<div class="num">03</div>
+<h3>Executive Advisory</h3>
+<div class="price">PRIVATE SCOPE</div>
+<p>Confidential support for leaders carrying personal accountability in sensitive, regulated or visible decisions.</p>
+<div class="list">
+<div>Board / founder matters</div>
+<div>AI / regulatory exposure</div>
+<div>Rapid private engagement</div>
+<div>Custom scope</div>
+</div>
+<a href="contact.html" class="cta">Discuss Exposure</a>
 </div>
 
 </div>
 </section>
 
 <section class="section">
-<div class="section-label">Used When</div>
-<h2>The decision is already moving.</h2>
-
+<div class="label">Why Clients Engage</div>
+<div class="panel">
 <p>
-Common triggers include regulated approvals, AI deployment, executive signoff, cross-functional deadlock, public visibility, or unclear stop authority.
+The matter is already moving.<br><br>
+Several people are involved.<br><br>
+Responsibility is real.<br><br>
+Authority is not.
 </p>
-
-<div class="quote">
-Clear authority protects execution.<br>
-Unclear authority creates aftermath.
 </div>
 </section>
 
-<section class="section">
-<div class="section-label">How Work Is Done</div>
-<h2>Selective. Direct. Senior.</h2>
-
-<p>
-All engagements are principal-led, limited in number, and confidential by design. No junior staffing. No generic consulting layers.
-</p>
-
-<p style="font-size:14px;color:#8f8880;margin-top:8px;">
-Limited active mandates each quarter.
-</p>
-
-<div class="actions">
-<a href="contact.html" class="btn btn-primary">Request Private Review</a>
-<a href="faq.html" class="btn">Read FAQ</a>
-</div>
-</section>
-
-<div class="footer">
-&copy; 2026 Liran Bar-Shrim. All rights reserved.
-</div>
-
-</main>
+<footer>
+© 2025 All Rights Reserved · Liran Bar-Shrim
+</footer>
 
 <script>
-const menu=document.getElementById('menu');
-const overlay=document.getElementById('overlay');
+const drawer=document.getElementById("drawer");
+const overlay=document.getElementById("overlay");
 
-document.getElementById('openMenu').onclick=function(){
-menu.classList.add('active');
-overlay.classList.add('active');
+document.getElementById("openMenu").onclick=()=>{
+drawer.classList.add("active");
+overlay.classList.add("active");
 };
 
-document.getElementById('closeMenu').onclick=closeMenu;
-overlay.onclick=closeMenu;
+document.getElementById("closeMenu").onclick=closeDrawer;
+overlay.onclick=closeDrawer;
 
-document.addEventListener('keydown',function(e){
-if(e.key==='Escape'){closeMenu();}
-});
-
-function closeMenu(){
-menu.classList.remove('active');
-overlay.classList.remove('active');
+function closeDrawer(){
+drawer.classList.remove("active");
+overlay.classList.remove("active");
 }
 </script>
 
