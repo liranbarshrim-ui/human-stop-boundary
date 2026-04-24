@@ -3,484 +3,97 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
-
 <title>Named Stop Authority | Matrix Audit</title>
 <meta name="description" content="Why approval systems fail when no one is clearly empowered to stop continuation. Private perspective on stop authority, executive accountability, AI governance, and irreversible decisions.">
 <meta name="robots" content="index,follow">
 <link rel="canonical" href="https://matrix-audit.com/stop-authority.html">
-
 <meta property="og:title" content="Named Stop Authority | Matrix Audit">
 <meta property="og:description" content="Approval enables continuation. Stop authority interrupts continuation.">
 <meta property="og:type" content="website">
-
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
-
 <style>
-
-:root{
---bg:#090909;
---surface:#111111;
---gold:#c8a96e;
---text:#e8e2d7;
---muted:#a7a097;
---soft:#8f8880;
---border:#1d1d1d;
---border2:#2a2a2a;
---danger:#c0392b;
-}
-
+:root{--bg:#090909;--surface:#111111;--gold:#c8a96e;--text:#e8e2d7;--muted:#a7a097;--soft:#8f8880;--border:#1d1d1d;--border2:#2a2a2a;--danger:#c0392b;}
 *{margin:0;padding:0;box-sizing:border-box;}
 html{scroll-behavior:smooth;}
-
-body{
-background:var(--bg);
-color:var(--text);
-font-family:Inter,system-ui,sans-serif;
-overflow-x:hidden;
--webkit-font-smoothing:antialiased;
-text-rendering:optimizeLegibility;
-line-height:1.7;
-}
-
-body:before{
-content:'';
-position:fixed;
-inset:0;
-background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 240 240' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.025'/%3E%3C/svg%3E");
-opacity:.55;
-pointer-events:none;
-z-index:0;
-}
-
+body{background:var(--bg);color:var(--text);font-family:Inter,system-ui,sans-serif;overflow-x:hidden;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;line-height:1.7;}
+body:before{content:'';position:fixed;inset:0;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 240 240' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.025'/%3E%3C/svg%3E");opacity:.55;pointer-events:none;z-index:0;}
 a{text-decoration:none;color:inherit;}
-
-/* ── topbar ── */
-
-.topbar{
-position:sticky;
-top:0;
-z-index:999;
-display:flex;
-justify-content:space-between;
-align-items:center;
-padding:18px 24px;
-background:rgba(9,9,9,.94);
-backdrop-filter:blur(10px);
-border-bottom:1px solid rgba(255,255,255,.04);
-}
-
-.brand{
-display:flex;
-align-items:center;
-gap:12px;
-text-decoration:none;
-color:var(--text);
-font-family:'IBM Plex Mono',monospace;
-font-size:10px;
-letter-spacing:.28em;
-text-transform:uppercase;
-}
-
-.brand-line{
-width:18px;
-height:1px;
-background:var(--gold);
-}
-
-.menu-btn{
-display:flex;
-flex-direction:column;
-justify-content:center;
-gap:5px;
-background:none;
-border:none;
-cursor:pointer;
-padding:6px;
-}
-
-.menu-btn span{
-display:block;
-width:22px;
-height:1.5px;
-background:var(--text);
-transition:background .2s;
-}
-
+.topbar{position:sticky;top:0;z-index:999;display:flex;justify-content:space-between;align-items:center;padding:18px 24px;background:rgba(9,9,9,.94);backdrop-filter:blur(10px);border-bottom:1px solid rgba(255,255,255,.04);}
+.brand{display:flex;align-items:center;gap:12px;text-decoration:none;color:var(--text);font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.28em;text-transform:uppercase;}
+.brand-line{width:18px;height:1px;background:var(--gold);}
+.menu-btn{display:flex;flex-direction:column;justify-content:center;gap:5px;background:none;border:none;cursor:pointer;padding:6px;}
+.menu-btn span{display:block;width:22px;height:1.5px;background:var(--text);transition:background .2s;}
 .menu-btn:hover span{background:var(--gold);}
-
-/* ── overlay ── */
-
-.overlay{
-position:fixed;
-inset:0;
-background:rgba(0,0,0,.6);
-opacity:0;
-visibility:hidden;
-transition:.25s;
-z-index:998;
-}
-
+.overlay{position:fixed;inset:0;background:rgba(0,0,0,.6);opacity:0;visibility:hidden;transition:.25s;z-index:998;}
 .overlay.active{opacity:1;visibility:visible;}
-
-/* ── side menu ── */
-
-.side-menu{
-position:fixed;
-top:0;
-right:-340px;
-width:300px;
-max-width:90%;
-height:100vh;
-overflow-y:auto;
-background:#0d0d0d;
-border-left:1px solid var(--border);
-padding:28px 24px 48px;
-transition:.28s cubic-bezier(.4,0,.2,1);
-z-index:999;
-}
-
+.side-menu{position:fixed;top:0;right:-340px;width:300px;max-width:90%;height:100vh;overflow-y:auto;background:#0d0d0d;border-left:1px solid var(--border);padding:28px 24px 48px;transition:.28s cubic-bezier(.4,0,.2,1);z-index:999;}
 .side-menu.active{right:0;}
-
-.menu-head{
-display:flex;
-justify-content:space-between;
-align-items:center;
-margin-bottom:28px;
-}
-
-.menu-head-brand{
-font-family:'IBM Plex Mono',monospace;
-font-size:9px;
-letter-spacing:.24em;
-text-transform:uppercase;
-color:var(--gold);
-}
-
-.close-btn{
-background:none;
-border:none;
-font-size:26px;
-line-height:1;
-color:var(--muted);
-cursor:pointer;
-transition:.2s;
-}
-
+.menu-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:28px;}
+.menu-head-brand{font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:.24em;text-transform:uppercase;color:var(--gold);}
+.close-btn{background:none;border:none;font-size:26px;line-height:1;color:var(--muted);cursor:pointer;transition:.2s;}
 .close-btn:hover{color:var(--text);}
-
-.menu-group{
-border-top:1px solid var(--border);
-padding-top:20px;
-margin-top:20px;
-}
-
-.menu-label{
-font-family:'IBM Plex Mono',monospace;
-font-size:9px;
-letter-spacing:.22em;
-text-transform:uppercase;
-color:var(--gold);
-margin-bottom:12px;
-}
-
-.menu-group a{
-display:flex;
-align-items:center;
-gap:10px;
-padding:9px 0;
-text-decoration:none;
-color:var(--muted);
-font-size:14px;
-border-bottom:1px solid rgba(255,255,255,.03);
-transition:.18s;
-}
-
+.menu-group{border-top:1px solid var(--border);padding-top:20px;margin-top:20px;}
+.menu-label{font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:.22em;text-transform:uppercase;color:var(--gold);margin-bottom:12px;}
+.menu-group a{display:flex;align-items:center;gap:10px;padding:9px 0;text-decoration:none;color:var(--muted);font-size:14px;border-bottom:1px solid rgba(255,255,255,.03);transition:.18s;}
 .menu-group a:last-child{border-bottom:none;}
 .menu-group a:hover{color:var(--text);padding-left:4px;}
 .menu-group a.active{color:var(--gold);}
-
-.menu-divider-line{
-display:inline-block;
-width:12px;
-height:1px;
-background:var(--border2);
-flex-shrink:0;
-}
-
-.menu-cta{
-display:block;
-margin-top:28px;
-padding:14px 20px;
-border:1px solid var(--gold);
-color:var(--gold)!important;
-font-family:'IBM Plex Mono',monospace;
-font-size:10px;
-letter-spacing:.2em;
-text-transform:uppercase;
-text-align:center;
-text-decoration:none;
-transition:.2s;
-}
-
+.menu-divider-line{display:inline-block;width:12px;height:1px;background:var(--border2);flex-shrink:0;}
+.menu-cta{display:block;margin-top:28px;padding:14px 20px;border:1px solid var(--gold);color:var(--gold)!important;font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.2em;text-transform:uppercase;text-align:center;text-decoration:none;transition:.2s;}
 .menu-cta:hover{background:var(--gold);color:#111!important;}
-
-/* ── layout ── */
-
-.container{
-position:relative;
-z-index:1;
-max-width:980px;
-margin:0 auto;
-padding:70px 28px 110px;
-}
-
-/* ── hero ── */
-
-.hero{
-border-left:3px solid var(--gold);
-padding-left:24px;
-margin-bottom:58px;
-}
-
-.hero-label{
-font-family:'IBM Plex Mono',monospace;
-font-size:10px;
-letter-spacing:.24em;
-text-transform:uppercase;
-color:#b8aa8a;
-margin-bottom:18px;
-}
-
-.hero h1{
-font-family:'Playfair Display',serif;
-font-size:clamp(36px,6vw,62px);
-line-height:1.06;
-letter-spacing:-.02em;
-margin-bottom:24px;
-max-width:860px;
-}
-
-.hero p{
-font-size:18px;
-line-height:1.9;
-color:var(--muted);
-max-width:760px;
-margin-bottom:28px;
-}
-
-/* ── statement ── */
-
-.statement{
-background:linear-gradient(180deg,#111,#0d0d0d);
-border:1px solid var(--border2);
-border-left:3px solid var(--gold);
-padding:34px;
-margin-bottom:62px;
-font-family:'Playfair Display',serif;
-font-size:clamp(22px,3vw,32px);
-line-height:1.28;
-}
-
-/* ── sections ── */
-
-.section{
-padding:54px 0;
-border-top:1px solid rgba(255,255,255,.05);
-}
-
-.section-label{
-font-family:'IBM Plex Mono',monospace;
-font-size:10px;
-letter-spacing:.22em;
-text-transform:uppercase;
-color:var(--gold);
-margin-bottom:14px;
-}
-
-.section h2{
-font-family:'Playfair Display',serif;
-font-size:clamp(28px,4vw,42px);
-line-height:1.1;
-margin-bottom:20px;
-}
-
-.section p{
-font-size:17px;
-color:var(--muted);
-max-width:760px;
-margin-bottom:14px;
-}
-
-/* ── two col ── */
-
-.grid2{
-display:grid;
-grid-template-columns:1fr 1fr;
-gap:32px;
-}
-
-/* ── box ── */
-
-.box{
-background:linear-gradient(180deg,#121212,#0d0d0d);
-border:1px solid #262626;
-border-left:3px solid var(--gold);
-padding:28px 24px;
-}
-
-.box h3{
-font-family:'Playfair Display',serif;
-font-size:26px;
-line-height:1.1;
-margin-bottom:14px;
-}
-
-.box p{
-font-size:15px;
-color:var(--muted);
-line-height:1.8;
-margin-bottom:12px;
-}
-
+.menu-email{display:block;margin-top:8px;padding:12px 20px;border:1px solid var(--border2);color:var(--muted)!important;font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:.08em;text-align:center;text-decoration:none;transition:.2s;}
+.menu-email:hover{border-color:var(--gold);color:var(--gold)!important;}
+.container{position:relative;z-index:1;max-width:980px;margin:0 auto;padding:70px 28px 110px;}
+.hero{border-left:3px solid var(--gold);padding-left:24px;margin-bottom:58px;}
+.hero-label{font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.24em;text-transform:uppercase;color:#b8aa8a;margin-bottom:18px;}
+.hero h1{font-family:'Playfair Display',serif;font-size:clamp(26px,4vw,46px);line-height:1.1;letter-spacing:-.01em;margin-bottom:24px;max-width:860px;}
+.hero p{font-size:18px;line-height:1.9;color:var(--muted);max-width:760px;margin-bottom:28px;}
+.statement{background:linear-gradient(180deg,#111,#0d0d0d);border:1px solid var(--border2);border-left:3px solid var(--gold);padding:34px;margin-bottom:62px;font-family:'Playfair Display',serif;font-size:clamp(22px,3vw,32px);line-height:1.28;}
+.section{padding:54px 0;border-top:1px solid rgba(255,255,255,.05);}
+.section-label{font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.22em;text-transform:uppercase;color:var(--gold);margin-bottom:14px;}
+.section h2{font-family:'Playfair Display',serif;font-size:clamp(24px,3.5vw,38px);line-height:1.1;margin-bottom:20px;}
+.section p{font-size:17px;color:var(--muted);max-width:760px;margin-bottom:14px;}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:32px;}
+.box{background:linear-gradient(180deg,#121212,#0d0d0d);border:1px solid #262626;border-left:3px solid var(--gold);padding:28px 24px;}
+.box h3{font-family:'Playfair Display',serif;font-size:22px;line-height:1.1;margin-bottom:14px;}
+.box p{font-size:15px;color:var(--muted);line-height:1.8;margin-bottom:12px;}
 .box p:last-child{margin-bottom:0;}
-
-/* ── stack list ── */
-
-.stack{
-display:grid;
-gap:0;
-margin-top:28px;
-}
-
-.stack-item{
-padding:16px 20px;
-background:linear-gradient(180deg,#121212,#0d0d0d);
-border:1px solid var(--border2);
-border-top:none;
-font-size:15px;
-color:var(--muted);
-line-height:1.7;
-}
-
+.box-danger{background:linear-gradient(180deg,#130d0d,#0d0d0d);border:1px solid #2a1a1a;border-left:3px solid var(--danger);padding:28px 24px;}
+.box-danger h3{font-family:'Playfair Display',serif;font-size:22px;line-height:1.1;margin-bottom:14px;}
+.box-danger .danger-label{font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:.22em;text-transform:uppercase;color:var(--danger);margin-bottom:14px;opacity:.8;}
+.box-danger p{font-size:15px;color:var(--muted);line-height:1.8;margin-bottom:12px;}
+.box-danger p:last-child{margin-bottom:0;}
+.stack{display:grid;gap:0;margin-top:28px;}
+.stack-item{padding:16px 20px;background:linear-gradient(180deg,#121212,#0d0d0d);border:1px solid var(--border2);border-top:none;font-size:15px;color:var(--muted);line-height:1.7;}
 .stack-item:first-child{border-top:1px solid var(--border2);}
-
-/* ── pull quote ── */
-
-.pull{
-margin-top:32px;
-padding:34px;
-background:linear-gradient(180deg,#111,#0d0d0d);
-border:1px solid var(--border2);
-border-left:3px solid var(--gold);
-font-family:'Playfair Display',serif;
-font-size:clamp(22px,3vw,30px);
-line-height:1.3;
-}
-
-/* ── center ── */
-
+.pull{margin-top:32px;padding:34px;background:linear-gradient(180deg,#111,#0d0d0d);border:1px solid var(--border2);border-left:3px solid var(--gold);font-family:'Playfair Display',serif;font-size:clamp(20px,2.5vw,28px);line-height:1.3;}
 .center{text-align:center;}
 .center .section-label{display:inline-block;}
 .center h2{margin-left:auto;margin-right:auto;}
 .center p{margin-left:auto;margin-right:auto;}
 .center .actions{justify-content:center;}
-
-/* ── actions ── */
-
-.actions{
-display:flex;
-gap:14px;
-flex-wrap:wrap;
-margin-top:28px;
-}
-
-.btn{
-display:inline-block;
-padding:16px 24px;
-font-family:'IBM Plex Mono',monospace;
-font-size:11px;
-letter-spacing:.18em;
-text-transform:uppercase;
-font-weight:500;
-transition:.2s;
-border:1px solid var(--border2);
-color:var(--text);
-}
-
+.actions{display:flex;gap:14px;flex-wrap:wrap;margin-top:28px;}
+.btn{display:inline-block;padding:16px 24px;font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.18em;text-transform:uppercase;font-weight:500;transition:.2s;border:1px solid var(--border2);color:var(--text);}
 .btn-primary{background:var(--gold);color:#111;border-color:var(--gold);}
 .btn:hover,.btn-primary:hover{transform:translateY(-2px);}
-
-/* ── footer banner ── */
-
-.footer-banner{
-margin-top:74px;
-border:1px solid var(--border2);
-background:#0d0d0d;
-}
-
-.footer-link{
-display:flex;
-justify-content:space-between;
-align-items:center;
-padding:20px 24px;
-text-decoration:none;
-color:var(--text);
-border-bottom:1px solid var(--border2);
-transition:.18s;
-}
-
+.footer-banner{margin-top:74px;border:1px solid var(--border2);background:#0d0d0d;}
+.footer-link{display:flex;justify-content:space-between;align-items:center;padding:20px 24px;text-decoration:none;color:var(--text);border-bottom:1px solid var(--border2);transition:.18s;}
 .footer-link:last-child{border-bottom:none;}
 .footer-link:hover{background:#151515;padding-left:28px;}
-
-.footer-link-left{
-display:flex;
-flex-direction:column;
-gap:4px;
-}
-
-.footer-link-label{
-font-family:'IBM Plex Mono',monospace;
-font-size:9px;
-letter-spacing:.22em;
-text-transform:uppercase;
-color:var(--gold);
-}
-
-.footer-link-title{
-font-family:'Playfair Display',serif;
-font-size:17px;
-line-height:1.2;
-}
-
-.footer-link-arrow{
-font-family:'IBM Plex Mono',monospace;
-font-size:14px;
-color:var(--muted);
-}
-
-.footer{
-margin-top:28px;
-padding-top:28px;
-border-top:1px solid var(--border2);
-font-size:11px;
-letter-spacing:.08em;
-color:#6e6964;
-font-family:'IBM Plex Mono',monospace;
-}
-
-/* ── mobile ── */
-
+.footer-link-left{display:flex;flex-direction:column;gap:4px;}
+.footer-link-label{font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:.22em;text-transform:uppercase;color:var(--gold);}
+.footer-link-title{font-family:'Playfair Display',serif;font-size:17px;line-height:1.2;}
+.footer-link-arrow{font-family:'IBM Plex Mono',monospace;font-size:14px;color:var(--muted);}
+.footer{margin-top:28px;padding-top:28px;border-top:1px solid var(--border2);font-size:11px;letter-spacing:.08em;color:#6e6964;font-family:'IBM Plex Mono',monospace;}
 @media(max-width:860px){
 .container{padding:56px 18px 90px;}
-.hero h1{font-size:clamp(32px,10vw,52px);}
+.hero h1{font-size:clamp(22px,7vw,36px);}
 .hero p,.section p{font-size:16px;}
 .grid2{grid-template-columns:1fr;}
 .btn{width:100%;text-align:center;}
 }
-
 </style>
 </head>
-
 <body>
 
 <header class="topbar">
@@ -489,9 +102,7 @@ font-family:'IBM Plex Mono',monospace;
     <span>Decision Authority Research</span>
   </a>
   <button class="menu-btn" id="openMenu" aria-label="Open menu">
-    <span></span>
-    <span></span>
-    <span></span>
+    <span></span><span></span><span></span>
   </button>
 </header>
 
@@ -512,6 +123,12 @@ font-family:'IBM Plex Mono',monospace;
   </div>
 
   <div class="menu-group">
+    <div class="menu-label">Research</div>
+    <a href="research.html"><span class="menu-divider-line"></span>Independent Research</a>
+    <a href="whitepaper.html"><span class="menu-divider-line"></span>White Paper</a>
+  </div>
+
+  <div class="menu-group">
     <div class="menu-label">Insights</div>
     <a href="exposure.html"><span class="menu-divider-line"></span>When Failure Lands on One Name</a>
     <a href="failure-points.html"><span class="menu-divider-line"></span>Where Accountability Breaks</a>
@@ -529,21 +146,21 @@ font-family:'IBM Plex Mono',monospace;
   </div>
 
   <a href="contact.html" class="menu-cta">Private Intake</a>
+  <a href="mailto:Liran@liranbarshrim.com" class="menu-email">Liran@liranbarshrim.com</a>
 </aside>
 
 <main class="container">
 
   <section class="hero">
     <div class="hero-label">Named Stop Authority</div>
-    <h1>Most organizations define how decisions proceed. Far fewer define who can stop them.</h1>
-    <p>
-      A private perspective on governance failure, executive exposure, AI systems, and why authority matters most when momentum is already moving.
-    </p>
+    <h1>Someone will be named after this fails.<br>That name is already on the approval chain.</h1>
+    <p>When careers depend on yes, who is protected enough to say no. When momentum is already moving, who can stop it. And if no one can — whose name remains.</p>
   </section>
 
   <div class="statement">
-    Approval enables continuation.<br>
-    Stop authority interrupts continuation.
+    If this fails, whose name remains?<br>
+    Who signs when no one wants ownership?<br>
+    Who can stop momentum once careers depend on yes?
   </div>
 
   <section class="section">
@@ -554,9 +171,7 @@ font-family:'IBM Plex Mono',monospace;
         <p>Stakeholders reviewed it. Committees approved it. Teams aligned on it.</p>
         <p>That language survives while outcomes remain positive.</p>
         <p>When failure appears, shared ownership often collapses into one question:</p>
-        <div class="pull" style="font-size:clamp(20px,3vw,28px);">
-          Who was responsible?
-        </div>
+        <div class="pull" style="margin-top:20px;font-size:clamp(18px,2.5vw,26px);">Who was responsible?</div>
       </div>
       <div>
         <div class="section-label">What Changes Under Pressure</div>
@@ -582,6 +197,65 @@ font-family:'IBM Plex Mono',monospace;
     </div>
   </section>
 
+  <!-- Override Authority -->
+  <section class="section">
+    <div class="section-label">Override Authority</div>
+    <h2>Defining who can stop is not enough. You must also define who can override the stop — and at what cost.</h2>
+    <p>Every organization with a named stop authority has an implicit question it rarely asks: who can override that decision, under what conditions, and who bears the consequences if the override was wrong.</p>
+    <p>Without answers to those questions, stop authority becomes procedural rather than real. A senior leader who can say "proceed anyway" without formal accountability has not been constrained by the stop. The stop has been bypassed.</p>
+    <div class="grid2" style="margin-top:32px;">
+      <div class="box">
+        <h3>The Stop Is Not the End</h3>
+        <p>A named stop is the beginning of a decision, not the end of one.</p>
+        <p>When a stop is invoked, two things must already be defined: who has the authority to release it, and what is required before that release is granted.</p>
+        <p>If neither is defined in advance, the stop dissolves under organizational pressure.</p>
+      </div>
+      <div class="box-danger">
+        <div class="danger-label">Override Authority</div>
+        <h3>Who Can Say Yes After the Stop</h3>
+        <p>The person who can override a stop must be named in advance, at a level above the stop authority itself.</p>
+        <p>That person must be personally accountable for the override decision. If the override is wrong, the consequences must be traceable back to a name.</p>
+        <p>Without that traceability, override is just pressure with a formal costume.</p>
+      </div>
+    </div>
+    <div class="pull">
+      The stop authority protects the organization.<br>
+      The override authority exposes whoever uses it.
+    </div>
+  </section>
+
+  <!-- Protection -->
+  <section class="section">
+    <div class="section-label">Protection for the Person Who Stops</div>
+    <h2>Stop authority without protection is theater.</h2>
+    <p>If the person named to stop a decision cannot exercise that authority without fear of retaliation, the authority is nominal. Cautious professionals will avoid such roles. Ambitious ones will accept them while privately deferring to whoever holds real power.</p>
+    <p>Any serious governance structure must answer this explicitly: is the person who invokes stop authority protected from organizational consequences when acting in good faith, based on reasonable professional judgment?</p>
+    <div class="stack">
+      <div class="stack-item">Protection must be stated before the crisis, not offered after it.</div>
+      <div class="stack-item">Acting in good faith means documented reasoning, not perfect outcomes.</div>
+      <div class="stack-item">A stop that results in punishment is a signal that real authority does not exist.</div>
+    </div>
+  </section>
+
+
+  <!-- Oversight of Stop Authority -->
+  <section class="section">
+    <div class="section-label">Oversight of Stop Authority</div>
+    <h2>Stop authority without oversight is power without accountability.</h2>
+    <p>The person holding stop authority can use it correctly. They can also use it to block rivals, delay commercial moves, conceal their own failures, or accumulate organizational influence.</p>
+    <p>Without oversight, the button becomes a weapon.</p>
+    <div class="stack">
+      <div class="stack-item">Who verifies that stop authority is exercised on professional grounds, not personal interest.</div>
+      <div class="stack-item">Who documents each stop decision and the reasoning behind it.</div>
+      <div class="stack-item">Who can challenge a stop that appears unfounded.</div>
+      <div class="stack-item">What happens if a stop is found to have been exercised improperly.</div>
+    </div>
+    <div class="pull">
+      Oversight does not weaken stop authority.<br>
+      It is what makes stop authority credible.
+    </div>
+  </section>
+
   <section class="section">
     <div class="section-label">Where This Appears</div>
     <div class="stack">
@@ -602,6 +276,7 @@ font-family:'IBM Plex Mono',monospace;
       <div>
         <div class="section-label">Executive Question</div>
         <p>Who is explicitly named to stop your next irreversible decision?</p>
+        <p>Who is named to override that stop — and what do they personally risk if the override is wrong?</p>
         <p>If the answer requires meetings, escalation chains, or interpretation, time may already be lost.</p>
       </div>
       <div>
@@ -662,15 +337,12 @@ font-family:'IBM Plex Mono',monospace;
 <script>
 const menu = document.getElementById('menu');
 const overlay = document.getElementById('overlay');
-
 document.getElementById('openMenu').onclick = function() {
   menu.classList.add('active');
   overlay.classList.add('active');
 };
-
 document.getElementById('closeMenu').onclick = closeMenu;
 overlay.onclick = closeMenu;
-
 function closeMenu() {
   menu.classList.remove('active');
   overlay.classList.remove('active');
