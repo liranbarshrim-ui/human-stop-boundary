@@ -3,38 +3,40 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>DAR | Decision Authority Record | Decision Authority Research</title>
-<meta name="description" content="Decision Authority Record defines who can stop a consequential decision before exposure becomes personal. Private advisory for boards, executives and counsel.">
+<title>DAR | Decision Authority Record | Matrix Audit</title>
+<meta name="description" content="Decision Authority Record. Define who can stop an irreversible decision before ownership becomes personal.">
 
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Cormorant+Garamond:wght@400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
 
 <style>
 :root{
---bg:#0a0d0b;
---bg2:#101511;
---card:#131a15;
---gold:#c7a86b;
---green:#123222;
---green2:#1b4630;
---text:#edf2ec;
---muted:#9aa59c;
+--bg:#07110c;
+--bg2:#0d1812;
+--panel:#122019;
+--panel2:#16271f;
+--gold:#c8a96e;
+--gold2:#e1c48b;
+--green:#163726;
+--green2:#214c36;
+--text:#eef4ef;
+--muted:#9ca8a0;
 --line:rgba(255,255,255,.07);
 }
 
-*{margin:0;padding:0;box-sizing:border-box;}
-html{scroll-behavior:smooth;}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
 body{
+font-family:Inter,sans-serif;
 background:
-radial-gradient(circle at top right, rgba(24,70,48,.35), transparent 35%),
-radial-gradient(circle at bottom left, rgba(199,168,107,.08), transparent 35%),
+radial-gradient(circle at top right, rgba(33,76,54,.35), transparent 35%),
+radial-gradient(circle at bottom left, rgba(200,169,110,.08), transparent 35%),
 var(--bg);
 color:var(--text);
-font-family:Inter,sans-serif;
 overflow-x:hidden;
 line-height:1.65;
 }
 
-a{text-decoration:none;color:inherit;}
+a{text-decoration:none;color:inherit}
 
 body:before{
 content:'';
@@ -42,21 +44,21 @@ position:fixed;inset:0;
 background-image:
 linear-gradient(rgba(255,255,255,.015) 1px, transparent 1px),
 linear-gradient(90deg, rgba(255,255,255,.015) 1px, transparent 1px);
-background-size:36px 36px;
+background-size:38px 38px;
+opacity:.28;
 pointer-events:none;
-opacity:.35;
 }
 
-/* TOPBAR */
+/* HEADER */
 .topbar{
 position:fixed;
 top:0;left:0;width:100%;
 z-index:999;
-padding:18px 34px;
 display:flex;
 justify-content:space-between;
 align-items:center;
-background:rgba(10,13,11,.78);
+padding:18px 28px;
+background:rgba(7,17,12,.82);
 backdrop-filter:blur(14px);
 border-bottom:1px solid var(--line);
 }
@@ -66,13 +68,12 @@ display:flex;
 align-items:center;
 gap:12px;
 font-size:11px;
-letter-spacing:.28em;
+letter-spacing:.24em;
 text-transform:uppercase;
-color:#f5f5f5;
 }
 
 .brand-line{
-width:26px;height:1px;background:var(--gold);
+width:24px;height:1px;background:var(--gold);
 }
 
 .menu-btn{
@@ -86,44 +87,46 @@ padding:4px;
 }
 
 .menu-btn span{
-width:24px;height:1px;
-background:#fff;
-opacity:.9;
+width:24px;height:1px;background:#fff;opacity:.9;
 }
 
 /* MENU */
 .overlay{
 position:fixed;inset:0;
-background:rgba(0,0,0,.65);
+background:rgba(0,0,0,.62);
 opacity:0;visibility:hidden;
 transition:.25s;
 z-index:998;
 }
-
 .overlay.active{opacity:1;visibility:visible;}
 
 .side-menu{
 position:fixed;
-right:-100%;
-top:0;
+top:0;right:-100%;
 width:82%;
-max-width:380px;
+max-width:370px;
 height:100vh;
-background:#0f1411;
-z-index:999;
-padding:34px 28px;
-transition:.32s ease;
 overflow-y:auto;
+background:#0d1712;
 border-left:1px solid var(--line);
+z-index:999;
+padding:28px;
+transition:.28s ease;
 }
-
 .side-menu.active{right:0;}
 
-.menu-top{
+.menu-head{
 display:flex;
 justify-content:space-between;
 align-items:center;
-margin-bottom:28px;
+margin-bottom:24px;
+}
+
+.menu-title{
+font-size:11px;
+letter-spacing:.24em;
+text-transform:uppercase;
+color:var(--gold);
 }
 
 .close-btn{
@@ -131,102 +134,90 @@ background:none;border:none;
 font-size:28px;color:#fff;cursor:pointer;
 }
 
-.menu-title{
-font-size:11px;
-letter-spacing:.25em;
-text-transform:uppercase;
-color:var(--gold);
-}
-
-.menu-block{
-margin-bottom:28px;
-}
+.menu-group{margin-bottom:26px;}
 
 .menu-label{
 font-size:11px;
 letter-spacing:.18em;
 text-transform:uppercase;
 color:var(--gold);
-margin-bottom:12px;
-opacity:.8;
+margin-bottom:10px;
 }
 
-.menu-block a{
+.menu-group a{
 display:block;
 padding:10px 0;
-border-bottom:1px solid rgba(255,255,255,.04);
-color:#e8ece8;
 font-size:15px;
+border-bottom:1px solid rgba(255,255,255,.04);
+color:#edf2ed;
 }
 
 .menu-cta{
-margin-top:18px;
 display:block;
+margin-top:10px;
 padding:14px;
 text-align:center;
+border-radius:12px;
 background:linear-gradient(135deg,var(--green2),var(--green));
-border:1px solid rgba(199,168,107,.35);
-color:#fff!important;
-border-radius:10px;
-font-size:13px;
+border:1px solid rgba(200,169,110,.28);
 }
 
 .menu-mail{
 display:block;
-margin-top:12px;
+margin-top:10px;
 padding:13px;
 text-align:center;
+border-radius:12px;
 border:1px solid var(--line);
-border-radius:10px;
-font-size:13px;
 color:var(--gold)!important;
 word-break:break-word;
+font-size:13px;
 }
 
 /* HERO */
 .hero{
-padding:150px 24px 80px;
-max-width:1180px;
+max-width:1200px;
 margin:auto;
+padding:150px 24px 90px;
 display:grid;
 grid-template-columns:1.1fr .9fr;
-gap:40px;
+gap:28px;
 align-items:center;
 }
 
 .kicker{
 font-size:12px;
-letter-spacing:.26em;
+letter-spacing:.24em;
 text-transform:uppercase;
 color:var(--gold);
 margin-bottom:18px;
 }
 
 .hero h1{
-font-family:"Cormorant Garamond",serif;
-font-size:74px;
-line-height:.98;
+font-size:72px;
+line-height:.96;
 font-weight:600;
-margin-bottom:22px;
+max-width:760px;
+margin-bottom:18px;
 }
 
-.hero h1 span{color:var(--gold);}
+.hero h1 span{color:var(--gold2)}
 
 .hero p{
 font-size:18px;
-max-width:620px;
 color:var(--muted);
+max-width:620px;
 margin-bottom:28px;
 }
 
-.hero-actions{
+.actions{
 display:flex;
 gap:14px;
 flex-wrap:wrap;
 }
 
 .btn{
-padding:15px 22px;
+padding:14px 20px;
 border-radius:12px;
 font-size:13px;
 letter-spacing:.12em;
@@ -235,7 +226,7 @@ text-transform:uppercase;
 
 .btn-primary{
 background:linear-gradient(135deg,var(--green2),var(--green));
-border:1px solid rgba(199,168,107,.35);
+border:1px solid rgba(200,169,110,.28);
 }
 
 .btn-secondary{
@@ -243,19 +234,17 @@ border:1px solid var(--line);
 }
 
 .hero-card{
-background:linear-gradient(145deg,#111813,#152219);
-border:1px solid rgba(199,168,107,.15);
+background:linear-gradient(145deg,var(--panel),var(--panel2));
+border:1px solid rgba(200,169,110,.14);
+border-radius:20px;
 padding:26px;
-border-radius:18px;
-box-shadow:0 20px 60px rgba(0,0,0,.28);
 }
 
 .metric{
 padding:14px 0;
 border-bottom:1px solid rgba(255,255,255,.05);
 }
-
-.metric:last-child{border-bottom:none;}
+.metric:last-child{border-bottom:none}
 
 .metric strong{
 display:block;
@@ -263,7 +252,6 @@ font-size:15px;
 color:var(--gold);
 margin-bottom:5px;
 }
-
 .metric span{
 font-size:14px;
 color:var(--muted);
@@ -271,23 +259,22 @@ color:var(--muted);
 
 /* SECTION */
 .section{
-max-width:1180px;
+max-width:1200px;
 margin:auto;
 padding:0 24px 90px;
 }
 
-.headline{
-font-family:"Cormorant Garamond",serif;
-font-size:54px;
-line-height:1;
-margin-bottom:18px;
+.section-title{
+font-size:44px;
+margin-bottom:14px;
+font-weight:600;
 }
 
-.sub{
+.section-sub{
+font-size:18px;
 color:var(--muted);
 max-width:760px;
-font-size:18px;
-margin-bottom:34px;
+margin-bottom:28px;
 }
 
 .grid{
@@ -297,10 +284,10 @@ gap:18px;
 }
 
 .card{
-background:linear-gradient(145deg,#121813,#16211a);
-border:1px solid rgba(199,168,107,.12);
-padding:28px;
+background:linear-gradient(145deg,var(--panel),var(--panel2));
+border:1px solid rgba(200,169,110,.12);
 border-radius:18px;
+padding:26px;
 }
 
 .card small{
@@ -309,7 +296,7 @@ font-size:11px;
 letter-spacing:.22em;
 text-transform:uppercase;
 color:var(--gold);
-margin-bottom:12px;
+margin-bottom:10px;
 }
 
 .card h3{
@@ -318,62 +305,59 @@ margin-bottom:10px;
 }
 
 .card p{
-color:var(--muted);
 font-size:15px;
+color:var(--muted);
 }
 
 /* CTA */
 .cta{
-max-width:1180px;
-margin:0 auto 90px;
-padding:0 24px;
+max-width:1200px;
+margin:auto;
+padding:0 24px 90px;
 }
 
 .cta-box{
-background:linear-gradient(145deg,#131d16,#183021);
-border:1px solid rgba(199,168,107,.18);
-padding:44px;
+background:linear-gradient(145deg,var(--panel),#1a3124);
+border:1px solid rgba(200,169,110,.16);
 border-radius:22px;
+padding:46px;
 text-align:center;
 }
 
 .cta-box h2{
-font-family:"Cormorant Garamond",serif;
-font-size:52px;
+font-size:48px;
+line-height:1.05;
 margin-bottom:14px;
 }
 
 .cta-box p{
-color:var(--muted);
 font-size:18px;
-margin-bottom:24px;
+color:var(--muted);
+margin-bottom:22px;
 }
 
 /* FOOTER */
 footer{
+padding:26px;
 border-top:1px solid var(--line);
-padding:28px 24px;
 text-align:center;
-color:#9ba59d;
 font-size:13px;
-letter-spacing:.08em;
+color:#96a29a;
 }
 
 /* MOBILE */
 @media(max-width:980px){
-.hero{
-grid-template-columns:1fr;
-}
-.hero h1{font-size:58px;}
-.grid{grid-template-columns:1fr 1fr;}
+.hero{grid-template-columns:1fr}
+.grid{grid-template-columns:1fr 1fr}
+.hero h1{font-size:58px}
 }
 
 @media(max-width:700px){
-.hero h1{font-size:46px;}
-.headline{font-size:40px;}
-.grid{grid-template-columns:1fr;}
-.topbar{padding:16px 18px;}
-.brand{font-size:10px;letter-spacing:.18em;}
+.grid{grid-template-columns:1fr}
+.hero h1{font-size:44px}
+.section-title{font-size:34px}
+.topbar{padding:16px 18px}
+.brand{font-size:10px;letter-spacing:.16em}
 }
 </style>
 </head>
@@ -393,13 +377,12 @@ grid-template-columns:1fr;
 <div class="overlay" id="overlay"></div>
 
 <aside class="side-menu" id="menu">
-
-<div class="menu-top">
+<div class="menu-head">
 <div class="menu-title">Matrix Audit</div>
 <button class="close-btn" id="closeMenu">&times;</button>
 </div>
 
-<div class="menu-block">
+<div class="menu-group">
 <div class="menu-label">Primary</div>
 <a href="index.html">Home</a>
 <a href="dar.html">DAR</a>
@@ -408,7 +391,7 @@ grid-template-columns:1fr;
 <a href="contact.html">Contact</a>
 </div>
 
-<div class="menu-block">
+<div class="menu-group">
 <div class="menu-label">Research</div>
 <a href="research.html">Independent Research</a>
 <a href="whitepaper.html">White Paper</a>
@@ -418,20 +401,25 @@ grid-template-columns:1fr;
 
 <a href="contact.html" class="menu-cta">Private Intake</a>
 <a href="mailto:Liran@liranbarshrim.com" class="menu-mail">Liran@liranbarshrim.com</a>
-
 </aside>
 
 <section class="hero">
 
 <div>
 <div class="kicker">Decision Authority Record</div>
-<h1>Approval is common.<br><span>Real stop power</span><br>is rare.</h1>
+
+<h1>
+Approval is common.<br>
+<span>Real stop power</span><br>
+is rare.
+</h1>
 
 <p>
-DAR defines one named authority who can stop a consequential decision before exposure becomes personal. Built for boards, executives, founders and counsel.
+DAR defines one named authority who can stop a consequential decision before exposure becomes personal.
+Built for boards, executives, founders and counsel.
 </p>
 
-<div class="hero-actions">
+<div class="actions">
 <a href="contact.html" class="btn btn-primary">Private Inquiry</a>
 <a href="services.html" class="btn btn-secondary">View Services</a>
 </div>
@@ -442,14 +430,17 @@ DAR defines one named authority who can stop a consequential decision before exp
 <strong>One Decision</strong>
 <span>Identify the pathway that matters most now.</span>
 </div>
+
 <div class="metric">
 <strong>One Authority</strong>
-<span>Name the individual empowered to stop it.</span>
+<span>Name the person empowered to stop it.</span>
 </div>
+
 <div class="metric">
 <strong>One Record</strong>
 <span>Create written authority before pressure begins.</span>
 </div>
+
 <div class="metric">
 <strong>One Outcome</strong>
 <span>Clarity before consequence.</span>
@@ -459,21 +450,22 @@ DAR defines one named authority who can stop a consequential decision before exp
 </section>
 
 <section class="section">
-<h2 class="headline">What DAR Solves</h2>
-<p class="sub">
-Most organizations define how decisions move forward. Very few define who can halt momentum when risk changes.
+<h2 class="section-title">What DAR Solves</h2>
+<p class="section-sub">
+Most organizations define how decisions proceed. Few define who can halt momentum when risk changes.
 </p>
 
 <div class="grid">
+
 <div class="card">
 <small>01</small>
 <h3>Authority Gap</h3>
-<p>Responsibility exists, but no one clearly holds stop authority.</p>
+<p>Responsibility exists, but no one clearly holds stop power.</p>
 </div>
 
 <div class="card">
 <small>02</small>
-<h3>Board Exposure</h3>
+<h3>Exposure Risk</h3>
 <p>After failure, ownership becomes personal and retrospective.</p>
 </div>
 
@@ -482,30 +474,33 @@ Most organizations define how decisions move forward. Very few define who can ha
 <h3>Speed Pressure</h3>
 <p>Momentum outruns governance in fast-moving environments.</p>
 </div>
+
 </div>
 </section>
 
 <section class="section">
-<h2 class="headline">Where It Applies</h2>
+<h2 class="section-title">Where It Applies</h2>
 
 <div class="grid">
+
 <div class="card">
 <small>AI</small>
-<h3>Autonomous Decisions</h3>
-<p>When systems move faster than human review.</p>
+<h3>Autonomous Systems</h3>
+<p>When execution moves faster than review.</p>
 </div>
 
 <div class="card">
 <small>Finance</small>
 <h3>Material Transactions</h3>
-<p>High-value decisions under urgency and complexity.</p>
+<p>High-value decisions under urgency and uncertainty.</p>
 </div>
 
 <div class="card">
 <small>Legal</small>
 <h3>Regulated Exposure</h3>
-<p>Someone signs without true power to stop.</p>
+<p>Someone signs without true authority to stop.</p>
 </div>
+
 </div>
 </section>
 
@@ -528,7 +523,7 @@ const overlay=document.getElementById('overlay');
 document.getElementById('openMenu').onclick=()=>{
 menu.classList.add('active');
 overlay.classList.add('active');
-}
+};
 
 document.getElementById('closeMenu').onclick=closeMenu;
 overlay.onclick=closeMenu;
