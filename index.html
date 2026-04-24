@@ -6,7 +6,7 @@
 <title>Decision Authority Research</title>
 <meta name="description" content="Private advisory for boards, executives and counsel facing irreversible decisions under uncertainty.">
 
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=IBM+Plex+Mono:wght@300;400;500;600&display=swap" rel="stylesheet">
 
 <style>
 *{
@@ -21,23 +21,22 @@ scroll-behavior:smooth;
 
 :root{
 --bg:#07110b;
---bg2:#0d1912;
---panel:#13241a;
+--bg2:#0d1711;
+--panel:#112018;
 --gold:#c8a86b;
---gold2:#e6c78d;
---green:#103722;
---text:#f7f5ef;
---muted:#aeb5ae;
+--gold2:#e4c68e;
+--white:#f5f4ef;
+--muted:#9da59e;
 --line:rgba(255,255,255,.08);
 }
 
 body{
-font-family:Inter,sans-serif;
+font-family:'Cormorant Garamond',serif;
 background:
-radial-gradient(circle at top right,rgba(200,168,107,.10),transparent 28%),
-radial-gradient(circle at bottom left,rgba(16,55,34,.28),transparent 32%),
-linear-gradient(135deg,#06100a,#08140d,#050a07);
-color:var(--text);
+radial-gradient(circle at top right,rgba(200,168,107,.08),transparent 25%),
+radial-gradient(circle at bottom left,rgba(18,70,38,.24),transparent 30%),
+linear-gradient(135deg,#06100a,#08120c,#050805);
+color:var(--white);
 overflow-x:hidden;
 }
 
@@ -51,37 +50,46 @@ position:fixed;
 top:0;
 left:0;
 width:100%;
-height:76px;
+height:74px;
+padding:0 18px;
 display:flex;
 justify-content:space-between;
 align-items:center;
-padding:0 28px;
-background:rgba(7,17,11,.86);
-backdrop-filter:blur(12px);
+background:rgba(7,17,11,.90);
+backdrop-filter:blur(10px);
 border-bottom:1px solid var(--line);
-z-index:999;
+z-index:1000;
 }
 
 .brand{
 display:flex;
 align-items:center;
-gap:14px;
-font-size:12px;
-font-weight:600;
-letter-spacing:.22em;
-text-transform:uppercase;
-color:var(--gold2);
+gap:10px;
+max-width:78%;
+overflow:hidden;
+white-space:nowrap;
 }
 
 .brand-line{
-width:28px;
+width:26px;
 height:1px;
 background:linear-gradient(90deg,var(--gold),transparent);
+flex-shrink:0;
+}
+
+.brand-text{
+font-family:'IBM Plex Mono',monospace;
+font-size:11px;
+letter-spacing:.16em;
+text-transform:uppercase;
+color:#ffffff;
+overflow:hidden;
+text-overflow:ellipsis;
 }
 
 .menu-btn{
-width:44px;
-height:44px;
+width:42px;
+height:42px;
 background:none;
 border:none;
 display:flex;
@@ -94,14 +102,14 @@ cursor:pointer;
 .menu-btn span{
 display:block;
 height:2px;
-background:var(--gold2);
 border-radius:2px;
+background:#ffffff;
 }
 
 .overlay{
 position:fixed;
 inset:0;
-background:rgba(0,0,0,.58);
+background:rgba(0,0,0,.55);
 backdrop-filter:blur(4px);
 opacity:0;
 visibility:hidden;
@@ -119,17 +127,17 @@ position:fixed;
 top:0;
 right:-100%;
 width:50%;
-max-width:430px;
-min-width:280px;
+min-width:260px;
+max-width:360px;
 height:100vh;
-padding:30px;
+overflow-y:auto;
+padding:22px;
 background:
-radial-gradient(circle at top right,rgba(200,168,107,.10),transparent 30%),
-linear-gradient(180deg,#0d1912,#09110c);
-border-left:1px solid rgba(200,168,107,.18);
+radial-gradient(circle at top right,rgba(200,168,107,.08),transparent 25%),
+linear-gradient(180deg,#0d1711,#08110b);
+border-left:1px solid rgba(200,168,107,.14);
 transition:.28s ease;
 z-index:999;
-overflow-y:auto;
 }
 
 .side-menu.active{
@@ -140,248 +148,176 @@ right:0;
 display:flex;
 justify-content:space-between;
 align-items:center;
-margin-bottom:28px;
+margin-bottom:18px;
 }
 
 .menu-title{
-font-size:11px;
-letter-spacing:.22em;
+font-family:'IBM Plex Mono',monospace;
+font-size:10px;
+letter-spacing:.20em;
 text-transform:uppercase;
 color:var(--gold2);
-font-weight:700;
 }
 
 .close-btn{
 background:none;
 border:none;
-font-size:30px;
+font-size:32px;
 color:#fff;
 cursor:pointer;
+line-height:1;
 }
 
 .menu-label{
-font-size:11px;
-letter-spacing:.22em;
+font-family:'IBM Plex Mono',monospace;
+font-size:10px;
+letter-spacing:.20em;
 text-transform:uppercase;
 color:var(--gold);
-margin:22px 0 10px;
-font-weight:600;
+margin:18px 0 8px;
 }
 
 .menu-link{
 display:block;
-padding:13px 0;
-font-family:"Cormorant Garamond",serif;
-font-size:28px;
+padding:10px 0;
+font-size:22px;
 font-weight:600;
 border-bottom:1px solid rgba(255,255,255,.05);
-transition:.2s;
+color:#f4f1ea;
 }
 
 .menu-link:hover{
 color:var(--gold2);
-padding-left:8px;
 }
 
 .menu-mail{
 display:block;
-margin-top:28px;
-padding:16px;
-border:1px solid rgba(200,168,107,.22);
-border-radius:14px;
+margin-top:18px;
+padding:14px 12px;
 text-align:center;
-font-size:14px;
-font-weight:600;
+font-family:'IBM Plex Mono',monospace;
+font-size:11px;
 color:var(--gold2);
-background:rgba(255,255,255,.02);
-white-space:nowrap;
-overflow:hidden;
-text-overflow:ellipsis;
+border:1px solid rgba(200,168,107,.18);
+border-radius:14px;
+white-space:normal;
+word-break:break-word;
+line-height:1.6;
 }
 
 .hero{
-padding:138px 24px 80px;
-max-width:1260px;
+padding:125px 20px 70px;
+max-width:1180px;
 margin:auto;
 }
 
-.hero-grid{
-display:grid;
-grid-template-columns:1.15fr .85fr;
-gap:28px;
-align-items:center;
-}
-
-.eyebrow{
-font-size:12px;
-letter-spacing:.26em;
-text-transform:uppercase;
-color:var(--gold);
-margin-bottom:18px;
-font-weight:600;
-}
-
-h1{
-font-family:"Cormorant Garamond",serif;
-font-size:78px;
+.hero h1{
+font-size:54px;
 line-height:.95;
 font-weight:700;
-letter-spacing:-.02em;
-margin-bottom:22px;
-max-width:760px;
+margin-bottom:18px;
 }
 
 .hero p{
-font-size:19px;
-line-height:1.75;
+font-size:20px;
+line-height:1.6;
 color:var(--muted);
-max-width:620px;
-margin-bottom:30px;
+max-width:650px;
+margin-bottom:24px;
 }
 
 .cta{
 display:inline-block;
-padding:16px 24px;
+padding:14px 22px;
 border-radius:14px;
 background:linear-gradient(135deg,var(--gold),var(--gold2));
 color:#111;
-font-weight:700;
-}
-
-.hero-card{
-padding:32px;
-border-radius:24px;
-background:
-radial-gradient(circle at top right,rgba(200,168,107,.16),transparent 34%),
-radial-gradient(circle at bottom left,rgba(16,55,34,.30),transparent 34%),
-linear-gradient(145deg,#14261b,#0d1711);
-border:1px solid rgba(200,168,107,.14);
-box-shadow:0 12px 40px rgba(0,0,0,.35);
-}
-
-.hero-card h3{
-font-family:"Cormorant Garamond",serif;
-font-size:34px;
-margin-bottom:10px;
-}
-
-.hero-card p{
-font-size:16px;
-margin:0;
+font-family:'IBM Plex Mono',monospace;
+font-size:11px;
+letter-spacing:.14em;
+text-transform:uppercase;
 }
 
 .section{
-max-width:1260px;
+max-width:1180px;
 margin:auto;
-padding:0 24px 40px;
-}
-
-.section-title{
-font-size:12px;
-letter-spacing:.24em;
-text-transform:uppercase;
-color:var(--gold);
-margin:24px 0 18px;
-font-weight:600;
+padding:0 20px 40px;
 }
 
 .grid{
 display:grid;
 grid-template-columns:repeat(3,1fr);
-gap:18px;
+gap:16px;
 }
 
 .card{
-padding:26px;
+padding:24px;
 border-radius:22px;
 background:
-radial-gradient(circle at top right,rgba(200,168,107,.10),transparent 34%),
+radial-gradient(circle at top right,rgba(200,168,107,.08),transparent 30%),
 linear-gradient(145deg,#14261b,#0d1711);
-border:1px solid rgba(255,255,255,.06);
-min-height:230px;
+border:1px solid rgba(255,255,255,.05);
 }
 
 .card h3{
-font-family:"Cormorant Garamond",serif;
-font-size:34px;
+font-size:30px;
 margin-bottom:10px;
 }
 
 .card p{
-font-size:15px;
-line-height:1.75;
+font-size:16px;
+line-height:1.6;
 color:var(--muted);
 }
 
-.quote{
-margin:34px 0;
-padding:38px;
-border-radius:24px;
-background:linear-gradient(135deg,#123420,#0c1711);
-border:1px solid rgba(200,168,107,.14);
-text-align:center;
-font-family:"Cormorant Garamond",serif;
-font-size:42px;
-font-weight:700;
-line-height:1.2;
-}
-
 .footer{
-margin-top:28px;
-padding:28px 24px 44px;
-border-top:1px solid var(--line);
+padding:28px 20px 40px;
 text-align:center;
-font-size:13px;
-color:#d8d8d8;
+border-top:1px solid var(--line);
+font-family:'IBM Plex Mono',monospace;
+font-size:11px;
+color:#d7d7d7;
+line-height:1.7;
 }
 
 .footer span{
 color:var(--gold2);
-font-weight:700;
 }
 
-@media(max-width:980px){
-.hero-grid{
-grid-template-columns:1fr;
-}
-h1{
-font-size:58px;
-}
+@media(max-width:900px){
 .grid{
 grid-template-columns:1fr;
 }
 }
 
 @media(max-width:700px){
-.topbar{
-padding:0 18px;
+.hero h1{
+font-size:42px;
+}
+.hero p{
+font-size:17px;
+}
+.brand-text{
+font-size:10px;
+letter-spacing:.10em;
 }
 .side-menu{
 width:50%;
 min-width:250px;
 }
-h1{
-font-size:44px;
-}
-.hero p{
-font-size:17px;
-}
-.quote{
-font-size:30px;
-}
 .menu-link{
-font-size:24px;
+font-size:20px;
 }
 }
 
-@media(max-width:520px){
-.brand{
-font-size:10px;
-letter-spacing:.14em;
-}
+@media(max-width:430px){
 .side-menu{
 width:50%;
-min-width:230px;
+min-width:235px;
+padding:18px;
+}
+.brand-text{
+font-size:9px;
 }
 }
 </style>
@@ -392,10 +328,10 @@ min-width:230px;
 <header class="topbar">
 <a href="index.html" class="brand">
 <span class="brand-line"></span>
-<span>Decision Authority Research</span>
+<span class="brand-text">Decision Authority Research</span>
 </a>
 
-<button class="menu-btn" id="openMenu">
+<button class="menu-btn" id="openMenu" aria-label="Open menu">
 <span></span>
 <span></span>
 <span></span>
@@ -412,60 +348,47 @@ min-width:230px;
 </div>
 
 <div class="menu-label">Primary</div>
-<a class="menu-link" href="index.html">Home</a>
-<a class="menu-link" href="dar.html">DAR</a>
-<a class="menu-link" href="services.html">Services</a>
-<a class="menu-link" href="contact.html">Contact</a>
-<a class="menu-link" href="about.html">About</a>
+<a href="index.html" class="menu-link">Home</a>
+<a href="dar.html" class="menu-link">DAR</a>
+<a href="services.html" class="menu-link">Services</a>
+<a href="contact.html" class="menu-link">Contact</a>
+<a href="about.html" class="menu-link">About</a>
 
 <div class="menu-label">Research</div>
-<a class="menu-link" href="research.html">Archive</a>
-<a class="menu-link" href="whitepaper.html">White Paper</a>
+<a href="research.html" class="menu-link">Independent Research</a>
+<a href="whitepaper.html" class="menu-link">White Paper</a>
 
-<a class="menu-mail" href="mailto:Liran@liranbarshrim.com">
+<div class="menu-label">Reference</div>
+<a href="definitions.html" class="menu-link">Definitions</a>
+<a href="faq.html" class="menu-link">FAQ</a>
+<a href="goodfaith.html" class="menu-link">Good Faith Use</a>
+
+<a href="mailto:Liran@liranbarshrim.com" class="menu-mail">
 Liran@liranbarshrim.com
 </a>
 
 </aside>
 
 <section class="hero">
-
-<div class="hero-grid">
-
-<div>
-<div class="eyebrow">Private Executive Advisory</div>
 <h1>Authority must exist before exposure begins.</h1>
 <p>
 Private advisory for boards, executives and counsel facing irreversible decisions under uncertainty.
 </p>
-<a href="contact.html" class="cta">Request Private Access</a>
-</div>
-
-<div class="hero-card">
-<h3>Named Stop Authority</h3>
-<p>
-When nobody is explicitly empowered to stop the process, ownership becomes personal later.
-</p>
-</div>
-
-</div>
-
+<a href="contact.html" class="cta">Private Access</a>
 </section>
 
 <section class="section">
-
-<div class="section-title">Core Areas</div>
 
 <div class="grid">
 
 <div class="card">
 <h3>DAR</h3>
-<p>Decision Authority Record defining one named person with real stop power before irreversible exposure.</p>
+<p>Decision Authority Record defining one named person with real stop authority.</p>
 </div>
 
 <div class="card">
 <h3>Boards</h3>
-<p>Governance review for high-stakes approvals where responsibility exists but authority remains vague.</p>
+<p>Governance review for material decisions where ownership is unclear.</p>
 </div>
 
 <div class="card">
@@ -475,34 +398,11 @@ When nobody is explicitly empowered to stop the process, ownership becomes perso
 
 </div>
 
-<div class="quote">
-Approval systems scale.<br>
-Stop systems determine survival.
-</div>
-
-<div class="grid">
-
-<div class="card">
-<h3>Transactions</h3>
-<p>Material deals, launches and submissions requiring clear stop ownership.</p>
-</div>
-
-<div class="card">
-<h3>Legal</h3>
-<p>Where signatures exist but real authority is structurally absent.</p>
-</div>
-
-<div class="card">
-<h3>Private Intake</h3>
-<p>Selective confidential engagements with decision makers only.</p>
-</div>
-
-</div>
-
 </section>
 
 <footer class="footer">
-© 2026 <span>Liran Bar-Shrim</span> · Decision Authority Research
+© 2026 <span>Liran Bar-Shrim</span><br>
+Decision Authority Research
 </footer>
 
 <script>
@@ -512,7 +412,7 @@ const overlay=document.getElementById('overlay');
 document.getElementById('openMenu').onclick=()=>{
 menu.classList.add('active');
 overlay.classList.add('active');
-}
+};
 
 document.getElementById('closeMenu').onclick=closeMenu;
 overlay.onclick=closeMenu;
