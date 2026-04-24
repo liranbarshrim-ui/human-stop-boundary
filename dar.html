@@ -3,23 +3,20 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>DAR | Decision Authority Record | Matrix Audit</title>
-<meta name="description" content="Decision Authority Record. Define who can stop an irreversible decision before ownership becomes personal.">
+<title>DAR | Decision Authority Record</title>
+<meta name="description" content="Decision Authority Record. Private advisory for boards, executives and counsel.">
 
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
 <style>
 :root{
 --bg:#07110c;
---bg2:#0d1812;
---panel:#122019;
---panel2:#16271f;
---gold:#c8a96e;
---gold2:#e1c48b;
---green:#163726;
---green2:#214c36;
---text:#eef4ef;
---muted:#9ca8a0;
+--bg2:#0e1b14;
+--card:#112018;
+--card2:#173022;
+--gold:#c9aa6d;
+--text:#eef3ef;
+--muted:#9ca79f;
 --line:rgba(255,255,255,.07);
 }
 
@@ -28,12 +25,12 @@ html{scroll-behavior:smooth}
 body{
 font-family:Inter,sans-serif;
 background:
-radial-gradient(circle at top right, rgba(33,76,54,.35), transparent 35%),
-radial-gradient(circle at bottom left, rgba(200,169,110,.08), transparent 35%),
+radial-gradient(circle at top right, rgba(23,48,34,.45), transparent 35%),
+radial-gradient(circle at bottom left, rgba(201,170,109,.06), transparent 35%),
 var(--bg);
 color:var(--text);
 overflow-x:hidden;
-line-height:1.65;
+line-height:1.6;
 }
 
 a{text-decoration:none;color:inherit}
@@ -42,10 +39,10 @@ body:before{
 content:'';
 position:fixed;inset:0;
 background-image:
-linear-gradient(rgba(255,255,255,.015) 1px, transparent 1px),
-linear-gradient(90deg, rgba(255,255,255,.015) 1px, transparent 1px);
+linear-gradient(rgba(255,255,255,.012) 1px, transparent 1px),
+linear-gradient(90deg, rgba(255,255,255,.012) 1px, transparent 1px);
 background-size:38px 38px;
-opacity:.28;
+opacity:.25;
 pointer-events:none;
 }
 
@@ -57,8 +54,8 @@ z-index:999;
 display:flex;
 justify-content:space-between;
 align-items:center;
-padding:18px 28px;
-background:rgba(7,17,12,.82);
+padding:16px 18px;
+background:rgba(7,17,12,.84);
 backdrop-filter:blur(14px);
 border-bottom:1px solid var(--line);
 }
@@ -66,9 +63,9 @@ border-bottom:1px solid var(--line);
 .brand{
 display:flex;
 align-items:center;
-gap:12px;
-font-size:11px;
-letter-spacing:.24em;
+gap:10px;
+font-size:10px;
+letter-spacing:.18em;
 text-transform:uppercase;
 }
 
@@ -77,66 +74,99 @@ width:24px;height:1px;background:var(--gold);
 }
 
 .menu-btn{
-background:none;
-border:none;
-cursor:pointer;
-display:flex;
-flex-direction:column;
-gap:5px;
-padding:4px;
+background:none;border:none;cursor:pointer;
+display:flex;flex-direction:column;gap:5px;
 }
 
 .menu-btn span{
-width:24px;height:1px;background:#fff;opacity:.9;
+width:24px;height:1px;background:#fff;
 }
 
-/* MENU */
-.overlay{
-position:fixed;inset:0;
-background:rgba(0,0,0,.62);
-opacity:0;visibility:hidden;
-transition:.25s;
-z-index:998;
-}
-.overlay.active{opacity:1;visibility:visible;}
-
-.side-menu{
-position:fixed;
-top:0;right:-100%;
-width:82%;
-max-width:370px;
-height:100vh;
-overflow-y:auto;
-background:#0d1712;
-border-left:1px solid var(--line);
-z-index:999;
-padding:28px;
-transition:.28s ease;
-}
-.side-menu.active{right:0;}
-
-.menu-head{
-display:flex;
-justify-content:space-between;
-align-items:center;
-margin-bottom:24px;
+/* HERO */
+.hero{
+padding:110px 18px 60px;
+max-width:760px;
+margin:auto;
 }
 
-.menu-title{
+.hero-box{
+background:linear-gradient(145deg,var(--card),var(--card2));
+border:1px solid rgba(201,170,109,.14);
+border-radius:24px;
+padding:34px 22px;
+text-align:center;
+box-shadow:0 25px 60px rgba(0,0,0,.28);
+}
+
+.kicker{
 font-size:11px;
-letter-spacing:.24em;
+letter-spacing:.22em;
 text-transform:uppercase;
 color:var(--gold);
+margin-bottom:18px;
 }
 
-.close-btn{
-background:none;border:none;
-font-size:28px;color:#fff;cursor:pointer;
+.hero h1{
+font-size:44px;
+line-height:1.02;
+font-weight:700;
+letter-spacing:-.03em;
+margin-bottom:18px;
 }
 
-.menu-group{margin-bottom:26px;}
+.hero h1 span{color:var(--gold)}
 
-.menu-label{
+.hero p{
+font-size:17px;
+color:var(--muted);
+margin-bottom:26px;
+line-height:1.55;
+}
+
+.btn{
+display:inline-block;
+padding:15px 22px;
+border-radius:14px;
+font-size:12px;
+letter-spacing:.16em;
+text-transform:uppercase;
+background:linear-gradient(145deg,#21422f,#173022);
+border:1px solid rgba(201,170,109,.24);
+min-width:220px;
+}
+
+/* SECTION */
+.section{
+padding:0 18px 70px;
+max-width:760px;
+margin:auto;
+}
+
+.section h2{
+font-size:30px;
+margin-bottom:14px;
+}
+
+.sub{
+font-size:16px;
+color:var(--muted);
+margin-bottom:22px;
+}
+
+.grid{
+display:grid;
+gap:14px;
+}
+
+.card{
+background:linear-gradient(145deg,var(--card),var(--card2));
+border:1px solid rgba(201,170,109,.10);
+border-radius:18px;
+padding:22px;
+}
+
+.card small{
+display:block;
 font-size:11px;
 letter-spacing:.18em;
 text-transform:uppercase;
@@ -144,164 +174,9 @@ color:var(--gold);
 margin-bottom:10px;
 }
 
-.menu-group a{
-display:block;
-padding:10px 0;
-font-size:15px;
-border-bottom:1px solid rgba(255,255,255,.04);
-color:#edf2ed;
-}
-
-.menu-cta{
-display:block;
-margin-top:10px;
-padding:14px;
-text-align:center;
-border-radius:12px;
-background:linear-gradient(135deg,var(--green2),var(--green));
-border:1px solid rgba(200,169,110,.28);
-}
-
-.menu-mail{
-display:block;
-margin-top:10px;
-padding:13px;
-text-align:center;
-border-radius:12px;
-border:1px solid var(--line);
-color:var(--gold)!important;
-word-break:break-word;
-font-size:13px;
-}
-
-/* HERO */
-.hero{
-max-width:1200px;
-margin:auto;
-padding:150px 24px 90px;
-display:grid;
-grid-template-columns:1.1fr .9fr;
-gap:28px;
-align-items:center;
-}
-
-.kicker{
-font-size:12px;
-letter-spacing:.24em;
-text-transform:uppercase;
-color:var(--gold);
-margin-bottom:18px;
-}
-
-.hero h1{
-font-size:72px;
-line-height:.96;
-font-weight:600;
-max-width:760px;
-margin-bottom:18px;
-}
-
-.hero h1 span{color:var(--gold2)}
-
-.hero p{
-font-size:18px;
-color:var(--muted);
-max-width:620px;
-margin-bottom:28px;
-}
-
-.actions{
-display:flex;
-gap:14px;
-flex-wrap:wrap;
-}
-
-.btn{
-padding:14px 20px;
-border-radius:12px;
-font-size:13px;
-letter-spacing:.12em;
-text-transform:uppercase;
-}
-
-.btn-primary{
-background:linear-gradient(135deg,var(--green2),var(--green));
-border:1px solid rgba(200,169,110,.28);
-}
-
-.btn-secondary{
-border:1px solid var(--line);
-}
-
-.hero-card{
-background:linear-gradient(145deg,var(--panel),var(--panel2));
-border:1px solid rgba(200,169,110,.14);
-border-radius:20px;
-padding:26px;
-}
-
-.metric{
-padding:14px 0;
-border-bottom:1px solid rgba(255,255,255,.05);
-}
-.metric:last-child{border-bottom:none}
-
-.metric strong{
-display:block;
-font-size:15px;
-color:var(--gold);
-margin-bottom:5px;
-}
-.metric span{
-font-size:14px;
-color:var(--muted);
-}
-
-/* SECTION */
-.section{
-max-width:1200px;
-margin:auto;
-padding:0 24px 90px;
-}
-
-.section-title{
-font-size:44px;
-margin-bottom:14px;
-font-weight:600;
-}
-
-.section-sub{
-font-size:18px;
-color:var(--muted);
-max-width:760px;
-margin-bottom:28px;
-}
-
-.grid{
-display:grid;
-grid-template-columns:repeat(3,1fr);
-gap:18px;
-}
-
-.card{
-background:linear-gradient(145deg,var(--panel),var(--panel2));
-border:1px solid rgba(200,169,110,.12);
-border-radius:18px;
-padding:26px;
-}
-
-.card small{
-display:block;
-font-size:11px;
-letter-spacing:.22em;
-text-transform:uppercase;
-color:var(--gold);
-margin-bottom:10px;
-}
-
 .card h3{
-font-size:21px;
-margin-bottom:10px;
+font-size:20px;
+margin-bottom:8px;
 }
 
 .card p{
@@ -309,55 +184,58 @@ font-size:15px;
 color:var(--muted);
 }
 
-/* CTA */
-.cta{
-max-width:1200px;
-margin:auto;
+/* FOOTER */
+footer{
+padding:24px 18px;
+border-top:1px solid var(--line);
+text-align:center;
+font-size:12px;
+color:#95a097;
+margin-top:20px;
+}
+
+/* DESKTOP */
+@media(min-width:900px){
+
+.topbar{
+padding:18px 28px;
+}
+
+.brand{
+font-size:11px;
+letter-spacing:.24em;
+}
+
+.hero{
+padding:145px 24px 80px;
+}
+
+.hero-box{
+padding:54px;
+}
+
+.hero h1{
+font-size:72px;
+}
+
+.hero p{
+font-size:20px;
+max-width:760px;
+margin:0 auto 28px;
+}
+
+.btn{
+min-width:auto;
+padding:16px 26px;
+}
+
+.section{
 padding:0 24px 90px;
 }
 
-.cta-box{
-background:linear-gradient(145deg,var(--panel),#1a3124);
-border:1px solid rgba(200,169,110,.16);
-border-radius:22px;
-padding:46px;
-text-align:center;
+.grid{
+grid-template-columns:repeat(3,1fr);
 }
-
-.cta-box h2{
-font-size:48px;
-line-height:1.05;
-margin-bottom:14px;
-}
-
-.cta-box p{
-font-size:18px;
-color:var(--muted);
-margin-bottom:22px;
-}
-
-/* FOOTER */
-footer{
-padding:26px;
-border-top:1px solid var(--line);
-text-align:center;
-font-size:13px;
-color:#96a29a;
-}
-
-/* MOBILE */
-@media(max-width:980px){
-.hero{grid-template-columns:1fr}
-.grid{grid-template-columns:1fr 1fr}
-.hero h1{font-size:58px}
-}
-
-@media(max-width:700px){
-.grid{grid-template-columns:1fr}
-.hero h1{font-size:44px}
-.section-title{font-size:34px}
-.topbar{padding:16px 18px}
-.brand{font-size:10px;letter-spacing:.16em}
 }
 </style>
 </head>
@@ -369,90 +247,36 @@ color:#96a29a;
 <span>Decision Authority Research</span>
 </a>
 
-<button class="menu-btn" id="openMenu">
+<button class="menu-btn">
 <span></span><span></span><span></span>
 </button>
 </header>
 
-<div class="overlay" id="overlay"></div>
-
-<aside class="side-menu" id="menu">
-<div class="menu-head">
-<div class="menu-title">Matrix Audit</div>
-<button class="close-btn" id="closeMenu">&times;</button>
-</div>
-
-<div class="menu-group">
-<div class="menu-label">Primary</div>
-<a href="index.html">Home</a>
-<a href="dar.html">DAR</a>
-<a href="services.html">Services</a>
-<a href="about.html">About</a>
-<a href="contact.html">Contact</a>
-</div>
-
-<div class="menu-group">
-<div class="menu-label">Research</div>
-<a href="research.html">Independent Research</a>
-<a href="whitepaper.html">White Paper</a>
-<a href="definitions.html">Definitions</a>
-<a href="faq.html">FAQ</a>
-</div>
-
-<a href="contact.html" class="menu-cta">Private Intake</a>
-<a href="mailto:Liran@liranbarshrim.com" class="menu-mail">Liran@liranbarshrim.com</a>
-</aside>
-
 <section class="hero">
+<div class="hero-box">
 
-<div>
 <div class="kicker">Decision Authority Record</div>
 
 <h1>
-Approval is common.<br>
-<span>Real stop power</span><br>
-is rare.
+When no one is named<br>
+to <span>stop it</span>, someone<br>
+is named after.
 </h1>
 
 <p>
-DAR defines one named authority who can stop a consequential decision before exposure becomes personal.
-Built for boards, executives, founders and counsel.
+DAR defines one named authority before ownership becomes personal.
+For boards, executives, founders and counsel.
 </p>
 
-<div class="actions">
-<a href="contact.html" class="btn btn-primary">Private Inquiry</a>
-<a href="services.html" class="btn btn-secondary">View Services</a>
-</div>
-</div>
+<a href="contact.html" class="btn">Private Inquiry</a>
 
-<div class="hero-card">
-<div class="metric">
-<strong>One Decision</strong>
-<span>Identify the pathway that matters most now.</span>
 </div>
-
-<div class="metric">
-<strong>One Authority</strong>
-<span>Name the person empowered to stop it.</span>
-</div>
-
-<div class="metric">
-<strong>One Record</strong>
-<span>Create written authority before pressure begins.</span>
-</div>
-
-<div class="metric">
-<strong>One Outcome</strong>
-<span>Clarity before consequence.</span>
-</div>
-</div>
-
 </section>
 
 <section class="section">
-<h2 class="section-title">What DAR Solves</h2>
-<p class="section-sub">
-Most organizations define how decisions proceed. Few define who can halt momentum when risk changes.
+<h2>What DAR Solves</h2>
+<p class="sub">
+Most organizations define approvals. Few define who can halt momentum when risk changes.
 </p>
 
 <div class="grid">
@@ -460,79 +284,53 @@ Most organizations define how decisions proceed. Few define who can halt momentu
 <div class="card">
 <small>01</small>
 <h3>Authority Gap</h3>
-<p>Responsibility exists, but no one clearly holds stop power.</p>
+<p>No one clearly holds real stop power.</p>
 </div>
 
 <div class="card">
 <small>02</small>
 <h3>Exposure Risk</h3>
-<p>After failure, ownership becomes personal and retrospective.</p>
+<p>After failure, ownership becomes personal.</p>
 </div>
 
 <div class="card">
 <small>03</small>
 <h3>Speed Pressure</h3>
-<p>Momentum outruns governance in fast-moving environments.</p>
+<p>Momentum outruns governance.</p>
 </div>
 
 </div>
 </section>
 
 <section class="section">
-<h2 class="section-title">Where It Applies</h2>
+<h2>Where It Applies</h2>
 
 <div class="grid">
 
 <div class="card">
 <small>AI</small>
 <h3>Autonomous Systems</h3>
-<p>When execution moves faster than review.</p>
+<p>Execution moves faster than review.</p>
 </div>
 
 <div class="card">
 <small>Finance</small>
 <h3>Material Transactions</h3>
-<p>High-value decisions under urgency and uncertainty.</p>
+<p>High-value decisions under urgency.</p>
 </div>
 
 <div class="card">
 <small>Legal</small>
 <h3>Regulated Exposure</h3>
-<p>Someone signs without true authority to stop.</p>
+<p>Someone signs without power to stop.</p>
 </div>
 
-</div>
-</section>
-
-<section class="cta">
-<div class="cta-box">
-<h2>When no one is named to stop it,<br>someone is named after.</h2>
-<p>Selective private engagements from €12,000.</p>
-<a href="contact.html" class="btn btn-primary">Discuss Active Exposure</a>
 </div>
 </section>
 
 <footer>
 © 2026 Liran Bar-Shrim · All Rights Reserved
 </footer>
-
-<script>
-const menu=document.getElementById('menu');
-const overlay=document.getElementById('overlay');
-
-document.getElementById('openMenu').onclick=()=>{
-menu.classList.add('active');
-overlay.classList.add('active');
-};
-
-document.getElementById('closeMenu').onclick=closeMenu;
-overlay.onclick=closeMenu;
-
-function closeMenu(){
-menu.classList.remove('active');
-overlay.classList.remove('active');
-}
-</script>
 
 </body>
 </html>
