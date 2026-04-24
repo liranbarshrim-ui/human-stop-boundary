@@ -4,13 +4,13 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
 
-<title>Good Faith Use | Matrix Audit</title>
-<meta name="description" content="Good Faith Use statement for Matrix Audit and Decision Authority Research. Clarifies scope, responsibility, oversight, and limitations.">
+<title>Good Faith Use | Decision Authority Research</title>
+<meta name="description" content="Good Faith Use principles for Decision Authority Research. Scope, limits, accountability, governance intent, and responsible application.">
 <meta name="robots" content="index,follow">
 <link rel="canonical" href="https://matrix-audit.com/goodfaith.html">
 
-<meta property="og:title" content="Good Faith Use | Matrix Audit">
-<meta property="og:description" content="Clarifying responsibility before irreversible decisions occur.">
+<meta property="og:title" content="Good Faith Use | Decision Authority Research">
+<meta property="og:description" content="Clarity can support judgment. It cannot replace it.">
 <meta property="og:type" content="website">
 
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
@@ -22,9 +22,10 @@
 --gold:#c8a96e;
 --text:#e8e2d7;
 --muted:#a7a097;
---border:#1d1d1d;
---border2:#2a2a2a;
+--line:#1d1d1d;
+--line2:#2a2a2a;
 }
+
 *{margin:0;padding:0;box-sizing:border-box;}
 html{scroll-behavior:smooth;}
 
@@ -32,12 +33,10 @@ body{
 background:var(--bg);
 color:var(--text);
 font-family:Inter,sans-serif;
-overflow-x:hidden;
 line-height:1.7;
+overflow-x:hidden;
 -webkit-font-smoothing:antialiased;
 }
-
-a{text-decoration:none;color:inherit;}
 
 body:before{
 content:'';
@@ -45,8 +44,10 @@ position:fixed;
 inset:0;
 pointer-events:none;
 opacity:.04;
-background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
 }
+
+a{text-decoration:none;color:inherit;}
 
 /* HEADER */
 
@@ -101,7 +102,7 @@ transition:.2s;
 
 .menu-btn:hover span{background:var(--gold);}
 
-/* MENU */
+/* OVERLAY */
 
 .overlay{
 position:fixed;
@@ -118,6 +119,8 @@ opacity:1;
 visibility:visible;
 }
 
+/* DRAWER */
+
 .side-menu{
 position:fixed;
 top:0;
@@ -127,7 +130,7 @@ max-width:92%;
 height:100vh;
 overflow-y:auto;
 background:#0d0d0d;
-border-left:1px solid var(--border);
+border-left:1px solid var(--line);
 padding:28px 24px 48px;
 transition:.28s ease;
 z-index:999;
@@ -160,7 +163,7 @@ color:var(--muted);
 }
 
 .menu-group{
-border-top:1px solid var(--border);
+border-top:1px solid var(--line);
 padding-top:18px;
 margin-top:18px;
 }
@@ -209,7 +212,7 @@ color:var(--gold);
 display:block;
 margin-top:18px;
 padding:14px;
-border:1px solid var(--border);
+border:1px solid var(--line);
 text-align:center;
 font-size:14px;
 color:var(--muted);
@@ -219,9 +222,9 @@ word-break:break-word;
 /* PAGE */
 
 .container{
-max-width:760px;
+max-width:820px;
 margin:auto;
-padding:70px 28px 110px;
+padding:72px 28px 110px;
 position:relative;
 z-index:1;
 }
@@ -229,90 +232,113 @@ z-index:1;
 .hero{
 border-left:3px solid var(--gold);
 padding-left:24px;
-margin-bottom:58px;
+margin-bottom:54px;
 }
 
-.hero-label{
+.eyebrow{
 font-family:'IBM Plex Mono',monospace;
 font-size:10px;
-letter-spacing:.24em;
+letter-spacing:.26em;
 text-transform:uppercase;
-color:#b8aa8a;
-margin-bottom:18px;
+color:var(--gold);
+margin-bottom:16px;
 }
 
 .hero h1{
 font-family:'Playfair Display',serif;
-font-size:clamp(32px,6vw,52px);
+font-size:clamp(34px,6vw,56px);
 line-height:1.08;
-margin-bottom:20px;
+margin-bottom:18px;
 }
 
 .hero p{
-font-size:17px;
-line-height:1.9;
+font-size:18px;
 color:var(--muted);
+max-width:700px;
+line-height:1.9;
 }
 
 .statement{
-background:#111;
-border:1px solid var(--border2);
+margin-bottom:56px;
+padding:30px;
+background:linear-gradient(180deg,#111,#0c0c0c);
+border:1px solid var(--line2);
 border-left:3px solid var(--gold);
-padding:28px;
-margin-bottom:54px;
 font-family:'Playfair Display',serif;
-font-size:clamp(18px,3vw,24px);
-line-height:1.35;
+font-size:clamp(22px,3vw,30px);
+line-height:1.34;
 }
 
-.items{margin-bottom:54px;}
-
-.item{
-padding:24px 0;
-border-bottom:1px solid rgba(255,255,255,.05);
-}
-
-.item:first-child{
+.section{
+padding:28px 0;
 border-top:1px solid rgba(255,255,255,.05);
 }
 
-.item-label{
+.label{
 font-family:'IBM Plex Mono',monospace;
-font-size:9px;
-letter-spacing:.22em;
+font-size:10px;
+letter-spacing:.24em;
 text-transform:uppercase;
 color:var(--gold);
-margin-bottom:8px;
+margin-bottom:12px;
 }
 
-.item-title{
+.title{
+font-family:'Playfair Display',serif;
+font-size:28px;
+margin-bottom:10px;
+line-height:1.18;
+}
+
+.text{
+font-size:16px;
+line-height:1.9;
+color:var(--muted);
+max-width:720px;
+}
+
+.grid{
+display:grid;
+grid-template-columns:1fr 1fr;
+gap:18px;
+margin-top:20px;
+}
+
+.card{
+background:linear-gradient(180deg,#111,#0c0c0c);
+border:1px solid var(--line2);
+padding:24px;
+}
+
+.card h3{
 font-family:'Playfair Display',serif;
 font-size:22px;
 margin-bottom:10px;
 }
 
-.item p{
+.card p{
 font-size:15px;
-color:var(--muted);
 line-height:1.8;
+color:var(--muted);
 }
 
 .closing{
-border-top:1px solid var(--border2);
-padding-top:40px;
-margin-bottom:54px;
+margin-top:56px;
+padding-top:30px;
+border-top:1px solid var(--line2);
 }
 
 .closing h2{
 font-family:'Playfair Display',serif;
-font-size:clamp(24px,4vw,36px);
-margin-bottom:16px;
+font-size:clamp(28px,4vw,40px);
+line-height:1.18;
+margin-bottom:14px;
 }
 
 .closing p{
 font-size:16px;
 color:var(--muted);
-margin-bottom:20px;
+margin-bottom:24px;
 }
 
 .actions{
@@ -323,15 +349,15 @@ flex-wrap:wrap;
 
 .btn{
 display:inline-block;
-padding:16px 24px;
+padding:15px 22px;
 font-family:'IBM Plex Mono',monospace;
 font-size:11px;
 letter-spacing:.18em;
 text-transform:uppercase;
-border:1px solid var(--border2);
+border:1px solid var(--line2);
 }
 
-.btn-primary{
+.btn.primary{
 background:var(--gold);
 border-color:var(--gold);
 color:#111;
@@ -340,15 +366,21 @@ color:#111;
 .footer{
 margin-top:70px;
 padding-top:26px;
-border-top:1px solid #161616;
+border-top:1px solid var(--line);
 font-family:'IBM Plex Mono',monospace;
 font-size:11px;
 color:#726b63;
 }
 
-@media(max-width:600px){
-.container{padding:48px 18px 72px;}
-.btn{width:100%;text-align:center;}
+@media(max-width:860px){
+.grid{grid-template-columns:1fr;}
+.container{padding:54px 18px 90px;}
+.hero h1{font-size:42px;}
+.hero p,.text{font-size:16px;}
+.statement{font-size:24px;padding:24px;}
+.title{font-size:24px;}
+.actions{flex-direction:column;}
+.btn{text-align:center;}
 }
 </style>
 </head>
@@ -406,10 +438,10 @@ color:#726b63;
 <main class="container">
 
 <section class="hero">
-<div class="hero-label">Good Faith Use</div>
+<div class="eyebrow">Good Faith Use</div>
 <h1>Clarity supports judgment.<br>It does not replace it.</h1>
 <p>
-Matrix Audit frameworks are designed to help organizations clarify responsibility before consequential decisions become irreversible.
+These frameworks are intended to improve responsibility, authority clarity, and escalation discipline before consequential decisions become irreversible.
 </p>
 </section>
 
@@ -418,53 +450,89 @@ A framework can define accountability.<br>
 Only people can exercise judgment.
 </div>
 
-<div class="items">
+<section class="section">
+<div class="label">Purpose</div>
+<div class="title">What this work is for</div>
+<p class="text">
+Decision Authority Research exists to help organizations identify authority gaps, clarify stop responsibility, and reduce preventable exposure where momentum can outrun judgment.
+</p>
+</section>
 
-<div class="item">
-<div class="item-label">Purpose</div>
-<div class="item-title">What this is for</div>
-<p>Decision Authority Research is a governance methodology intended to clarify authority, escalation, and accountability before critical decisions occur.</p>
+<section class="section">
+<div class="label">Limits</div>
+<div class="title">What this work is not</div>
+<p class="text">
+It is not legal advice, compliance certification, insurance, or a guarantee against loss. It may support governance quality, but it does not replace legal, regulatory, technical, or fiduciary duties.
+</p>
+</section>
+
+<section class="section">
+<div class="label">Core Principles</div>
+
+<div class="grid">
+
+<div class="card">
+<h3>Authority Is Human</h3>
+<p>
+Documents may assign power. Only identifiable people can exercise it when timing matters.
+</p>
 </div>
 
-<div class="item">
-<div class="item-label">Scope</div>
-<div class="item-title">What this is not</div>
-<p>It may align with oversight expectations, but it is not legal advice, compliance certification, or a guarantee against liability.</p>
+<div class="card">
+<h3>Responsibility Remains Real</h3>
+<p>
+Responsibility for decisions remains with officers, boards, operators, and designated decision makers.
+</p>
 </div>
 
-<div class="item">
-<div class="item-label">Responsibility</div>
-<div class="item-title">Who owns the decision</div>
-<p>Responsibility remains with the organization, its officers, board members, and designated decision makers.</p>
+<div class="card">
+<h3>No Cosmetic Governance</h3>
+<p>
+Processes that look serious but cannot interrupt danger are appearances, not control.
+</p>
 </div>
 
-<div class="item">
-<div class="item-label">Core Principle</div>
-<div class="item-title">What DAR can and cannot do</div>
-<p>DAR can identify who should be accountable to stop. It does not make the decision. A named human being does.</p>
+<div class="card">
+<h3>Good Faith Means Substance</h3>
+<p>
+Use should be honest, proportionate, lawful, and directed toward genuine governance improvement.
+</p>
 </div>
 
-<div class="item">
-<div class="item-label">Good Faith Standard</div>
-<div class="item-title">How to use this honestly</div>
-<p>Use should be lawful, proportionate, and directed toward real governance improvement rather than symbolic optics.</p>
+<div class="card">
+<h3>Stop Power Needs Oversight</h3>
+<p>
+Unchecked stop authority can become veto abuse. No stop authority can become unmanaged momentum.
+</p>
 </div>
 
-<div class="item">
-<div class="item-label">Practical Reality</div>
-<div class="item-title">The limit of documents</div>
-<p>Documents do not stop events. Authority exercised in time does.</p>
+<div class="card">
+<h3>Escalation Must Be Real</h3>
+<p>
+If authority is unclear during pressure, the framework has already failed.
+</p>
 </div>
 
 </div>
+</section>
+
+<section class="section">
+<div class="label">Practical Reality</div>
+<div class="title">The limit of documents</div>
+<p class="text">
+Policies do not stop events. Committees do not stop events. Slides do not stop events. Timely authority exercised by a real person does.
+</p>
+</section>
 
 <div class="closing">
 <h2>If the decision mattered tomorrow,<br>would authority be clear today?</h2>
-<p>Private advisory for organizations facing consequential live decisions.</p>
+<p>
+Private advisory for organizations facing consequential live decisions.
+</p>
 
 <div class="actions">
-<a href="contact.html" class="btn btn-primary">Request Private Review</a>
-<a href="index.html" class="btn">Return Home</a>
+<a href="contact.html" class="btn primary">Request Private Review</a>
+<a href="dar.html" class="btn">Explore DAR</a>
 </div>
 </div>
 
