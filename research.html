@@ -34,7 +34,6 @@ overflow-x:hidden;
 }
 a{text-decoration:none;color:inherit;}
 
-/* TOPBAR */
 .topbar{
 position:fixed;
 top:0;left:0;right:0;
@@ -61,14 +60,17 @@ white-space:nowrap;
 }
 
 .brand-line{
-width:34px;height:2px;
+width:34px;
+height:2px;
 background:var(--gold);
 border-radius:4px;
 }
 
 .menu-btn{
-width:42px;height:42px;
-border:none;background:none;
+width:42px;
+height:42px;
+border:none;
+background:none;
 cursor:pointer;
 display:flex;
 flex-direction:column;
@@ -87,7 +89,6 @@ width:72%;
 margin-left:auto;
 }
 
-/* MENU */
 .overlay{
 position:fixed;
 inset:0;
@@ -97,7 +98,10 @@ visibility:hidden;
 transition:.25s;
 z-index:998;
 }
-.overlay.active{opacity:1;visibility:visible;}
+.overlay.active{
+opacity:1;
+visibility:visible;
+}
 
 .drawer{
 position:fixed;
@@ -159,9 +163,10 @@ border-bottom:1px solid rgba(255,255,255,.05);
 }
 
 .drawer a.link:hover,
-.drawer a.link.active{color:var(--gold2);}
+.drawer a.link.active{
+color:var(--gold2);
+}
 
-/* HERO */
 .hero{
 padding:128px 18px 50px;
 max-width:1250px;
@@ -195,7 +200,6 @@ color:var(--muted);
 max-width:760px;
 }
 
-/* CONTENT */
 .wrap{
 max-width:1250px;
 margin:auto;
@@ -283,18 +287,13 @@ color:#8f9a95;
 
 .topbar{padding:0 34px;}
 
-.hero{
-padding:150px 34px 60px;
-}
-
+.hero{padding:150px 34px 60px;}
 .hero h1{font-size:92px;}
 .hero p{font-size:22px;}
 
 .wrap{padding:0 34px 100px;}
 
-.grid{
-grid-template-columns:1fr 1fr;
-}
+.grid{grid-template-columns:1fr 1fr;}
 
 .card{padding:30px;}
 .card h3{font-size:48px;}
@@ -368,7 +367,7 @@ Essays, field notes, case studies and governance frameworks focused on the struc
 <a href="executive.html" class="featured">
 <h2>The Executive Who Could Not Stop It</h2>
 <p>
-Responsibility without authority is not governance. It is exposure.  
+Responsibility without authority is not governance. It is exposure.
 A study of the structural gap between who signs and who can actually stop a decision.
 </p>
 </a>
@@ -450,7 +449,7 @@ A study of the structural gap between who signs and who can actually stop a deci
 </section>
 
 <footer>
-© 2026 Liran Bar-Shrim · Decision Authority Research
+© 2026 All Rights Reserved · Liran Bar-Shrim
 </footer>
 
 <script>
