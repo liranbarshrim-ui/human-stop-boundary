@@ -16,23 +16,24 @@
 html{scroll-behavior:smooth}
 
 :root{
---bg:#0b0d0f;
---bg2:#111417;
---card:#151a1d;
+--bg:#0b0d10;
+--bg2:#11161a;
+--card:#161d21;
 --line:rgba(255,255,255,.06);
---text:#f5f7f8;
---muted:#a2abb1;
+--line2:rgba(255,255,255,.03);
+--text:#f6f7f8;
+--muted:#9ca7ae;
 --gold:#c8a76a;
---gold2:#e2c58f;
---green:#16352b;
+--gold2:#e5c98e;
+--green:#143226;
 }
 
 body{
 font-family:Inter,sans-serif;
 background:
-radial-gradient(circle at 80% 10%, rgba(200,167,106,.09), transparent 22%),
-radial-gradient(circle at 15% 80%, rgba(22,53,43,.35), transparent 22%),
-linear-gradient(180deg,#090b0c,#0f1215);
+radial-gradient(circle at 80% 10%, rgba(200,167,106,.08), transparent 22%),
+radial-gradient(circle at 15% 75%, rgba(20,50,38,.28), transparent 24%),
+linear-gradient(180deg,#090b0d,#101418);
 color:var(--text);
 overflow-x:hidden;
 -webkit-font-smoothing:antialiased;
@@ -40,35 +41,38 @@ overflow-x:hidden;
 
 a{text-decoration:none;color:inherit}
 
-/* TOPBAR */
+/* HEADER */
 .topbar{
 position:fixed;
-top:0;left:0;width:100%;
+top:0;left:0;
+width:100%;
 z-index:999;
 display:flex;
 justify-content:space-between;
 align-items:center;
-padding:22px 28px;
-background:rgba(11,13,15,.84);
-backdrop-filter:blur(18px);
+padding:20px 22px;
+background:rgba(11,13,16,.82);
+backdrop-filter:blur(16px);
 border-bottom:1px solid var(--line);
 }
 
 .brand{
 display:flex;
 align-items:center;
-gap:14px;
-font-family:'IBM Plex Mono',monospace;
-font-size:11px;
+gap:12px;
+font-family:"IBM Plex Mono",monospace;
+font-size:10px;
 letter-spacing:.28em;
 text-transform:uppercase;
 color:#fff;
+white-space:nowrap;
 }
 
 .brand-line{
-width:26px;
+width:28px;
 height:2px;
 background:var(--gold);
+border-radius:2px;
 }
 
 .menu-btn{
@@ -82,7 +86,6 @@ padding:4px;
 }
 
 .menu-btn span{
-display:block;
 width:28px;
 height:2px;
 background:#fff;
@@ -108,88 +111,118 @@ opacity:1;
 visibility:visible;
 }
 
-/* SIDE MENU */
+/* MENU */
 .side-menu{
 position:fixed;
 top:0;
 right:-100%;
 width:50%;
 max-width:420px;
-min-width:290px;
+min-width:300px;
 height:100vh;
-background:#0f1316;
+background:
+linear-gradient(180deg,#0d1115,#10161a);
 border-left:1px solid var(--line);
+padding:24px 22px 22px;
+display:flex;
+flex-direction:column;
 z-index:9999;
-padding:30px 28px 50px;
-overflow:auto;
 transition:.3s ease;
 }
 
 .side-menu.active{right:0}
 
+.menu-scroll{
+overflow:auto;
+padding-right:4px;
+flex:1;
+}
+
 .menu-head{
 display:flex;
 justify-content:space-between;
 align-items:center;
-padding-bottom:18px;
-margin-bottom:24px;
+padding-bottom:14px;
+margin-bottom:18px;
 border-bottom:1px solid var(--line);
 }
 
 .menu-title{
-font-family:'IBM Plex Mono',monospace;
-font-size:11px;
+font-family:"IBM Plex Mono",monospace;
+font-size:10px;
 letter-spacing:.24em;
 text-transform:uppercase;
-color:var(--gold);
+color:var(--gold2);
 }
 
 .close-btn{
 background:none;
 border:none;
 font-size:28px;
-color:#fff;
+line-height:1;
 cursor:pointer;
+color:#fff;
 }
 
-.menu-group{margin-bottom:24px}
+.group{
+margin-bottom:20px;
+}
 
-.menu-label{
-font-family:'IBM Plex Mono',monospace;
+.label{
+font-family:"IBM Plex Mono",monospace;
 font-size:10px;
 letter-spacing:.22em;
 text-transform:uppercase;
-color:var(--gold2);
+color:var(--gold);
 margin-bottom:10px;
-opacity:.8;
+opacity:.9;
 }
 
-.menu-group a{
+.group a{
 display:block;
 padding:13px 0;
-border-bottom:1px solid rgba(255,255,255,.04);
-font-size:17px;
+font-size:16px;
+font-weight:500;
 color:#eef2f4;
+border-bottom:1px solid var(--line2);
 transition:.2s;
 }
 
-.menu-group a:hover{
+.group a:hover{
 padding-left:6px;
 color:var(--gold2);
 }
 
-.intake-btn{
+.menu-footer{
+padding-top:14px;
+border-top:1px solid var(--line);
+}
+
+.intake{
 display:block;
-margin-top:12px;
-padding:14px 16px;
 text-align:center;
-background:linear-gradient(135deg,var(--gold),#a98752);
+padding:15px 14px;
+border-radius:14px;
+background:linear-gradient(135deg,var(--gold),#a6844f);
 color:#111 !important;
-font-weight:700;
 font-size:12px;
-letter-spacing:.16em;
+font-weight:700;
+letter-spacing:.18em;
 text-transform:uppercase;
-border-radius:12px;
+margin-bottom:12px;
+}
+
+.mail{
+display:block;
+text-align:center;
+padding:14px 12px;
+border-radius:14px;
+border:1px solid rgba(200,167,106,.22);
+background:rgba(255,255,255,.02);
+font-size:14px;
+font-weight:500;
+color:#fff !important;
+word-break:break-all;
 }
 
 /* HERO */
@@ -197,7 +230,7 @@ border-radius:12px;
 min-height:100vh;
 display:flex;
 align-items:center;
-padding:130px 28px 70px;
+padding:120px 22px 60px;
 }
 
 .wrap{
@@ -207,112 +240,48 @@ width:100%;
 }
 
 .eyebrow{
-font-family:'IBM Plex Mono',monospace;
-font-size:11px;
+font-family:"IBM Plex Mono",monospace;
+font-size:10px;
 letter-spacing:.28em;
 text-transform:uppercase;
 color:var(--gold);
-margin-bottom:24px;
+margin-bottom:22px;
 }
 
 h1{
-font-size:clamp(44px,8vw,92px);
+font-size:clamp(44px,8vw,88px);
 line-height:.96;
 font-weight:700;
 letter-spacing:-.04em;
-max-width:900px;
-margin-bottom:28px;
+max-width:860px;
+margin-bottom:24px;
 }
 
 h1 span{color:var(--gold2)}
 
 .sub{
-max-width:700px;
+max-width:660px;
 font-size:20px;
 line-height:1.7;
 color:var(--muted);
-margin-bottom:42px;
+margin-bottom:36px;
 }
 
 .cta{
 display:inline-block;
-padding:16px 24px;
-background:linear-gradient(135deg,var(--gold),#a98752);
+padding:15px 22px;
+border-radius:12px;
+background:linear-gradient(135deg,var(--gold),#a6844f);
 color:#111;
 font-size:12px;
 font-weight:700;
-letter-spacing:.16em;
+letter-spacing:.18em;
 text-transform:uppercase;
-border-radius:12px;
-transition:.25s;
-}
-
-.cta:hover{transform:translateY(-2px)}
-
-/* STATEMENT */
-.statement{padding:0 28px 80px}
-
-.statement-inner{
-max-width:1180px;
-margin:auto;
-padding:34px 0;
-border-top:1px solid var(--line);
-border-bottom:1px solid var(--line);
-font-size:34px;
-font-weight:600;
-line-height:1.3;
-}
-
-.statement span{color:var(--gold)}
-
-/* GRID */
-.section{padding:0 28px 90px}
-
-.grid{
-max-width:1180px;
-margin:auto;
-display:grid;
-grid-template-columns:repeat(3,1fr);
-gap:18px;
-}
-
-.card{
-background:
-linear-gradient(135deg, rgba(22,53,43,.45), rgba(21,26,29,.95));
-border:1px solid var(--line);
-border-radius:18px;
-padding:28px;
-transition:.25s;
-}
-
-.card:hover{
-transform:translateY(-4px);
-border-color:rgba(200,167,106,.28);
-}
-
-.kicker{
-font-family:'IBM Plex Mono',monospace;
-font-size:11px;
-letter-spacing:.22em;
-text-transform:uppercase;
-color:var(--gold);
-margin-bottom:12px;
-}
-
-.card h3{
-font-size:28px;
-margin-bottom:12px;
-}
-
-.card p{
-font-size:16px;
-line-height:1.75;
-color:var(--muted);
 }
 
 /* FOOTER */
 .footer{
-padding:26px 28px 36px;
+padding:24px 22px 34px;
 border-top:1px solid var(--line);
 }
 
@@ -321,21 +290,14 @@ max-width:1180px;
 margin:auto;
 text-align:center;
 font-size:13px;
-color:#c7cdd1;
+color:#c6cdd1;
 line-height:1.8;
 }
 
-/* RESPONSIVE */
-@media(max-width:980px){
-.grid{grid-template-columns:1fr}
-.statement-inner{font-size:28px}
-}
-
+/* MOBILE */
 @media(max-width:768px){
-.topbar{padding:18px}
-.hero{padding:120px 18px 60px}
-.statement,.section,.footer{padding-left:18px;padding-right:18px}
 .side-menu{width:78%}
+.brand{font-size:9px;letter-spacing:.22em}
 .sub{font-size:18px}
 }
 </style>
@@ -349,7 +311,7 @@ line-height:1.8;
 <span>Decision Authority Research</span>
 </a>
 
-<button class="menu-btn" id="openMenu" aria-label="Menu">
+<button class="menu-btn" id="openMenu" aria-label="Open menu">
 <span></span>
 <span></span>
 <span></span>
@@ -365,27 +327,35 @@ line-height:1.8;
 <button class="close-btn" id="closeMenu">&times;</button>
 </div>
 
-<div class="menu-group">
-<div class="menu-label">Primary</div>
+<div class="menu-scroll">
+
+<div class="group">
+<div class="label">Primary</div>
 <a href="index.html">Home</a>
 <a href="dar.html">DAR</a>
 <a href="services.html">Services</a>
 <a href="about.html">About</a>
 <a href="contact.html">Contact</a>
-<a href="contact.html" class="intake-btn">Private Intake</a>
 </div>
 
-<div class="menu-group">
-<div class="menu-label">Research</div>
+<div class="group">
+<div class="label">Research</div>
 <a href="research.html">Independent Research</a>
 <a href="whitepaper.html">White Paper</a>
 </div>
 
-<div class="menu-group">
-<div class="menu-label">Reference</div>
+<div class="group">
+<div class="label">Reference</div>
 <a href="definitions.html">Definitions</a>
 <a href="faq.html">FAQ</a>
 <a href="goodfaith.html">Good Faith Use</a>
+</div>
+
+</div>
+
+<div class="menu-footer">
+<a href="contact.html" class="intake">Private Intake</a>
+<a href="mailto:Liran@liranbarshrim.com" class="mail">Liran@liranbarshrim.com</a>
 </div>
 
 </aside>
@@ -401,40 +371,10 @@ When authority is unclear,<br>
 </h1>
 
 <p class="sub">
-Independent advisory for boards, executives, founders and counsel facing consequential decisions already in motion.
+Independent advisory for boards, executives and counsel facing consequential decisions already in motion.
 </p>
 
 <a href="contact.html" class="cta">Private Inquiry</a>
-
-</div>
-</section>
-
-<section class="statement">
-<div class="statement-inner">
-Approval systems scale. <span>Stop authority decides survival.</span>
-</div>
-</section>
-
-<section class="section">
-<div class="grid">
-
-<div class="card">
-<div class="kicker">Framework</div>
-<h3>DAR</h3>
-<p>One named authority with explicit power to stop a critical decision before exposure begins.</p>
-</div>
-
-<div class="card">
-<div class="kicker">Executive Risk</div>
-<h3>Personal Exposure</h3>
-<p>Many leaders carry responsibility for processes they were never empowered to stop.</p>
-</div>
-
-<div class="card">
-<div class="kicker">AI Governance</div>
-<h3>Irreversible Systems</h3>
-<p>When systems move faster than oversight, governance becomes theoretical.</p>
-</div>
 
 </div>
 </section>
@@ -448,21 +388,15 @@ Approval systems scale. <span>Stop authority decides survival.</span>
 <script>
 const menu=document.getElementById('menu');
 const overlay=document.getElementById('overlay');
-const open=document.getElementById('openMenu');
-const close=document.getElementById('closeMenu');
-
-function openMenu(){
+document.getElementById('openMenu').onclick=()=>{
 menu.classList.add('active');
 overlay.classList.add('active');
-}
-
+};
 function closeMenu(){
 menu.classList.remove('active');
 overlay.classList.remove('active');
 }
-
-open.onclick=openMenu;
-close.onclick=closeMenu;
+document.getElementById('closeMenu').onclick=closeMenu;
 overlay.onclick=closeMenu;
 </script>
 
