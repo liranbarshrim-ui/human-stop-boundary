@@ -4,333 +4,475 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
 <title>DAR | Decision Authority Record</title>
-<meta name="description" content="Decision Authority Record. Private advisory for boards, executives and counsel.">
+<meta name="description" content="Decision Authority Record. Define who can stop irreversible decisions before exposure begins.">
 
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Cormorant+Garamond:wght@500;600&display=swap" rel="stylesheet">
 
 <style>
 :root{
---bg:#07110c;
---bg2:#0e1b14;
---card:#112018;
---card2:#173022;
---gold:#c9aa6d;
---text:#eef3ef;
---muted:#9ca79f;
---line:rgba(255,255,255,.07);
+--bg:#06110d;
+--bg2:#0a1712;
+--panel:#0f2019;
+--gold:#d0b06b;
+--gold2:#f0d59b;
+--line:rgba(208,176,107,.18);
+--text:#edf1ed;
+--muted:#9da8a1;
+--green:#133326;
 }
 
 *{margin:0;padding:0;box-sizing:border-box}
 html{scroll-behavior:smooth}
 body{
-font-family:Inter,sans-serif;
 background:
-radial-gradient(circle at top right, rgba(23,48,34,.45), transparent 35%),
-radial-gradient(circle at bottom left, rgba(201,170,109,.06), transparent 35%),
-var(--bg);
+radial-gradient(circle at top right, rgba(208,176,107,.08), transparent 35%),
+radial-gradient(circle at left bottom, rgba(20,70,50,.28), transparent 40%),
+linear-gradient(180deg,#06110d,#07130f,#081510);
 color:var(--text);
+font-family:Inter,sans-serif;
 overflow-x:hidden;
-line-height:1.6;
-}
-
-a{text-decoration:none;color:inherit}
-
-body:before{
-content:'';
-position:fixed;inset:0;
-background-image:
-linear-gradient(rgba(255,255,255,.012) 1px, transparent 1px),
-linear-gradient(90deg, rgba(255,255,255,.012) 1px, transparent 1px);
-background-size:38px 38px;
-opacity:.25;
-pointer-events:none;
 }
 
 /* HEADER */
-.topbar{
+header{
 position:fixed;
 top:0;left:0;width:100%;
-z-index:999;
+height:76px;
 display:flex;
-justify-content:space-between;
 align-items:center;
-padding:16px 18px;
-background:rgba(7,17,12,.84);
-backdrop-filter:blur(14px);
-border-bottom:1px solid var(--line);
+justify-content:space-between;
+padding:0 22px;
+background:rgba(6,17,13,.88);
+backdrop-filter:blur(10px);
+border-bottom:1px solid rgba(255,255,255,.04);
+z-index:1000;
 }
 
 .brand{
 display:flex;
 align-items:center;
-gap:10px;
-font-size:10px;
-letter-spacing:.18em;
+gap:14px;
+font-size:13px;
+letter-spacing:.32em;
 text-transform:uppercase;
+font-weight:600;
+color:#fff;
 }
 
-.brand-line{
-width:24px;height:1px;background:var(--gold);
+.brand:before{
+content:"";
+width:28px;height:2px;
+background:var(--gold);
+border-radius:2px;
 }
 
 .menu-btn{
-background:none;border:none;cursor:pointer;
-display:flex;flex-direction:column;gap:5px;
+width:42px;height:42px;
+background:none;border:none;
+display:flex;
+flex-direction:column;
+justify-content:center;
+gap:6px;
+cursor:pointer;
 }
 
 .menu-btn span{
-width:24px;height:1px;background:#fff;
+display:block;
+height:2px;
+background:#fff;
+border-radius:3px;
+}
+
+/* MENU */
+.overlay{
+position:fixed;
+inset:0;
+background:rgba(0,0,0,.62);
+opacity:0;
+visibility:hidden;
+transition:.3s;
+z-index:998;
+}
+
+.overlay.show{
+opacity:1;
+visibility:visible;
+}
+
+.side{
+position:fixed;
+top:0;right:-100%;
+width:86%;
+max-width:390px;
+height:100vh;
+overflow:auto;
+background:linear-gradient(180deg,#0a1712,#0c1d16,#10241b);
+border-left:1px solid var(--line);
+padding:26px 24px 40px;
+transition:.34s ease;
+z-index:999;
+}
+
+.side.show{right:0}
+
+.side-top{
+display:flex;
+justify-content:space-between;
+align-items:center;
+margin-bottom:26px;
+}
+
+.side-title{
+font-size:12px;
+letter-spacing:.3em;
+text-transform:uppercase;
+color:var(--gold);
+font-weight:700;
+}
+
+.close{
+background:none;
+border:none;
+color:#fff;
+font-size:34px;
+line-height:1;
+cursor:pointer;
+}
+
+.group{margin-bottom:24px}
+
+.label{
+font-size:11px;
+letter-spacing:.28em;
+text-transform:uppercase;
+color:var(--gold);
+margin-bottom:10px;
+font-weight:700;
+}
+
+.group a{
+display:block;
+padding:15px 0;
+border-bottom:1px solid rgba(255,255,255,.05);
+font-size:19px;
+font-weight:500;
+color:#eef3ef;
+text-decoration:none;
+}
+
+.group a:hover{color:var(--gold2)}
+
+.intake{
+display:block;
+margin-top:14px;
+padding:16px;
+text-align:center;
+background:var(--gold);
+color:#111!important;
+font-weight:800;
+border-radius:14px;
+letter-spacing:.18em;
+text-transform:uppercase;
+font-size:12px;
+text-decoration:none;
+}
+
+.mail{
+display:block;
+margin-top:12px;
+padding:14px;
+text-align:center;
+border:1px solid var(--line);
+border-radius:14px;
+color:#fff;
+font-size:14px;
+text-decoration:none;
+word-break:break-word;
 }
 
 /* HERO */
 .hero{
-padding:110px 18px 60px;
-max-width:760px;
-margin:auto;
+padding:120px 20px 28px;
 }
 
-.hero-box{
-background:linear-gradient(145deg,var(--card),var(--card2));
-border:1px solid rgba(201,170,109,.14);
-border-radius:24px;
-padding:34px 22px;
-text-align:center;
-box-shadow:0 25px 60px rgba(0,0,0,.28);
+.card{
+background:
+radial-gradient(circle at top right, rgba(208,176,107,.08), transparent 35%),
+linear-gradient(135deg,#0c1b15,#10231b,#12271e);
+border:1px solid rgba(255,255,255,.06);
+border-radius:28px;
+padding:28px 22px;
+box-shadow:0 0 0 1px rgba(255,255,255,.02) inset;
 }
 
 .kicker{
 font-size:11px;
-letter-spacing:.22em;
+letter-spacing:.28em;
 text-transform:uppercase;
 color:var(--gold);
-margin-bottom:18px;
-}
-
-.hero h1{
-font-size:44px;
-line-height:1.02;
 font-weight:700;
-letter-spacing:-.03em;
+margin-bottom:16px;
+}
+
+h1{
+font-size:48px;
+line-height:.95;
+font-weight:800;
+letter-spacing:-.04em;
 margin-bottom:18px;
-}
-
-.hero h1 span{color:var(--gold)}
-
-.hero p{
-font-size:17px;
-color:var(--muted);
-margin-bottom:26px;
-line-height:1.55;
-}
-
-.btn{
-display:inline-block;
-padding:15px 22px;
-border-radius:14px;
-font-size:12px;
-letter-spacing:.16em;
-text-transform:uppercase;
-background:linear-gradient(145deg,#21422f,#173022);
-border:1px solid rgba(201,170,109,.24);
-min-width:220px;
-}
-
-/* SECTION */
-.section{
-padding:0 18px 70px;
-max-width:760px;
-margin:auto;
-}
-
-.section h2{
-font-size:30px;
-margin-bottom:14px;
 }
 
 .sub{
-font-size:16px;
+font-size:20px;
+line-height:1.5;
 color:var(--muted);
-margin-bottom:22px;
+margin-bottom:26px;
+}
+
+.cta{
+display:inline-block;
+padding:16px 22px;
+background:transparent;
+border:1px solid var(--gold);
+border-radius:16px;
+color:var(--gold2);
+text-decoration:none;
+font-size:12px;
+font-weight:800;
+letter-spacing:.18em;
+text-transform:uppercase;
+}
+
+.price{
+margin-top:22px;
+padding-top:20px;
+border-top:1px solid rgba(255,255,255,.05);
+font-size:15px;
+color:#d8ddd8;
+line-height:1.7;
+}
+
+.price strong{
+color:var(--gold2);
+font-size:18px;
+}
+
+/* SECTIONS */
+.wrap{padding:8px 20px 70px}
+
+.sec{
+margin-top:26px;
+background:rgba(255,255,255,.02);
+border:1px solid rgba(255,255,255,.05);
+border-radius:24px;
+padding:24px 20px;
+}
+
+.sec h2{
+font-size:28px;
+margin-bottom:14px;
+line-height:1.1;
+}
+
+.sec p{
+font-size:17px;
+line-height:1.7;
+color:var(--muted);
 }
 
 .grid{
 display:grid;
 gap:14px;
+margin-top:18px;
 }
 
-.card{
-background:linear-gradient(145deg,var(--card),var(--card2));
-border:1px solid rgba(201,170,109,.10);
+.item{
+padding:18px;
 border-radius:18px;
-padding:22px;
+background:linear-gradient(135deg,#0d1f18,#11261d);
+border:1px solid rgba(208,176,107,.09);
 }
 
-.card small{
-display:block;
-font-size:11px;
-letter-spacing:.18em;
-text-transform:uppercase;
+.num{
+font-size:12px;
 color:var(--gold);
+font-weight:800;
+letter-spacing:.2em;
 margin-bottom:10px;
 }
 
-.card h3{
-font-size:20px;
+.item h3{
+font-size:22px;
 margin-bottom:8px;
 }
 
-.card p{
+.item p{
 font-size:15px;
-color:var(--muted);
+line-height:1.65;
 }
 
 /* FOOTER */
 footer{
-padding:24px 18px;
-border-top:1px solid var(--line);
-text-align:center;
+padding:24px 20px 34px;
+border-top:1px solid rgba(255,255,255,.05);
 font-size:12px;
-color:#95a097;
-margin-top:20px;
+letter-spacing:.16em;
+text-transform:uppercase;
+color:#9ca39d;
+text-align:center;
 }
 
 /* DESKTOP */
 @media(min-width:900px){
-
-.topbar{
-padding:18px 28px;
-}
-
-.brand{
-font-size:11px;
-letter-spacing:.24em;
-}
-
-.hero{
-padding:145px 24px 80px;
-}
-
-.hero-box{
-padding:54px;
-}
-
-.hero h1{
-font-size:72px;
-}
-
-.hero p{
-font-size:20px;
-max-width:760px;
-margin:0 auto 28px;
-}
-
-.btn{
-min-width:auto;
-padding:16px 26px;
-}
-
-.section{
-padding:0 24px 90px;
-}
-
-.grid{
-grid-template-columns:repeat(3,1fr);
-}
+.hero,.wrap{max-width:1100px;margin:auto}
+.grid{grid-template-columns:repeat(2,1fr)}
+h1{font-size:72px}
+.sub{max-width:700px}
 }
 </style>
 </head>
+
 <body>
 
-<header class="topbar">
-<a href="index.html" class="brand">
-<span class="brand-line"></span>
-<span>Decision Authority Research</span>
-</a>
+<header>
+<div class="brand">Decision Authority Research</div>
 
-<button class="menu-btn">
+<button class="menu-btn" id="openMenu">
 <span></span><span></span><span></span>
 </button>
 </header>
 
-<section class="hero">
-<div class="hero-box">
+<div class="overlay" id="overlay"></div>
 
+<aside class="side" id="side">
+<div class="side-top">
+<div class="side-title">Navigation</div>
+<button class="close" id="closeMenu">&times;</button>
+</div>
+
+<div class="group">
+<div class="label">Primary</div>
+<a href="index.html">Home</a>
+<a href="dar.html">DAR</a>
+<a href="services.html">Services</a>
+<a href="about.html">About</a>
+<a href="contact.html">Contact</a>
+</div>
+
+<div class="group">
+<div class="label">Research</div>
+<a href="research.html">Independent Research</a>
+<a href="whitepaper.html">White Paper</a>
+</div>
+
+<div class="group">
+<div class="label">Reference</div>
+<a href="definitions.html">Definitions</a>
+<a href="faq.html">FAQ</a>
+<a href="goodfaith.html">Good Faith Use</a>
+</div>
+
+<a href="contact.html" class="intake">Private Intake</a>
+<a href="mailto:Liran@liranbarshrim.com" class="mail">Liran@liranbarshrim.com</a>
+</aside>
+
+<section class="hero">
+<div class="card">
 <div class="kicker">Decision Authority Record</div>
 
-<h1>
-When no one is named<br>
-to <span>stop it</span>, someone<br>
-is named after.
-</h1>
+<h1>Approval is common.<br>Stop power is rare.</h1>
 
-<p>
-DAR defines one named authority before ownership becomes personal.
-For boards, executives, founders and counsel.
-</p>
+<div class="sub">
+DAR defines one named authority with real power to pause or stop a critical decision before it becomes irreversible.
+</div>
 
-<a href="contact.html" class="btn">Private Inquiry</a>
+<a href="contact.html" class="cta">Discuss Active Exposure</a>
 
+<div class="price">
+<strong>From €12,000</strong><br>
+Single-pathway authority review. One decision, one accountable human authority, one formal DAR record.
+</div>
 </div>
 </section>
 
-<section class="section">
+<div class="wrap">
+
+<section class="sec">
 <h2>What DAR Solves</h2>
-<p class="sub">
-Most organizations define approvals. Few define who can halt momentum when risk changes.
-</p>
 
 <div class="grid">
 
-<div class="card">
-<small>01</small>
-<h3>Authority Gap</h3>
-<p>No one clearly holds real stop power.</p>
+<div class="item">
+<div class="num">01</div>
+<h3>Map Reality</h3>
+<p>Trace how a real consequential decision moves through your organization.</p>
 </div>
 
-<div class="card">
-<small>02</small>
-<h3>Exposure Risk</h3>
-<p>After failure, ownership becomes personal.</p>
+<div class="item">
+<div class="num">02</div>
+<h3>Name Authority</h3>
+<p>Assign one real person with authority to stop continuation.</p>
 </div>
 
-<div class="card">
-<small>03</small>
-<h3>Speed Pressure</h3>
-<p>Momentum outruns governance.</p>
+<div class="item">
+<div class="num">03</div>
+<h3>Define Threshold</h3>
+<p>Clarify what uncertainty or exposure requires mandatory pause.</p>
+</div>
+
+<div class="item">
+<div class="num">04</div>
+<h3>Create Record</h3>
+<p>Document authority before the critical moment arrives.</p>
 </div>
 
 </div>
 </section>
 
-<section class="section">
+<section class="sec">
 <h2>Where It Applies</h2>
-
-<div class="grid">
-
-<div class="card">
-<small>AI</small>
-<h3>Autonomous Systems</h3>
-<p>Execution moves faster than review.</p>
-</div>
-
-<div class="card">
-<small>Finance</small>
-<h3>Material Transactions</h3>
-<p>High-value decisions under urgency.</p>
-</div>
-
-<div class="card">
-<small>Legal</small>
-<h3>Regulated Exposure</h3>
-<p>Someone signs without power to stop.</p>
-</div>
-
-</div>
+<p>
+AI systems, finance, executive decisions, launches, legal approvals, regulated operations, high-speed organizations.
+</p>
 </section>
+
+<section class="sec">
+<h2>Core Principle</h2>
+<p>
+If no one can be named with authority to stop it, the decision is not ready to proceed.
+</p>
+</section>
+
+</div>
 
 <footer>
-© 2026 Liran Bar-Shrim · All Rights Reserved
+© 2026 All Rights Reserved
 </footer>
+
+<script>
+const side=document.getElementById("side");
+const overlay=document.getElementById("overlay");
+const openBtn=document.getElementById("openMenu");
+const closeBtn=document.getElementById("closeMenu");
+
+function openMenu(){
+side.classList.add("show");
+overlay.classList.add("show");
+}
+
+function closeMenu(){
+side.classList.remove("show");
+overlay.classList.remove("show");
+}
+
+openBtn.addEventListener("click",openMenu);
+closeBtn.addEventListener("click",closeMenu);
+overlay.addEventListener("click",closeMenu);
+
+document.addEventListener("keydown",function(e){
+if(e.key==="Escape"){closeMenu();}
+});
+</script>
 
 </body>
 </html>
