@@ -5,21 +5,23 @@
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
 
 <title>About | Decision Authority Research</title>
-<meta name="description" content="Independent research on authority gaps, accountability, and irreversible decisions under uncertainty.">
+<meta name="description" content="Independent research focused on authority gaps, executive accountability, and irreversible decisions under uncertainty.">
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
-<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:wght@400;500;600;700&family=Cormorant+Garamond:wght@500;600;700&family=IBM+Plex+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Cormorant+Garamond:wght@400;500;600;700&family=IBM+Plex+Mono:wght@300;400;500&display=swap" rel="stylesheet">
 
 <style>
 :root{
---bg:#050505;
---panel:#0c0c0c;
+--bg:#050606;
+--bg2:#081011;
+--card:#0a1414;
+--green:#0e2d23;
 --gold:#c8a15b;
 --gold2:#efd8a0;
---text:#f1f1ee;
---muted:#a7aca8;
+--text:#edf2ef;
+--muted:#95a09b;
 --line:rgba(255,255,255,.08);
 }
 
@@ -27,11 +29,10 @@
 html{scroll-behavior:smooth;}
 
 body{
-font-family:"Source Serif 4",serif;
+font-family:Inter,sans-serif;
 background:#050505;
 color:var(--text);
 overflow-x:hidden;
-line-height:1.75;
 }
 
 body:before{
@@ -39,16 +40,16 @@ content:"";
 position:fixed;
 inset:0;
 pointer-events:none;
-opacity:.07;
+opacity:.14;
 background-image:
-linear-gradient(rgba(255,255,255,.025) 1px, transparent 1px),
-linear-gradient(90deg, rgba(255,255,255,.025) 1px, transparent 1px);
-background-size:42px 42px;
+linear-gradient(rgba(255,255,255,.03) 1px, transparent 1px),
+linear-gradient(90deg, rgba(255,255,255,.03) 1px, transparent 1px);
+background-size:40px 40px;
 }
 
-a{text-decoration:none;color:inherit}
+a{text-decoration:none;color:inherit;}
 
-/* topbar */
+/* TOPBAR */
 
 .topbar{
 position:fixed;
@@ -59,7 +60,7 @@ align-items:center;
 justify-content:space-between;
 padding:0 18px;
 z-index:1000;
-background:rgba(5,5,5,.9);
+background:rgba(4,7,8,.82);
 backdrop-filter:blur(14px);
 border-bottom:1px solid var(--line);
 }
@@ -76,36 +77,160 @@ white-space:nowrap;
 }
 
 .brand-line{
-width:34px;height:2px;border-radius:4px;background:var(--gold);
+width:34px;
+height:2px;
+border-radius:4px;
+background:var(--gold);
 }
 
 .menu-btn{
-width:42px;height:42px;border:none;background:none;cursor:pointer;
-display:flex;flex-direction:column;justify-content:center;gap:6px;
+width:42px;
+height:42px;
+border:none;
+background:none;
+cursor:pointer;
+display:flex;
+flex-direction:column;
+justify-content:center;
+gap:6px;
 }
 
 .menu-btn span{
-height:2px;background:#fff;border-radius:4px;
+height:2px;
+background:#fff;
+border-radius:4px;
 }
 
-.menu-btn span:nth-child(2){width:72%;margin-left:auto;}
+.menu-btn span:nth-child(2){
+width:72%;
+margin-left:auto;
+}
 
-/* hero */
+/* DRAWER */
+
+.overlay{
+position:fixed;
+inset:0;
+background:rgba(0,0,0,.55);
+opacity:0;
+visibility:hidden;
+transition:.25s;
+z-index:998;
+}
+
+.overlay.active{
+opacity:1;
+visibility:visible;
+}
+
+.drawer{
+position:fixed;
+top:0;
+right:-100%;
+width:86%;
+max-width:420px;
+height:100vh;
+overflow-y:auto;
+z-index:999;
+padding:24px;
+transition:.3s ease;
+background:linear-gradient(180deg,#071010,#071313 70%,#050707);
+border-left:1px solid rgba(255,255,255,.08);
+}
+
+.drawer.active{right:0;}
+
+.drawer-top{
+display:flex;
+justify-content:space-between;
+align-items:center;
+margin-bottom:18px;
+}
+
+.drawer-title{
+font-family:"IBM Plex Mono",monospace;
+font-size:11px;
+letter-spacing:.28em;
+text-transform:uppercase;
+color:var(--gold2);
+}
+
+.close-btn{
+font-size:38px;
+line-height:1;
+background:none;
+border:none;
+color:#fff;
+cursor:pointer;
+}
+
+.group{margin-top:18px;}
+
+.group small{
+display:block;
+font-family:"IBM Plex Mono",monospace;
+font-size:10px;
+letter-spacing:.26em;
+text-transform:uppercase;
+color:var(--gold);
+margin-bottom:10px;
+}
+
+.drawer a.link{
+display:block;
+padding:14px 0;
+font-size:20px;
+border-bottom:1px solid rgba(255,255,255,.05);
+}
+
+.drawer a.link:hover,
+.drawer a.link.active{
+color:var(--gold2);
+}
+
+.private-btn{
+display:block;
+margin-top:22px;
+padding:16px;
+border-radius:16px;
+text-align:center;
+font-weight:800;
+letter-spacing:.18em;
+font-size:13px;
+text-transform:uppercase;
+background:linear-gradient(135deg,#d9bb79,#b88e45);
+color:#111;
+}
+
+.mail-btn{
+display:block;
+margin-top:14px;
+padding:14px;
+text-align:center;
+border-radius:16px;
+border:1px solid rgba(255,255,255,.08);
+color:#f3dfb4;
+font-size:15px;
+word-break:break-word;
+}
+
+/* HERO */
 
 .hero{
-max-width:980px;
+padding:118px 18px 40px;
+max-width:1200px;
 margin:auto;
-padding:118px 18px 30px;
 display:grid;
 grid-template-columns:1fr;
 gap:28px;
 }
 
 .photo{
-max-width:250px;
-border-radius:22px;
+max-width:240px;
+border-radius:24px;
 overflow:hidden;
 border:1px solid rgba(255,255,255,.08);
+background:#111;
 }
 
 .photo img{
@@ -115,83 +240,78 @@ aspect-ratio:4/5;
 object-fit:cover;
 }
 
-.eyebrow,.label{
+.eyebrow{
 font-family:"IBM Plex Mono",monospace;
 font-size:10px;
-letter-spacing:.28em;
+letter-spacing:.3em;
 text-transform:uppercase;
 color:var(--gold2);
-margin-bottom:14px;
+margin-bottom:18px;
 }
 
 .hero h1{
 font-family:"Cormorant Garamond",serif;
-font-size:48px;
-line-height:.95;
+font-size:54px;
+line-height:.92;
 font-weight:600;
-letter-spacing:-.02em;
+letter-spacing:-.03em;
 }
 
 .hero h1 span{color:var(--gold2);}
 
-.role{
-margin-top:12px;
-font-family:"IBM Plex Mono",monospace;
-font-size:10px;
-letter-spacing:.22em;
-text-transform:uppercase;
-color:var(--gold);
-}
-
-.lead{
-margin-top:20px;
-font-size:22px;
-line-height:1.65;
-max-width:700px;
-}
-
-.copy{
-margin-top:16px;
-font-size:19px;
+.hero p{
+margin-top:18px;
+font-size:18px;
+line-height:1.75;
 color:var(--muted);
 max-width:760px;
 }
 
-/* sections */
+/* SECTIONS */
 
 .section{
-max-width:980px;
+max-width:1200px;
 margin:auto;
 padding:18px;
 }
 
-.panel{
-background:#0c0c0c;
-border:1px solid rgba(255,255,255,.06);
-border-radius:22px;
-padding:26px;
+.label{
+font-family:"IBM Plex Mono",monospace;
+font-size:10px;
+letter-spacing:.28em;
+text-transform:uppercase;
+color:var(--gold);
+margin-bottom:16px;
+}
+
+.card{
+position:relative;
+overflow:hidden;
+border-radius:24px;
+padding:24px;
+background:
+radial-gradient(circle at 85% 18%, rgba(200,161,91,.08), transparent 24%),
+radial-gradient(circle at 15% 90%, rgba(14,45,35,.45), transparent 28%),
+linear-gradient(135deg,#071010,#0a1516);
+border:1px solid rgba(255,255,255,.07);
 margin-bottom:18px;
 }
 
-.panel h2{
+.card h2{
 font-family:"Cormorant Garamond",serif;
-font-size:40px;
-line-height:1;
-margin-bottom:12px;
-color:var(--gold2);
-}
-
-.panel p{
-font-size:19px;
-color:#d0d3d0;
+font-size:42px;
+line-height:.95;
+font-weight:600;
+color:#e7c98f;
 margin-bottom:14px;
 }
 
-.quote{
-font-family:"Cormorant Garamond",serif;
-font-size:38px;
-line-height:1.08;
-color:#fff;
+.card p{
+font-size:18px;
+line-height:1.75;
+color:#cbd3cf;
+max-width:780px;
+margin-bottom:14px;
 }
 
 .actions{
@@ -202,14 +322,14 @@ margin-top:18px;
 }
 
 .btn{
+display:block;
 padding:16px;
 border-radius:16px;
 text-align:center;
-font-family:"IBM Plex Mono",monospace;
-font-size:12px;
+font-weight:800;
 letter-spacing:.18em;
+font-size:12px;
 text-transform:uppercase;
-font-weight:700;
 }
 
 .btn-primary{
@@ -223,38 +343,39 @@ color:#fff;
 }
 
 footer{
-max-width:980px;
+max-width:1200px;
 margin:auto;
-padding:40px 18px 70px;
+padding:28px 18px 70px;
 border-top:1px solid var(--line);
 font-size:14px;
 color:#8f9a95;
-margin-top:40px;
+margin-top:50px;
 }
 
-/* desktop */
+/* DESKTOP */
 
 @media(min-width:900px){
 
 .topbar{padding:0 34px;}
 
 .hero{
-padding:150px 34px 34px;
-grid-template-columns:270px 1fr;
-gap:54px;
-align-items:start;
+padding:150px 34px 50px;
+grid-template-columns:280px 1fr;
+align-items:center;
+gap:50px;
 }
 
-.hero h1{font-size:74px;}
-.lead{font-size:28px;}
-.copy{font-size:22px;}
+.hero h1{font-size:86px;}
+.hero p{font-size:22px;}
 
 .section{padding:34px;}
 
-.panel{padding:38px;}
-.panel h2{font-size:56px;}
-.panel p{font-size:22px;}
-.quote{font-size:56px;}
+.card{
+padding:34px;
+}
+
+.card h2{font-size:58px;}
+.card p{font-size:21px;}
 
 .actions{
 flex-direction:row;
@@ -263,7 +384,9 @@ max-width:520px;
 
 .btn{flex:1;}
 
-footer{padding:34px 34px 70px;}
+footer{
+padding:34px 34px 70px;
+}
 }
 </style>
 </head>
@@ -276,10 +399,48 @@ footer{padding:34px 34px 70px;}
 <span>Decision Authority Research</span>
 </a>
 
-<button class="menu-btn">
-<span></span><span></span><span></span>
+<button class="menu-btn" id="openMenu" aria-label="Open Menu">
+<span></span>
+<span></span>
+<span></span>
 </button>
 </header>
+
+<div class="overlay" id="overlay"></div>
+
+<aside class="drawer" id="drawer">
+
+<div class="drawer-top">
+<div class="drawer-title">Navigation</div>
+<button class="close-btn" id="closeMenu">×</button>
+</div>
+
+<div class="group">
+<small>Primary</small>
+<a class="link" href="index.html">Home</a>
+<a class="link" href="dar.html">DAR</a>
+<a class="link" href="services.html">Services</a>
+<a class="link active" href="about.html">About</a>
+<a class="link" href="contact.html">Contact</a>
+</div>
+
+<div class="group">
+<small>Research</small>
+<a class="link" href="research.html">Independent Research</a>
+<a class="link" href="whitepaper.html">White Paper</a>
+</div>
+
+<div class="group">
+<small>Reference</small>
+<a class="link" href="definitions.html">Definitions</a>
+<a class="link" href="faq.html">FAQ</a>
+<a class="link" href="goodfaith.html">Good Faith Use</a>
+</div>
+
+<a href="contact.html" class="private-btn">Private Intake</a>
+<a href="mailto:Liran@liranbarshrim.com" class="mail-btn">Liran@liranbarshrim.com</a>
+
+</aside>
 
 <section class="hero">
 
@@ -292,16 +453,9 @@ footer{padding:34px 34px 70px;}
 
 <h1>Liran <span>Bar&#8209;Shrim</span></h1>
 
-<div class="role">Independent Research · Decision Authority</div>
-
-<div class="lead">
-Researching what many institutions discover only after pressure rises:
-responsibility is often clear long before authority is.
-</div>
-
-<div class="copy">
-Focused on authority gaps, executive accountability, and the moment consequential decisions become difficult to reverse.
-</div>
+<p>
+Independent research focused on authority gaps, executive accountability, and the moment institutions discover too late that responsibility was assigned before authority was clear.
+</p>
 
 </div>
 
@@ -309,73 +463,29 @@ Focused on authority gaps, executive accountability, and the moment consequentia
 
 <section class="section">
 
-<div class="label">Why This Work Exists</div>
+<div class="label">Core View</div>
 
-<div class="panel">
+<div class="card">
 <h2>Most systems know how to approve. Fewer know how to stop.</h2>
-
 <p>
-Organizations often invest heavily in process, workflow, delegation and execution. Yet when uncertainty rises, speed increases, or consequences become personal, the true authority structure can become unclear.
+Organizations build workflows, committees, escalation paths and controls. Yet when pressure rises, timelines compress, or consequences become personal, true stop authority is often unclear.
 </p>
-
 <p>
-That gap is often invisible until it matters.
+That gap can remain invisible until it matters most.
 </p>
 </div>
 
-<div class="panel">
-<div class="quote">
-If no one is clearly empowered to stop momentum, ownership may be assigned later.
-</div>
-</div>
-
-</section>
-
-<section class="section">
-
-<div class="label">What Is Studied</div>
-
-<div class="panel">
-<h2>Authority under pressure.</h2>
-
+<div class="card">
+<h2>Why Independent Matters</h2>
 <p>
-How organizations behave when timelines compress. How accountability moves when outcomes worsen. How committees diffuse ownership. How symbolic controls replace usable authority.
-</p>
-
-<p>
-Particular focus includes boards, founders, executive teams, legal escalation, AI governance, and irreversible operational decisions.
+Distance can reveal what proximity normalizes. Outside internal politics and routine assumptions, structural blind spots are often easier to identify.
 </p>
 </div>
 
-</section>
-
-<section class="section">
-
-<div class="label">Why Independent Matters</div>
-
-<div class="panel">
-<h2>Distance can reveal what proximity normalizes.</h2>
-
+<div class="card">
+<h2>Private Inquiry</h2>
 <p>
-Inside a system, recurring patterns can feel ordinary. From outside, structural blind spots are often easier to identify.
-</p>
-
-<p>
-Independence allows observation without internal politics, inherited assumptions, or pressure to preserve appearances.
-</p>
-</div>
-
-</section>
-
-<section class="section">
-
-<div class="label">Private Inquiry</div>
-
-<div class="panel">
-<h2>Selective conversations.</h2>
-
-<p>
-For boards, executives, founders, General Counsel, CROs and leaders facing live matters where authority, accountability or stop power is unclear.
+For boards, executives, founders, General Counsel, CROs and leaders facing live matters where authority, accountability or intervention power is unclear.
 </p>
 
 <div class="actions">
@@ -391,5 +501,25 @@ For boards, executives, founders, General Counsel, CROs and leaders facing live 
 © 2025 All Rights Reserved · Liran Bar-Shrim
 </footer>
 
+<script>
+const drawer=document.getElementById("drawer");
+const overlay=document.getElementById("overlay");
+const openBtn=document.getElementById("openMenu");
+const closeBtn=document.getElementById("closeMenu");
+
+openBtn.onclick=function(){
+drawer.classList.add("active");
+overlay.classList.add("active");
+};
+
+closeBtn.onclick=closeDrawer;
+overlay.onclick=closeDrawer;
+
+function closeDrawer(){
+drawer.classList.remove("active");
+overlay.classList.remove("active");
+}
+</script>
+
 </body>
-</html> 
+</html>
