@@ -2,46 +2,42 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+
 <title>Independent Research | Decision Authority Research</title>
-<meta name="description" content="Research on authority, accountability, and irreversible decisions. Essays and working notes by Liran Bar-Shrim.">
-<link rel="canonical" href="https://matrix-audit.com/research.html">
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;600&family=IBM+Plex+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+<meta name="description" content="Essays, case studies, AI governance notes, and decision authority frameworks by Liran Bar-Shrim.">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Cormorant+Garamond:wght@400;500;600;700&family=IBM+Plex+Mono:wght@300;400;500&display=swap" rel="stylesheet">
 
 <style>
 :root{
---bg:#060606;
---text:#e8e2d7;
---muted:#8d877f;
---gold:#c8a96e;
---line:rgba(255,255,255,.07);
+--bg:#050505;
+--bg2:#0a1011;
+--card:#0c1415;
+--gold:#c8a15b;
+--gold2:#efd8a0;
+--text:#edf2ef;
+--muted:#97a19d;
+--line:rgba(255,255,255,.08);
 }
 
-*{
-margin:0;
-padding:0;
-box-sizing:border-box;
-}
-
-html{
-scroll-behavior:smooth;
-}
-
+*{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
 body{
-background:#060606;
+font-family:Inter,sans-serif;
+background:var(--bg);
 color:var(--text);
-font-family:'Cormorant Garamond',serif;
 overflow-x:hidden;
-line-height:1.7;
 }
+a{text-decoration:none;color:inherit;}
 
 /* TOPBAR */
-
 .topbar{
 position:fixed;
-top:0;
-left:0;
-right:0;
+top:0;left:0;right:0;
 height:74px;
 display:flex;
 align-items:center;
@@ -65,17 +61,14 @@ white-space:nowrap;
 }
 
 .brand-line{
-width:34px;
-height:2px;
+width:34px;height:2px;
 background:var(--gold);
 border-radius:4px;
 }
 
 .menu-btn{
-width:42px;
-height:42px;
-border:none;
-background:none;
+width:42px;height:42px;
+border:none;background:none;
 cursor:pointer;
 display:flex;
 flex-direction:column;
@@ -84,7 +77,6 @@ gap:6px;
 }
 
 .menu-btn span{
-display:block;
 height:2px;
 background:#fff;
 border-radius:4px;
@@ -96,21 +88,16 @@ margin-left:auto;
 }
 
 /* MENU */
-
 .overlay{
 position:fixed;
 inset:0;
-background:rgba(0,0,0,.6);
+background:rgba(0,0,0,.55);
 opacity:0;
 visibility:hidden;
 transition:.25s;
 z-index:998;
 }
-
-.overlay.active{
-opacity:1;
-visibility:visible;
-}
+.overlay.active{opacity:1;visibility:visible;}
 
 .drawer{
 position:fixed;
@@ -121,15 +108,12 @@ max-width:420px;
 height:100vh;
 overflow-y:auto;
 padding:24px;
-background:#080808;
-border-left:1px solid var(--line);
-transition:.3s ease;
 z-index:999;
+transition:.3s ease;
+background:linear-gradient(180deg,#071010,#071313 70%,#050707);
+border-left:1px solid rgba(255,255,255,.08);
 }
-
-.drawer.active{
-right:0;
-}
+.drawer.active{right:0;}
 
 .drawer-top{
 display:flex;
@@ -143,7 +127,7 @@ font-family:"IBM Plex Mono",monospace;
 font-size:11px;
 letter-spacing:.28em;
 text-transform:uppercase;
-color:var(--gold);
+color:var(--gold2);
 }
 
 .close-btn{
@@ -155,9 +139,7 @@ color:#fff;
 cursor:pointer;
 }
 
-.group{
-margin-top:18px;
-}
+.group{margin-top:18px;}
 
 .group small{
 display:block;
@@ -176,208 +158,152 @@ font-size:20px;
 border-bottom:1px solid rgba(255,255,255,.05);
 }
 
-.drawer a.link:hover{
-color:var(--gold);
-}
-
-.private-btn{
-display:block;
-margin-top:22px;
-padding:16px;
-border-radius:16px;
-text-align:center;
-font-family:"IBM Plex Mono",monospace;
-font-size:12px;
-letter-spacing:.16em;
-text-transform:uppercase;
-background:linear-gradient(135deg,#d9bb79,#b88e45);
-color:#111;
-}
-
-.mail-btn{
-display:block;
-margin-top:14px;
-padding:14px;
-text-align:center;
-border-radius:16px;
-border:1px solid rgba(255,255,255,.08);
-font-size:15px;
-color:#f3dfb4;
-}
+.drawer a.link:hover,
+.drawer a.link.active{color:var(--gold2);}
 
 /* HERO */
-
 .hero{
-padding:140px 22px 70px;
-max-width:1180px;
+padding:128px 18px 50px;
+max-width:1250px;
 margin:auto;
 }
 
 .eyebrow{
 font-family:"IBM Plex Mono",monospace;
 font-size:10px;
-letter-spacing:.30em;
+letter-spacing:.3em;
 text-transform:uppercase;
-color:var(--gold);
-margin-bottom:22px;
+color:var(--gold2);
+margin-bottom:18px;
 }
 
 .hero h1{
-font-size:72px;
-line-height:.95;
-font-weight:300;
-max-width:760px;
-margin-bottom:24px;
+font-family:"Cormorant Garamond",serif;
+font-size:58px;
+line-height:.92;
+font-weight:600;
+max-width:900px;
+margin-bottom:18px;
 }
 
-.hero h1 em{
-font-style:italic;
-color:var(--gold);
-}
+.hero h1 span{color:var(--gold2);}
 
 .hero p{
-font-family:"IBM Plex Mono",monospace;
-font-size:12px;
-line-height:1.9;
-max-width:520px;
+font-size:19px;
+line-height:1.85;
 color:var(--muted);
+max-width:760px;
 }
 
 /* CONTENT */
-
-.main{
-max-width:1180px;
+.wrap{
+max-width:1250px;
 margin:auto;
-padding:0 22px 100px;
+padding:0 18px 90px;
 }
 
-.section{
-margin-top:70px;
-}
-
-.sec-head{
-display:flex;
-align-items:center;
-gap:18px;
-margin-bottom:28px;
-}
-
-.sec-tag{
+.section-title{
 font-family:"IBM Plex Mono",monospace;
-font-size:9px;
+font-size:10px;
 letter-spacing:.28em;
 text-transform:uppercase;
 color:var(--gold);
-white-space:nowrap;
+margin:36px 0 14px;
 }
 
-.sec-line{
-flex:1;
-height:1px;
-background:var(--line);
-}
-
-.band{
+.featured{
 display:block;
 padding:30px;
-border:1px solid var(--line);
-margin-bottom:16px;
+border-radius:26px;
+background:linear-gradient(135deg,#0d1516,#111819);
+border:1px solid rgba(255,255,255,.07);
+margin-bottom:18px;
 }
 
-.band:hover{
-border-color:rgba(200,169,110,.35);
+.featured h2{
+font-family:"Cormorant Garamond",serif;
+font-size:52px;
+line-height:.95;
+margin-bottom:14px;
+color:var(--gold2);
 }
 
-.band-tag{
-font-family:"IBM Plex Mono",monospace;
-font-size:9px;
-letter-spacing:.24em;
-text-transform:uppercase;
-color:var(--gold);
-margin-bottom:10px;
-}
-
-.band-title{
-font-size:34px;
-margin-bottom:10px;
-}
-
-.band-desc{
-font-family:"IBM Plex Mono",monospace;
-font-size:11px;
+.featured p{
+font-size:18px;
 line-height:1.8;
-color:var(--muted);
+color:#cfd5d1;
+max-width:780px;
 }
 
-.cards{
+.grid{
 display:grid;
-grid-template-columns:repeat(3,1fr);
-gap:16px;
+grid-template-columns:1fr;
+gap:18px;
 }
 
 .card{
 display:block;
-padding:26px;
-border:1px solid var(--line);
-min-height:250px;
+padding:24px;
+border-radius:24px;
+background:linear-gradient(135deg,var(--card),var(--bg2));
+border:1px solid rgba(255,255,255,.06);
+transition:.2s;
 }
 
 .card:hover{
-border-color:rgba(200,169,110,.35);
-}
-
-.card small{
-font-family:"IBM Plex Mono",monospace;
-font-size:9px;
-letter-spacing:.22em;
-color:var(--gold);
-display:block;
-margin-bottom:12px;
+transform:translateY(-2px);
+border-color:rgba(200,161,91,.45);
 }
 
 .card h3{
-font-size:28px;
-line-height:1.1;
-margin-bottom:12px;
-font-weight:300;
+font-family:"Cormorant Garamond",serif;
+font-size:38px;
+line-height:1;
+font-weight:600;
+margin-bottom:10px;
+color:var(--gold2);
 }
 
 .card p{
-font-family:"IBM Plex Mono",monospace;
-font-size:11px;
-line-height:1.8;
-color:var(--muted);
+font-size:16px;
+line-height:1.75;
+color:#c9d0cc;
 }
 
-.footer{
-margin-top:80px;
-padding-top:30px;
+footer{
+max-width:1250px;
+margin:auto;
+padding:34px 18px 70px;
 border-top:1px solid var(--line);
-display:flex;
-justify-content:space-between;
-gap:14px;
-flex-wrap:wrap;
-font-family:"IBM Plex Mono",monospace;
-font-size:10px;
-color:var(--muted);
+font-size:14px;
+color:#8f9a95;
 }
 
-@media(max-width:900px){
+@media(min-width:900px){
 
-.hero h1{
-font-size:48px;
+.topbar{padding:0 34px;}
+
+.hero{
+padding:150px 34px 60px;
 }
 
-.cards{
-grid-template-columns:1fr;
+.hero h1{font-size:92px;}
+.hero p{font-size:22px;}
+
+.wrap{padding:0 34px 100px;}
+
+.grid{
+grid-template-columns:1fr 1fr;
 }
 
-.band-title{
-font-size:28px;
-}
+.card{padding:30px;}
+.card h3{font-size:48px;}
 
-}
+.featured{padding:42px;}
+.featured h2{font-size:72px;}
 
+footer{padding:34px 34px 70px;}
+}
 </style>
 </head>
 
@@ -409,11 +335,12 @@ font-size:28px;
 <a class="link" href="dar.html">DAR</a>
 <a class="link" href="services.html">Services</a>
 <a class="link" href="about.html">About</a>
+<a class="link" href="contact.html">Contact</a>
 </div>
 
 <div class="group">
 <small>Research</small>
-<a class="link" href="research.html">Independent Research</a>
+<a class="link active" href="research.html">Independent Research</a>
 <a class="link" href="whitepaper.html">White Paper</a>
 </div>
 
@@ -421,83 +348,124 @@ font-size:28px;
 <small>Reference</small>
 <a class="link" href="definitions.html">Definitions</a>
 <a class="link" href="faq.html">FAQ</a>
+<a class="link" href="goodfaith.html">Good Faith Use</a>
 </div>
-
-<a href="contact.html" class="private-btn">Private Intake</a>
-<a href="mailto:Liran@liranbarshrim.com" class="mail-btn">Liran@liranbarshrim.com</a>
 
 </aside>
 
 <section class="hero">
 <div class="eyebrow">Independent Research</div>
-<h1>Who has the authority<br>to <em>stop</em> it<br>in time?</h1>
-<p>Essays, case breakdowns, and framework notes on the structural gap between motion and accountability.</p>
+<h1>Who has the authority to <span>stop</span> it in time?</h1>
+<p>
+Essays, field notes, case studies and governance frameworks focused on the structural gap between motion, accountability and intervention authority.
+</p>
 </section>
 
-<main class="main">
+<section class="wrap">
 
-<section class="section">
-<div class="sec-head">
-<div class="sec-tag">New Essay</div>
-<div class="sec-line"></div>
-</div>
+<div class="section-title">Featured Essay</div>
 
-<a href="executive.html" class="band">
-<div class="band-tag">Essay</div>
-<div class="band-title">The Executive Who Could Not Stop It</div>
-<div class="band-desc">Responsibility without authority is not governance. It is exposure.</div>
+<a href="executive.html" class="featured">
+<h2>The Executive Who Could Not Stop It</h2>
+<p>
+Responsibility without authority is not governance. It is exposure.  
+A study of the structural gap between who signs and who can actually stop a decision.
+</p>
 </a>
-</section>
 
-<section class="section">
-<div class="sec-head">
-<div class="sec-tag">Essays</div>
-<div class="sec-line"></div>
-</div>
+<div class="section-title">Essays</div>
 
-<div class="cards">
-
-<a href="stop-authority.html" class="card">
-<small>01</small>
-<h3>Named Stop Authority</h3>
-<p>Approval enables continuation. Stop authority interrupts it.</p>
-</a>
+<div class="grid">
 
 <a href="we.html" class="card">
-<small>02</small>
-<h3>The Death of “We”</h3>
+<h3>The Death of We</h3>
 <p>Collective language survives until responsibility becomes personal.</p>
 </a>
 
 <a href="exposure.html" class="card">
-<small>03</small>
 <h3>A Name Appears</h3>
-<p>When failure arrives, shared ownership collapses.</p>
+<p>When failure arrives, shared ownership collapses into one signature.</p>
+</a>
+
+<a href="stop-authority.html" class="card">
+<h3>Named Stop Authority</h3>
+<p>Approval enables continuation. Stop authority interrupts it.</p>
+</a>
+
+<a href="whitepaper.html" class="card">
+<h3>White Paper</h3>
+<p>Named Stop Authority in High-Risk Decisions.</p>
 </a>
 
 </div>
-</section>
 
-<div class="footer">
-<div>© 2026 Liran Bar-Shrim</div>
-<div>Liran@liranbarshrim.com</div>
+<div class="section-title">AI Governance</div>
+
+<div class="grid">
+
+<a href="ai-governance.html" class="card">
+<h3>AI Governance</h3>
+<p>When systems move faster than oversight, control becomes theoretical.</p>
+</a>
+
+<a href="stop-authority.html" class="card">
+<h3>Human Override</h3>
+<p>Someone must retain the authority to intervene by name.</p>
+</a>
+
 </div>
 
-</main>
+<div class="section-title">Case Studies</div>
+
+<div class="grid">
+
+<a href="case-studies.html" class="card">
+<h3>Real Failures</h3>
+<p>Boeing, Wells Fargo, Knight Capital, CrowdStrike and recurring governance gaps.</p>
+</a>
+
+<a href="failure-points.html" class="card">
+<h3>Failure Points</h3>
+<p>The moments accountability breaks under pressure.</p>
+</a>
+
+</div>
+
+<div class="section-title">Framework</div>
+
+<div class="grid">
+
+<a href="dar.html" class="card">
+<h3>DAR</h3>
+<p>Decision Authority Record framework.</p>
+</a>
+
+<a href="definitions.html" class="card">
+<h3>Definitions</h3>
+<p>Core terms, concepts and working language.</p>
+</a>
+
+</div>
+
+</section>
+
+<footer>
+© 2026 Liran Bar-Shrim · Decision Authority Research
+</footer>
 
 <script>
 const drawer=document.getElementById("drawer");
 const overlay=document.getElementById("overlay");
 
-document.getElementById("openMenu").onclick=()=>{
+document.getElementById("openMenu").onclick=function(){
 drawer.classList.add("active");
 overlay.classList.add("active");
 };
 
-document.getElementById("closeMenu").onclick=closeDrawer;
-overlay.onclick=closeDrawer;
+document.getElementById("closeMenu").onclick=closeMenu;
+overlay.onclick=closeMenu;
 
-function closeDrawer(){
+function closeMenu(){
 drawer.classList.remove("active");
 overlay.classList.remove("active");
 }
