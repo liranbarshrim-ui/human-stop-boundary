@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+
+<title>About | Decision Authority Research</title>
+<meta name="description" content="Independent research focused on authority gaps, executive accountability, and irreversible decisions under uncertainty.">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Cormorant+Garamond:wght@500;600;700&family=IBM+Plex+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+
+<style>
+:root{
+--bg:#050505;
+--panel:#0b0b0b;
+--gold:#c8a15b;
+--gold2:#efd8a0;
+--text:#f0f1ef;
+--muted:#9ba09b;
+--line:rgba(255,255,255,.08);
+}
+
+*{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+
+body{
+font-family:Inter,sans-serif;
+background:#050505;
+color:var(--text);
+overflow-x:hidden;
+}
+
+body:before{
+content:"";
+position:fixed;
+inset:0;
+pointer-events:none;
+opacity:.12;
+background-image:
+linear-gradient(rgba(255,255,255,.025) 1px, transparent 1px),
+linear-gradient(90deg, rgba(255,255,255,.025) 1px, transparent 1px);
+background-size:42px 42px;
+}
+
+a{text-decoration:none;color:inherit}
+
+/* topbar */
+
+.topbar{
+position:fixed;
+top:0;left:0;right:0;
+height:74px;
+display:flex;
+align-items:center;
+justify-content:space-between;
+padding:0 18px;
+z-index:1000;
+background:rgba(4,4,4,.88);
+backdrop-filter:blur(14px);
+border-bottom:1px solid var(--line);
+}
+
+.brand{
+display:flex;
+align-items:center;
+gap:12px;
+font-family:"IBM Plex Mono",monospace;
+font-size:10px;
+letter-spacing:.28em;
+text-transform:uppercase;
+white-space:nowrap;
+}
+
+.brand-line{
+width:34px;
+height:2px;
+background:var(--gold);
+border-radius:4px;
+}
+
+.menu-btn{
+width:42px;
+height:42px;
+border:none;
+background:none;
+cursor:pointer;
+display:flex;
+flex-direction:column;
+justify-content:center;
+gap:6px;
+}
+
+.menu-btn span{
+height:2px;
+background:#fff;
+border-radius:4px;
+}
+
+.menu-btn span:nth-child(2){
+width:72%;
+margin-left:auto;
+}
+
+/* hero */
+
+.hero{
+max-width:1200px;
+margin:auto;
+padding:118px 18px 24px;
+display:grid;
+grid-template-columns:1fr;
+gap:28px;
+}
+
+.photo{
+max-width:260px;
+border-radius:24px;
+overflow:hidden;
+border:1px solid rgba(255,255,255,.08);
+background:#111;
+}
+
+.photo img{
+width:100%;
+display:block;
+aspect-ratio:4/5;
+object-fit:cover;
+}
+
+.eyebrow{
+font-family:"IBM Plex Mono",monospace;
+font-size:10px;
+letter-spacing:.30em;
+text-transform:uppercase;
+color:var(--gold2);
+margin-bottom:18px;
+}
+
+.hero h1{
+font-family:"Cormorant Garamond",serif;
+font-size:58px;
+line-height:.92;
+font-weight:600;
+letter-spacing:-.03em;
+}
+
+.hero h1 span{
+color:var(--gold2);
+}
+
+.role{
+margin-top:14px;
+font-family:"IBM Plex Mono",monospace;
+font-size:11px;
+letter-spacing:.22em;
+text-transform:uppercase;
+color:var(--gold);
+line-height:1.8;
+}
+
+.hero p{
+margin-top:20px;
+font-size:18px;
+line-height:1.78;
+color:var(--muted);
+max-width:760px;
+}
+
+/* sections */
+
+.section{
+max-width:1200px;
+margin:auto;
+padding:20px 18px 0;
+}
+
+.label{
+font-family:"IBM Plex Mono",monospace;
+font-size:10px;
+letter-spacing:.28em;
+text-transform:uppercase;
+color:var(--gold);
+margin-bottom:16px;
+}
+
+.panel{
+border-radius:24px;
+padding:26px;
+background:linear-gradient(180deg,#0b0b0b,#101010);
+border:1px solid rgba(255,255,255,.06);
+margin-bottom:18px;
+}
+
+.panel h2{
+font-family:"Cormorant Garamond",serif;
+font-size:46px;
+line-height:.96;
+font-weight:600;
+color:var(--gold2);
+margin-bottom:14px;
+}
+
+.panel p{
+font-size:18px;
+line-height:1.8;
+color:#c8cdca;
+max-width:820px;
+}
+
+.quote{
+font-family:"Cormorant Garamond",serif;
+font-size:40px;
+line-height:1;
+color:#fff;
+}
+
+.actions{
+display:flex;
+flex-direction:column;
+gap:14px;
+margin-top:18px;
+}
+
+.btn{
+display:block;
+padding:16px;
+border-radius:16px;
+text-align:center;
+font-weight:800;
+letter-spacing:.18em;
+font-size:12px;
+text-transform:uppercase;
+}
+
+.btn-primary{
+background:linear-gradient(135deg,#d9bb79,#b88e45);
+color:#111;
+}
+
+.btn-secondary{
+border:1px solid rgba(255,255,255,.08);
+color:#fff;
+}
+
+footer{
+max-width:1200px;
+margin:auto;
+padding:40px 18px 70px;
+border-top:1px solid var(--line);
+font-size:14px;
+color:#8f9a95;
+margin-top:60px;
+}
+
+/* desktop */
+
+@media(min-width:900px){
+
+.topbar{padding:0 34px;}
+
+.hero{
+padding:150px 34px 30px;
+grid-template-columns:280px 1fr;
+align-items:center;
+gap:54px;
+}
+
+.hero h1{font-size:96px;}
+.hero p{font-size:22px;}
+
+.section{padding:34px 34px 0;}
+
+.panel{padding:38px;}
+.panel h2{font-size:66px;}
+.quote{font-size:64px;}
+
+.actions{
+flex-direction:row;
+max-width:520px;
+}
+
+.btn{flex:1;}
+
+footer{
+padding:34px 34px 70px;
+}
+}
+</style>
+</head>
+
+<body>
+
+<header class="topbar">
+<a href="index.html" class="brand">
+<span class="brand-line"></span>
+<span>Decision Authority Research</span>
+</a>
+
+<button class="menu-btn">
+<span></span><span></span><span></span>
+</button>
+</header>
+
+<section class="hero">
+
+<div class="photo">
+<img src="https://i.postimg.cc/mkCYFrxr/liran-1.jpg" alt="Liran Bar-Shrim">
+</div>
+
+<div>
+<div class="eyebrow">About</div>
+
+<h1>
+Liran<br>
+<span>Bar&#8209;Shrim</span>
+</h1>
+
+<div class="role">
+Independent Research · Decision Authority
+</div>
+
+<p>
+Focused on authority gaps, executive accountability, and the missing question many institutions discover too late: who can personally stop momentum when risk rises.
+</p>
+
+</div>
+
+</section>
+
+<section class="section">
+
+<div class="label">Core View</div>
+
+<div class="panel">
+<h2>Most systems define motion better than restraint.</h2>
+
+<p>
+Organizations build approval paths, workflows and delegation models. Far fewer define real intervention authority once pressure, speed and uncertainty are already present.
+</p>
+</div>
+
+<div class="panel">
+<div class="quote">
+If no one is clearly named to stop it, clarity often arrives after consequences.
+</div>
+</div>
+
+</section>
+
+<section class="section">
+
+<div class="label">Why Independent</div>
+
+<div class="panel">
+<h2>Distance can reveal what proximity normalizes.</h2>
+
+<p>
+Inside complex systems, momentum can look like progress. Ownership diffuses, symbolic controls replace usable authority, and structural blind spots become routine.
+</p>
+</div>
+
+</section>
+
+<section class="section">
+
+<div class="label">Private Inquiry</div>
+
+<div class="panel">
+<h2>Confidential conversations.</h2>
+
+<p>
+For boards, executives, founders, General Counsel, CROs and leaders facing live decisions where authority is unclear.
+</p>
+
+<div class="actions">
+<a href="contact.html" class="btn btn-primary">Request Intake</a>
+<a href="dar.html" class="btn btn-secondary">Explore DAR</a>
+</div>
+
+</div>
+
+</section>
+
+<footer>
+© 2025 All Rights Reserved · Liran Bar-Shrim
+</footer>
+
+</body>
+</html>
