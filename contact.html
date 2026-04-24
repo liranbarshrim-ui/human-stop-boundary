@@ -15,7 +15,8 @@
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&family=Cormorant+Garamond:wght@500;600;700&display=swap" rel="stylesheet">
 
 <style>
 :root{
@@ -30,185 +31,191 @@
 
 *{margin:0;padding:0;box-sizing:border-box;}
 html{scroll-behavior:smooth;}
+
 body{
 background:var(--bg);
 color:var(--text);
-font-family:Inter,system-ui,sans-serif;
+font-family:Inter,sans-serif;
 line-height:1.7;
 overflow-x:hidden;
 -webkit-font-smoothing:antialiased;
-text-rendering:optimizeLegibility;
 }
 
 a{text-decoration:none;color:inherit;}
 
-body:before{
-content:'';
-position:fixed;
-inset:0;
-background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 240 240' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.02'/%3E%3C/svg%3E");
-pointer-events:none;
-z-index:0;
-}
+/* unified topbar */
 
-/* topbar */
 .topbar{
-position:sticky;
-top:0;
-z-index:999;
+position:fixed;
+top:0;left:0;right:0;
+height:74px;
 display:flex;
-justify-content:space-between;
 align-items:center;
-padding:16px 18px;
-background:rgba(9,9,9,.94);
-backdrop-filter:blur(10px);
-border-bottom:1px solid rgba(255,255,255,.04);
+justify-content:space-between;
+padding:0 18px;
+z-index:1000;
+background:rgba(4,7,8,.82);
+backdrop-filter:blur(14px);
+border-bottom:1px solid rgba(255,255,255,.06);
 }
 
 .brand{
 display:flex;
 align-items:center;
-gap:10px;
-font-family:'IBM Plex Mono',monospace;
-font-size:9px;
-letter-spacing:.22em;
+gap:12px;
+font-family:"IBM Plex Mono",monospace;
+font-size:10px;
+letter-spacing:.28em;
 text-transform:uppercase;
 white-space:nowrap;
-max-width:78%;
-overflow:hidden;
 }
 
 .brand-line{
-width:18px;
-height:1px;
+width:34px;
+height:2px;
+border-radius:4px;
 background:var(--gold);
-flex-shrink:0;
 }
 
 .menu-btn{
+width:42px;
+height:42px;
+border:none;
+background:none;
+cursor:pointer;
 display:flex;
 flex-direction:column;
-gap:5px;
-background:none;
-border:none;
-cursor:pointer;
-padding:4px;
+justify-content:center;
+gap:6px;
 }
 
 .menu-btn span{
-width:24px;
-height:1.5px;
-background:var(--text);
-display:block;
+height:2px;
+background:#fff;
+border-radius:4px;
 }
 
-/* overlay */
+.menu-btn span:nth-child(2){
+width:72%;
+margin-left:auto;
+}
+
+/* drawer */
+
 .overlay{
 position:fixed;
 inset:0;
-background:rgba(0,0,0,.62);
+background:rgba(0,0,0,.55);
 opacity:0;
 visibility:hidden;
 transition:.25s;
 z-index:998;
 }
-.overlay.active{opacity:1;visibility:visible;}
 
-/* side menu */
-.side-menu{
+.overlay.active{
+opacity:1;
+visibility:visible;
+}
+
+.drawer{
 position:fixed;
 top:0;
-right:-360px;
-width:340px;
-max-width:90vw;
-height:100dvh;
+right:-100%;
+width:86%;
+max-width:420px;
+height:100vh;
 overflow-y:auto;
-background:#0d0d0d;
-border-left:1px solid var(--border);
-padding:22px 18px 42px;
-transition:.28s ease;
 z-index:999;
+padding:24px;
+transition:.3s ease;
+background:linear-gradient(180deg,#071010,#071313 70%,#050707);
+border-left:1px solid rgba(255,255,255,.08);
 }
-.side-menu.active{right:0;}
 
-.menu-head{
+.drawer.active{right:0;}
+
+.drawer-top{
 display:flex;
 justify-content:space-between;
 align-items:center;
 margin-bottom:18px;
-position:sticky;
-top:0;
-background:#0d0d0d;
-padding-bottom:12px;
 }
 
-.menu-head-brand{
-font-family:'IBM Plex Mono',monospace;
-font-size:9px;
-letter-spacing:.24em;
-color:var(--gold);
+.drawer-title{
+font-family:"IBM Plex Mono",monospace;
+font-size:11px;
+letter-spacing:.28em;
 text-transform:uppercase;
+color:#efd8a0;
 }
 
 .close-btn{
+font-size:38px;
+line-height:1;
 background:none;
 border:none;
-font-size:28px;
-color:var(--muted);
+color:#fff;
 cursor:pointer;
 }
 
-.menu-group{
-border-top:1px solid var(--border);
-padding-top:14px;
-margin-top:14px;
-}
+.group{margin-top:18px;}
 
-.menu-label{
-font-family:'IBM Plex Mono',monospace;
-font-size:9px;
-letter-spacing:.22em;
-color:var(--gold);
+.group small{
+display:block;
+font-family:"IBM Plex Mono",monospace;
+font-size:10px;
+letter-spacing:.26em;
 text-transform:uppercase;
+color:var(--gold);
 margin-bottom:10px;
 }
 
-.menu-group a{
+.drawer a.link{
 display:block;
-padding:12px 0;
-font-size:15px;
-color:var(--muted);
-border-bottom:1px solid rgba(255,255,255,.03);
+padding:14px 0;
+font-size:20px;
+border-bottom:1px solid rgba(255,255,255,.05);
 }
 
-.menu-group a.active,
-.menu-group a:hover{
-color:var(--gold);
+.drawer a.link:hover,
+.drawer a.link.active{
+color:#efd8a0;
 }
 
-.menu-cta{
+.private-btn{
 display:block;
-margin-top:18px;
-padding:15px;
-border:1px solid var(--gold);
-color:var(--gold);
+margin-top:22px;
+padding:16px;
+border-radius:16px;
 text-align:center;
-font-family:'IBM Plex Mono',monospace;
-font-size:10px;
+font-weight:800;
 letter-spacing:.18em;
+font-size:13px;
 text-transform:uppercase;
+background:linear-gradient(135deg,#d9bb79,#b88e45);
+color:#111;
 }
 
-/* layout */
+.mail-btn{
+display:block;
+margin-top:14px;
+padding:14px;
+text-align:center;
+border-radius:16px;
+border:1px solid rgba(255,255,255,.08);
+color:#f3dfb4;
+font-size:15px;
+word-break:break-word;
+}
+
+/* original page body */
+
 .container{
-position:relative;
-z-index:1;
 max-width:980px;
 margin:auto;
-padding:42px 16px 80px;
+padding:118px 16px 80px;
 }
 
-/* hero */
 .hero{
 border-left:3px solid var(--gold);
 padding-left:16px;
@@ -225,24 +232,21 @@ margin-bottom:14px;
 }
 
 .hero h1{
-font-family:'Playfair Display',serif;
-font-size:clamp(34px,10vw,58px);
-line-height:.96;
-letter-spacing:-.03em;
+font-family:"Cormorant Garamond",serif;
+font-size:56px;
+line-height:.95;
 margin-bottom:16px;
-max-width:760px;
 }
 
 .hero p{
 font-size:16px;
 color:var(--muted);
-line-height:1.72;
 max-width:700px;
 margin-bottom:18px;
 }
 
 .notice{
-background:linear-gradient(180deg,#121212,#0d0d0d);
+background:#111;
 border:1px solid var(--border2);
 border-left:3px solid var(--gold);
 padding:18px;
@@ -254,7 +258,6 @@ font-size:14px;
 color:var(--muted);
 margin-bottom:6px;
 }
-.notice p:last-child{margin-bottom:0;}
 
 .section{
 padding-top:28px;
@@ -268,7 +271,7 @@ gap:18px;
 }
 
 .box,.side-box{
-background:linear-gradient(180deg,#121212,#0d0d0d);
+background:#111;
 border:1px solid var(--border2);
 padding:22px 16px;
 }
@@ -276,9 +279,8 @@ padding:22px 16px;
 .box{border-left:3px solid var(--gold);}
 
 .box-title,.side-box-title{
-font-family:'Playfair Display',serif;
-font-size:26px;
-line-height:1.08;
+font-family:"Cormorant Garamond",serif;
+font-size:34px;
 margin-bottom:10px;
 }
 
@@ -305,17 +307,9 @@ background:#0a0a0a;
 border:1px solid var(--border2);
 color:var(--text);
 font-size:15px;
-outline:none;
 }
 
-input:focus,textarea:focus,select:focus{
-border-color:var(--gold);
-}
-
-textarea{
-min-height:140px;
-resize:vertical;
-}
+textarea{min-height:140px;resize:vertical;}
 
 .submit{
 width:100%;
@@ -337,8 +331,6 @@ padding:14px 0;
 border-bottom:1px solid rgba(255,255,255,.05);
 }
 
-.item:last-child{border-bottom:none;}
-
 .item strong{
 display:block;
 font-family:'IBM Plex Mono',monospace;
@@ -352,7 +344,6 @@ margin-bottom:6px;
 .item span{
 font-size:14px;
 color:var(--muted);
-line-height:1.65;
 }
 
 .pull{
@@ -360,9 +351,9 @@ margin-top:18px;
 padding:20px;
 background:#0e0e0e;
 border-left:3px solid var(--gold);
-font-family:'Playfair Display',serif;
-font-size:22px;
-line-height:1.28;
+font-family:"Cormorant Garamond",serif;
+font-size:28px;
+line-height:1.2;
 }
 
 .footer{
@@ -374,14 +365,11 @@ font-family:'IBM Plex Mono',monospace;
 color:#6e6964;
 }
 
-/* desktop */
-@media(min-width:861px){
-.container{padding:70px 28px 110px;}
+@media(min-width:900px){
+.topbar{padding:0 34px;}
+.container{padding:150px 28px 110px;}
 .grid{grid-template-columns:1.05fr .95fr;gap:28px;}
-.hero{padding-left:22px;}
 .hero h1{font-size:72px;}
-.hero p{font-size:18px;}
-.notice{padding:24px;}
 .box,.side-box{padding:28px 24px;}
 }
 </style>
@@ -396,49 +384,45 @@ color:#6e6964;
 </a>
 
 <button class="menu-btn" id="openMenu" aria-label="Open Menu">
-<span></span><span></span><span></span>
+<span></span>
+<span></span>
+<span></span>
 </button>
 </header>
 
 <div class="overlay" id="overlay"></div>
 
-<aside class="side-menu" id="menu">
+<aside class="drawer" id="drawer">
 
-<div class="menu-head">
-<span class="menu-head-brand">Matrix Audit</span>
-<button class="close-btn" id="closeMenu">&times;</button>
+<div class="drawer-top">
+<div class="drawer-title">Navigation</div>
+<button class="close-btn" id="closeMenu">×</button>
 </div>
 
-<div class="menu-group" style="border-top:none;padding-top:0;margin-top:0;">
-<div class="menu-label">Primary</div>
-<a href="index.html">Home</a>
-<a href="dar.html">DAR</a>
-<a href="services.html">Services</a>
-<a href="about.html">About</a>
-<a href="contact.html" class="active">Private Intake</a>
+<div class="group">
+<small>Primary</small>
+<a class="link" href="index.html">Home</a>
+<a class="link" href="dar.html">DAR</a>
+<a class="link" href="services.html">Services</a>
+<a class="link" href="about.html">About</a>
+<a class="link active" href="contact.html">Contact</a>
 </div>
 
-<div class="menu-group">
-<div class="menu-label">Insights</div>
-<a href="exposure.html">When Failure Lands on One Name</a>
-<a href="failure-points.html">Where Accountability Breaks</a>
-<a href="we.html">The Death of We</a>
-<a href="stop-authority.html">Stop Authority</a>
-<a href="accountability-gap.html">The Accountability Gap</a>
-<a href="ai-governance.html">AI Governance</a>
+<div class="group">
+<small>Research</small>
+<a class="link" href="research.html">Independent Research</a>
+<a class="link" href="whitepaper.html">White Paper</a>
 </div>
 
-<div class="menu-group">
-<div class="menu-label">Knowledge</div>
-<a href="definitions.html">Definitions</a>
-<a href="faq.html">FAQ</a>
-<a href="case-studies.html">Case Studies</a>
-<a href="goodfaith.html">Good Faith Use</a>
-<a href="whitepaper.html">White Paper</a>
-<a href="research.html">Independent Research</a>
+<div class="group">
+<small>Reference</small>
+<a class="link" href="definitions.html">Definitions</a>
+<a class="link" href="faq.html">FAQ</a>
+<a class="link" href="goodfaith.html">Good Faith Use</a>
 </div>
 
-<a href="contact.html" class="menu-cta">Request Review</a>
+<a href="contact.html" class="private-btn">Private Intake</a>
+<a href="mailto:Liran@liranbarshrim.com" class="mail-btn">Liran@liranbarshrim.com</a>
 
 </aside>
 
@@ -526,26 +510,28 @@ When momentum rises,<br>clarity matters.
 </section>
 
 <div class="footer">
-© 2026 Liran Bar-Shrim. All rights reserved.
+© 2025 Liran Bar-Shrim. All rights reserved.
 </div>
 
 </main>
 
 <script>
-const menu=document.getElementById('menu');
-const overlay=document.getElementById('overlay');
+const drawer=document.getElementById("drawer");
+const overlay=document.getElementById("overlay");
+const openBtn=document.getElementById("openMenu");
+const closeBtn=document.getElementById("closeMenu");
 
-document.getElementById('openMenu').onclick=()=>{
-menu.classList.add('active');
-overlay.classList.add('active');
-}
+openBtn.onclick=function(){
+drawer.classList.add("active");
+overlay.classList.add("active");
+};
 
-document.getElementById('closeMenu').onclick=closeMenu;
-overlay.onclick=closeMenu;
+closeBtn.onclick=closeDrawer;
+overlay.onclick=closeDrawer;
 
-function closeMenu(){
-menu.classList.remove('active');
-overlay.classList.remove('active');
+function closeDrawer(){
+drawer.classList.remove("active");
+overlay.classList.remove("active");
 }
 </script>
 
