@@ -2,16 +2,11 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
 
 <title>Definitions | Decision Authority Research</title>
-<meta name="description" content="Core definitions in decision authority, stop authority, accountability gaps, escalation windows, oversight triggers, irreversible decisions, and organizational continuation bias.">
-<meta name="keywords" content="decision authority, stop authority, DAR, accountability gap, escalation window, oversight trigger, irreversible decision">
+<meta name="description" content="Core definitions in authority, accountability, stop control and irreversible decisions.">
 <link rel="canonical" href="https://matrix-audit.com/definitions.html">
-
-<meta property="og:title" content="Definitions | Decision Authority Research">
-<meta property="og:description" content="Core definitions in authority, stop control, oversight, and irreversible decisions.">
-<meta property="og:type" content="website">
 
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
 
@@ -24,62 +19,81 @@
 --border:#1d1d1d;
 --border2:#2a2a2a;
 }
+
 *{margin:0;padding:0;box-sizing:border-box;}
 html{scroll-behavior:smooth;}
+
 body{
 background:var(--bg);
 color:var(--text);
-font-family:Inter,system-ui,sans-serif;
+font-family:Inter,sans-serif;
 line-height:1.7;
 overflow-x:hidden;
 }
+
 a{text-decoration:none;color:inherit;}
 
-/* TOPBAR */
+/* HEADER UNIFIED */
 .topbar{
-position:sticky;
-top:0;
-z-index:999;
+position:fixed;
+top:0;left:0;right:0;
+height:74px;
 display:flex;
-justify-content:space-between;
 align-items:center;
-padding:18px 24px;
-background:rgba(9,9,9,.94);
-backdrop-filter:blur(10px);
-border-bottom:1px solid rgba(255,255,255,.04);
+justify-content:space-between;
+padding:0 18px;
+z-index:1000;
+background:rgba(4,7,8,.82);
+backdrop-filter:blur(14px);
+border-bottom:1px solid rgba(255,255,255,.06);
 }
+
 .brand{
 display:flex;
 align-items:center;
 gap:12px;
-font-family:'IBM Plex Mono',monospace;
+font-family:"IBM Plex Mono",monospace;
 font-size:10px;
 letter-spacing:.28em;
 text-transform:uppercase;
+white-space:nowrap;
 }
-.brand-line{width:18px;height:1px;background:var(--gold);}
+
+.brand-line{
+width:34px;
+height:2px;
+background:var(--gold);
+border-radius:4px;
+}
 
 .menu-btn{
+width:42px;
+height:42px;
+border:none;
+background:none;
+cursor:pointer;
 display:flex;
 flex-direction:column;
-gap:5px;
-background:none;
-border:none;
-cursor:pointer;
-padding:6px;
-}
-.menu-btn span{
-display:block;
-width:22px;
-height:1.5px;
-background:var(--text);
+justify-content:center;
+gap:6px;
 }
 
-/* MENU */
+.menu-btn span{
+height:2px;
+background:#fff;
+border-radius:4px;
+}
+
+.menu-btn span:nth-child(2){
+width:72%;
+margin-left:auto;
+}
+
+/* DRAWER */
 .overlay{
 position:fixed;
 inset:0;
-background:rgba(0,0,0,.65);
+background:rgba(0,0,0,.55);
 opacity:0;
 visibility:hidden;
 transition:.25s;
@@ -87,90 +101,101 @@ z-index:998;
 }
 .overlay.active{opacity:1;visibility:visible;}
 
-.side-menu{
+.drawer{
 position:fixed;
 top:0;
-right:-340px;
-width:300px;
-max-width:90%;
+right:-100%;
+width:86%;
+max-width:420px;
 height:100vh;
 overflow-y:auto;
-background:#0d0d0d;
-border-left:1px solid var(--border);
-padding:28px 24px 48px;
-transition:.28s;
 z-index:999;
+padding:24px;
+transition:.3s ease;
+background:linear-gradient(180deg,#071010,#071313 70%,#050707);
+border-left:1px solid rgba(255,255,255,.08);
 }
-.side-menu.active{right:0;}
+.drawer.active{right:0;}
 
-.menu-head{
+.drawer-top{
 display:flex;
 justify-content:space-between;
 align-items:center;
-margin-bottom:28px;
+margin-bottom:18px;
 }
-.menu-head-brand{
-font-family:'IBM Plex Mono',monospace;
-font-size:9px;
-letter-spacing:.24em;
+
+.drawer-title{
+font-family:"IBM Plex Mono",monospace;
+font-size:11px;
+letter-spacing:.28em;
 text-transform:uppercase;
-color:var(--gold);
+color:#efd8a0;
 }
+
 .close-btn{
+font-size:38px;
+line-height:1;
 background:none;
 border:none;
-font-size:28px;
-color:var(--muted);
+color:#fff;
 cursor:pointer;
 }
 
-.menu-group{
-border-top:1px solid var(--border);
-padding-top:18px;
-margin-top:18px;
-}
-.menu-label{
-font-family:'IBM Plex Mono',monospace;
-font-size:9px;
-letter-spacing:.22em;
-text-transform:uppercase;
-color:var(--gold);
-margin-bottom:12px;
-}
-.menu-group a{
-display:block;
-padding:9px 0;
-font-size:14px;
-color:var(--muted);
-}
-.menu-group a:hover,
-.menu-group a.active{color:var(--gold);}
+.group{margin-top:18px;}
 
-.menu-cta,.menu-email{
+.group small{
 display:block;
-text-align:center;
-padding:14px;
-margin-top:16px;
-}
-.menu-cta{
-border:1px solid var(--gold);
-color:var(--gold);
-font-family:'IBM Plex Mono',monospace;
+font-family:"IBM Plex Mono",monospace;
 font-size:10px;
-letter-spacing:.2em;
+letter-spacing:.26em;
 text-transform:uppercase;
+color:var(--gold);
+margin-bottom:10px;
 }
-.menu-email{
-border:1px solid var(--border);
+
+.drawer a.link{
+display:block;
+padding:14px 0;
+font-size:20px;
+border-bottom:1px solid rgba(255,255,255,.05);
+}
+
+.drawer a.link:hover,
+.drawer a.link.active{
+color:#efd8a0;
+}
+
+.private-btn{
+display:block;
+margin-top:22px;
+padding:16px;
+border-radius:16px;
+text-align:center;
+font-weight:800;
+letter-spacing:.18em;
 font-size:13px;
-color:var(--muted);
+text-transform:uppercase;
+background:linear-gradient(135deg,#d9bb79,#b88e45);
+color:#111;
+}
+
+.mail-btn{
+display:block;
+margin-top:14px;
+padding:14px;
+text-align:center;
+border-radius:16px;
+border:1px solid rgba(255,255,255,.08);
+color:#f3dfb4;
+font-size:15px;
+word-break:break-word;
 }
 
 /* CONTENT */
 .container{
 max-width:1080px;
 margin:auto;
-padding:70px 28px 110px;
+padding:118px 18px 90px;
 }
 
 .hero{
@@ -178,20 +203,23 @@ border-left:3px solid var(--gold);
 padding-left:24px;
 margin-bottom:56px;
 }
+
 .hero-label{
-font-family:'IBM Plex Mono',monospace;
+font-family:"IBM Plex Mono",monospace;
 font-size:10px;
-letter-spacing:.24em;
+letter-spacing:.28em;
 text-transform:uppercase;
 color:var(--gold);
-margin-bottom:16px;
+margin-bottom:14px;
 }
+
 .hero h1{
-font-family:'Playfair Display',serif;
+font-family:"Playfair Display",serif;
 font-size:clamp(44px,7vw,74px);
 line-height:1.03;
 margin-bottom:18px;
 }
+
 .hero p{
 font-size:18px;
 color:var(--muted);
@@ -204,7 +232,7 @@ padding:34px;
 background:#111;
 border:1px solid var(--border2);
 border-left:3px solid var(--gold);
-font-family:'Playfair Display',serif;
+font-family:"Playfair Display",serif;
 font-size:32px;
 line-height:1.28;
 }
@@ -221,32 +249,36 @@ border:1px solid #262626;
 border-left:3px solid var(--gold);
 padding:28px;
 }
+
 .term small{
 display:block;
-font-family:'IBM Plex Mono',monospace;
+font-family:"IBM Plex Mono",monospace;
 font-size:10px;
 letter-spacing:.22em;
 text-transform:uppercase;
 color:var(--gold);
 margin-bottom:12px;
 }
+
 .term h3{
-font-family:'Playfair Display',serif;
+font-family:"Playfair Display",serif;
 font-size:28px;
 line-height:1.1;
 margin-bottom:12px;
 }
+
 .term p{
 font-size:15px;
 color:var(--muted);
 line-height:1.8;
 margin-bottom:8px;
 }
+
 .term-note{
 margin-top:12px;
 padding-left:12px;
 border-left:2px solid var(--border2);
-font-family:'IBM Plex Mono',monospace;
+font-family:"IBM Plex Mono",monospace;
 font-size:11px;
 color:#7c756f;
 line-height:1.8;
@@ -259,15 +291,19 @@ border-top:1px solid var(--border2);
 font-size:11px;
 letter-spacing:.08em;
 color:#6e6964;
-font-family:'IBM Plex Mono',monospace;
+font-family:"IBM Plex Mono",monospace;
 }
 
 @media(max-width:860px){
 .grid{grid-template-columns:1fr;}
-.container{padding:56px 18px 90px;}
 .hero h1{font-size:44px;}
 .hero p{font-size:16px;}
 .pull{font-size:24px;padding:26px;}
+}
+
+@media(min-width:900px){
+.topbar{padding:0 34px;}
+.container{padding:150px 34px 110px;}
 }
 </style>
 </head>
@@ -287,37 +323,37 @@ font-family:'IBM Plex Mono',monospace;
 
 <div class="overlay" id="overlay"></div>
 
-<aside class="side-menu" id="menu">
+<aside class="drawer" id="drawer">
 
-<div class="menu-head">
-<span class="menu-head-brand">Navigation</span>
-<button class="close-btn" id="closeMenu">&times;</button>
+<div class="drawer-top">
+<div class="drawer-title">Navigation</div>
+<button class="close-btn" id="closeMenu">×</button>
 </div>
 
-<div class="menu-group" style="border-top:none;margin-top:0;padding-top:0;">
-<div class="menu-label">Primary</div>
-<a href="index.html">Home</a>
-<a href="dar.html">DAR</a>
-<a href="services.html">Services</a>
-<a href="about.html">About</a>
-<a href="contact.html">Contact</a>
+<div class="group">
+<small>Primary</small>
+<a class="link" href="index.html">Home</a>
+<a class="link" href="dar.html">DAR</a>
+<a class="link" href="services.html">Services</a>
+<a class="link" href="about.html">About</a>
+<a class="link" href="contact.html">Contact</a>
 </div>
 
-<div class="menu-group">
-<div class="menu-label">Research</div>
-<a href="whitepaper.html">White Paper</a>
-<a href="research.html">Independent Research</a>
+<div class="group">
+<small>Research</small>
+<a class="link" href="research.html">Independent Research</a>
+<a class="link" href="whitepaper.html">White Paper</a>
 </div>
 
-<div class="menu-group">
-<div class="menu-label">Reference</div>
-<a href="definitions.html" class="active">Definitions</a>
-<a href="faq.html">FAQ</a>
-<a href="case-studies.html">Case Studies</a>
+<div class="group">
+<small>Reference</small>
+<a class="link active" href="definitions.html">Definitions</a>
+<a class="link" href="faq.html">FAQ</a>
+<a class="link" href="case-studies.html">Case Studies</a>
 </div>
 
-<a href="contact.html" class="menu-cta">Private Intake</a>
-<a href="mailto:Liran@liranbarshrim.com" class="menu-email">Liran@liranbarshrim.com</a>
+<a href="contact.html" class="private-btn">Private Intake</a>
+<a href="mailto:Liran@liranbarshrim.com" class="mail-btn">Liran@liranbarshrim.com</a>
 
 </aside>
 
@@ -343,53 +379,39 @@ If no one is clearly named to stop it, the gap already exists.
 
 <div class="term"><small>04</small><h3>Stop Authority Gap</h3><p>No clearly named person can stop the decision when needed.</p><div class="term-note">Momentum rules by default.</div></div>
 
-<div class="term"><small>05</small><h3>Escalation Window</h3><p>A defined response period granted to the named authority once a stop issue appears.</p><div class="term-note">Time matters.</div></div>
+<div class="term"><small>05</small><h3>Responsibility Without Authority</h3><p>Formal accountability without real power to intervene.</p><div class="term-note">Exposure without control.</div></div>
 
-<div class="term"><small>06</small><h3>Replacement Authority</h3><p>If no action is taken within the escalation window, authority transfers automatically.</p><div class="term-note">No paralysis.</div></div>
+<div class="term"><small>06</small><h3>Continuation Bias</h3><p>Preference for speed and continuation even when pause is justified.</p><div class="term-note">Motion feels safer.</div></div>
 
-<div class="term"><small>07</small><h3>Oversight Trigger</h3><p>Any use of stop authority, refusal to act, or expiry of the window creates review.</p><div class="term-note">Verification, not punishment.</div></div>
+<div class="term"><small>07</small><h3>Stop Penalty</h3><p>Informal punishment imposed on those who stop risky momentum.</p><div class="term-note">Culture can punish caution.</div></div>
 
-<div class="term"><small>08</small><h3>Frozen Authority</h3><p>Authority exists formally, but no timely action is taken while exposure grows.</p><div class="term-note">Delay becomes decision.</div></div>
-
-<div class="term"><small>09</small><h3>Distributed Permission</h3><p>Many can approve continuation, yet no single person can stop.</p><div class="term-note">Everyone approves. Nobody owns.</div></div>
-
-<div class="term"><small>10</small><h3>Decision Exposure</h3><p>The legal, financial, reputational, or personal consequences attached to a moving decision.</p><div class="term-note">Risk lands somewhere.</div></div>
-
-<div class="term"><small>11</small><h3>Responsibility Without Authority</h3><p>A person carries formal accountability without real power to stop or redirect the decision.</p><div class="term-note">Exposure without control.</div></div>
-
-<div class="term"><small>12</small><h3>Continuation Bias</h3><p>Organizational preference for speed, momentum, and continuation even when pause is justified.</p><div class="term-note">Motion feels safer than interruption.</div></div>
-
-<div class="term"><small>13</small><h3>Stop Penalty</h3><p>Informal punishment imposed on those who slow or halt risky momentum.</p><div class="term-note">Culture can punish caution.</div></div>
-
-<div class="term"><small>14</small><h3>Stop Oversight</h3><p>A review mechanism governing how stop authority is used.</p><div class="term-note">Prevents arbitrary veto.</div></div>
-
-<div class="term"><small>15</small><h3>Review Theater</h3><p>Formal oversight exists, but no real authority can interrupt the decision.</p><div class="term-note">Procedure without control.</div></div>
-
-<div class="term"><small>16</small><h3>Cosmetic Governance</h3><p>Processes that appear rigorous but cannot interrupt dangerous momentum.</p><div class="term-note">Looks safe. Stops nothing.</div></div>
+<div class="term"><small>08</small><h3>Stop Oversight</h3><p>Review mechanism governing use of stop authority.</p><div class="term-note">Prevents arbitrary veto.</div></div>
 
 </section>
 
 <div class="footer">
-&copy; 2025 Liran Bar-Shrim. All rights reserved.
+© 2025 Liran Bar-Shrim. All rights reserved.
 </div>
 
 </main>
 
 <script>
-const menu=document.getElementById('menu');
-const overlay=document.getElementById('overlay');
+const drawer=document.getElementById("drawer");
+const overlay=document.getElementById("overlay");
+const openBtn=document.getElementById("openMenu");
+const closeBtn=document.getElementById("closeMenu");
 
-document.getElementById('openMenu').onclick=function(){
-menu.classList.add('active');
-overlay.classList.add('active');
+openBtn.onclick=function(){
+drawer.classList.add("active");
+overlay.classList.add("active");
 };
 
-document.getElementById('closeMenu').onclick=closeMenu;
-overlay.onclick=closeMenu;
+closeBtn.onclick=closeDrawer;
+overlay.onclick=closeDrawer;
 
-function closeMenu(){
-menu.classList.remove('active');
-overlay.classList.remove('active');
+function closeDrawer(){
+drawer.classList.remove("active");
+overlay.classList.remove("active");
 }
 </script>
 
