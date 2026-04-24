@@ -9,18 +9,22 @@
 <meta name="robots" content="index,follow">
 <link rel="canonical" href="https://matrix-audit.com/goodfaith.html">
 
+<meta property="og:title" content="Good Faith Use | Matrix Audit">
+<meta property="og:description" content="Clarifying responsibility before irreversible decisions occur.">
+<meta property="og:type" content="website">
+
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
 
 <style>
 :root{
 --bg:#090909;
+--surface:#111111;
 --gold:#c8a96e;
 --text:#e8e2d7;
 --muted:#a7a097;
 --border:#1d1d1d;
 --border2:#2a2a2a;
 }
-
 *{margin:0;padding:0;box-sizing:border-box;}
 html{scroll-behavior:smooth;}
 
@@ -28,14 +32,23 @@ body{
 background:var(--bg);
 color:var(--text);
 font-family:Inter,sans-serif;
-line-height:1.7;
 overflow-x:hidden;
+line-height:1.7;
 -webkit-font-smoothing:antialiased;
 }
 
 a{text-decoration:none;color:inherit;}
 
-/* PERFECT UNIFIED HEADER */
+body:before{
+content:'';
+position:fixed;
+inset:0;
+pointer-events:none;
+opacity:.04;
+background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+/* HEADER */
 
 .topbar{
 position:sticky;
@@ -86,9 +99,7 @@ background:var(--text);
 transition:.2s;
 }
 
-.menu-btn:hover span{
-background:var(--gold);
-}
+.menu-btn:hover span{background:var(--gold);}
 
 /* MENU */
 
@@ -211,6 +222,8 @@ word-break:break-word;
 max-width:760px;
 margin:auto;
 padding:70px 28px 110px;
+position:relative;
+z-index:1;
 }
 
 .hero{
@@ -241,6 +254,89 @@ line-height:1.9;
 color:var(--muted);
 }
 
+.statement{
+background:#111;
+border:1px solid var(--border2);
+border-left:3px solid var(--gold);
+padding:28px;
+margin-bottom:54px;
+font-family:'Playfair Display',serif;
+font-size:clamp(18px,3vw,24px);
+line-height:1.35;
+}
+
+.items{margin-bottom:54px;}
+
+.item{
+padding:24px 0;
+border-bottom:1px solid rgba(255,255,255,.05);
+}
+
+.item:first-child{
+border-top:1px solid rgba(255,255,255,.05);
+}
+
+.item-label{
+font-family:'IBM Plex Mono',monospace;
+font-size:9px;
+letter-spacing:.22em;
+text-transform:uppercase;
+color:var(--gold);
+margin-bottom:8px;
+}
+
+.item-title{
+font-family:'Playfair Display',serif;
+font-size:22px;
+margin-bottom:10px;
+}
+
+.item p{
+font-size:15px;
+color:var(--muted);
+line-height:1.8;
+}
+
+.closing{
+border-top:1px solid var(--border2);
+padding-top:40px;
+margin-bottom:54px;
+}
+
+.closing h2{
+font-family:'Playfair Display',serif;
+font-size:clamp(24px,4vw,36px);
+margin-bottom:16px;
+}
+
+.closing p{
+font-size:16px;
+color:var(--muted);
+margin-bottom:20px;
+}
+
+.actions{
+display:flex;
+gap:14px;
+flex-wrap:wrap;
+}
+
+.btn{
+display:inline-block;
+padding:16px 24px;
+font-family:'IBM Plex Mono',monospace;
+font-size:11px;
+letter-spacing:.18em;
+text-transform:uppercase;
+border:1px solid var(--border2);
+}
+
+.btn-primary{
+background:var(--gold);
+border-color:var(--gold);
+color:#111;
+}
+
 .footer{
 margin-top:70px;
 padding-top:26px;
@@ -252,6 +348,7 @@ color:#726b63;
 
 @media(max-width:600px){
 .container{padding:48px 18px 72px;}
+.btn{width:100%;text-align:center;}
 }
 </style>
 </head>
@@ -265,9 +362,7 @@ color:#726b63;
 </a>
 
 <button class="menu-btn" id="openMenu" aria-label="Open Menu">
-<span></span>
-<span></span>
-<span></span>
+<span></span><span></span><span></span>
 </button>
 </header>
 
@@ -317,6 +412,61 @@ color:#726b63;
 Matrix Audit frameworks are designed to help organizations clarify responsibility before consequential decisions become irreversible.
 </p>
 </section>
+
+<div class="statement">
+A framework can define accountability.<br>
+Only people can exercise judgment.
+</div>
+
+<div class="items">
+
+<div class="item">
+<div class="item-label">Purpose</div>
+<div class="item-title">What this is for</div>
+<p>Decision Authority Research is a governance methodology intended to clarify authority, escalation, and accountability before critical decisions occur.</p>
+</div>
+
+<div class="item">
+<div class="item-label">Scope</div>
+<div class="item-title">What this is not</div>
+<p>It may align with oversight expectations, but it is not legal advice, compliance certification, or a guarantee against liability.</p>
+</div>
+
+<div class="item">
+<div class="item-label">Responsibility</div>
+<div class="item-title">Who owns the decision</div>
+<p>Responsibility remains with the organization, its officers, board members, and designated decision makers.</p>
+</div>
+
+<div class="item">
+<div class="item-label">Core Principle</div>
+<div class="item-title">What DAR can and cannot do</div>
+<p>DAR can identify who should be accountable to stop. It does not make the decision. A named human being does.</p>
+</div>
+
+<div class="item">
+<div class="item-label">Good Faith Standard</div>
+<div class="item-title">How to use this honestly</div>
+<p>Use should be lawful, proportionate, and directed toward real governance improvement rather than symbolic optics.</p>
+</div>
+
+<div class="item">
+<div class="item-label">Practical Reality</div>
+<div class="item-title">The limit of documents</div>
+<p>Documents do not stop events. Authority exercised in time does.</p>
+</div>
+
+</div>
+
+<div class="closing">
+<h2>If the decision mattered tomorrow,<br>would authority be clear today?</h2>
+<p>Private advisory for organizations facing consequential live decisions.</p>
+
+<div class="actions">
+<a href="contact.html" class="btn btn-primary">Request Private Review</a>
+<a href="index.html" class="btn">Return Home</a>
+</div>
+</div>
 
 <div class="footer">
 © 2025 Liran Bar-Shrim. All rights reserved.
