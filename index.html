@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Decision Authority Research | Matrix Audit</title>
-<meta name="description" content="Private advisory for executives, boards and counsel facing irreversible decisions under uncertainty.">
+<title>Insights | Matrix Audit</title>
+<meta name="description" content="Independent governance insights on authority, accountability, irreversible decisions and organizational pressure.">
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -28,10 +28,6 @@
 margin:0;
 padding:0;
 box-sizing:border-box;
-}
-
-html{
-scroll-behavior:smooth;
 }
 
 body{
@@ -60,8 +56,6 @@ linear-gradient(rgba(255,255,255,.03) 1px, transparent 1px),
 linear-gradient(90deg, rgba(255,255,255,.03) 1px, transparent 1px);
 background-size:40px 40px;
 }
-
-/* topbar */
 
 .topbar{
 position:fixed;
@@ -119,8 +113,6 @@ border-radius:4px;
 width:72%;
 margin-left:auto;
 }
-
-/* drawer */
 
 .overlay{
 position:fixed;
@@ -206,37 +198,9 @@ border-bottom:1px solid rgba(255,255,255,.05);
 color:var(--gold2);
 }
 
-.private-btn{
-display:block;
-margin-top:22px;
-padding:16px;
-border-radius:16px;
-text-align:center;
-font-weight:800;
-letter-spacing:.18em;
-font-size:13px;
-text-transform:uppercase;
-background:linear-gradient(135deg,#d9bb79,#b88e45);
-color:#111;
-}
-
-.mail-btn{
-display:block;
-margin-top:14px;
-padding:14px;
-text-align:center;
-border-radius:16px;
-border:1px solid rgba(255,255,255,.08);
-color:#f3dfb4;
-font-size:15px;
-word-break:break-word;
-}
-
-/* hero */
-
-.hero{
-padding:118px 18px 44px;
-max-width:1200px;
+.page{
+padding:120px 18px 60px;
+max-width:1100px;
 margin:auto;
 }
 
@@ -249,127 +213,47 @@ color:var(--gold2);
 margin-bottom:18px;
 }
 
-.hero h1{
+h1{
 font-family:"Cormorant Garamond",serif;
-font-size:56px;
+font-size:62px;
 line-height:.92;
 font-weight:600;
-letter-spacing:-.03em;
-max-width:900px;
-}
-
-.hero h1 span{
-color:var(--gold2);
-}
-
-.hero p{
-margin-top:18px;
-font-size:18px;
-line-height:1.7;
-color:var(--muted);
-max-width:720px;
-}
-
-.hero-cta{
-margin-top:26px;
-display:inline-block;
-padding:16px 24px;
-border-radius:16px;
-background:linear-gradient(135deg,#d9bb79,#b88e45);
-color:#111;
-font-weight:800;
-letter-spacing:.18em;
-font-size:13px;
-text-transform:uppercase;
-}
-
-/* cards */
-
-.section{
-max-width:1200px;
-margin:auto;
-padding:18px 18px 0;
-}
-
-.label{
-font-family:"IBM Plex Mono",monospace;
-font-size:10px;
-letter-spacing:.28em;
-text-transform:uppercase;
-color:var(--gold);
-margin-bottom:16px;
+margin-bottom:20px;
 }
 
 .grid{
 display:grid;
 grid-template-columns:1fr;
-gap:16px;
-margin-top:10px;
+gap:18px;
+margin-top:24px;
 }
 
 .card{
-position:relative;
-overflow:hidden;
 border-radius:24px;
-padding:24px;
+padding:28px;
 background:
 radial-gradient(circle at 85% 18%, rgba(200,161,91,.08), transparent 24%),
 radial-gradient(circle at 15% 90%, rgba(14,45,35,.45), transparent 28%),
 linear-gradient(135deg,#071010,#0a1516);
 border:1px solid rgba(255,255,255,.07);
-min-height:230px;
-}
-
-.num{
-font-family:"IBM Plex Mono",monospace;
-font-size:12px;
-letter-spacing:.22em;
-color:var(--gold2);
-margin-bottom:12px;
 }
 
 .card h3{
 font-family:"Cormorant Garamond",serif;
-font-size:44px;
-line-height:.95;
-font-weight:600;
+font-size:42px;
 color:#e7c98f;
-margin-bottom:14px;
+margin-bottom:12px;
+line-height:1;
 }
 
 .card p{
 font-size:18px;
 line-height:1.75;
 color:#cbd3cf;
-max-width:720px;
 }
-
-/* problem */
-
-.problem{
-padding-bottom:60px;
-}
-
-.problem h2{
-font-family:"Cormorant Garamond",serif;
-font-size:52px;
-line-height:.95;
-font-weight:600;
-color:#dce7df;
-margin-bottom:16px;
-}
-
-.problem p{
-font-size:18px;
-line-height:1.75;
-color:var(--muted);
-max-width:760px;
-}
-
-/* footer */
 
 footer{
-max-width:1200px;
+max-width:1100px;
 margin:auto;
 padding:28px 18px 60px;
 border-top:1px solid var(--line);
@@ -377,28 +261,18 @@ font-size:14px;
 color:#8f9a95;
 }
 
-/* desktop */
-
 @media(min-width:900px){
 
 .topbar{
 padding:0 34px;
 }
 
-.hero{
-padding:150px 34px 50px;
+.page{
+padding:150px 34px 70px;
 }
 
-.hero h1{
+h1{
 font-size:92px;
-}
-
-.hero p{
-font-size:22px;
-}
-
-.section{
-padding:34px 34px 0;
 }
 
 .grid{
@@ -406,21 +280,8 @@ grid-template-columns:1fr 1fr;
 gap:22px;
 }
 
-.card{
-padding:34px;
-min-height:300px;
-}
-
 .card h3{
-font-size:58px;
-}
-
-.card p{
-font-size:21px;
-}
-
-.problem h2{
-font-size:78px;
+font-size:54px;
 }
 
 footer{
@@ -467,6 +328,7 @@ padding:34px 34px 70px;
 <small>Research</small>
 <a class="link" href="research.html">Independent Research</a>
 <a class="link" href="whitepaper.html">White Paper</a>
+<a class="link" href="insights.html">Insights</a>
 </div>
 
 <div class="group">
@@ -476,72 +338,37 @@ padding:34px 34px 70px;
 <a class="link" href="goodfaith.html">Good Faith Use</a>
 </div>
 
-<a href="contact.html" class="private-btn">Private Intake</a>
-<a href="mailto:Liran@liranbarshrim.com" class="mail-btn">Liran@liranbarshrim.com</a>
-
 </aside>
 
-<section class="hero">
-<div class="eyebrow">Private Advisory</div>
+<section class="page">
 
-<h1>
-When decisions become irreversible,<br>
-<span>someone must be able to stop them.</span>
-</h1>
+<div class="eyebrow">Insights</div>
 
-<p>
-Original governance thinking for boards, executives, founders and counsel facing pressure, uncertainty and personal exposure.
-</p>
-
-<a href="contact.html" class="hero-cta">Private Inquiry</a>
-</section>
-
-<section class="section">
-
-<div class="label">The Framework</div>
+<h1>Ideas that pressure usually hides.</h1>
 
 <div class="grid">
 
 <div class="card">
-<div class="num">01</div>
-<h3>Map Reality</h3>
-<p>Trace how one consequential decision actually moves through the organization — not how policy says it should move.</p>
+<h3>Who resumes?</h3>
+<p>Whoever feels the pain of stopping. When no one is named to resume, pain becomes authority.</p>
 </div>
 
 <div class="card">
-<div class="num">02</div>
-<h3>Name Authority</h3>
-<p>Define one accountable human authority with real stop power. Not a committee. Not a mailbox.</p>
+<h3>Approval Is Common</h3>
+<p>Most organizations know how to approve decisions. Few define who can stop them before damage compounds.</p>
 </div>
 
 <div class="card">
-<div class="num">03</div>
-<h3>Define Threshold</h3>
-<p>Clarify what uncertainty, escalation or irreversibility triggers mandatory pause and review.</p>
+<h3>Silence Decides</h3>
+<p>When no one explicitly owns the decision, momentum often decides in their place.</p>
 </div>
 
 <div class="card">
-<div class="num">04</div>
-<h3>Create Record</h3>
-<p>Produce a formal authority record that exists before the critical moment arrives.</p>
+<h3>Blame Arrives Late</h3>
+<p>Responsibility without authority often looks orderly until failure makes the gap public.</p>
 </div>
 
 </div>
-
-</section>
-
-<section class="section problem">
-
-<div class="label">The Problem</div>
-
-<h2>
-Most organizations know how to approve decisions.<br>
-Almost none know who can stop them.
-</h2>
-
-<p>
-Responsibility without authority is not governance. It is delayed blame. DAR helps define authority before failure defines it publicly.
-</p>
 
 </section>
 
