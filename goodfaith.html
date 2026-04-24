@@ -16,17 +16,14 @@
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
 
 <style>
-
 :root{
 --bg:#090909;
 --surface:#111111;
 --gold:#c8a96e;
 --text:#e8e2d7;
 --muted:#a7a097;
---soft:#8f8880;
 --border:#1d1d1d;
 --border2:#2a2a2a;
---danger:#c0392b;
 }
 
 *{margin:0;padding:0;box-sizing:border-box;}
@@ -36,22 +33,23 @@ body{
 background:var(--bg);
 color:var(--text);
 font-family:Inter,system-ui,sans-serif;
+line-height:1.7;
 overflow-x:hidden;
 -webkit-font-smoothing:antialiased;
-line-height:1.7;
 }
 
 body:before{
 content:'';
 position:fixed;
 inset:0;
-background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 240 240' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.025'/%3E%3C/svg%3E");
-opacity:.55;
 pointer-events:none;
-z-index:0;
+opacity:.04;
+background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
 }
 
 a{text-decoration:none;color:inherit;}
+
+/* TOPBAR */
 
 .topbar{
 position:sticky;
@@ -70,20 +68,22 @@ border-bottom:1px solid rgba(255,255,255,.04);
 display:flex;
 align-items:center;
 gap:12px;
-text-decoration:none;
-color:var(--text);
 font-family:'IBM Plex Mono',monospace;
 font-size:10px;
 letter-spacing:.28em;
 text-transform:uppercase;
+white-space:nowrap;
 }
 
-.brand-line{width:18px;height:1px;background:var(--gold);}
+.brand-line{
+width:18px;
+height:1px;
+background:var(--gold);
+}
 
 .menu-btn{
 display:flex;
 flex-direction:column;
-justify-content:center;
 gap:5px;
 background:none;
 border:none;
@@ -96,35 +96,39 @@ display:block;
 width:22px;
 height:1.5px;
 background:var(--text);
-transition:background .2s;
 }
 
-.menu-btn:hover span{background:var(--gold);}
+/* OVERLAY */
 
 .overlay{
 position:fixed;
 inset:0;
-background:rgba(0,0,0,.6);
+background:rgba(0,0,0,.65);
 opacity:0;
 visibility:hidden;
 transition:.25s;
 z-index:998;
 }
 
-.overlay.active{opacity:1;visibility:visible;}
+.overlay.active{
+opacity:1;
+visibility:visible;
+}
+
+/* SIDE MENU */
 
 .side-menu{
 position:fixed;
 top:0;
 right:-340px;
-width:300px;
-max-width:90%;
+width:320px;
+max-width:92%;
 height:100vh;
 overflow-y:auto;
 background:#0d0d0d;
 border-left:1px solid var(--border);
 padding:28px 24px 48px;
-transition:.28s cubic-bezier(.4,0,.2,1);
+transition:.28s ease;
 z-index:999;
 }
 
@@ -134,13 +138,13 @@ z-index:999;
 display:flex;
 justify-content:space-between;
 align-items:center;
-margin-bottom:28px;
+margin-bottom:26px;
 }
 
 .menu-head-brand{
 font-family:'IBM Plex Mono',monospace;
-font-size:9px;
-letter-spacing:.24em;
+font-size:10px;
+letter-spacing:.28em;
 text-transform:uppercase;
 color:var(--gold);
 }
@@ -148,92 +152,77 @@ color:var(--gold);
 .close-btn{
 background:none;
 border:none;
-font-size:26px;
+font-size:34px;
 line-height:1;
-color:var(--muted);
 cursor:pointer;
-transition:.2s;
+color:var(--muted);
 }
-
-.close-btn:hover{color:var(--text);}
 
 .menu-group{
 border-top:1px solid var(--border);
-padding-top:20px;
-margin-top:20px;
+padding-top:18px;
+margin-top:18px;
+}
+
+.menu-group.first{
+border-top:none;
+padding-top:0;
+margin-top:0;
 }
 
 .menu-label{
 font-family:'IBM Plex Mono',monospace;
-font-size:9px;
-letter-spacing:.22em;
+font-size:10px;
+letter-spacing:.28em;
 text-transform:uppercase;
 color:var(--gold);
-margin-bottom:12px;
+margin-bottom:14px;
 }
 
 .menu-group a{
-display:flex;
-align-items:center;
-gap:10px;
-padding:9px 0;
-text-decoration:none;
+display:block;
+padding:8px 0;
+font-size:15px;
 color:var(--muted);
-font-size:14px;
-border-bottom:1px solid rgba(255,255,255,.03);
-transition:.18s;
 }
 
-.menu-group a:last-child{border-bottom:none;}
-.menu-group a:hover{color:var(--text);padding-left:4px;}
-.menu-group a.active{color:var(--gold);}
-
-.menu-divider-line{
-display:inline-block;
-width:12px;
-height:1px;
-background:var(--border2);
-flex-shrink:0;
+.menu-group a:hover,
+.menu-group a.active{
+color:var(--gold);
 }
 
 .menu-cta{
 display:block;
-margin-top:28px;
-padding:14px 20px;
-border:1px solid var(--gold);
-color:var(--gold)!important;
-font-family:'IBM Plex Mono',monospace;
-font-size:10px;
-letter-spacing:.2em;
-text-transform:uppercase;
+margin-top:24px;
+padding:14px;
 text-align:center;
-text-decoration:none;
-transition:.2s;
+border:1px solid var(--gold);
+font-family:'IBM Plex Mono',monospace;
+font-size:11px;
+letter-spacing:.22em;
+text-transform:uppercase;
+color:var(--gold);
 }
-
-.menu-cta:hover{background:var(--gold);color:#111!important;}
 
 .menu-email{
 display:block;
-margin-top:10px;
-padding:11px 20px;
-color:var(--muted)!important;
-font-family:Inter,system-ui,sans-serif;
-font-size:13px;
-text-align:center;
-text-decoration:none;
+margin-top:18px;
+padding:14px;
 border:1px solid var(--border);
-transition:.2s;
+text-align:center;
+font-size:14px;
+color:var(--muted);
+word-break:break-word;
 }
 
-.menu-email:hover{color:var(--gold)!important;border-color:var(--border2);}
+/* PAGE */
 
 .container{
+max-width:760px;
+margin:auto;
+padding:70px 28px 110px;
 position:relative;
 z-index:1;
-max-width:760px;
-margin:0 auto;
-padding:70px 28px 110px;
 }
 
 .hero{
@@ -255,7 +244,6 @@ margin-bottom:18px;
 font-family:'Playfair Display',serif;
 font-size:clamp(32px,6vw,52px);
 line-height:1.08;
-letter-spacing:-.02em;
 margin-bottom:20px;
 }
 
@@ -263,11 +251,10 @@ margin-bottom:20px;
 font-size:17px;
 line-height:1.9;
 color:var(--muted);
-max-width:680px;
 }
 
 .statement{
-background:linear-gradient(180deg,#111,#0d0d0d);
+background:#111;
 border:1px solid var(--border2);
 border-left:3px solid var(--gold);
 padding:28px;
@@ -277,20 +264,16 @@ font-size:clamp(18px,3vw,24px);
 line-height:1.35;
 }
 
-/* ── items ── */
-
-.items{
-display:grid;
-gap:0;
-margin-bottom:54px;
-}
+.items{margin-bottom:54px;}
 
 .item{
 padding:24px 0;
 border-bottom:1px solid rgba(255,255,255,.05);
 }
 
-.item:first-child{border-top:1px solid rgba(255,255,255,.05);}
+.item:first-child{
+border-top:1px solid rgba(255,255,255,.05);
+}
 
 .item-label{
 font-family:'IBM Plex Mono',monospace;
@@ -305,7 +288,6 @@ margin-bottom:8px;
 font-family:'Playfair Display',serif;
 font-size:22px;
 margin-bottom:10px;
-line-height:1.15;
 }
 
 .item p{
@@ -313,8 +295,6 @@ font-size:15px;
 color:var(--muted);
 line-height:1.8;
 }
-
-/* ── closing ── */
 
 .closing{
 border-top:1px solid var(--border2);
@@ -325,7 +305,6 @@ margin-bottom:54px;
 .closing h2{
 font-family:'Playfair Display',serif;
 font-size:clamp(24px,4vw,36px);
-line-height:1.15;
 margin-bottom:16px;
 }
 
@@ -335,7 +314,11 @@ color:var(--muted);
 margin-bottom:20px;
 }
 
-.actions{display:flex;gap:14px;flex-wrap:wrap;}
+.actions{
+display:flex;
+gap:14px;
+flex-wrap:wrap;
+}
 
 .btn{
 display:inline-block;
@@ -344,222 +327,171 @@ font-family:'IBM Plex Mono',monospace;
 font-size:11px;
 letter-spacing:.18em;
 text-transform:uppercase;
-font-weight:500;
-transition:.2s;
 border:1px solid var(--border2);
-color:var(--text);
 }
 
-.btn-primary{background:var(--gold);color:#111;border-color:var(--gold);}
-.btn:hover,.btn-primary:hover{transform:translateY(-2px);}
-
-.footer-banner{border:1px solid var(--border2);background:#0d0d0d;}
-
-.footer-link{
-display:flex;
-justify-content:space-between;
-align-items:center;
-padding:20px 24px;
-text-decoration:none;
-color:var(--text);
-border-bottom:1px solid var(--border2);
-transition:.18s;
+.btn-primary{
+background:var(--gold);
+border-color:var(--gold);
+color:#111;
 }
-
-.footer-link:last-child{border-bottom:none;}
-.footer-link:hover{background:#151515;padding-left:28px;}
-.footer-link-left{display:flex;flex-direction:column;gap:4px;}
-
-.footer-link-label{
-font-family:'IBM Plex Mono',monospace;
-font-size:9px;
-letter-spacing:.22em;
-text-transform:uppercase;
-color:var(--gold);
-}
-
-.footer-link-title{font-family:'Playfair Display',serif;font-size:17px;line-height:1.2;}
-.footer-link-arrow{font-family:'IBM Plex Mono',monospace;font-size:14px;color:var(--muted);}
 
 .footer{
-margin-top:28px;
-padding-top:28px;
-border-top:1px solid var(--border2);
-font-size:11px;
-letter-spacing:.08em;
-color:#6e6964;
+margin-top:70px;
+padding-top:26px;
+border-top:1px solid #161616;
 font-family:'IBM Plex Mono',monospace;
+font-size:11px;
+color:#726b63;
 }
 
 @media(max-width:600px){
 .container{padding:48px 18px 72px;}
 .btn{width:100%;text-align:center;}
 }
-
 </style>
 </head>
 
 <body>
 
 <header class="topbar">
-  <a href="index.html" class="brand">
-    <span class="brand-line"></span>
-    <span>Decision Authority Research</span>
-  </a>
-  <button class="menu-btn" id="openMenu" aria-label="Open menu">
-    <span></span>
-    <span></span>
-    <span></span>
-  </button>
+<a href="index.html" class="brand">
+<span class="brand-line"></span>
+<span>Decision Authority Research</span>
+</a>
+
+<button class="menu-btn" id="openMenu" aria-label="Open Menu">
+<span></span><span></span><span></span>
+</button>
 </header>
 
 <div class="overlay" id="overlay"></div>
 
 <aside class="side-menu" id="menu">
-  <div class="menu-head">
-    <span class="menu-head-brand">Matrix Audit</span>
-    <button class="close-btn" id="closeMenu">&times;</button>
-  </div>
 
-  <div class="menu-group" style="border-top:none;padding-top:0;margin-top:0;">
-    <div class="menu-label">Primary</div>
-    <a href="index.html"><span class="menu-divider-line"></span>Home</a>
-    <a href="dar.html"><span class="menu-divider-line"></span>DAR</a>
-    <a href="services.html"><span class="menu-divider-line"></span>Services</a>
-    <a href="about.html"><span class="menu-divider-line"></span>About</a>
-  </div>
+<div class="menu-head">
+<div class="menu-head-brand">Matrix Audit</div>
+<button class="close-btn" id="closeMenu">&times;</button>
+</div>
 
-  <div class="menu-group">
-    <div class="menu-label">Insights</div>
-    <a href="exposure.html"><span class="menu-divider-line"></span>When Failure Lands on One Name</a>
-    <a href="failure-points.html"><span class="menu-divider-line"></span>Where Accountability Breaks</a>
-    <a href="we.html"><span class="menu-divider-line"></span>The Death of We</a>
-    <a href="stop-authority.html"><span class="menu-divider-line"></span>Stop Authority</a>
-    <a href="ai-governance.html"><span class="menu-divider-line"></span>AI Governance</a>
-  </div>
+<div class="menu-group first">
+<div class="menu-label">Primary</div>
+<a href="index.html">Home</a>
+<a href="dar.html">DAR</a>
+<a href="services.html">Services</a>
+<a href="about.html">About</a>
+<a href="contact.html">Contact</a>
+</div>
 
-  <div class="menu-group">
-    <div class="menu-label">Knowledge</div>
-    <a href="definitions.html"><span class="menu-divider-line"></span>Definitions</a>
-    <a href="faq.html"><span class="menu-divider-line"></span>FAQ</a>
-    <a href="case-studies.html"><span class="menu-divider-line"></span>Case Studies</a>
-    <a href="goodfaith.html" class="active"><span class="menu-divider-line"></span>Good Faith Use</a>
-  </div>
+<div class="menu-group">
+<div class="menu-label">Research</div>
+<a href="whitepaper.html">White Paper</a>
+<a href="research.html">Independent Research</a>
+</div>
 
-  <a href="contact.html" class="menu-cta">Private Intake</a>
-  <a href="mailto:Liran@liranbarshrim.com" class="menu-email">Liran@liranbarshrim.com</a>
+<div class="menu-group">
+<div class="menu-label">Reference</div>
+<a href="definitions.html">Definitions</a>
+<a href="faq.html">FAQ</a>
+<a href="case-studies.html">Case Studies</a>
+<a href="goodfaith.html" class="active">Good Faith Use</a>
+</div>
+
+<a href="contact.html" class="menu-cta">Private Intake</a>
+<a href="mailto:Liran@liranbarshrim.com" class="menu-email">Liran@liranbarshrim.com</a>
+
 </aside>
 
 <main class="container">
 
-  <section class="hero">
-    <div class="hero-label">Good Faith Use</div>
-    <h1>Clarity supports judgment.<br>It does not replace it.</h1>
-    <p>
-      Matrix Audit frameworks are designed to help organizations clarify responsibility before consequential decisions become irreversible.
-    </p>
-  </section>
+<section class="hero">
+<div class="hero-label">Good Faith Use</div>
+<h1>Clarity supports judgment.<br>It does not replace it.</h1>
+<p>
+Matrix Audit frameworks are designed to help organizations clarify responsibility before consequential decisions become irreversible.
+</p>
+</section>
 
-  <div class="statement">
-    A framework can define accountability.<br>
-    Only people can exercise judgment.
-  </div>
+<div class="statement">
+A framework can define accountability.<br>
+Only people can exercise judgment.
+</div>
 
-  <div class="items">
+<div class="items">
 
-    <div class="item">
-      <div class="item-label">Purpose</div>
-      <div class="item-title">What this is for</div>
-      <p>Decision Authority Research is a governance methodology intended to clarify authority, escalation, and accountability before critical decisions occur.</p>
-    </div>
+<div class="item">
+<div class="item-label">Purpose</div>
+<div class="item-title">What this is for</div>
+<p>Decision Authority Research is a governance methodology intended to clarify authority, escalation, and accountability before critical decisions occur.</p>
+</div>
 
-    <div class="item">
-      <div class="item-label">Scope</div>
-      <div class="item-title">What this is not</div>
-      <p>It may align with oversight, governance, and regulatory expectations, but it is not a legal opinion, compliance certification, or guarantee against liability.</p>
-    </div>
+<div class="item">
+<div class="item-label">Scope</div>
+<div class="item-title">What this is not</div>
+<p>It may align with oversight expectations, but it is not legal advice, compliance certification, or a guarantee against liability.</p>
+</div>
 
-    <div class="item">
-      <div class="item-label">Responsibility</div>
-      <div class="item-title">Who owns the decision</div>
-      <p>Responsibility for decisions remains with the organization, its officers, board members, and designated decision makers.</p>
-    </div>
+<div class="item">
+<div class="item-label">Responsibility</div>
+<div class="item-title">Who owns the decision</div>
+<p>Responsibility remains with the organization, its officers, board members, and designated decision makers.</p>
+</div>
 
-    <div class="item">
-      <div class="item-label">Core Principle</div>
-      <div class="item-title">What DAR can and cannot do</div>
-      <p>DAR can identify who should be accountable to stop. It does not make the decision. A named human being does.</p>
-    </div>
+<div class="item">
+<div class="item-label">Core Principle</div>
+<div class="item-title">What DAR can and cannot do</div>
+<p>DAR can identify who should be accountable to stop. It does not make the decision. A named human being does.</p>
+</div>
 
-    <div class="item">
-      <div class="item-label">Good Faith Standard</div>
-      <div class="item-title">How to use this honestly</div>
-      <p>Any use of these materials should be honest, lawful, proportionate, and directed toward real governance improvement rather than symbolic optics.</p>
-    </div>
+<div class="item">
+<div class="item-label">Good Faith Standard</div>
+<div class="item-title">How to use this honestly</div>
+<p>Use should be lawful, proportionate, and directed toward real governance improvement rather than symbolic optics.</p>
+</div>
 
-    <div class="item">
-      <div class="item-label">Practical Reality</div>
-      <div class="item-title">The limit of documents</div>
-      <p>Documents do not stop events. Authority exercised in time does.</p>
-    </div>
+<div class="item">
+<div class="item-label">Practical Reality</div>
+<div class="item-title">The limit of documents</div>
+<p>Documents do not stop events. Authority exercised in time does.</p>
+</div>
 
-  </div>
+</div>
 
-  <div class="closing">
-    <h2>If the decision mattered tomorrow,<br>would authority be clear today?</h2>
-    <p>Private advisory for organizations facing consequential live decisions.</p>
-    <div class="actions">
-      <a href="contact.html" class="btn btn-primary">Request Private Review</a>
-      <a href="index.html" class="btn">Return Home</a>
-    </div>
-  </div>
+<div class="closing">
+<h2>If the decision mattered tomorrow,<br>would authority be clear today?</h2>
+<p>Private advisory for organizations facing consequential live decisions.</p>
 
-  <div class="footer-banner">
-    <a href="dar.html" class="footer-link">
-      <div class="footer-link-left">
-        <span class="footer-link-label">Framework</span>
-        <span class="footer-link-title">Decision Authority Record</span>
-      </div>
-      <span class="footer-link-arrow">&rarr;</span>
-    </a>
-    <a href="faq.html" class="footer-link">
-      <div class="footer-link-left">
-        <span class="footer-link-label">FAQ</span>
-        <span class="footer-link-title">Questions &amp; Answers</span>
-      </div>
-      <span class="footer-link-arrow">&rarr;</span>
-    </a>
-    <a href="contact.html" class="footer-link">
-      <div class="footer-link-left">
-        <span class="footer-link-label">Contact</span>
-        <span class="footer-link-title">Private Intake</span>
-      </div>
-      <span class="footer-link-arrow">&rarr;</span>
-    </a>
-  </div>
+<div class="actions">
+<a href="contact.html" class="btn btn-primary">Request Private Review</a>
+<a href="index.html" class="btn">Return Home</a>
+</div>
+</div>
 
-  <div class="footer">
-    &copy; 2026 Liran Bar-Shrim. All rights reserved.
-  </div>
+<div class="footer">
+© 2025 Liran Bar-Shrim. All rights reserved.
+</div>
 
 </main>
 
 <script>
-const menu = document.getElementById('menu');
-const overlay = document.getElementById('overlay');
+const menu=document.getElementById('menu');
+const overlay=document.getElementById('overlay');
+const openBtn=document.getElementById('openMenu');
+const closeBtn=document.getElementById('closeMenu');
 
-document.getElementById('openMenu').onclick = function() {
-  menu.classList.add('active');
-  overlay.classList.add('active');
-};
-
-document.getElementById('closeMenu').onclick = closeMenu;
-overlay.onclick = closeMenu;
-
-function closeMenu() {
-  menu.classList.remove('active');
-  overlay.classList.remove('active');
+function openMenu(){
+menu.classList.add('active');
+overlay.classList.add('active');
 }
+
+function closeMenu(){
+menu.classList.remove('active');
+overlay.classList.remove('active');
+}
+
+openBtn.onclick=openMenu;
+closeBtn.onclick=closeMenu;
+overlay.onclick=closeMenu;
 </script>
 
 </body>
