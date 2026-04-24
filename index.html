@@ -12,15 +12,8 @@
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
 
 <style>
-*{
-margin:0;
-padding:0;
-box-sizing:border-box;
-}
-
-html{
-scroll-behavior:smooth;
-}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
 
 :root{
 --bg:#0b0d0f;
@@ -45,17 +38,12 @@ overflow-x:hidden;
 -webkit-font-smoothing:antialiased;
 }
 
-a{
-text-decoration:none;
-color:inherit;
-}
+a{text-decoration:none;color:inherit}
 
 /* TOPBAR */
 .topbar{
 position:fixed;
-top:0;
-left:0;
-width:100%;
+top:0;left:0;width:100%;
 z-index:999;
 display:flex;
 justify-content:space-between;
@@ -83,7 +71,6 @@ height:2px;
 background:var(--gold);
 }
 
-/* MENU BUTTON */
 .menu-btn{
 background:none;
 border:none;
@@ -98,14 +85,12 @@ padding:4px;
 display:block;
 width:28px;
 height:2px;
-background:#ffffff;
+background:#fff;
 border-radius:2px;
 transition:.25s;
 }
 
-.menu-btn:hover span{
-background:var(--gold);
-}
+.menu-btn:hover span{background:var(--gold)}
 
 /* OVERLAY */
 .overlay{
@@ -140,9 +125,7 @@ overflow:auto;
 transition:.3s ease;
 }
 
-.side-menu.active{
-right:0;
-}
+.side-menu.active{right:0}
 
 .menu-head{
 display:flex;
@@ -169,9 +152,7 @@ color:#fff;
 cursor:pointer;
 }
 
-.menu-group{
-margin-bottom:24px;
-}
+.menu-group{margin-bottom:24px}
 
 .menu-label{
 font-family:'IBM Plex Mono',monospace;
@@ -195,6 +176,20 @@ transition:.2s;
 .menu-group a:hover{
 padding-left:6px;
 color:var(--gold2);
+}
+
+.intake-btn{
+display:block;
+margin-top:12px;
+padding:14px 16px;
+text-align:center;
+background:linear-gradient(135deg,var(--gold),#a98752);
+color:#111 !important;
+font-weight:700;
+font-size:12px;
+letter-spacing:.16em;
+text-transform:uppercase;
+border-radius:12px;
 }
 
 /* HERO */
@@ -229,9 +224,7 @@ max-width:900px;
 margin-bottom:28px;
 }
 
-h1 span{
-color:var(--gold2);
-}
+h1 span{color:var(--gold2)}
 
 .sub{
 max-width:700px;
@@ -254,14 +247,10 @@ border-radius:12px;
 transition:.25s;
 }
 
-.cta:hover{
-transform:translateY(-2px);
-}
+.cta:hover{transform:translateY(-2px)}
 
 /* STATEMENT */
-.statement{
-padding:0 28px 80px;
-}
+.statement{padding:0 28px 80px}
 
 .statement-inner{
 max-width:1180px;
@@ -274,14 +263,10 @@ font-weight:600;
 line-height:1.3;
 }
 
-.statement span{
-color:var(--gold);
-}
+.statement span{color:var(--gold)}
 
 /* GRID */
-.section{
-padding:0 28px 90px;
-}
+.section{padding:0 28px 90px}
 
 .grid{
 max-width:1180px;
@@ -342,39 +327,17 @@ line-height:1.8;
 
 /* RESPONSIVE */
 @media(max-width:980px){
-.grid{
-grid-template-columns:1fr;
-}
-.statement-inner{
-font-size:28px;
-}
+.grid{grid-template-columns:1fr}
+.statement-inner{font-size:28px}
 }
 
 @media(max-width:768px){
-.topbar{
-padding:18px 18px;
+.topbar{padding:18px}
+.hero{padding:120px 18px 60px}
+.statement,.section,.footer{padding-left:18px;padding-right:18px}
+.side-menu{width:78%}
+.sub{font-size:18px}
 }
-
-.hero{
-padding:120px 18px 60px;
-}
-
-.statement,
-.section,
-.footer{
-padding-left:18px;
-padding-right:18px;
-}
-
-.side-menu{
-width:78%;
-}
-
-.sub{
-font-size:18px;
-}
-}
-
 </style>
 </head>
 
@@ -409,6 +372,7 @@ font-size:18px;
 <a href="services.html">Services</a>
 <a href="about.html">About</a>
 <a href="contact.html">Contact</a>
+<a href="contact.html" class="intake-btn">Private Intake</a>
 </div>
 
 <div class="menu-group">
@@ -477,7 +441,7 @@ Approval systems scale. <span>Stop authority decides survival.</span>
 
 <footer class="footer">
 <div class="footer-inner">
-© 2026 Liran Bar-Shrim · All Rights Reserved · Decision Authority Research
+© 2025 All Rights Reserved · Decision Authority Research
 </div>
 </footer>
 
