@@ -4,8 +4,8 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
 
-<title>Private Mandates | Decision Authority Research</title>
-<meta name="description" content="Selective private mandates for executives, boards, founders and counsel facing consequential decisions under uncertainty.">
+<title>Services | Decision Authority Research</title>
+<meta name="description" content="Private engagements for boards, executives, founders and counsel facing consequential decisions under uncertainty.">
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -14,12 +14,14 @@
 
 <style>
 :root{
---bg:#030404;
---bg2:#081111;
+--bg:#050606;
+--bg2:#081011;
+--card:#0a1414;
+--green:#0e2d23;
 --gold:#c8a15b;
---gold2:#f0dfb7;
+--gold2:#efd8a0;
 --text:#edf2ef;
---muted:#92a09a;
+--muted:#95a09b;
 --line:rgba(255,255,255,.08);
 }
 
@@ -29,9 +31,9 @@ html{scroll-behavior:smooth;}
 body{
 font-family:Inter,sans-serif;
 background:
-radial-gradient(circle at 15% 10%, rgba(10,45,35,.52), transparent 28%),
-radial-gradient(circle at 82% 0%, rgba(200,161,91,.12), transparent 22%),
-linear-gradient(180deg,#020303,#061010 55%,#020303);
+radial-gradient(circle at 20% 10%, rgba(14,45,35,.55), transparent 28%),
+radial-gradient(circle at 80% 0%, rgba(200,161,91,.12), transparent 20%),
+linear-gradient(180deg,#030404,#071010 55%,#030404);
 color:var(--text);
 overflow-x:hidden;
 }
@@ -41,16 +43,17 @@ content:"";
 position:fixed;
 inset:0;
 pointer-events:none;
-opacity:.12;
+opacity:.18;
 background-image:
 linear-gradient(rgba(255,255,255,.03) 1px, transparent 1px),
 linear-gradient(90deg, rgba(255,255,255,.03) 1px, transparent 1px);
-background-size:42px 42px;
+background-size:40px 40px;
 }
 
 a{text-decoration:none;color:inherit}
 
 /* topbar */
+
 .topbar{
 position:fixed;
 top:0;left:0;right:0;
@@ -84,8 +87,10 @@ background:var(--gold);
 }
 
 .menu-btn{
-width:42px;height:42px;
-border:none;background:none;
+width:42px;
+height:42px;
+border:none;
+background:none;
 cursor:pointer;
 display:flex;
 flex-direction:column;
@@ -105,6 +110,7 @@ margin-left:auto;
 }
 
 /* drawer */
+
 .overlay{
 position:fixed;
 inset:0;
@@ -131,7 +137,8 @@ overflow-y:auto;
 z-index:999;
 padding:24px;
 transition:.3s ease;
-background:linear-gradient(180deg,#071010,#071313 70%,#050707);
+background:
+linear-gradient(180deg,#071010,#071313 70%,#050707);
 border-left:1px solid rgba(255,255,255,.08);
 }
 
@@ -212,8 +219,9 @@ word-break:break-word;
 }
 
 /* hero */
+
 .hero{
-padding:118px 18px 42px;
+padding:118px 18px 44px;
 max-width:1200px;
 margin:auto;
 }
@@ -221,7 +229,7 @@ margin:auto;
 .eyebrow{
 font-family:"IBM Plex Mono",monospace;
 font-size:10px;
-letter-spacing:.30em;
+letter-spacing:.3em;
 text-transform:uppercase;
 color:var(--gold2);
 margin-bottom:18px;
@@ -229,26 +237,26 @@ margin-bottom:18px;
 
 .hero h1{
 font-family:"Cormorant Garamond",serif;
-font-size:60px;
-line-height:.9;
-font-weight:700;
+font-size:56px;
+line-height:.92;
+font-weight:600;
 letter-spacing:-.03em;
-max-width:980px;
+max-width:900px;
 }
 
 .hero h1 span{color:var(--gold2);}
 
 .hero p{
-margin-top:20px;
+margin-top:18px;
 font-size:18px;
-line-height:1.8;
+line-height:1.7;
 color:var(--muted);
-max-width:760px;
+max-width:720px;
 }
 
 .hero-cta{
+margin-top:26px;
 display:inline-block;
-margin-top:28px;
 padding:16px 24px;
 border-radius:16px;
 background:linear-gradient(135deg,#d9bb79,#b88e45);
@@ -259,11 +267,12 @@ font-size:13px;
 text-transform:uppercase;
 }
 
-/* section */
+/* sections */
+
 .section{
 max-width:1200px;
 margin:auto;
-padding:20px 18px 0;
+padding:18px 18px 0;
 }
 
 .label{
@@ -275,38 +284,39 @@ color:var(--gold);
 margin-bottom:16px;
 }
 
-.statement,
-.panel{
-border-radius:26px;
-padding:28px;
-background:
-radial-gradient(circle at 85% 15%, rgba(200,161,91,.08), transparent 22%),
-linear-gradient(135deg,#081111,#0c1718);
-border:1px solid rgba(255,255,255,.07);
-}
-
 .statement{
+border-radius:24px;
+padding:26px;
+background:
+radial-gradient(circle at 85% 18%, rgba(200,161,91,.08), transparent 24%),
+radial-gradient(circle at 15% 90%, rgba(14,45,35,.45), transparent 28%),
+linear-gradient(135deg,#071010,#0a1516);
+border:1px solid rgba(255,255,255,.07);
 font-family:"Cormorant Garamond",serif;
-font-size:42px;
-line-height:1;
-color:var(--gold2);
+font-size:46px;
+line-height:.95;
+font-weight:600;
+color:#f0dfb7;
 }
 
 .grid{
 display:grid;
 grid-template-columns:1fr;
 gap:16px;
-margin-top:18px;
+margin-top:10px;
 }
 
 .card{
+position:relative;
+overflow:hidden;
 border-radius:24px;
 padding:24px;
 background:
 radial-gradient(circle at 85% 18%, rgba(200,161,91,.08), transparent 24%),
-radial-gradient(circle at 15% 90%, rgba(10,45,35,.40), transparent 28%),
+radial-gradient(circle at 15% 90%, rgba(14,45,35,.45), transparent 28%),
 linear-gradient(135deg,#071010,#0a1516);
 border:1px solid rgba(255,255,255,.07);
+min-height:230px;
 }
 
 .num{
@@ -319,35 +329,32 @@ margin-bottom:12px;
 
 .card h3{
 font-family:"Cormorant Garamond",serif;
-font-size:48px;
-line-height:.92;
-font-weight:700;
+font-size:44px;
+line-height:.95;
+font-weight:600;
 color:#e7c98f;
-margin-bottom:12px;
+margin-bottom:14px;
 }
 
 .price{
 font-family:"IBM Plex Mono",monospace;
 font-size:12px;
 letter-spacing:.18em;
-opacity:.85;
 margin-bottom:14px;
+opacity:.9;
 }
 
-.card p,.panel p{
-font-size:17px;
+.card p{
+font-size:18px;
 line-height:1.75;
-color:#cfd6d1;
-}
-
-.list{
-margin-top:14px;
+color:#cbd3cf;
+margin-bottom:16px;
 }
 
 .list div{
 padding:8px 0;
 font-size:14px;
-color:#9aa6a0;
+color:#98a39e;
 border-bottom:1px solid rgba(255,255,255,.05);
 }
 
@@ -359,9 +366,9 @@ margin-top:18px;
 padding:14px;
 border-radius:14px;
 text-align:center;
-font-size:12px;
 font-weight:800;
 letter-spacing:.18em;
+font-size:12px;
 text-transform:uppercase;
 background:linear-gradient(135deg,#d9bb79,#b88e45);
 color:#111;
@@ -370,25 +377,57 @@ color:#111;
 footer{
 max-width:1200px;
 margin:auto;
-padding:42px 18px 70px;
+padding:28px 18px 60px;
 border-top:1px solid var(--line);
 font-size:14px;
 color:#8f9a95;
 margin-top:60px;
 }
 
+/* desktop */
+
 @media(min-width:900px){
+
 .topbar{padding:0 34px;}
-.hero{padding:150px 34px 50px;}
-.hero h1{font-size:96px;}
-.hero p{font-size:22px;}
-.section{padding:34px 34px 0;}
-.grid{grid-template-columns:repeat(3,1fr);gap:22px;}
-.card{padding:34px;min-height:520px;}
-.card h3{font-size:58px;}
-.statement{font-size:68px;padding:40px;}
-.panel{padding:38px;}
-footer{padding:34px 34px 70px;}
+
+.hero{
+padding:150px 34px 50px;
+}
+
+.hero h1{
+font-size:92px;
+}
+
+.hero p{
+font-size:22px;
+}
+
+.section{
+padding:34px 34px 0;
+}
+
+.grid{
+grid-template-columns:1fr 1fr 1fr;
+gap:22px;
+}
+
+.card{
+padding:34px;
+min-height:520px;
+}
+
+.card h3{
+font-size:58px;
+}
+
+.statement{
+font-size:70px;
+padding:38px;
+}
+
+footer{
+padding:34px 34px 70px;
+}
 }
 </style>
 </head>
@@ -402,13 +441,16 @@ footer{padding:34px 34px 70px;}
 </a>
 
 <button class="menu-btn" id="openMenu">
-<span></span><span></span><span></span>
+<span></span>
+<span></span>
+<span></span>
 </button>
 </header>
 
 <div class="overlay" id="overlay"></div>
 
 <aside class="drawer" id="drawer">
+
 <div class="drawer-top">
 <div class="drawer-title">Navigation</div>
 <button class="close-btn" id="closeMenu">×</button>
@@ -438,33 +480,36 @@ footer{padding:34px 34px 70px;}
 
 <a href="contact.html" class="private-btn">Private Intake</a>
 <a href="mailto:Liran@liranbarshrim.com" class="mail-btn">Liran@liranbarshrim.com</a>
+
 </aside>
 
 <section class="hero">
-<div class="eyebrow">Selective Private Mandates</div>
+<div class="eyebrow">Selective Engagements</div>
 
 <h1>
 When decisions carry exposure,<br>
-<span>clarity becomes expensive.</span>
+<span>clarity becomes valuable.</span>
 </h1>
 
 <p>
-For executives, boards, founders and counsel who prefer defined authority before pressure becomes public accountability.
+Private mandates for boards, executives, founders and counsel who need defined authority before pressure becomes blame.
 </p>
 
 <a href="contact.html" class="hero-cta">Private Inquiry</a>
 </section>
 
 <section class="section">
-<div class="label">Position</div>
+<div class="label">Core Principle</div>
+
 <div class="statement">
 If no one can stop it now,<br>
-someone may explain it later.
+someone may answer for it later.
 </div>
 </section>
 
 <section class="section">
-<div class="label">Mandates</div>
+
+<div class="label">Engagement Models</div>
 
 <div class="grid">
 
@@ -472,7 +517,7 @@ someone may explain it later.
 <div class="num">01</div>
 <h3>Exposure Review</h3>
 <div class="price">FROM €6,000</div>
-<p>For one active decision already moving where responsibility is visible and authority is uncertain.</p>
+<p>For one live matter already moving where responsibility is visible but authority is unclear.</p>
 <div class="list">
 <div>Single pathway review</div>
 <div>Approval vs stop authority</div>
@@ -486,10 +531,10 @@ someone may explain it later.
 <div class="num">02</div>
 <h3>Authority Design</h3>
 <div class="price">FROM €12,000</div>
-<p>For organizations where multiple functions participate, yet no single person clearly owns the final stop decision.</p>
+<p>For organizations where multiple functions participate, yet no single person owns the final stop decision.</p>
 <div class="list">
-<div>3–5 pathways assessed</div>
-<div>Named authority structure</div>
+<div>3–5 pathways reviewed</div>
+<div>Named authority framework</div>
 <div>Escalation thresholds</div>
 <div>10–14 business days</div>
 </div>
@@ -500,29 +545,18 @@ someone may explain it later.
 <div class="num">03</div>
 <h3>Executive Advisory</h3>
 <div class="price">PRIVATE SCOPE</div>
-<p>Confidential support for leaders carrying personal accountability in sensitive, regulated or visible decisions.</p>
+<p>Confidential support for leaders carrying personal accountability in sensitive or visible decisions.</p>
 <div class="list">
 <div>Board / founder matters</div>
 <div>AI / regulatory exposure</div>
-<div>Rapid private engagement</div>
+<div>Rapid engagement</div>
 <div>Custom scope</div>
 </div>
 <a href="contact.html" class="cta">Discuss Exposure</a>
 </div>
 
 </div>
-</section>
 
-<section class="section">
-<div class="label">Why Clients Engage</div>
-<div class="panel">
-<p>
-The matter is already moving.<br><br>
-Several people are involved.<br><br>
-Responsibility is real.<br><br>
-Authority is not.
-</p>
-</div>
 </section>
 
 <footer>
