@@ -5,8 +5,12 @@
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
 
 <title>Named Stop Authority in High-Risk Decisions | Decision Authority Research</title>
-<meta name="description" content="A practical governance white paper on named stop authority. For organizations facing high-risk decisions where speed, uncertainty, and accountability intersect.">
+<meta name="description" content="A practical governance white paper on named stop authority, accountability exposure, and stopping authority in high-risk decisions.">
+<meta name="robots" content="index,follow">
 <link rel="canonical" href="https://matrix-audit.com/whitepaper.html">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
 
@@ -17,19 +21,19 @@
 --gold:#c8a96e;
 --text:#e8e2d7;
 --muted:#a7a097;
---border:#1d1d1d;
---border2:#2a2a2a;
+--line:rgba(255,255,255,.08);
+--line2:rgba(255,255,255,.05);
 }
 
 *{margin:0;padding:0;box-sizing:border-box;}
 html{scroll-behavior:smooth;}
 
 body{
+font-family:Inter,sans-serif;
 background:var(--bg);
 color:var(--text);
-font-family:Inter,system-ui,sans-serif;
-line-height:1.75;
 overflow-x:hidden;
+line-height:1.78;
 -webkit-font-smoothing:antialiased;
 }
 
@@ -48,6 +52,7 @@ background-size:40px 40px;
 a{text-decoration:none;color:inherit;}
 
 /* TOPBAR */
+
 .topbar{
 position:fixed;
 top:0;left:0;right:0;
@@ -57,9 +62,9 @@ align-items:center;
 justify-content:space-between;
 padding:0 18px;
 z-index:1000;
-background:rgba(9,9,9,.88);
+background:rgba(5,5,5,.84);
 backdrop-filter:blur(14px);
-border-bottom:1px solid rgba(255,255,255,.05);
+border-bottom:1px solid var(--line2);
 }
 
 .brand{
@@ -103,6 +108,7 @@ margin-left:auto;
 }
 
 /* DRAWER */
+
 .overlay{
 position:fixed;
 inset:0;
@@ -129,8 +135,8 @@ overflow-y:auto;
 z-index:999;
 padding:24px;
 transition:.3s ease;
-background:#0b0b0b;
-border-left:1px solid rgba(255,255,255,.08);
+background:#0a0a0a;
+border-left:1px solid var(--line);
 }
 
 .drawer.active{right:0;}
@@ -175,7 +181,7 @@ margin-bottom:10px;
 display:block;
 padding:14px 0;
 font-size:20px;
-border-bottom:1px solid rgba(255,255,255,.05);
+border-bottom:1px solid var(--line2);
 }
 
 .drawer a.link:hover,
@@ -203,17 +209,18 @@ margin-top:14px;
 padding:14px;
 text-align:center;
 border-radius:16px;
-border:1px solid rgba(255,255,255,.08);
+border:1px solid var(--line);
 color:#f3dfb4;
 font-size:15px;
 word-break:break-word;
 }
 
 /* CONTENT */
+
 .container{
-max-width:780px;
+max-width:860px;
 margin:auto;
-padding:130px 18px 80px;
+padding:128px 18px 80px;
 position:relative;
 z-index:1;
 }
@@ -229,8 +236,8 @@ margin-bottom:20px;
 
 h1{
 font-family:"Playfair Display",serif;
-font-size:clamp(38px,8vw,62px);
-line-height:.96;
+font-size:clamp(40px,8vw,68px);
+line-height:.95;
 margin-bottom:14px;
 border-left:3px solid var(--gold);
 padding-left:18px;
@@ -242,16 +249,19 @@ font-size:11px;
 letter-spacing:.18em;
 text-transform:uppercase;
 color:var(--muted);
-margin-bottom:44px;
 padding-left:21px;
+margin-bottom:42px;
+}
+
+.box,section{
+background:linear-gradient(180deg,#111,#0d0d0d);
+border:1px solid var(--line2);
+padding:26px;
+margin-bottom:22px;
 }
 
 .box{
-background:linear-gradient(180deg,#111,#0d0d0d);
-border:1px solid var(--border2);
 border-left:3px solid var(--gold);
-padding:24px;
-margin-bottom:28px;
 }
 
 .label{
@@ -263,59 +273,52 @@ color:var(--gold);
 margin-bottom:12px;
 }
 
-.box h2,
-section h2{
+h2{
 font-family:"Playfair Display",serif;
-font-size:32px;
+font-size:34px;
 line-height:1.05;
 margin-bottom:14px;
 }
 
 p{
-font-size:16px;
+font-size:17px;
 color:var(--muted);
 margin-bottom:14px;
 }
 
 strong{color:var(--text);}
 
-section{
-padding:34px 0;
-border-top:1px solid rgba(255,255,255,.05);
-}
-
 .list-item{
-padding:10px 0;
-border-bottom:1px solid rgba(255,255,255,.04);
+padding:11px 0;
+border-bottom:1px solid var(--line2);
 color:var(--muted);
 }
 
 .pull{
 margin-top:18px;
 padding:20px;
-border-left:3px solid var(--gold);
 background:#101010;
+border-left:3px solid var(--gold);
 font-family:"Playfair Display",serif;
-font-size:24px;
+font-size:25px;
 line-height:1.28;
-color:var(--text);
 }
 
 .footer{
-margin-top:50px;
-padding-top:22px;
-border-top:1px solid rgba(255,255,255,.06);
-font-size:12px;
-color:#7f7a74;
+margin-top:38px;
+padding-top:24px;
+border-top:1px solid var(--line);
 font-family:"IBM Plex Mono",monospace;
+font-size:12px;
+color:#7c766f;
 }
 
 @media(min-width:900px){
 .topbar{padding:0 34px;}
-.container{padding:150px 34px 100px;}
-h1{font-size:72px;}
+.container{padding:150px 34px 110px;}
+.box,section{padding:34px;}
+h2{font-size:38px;}
 p{font-size:18px;}
-.box{padding:30px;}
 }
 </style>
 </head>
@@ -328,7 +331,7 @@ p{font-size:18px;}
 <span>Decision Authority Research</span>
 </a>
 
-<button class="menu-btn" id="openMenu">
+<button class="menu-btn" id="openMenu" aria-label="Open Menu">
 <span></span><span></span><span></span>
 </button>
 </header>
@@ -390,6 +393,17 @@ p{font-size:18px;}
 </div>
 
 <section>
+<div class="label">The Hidden Governance Gap</div>
+<h2>Responsibility is often assigned before stopping authority is defined.</h2>
+
+<p>Many organizations maintain clear approval workflows, budget authority, reporting lines, and escalation structures.</p>
+
+<p><strong>Who can interrupt momentum immediately when new uncertainty appears?</strong></p>
+
+<p>Where this is unclear, responsibility may later become personal while authority had previously been diffuse.</p>
+</section>
+
+<section>
 <div class="label">The Problem</div>
 <h2>Most systems know how to approve. Few know how to stop.</h2>
 
@@ -403,12 +417,23 @@ p{font-size:18px;}
 </section>
 
 <section>
+<div class="label">Exposure Logic</div>
+<h2>Failure often converges to one name.</h2>
+
+<div class="list-item">Who signed?</div>
+<div class="list-item">Who knew?</div>
+<div class="list-item">Who could have stopped it?</div>
+
+<p>If these are different people, accountability becomes structurally unstable.</p>
+</section>
+
+<section>
 <div class="label">The Principle</div>
 <h2>Named Stop Authority</h2>
 
 <p>A clearly identified individual is empowered to pause, halt, isolate, or escalate before damage expands.</p>
 
-<p>Not a committee. Not a department. <strong>A named person.</strong></p>
+<p><strong>Not a committee. Not a department. A named person.</strong></p>
 </section>
 
 <section>
@@ -416,7 +441,6 @@ p{font-size:18px;}
 <h2>Stopping power must be fast. Its use must be reviewable.</h2>
 
 <p>A stop mechanism without oversight can become arbitrary veto power.</p>
-
 <p>An oversight mechanism without real stop power becomes symbolic process.</p>
 
 <div class="list-item">Immediate authority when triggers arise</div>
@@ -432,12 +456,21 @@ Review without stop becomes theater.
 </section>
 
 <section>
-<div class="label">Why This Matters Now</div>
-<h2>Automation compresses time between signal and consequence.</h2>
+<div class="label">Boards & Executives</div>
+<h2>Approval systems are commonly reviewed. Stop systems are not.</h2>
 
-<p>As systems move faster, governance must become clearer.</p>
+<p>Boards frequently review controls, budgets, plans, and risk reports.</p>
 
-<p>The challenge is no longer only whether organizations can act quickly — but whether they can interrupt quickly when necessary.</p>
+<p>Far fewer review whether management can halt dangerous continuation under pressure.</p>
+</section>
+
+<section>
+<div class="label">AI & Autonomous Systems</div>
+<h2>The faster the system, the clearer the stop path must be.</h2>
+
+<p>Automation compresses time between signal and consequence.</p>
+
+<p>Governance maturity increasingly includes interruption capability.</p>
 </section>
 
 <section>
