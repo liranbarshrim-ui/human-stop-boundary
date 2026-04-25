@@ -49,8 +49,6 @@ background-size:40px 40px;
 
 a{text-decoration:none;color:inherit;}
 
-/* TOPBAR */
-
 .topbar{
 position:fixed;
 top:0;left:0;right:0;
@@ -106,8 +104,6 @@ width:72%;
 margin-left:auto;
 }
 
-/* DRAWER */
-
 .overlay{
 position:fixed;
 inset:0;
@@ -118,10 +114,7 @@ transition:.25s;
 z-index:998;
 }
 
-.overlay.active{
-opacity:1;
-visibility:visible;
-}
+.overlay.active{opacity:1;visibility:visible;}
 
 .drawer{
 position:fixed;
@@ -184,9 +177,7 @@ border-bottom:1px solid rgba(255,255,255,.05);
 }
 
 .drawer a.link:hover,
-.drawer a.link.active{
-color:var(--gold2);
-}
+.drawer a.link.active{color:var(--gold2);}
 
 .private-btn{
 display:block;
@@ -213,8 +204,6 @@ color:#f3dfb4;
 font-size:15px;
 word-break:break-word;
 }
-
-/* HERO */
 
 .hero{
 padding:118px 18px 40px;
@@ -266,8 +255,6 @@ line-height:1.75;
 color:var(--muted);
 max-width:760px;
 }
-
-/* SECTIONS */
 
 .section{
 max-width:1200px;
@@ -352,41 +339,18 @@ color:#8f9a95;
 margin-top:50px;
 }
 
-/* DESKTOP */
-
 @media(min-width:900px){
-
 .topbar{padding:0 34px;}
-
-.hero{
-padding:150px 34px 50px;
-grid-template-columns:280px 1fr;
-align-items:center;
-gap:50px;
-}
-
+.hero{padding:150px 34px 50px;grid-template-columns:280px 1fr;align-items:center;gap:50px;}
 .hero h1{font-size:86px;}
 .hero p{font-size:22px;}
-
 .section{padding:34px;}
-
-.card{
-padding:34px;
-}
-
+.card{padding:34px;}
 .card h2{font-size:58px;}
 .card p{font-size:21px;}
-
-.actions{
-flex-direction:row;
-max-width:520px;
-}
-
+.actions{flex-direction:row;max-width:520px;}
 .btn{flex:1;}
-
-footer{
-padding:34px 34px 70px;
-}
+footer{padding:34px 34px 70px;}
 }
 </style>
 </head>
@@ -398,23 +362,18 @@ padding:34px 34px 70px;
 <span class="brand-line"></span>
 <span>Decision Authority Research</span>
 </a>
-
 <button class="menu-btn" id="openMenu" aria-label="Open Menu">
-<span></span>
-<span></span>
-<span></span>
+<span></span><span></span><span></span>
 </button>
 </header>
 
 <div class="overlay" id="overlay"></div>
 
 <aside class="drawer" id="drawer">
-
 <div class="drawer-top">
 <div class="drawer-title">Navigation</div>
 <button class="close-btn" id="closeMenu">×</button>
 </div>
-
 <div class="group">
 <small>Primary</small>
 <a class="link" href="index.html">Home</a>
@@ -423,78 +382,55 @@ padding:34px 34px 70px;
 <a class="link active" href="about.html">About</a>
 <a class="link" href="contact.html">Contact</a>
 </div>
-
 <div class="group">
 <small>Research</small>
 <a class="link" href="research.html">Independent Research</a>
 <a class="link" href="whitepaper.html">White Paper</a>
+<a class="link" href="board-brief.html">Board Brief</a>
+<a class="link" href="insights.html">Insights</a>
 </div>
-
 <div class="group">
 <small>Reference</small>
 <a class="link" href="definitions.html">Definitions</a>
 <a class="link" href="faq.html">FAQ</a>
 <a class="link" href="goodfaith.html">Good Faith Use</a>
 </div>
-
 <a href="contact.html" class="private-btn">Private Intake</a>
 <a href="mailto:Liran@liranbarshrim.com" class="mail-btn">Liran@liranbarshrim.com</a>
-
 </aside>
 
 <section class="hero">
-
 <div class="photo">
 <img src="https://i.postimg.cc/mkCYFrxr/liran-1.jpg" alt="Liran Bar-Shrim">
 </div>
-
 <div>
 <div class="eyebrow">About</div>
-
 <h1>Liran <span>Bar&#8209;Shrim</span></h1>
-
 <p>
 Independent research focused on authority gaps, executive accountability, and the moment institutions discover too late that responsibility was assigned before authority was clear.
 </p>
-
 </div>
-
 </section>
 
 <section class="section">
-
 <div class="label">Core View</div>
-
 <div class="card">
 <h2>Most systems know how to approve. Fewer know how to stop.</h2>
-<p>
-Organizations build workflows, committees, escalation paths and controls. Yet when pressure rises, timelines compress, or consequences become personal, true stop authority is often unclear.
-</p>
-<p>
-That gap can remain invisible until it matters most.
-</p>
+<p>Organizations build workflows, committees, escalation paths and controls. Yet when pressure rises, timelines compress, or consequences become personal, true stop authority is often unclear.</p>
+<p>That gap can remain invisible until it matters most.</p>
 </div>
-
 <div class="card">
 <h2>Why Independent Matters</h2>
-<p>
-Distance can reveal what proximity normalizes. Outside internal politics and routine assumptions, structural blind spots are often easier to identify.
-</p>
+<p>Distance can reveal what proximity normalizes. Outside internal politics and routine assumptions, structural blind spots are often easier to identify.</p>
 </div>
-
 <div class="card">
 <h2>Private Inquiry</h2>
-<p>
-For boards, executives, founders, General Counsel, CROs and leaders facing live matters where authority, accountability or intervention power is unclear.
-</p>
-
+<p>For boards, executives, founders, General Counsel, CROs and leaders facing live matters where authority, accountability or intervention power is unclear.</p>
 <div class="actions">
 <a href="contact.html" class="btn btn-primary">Request Intake</a>
 <a href="dar.html" class="btn btn-secondary">Explore DAR</a>
 </div>
-
 </div>
-
 </section>
 
 <footer>
@@ -506,15 +442,12 @@ const drawer=document.getElementById("drawer");
 const overlay=document.getElementById("overlay");
 const openBtn=document.getElementById("openMenu");
 const closeBtn=document.getElementById("closeMenu");
-
 openBtn.onclick=function(){
 drawer.classList.add("active");
 overlay.classList.add("active");
 };
-
 closeBtn.onclick=closeDrawer;
 overlay.onclick=closeDrawer;
-
 function closeDrawer(){
 drawer.classList.remove("active");
 overlay.classList.remove("active");
