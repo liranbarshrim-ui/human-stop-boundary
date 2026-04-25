@@ -51,8 +51,6 @@ linear-gradient(90deg, rgba(255,255,255,.03) 1px, transparent 1px);
 background-size:40px 40px;
 }
 
-/* TOPBAR */
-
 .topbar{
 position:fixed;
 top:0;left:0;right:0;
@@ -107,8 +105,6 @@ border-radius:4px;
 width:72%;
 margin-left:auto;
 }
-
-/* DRAWER */
 
 .overlay{
 position:fixed;
@@ -212,8 +208,6 @@ font-size:15px;
 word-break:break-word;
 }
 
-/* HERO */
-
 .hero{
 padding:118px 18px 44px;
 max-width:1200px;
@@ -260,8 +254,6 @@ letter-spacing:.18em;
 font-size:13px;
 text-transform:uppercase;
 }
-
-/* SECTIONS */
 
 .section{
 max-width:1200px;
@@ -322,8 +314,6 @@ color:#cbd3cf;
 max-width:720px;
 }
 
-/* PRICE */
-
 .price-box{
 margin-top:18px;
 border-radius:24px;
@@ -348,8 +338,6 @@ line-height:1.75;
 color:var(--muted);
 }
 
-/* FOOTER */
-
 footer{
 max-width:1200px;
 margin:auto;
@@ -360,36 +348,17 @@ color:#8f9a95;
 margin-top:40px;
 }
 
-/* DESKTOP */
-
 @media(min-width:900px){
-
 .topbar{padding:0 34px;}
-
 .hero{padding:150px 34px 50px;}
-
 .hero h1{font-size:92px;}
-
 .hero p{font-size:22px;}
-
 .section{padding:34px 34px 0;}
-
-.grid{
-grid-template-columns:1fr 1fr;
-gap:22px;
-}
-
-.card{
-padding:34px;
-min-height:300px;
-}
-
+.grid{grid-template-columns:1fr 1fr;gap:22px;}
+.card{padding:34px;min-height:300px;}
 .card h3{font-size:58px;}
-
 .card p{font-size:21px;}
-
 .price-box h2{font-size:70px;}
-
 footer{padding:34px 34px 70px;}
 }
 </style>
@@ -402,7 +371,6 @@ footer{padding:34px 34px 70px;}
 <span class="brand-line"></span>
 <span>Decision Authority Research</span>
 </a>
-
 <button class="menu-btn" id="openMenu">
 <span></span><span></span><span></span>
 </button>
@@ -411,12 +379,10 @@ footer{padding:34px 34px 70px;}
 <div class="overlay" id="overlay"></div>
 
 <aside class="drawer" id="drawer">
-
 <div class="drawer-top">
 <div class="drawer-title">Navigation</div>
 <button class="close-btn" id="closeMenu">×</button>
 </div>
-
 <div class="group">
 <small>Primary</small>
 <a class="link" href="index.html">Home</a>
@@ -425,78 +391,63 @@ footer{padding:34px 34px 70px;}
 <a class="link" href="about.html">About</a>
 <a class="link" href="contact.html">Contact</a>
 </div>
-
 <div class="group">
 <small>Research</small>
 <a class="link" href="research.html">Independent Research</a>
 <a class="link" href="whitepaper.html">White Paper</a>
+<a class="link" href="board-brief.html">Board Brief</a>
+<a class="link" href="insights.html">Insights</a>
 </div>
-
 <div class="group">
 <small>Reference</small>
 <a class="link" href="definitions.html">Definitions</a>
 <a class="link" href="faq.html">FAQ</a>
 <a class="link" href="goodfaith.html">Good Faith Use</a>
 </div>
-
 <a href="contact.html" class="private-btn">Private Intake</a>
 <a href="mailto:Liran@liranbarshrim.com" class="mail-btn">Liran@liranbarshrim.com</a>
-
 </aside>
 
 <section class="hero">
 <div class="eyebrow">Decision Authority Record</div>
-
 <h1>
 Approval is common.<br>
 <span>Real stop power is rare.</span>
 </h1>
-
 <p>
 DAR defines one named human authority with explicit power to pause or stop a consequential decision before exposure becomes irreversible.
 </p>
-
 <a href="contact.html" class="hero-cta">Private Inquiry</a>
 </section>
 
 <section class="section">
-
 <div class="label">The Framework</div>
-
 <div class="grid">
-
 <div class="card">
 <div class="num">01</div>
 <h3>Map Reality</h3>
 <p>Trace how one consequential decision actually moves through the organization — not how policy says it moves.</p>
 </div>
-
 <div class="card">
 <div class="num">02</div>
 <h3>Name Authority</h3>
 <p>Define one accountable human authority with real stop power. Not a committee. Not a mailbox.</p>
 </div>
-
 <div class="card">
 <div class="num">03</div>
 <h3>Set Threshold</h3>
 <p>Clarify what uncertainty, escalation or irreversibility requires pause and review.</p>
 </div>
-
 <div class="card">
 <div class="num">04</div>
 <h3>Create Record</h3>
 <p>Produce a formal authority record before the critical moment arrives.</p>
 </div>
-
 </div>
-
 </section>
 
 <section class="section">
-
 <div class="label">Engagement</div>
-
 <div class="price-box">
 <h2>From €12,000</h2>
 <p>
@@ -505,7 +456,6 @@ One decision. One named authority. One DAR record.<br><br>
 Typical timeline: 7–10 business days. Confidential by design.
 </p>
 </div>
-
 </section>
 
 <footer>
@@ -515,15 +465,12 @@ Typical timeline: 7–10 business days. Confidential by design.
 <script>
 const drawer=document.getElementById("drawer");
 const overlay=document.getElementById("overlay");
-
 document.getElementById("openMenu").onclick=()=>{
 drawer.classList.add("active");
 overlay.classList.add("active");
 };
-
 document.getElementById("closeMenu").onclick=closeDrawer;
 overlay.onclick=closeDrawer;
-
 function closeDrawer(){
 drawer.classList.remove("active");
 overlay.classList.remove("active");
