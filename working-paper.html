@@ -1,0 +1,740 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Named Stop Authority — Liran Bar-Shrim</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&family=IBM+Plex+Mono:wght@300;400;500&family=IBM+Plex+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #090909;
+    --surface: #111111;
+    --accent: #c8a96e;
+    --danger: #c0392b;
+    --safe: #3d9970;
+    --text: #e6e0d4;
+    --muted: #7a7570;
+    --muted2: #52504c;
+    --border: #1e1e1e;
+    --border2: #2a2a2a;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'IBM Plex Sans', sans-serif;
+    font-weight: 300;
+    line-height: 1.8;
+    font-size: 17px;
+    position: relative;
+    overflow-x: hidden;
+  }
+
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='1'/%3E%3C/svg%3E");
+    opacity: 0.025;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .container {
+    max-width: 780px;
+    margin: 0 auto;
+    padding: 0 32px;
+    position: relative;
+    z-index: 1;
+  }
+
+  /* Header */
+  header {
+    padding: 80px 0 60px;
+    border-bottom: 1px solid var(--border2);
+    margin-bottom: 64px;
+  }
+
+  .journal-tag {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 32px;
+    display: block;
+  }
+
+  h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(28px, 5vw, 44px);
+    font-weight: 700;
+    line-height: 1.15;
+    color: var(--text);
+    margin-bottom: 20px;
+    letter-spacing: -0.01em;
+  }
+
+  h1 em {
+    font-style: italic;
+    color: var(--accent);
+  }
+
+  .subtitle {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 13px;
+    color: var(--muted);
+    margin-bottom: 48px;
+    font-weight: 300;
+    letter-spacing: 0.02em;
+  }
+
+  .author-block {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+
+  .author-name {
+    font-family: 'Playfair Display', serif;
+    font-size: 16px;
+    color: var(--text);
+    font-weight: 400;
+  }
+
+  .author-meta {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px;
+    color: var(--muted);
+    letter-spacing: 0.05em;
+  }
+
+  .divider-gold {
+    width: 48px;
+    height: 2px;
+    background: var(--accent);
+    margin: 48px 0;
+  }
+
+  /* Abstract */
+  .abstract {
+    background: var(--surface);
+    border-left: 3px solid var(--accent);
+    padding: 32px 36px;
+    margin-bottom: 64px;
+  }
+
+  .abstract-label {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 16px;
+    display: block;
+  }
+
+  .abstract p {
+    font-size: 15px;
+    color: #c8c2b8;
+    line-height: 1.9;
+    font-style: italic;
+  }
+
+  /* Keywords */
+  .keywords {
+    margin-bottom: 64px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    align-items: center;
+  }
+
+  .kw-label {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-right: 8px;
+  }
+
+  .kw {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--muted2);
+    border: 1px solid var(--border2);
+    padding: 4px 10px;
+  }
+
+  /* Sections */
+  section {
+    margin-bottom: 72px;
+  }
+
+  .section-number {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 12px;
+    display: block;
+  }
+
+  h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(22px, 3.5vw, 30px);
+    font-weight: 600;
+    color: var(--text);
+    margin-bottom: 28px;
+    line-height: 1.25;
+    letter-spacing: -0.01em;
+  }
+
+  h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 19px;
+    font-weight: 400;
+    font-style: italic;
+    color: #c4beb4;
+    margin: 40px 0 16px;
+  }
+
+  p {
+    margin-bottom: 20px;
+    color: #ccc6bc;
+    font-weight: 300;
+  }
+
+  p:last-child { margin-bottom: 0; }
+
+  /* Pull quote */
+  .pull-quote {
+    border-left: 3px solid var(--accent);
+    padding: 24px 32px;
+    margin: 40px 0;
+    background: rgba(200, 169, 110, 0.04);
+  }
+
+  .pull-quote p {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(17px, 2.5vw, 21px);
+    font-style: italic;
+    color: var(--text);
+    line-height: 1.5;
+    margin: 0;
+  }
+
+  /* Principle box */
+  .principle-box {
+    border: 1px solid var(--border2);
+    background: var(--surface);
+    padding: 28px 32px;
+    margin: 36px 0;
+  }
+
+  .principle-box .p-label {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 14px;
+    display: block;
+  }
+
+  .principle-box p {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 13px;
+    color: var(--text);
+    line-height: 1.8;
+    margin: 0;
+    font-weight: 400;
+  }
+
+  /* Danger note */
+  .danger-note {
+    border-left: 3px solid var(--danger);
+    padding: 20px 28px;
+    margin: 32px 0;
+    background: rgba(192, 57, 43, 0.04);
+  }
+
+  .danger-note p {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 12px;
+    color: #d4796f;
+    margin: 0;
+    letter-spacing: 0.02em;
+  }
+
+  /* Numbered list */
+  ol.body-list {
+    list-style: none;
+    counter-reset: item;
+    margin: 24px 0 28px;
+  }
+
+  ol.body-list li {
+    counter-increment: item;
+    display: flex;
+    gap: 16px;
+    margin-bottom: 16px;
+    color: #ccc6bc;
+    font-weight: 300;
+    line-height: 1.7;
+  }
+
+  ol.body-list li::before {
+    content: counter(item, decimal-leading-zero);
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10px;
+    color: var(--accent);
+    min-width: 28px;
+    padding-top: 5px;
+    letter-spacing: 0.05em;
+  }
+
+  /* Conclusion */
+  .conclusion-block {
+    border-top: 1px solid var(--border2);
+    border-bottom: 1px solid var(--border2);
+    padding: 48px 0;
+    margin: 64px 0;
+  }
+
+  /* Footer */
+  footer {
+    padding: 48px 0 80px;
+    border-top: 1px solid var(--border);
+  }
+
+  .footer-inner {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    flex-wrap: wrap;
+    gap: 24px;
+  }
+
+  .footer-brand {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px;
+    color: var(--muted2);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+
+  .footer-brand span {
+    color: var(--accent);
+  }
+
+  .footer-note {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10px;
+    color: var(--muted2);
+    letter-spacing: 0.05em;
+    text-align: right;
+  }
+
+  strong {
+    color: var(--text);
+    font-weight: 500;
+  }
+
+  em.accent {
+    color: var(--accent);
+    font-style: normal;
+  }
+
+  @media (max-width: 600px) {
+    .container { padding: 0 20px; }
+    header { padding: 48px 0 40px; }
+    .abstract { padding: 24px 20px; }
+    .pull-quote { padding: 20px 20px; }
+    .principle-box { padding: 20px 20px; }
+    .footer-inner { flex-direction: column; align-items: flex-start; }
+    .footer-note { text-align: left; }
+  }
+</style>
+</head>
+<body>
+
+<div class="container">
+
+  <header>
+    <span class="journal-tag">Decision Authority Research — Working Paper</span>
+
+    <h1>Named Stop Authority:<br><em>Why Diffused Accountability<br>Is No Longer a Safe Design</em></h1>
+
+    <p class="subtitle">Rethinking Organizational Governance in the Age of Autonomous Systems</p>
+
+    <div class="author-block">
+      <span class="author-name">Liran Bar-Shrim</span>
+      <span class="author-meta">Founder, Decision Authority Research / Matrix Audit</span>
+      <span class="author-meta">matrix-audit.com</span>
+    </div>
+  </header>
+
+  <!-- Abstract -->
+  <div class="abstract">
+    <span class="abstract-label">Abstract</span>
+    <p>
+      Organizations have long distributed accountability across roles, committees, and processes as a rational response to complexity. This paper argues that such distribution, once a defensible design choice, has become structurally dangerous in environments where decisions execute faster than governance can respond. We introduce the concept of Named Stop Authority as a necessary condition for meaningful organizational control: the requirement that a specific individual, identified in advance, holds exclusive and protected power to halt an irreversible decision. We examine the conditions under which this authority is genuine versus ceremonial, the structural features that strip it of force, and the accountability gap that emerges when continuation is treated as the default state. The argument is not normative. It is diagnostic. Most organizations do not have a stop. They have the appearance of one.
+    </p>
+  </div>
+
+  <!-- Keywords -->
+  <div class="keywords">
+    <span class="kw-label">Keywords</span>
+    <span class="kw">Named Stop Authority</span>
+    <span class="kw">Organizational Accountability</span>
+    <span class="kw">AI Governance</span>
+    <span class="kw">Irreversibility</span>
+    <span class="kw">Decision Authority</span>
+    <span class="kw">DAR</span>
+  </div>
+
+  <!-- Section 1 -->
+  <section>
+    <span class="section-number">01 — Introduction</span>
+    <h2>The Accountability Gap Nobody Named</h2>
+
+    <p>
+      Ask any senior executive who in their organization can stop a major decision before it becomes irreversible. The answer will typically involve a committee, a process, a role, or a regulation. Rarely will it involve a name.
+    </p>
+
+    <p>
+      This is not an oversight. It is architecture.
+    </p>
+
+    <p>
+      For decades, organizations have deliberately distributed accountability across layers of governance. The logic was sound: complex decisions require collective judgment, and no single individual should carry the full weight of consequential choices. Boards, committees, approval chains, and compliance functions emerged as rational responses to scale and uncertainty.
+    </p>
+
+    <div class="pull-quote">
+      <p>"The gap between those who hold information and those with named authority to stop an irreversible decision is not a structural bug. It is an intentional feature. Organizations diffuse responsibility to avoid the burden of personal accountability."</p>
+    </div>
+
+    <p>
+      But the environment in which this architecture was designed has fundamentally changed. The speed at which decisions now execute, particularly those involving autonomous systems and artificial intelligence, has outpaced the speed at which traditional governance can respond. When a system can execute before a committee convenes, the committee is not a control. It is a record.
+    </p>
+
+    <p>
+      This paper introduces the concept of <strong>Named Stop Authority</strong> as the minimal governance unit required to make organizational control real rather than nominal. It examines what makes such authority genuine, what strips it of force, and why the absence of a named stop is not merely a governance gap but a deliberate organizational choice with measurable consequences.
+    </p>
+  </section>
+
+  <!-- Section 2 -->
+  <section>
+    <span class="section-number">02 — The Design That Made Sense</span>
+    <h2>Distributed Accountability as Rational Architecture</h2>
+
+    <p>
+      Distributed responsibility was not a governance failure. It was an optimization. In environments where decisions unfolded over days or weeks, where human review could occur at multiple points, and where course correction remained available after initial execution, diffusing accountability across roles and committees served several legitimate functions.
+    </p>
+
+    <h3>What distribution accomplished</h3>
+
+    <p>
+      It reduced the concentration of power in any single decision-maker, creating checks against individual error or bias. It leveraged collective expertise across functions with different risk perspectives. It created legal and regulatory defensibility by demonstrating process. And it distributed the psychological burden of consequential choices across multiple shoulders.
+    </p>
+
+    <p>
+      These were not trivial benefits. In the organizational environments of the twentieth century, where the rhythm of decisions allowed for deliberation and where the consequences of most choices could be observed and corrected before becoming permanent, this architecture performed adequately. The excuses it generated when things went wrong, appeals to scale, to complexity, to culture, to the difficulty of anticipating outcomes, were often plausible.
+    </p>
+
+    <div class="principle-box">
+      <span class="p-label">Historical Design Logic</span>
+      <p>Structure defines when not to start.<br>Authority defines when to stop anyway.<br>Distributed governance assumed enough time for both to function.</p>
+    </div>
+
+    <p>
+      The critical assumption underlying this design was temporal. Distributed accountability works when there is enough time between decision and consequence for governance layers to engage. Remove that time, and distribution becomes diffusion. Diffusion in conditions of speed becomes concealment.
+    </p>
+  </section>
+
+  <!-- Section 3 -->
+  <section>
+    <span class="section-number">03 — The Environment Changed</span>
+    <h2>When Speed Breaks the Architecture</h2>
+
+    <p>
+      Autonomous systems do not wait for committees. Machine learning pipelines execute at clock speed. Algorithmic trading, automated compliance decisions, AI-driven credit assessments, and agentic systems operating across organizational workflows all share a common property: they can produce irreversible outcomes before any human review process has formally begun.
+    </p>
+
+    <p>
+      This is not a failure of those systems. It is their function. Speed is the value proposition. The problem is that the governance architecture layered over them was not rebuilt to match.
+    </p>
+
+    <div class="pull-quote">
+      <p>"Diffused accountability was a defensible design when decisions unfolded slowly. When the irreversible arrives faster than the committee convenes, diffusion stops being caution and becomes cover."</p>
+    </div>
+
+    <h3>The asymmetry of execution and governance</h3>
+
+    <p>
+      Consider the structure of a typical high-stakes automated decision. A system identifies a condition, evaluates against trained parameters, and executes an action. The entire sequence may complete in milliseconds. The governance structure surrounding it, the human-in-the-loop requirement, the approval workflow, the escalation matrix, may require hours or days to engage.
+    </p>
+
+    <p>
+      In this asymmetry lies the accountability gap. No individual was watching at the moment of execution. No named person carried the authority to halt the sequence. The process was followed. The system behaved as designed. And the outcome, if adverse, belongs to nobody in particular.
+    </p>
+
+    <div class="danger-note">
+      <p>STRUCTURAL CONSEQUENCE: When continuation is faster than governance, every existing control mechanism becomes retrospective. It can document what happened. It cannot stop what is happening.</p>
+    </div>
+
+    <p>
+      The language organizations use to describe this condition is revealing. "The system flagged it." "The process was followed." "No single person made that call." These formulations are not evasions in the ordinary sense. They are accurate descriptions of how accountability was architecturally distributed out of existence.
+    </p>
+  </section>
+
+  <!-- Section 4 -->
+  <section>
+    <span class="section-number">04 — The Core Concept</span>
+    <h2>What Named Stop Authority Actually Means</h2>
+
+    <p>
+      Named Stop Authority is not a title. It is not a role in an organizational chart. It is not a checkbox in a compliance framework. It is a condition: the pre-identified assignment of a specific individual who holds protected, documented, and enforceable power to halt a defined category of irreversible decision.
+    </p>
+
+    <p>
+      The word "named" carries the full weight of this definition. Not a function. Not a committee. Not "whoever holds the CRO position at the relevant moment." A person. With a name. Assigned before the decision process begins.
+    </p>
+
+    <h3>The conditions of genuine authority</h3>
+
+    <p>
+      For stop authority to be real rather than ceremonial, six structural conditions must hold simultaneously.
+    </p>
+
+    <ol class="body-list">
+      <li><strong>Written formal appointment.</strong> The board or executive leadership has documented in writing that this individual holds stop authority for this category of decision. A verbal understanding is not authority.</li>
+      <li><strong>Political independence.</strong> The individual cannot be immediately removed for exercising the authority. If termination is a credible and costless response to a stop invocation, the authority does not exist. It is performance.</li>
+      <li><strong>Direct access.</strong> The individual has unmediated access to the board and senior leadership. A stop that must pass through layers before reaching decision-makers is a stop that can be absorbed.</li>
+      <li><strong>Defined triggers.</strong> The conditions under which stop authority may be invoked are specified in advance: irreversible execution under material uncertainty, safety threshold breach, legal exposure, or autonomous action without human release.</li>
+      <li><strong>Mandatory response obligation.</strong> When a stop is invoked, governance is required to respond. Not to agree. To respond. Silence is not a valid answer to a named stop invocation.</li>
+      <li><strong>Consequences for circumvention.</strong> If the stop is bypassed, there are real and documented consequences. Without this, the stop is advisory.</li>
+    </ol>
+
+    <p>
+      The absence of any single condition degrades the authority. The absence of several renders it symbolic.
+    </p>
+
+    <div class="principle-box">
+      <span class="p-label">Core Principle — Named Stop Authority</span>
+      <p>Stop is the default state. Continuation does not exist until explicitly released by a named individual bound to refusal. No release, no continuation. If continuation is available without that release, there is no stop.</p>
+    </div>
+  </section>
+
+  <!-- Section 5 -->
+  <section>
+    <span class="section-number">05 — Common Misidentifications</span>
+    <h2>What Named Stop Authority Is Not</h2>
+
+    <p>
+      The concept is frequently misread as one of several adjacent governance instruments. Each misidentification matters because it produces a different and insufficient response.
+    </p>
+
+    <h3>It is not day-to-day governance</h3>
+
+    <p>
+      RACI matrices, approval workflows, human-in-the-loop requirements, compliance sign-offs, and risk committee reviews are ordinary governance instruments. They function as preventive layers within normal operations. Named Stop Authority is not a layer within that system. It is the mechanism that activates when the system has failed to resolve, or has itself produced, a condition of irreversible risk under material uncertainty.
+    </p>
+
+    <p>
+      This distinction matters practically. Organizations often point to their existing governance layers as evidence that a stop mechanism exists. It does not follow. A process that failed to prevent the condition cannot simultaneously be the mechanism for stopping it.
+    </p>
+
+    <h3>It is not a veto over ordinary decisions</h3>
+
+    <p>
+      Named Stop Authority is a last-resort mechanism. It engages at the boundary between reversible and irreversible, between ordinary uncertainty and material risk of unrecoverable harm. Its rarity is a feature, not a limitation. An authority invoked weekly has been misdesigned. An authority that has never been invoked may simply mean the system has been functioning correctly.
+    </p>
+
+    <div class="pull-quote">
+      <p>"The stop authority does not replace governance. It begins where governance ends. Its power is structural. Its presence changes behavior before it is ever exercised."</p>
+    </div>
+
+    <h3>It is not the same as the release authority</h3>
+
+    <p>
+      This is among the most consequential distinctions in the entire framework. The individual who invokes a stop and the individual who releases it must not be the same person. If the person who stops can also release unilaterally, the stop is a temporary suspension, not a governance event. The separation of stop authority from release authority is what transforms an individual judgment into an organizational accountability structure.
+    </p>
+
+    <p>
+      Who holds the stop. Who holds the release. Who escalates if neither acts. All three must be named. All three must be named before the decision process begins.
+    </p>
+  </section>
+
+  <!-- Section 6 -->
+  <section>
+    <span class="section-number">06 — The Intuition Problem</span>
+    <h2>When the Signal Precedes the Evidence</h2>
+
+    <p>
+      In high-complexity environments, experienced practitioners frequently detect the preconditions of failure before quantitative indicators confirm them. A senior nurse senses that a patient's condition is deteriorating before the vital signs cascade. A risk officer feels the shape of a position before the model assigns probability to the tail. An engineer recognizes the signature of a system under stress before the alert fires.
+    </p>
+
+    <p>
+      This intuition is not noise. In domains with sufficient feedback and accumulated expertise, pattern recognition operates ahead of explicit analysis. The question is not whether to honor it, but what governance structure allows it to function without becoming a mechanism for arbitrary interference.
+    </p>
+
+    <h3>Two levels, two authorities</h3>
+
+    <p>
+      The appropriate structure distinguishes between a pause invocation and a stop invocation. A pause is a short, time-bounded hold to gather evidence and validate the intuitive signal. A stop is a formal halt pending a governance response.
+    </p>
+
+    <p>
+      Both require a named individual. But the critical formulation is this: the trigger may be ambiguous. The authority may not be. A system that allows anyone who experiences unease to invoke a hold is not a governance structure. It is chaos with procedural language around it. The question is always who, specifically, carries the authority to translate signal into action.
+    </p>
+
+    <div class="principle-box">
+      <span class="p-label">Precision Rule</span>
+      <p>Intuition may justify a pause.<br>Evidence must justify a stop.<br>In both cases: the authority is named before the signal arrives.</p>
+    </div>
+  </section>
+
+  <!-- Section 7 -->
+  <section>
+    <span class="section-number">07 — The Accountability Structure</span>
+    <h2>Who Stops, Who Holds, Who Releases</h2>
+
+    <p>
+      The full accountability structure of a Named Stop Authority event requires four identified individuals or roles, each with a distinct and non-overlapping function.
+    </p>
+
+    <ol class="body-list">
+      <li><strong>The Stop Authority.</strong> Named in advance. Empowered to invoke a halt when defined trigger conditions are met. Protected from immediate retaliation for good-faith invocation. Cannot be the release authority.</li>
+      <li><strong>The Hold Authority.</strong> Responsible for maintaining the stop while the governance response is organized. Accountable for the duration of the hold and for preventing circumvention. Distinct from both the stop and release authority.</li>
+      <li><strong>The Release Authority.</strong> Named in advance. Empowered to lift the stop following a documented governance review. Release requires documented rationale. Cannot be the individual who invoked the stop.</li>
+      <li><strong>The Escalation Path.</strong> If the stop is invoked and neither the release authority nor the governance body responds within a defined period, there is a named escalation recipient at board level. Silence after a stop invocation is not a governance outcome. It is a governance failure.</li>
+    </ol>
+
+    <p>
+      The logic is structurally identical to critical-system design in aviation, nuclear operations, and surgical environments. In each domain, the conditions for continuation are more demanding than the conditions for pause. Continuation is a privilege that must be explicitly granted. Absence of objection is not consent.
+    </p>
+
+    <div class="pull-quote">
+      <p>"A stop without a named release authority is not governance. It is a delay with no owner. Someone must hold it. Someone must end it. Both names must appear in the document before the decision begins."</p>
+    </div>
+  </section>
+
+  <!-- Section 8 -->
+  <section>
+    <span class="section-number">08 — Why Organizations Resist</span>
+    <h2>The Political Economy of Named Accountability</h2>
+
+    <p>
+      The primary resistance to Named Stop Authority is not intellectual. Organizations do not typically argue that the concept is wrong. They argue that it is impractical, that it concentrates too much power, that it will paralyze operations, that culture must change first.
+    </p>
+
+    <p>
+      These arguments are familiar. They are structurally identical to the arguments made against every accountability mechanism that assigns personal rather than collective responsibility. They should be read not as objections but as indicators of precisely the condition Named Stop Authority is designed to address.
+    </p>
+
+    <h3>The political cost of a name</h3>
+
+    <p>
+      When accountability is distributed across a committee, no individual is exposed. When a name is assigned, someone is. The organizational preference for distributed accountability is not primarily about better decision-making. It is about limiting the personal exposure of individuals within the organization.
+    </p>
+
+    <p>
+      This is the deeper truth that Named Stop Authority surfaces. The design that organizations use is not optimized for control. It is optimized for defensibility. In a post-incident review, "the process was followed" is a complete answer. "I was the named stop authority and I did not stop it" is not.
+    </p>
+
+    <div class="danger-note">
+      <p>DIAGNOSTIC SIGNAL: When an organization claims it has a stop mechanism but cannot produce a name, it does not have a stop mechanism. It has a stop narrative.</p>
+    </div>
+
+    <p>
+      The excuses organizations offer for the absence of named accountability, scale, complexity, culture, speed of change, are not explanations. They are the conditions under which named accountability is most necessary. The harder it is to assign a name, the more important it is to assign one.
+    </p>
+  </section>
+
+  <!-- Section 9 -->
+  <section>
+    <span class="section-number">09 — Implications for AI Governance</span>
+    <h2>The Autonomous System Problem</h2>
+
+    <p>
+      Autonomous systems present Named Stop Authority with its most demanding test case. An agentic AI system operating across organizational workflows may make thousands of micro-decisions per hour, some of which, individually or in combination, produce outcomes that are irreversible at scale. The governance question is not whether a human was involved in the loop. The question is whether a named individual holds the authority to halt the system before a specific category of irreversible outcome occurs.
+    </p>
+
+    <p>
+      Existing AI governance frameworks address this question imprecisely. They require human oversight, human-in-the-loop mechanisms, and impact assessments. They do not, as a general rule, require that a specific individual be named in advance as the stop authority for a defined category of AI-driven decision.
+    </p>
+
+    <h3>The regulatory gap</h3>
+
+    <p>
+      Regulation asks what happened. Documentation describes what should happen. Neither asks the question that Named Stop Authority poses: who was supposed to stop it before it happened? Not a team. Not a function. A person. Named. Accountable. Committed in advance.
+    </p>
+
+    <p>
+      This gap will close. The pace at which autonomous systems are deployed into consequential organizational decisions will eventually produce a governance failure of sufficient visibility to force specificity. The organizations that establish named stop structures before that moment will be structurally differentiated from those that did not.
+    </p>
+
+    <div class="principle-box">
+      <span class="p-label">DAR Core Question</span>
+      <p>Who, by name, can stop the system before execution becomes irreversible?<br><br>Not a role. Not a committee. Not a policy. A person. Named. Before the decision begins.</p>
+    </div>
+  </section>
+
+  <!-- Conclusion -->
+  <div class="conclusion-block">
+    <section>
+      <span class="section-number">10 — Conclusion</span>
+      <h2>The Brake That Must Exist Before It Is Needed</h2>
+
+      <p>
+        Named Stop Authority is not a proposal for more governance. Most organizations already have too many governance layers and too little accountability. It is a proposal for different governance: governance that assigns a name rather than a process to the question of who stops the irreversible.
+      </p>
+
+      <p>
+        The argument in this paper is diagnostic. We are not claiming that organizations intend to evade accountability. We are claiming that the architectural choices they have made produce evasion as a structural outcome, and that this outcome, once defensible under conditions of slow decisions and observable consequences, is no longer defensible in environments where autonomous systems execute faster than committees convene.
+      </p>
+
+      <div class="pull-quote">
+        <p>"The trigger may be ambiguous. The authority may not be. The brake must exist, and its owner must be named, before the moment it is needed."</p>
+      </div>
+
+      <p>
+        The measure of whether an organization has a real stop is simple. Ask who, by name, can halt the most consequential automated decision it makes today. If the answer is a process, a committee, or a role without a name attached to it, the organization does not have a stop. It has the appearance of one.
+      </p>
+
+      <p>
+        That distinction is no longer academic. It is operational. And in the age of autonomous systems, it is the difference between governance that holds and governance that merely documents.
+      </p>
+    </section>
+  </div>
+
+  <!-- Footer -->
+  <footer>
+    <div class="footer-inner">
+      <div class="footer-brand">
+        <span>Decision Authority Research</span> — Matrix Audit<br>
+        matrix-audit.com
+      </div>
+      <div class="footer-note">
+        Working Paper<br>
+        Liran Bar-Shrim, 2026<br>
+        Named Stop Authority Framework
+      </div>
+    </div>
+  </footer>
+
+</div>
+
+</body>
+</html>
