@@ -14,9 +14,6 @@
 <style>
 :root{
 --bg:#050606;
---bg2:#081011;
---card:#0a1414;
---green:#0e2d23;
 --gold:#c8a15b;
 --gold2:#efd8a0;
 --text:#edf2ef;
@@ -41,10 +38,8 @@ a{text-decoration:none;color:inherit;}
 
 body:before{
 content:"";
-position:fixed;
-inset:0;
-pointer-events:none;
-opacity:.18;
+position:fixed;inset:0;
+pointer-events:none;opacity:.18;
 background-image:
 linear-gradient(rgba(255,255,255,.03) 1px, transparent 1px),
 linear-gradient(90deg, rgba(255,255,255,.03) 1px, transparent 1px);
@@ -52,272 +47,172 @@ background-size:40px 40px;
 }
 
 .topbar{
-position:fixed;
-top:0;left:0;right:0;
-height:74px;
-display:flex;
-align-items:center;
-justify-content:space-between;
-padding:0 18px;
-z-index:1000;
-background:rgba(4,7,8,.82);
-backdrop-filter:blur(14px);
+position:fixed;top:0;left:0;right:0;height:74px;
+display:flex;align-items:center;justify-content:space-between;
+padding:0 18px;z-index:1000;
+background:rgba(4,7,8,.82);backdrop-filter:blur(14px);
 border-bottom:1px solid var(--line);
 }
 
 .brand{
-display:flex;
-align-items:center;
-gap:12px;
-font-family:"IBM Plex Mono",monospace;
-font-size:10px;
-letter-spacing:.28em;
-text-transform:uppercase;
-white-space:nowrap;
+display:flex;align-items:center;gap:12px;
+font-family:"IBM Plex Mono",monospace;font-size:10px;
+letter-spacing:.28em;text-transform:uppercase;white-space:nowrap;
 }
 
-.brand-line{
-width:34px;
-height:2px;
-border-radius:4px;
-background:var(--gold);
-}
+.brand-line{width:34px;height:2px;border-radius:4px;background:var(--gold);}
 
 .menu-btn{
-width:42px;
-height:42px;
-border:none;
-background:none;
-cursor:pointer;
-display:flex;
-flex-direction:column;
-justify-content:center;
-gap:6px;
+width:42px;height:42px;border:none;background:none;cursor:pointer;
+display:flex;flex-direction:column;justify-content:center;gap:6px;
 }
 
-.menu-btn span{
-height:2px;
-background:#fff;
-border-radius:4px;
-}
-
-.menu-btn span:nth-child(2){
-width:72%;
-margin-left:auto;
-}
+.menu-btn span{height:2px;background:#fff;border-radius:4px;}
+.menu-btn span:nth-child(2){width:72%;margin-left:auto;}
 
 .overlay{
-position:fixed;
-inset:0;
-background:rgba(0,0,0,.55);
-opacity:0;
-visibility:hidden;
-transition:.25s;
-z-index:998;
+position:fixed;inset:0;background:rgba(0,0,0,.55);
+opacity:0;visibility:hidden;transition:.25s;z-index:998;
 }
-
-.overlay.active{
-opacity:1;
-visibility:visible;
-}
+.overlay.active{opacity:1;visibility:visible;}
 
 .drawer{
-position:fixed;
-top:0;
-right:-100%;
-width:86%;
-max-width:420px;
-height:100vh;
-overflow-y:auto;
-z-index:999;
-padding:24px;
+position:fixed;top:0;right:-100%;width:86%;max-width:420px;
+height:100vh;overflow-y:auto;z-index:999;padding:24px;
 transition:.3s ease;
-background:
-linear-gradient(180deg,#071010,#071313 70%,#050707);
+background:linear-gradient(180deg,#071010,#071313 70%,#050707);
 border-left:1px solid rgba(255,255,255,.08);
 }
-
 .drawer.active{right:0;}
 
-.drawer-top{
-display:flex;
-justify-content:space-between;
-align-items:center;
-margin-bottom:18px;
-}
+.drawer-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:18px;}
 
 .drawer-title{
-font-family:"IBM Plex Mono",monospace;
-font-size:11px;
-letter-spacing:.28em;
-text-transform:uppercase;
-color:var(--gold2);
+font-family:"IBM Plex Mono",monospace;font-size:11px;
+letter-spacing:.28em;text-transform:uppercase;color:var(--gold2);
 }
 
-.close-btn{
-font-size:38px;
-line-height:1;
-background:none;
-border:none;
-color:#fff;
-cursor:pointer;
-}
+.close-btn{font-size:38px;line-height:1;background:none;border:none;color:#fff;cursor:pointer;}
 
 .group{margin-top:18px;}
 
 .group small{
-display:block;
-font-family:"IBM Plex Mono",monospace;
-font-size:10px;
-letter-spacing:.26em;
-text-transform:uppercase;
-color:var(--gold);
-margin-bottom:10px;
+display:block;font-family:"IBM Plex Mono",monospace;font-size:10px;
+letter-spacing:.26em;text-transform:uppercase;color:var(--gold);margin-bottom:10px;
 }
 
-.drawer a.link{
-display:block;
-padding:14px 0;
-font-size:20px;
-border-bottom:1px solid rgba(255,255,255,.05);
-}
+.drawer a.link{display:block;padding:14px 0;font-size:20px;border-bottom:1px solid rgba(255,255,255,.05);}
 
 .private-btn{
-display:block;
-margin-top:22px;
-padding:16px;
-border-radius:16px;
-text-align:center;
-font-weight:800;
-letter-spacing:.18em;
-font-size:13px;
-text-transform:uppercase;
-background:linear-gradient(135deg,#d9bb79,#b88e45);
-color:#111;
+display:block;margin-top:22px;padding:16px;border-radius:16px;
+text-align:center;font-weight:800;letter-spacing:.18em;font-size:13px;
+text-transform:uppercase;background:linear-gradient(135deg,#d9bb79,#b88e45);color:#111;
 }
 
 .mail-btn{
-display:block;
-margin-top:14px;
-padding:14px;
-text-align:center;
-border-radius:16px;
-border:1px solid rgba(255,255,255,.08);
-color:#f3dfb4;
-font-size:15px;
-word-break:break-word;
+display:block;margin-top:14px;padding:14px;text-align:center;border-radius:16px;
+border:1px solid rgba(255,255,255,.08);color:#f3dfb4;font-size:15px;word-break:break-word;
 }
 
-.hero{
-padding:118px 18px 44px;
-max-width:1200px;
-margin:auto;
-}
+.hero{padding:118px 18px 44px;max-width:1200px;margin:auto;}
 
 .eyebrow{
-font-family:"IBM Plex Mono",monospace;
-font-size:10px;
-letter-spacing:.3em;
-text-transform:uppercase;
-color:var(--gold2);
-margin-bottom:18px;
+font-family:"IBM Plex Mono",monospace;font-size:10px;letter-spacing:.3em;
+text-transform:uppercase;color:var(--gold2);margin-bottom:18px;
 }
 
 .hero h1{
-font-family:"Cormorant Garamond",serif;
-font-size:56px;
-line-height:.92;
-font-weight:600;
-letter-spacing:-.03em;
-max-width:900px;
+font-family:"Cormorant Garamond",serif;font-size:56px;line-height:.92;
+font-weight:600;letter-spacing:-.03em;max-width:900px;
 }
 
 .hero h1 span{color:var(--gold2);}
 
-.hero p{
-margin-top:18px;
-font-size:18px;
-line-height:1.7;
-color:var(--muted);
-max-width:760px;
-}
+.hero p{margin-top:18px;font-size:18px;line-height:1.7;color:var(--muted);max-width:760px;}
 
 .hero-cta{
-margin-top:26px;
-display:inline-block;
-padding:16px 24px;
-border-radius:16px;
-background:linear-gradient(135deg,#d9bb79,#b88e45);
-color:#111;
-font-weight:800;
-letter-spacing:.18em;
-font-size:13px;
-text-transform:uppercase;
+margin-top:26px;display:inline-block;padding:16px 24px;border-radius:16px;
+background:linear-gradient(135deg,#d9bb79,#b88e45);color:#111;
+font-weight:800;letter-spacing:.18em;font-size:13px;text-transform:uppercase;
 }
 
-.section{
-max-width:1200px;
-margin:auto;
-padding:18px 18px 0;
-}
+.section{max-width:1200px;margin:auto;padding:18px 18px 0;}
 
 .label{
-font-family:"IBM Plex Mono",monospace;
-font-size:10px;
-letter-spacing:.28em;
-text-transform:uppercase;
-color:var(--gold);
-margin-bottom:16px;
+font-family:"IBM Plex Mono",monospace;font-size:10px;letter-spacing:.28em;
+text-transform:uppercase;color:var(--gold);margin-bottom:16px;
 }
 
-.grid{
-display:grid;
-grid-template-columns:1fr;
-gap:16px;
-margin-top:10px;
-}
+.grid{display:grid;grid-template-columns:1fr;gap:16px;margin-top:10px;}
 
 .card{
-position:relative;
-overflow:hidden;
-border-radius:24px;
-padding:24px;
+position:relative;overflow:hidden;border-radius:24px;padding:24px;
 background:
 radial-gradient(circle at 85% 18%, rgba(200,161,91,.08), transparent 24%),
 radial-gradient(circle at 15% 90%, rgba(14,45,35,.45), transparent 28%),
 linear-gradient(135deg,#071010,#0a1516);
-border:1px solid rgba(255,255,255,.07);
-min-height:230px;
+border:1px solid rgba(255,255,255,.07);min-height:230px;
 }
 
-.num{
-font-family:"IBM Plex Mono",monospace;
-font-size:12px;
-letter-spacing:.22em;
-color:var(--gold2);
-margin-bottom:12px;
-}
+.num{font-family:"IBM Plex Mono",monospace;font-size:12px;letter-spacing:.22em;color:var(--gold2);margin-bottom:12px;}
 
 .card h3{
-font-family:"Cormorant Garamond",serif;
-font-size:44px;
-line-height:.95;
-font-weight:600;
-color:#e7c98f;
-margin-bottom:14px;
+font-family:"Cormorant Garamond",serif;font-size:44px;line-height:.95;
+font-weight:600;color:#e7c98f;margin-bottom:14px;
 }
 
-.card p{
-font-size:18px;
-line-height:1.75;
-color:#cbd3cf;
-max-width:720px;
+.card p{font-size:18px;line-height:1.75;color:#cbd3cf;max-width:720px;}
+
+/* Charter */
+.charter{
+margin-top:18px;border-radius:24px;padding:34px;
+background:
+radial-gradient(circle at 85% 18%, rgba(200,161,91,.06), transparent 24%),
+linear-gradient(135deg,#071010,#0a1516);
+border:1px solid rgba(200,161,91,.2);
+}
+
+.charter h2{
+font-family:"Cormorant Garamond",serif;
+font-size:clamp(26px,4vw,40px);
+color:var(--gold2);margin-bottom:10px;line-height:1.1;font-weight:600;
+}
+
+.charter-sub{
+font-family:"IBM Plex Mono",monospace;font-size:10px;
+color:var(--muted);letter-spacing:.1em;margin-bottom:24px;text-transform:uppercase;
+}
+
+.charter-intro{font-size:16px;color:#b8c4be;line-height:1.8;margin-bottom:28px;}
+
+.charter-item{display:flex;gap:18px;margin-bottom:20px;align-items:flex-start;}
+
+.charter-num{
+font-family:"IBM Plex Mono",monospace;font-size:10px;
+color:var(--gold);letter-spacing:.15em;min-width:28px;padding-top:3px;
+}
+
+.charter-item-content h4{
+font-family:"IBM Plex Mono",monospace;font-size:11px;
+letter-spacing:.15em;text-transform:uppercase;color:var(--gold2);margin-bottom:6px;
+}
+
+.charter-item-content p{font-size:15px;color:#b8c4be;line-height:1.75;}
+
+.charter-divider{border:none;border-top:1px solid rgba(255,255,255,.07);margin:28px 0;}
+
+.charter-question{
+font-family:"Cormorant Garamond",serif;font-size:clamp(18px,2.5vw,24px);
+color:var(--text);line-height:1.4;margin-bottom:12px;font-style:italic;
+}
+
+.charter-closing{
+font-family:"IBM Plex Mono",monospace;font-size:12px;
+color:var(--gold);letter-spacing:.05em;line-height:1.8;
 }
 
 .price-box{
-margin-top:18px;
-border-radius:24px;
-padding:26px;
+margin-top:18px;border-radius:24px;padding:26px;
 background:
 radial-gradient(circle at top right, rgba(200,161,91,.08), transparent 30%),
 linear-gradient(135deg,#081112,#0d1a18);
@@ -325,27 +220,15 @@ border:1px solid rgba(255,255,255,.07);
 }
 
 .price-box h2{
-font-family:"Cormorant Garamond",serif;
-font-size:48px;
-color:var(--gold2);
-margin-bottom:12px;
-line-height:.95;
+font-family:"Cormorant Garamond",serif;font-size:48px;
+color:var(--gold2);margin-bottom:12px;line-height:.95;
 }
 
-.price-box p{
-font-size:18px;
-line-height:1.75;
-color:var(--muted);
-}
+.price-box p{font-size:18px;line-height:1.75;color:var(--muted);}
 
 footer{
-max-width:1200px;
-margin:auto;
-padding:28px 18px 60px;
-border-top:1px solid var(--line);
-font-size:14px;
-color:#8f9a95;
-margin-top:40px;
+max-width:1200px;margin:auto;padding:28px 18px 60px;
+border-top:1px solid var(--line);font-size:14px;color:#8f9a95;margin-top:40px;
 }
 
 @media(min-width:900px){
@@ -447,19 +330,78 @@ DAR defines one named human authority with explicit power to pause or stop a con
 </section>
 
 <section class="section">
+<div class="label">Executive Responsibility Charter</div>
+<div class="charter">
+<h2>Named Stop Authority<br>for High-Stakes AI Decisions</h2>
+<p class="charter-sub">DAR Executive Responsibility Charter</p>
+
+<p class="charter-intro">As organizations deploy AI into consequential workflows, speed of execution often exceeds speed of governance. Controls, policies, and approvals remain important. But when outcomes may become irreversible under uncertainty, governance requires something more specific: a named human authority with the power to stop execution in time.</p>
+
+<div class="charter-item">
+<span class="charter-num">01</span>
+<div class="charter-item-content">
+<h4>Named Stop Authority</h4>
+<p>For each defined high-stakes AI process, one individual shall be identified in advance with authority to halt execution when material risk, uncertainty, or unexpected behavior emerges.</p>
+</div>
+</div>
+
+<div class="charter-item">
+<span class="charter-num">02</span>
+<div class="charter-item-content">
+<h4>Separation of Powers</h4>
+<p>The authority to stop, the authority to release, and the authority to review shall not automatically reside in the same person.</p>
+</div>
+</div>
+
+<div class="charter-item">
+<span class="charter-num">03</span>
+<div class="charter-item-content">
+<h4>Written Ownership</h4>
+<p>Any override, release, or continuation after a stop event requires documented ownership and rationale.</p>
+</div>
+</div>
+
+<div class="charter-item">
+<span class="charter-num">04</span>
+<div class="charter-item-content">
+<h4>Human Signal Protection</h4>
+<p>Good-faith escalation by qualified personnel must be protected, reviewed rapidly, and never penalized merely for raising concern.</p>
+</div>
+</div>
+
+<div class="charter-item">
+<span class="charter-num">05</span>
+<div class="charter-item-content">
+<h4>Real-World Kill Boundary</h4>
+<p>Where technically feasible, organizations shall maintain the ability to suspend the system's effect on external operations, customers, markets, or patients.</p>
+</div>
+</div>
+
+<hr class="charter-divider">
+
+<p class="charter-question">If something unexpected happens today,<br>who by name can stop it in time?</p>
+<p style="font-size:14px;color:var(--muted);margin-bottom:24px;">If that answer is unclear, governance is incomplete.</p>
+
+<p class="charter-closing">Controls manage behavior.<br>Names carry consequences.</p>
+</div>
+</section>
+
+<section class="section">
 <div class="label">Engagement</div>
 <div class="price-box">
 <h2>From €12,000</h2>
+<p style="font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.15em;text-transform:uppercase;color:var(--gold);margin-bottom:14px;">Fixed-Scope Authority Review</p>
 <p>
 Single-pathway authority review.<br>
 One decision. One named authority. One DAR record.<br><br>
 Typical timeline: 7–10 business days. Confidential by design.
 </p>
+<a href="contact.html" style="display:inline-block;margin-top:22px;padding:16px 28px;background:linear-gradient(135deg,#d9bb79,#b88e45);color:#111;font-family:'IBM Plex Mono',monospace;font-size:11px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;border-radius:14px;text-decoration:none;">Request Private Inquiry</a>
 </div>
 </section>
 
 <footer>
-© 2025 All Rights Reserved · Liran Bar-Shrim
+© 2026 All Rights Reserved · Liran Bar-Shrim
 </footer>
 
 <script>
