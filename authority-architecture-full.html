@@ -1,0 +1,512 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Authority Architecture v2 + Case Study | Internal Working Model</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+--bg:#090909;
+--gold:#c8a96e;
+--text:#e8e2d7;
+--muted:#9e978d;
+--line:rgba(255,255,255,.07);
+--danger:#c0392b;
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{
+background:var(--bg);
+color:var(--text);
+font-family:Inter,sans-serif;
+line-height:1.75;
+padding:40px 18px 80px;
+}
+.container{max-width:980px;margin:auto;}
+.meta{
+font-family:"IBM Plex Mono",monospace;
+font-size:11px;
+letter-spacing:.24em;
+text-transform:uppercase;
+color:var(--gold);
+margin-bottom:24px;
+}
+h1{
+font-family:"Playfair Display",serif;
+font-size:clamp(34px,7vw,64px);
+line-height:.95;
+margin-bottom:18px;
+border-left:3px solid var(--gold);
+padding-left:18px;
+}
+h1.case-title{
+border-left-color:var(--danger);
+font-size:clamp(28px,5vw,50px);
+}
+.sub{
+font-size:18px;
+color:var(--muted);
+max-width:760px;
+margin-bottom:34px;
+}
+.chapter-divider{
+margin:54px 0 40px;
+display:flex;
+align-items:center;
+gap:18px;
+}
+.chapter-divider-line{
+flex:1;
+height:1px;
+background:var(--line);
+}
+.chapter-divider-label{
+font-family:"IBM Plex Mono",monospace;
+font-size:10px;
+letter-spacing:.28em;
+text-transform:uppercase;
+color:var(--gold);
+white-space:nowrap;
+}
+.section{
+background:linear-gradient(180deg,#111,#0d0d0d);
+border:1px solid var(--line);
+padding:28px;
+margin-bottom:18px;
+}
+.section-danger{
+background:linear-gradient(180deg,#130d0d,#0d0d0d);
+border:1px solid rgba(192,57,43,.2);
+border-left:3px solid var(--danger);
+padding:28px;
+margin-bottom:18px;
+}
+.label{
+font-family:"IBM Plex Mono",monospace;
+font-size:10px;
+letter-spacing:.22em;
+text-transform:uppercase;
+color:var(--gold);
+margin-bottom:12px;
+}
+.label-danger{
+font-family:"IBM Plex Mono",monospace;
+font-size:10px;
+letter-spacing:.22em;
+text-transform:uppercase;
+color:var(--danger);
+margin-bottom:12px;
+opacity:.85;
+}
+h2{
+font-family:"Playfair Display",serif;
+font-size:30px;
+margin-bottom:14px;
+line-height:1.05;
+}
+p{
+font-size:17px;
+color:var(--muted);
+margin-bottom:12px;
+}
+p:last-child{margin-bottom:0;}
+.grid{
+display:grid;
+grid-template-columns:1fr 1fr 1fr;
+gap:14px;
+margin-top:18px;
+}
+.card{
+border:1px solid var(--line);
+padding:18px;
+background:#0d0d0d;
+}
+.card h3{
+font-family:"Playfair Display",serif;
+font-size:22px;
+margin-bottom:8px;
+}
+.card p{font-size:14px;margin-bottom:0;}
+.list-item{
+padding:12px 0;
+border-bottom:1px solid var(--line);
+font-size:15px;
+color:var(--muted);
+}
+.list-item:last-child{border-bottom:none;}
+.conditions{margin-top:14px;}
+.cond{
+padding:14px 0;
+border-bottom:1px solid var(--line);
+font-size:15px;
+color:var(--muted);
+}
+.cond:last-child{border-bottom:none;}
+.cond strong{
+display:block;
+font-size:12px;
+font-family:"IBM Plex Mono",monospace;
+color:#b8aa8a;
+margin-bottom:4px;
+letter-spacing:.04em;
+}
+.friction-item{
+padding:14px 0;
+border-bottom:1px solid rgba(192,57,43,.12);
+font-size:15px;
+color:#c4a89a;
+}
+.friction-item:last-child{border-bottom:none;}
+.friction-item strong{
+display:block;
+font-size:13px;
+font-family:"IBM Plex Mono",monospace;
+color:#d4796f;
+margin-bottom:4px;
+letter-spacing:.04em;
+}
+.pull{
+margin-top:18px;
+padding:22px;
+border-left:3px solid var(--gold);
+background:#101010;
+font-family:"Playfair Display",serif;
+font-size:clamp(18px,2.5vw,26px);
+line-height:1.3;
+}
+.pull-danger{
+margin-top:18px;
+padding:22px;
+border-left:3px solid var(--danger);
+background:#110a0a;
+font-family:"Playfair Display",serif;
+font-size:clamp(18px,2.5vw,24px);
+line-height:1.3;
+color:#d4a09a;
+}
+.stat{
+display:inline-block;
+font-family:"IBM Plex Mono",monospace;
+font-size:13px;
+color:var(--danger);
+border:1px solid rgba(192,57,43,.3);
+padding:6px 14px;
+margin:4px 4px 4px 0;
+}
+.timeline{margin-top:8px;}
+.tl-item{
+display:flex;
+gap:20px;
+padding:16px 0;
+border-bottom:1px solid var(--line);
+}
+.tl-item:last-child{border-bottom:none;}
+.tl-time{
+font-family:"IBM Plex Mono",monospace;
+font-size:11px;
+color:var(--danger);
+min-width:90px;
+padding-top:3px;
+letter-spacing:.04em;
+opacity:.8;
+}
+.tl-text{font-size:15px;color:var(--muted);line-height:1.7;}
+.tl-text strong{display:block;color:var(--text);margin-bottom:4px;font-size:15px;}
+.lesson{
+padding:16px 0;
+border-bottom:1px solid var(--line);
+}
+.lesson:last-child{border-bottom:none;}
+.lesson-num{
+font-family:"IBM Plex Mono",monospace;
+font-size:10px;
+letter-spacing:.2em;
+color:var(--gold);
+opacity:.7;
+margin-bottom:6px;
+}
+.lesson h3{
+font-family:"Playfair Display",serif;
+font-size:22px;
+margin-bottom:8px;
+line-height:1.1;
+}
+.lesson p{font-size:15px;color:var(--muted);margin-bottom:0;}
+.footer{
+margin-top:40px;
+font-size:12px;
+color:#6f6a64;
+font-family:"IBM Plex Mono",monospace;
+}
+@media(max-width:900px){
+.grid{grid-template-columns:1fr;}
+h2{font-size:26px;}
+p{font-size:16px;}
+}
+</style>
+</head>
+<body>
+<div class="container">
+
+<!-- PART ONE -->
+<div class="meta">Internal Working Model · v2</div>
+
+<h1>Authority Architecture</h1>
+
+<div class="sub">
+A private framework for designing decision authority inside organizations before pressure, uncertainty, and momentum take control.
+</div>
+
+<div class="section">
+<div class="label">Core Principle</div>
+<h2>Before something goes wrong, someone must already be named to stop it.</h2>
+<p>Approval systems often exist. Stop systems often do not.</p>
+<div class="pull">
+If no one is named to stop it,<br>
+momentum already has authority.
+</div>
+</div>
+
+<div class="section">
+<div class="label">Authority Roles</div>
+<h2>Three functional roles</h2>
+<div class="grid">
+<div class="card">
+<h3>Stop</h3>
+<p>Immediate authority to halt continuation when thresholds are triggered.</p>
+</div>
+<div class="card">
+<h3>Hold</h3>
+<p>Maintains suspension while review, escalation, or clarification occurs.</p>
+</div>
+<div class="card">
+<h3>Release</h3>
+<p>Named authority who resumes continuation with documented rationale.</p>
+</div>
+</div>
+</div>
+
+<div class="section">
+<div class="label">Mandatory Response Architecture</div>
+<h2>A hold without mandatory response is a slow override by silence.</h2>
+<p>Between Stop and Release there is a window. What happens inside that window determines whether the stop is a governance event or a delay that dissolves on its own.</p>
+<p>Most organizations leave this window unowned. No one is required to respond. No clock is running. The hold persists until organizational pressure quietly resumes continuation without formal release.</p>
+<div class="conditions">
+<div class="cond">
+<strong>Response window</strong>
+A defined maximum time before a named authority must formally respond to the stop. Not acknowledge. Respond. A response requires documented position.
+</div>
+<div class="cond">
+<strong>Who must respond</strong>
+Named in advance. Not whoever is available. Not the stop authority themselves. A specific individual at a level above the stopped decision.
+</div>
+<div class="cond">
+<strong>No response default</strong>
+If no response arrives within the window, the hold does not dissolve. It escalates automatically to the next named level. Silence is not consent. Silence triggers escalation.
+</div>
+<div class="cond">
+<strong>Auto-escalation path</strong>
+Three levels named in advance: primary respondent, secondary, board-level. Each with a defined window. If all three fail to respond, the stop holds and the failure is documented as a governance event in itself.
+</div>
+<div class="cond">
+<strong>Default state until release</strong>
+Hold remains active. Continuation is not available. No informal resumption. The stopped decision does not proceed because people stopped paying attention to it.
+</div>
+</div>
+<div class="pull" style="font-size:22px;">
+Silence is often how stop authority is defeated.<br>
+Not by override. By neglect.
+</div>
+</div>
+
+<div class="section-danger">
+<div class="label-danger">Human Friction Layer</div>
+<h2>Why organizations don't stop even when they can</h2>
+<p>The structural mechanism may exist. The human conditions that allow it to function often do not.</p>
+<div class="friction-item">
+<strong>KPI exposure</strong>
+The person with stop authority owns a number. Stopping means missing it. The authority exists on paper. The incentive structure cancels it in practice.
+</div>
+<div class="friction-item">
+<strong>Career cost</strong>
+Stopping creates enemies. Continuing creates deniability. Ambitious people read this correctly and do not stop.
+</div>
+<div class="friction-item">
+<strong>The room reads wrong</strong>
+Everyone in the meeting wants to proceed. The person who can stop feels the social weight. Silence is easier. Silence is not governance.
+</div>
+<div class="friction-item">
+<strong>Informal override</strong>
+A senior leader signals displeasure after the stop. No formal override occurs. The stop authority quietly reverses position. The mechanism worked. The culture undid it.
+</div>
+<div class="friction-item">
+<strong>Diffuse pressure</strong>
+No one orders the person to proceed. But three colleagues mention the deadline. Two mention the client. One mentions the board. Pressure without instruction is still pressure.
+</div>
+<div class="friction-item">
+<strong>Punishment arrives late</strong>
+The person who stopped gets a smaller budget next quarter. No connection is stated. No connection needs to be stated. The signal is clear. The next person with stop authority reads it.
+</div>
+<div class="pull" style="font-size:22px;">
+The mechanism that fails is rarely the structure.<br>
+It is the human condition inside the structure.
+</div>
+</div>
+
+<div class="section">
+<div class="label">Failure Modes</div>
+<h2>Where systems break</h2>
+<div class="list-item">No one clearly owns the stop decision</div>
+<div class="list-item">The stop can be overridden informally</div>
+<div class="list-item">No response path after suspension</div>
+<div class="list-item">The person who stopped pays the price</div>
+<div class="list-item">Politics outruns governance</div>
+</div>
+
+<div class="section">
+<div class="label">Design Questions</div>
+<h2>Questions every organization must answer</h2>
+<div class="list-item">Who can stop immediately?</div>
+<div class="list-item">Who can override, and under what conditions?</div>
+<div class="list-item">Who signs to resume?</div>
+<div class="list-item">What happens if no one responds?</div>
+<div class="list-item">Who is protected for good-faith stopping?</div>
+</div>
+
+<div class="section">
+<div class="label">Use Cases</div>
+<h2>Where this matters most</h2>
+<div class="list-item">AI systems</div>
+<div class="list-item">Cyber incidents</div>
+<div class="list-item">Financial execution</div>
+<div class="list-item">Product launches</div>
+<div class="list-item">Board-level irreversible decisions</div>
+</div>
+
+<!-- DIVIDER -->
+<div class="chapter-divider">
+<div class="chapter-divider-line"></div>
+<div class="chapter-divider-label">Case Study</div>
+<div class="chapter-divider-line"></div>
+</div>
+
+<!-- PART TWO -->
+<div class="meta">Internal Working Model · 03 · Case Study</div>
+
+<h1 class="case-title">Knight Capital Group<br>August 1, 2012</h1>
+
+<div class="sub">
+A study in what happens when a system continues because no one was named, in advance, to stop it.
+</div>
+
+<div class="section">
+<div class="label">The Numbers</div>
+<div style="margin-bottom:18px;">
+<span class="stat">$440M lost</span>
+<span class="stat">45 minutes</span>
+<span class="stat">154 stocks affected</span>
+<span class="stat">$10M per minute</span>
+<span class="stat">Firm did not survive</span>
+</div>
+<p>Knight Capital was one of the largest US equity market makers. On August 1, 2012, a software deployment error activated a dormant trading algorithm. The firm observed the anomaly. Escalation occurred. The system continued executing erroneous orders for 45 minutes while governance attempted to convene.</p>
+<p>The process was not absent. The name was.</p>
+</div>
+
+<div class="section-danger">
+<div class="label-danger">Timeline</div>
+<h2>What happened, minute by minute</h2>
+<div class="timeline">
+<div class="tl-item">
+<div class="tl-time">09:30</div>
+<div class="tl-text">
+<strong>Market opens. System activates.</strong>
+A software deployment error on one of eight servers left an old, dormant algorithm active. The system begins executing at volume.
+</div>
+</div>
+<div class="tl-item">
+<div class="tl-time">09:31</div>
+<div class="tl-text">
+<strong>Anomalous behavior observed.</strong>
+Operators notice unusual order flow. The pattern is not consistent with normal market making. Internal alerts begin appearing.
+</div>
+</div>
+<div class="tl-item">
+<div class="tl-time">09:31 — 10:15</div>
+<div class="tl-text">
+<strong>Escalation without named stop authority.</strong>
+Calls are made. People are contacted. The question of who can halt the system is not answered by a name. It is answered by a process. The process requires convening. Convening requires time. The system does not wait.
+</div>
+</div>
+<div class="tl-item">
+<div class="tl-time">10:15</div>
+<div class="tl-text">
+<strong>System manually shut down.</strong>
+After 45 minutes, the trading system is halted. By this point the firm has accumulated positions it cannot sustain.
+</div>
+</div>
+<div class="tl-item">
+<div class="tl-time">Following days</div>
+<div class="tl-text">
+<strong>$440M loss confirmed. Firm seeks emergency capital.</strong>
+Knight Capital does not survive as an independent entity. It is acquired by Getco in early 2013.
+</div>
+</div>
+</div>
+<div class="pull-danger">
+The gap between observation and named stop authority<br>
+cost $10 million per minute.
+</div>
+</div>
+
+<div class="section">
+<div class="label">Authority Design Analysis</div>
+<h2>Where the stop path failed</h2>
+<p>This was not a technology failure in the ordinary sense. The algorithm executed exactly as it was designed to execute. The deployment process failed to deactivate it on one server. These are recoverable errors in a system with named stop authority.</p>
+<p>The critical gap was not detection. Operators detected the anomaly within the first minute. The gap was the distance between detection and halt. That distance was filled by escalation chains, phone calls, and organizational process. None of those are a stop. They are the appearance of governance moving toward a stop.</p>
+<div class="pull">
+Detection is not the same as authority.<br>
+Escalation is not the same as a stop.
+</div>
+<p style="margin-top:18px;">A named individual with pre-documented authority to halt the trading system immediately, without convening, without approval, would have changed the outcome. Not because the error would have been prevented. Because the error would have been contained in the first two minutes instead of the first forty-five.</p>
+</div>
+
+<div class="section">
+<div class="label">Lessons for Boards</div>
+<div class="lesson">
+<div class="lesson-num">01</div>
+<h3>Speed asymmetry is the governance problem</h3>
+<p>Automated systems execute faster than governance can respond. The governance architecture must account for this explicitly. A committee that convenes in hours cannot govern a system that executes in seconds. Named stop authority is the only mechanism that closes this gap.</p>
+</div>
+<div class="lesson">
+<div class="lesson-num">02</div>
+<h3>Observation without authority is not control</h3>
+<p>Knight Capital's operators observed the anomaly immediately. Observation without a named stop path is not governance. It is documentation of a loss in progress.</p>
+</div>
+<div class="lesson">
+<div class="lesson-num">03</div>
+<h3>Process is not a brake</h3>
+<p>Escalation chains, approval workflows, and risk committees are governance instruments designed for normal operations. They are not designed to halt a system executing at market speed. Treating process as a stop is the architectural error that produced the 45-minute window.</p>
+</div>
+<div class="lesson">
+<div class="lesson-num">04</div>
+<h3>The cost of the missing name</h3>
+<p>No single person was named, in advance, with documented authority to halt the trading system immediately upon detecting anomalous behavior. This is not a speculation about what might have helped. It is a description of the structural gap that converted a software error into a firm-ending event.</p>
+</div>
+<div class="lesson">
+<div class="lesson-num">05</div>
+<h3>The question boards must now answer</h3>
+<p>For every automated system your organization operates: who is named, in advance, to halt it? Not a process. Not a team. Not an escalation path. A person. With a name. With documented authority. With the ability to act before the committee convenes.</p>
+</div>
+<div class="pull">
+The process was not absent.<br>
+The name was.
+</div>
+</div>
+
+<div class="footer">
+Authority Architecture v2 + Knight Capital Case Study · Internal Use Only
+</div>
+
+</div>
+</body>
+</html>
