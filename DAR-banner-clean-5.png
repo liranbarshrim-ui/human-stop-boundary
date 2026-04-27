@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DAR | Decision Authority Research</title>
+<meta name="description" content="Decision Authority Record. Define who can stop irreversible decisions before exposure begins.">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Cormorant+Garamond:wght@400;500;600&family=IBM+Plex+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+
+<style>
+:root{
+--bg:#050606;
+--gold:#c8a15b;
+--gold2:#efd8a0;
+--text:#edf2ef;
+--muted:#95a09b;
+--line:rgba(255,255,255,.08);
+}
+
+*{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+
+body{
+font-family:Inter,sans-serif;
+background:
+radial-gradient(circle at 20% 10%, rgba(14,45,35,.55), transparent 28%),
+radial-gradient(circle at 80% 0%, rgba(200,161,91,.12), transparent 20%),
+linear-gradient(180deg,#030404,#071010 55%,#030404);
+color:var(--text);
+overflow-x:hidden;
+}
+
+a{text-decoration:none;color:inherit;}
+
+body:before{
+content:"";
+position:fixed;inset:0;
+pointer-events:none;opacity:.18;
+background-image:
+linear-gradient(rgba(255,255,255,.03) 1px, transparent 1px),
+linear-gradient(90deg, rgba(255,255,255,.03) 1px, transparent 1px);
+background-size:40px 40px;
+}
+
+.topbar{
+position:fixed;top:0;left:0;right:0;height:74px;
+display:flex;align-items:center;justify-content:space-between;
+padding:0 18px;z-index:1000;
+background:rgba(4,7,8,.82);backdrop-filter:blur(14px);
+border-bottom:1px solid var(--line);
+}
+
+.brand{
+display:flex;align-items:center;gap:12px;
+font-family:"IBM Plex Mono",monospace;font-size:10px;
+letter-spacing:.28em;text-transform:uppercase;white-space:nowrap;
+}
+
+.brand-line{width:34px;height:2px;border-radius:4px;background:var(--gold);}
+
+.menu-btn{
+width:42px;height:42px;border:none;background:none;cursor:pointer;
+display:flex;flex-direction:column;justify-content:center;gap:6px;
+}
+
+.menu-btn span{height:2px;background:#fff;border-radius:4px;}
+.menu-btn span:nth-child(2){width:72%;margin-left:auto;}
+
+.overlay{
+position:fixed;inset:0;background:rgba(0,0,0,.55);
+opacity:0;visibility:hidden;transition:.25s;z-index:998;
+}
+.overlay.active{opacity:1;visibility:visible;}
+
+.drawer{
+position:fixed;top:0;right:-100%;width:86%;max-width:420px;
+height:100vh;overflow-y:auto;z-index:999;padding:24px;
+transition:.3s ease;
+background:linear-gradient(180deg,#071010,#071313 70%,#050707);
+border-left:1px solid rgba(255,255,255,.08);
+}
+.drawer.active{right:0;}
+
+.drawer-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:18px;}
+
+.drawer-title{
+font-family:"IBM Plex Mono",monospace;font-size:11px;
+letter-spacing:.28em;text-transform:uppercase;color:var(--gold2);
+}
+
+.close-btn{font-size:38px;line-height:1;background:none;border:none;color:#fff;cursor:pointer;}
+
+.group{margin-top:18px;}
+
+.group small{
+display:block;font-family:"IBM Plex Mono",monospace;font-size:10px;
+letter-spacing:.26em;text-transform:uppercase;color:var(--gold);margin-bottom:10px;
+}
+
+.drawer a.link{display:block;padding:14px 0;font-size:20px;border-bottom:1px solid rgba(255,255,255,.05);}
+
+.private-btn{
+display:block;margin-top:22px;padding:16px;border-radius:16px;
+text-align:center;font-weight:800;letter-spacing:.18em;font-size:13px;
+text-transform:uppercase;background:linear-gradient(135deg,#d9bb79,#b88e45);color:#111;
+}
+
+.mail-btn{
+display:block;margin-top:14px;padding:14px;text-align:center;border-radius:16px;
+border:1px solid rgba(255,255,255,.08);color:#f3dfb4;font-size:15px;word-break:break-word;
+}
+
+.hero{padding:118px 18px 44px;max-width:1200px;margin:auto;}
+
+.eyebrow{
+font-family:"IBM Plex Mono",monospace;font-size:10px;letter-spacing:.3em;
+text-transform:uppercase;color:var(--gold2);margin-bottom:18px;
+}
+
+.hero h1{
+font-family:"Cormorant Garamond",serif;font-size:56px;line-height:.92;
+font-weight:600;letter-spacing:-.03em;max-width:900px;
+}
+
+.hero h1 span{color:var(--gold2);}
+
+.hero p{margin-top:18px;font-size:18px;line-height:1.7;color:var(--muted);max-width:760px;}
+
+.hero-cta{
+margin-top:26px;display:inline-block;padding:16px 24px;border-radius:16px;
+background:linear-gradient(135deg,#d9bb79,#b88e45);color:#111;
+font-weight:800;letter-spacing:.18em;font-size:13px;text-transform:uppercase;
+}
+
+.section{max-width:1200px;margin:auto;padding:18px 18px 0;}
+
+.label{
+font-family:"IBM Plex Mono",monospace;font-size:10px;letter-spacing:.28em;
+text-transform:uppercase;color:var(--gold);margin-bottom:16px;
+}
+
+.grid{display:grid;grid-template-columns:1fr;gap:16px;margin-top:10px;}
+
+.card{
+position:relative;overflow:hidden;border-radius:24px;padding:24px;
+background:
+radial-gradient(circle at 85% 18%, rgba(200,161,91,.08), transparent 24%),
+radial-gradient(circle at 15% 90%, rgba(14,45,35,.45), transparent 28%),
+linear-gradient(135deg,#071010,#0a1516);
+border:1px solid rgba(255,255,255,.07);min-height:230px;
+}
+
+.num{font-family:"IBM Plex Mono",monospace;font-size:12px;letter-spacing:.22em;color:var(--gold2);margin-bottom:12px;}
+
+.card h3{
+font-family:"Cormorant Garamond",serif;font-size:44px;line-height:.95;
+font-weight:600;color:#e7c98f;margin-bottom:14px;
+}
+
+.card p{font-size:18px;line-height:1.75;color:#cbd3cf;max-width:720px;}
+
+/* Charter */
+.charter{
+margin-top:18px;border-radius:24px;padding:34px;
+background:
+radial-gradient(circle at 85% 18%, rgba(200,161,91,.06), transparent 24%),
+linear-gradient(135deg,#071010,#0a1516);
+border:1px solid rgba(200,161,91,.2);
+}
+
+.charter h2{
+font-family:"Cormorant Garamond",serif;
+font-size:clamp(26px,4vw,40px);
+color:var(--gold2);margin-bottom:10px;line-height:1.1;font-weight:600;
+}
+
+.charter-sub{
+font-family:"IBM Plex Mono",monospace;font-size:10px;
+color:var(--muted);letter-spacing:.1em;margin-bottom:24px;text-transform:uppercase;
+}
+
+.charter-intro{font-size:16px;color:#b8c4be;line-height:1.8;margin-bottom:28px;}
+
+.charter-item{display:flex;gap:18px;margin-bottom:20px;align-items:flex-start;}
+
+.charter-num{
+font-family:"IBM Plex Mono",monospace;font-size:10px;
+color:var(--gold);letter-spacing:.15em;min-width:28px;padding-top:3px;
+}
+
+.charter-item-content h4{
+font-family:"IBM Plex Mono",monospace;font-size:11px;
+letter-spacing:.15em;text-transform:uppercase;color:var(--gold2);margin-bottom:6px;
+}
+
+.charter-item-content p{font-size:15px;color:#b8c4be;line-height:1.75;}
+
+.charter-divider{border:none;border-top:1px solid rgba(255,255,255,.07);margin:28px 0;}
+
+.charter-question{
+font-family:"Cormorant Garamond",serif;font-size:clamp(18px,2.5vw,24px);
+color:var(--text);line-height:1.4;margin-bottom:12px;font-style:italic;
+}
+
+.charter-closing{
+font-family:"IBM Plex Mono",monospace;font-size:12px;
+color:var(--gold);letter-spacing:.05em;line-height:1.8;
+}
+
+.price-box{
+margin-top:18px;border-radius:24px;padding:26px;
+background:
+radial-gradient(circle at top right, rgba(200,161,91,.08), transparent 30%),
+linear-gradient(135deg,#081112,#0d1a18);
+border:1px solid rgba(255,255,255,.07);
+}
+
+.price-box h2{
+font-family:"Cormorant Garamond",serif;font-size:48px;
+color:var(--gold2);margin-bottom:12px;line-height:.95;
+}
+
+.price-box p{font-size:18px;line-height:1.75;color:var(--muted);}
+
+footer{
+max-width:1200px;margin:auto;padding:28px 18px 60px;
+border-top:1px solid var(--line);font-size:14px;color:#8f9a95;margin-top:40px;
+}
+
+@media(min-width:900px){
+.topbar{padding:0 34px;}
+.hero{padding:150px 34px 50px;}
+.hero h1{font-size:92px;}
+.hero p{font-size:22px;}
+.section{padding:34px 34px 0;}
+.grid{grid-template-columns:1fr 1fr;gap:22px;}
+.card{padding:34px;min-height:300px;}
+.card h3{font-size:58px;}
+.card p{font-size:21px;}
+.price-box h2{font-size:70px;}
+footer{padding:34px 34px 70px;}
+}
+</style>
+</head>
+
+<body>
+
+<header class="topbar">
+<a href="index.html" class="brand">
+<span class="brand-line"></span>
+<span>Decision Authority Research</span>
+</a>
+<button class="menu-btn" id="openMenu">
+<span></span><span></span><span></span>
+</button>
+</header>
+
+<div class="overlay" id="overlay"></div>
+
+<aside class="drawer" id="drawer">
+<div class="drawer-top">
+<div class="drawer-title">Navigation</div>
+<button class="close-btn" id="closeMenu">×</button>
+</div>
+<div class="group">
+<small>Primary</small>
+<a class="link" href="index.html">Home</a>
+<a class="link" href="dar.html">DAR</a>
+<a class="link" href="services.html">Services</a>
+<a class="link" href="about.html">About</a>
+<a class="link" href="contact.html">Contact</a>
+</div>
+<div class="group">
+<small>Research</small>
+<a class="link" href="research.html">Independent Research</a>
+<a class="link" href="whitepaper.html">White Paper</a>
+<a class="link" href="board-brief.html">Board Brief</a>
+<a class="link" href="insights.html">Insights</a>
+</div>
+<div class="group">
+<small>Reference</small>
+<a class="link" href="definitions.html">Definitions</a>
+<a class="link" href="faq.html">FAQ</a>
+<a class="link" href="goodfaith.html">Good Faith Use</a>
+<a class="link" href="diagnostic.html">Governance Diagnostic</a>
+</div>
+<a href="contact.html" class="private-btn">Private Intake</a>
+<a href="mailto:Liran@liranbarshrim.com" class="mail-btn">Liran@liranbarshrim.com</a>
+</aside>
+
+<section class="hero">
+<div style="width:100%;margin-bottom:32px;overflow:hidden;">
+<img src="https://i.postimg.cc/vBSwCpqc/DAR-banner-clean-5.png" alt="DAR — One named authority to stop automated decisions before they become irreversible" style="width:100%;max-height:280px;object-fit:cover;object-position:center;display:block;">
+</div>
+<div class="eyebrow">Decision Authority Record</div>
+<h1>
+Approval is common.<br>
+<span>Real stop power is rare.</span>
+</h1>
+<p>
+DAR defines one named human authority with explicit power to pause or stop a consequential decision before exposure becomes irreversible.
+</p>
+<a href="contact.html" class="hero-cta">Private Inquiry</a>
+</section>
+
+<section class="section">
+<div class="label">The Framework</div>
+<div class="grid">
+<div class="card">
+<div class="num">01</div>
+<h3>Identify Exposure</h3>
+<p>Locate decisions where execution may outrun governance and become irreversible.</p>
+</div>
+<div class="card">
+<div class="num">02</div>
+<h3>Name Authority</h3>
+<p>Define one accountable human authority with real stop power. Not a committee. Not a mailbox.</p>
+</div>
+<div class="card">
+<div class="num">03</div>
+<h3>Set Threshold</h3>
+<p>Clarify what uncertainty, escalation or irreversibility requires pause and review.</p>
+</div>
+<div class="card">
+<div class="num">04</div>
+<h3>Create Record</h3>
+<p>Produce a formal authority record before the critical moment arrives.</p>
+</div>
+</div>
+</section>
+
+<section class="section">
+<div class="label">Executive Responsibility Charter</div>
+<div class="charter">
+<h2>Named Stop Authority<br>for High-Stakes AI Decisions</h2>
+<p class="charter-sub">DAR Executive Responsibility Charter</p>
+
+<p class="charter-intro">As organizations deploy AI into consequential workflows, speed of execution often exceeds speed of governance. Controls, policies, and approvals remain important. But when outcomes may become irreversible under uncertainty, governance requires something more specific: a named human authority with the power to stop execution in time.</p>
+
+<div class="charter-item">
+<span class="charter-num">01</span>
+<div class="charter-item-content">
+<h4>Named Stop Authority</h4>
+<p>For each defined high-stakes AI process, one individual shall be identified in advance with authority to halt execution when material risk, uncertainty, or unexpected behavior emerges.</p>
+</div>
+</div>
+
+<div class="charter-item">
+<span class="charter-num">02</span>
+<div class="charter-item-content">
+<h4>Separation of Powers</h4>
+<p>The authority to stop, the authority to release, and the authority to review shall not automatically reside in the same person.</p>
+</div>
+</div>
+
+<div class="charter-item">
+<span class="charter-num">03</span>
+<div class="charter-item-content">
+<h4>Written Ownership</h4>
+<p>Any override, release, or continuation after a stop event requires documented ownership and rationale.</p>
+</div>
+</div>
+
+<div class="charter-item">
+<span class="charter-num">04</span>
+<div class="charter-item-content">
+<h4>Human Signal Protection</h4>
+<p>Good-faith escalation by qualified personnel must be protected, reviewed rapidly, and never penalized merely for raising concern.</p>
+</div>
+</div>
+
+<div class="charter-item">
+<span class="charter-num">05</span>
+<div class="charter-item-content">
+<h4>Real-World Kill Boundary</h4>
+<p>Where technically feasible, organizations shall maintain the ability to suspend the system's effect on external operations, customers, markets, or patients.</p>
+</div>
+</div>
+
+<hr class="charter-divider">
+
+<p class="charter-question">If something unexpected happens today,<br>who by name can stop it in time?</p>
+<p style="font-size:14px;color:var(--muted);margin-bottom:24px;">If that answer is unclear, governance is incomplete.</p>
+
+<p class="charter-closing">Controls manage behavior.<br>Names carry consequences.</p>
+</div>
+</section>
+
+<section class="section">
+<div class="label">Engagement</div>
+<div class="price-box">
+<h2>From €12,000</h2>
+<p style="font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.15em;text-transform:uppercase;color:var(--gold);margin-bottom:14px;">Fixed-Scope Authority Review</p>
+<p>
+Single-pathway authority review.<br>
+One decision. One named authority. One DAR record.<br><br>
+Typical timeline: 7–10 business days. Confidential by design.
+</p>
+<a href="contact.html" style="display:inline-block;margin-top:22px;padding:16px 28px;background:linear-gradient(135deg,#d9bb79,#b88e45);color:#111;font-family:'IBM Plex Mono',monospace;font-size:11px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;border-radius:14px;text-decoration:none;">Request Private Inquiry</a>
+</div>
+</section>
+
+<footer>
+© 2026 All Rights Reserved · Liran Bar-Shrim
+</footer>
+
+<script>
+const drawer=document.getElementById("drawer");
+const overlay=document.getElementById("overlay");
+document.getElementById("openMenu").onclick=()=>{
+drawer.classList.add("active");
+overlay.classList.add("active");
+};
+document.getElementById("closeMenu").onclick=closeDrawer;
+overlay.onclick=closeDrawer;
+function closeDrawer(){
+drawer.classList.remove("active");
+overlay.classList.remove("active");
+}
+</script>
+
+</body>
+</html>
