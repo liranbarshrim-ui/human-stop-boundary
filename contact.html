@@ -3,402 +3,76 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
-
 <title>Private Inquiry | Matrix Audit</title>
 <meta name="description" content="Confidential private inquiry for executives facing accountability exposure, unclear authority, and consequential decisions already in motion.">
 <meta name="robots" content="index,follow">
 <link rel="canonical" href="https://matrix-audit.com/contact.html">
-
 <meta property="og:title" content="Private Inquiry | Matrix Audit">
 <meta property="og:description" content="Selective private advisory for leaders facing consequential decisions already in motion.">
 <meta property="og:type" content="website">
-
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&family=Cormorant+Garamond:wght@500;600;700&display=swap" rel="stylesheet">
-
 <style>
-:root{
---bg:#090909;
---surface:#111111;
---gold:#c8a96e;
---text:#e8e2d7;
---muted:#a7a097;
---border:#1d1d1d;
---border2:#2a2a2a;
-}
-
-*{margin:0;padding:0;box-sizing:border-box;}
-html{scroll-behavior:smooth;}
-
-body{
-background:var(--bg);
-color:var(--text);
-font-family:Inter,sans-serif;
-line-height:1.7;
-overflow-x:hidden;
--webkit-font-smoothing:antialiased;
-}
-
+:root{--bg:#090909;--surface:#111111;--gold:#c8a96e;--text:#e8e2d7;--muted:#a7a097;--border:#1d1d1d;--border2:#2a2a2a;}
+*{margin:0;padding:0;box-sizing:border-box;}html{scroll-behavior:smooth;}
+body{background:var(--bg);color:var(--text);font-family:Inter,sans-serif;line-height:1.7;overflow-x:hidden;-webkit-font-smoothing:antialiased;}
 a{text-decoration:none;color:inherit;}
-
-/* unified topbar */
-
-.topbar{
-position:fixed;
-top:0;left:0;right:0;
-height:74px;
-display:flex;
-align-items:center;
-justify-content:space-between;
-padding:0 18px;
-z-index:1000;
-background:rgba(4,7,8,.82);
-backdrop-filter:blur(14px);
-border-bottom:1px solid rgba(255,255,255,.06);
-}
-
-.brand{
-display:flex;
-align-items:center;
-gap:12px;
-font-family:"IBM Plex Mono",monospace;
-font-size:10px;
-letter-spacing:.28em;
-text-transform:uppercase;
-white-space:nowrap;
-}
-
-.brand-line{
-width:34px;
-height:2px;
-border-radius:4px;
-background:var(--gold);
-}
-
-.menu-btn{
-width:42px;
-height:42px;
-border:none;
-background:none;
-cursor:pointer;
-display:flex;
-flex-direction:column;
-justify-content:center;
-gap:6px;
-}
-
-.menu-btn span{
-height:2px;
-background:#fff;
-border-radius:4px;
-}
-
-.menu-btn span:nth-child(2){
-width:72%;
-margin-left:auto;
-}
-
-/* drawer */
-
-.overlay{
-position:fixed;
-inset:0;
-background:rgba(0,0,0,.55);
-opacity:0;
-visibility:hidden;
-transition:.25s;
-z-index:998;
-}
-
-.overlay.active{
-opacity:1;
-visibility:visible;
-}
-
-.drawer{
-position:fixed;
-top:0;
-right:-100%;
-width:86%;
-max-width:420px;
-height:100vh;
-overflow-y:auto;
-z-index:999;
-padding:24px;
-transition:.3s ease;
-background:linear-gradient(180deg,#071010,#071313 70%,#050707);
-border-left:1px solid rgba(255,255,255,.08);
-}
-
+.topbar{position:fixed;top:0;left:0;right:0;height:74px;display:flex;align-items:center;justify-content:space-between;padding:0 18px;z-index:1000;background:rgba(4,7,8,.82);backdrop-filter:blur(14px);border-bottom:1px solid rgba(255,255,255,.06);}
+.brand{display:flex;align-items:center;gap:12px;font-family:"IBM Plex Mono",monospace;font-size:10px;letter-spacing:.28em;text-transform:uppercase;white-space:nowrap;}
+.brand-line{width:34px;height:2px;border-radius:4px;background:var(--gold);}
+.menu-btn{width:42px;height:42px;border:none;background:none;cursor:pointer;display:flex;flex-direction:column;justify-content:center;gap:6px;}
+.menu-btn span{height:2px;background:#fff;border-radius:4px;}
+.menu-btn span:nth-child(2){width:72%;margin-left:auto;}
+.overlay{position:fixed;inset:0;background:rgba(0,0,0,.55);opacity:0;visibility:hidden;transition:.25s;z-index:998;}
+.overlay.active{opacity:1;visibility:visible;}
+.drawer{position:fixed;top:0;right:-100%;width:86%;max-width:420px;height:100vh;overflow-y:auto;z-index:999;padding:24px;transition:.3s ease;background:linear-gradient(180deg,#071010,#071313 70%,#050707);border-left:1px solid rgba(255,255,255,.08);}
 .drawer.active{right:0;}
-
-.drawer-top{
-display:flex;
-justify-content:space-between;
-align-items:center;
-margin-bottom:18px;
-}
-
-.drawer-title{
-font-family:"IBM Plex Mono",monospace;
-font-size:11px;
-letter-spacing:.28em;
-text-transform:uppercase;
-color:#efd8a0;
-}
-
-.close-btn{
-font-size:38px;
-line-height:1;
-background:none;
-border:none;
-color:#fff;
-cursor:pointer;
-}
-
+.drawer-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:18px;}
+.drawer-title{font-family:"IBM Plex Mono",monospace;font-size:11px;letter-spacing:.28em;text-transform:uppercase;color:#efd8a0;}
+.close-btn{font-size:38px;line-height:1;background:none;border:none;color:#fff;cursor:pointer;}
 .group{margin-top:18px;}
-
-.group small{
-display:block;
-font-family:"IBM Plex Mono",monospace;
-font-size:10px;
-letter-spacing:.26em;
-text-transform:uppercase;
-color:var(--gold);
-margin-bottom:10px;
-}
-
-.drawer a.link{
-display:block;
-padding:14px 0;
-font-size:20px;
-border-bottom:1px solid rgba(255,255,255,.05);
-}
-
-.drawer a.link:hover,
-.drawer a.link.active{
-color:#efd8a0;
-}
-
-.private-btn{
-display:block;
-margin-top:22px;
-padding:16px;
-border-radius:16px;
-text-align:center;
-font-weight:800;
-letter-spacing:.18em;
-font-size:13px;
-text-transform:uppercase;
-background:linear-gradient(135deg,#d9bb79,#b88e45);
-color:#111;
-}
-
-.mail-btn{
-display:block;
-margin-top:14px;
-padding:14px;
-text-align:center;
-border-radius:16px;
-border:1px solid rgba(255,255,255,.08);
-color:#f3dfb4;
-font-size:15px;
-word-break:break-word;
-}
-
-/* original page body */
-
-.container{
-max-width:980px;
-margin:auto;
-padding:118px 16px 80px;
-}
-
-.hero{
-border-left:3px solid var(--gold);
-padding-left:16px;
-margin-bottom:36px;
-}
-
-.hero-label{
-font-family:'IBM Plex Mono',monospace;
-font-size:10px;
-letter-spacing:.22em;
-text-transform:uppercase;
-color:var(--gold);
-margin-bottom:14px;
-}
-
-.hero h1{
-font-family:"Cormorant Garamond",serif;
-font-size:56px;
-line-height:.95;
-margin-bottom:16px;
-}
-
-.hero p{
-font-size:16px;
-color:var(--muted);
-max-width:700px;
-margin-bottom:18px;
-}
-
-.notice{
-background:#111;
-border:1px solid var(--border2);
-border-left:3px solid var(--gold);
-padding:18px;
-max-width:720px;
-}
-
-.notice p{
-font-size:14px;
-color:var(--muted);
-margin-bottom:6px;
-}
-
-.section{
-padding-top:28px;
-border-top:1px solid rgba(255,255,255,.05);
-}
-
-.grid{
-display:grid;
-grid-template-columns:1fr;
-gap:18px;
-}
-
-.box,.side-box{
-background:#111;
-border:1px solid var(--border2);
-padding:22px 16px;
-}
-
+.group small{display:block;font-family:"IBM Plex Mono",monospace;font-size:10px;letter-spacing:.26em;text-transform:uppercase;color:var(--gold);margin-bottom:10px;}
+.drawer a.link{display:block;padding:14px 0;font-size:20px;border-bottom:1px solid rgba(255,255,255,.05);}
+.drawer a.link:hover,.drawer a.link.active{color:#efd8a0;}
+.private-btn{display:block;margin-top:22px;padding:16px;border-radius:16px;text-align:center;font-weight:800;letter-spacing:.18em;font-size:13px;text-transform:uppercase;background:linear-gradient(135deg,#d9bb79,#b88e45);color:#111;}
+.mail-btn{display:block;margin-top:14px;padding:14px;text-align:center;border-radius:16px;border:1px solid rgba(255,255,255,.08);color:#f3dfb4;font-size:15px;word-break:break-word;}
+.container{max-width:980px;margin:auto;padding:118px 16px 80px;}
+.hero{border-left:3px solid var(--gold);padding-left:16px;margin-bottom:36px;}
+.hero-label{font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.22em;text-transform:uppercase;color:var(--gold);margin-bottom:14px;}
+.hero h1{font-family:"Cormorant Garamond",serif;font-size:38px;line-height:1.1;margin-bottom:16px;}
+.hero p{font-size:16px;color:var(--muted);max-width:700px;margin-bottom:18px;}
+.notice{background:#111;border:1px solid var(--border2);border-left:3px solid var(--gold);padding:18px;max-width:720px;}
+.notice p{font-size:14px;color:var(--muted);margin-bottom:6px;}
+.section{padding-top:28px;border-top:1px solid rgba(255,255,255,.05);}
+.grid{display:grid;grid-template-columns:1fr;gap:18px;}
+.box,.side-box{background:#111;border:1px solid var(--border2);padding:22px 16px;}
 .box{border-left:3px solid var(--gold);}
-
-.box-title,.side-box-title{
-font-family:"Cormorant Garamond",serif;
-font-size:34px;
-margin-bottom:10px;
-}
-
-.box-desc{
-font-size:14px;
-color:var(--muted);
-margin-bottom:18px;
-}
-
-label{
-display:block;
-margin:14px 0 7px;
-font-family:'IBM Plex Mono',monospace;
-font-size:9px;
-letter-spacing:.22em;
-text-transform:uppercase;
-color:var(--gold);
-}
-
-input,textarea,select{
-width:100%;
-padding:14px;
-background:#0a0a0a;
-border:1px solid var(--border2);
-color:var(--text);
-font-size:15px;
-}
-
+.box-title,.side-box-title{font-family:"Cormorant Garamond",serif;font-size:34px;margin-bottom:10px;}
+.box-desc{font-size:14px;color:var(--muted);margin-bottom:18px;}
+label{display:block;margin:14px 0 7px;font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:.22em;text-transform:uppercase;color:var(--gold);}
+input,textarea,select{width:100%;padding:14px;background:#0a0a0a;border:1px solid var(--border2);color:var(--text);font-size:15px;}
 textarea{min-height:140px;resize:vertical;}
-
-.submit{
-width:100%;
-margin-top:18px;
-padding:16px;
-border:none;
-background:var(--gold);
-color:#111;
-font-family:'IBM Plex Mono',monospace;
-font-size:10px;
-letter-spacing:.18em;
-text-transform:uppercase;
-font-weight:700;
-cursor:pointer;
-}
-
-.item{
-padding:14px 0;
-border-bottom:1px solid rgba(255,255,255,.05);
-}
-
-.item strong{
-display:block;
-font-family:'IBM Plex Mono',monospace;
-font-size:9px;
-letter-spacing:.2em;
-text-transform:uppercase;
-color:var(--gold);
-margin-bottom:6px;
-}
-
-.item span{
-font-size:14px;
-color:var(--muted);
-}
-
-.pull{
-margin-top:18px;
-padding:20px;
-background:#0e0e0e;
-border-left:3px solid var(--gold);
-font-family:"Cormorant Garamond",serif;
-font-size:28px;
-line-height:1.2;
-}
-
-.footer{
-margin-top:44px;
-padding-top:22px;
-border-top:1px solid var(--border2);
-font-size:11px;
-font-family:'IBM Plex Mono',monospace;
-color:#6e6964;
-}
-
-@media(min-width:900px){
-.topbar{padding:0 34px;}
-.container{padding:150px 28px 110px;}
-.grid{grid-template-columns:1.05fr .95fr;gap:28px;}
-.hero h1{font-size:72px;}
-.box,.side-box{padding:28px 24px;}
-}
+.submit{width:100%;margin-top:18px;padding:16px;border:none;background:var(--gold);color:#111;font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.18em;text-transform:uppercase;font-weight:700;cursor:pointer;}
+.item{padding:14px 0;border-bottom:1px solid rgba(255,255,255,.05);}
+.item strong{display:block;font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:.2em;text-transform:uppercase;color:var(--gold);margin-bottom:6px;}
+.item span{font-size:14px;color:var(--muted);}
+.pull{margin-top:18px;padding:20px;background:#0e0e0e;border-left:3px solid var(--gold);font-family:"Cormorant Garamond",serif;font-size:28px;line-height:1.2;}
+.footer{margin-top:44px;padding-top:22px;border-top:1px solid var(--border2);font-size:11px;font-family:'IBM Plex Mono',monospace;color:#6e6964;}
+@media(min-width:900px){.topbar{padding:0 34px;}.container{padding:150px 28px 110px;}.grid{grid-template-columns:1.05fr .95fr;gap:28px;}.box,.side-box{padding:28px 24px;}}
 </style>
 </head>
-
 <body>
-
 <header class="topbar">
-<a href="index.html" class="brand">
-<span class="brand-line"></span>
-<span>Decision Authority Research</span>
-</a>
-
-<button class="menu-btn" id="openMenu" aria-label="Open Menu">
-<span></span>
-<span></span>
-<span></span>
-</button>
+<a href="index.html" class="brand"><span class="brand-line"></span><span>Decision Authority Research</span></a>
+<button class="menu-btn" id="openMenu" aria-label="Open Menu"><span></span><span></span><span></span></button>
 </header>
-
 <div class="overlay" id="overlay"></div>
-
 <aside class="drawer" id="drawer">
-
 <div class="drawer-top">
 <div class="drawer-title">Navigation</div>
 <button class="close-btn" id="closeMenu">×</button>
 </div>
-
 <div class="group">
 <small>Primary</small>
 <a class="link" href="index.html">Home</a>
@@ -407,57 +81,44 @@ color:#6e6964;
 <a class="link" href="about.html">About</a>
 <a class="link active" href="contact.html">Contact</a>
 </div>
-
 <div class="group">
 <small>Research</small>
 <a class="link" href="research.html">Independent Research</a>
 <a class="link" href="whitepaper.html">White Paper</a>
+<a class="link" href="board-brief.html">Board Brief</a>
+<a class="link" href="insights.html">Insights</a>
 </div>
-
 <div class="group">
 <small>Reference</small>
 <a class="link" href="definitions.html">Definitions</a>
 <a class="link" href="faq.html">FAQ</a>
 <a class="link" href="goodfaith.html">Good Faith Use</a>
+<a class="link" href="diagnostic.html">Governance Diagnostic</a>
 </div>
-
 <a href="contact.html" class="private-btn">Private Intake</a>
 <a href="mailto:Liran@liranbarshrim.com" class="mail-btn">Liran@liranbarshrim.com</a>
-
 </aside>
-
 <main class="container">
-
 <section class="hero">
 <div class="hero-label">Confidential Executive Intake</div>
 <h1>When exposure is rising, clarity cannot wait.</h1>
-
-<p>
-Private inquiry for executives, boards, founders, counsel, and leaders facing consequential decisions already in motion.
-</p>
-
+<p>Private inquiry for executives, boards, founders, counsel, and leaders facing consequential decisions already in motion.</p>
 <div class="notice">
 <p>Selective independent advisory.</p>
 <p>Direct principal contact only.</p>
 <p>Initial response typically within two business days.</p>
 </div>
 </section>
-
 <section class="section">
 <div class="grid">
-
 <div class="box">
 <div class="box-title">Request Review</div>
 <p class="box-desc">Minimal information required. Sensitive situations welcome.</p>
-
 <form action="https://formspree.io/f/xgorndnl" method="POST">
-
 <label>Name</label>
 <input type="text" name="name" required>
-
 <label>Email</label>
 <input type="email" name="email" required>
-
 <label>Role</label>
 <select name="role">
 <option>CEO / Founder</option>
@@ -467,73 +128,42 @@ Private inquiry for executives, boards, founders, counsel, and leaders facing co
 <option>Executive Operator</option>
 <option>Other</option>
 </select>
-
 <label>What is moving now?</label>
 <textarea name="message" required placeholder="Decision, exposure, timing, uncertainty..."></textarea>
-
 <button type="submit" class="submit">Send Private Inquiry</button>
-
 </form>
 </div>
-
 <div class="side-box">
-
 <div class="side-box-title">What This Is For</div>
-
 <div class="item">
 <strong>Authority Gap</strong>
 <span>No one clearly empowered to stop a critical decision.</span>
 </div>
-
 <div class="item">
 <strong>Executive Exposure</strong>
 <span>Responsibility may become personal if outcomes fail.</span>
 </div>
-
 <div class="item">
 <strong>Governance Pressure</strong>
 <span>Board, regulator, investor, or escalation risk.</span>
 </div>
-
 <div class="item">
 <strong>Time Compression</strong>
 <span>Decisions moving faster than internal process.</span>
 </div>
-
-<div class="pull">
-When momentum rises,<br>clarity matters.
+<div class="pull">When momentum rises,<br>clarity matters.</div>
 </div>
-
-</div>
-
 </div>
 </section>
-
-<div class="footer">
-© 2025 Liran Bar-Shrim. All rights reserved.
-</div>
-
+<div class="footer">© 2026 Liran Bar-Shrim. All rights reserved.</div>
 </main>
-
 <script>
 const drawer=document.getElementById("drawer");
 const overlay=document.getElementById("overlay");
-const openBtn=document.getElementById("openMenu");
-const closeBtn=document.getElementById("closeMenu");
-
-openBtn.onclick=function(){
-drawer.classList.add("active");
-overlay.classList.add("active");
-};
-
-closeBtn.onclick=closeDrawer;
+document.getElementById("openMenu").onclick=function(){drawer.classList.add("active");overlay.classList.add("active");};
+document.getElementById("closeMenu").onclick=closeDrawer;
 overlay.onclick=closeDrawer;
-
-function closeDrawer(){
-drawer.classList.remove("active");
-overlay.classList.remove("active");
-}
+function closeDrawer(){drawer.classList.remove("active");overlay.classList.remove("active");}
 </script>
-
 </body>
 </html>
