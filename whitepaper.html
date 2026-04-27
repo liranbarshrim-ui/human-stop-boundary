@@ -7,10 +7,6 @@
 <meta name="description" content="A practical governance white paper on named stop authority, accountability exposure, and stopping authority in high-risk decisions.">
 <meta name="robots" content="index,follow">
 <link rel="canonical" href="https://matrix-audit.com/whitepaper.html">
-<meta property="og:title" content="Named Stop Authority White Paper | Decision Authority Research">
-<meta property="og:description" content="A practical governance white paper on named stop authority in high-risk decisions.">
-<meta property="og:type" content="website">
-<meta property="og:url" content="https://matrix-audit.com/whitepaper.html">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&display=swap" rel="stylesheet">
@@ -54,13 +50,11 @@ strong{color:var(--text);}
 .list-item{padding:11px 0;border-bottom:1px solid var(--line2);color:var(--muted);font-size:15px;}
 .list-item:last-child{border-bottom:none;}
 .pull{margin-top:18px;padding:20px 24px;background:#101010;border-left:3px solid var(--gold);font-family:"Cormorant Garamond",serif;font-size:clamp(18px,2.5vw,24px);line-height:1.4;color:var(--text);}
-.three-chain{display:grid;grid-template-columns:1fr;gap:12px;margin:20px 0;}
-@media(min-width:700px){.three-chain{grid-template-columns:1fr 1fr 1fr;}}
+.three-chain{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;margin:20px 0;}
 .chain-item{background:#0d0d0d;border:1px solid var(--line2);padding:16px;}
 .chain-num{font-family:"IBM Plex Mono",monospace;font-size:9px;letter-spacing:.18em;color:var(--gold);opacity:.6;margin-bottom:8px;}
 .chain-title{font-family:"Cormorant Garamond",serif;font-size:18px;font-weight:600;color:var(--gold2);margin-bottom:6px;}
 .chain-desc{font-size:12px;color:var(--muted);line-height:1.6;}
-a:focus,button:focus{outline:2px solid var(--gold);outline-offset:3px;}
 .footer-bar{max-width:860px;margin:auto;padding:22px 18px 60px;border-top:1px solid var(--line);font-family:Inter,sans-serif;font-size:13px;color:#7c766f;display:flex;justify-content:space-between;}
 @media(min-width:900px){.topbar{padding:0 34px;}.container{padding:130px 34px 110px;}.box,.section,.danger-section{padding:34px;}.footer-bar{padding:26px 34px 60px;}}
 </style>
@@ -69,7 +63,7 @@ a:focus,button:focus{outline:2px solid var(--gold);outline-offset:3px;}
 
 <header class="topbar">
 <a href="index.html" class="brand"><span class="brand-line"></span><span>Decision Authority Research</span></a>
-<button type="button" class="menu-btn" id="openMenu" aria-label="Open Menu"><span></span><span></span><span></span></button>
+<button class="menu-btn" id="openMenu" aria-label="Open Menu"><span></span><span></span><span></span></button>
 </header>
 
 <div class="overlay" id="overlay"></div>
@@ -77,7 +71,7 @@ a:focus,button:focus{outline:2px solid var(--gold);outline-offset:3px;}
 <aside class="drawer" id="drawer">
 <div class="drawer-top">
 <div class="drawer-title">Navigation</div>
-<button type="button" class="close-btn" id="closeMenu">&#215;</button>
+<button class="close-btn" id="closeMenu">&#215;</button>
 </div>
 <div class="group">
 <small>Primary</small>
@@ -137,7 +131,7 @@ a:focus,button:focus{outline:2px solid var(--gold);outline-offset:3px;}
 
 <div class="section">
 <div class="label">The Three Names</div>
-<h2>One practical model uses three distinct authorities.</h2>
+<h2>Named Stop Authority requires three distinct people.</h2>
 <p>A stop without a separate hold owner becomes a stop that dissolves. A hold without a separate release authority becomes an unowned delay. All three must be named before the decision begins.</p>
 <div class="three-chain">
 <div class="chain-item">
@@ -147,7 +141,7 @@ a:focus,button:focus{outline:2px solid var(--gold);outline-offset:3px;}
 </div>
 <div class="chain-item">
 <div class="chain-num">02</div>
-<div class="chain-title">Hold Authority</div>
+<div class="chain-title">Pause Owner</div>
 <div class="chain-desc">Holds the decision in suspension while governance responds. Distinct from the stop authority. If the hold requires convening, it has already dissolved.</div>
 </div>
 <div class="chain-item">
@@ -192,44 +186,10 @@ a:focus,button:focus{outline:2px solid var(--gold);outline-offset:3px;}
 </div>
 
 <div class="section">
-<div class="label">Case Examples</div>
-<h2>The pattern is not theoretical.</h2>
-<p>In each of the following cases, the system continued because no one was named, in advance, to stop it.</p>
-
-<div class="list-item" style="padding:16px 0;">
-<strong style="display:block;color:var(--text);margin-bottom:6px;">Knight Capital Group — August 1, 2012</strong>
-<span style="font-size:14px;">A software deployment error activated a dormant trading algorithm. In 45 minutes, Knight Capital executed millions of erroneous orders. Loss: $440 million. No single named individual held the authority to halt the trading system in real time. Operators observed anomalous behavior. The system continued executing while governance attempted to convene. The gap between observation and named stop authority cost $10 million per minute.</span>
-</div>
-
-<div class="list-item" style="padding:16px 0;">
-<strong style="display:block;color:var(--text);margin-bottom:6px;">Boeing MCAS</strong>
-<span style="font-size:14px;">The MCAS system continued operating under conditions its pilots could not override through standard procedure. The governance question was not whether the system was approved. It was whether any named individual held the authority to halt it before outcomes became irreversible at scale.</span>
-</div>
-
-<div class="pull" style="margin-top:24px;">In each case: the process was not absent. The name was.</div>
-</div>
+<div class="label">AI & Autonomous Systems</div>
 <h2>The faster the system, the clearer the stop path must be.</h2>
 <p>Automation compresses time between signal and consequence. When AI removes the visible decision-maker, governance must restore the visible stop-maker. The question is not who reviews later. It is who can halt the system in time.</p>
 <div class="pull">If no one is named to stop it, it should not run.</div>
-</div>
-
-<div class="section">
-<div class="label">Why Boards Care</div>
-<h2>Governance exposure is personal before it is organizational.</h2>
-<div class="list-item">Unclear ownership becomes visible after incidents, not before</div>
-<div class="list-item">Delayed stop response concentrates liability on whoever was most visible</div>
-<div class="list-item">Personal exposure follows when authority was diffuse and outcomes were harmful</div>
-<div class="list-item">Inability to demonstrate named oversight weakens board defensibility</div>
-</div>
-
-<div class="section">
-<div class="label">Business Value</div>
-<h2>Named stop authority reduces unmanaged exposure.</h2>
-<div class="list-item">Reduces unmanaged liability in high-speed decision environments</div>
-<div class="list-item">Shortens crisis response time by pre-assigning ownership</div>
-<div class="list-item">Clarifies escalation before pressure forces improvisation</div>
-<div class="list-item">Protects board oversight with documented authority structures</div>
-<div class="list-item">Creates a governance record reviewable after any incident</div>
 </div>
 
 <div class="section">
@@ -237,7 +197,6 @@ a:focus,button:focus{outline:2px solid var(--gold);outline-offset:3px;}
 <h2>Strong organizations are not defined only by speed.</h2>
 <p>They are also defined by whether someone can legitimately and clearly say stop, and whether that word belongs to a name, not a process.</p>
 <p>If no one is named to stop the irreversible, the organization has already delegated the decision to momentum.</p>
-<a href="contact.html" style="display:inline-block;margin-top:18px;padding:13px 26px;background:linear-gradient(135deg,#d9bb79,#b88e45);color:#111;font-family:'IBM Plex Mono',monospace;font-size:10px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;border-radius:3px;text-decoration:none;">Request Private Inquiry</a>
 </div>
 
 </main>
@@ -246,15 +205,14 @@ a:focus,button:focus{outline:2px solid var(--gold);outline-offset:3px;}
 <span>&#169; 2026 Liran Bar-Shrim</span>
 <span>matrix-audit.com</span>
 </footer>
-<div style="max-width:860px;margin:0 auto;padding:0 18px 40px;font-family:'IBM Plex Mono',monospace;font-size:10px;color:#3a3a3a;line-height:1.7;">This paper is for governance discussion purposes only and does not constitute legal, regulatory, or operational advice.</div>
 
 <script>
 var drawer=document.getElementById('drawer');
 var overlay=document.getElementById('overlay');
-document.getElementById('openMenu').onclick=function(){drawer.classList.add('active');overlay.classList.add('active');document.body.style.overflow='hidden';};
+document.getElementById('openMenu').onclick=function(){drawer.classList.add('active');overlay.classList.add('active');};
 document.getElementById('closeMenu').onclick=closeDrawer;
 overlay.onclick=closeDrawer;
-function closeDrawer(){drawer.classList.remove('active');overlay.classList.remove('active');document.body.style.overflow='';}
+function closeDrawer(){drawer.classList.remove('active');overlay.classList.remove('active');}
 </script>
 
 </body>
