@@ -3,15 +3,13 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>Named Stop Authority — Working Paper | Decision Authority Research</title>
-<meta name="description" content="Named Stop Authority: Why Diffused Accountability Is No Longer a Safe Design. A working paper by Liran Bar-Shrim, Decision Authority Research.">
+<title>Named Stop Authority — Board Brief | Decision Authority Research</title>
+<meta name="description" content="Named Stop Authority: Why Diffused Accountability Is No Longer a Safe Design. A board brief by Liran Bar-Shrim, Decision Authority Research.">
 <meta name="robots" content="index,follow">
-<link rel="canonical" href="https://matrix-audit.com/working-paper.html">
-
+<link rel="canonical" href="https://matrix-audit.com/board-brief.html">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&family=IBM+Plex+Mono:wght@400;500&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&display=swap" rel="stylesheet">
-
 <style>
 :root{
 --bg:#090909;
@@ -25,325 +23,67 @@
 --line2:rgba(255,255,255,.05);
 --danger:#c0392b;
 }
-
 *{margin:0;padding:0;box-sizing:border-box;}
 html{scroll-behavior:smooth;}
-
-body{
-font-family:Inter,sans-serif;
-background:var(--bg);
-color:var(--text);
-overflow-x:hidden;
-line-height:1.78;
--webkit-font-smoothing:antialiased;
-font-weight:300;
-}
-
-body:before{
-content:"";
-position:fixed;inset:0;
-pointer-events:none;opacity:.04;
-background-image:
-linear-gradient(rgba(255,255,255,.03) 1px,transparent 1px),
-linear-gradient(90deg,rgba(255,255,255,.03) 1px,transparent 1px);
-background-size:40px 40px;
-}
-
+body{font-family:Inter,sans-serif;background:var(--bg);color:var(--text);overflow-x:hidden;line-height:1.78;-webkit-font-smoothing:antialiased;font-weight:300;}
+body:before{content:"";position:fixed;inset:0;pointer-events:none;opacity:.04;background-image:linear-gradient(rgba(255,255,255,.03) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.03) 1px,transparent 1px);background-size:40px 40px;}
 a{text-decoration:none;color:inherit;}
-
-/* TOPBAR */
-.topbar{
-position:fixed;top:0;left:0;right:0;
-height:74px;
-display:flex;align-items:center;justify-content:space-between;
-padding:0 18px;z-index:1000;
-background:rgba(5,5,5,.92);
-backdrop-filter:blur(14px);
-border-bottom:1px solid var(--line2);
-}
-
-.brand{
-display:flex;align-items:center;gap:12px;
-font-family:"IBM Plex Mono",monospace;
-font-size:10px;letter-spacing:.28em;
-text-transform:uppercase;white-space:nowrap;
-}
+.topbar{position:fixed;top:0;left:0;right:0;height:74px;display:flex;align-items:center;justify-content:space-between;padding:0 18px;z-index:1000;background:rgba(5,5,5,.92);backdrop-filter:blur(14px);border-bottom:1px solid var(--line2);}
+.brand{display:flex;align-items:center;gap:12px;font-family:"IBM Plex Mono",monospace;font-size:10px;letter-spacing:.28em;text-transform:uppercase;white-space:nowrap;}
 .brand-line{width:34px;height:2px;background:var(--gold);}
-
-.menu-btn{
-width:42px;height:42px;
-border:none;background:none;cursor:pointer;
-display:flex;flex-direction:column;justify-content:center;gap:6px;
-}
+.menu-btn{width:42px;height:42px;border:none;background:none;cursor:pointer;display:flex;flex-direction:column;justify-content:center;gap:6px;}
 .menu-btn span{height:2px;background:#fff;border-radius:4px;display:block;}
 .menu-btn span:nth-child(2){width:72%;margin-left:auto;}
-
-/* DRAWER */
-.overlay{
-position:fixed;inset:0;
-background:rgba(0,0,0,.55);
-opacity:0;visibility:hidden;transition:.25s;z-index:998;
-}
+.overlay{position:fixed;inset:0;background:rgba(0,0,0,.55);opacity:0;visibility:hidden;transition:.25s;z-index:998;}
 .overlay.active{opacity:1;visibility:visible;}
-
-.drawer{
-position:fixed;top:0;right:-100%;
-width:86%;max-width:420px;
-height:100vh;overflow-y:auto;
-z-index:999;padding:24px;
-transition:.3s ease;
-background:#0a0a0a;
-border-left:1px solid var(--line);
-}
+.drawer{position:fixed;top:0;right:-100%;width:86%;max-width:420px;height:100vh;overflow-y:auto;z-index:999;padding:24px;transition:.3s ease;background:#0a0a0a;border-left:1px solid var(--line);}
 .drawer.active{right:0;}
-
-.drawer-top{
-display:flex;justify-content:space-between;align-items:center;
-margin-bottom:18px;
-}
-.drawer-title{
-font-family:"IBM Plex Mono",monospace;
-font-size:11px;letter-spacing:.28em;
-text-transform:uppercase;color:var(--gold);
-}
-.close-btn{
-font-size:38px;line-height:1;
-background:none;border:none;color:#fff;cursor:pointer;
-}
+.drawer-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:18px;}
+.drawer-title{font-family:"IBM Plex Mono",monospace;font-size:11px;letter-spacing:.28em;text-transform:uppercase;color:var(--gold);}
+.close-btn{font-size:38px;line-height:1;background:none;border:none;color:#fff;cursor:pointer;}
 .group{margin-top:18px;}
-.group small{
-display:block;
-font-family:"IBM Plex Mono",monospace;
-font-size:10px;letter-spacing:.26em;
-text-transform:uppercase;color:var(--gold);
-margin-bottom:10px;
-}
-.drawer a.link{
-display:block;padding:14px 0;font-size:20px;
-border-bottom:1px solid var(--line2);
-color:var(--text);
-}
+.group small{display:block;font-family:"IBM Plex Mono",monospace;font-size:10px;letter-spacing:.26em;text-transform:uppercase;color:var(--gold);margin-bottom:10px;}
+.drawer a.link{display:block;padding:14px 0;font-size:20px;border-bottom:1px solid var(--line2);color:var(--text);}
 .drawer a.link:hover{color:var(--gold2);}
 .drawer a.link.current{color:var(--gold);}
-
-.private-btn{
-display:block;margin-top:22px;padding:16px;
-border-radius:16px;text-align:center;
-font-weight:800;letter-spacing:.18em;
-font-size:13px;text-transform:uppercase;
-background:linear-gradient(135deg,#d9bb79,#b88e45);
-color:#111;
-}
-.mail-btn{
-display:block;margin-top:14px;padding:14px;
-text-align:center;border-radius:16px;
-border:1px solid var(--line);
-color:#f3dfb4;font-size:15px;word-break:break-word;
-}
-
-/* PAPER LAYOUT */
-.paper-wrap{
-max-width:780px;
-margin:0 auto;
-padding:110px 24px 80px;
-}
-
-/* PAPER HEADER */
-.journal-tag{
-font-family:"IBM Plex Mono",monospace;
-font-size:10px;letter-spacing:.22em;
-text-transform:uppercase;color:var(--gold);
-display:block;margin-bottom:32px;
-}
-
-.paper-title{
-font-family:"Cormorant Garamond",serif;
-font-size:clamp(30px,6vw,52px);
-line-height:1.1;font-weight:600;
-margin-bottom:20px;
-border-left:3px solid var(--gold);
-padding-left:20px;
-}
-
-.paper-title em{
-font-style:italic;color:var(--gold);
-}
-
-.paper-subtitle{
-font-family:"IBM Plex Mono",monospace;
-font-size:12px;color:var(--muted2);
-margin-bottom:40px;padding-left:23px;
-letter-spacing:.04em;
-}
-
-.author-block{
-padding-left:23px;
-margin-bottom:56px;
-border-bottom:1px solid var(--line2);
-padding-bottom:40px;
-}
-.author-name{
-font-family:"Cormorant Garamond",serif;
-font-size:18px;display:block;margin-bottom:4px;
-}
-.author-meta{
-font-family:"IBM Plex Mono",monospace;
-font-size:11px;color:var(--muted);
-display:block;letter-spacing:.05em;
-}
-
-/* ABSTRACT */
-.abstract{
-background:var(--surface);
-border-left:3px solid var(--gold);
-padding:28px 32px;
-margin-bottom:48px;
-}
-.abstract-label{
-font-family:"IBM Plex Mono",monospace;
-font-size:10px;letter-spacing:.2em;
-text-transform:uppercase;color:var(--gold);
-display:block;margin-bottom:14px;
-}
-.abstract p{
-font-size:15px;color:#c8c2b8;
-line-height:1.9;font-style:italic;
-}
-
-/* KEYWORDS */
-.keywords{
-margin-bottom:56px;
-display:flex;flex-wrap:wrap;gap:8px;align-items:center;
-}
-.kw-label{
-font-family:"IBM Plex Mono",monospace;
-font-size:10px;letter-spacing:.15em;
-text-transform:uppercase;color:var(--muted);
-margin-right:8px;
-}
-.kw{
-font-family:"IBM Plex Mono",monospace;
-font-size:10px;letter-spacing:.1em;
-text-transform:uppercase;color:var(--muted2);
-border:1px solid var(--line2);
-padding:4px 10px;
-}
-
-/* SECTIONS */
+.private-btn{display:block;margin-top:22px;padding:16px;border-radius:16px;text-align:center;font-weight:800;letter-spacing:.18em;font-size:13px;text-transform:uppercase;background:linear-gradient(135deg,#d9bb79,#b88e45);color:#111;}
+.mail-btn{display:block;margin-top:14px;padding:14px;text-align:center;border-radius:16px;border:1px solid var(--line);color:#f3dfb4;font-size:15px;word-break:break-word;}
+.paper-wrap{max-width:780px;margin:0 auto;padding:110px 24px 80px;}
+.journal-tag{font-family:"IBM Plex Mono",monospace;font-size:10px;letter-spacing:.22em;text-transform:uppercase;color:var(--gold);display:block;margin-bottom:32px;}
+.paper-title{font-family:"Cormorant Garamond",serif;font-size:clamp(30px,6vw,52px);line-height:1.1;font-weight:600;margin-bottom:20px;border-left:3px solid var(--gold);padding-left:20px;}
+.paper-title em{font-style:italic;color:var(--gold);}
+.paper-subtitle{font-family:"IBM Plex Mono",monospace;font-size:12px;color:var(--muted2);margin-bottom:40px;padding-left:23px;letter-spacing:.04em;}
+.author-block{padding-left:23px;margin-bottom:56px;border-bottom:1px solid var(--line2);padding-bottom:40px;}
+.author-name{font-family:"Cormorant Garamond",serif;font-size:18px;display:block;margin-bottom:4px;}
+.author-meta{font-family:"IBM Plex Mono",monospace;font-size:11px;color:var(--muted);display:block;letter-spacing:.05em;}
+.abstract{background:var(--surface);border-left:3px solid var(--gold);padding:28px 32px;margin-bottom:48px;}
+.abstract-label{font-family:"IBM Plex Mono",monospace;font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--gold);display:block;margin-bottom:14px;}
+.abstract p{font-size:15px;color:#c8c2b8;line-height:1.9;font-style:italic;}
+.keywords{margin-bottom:56px;display:flex;flex-wrap:wrap;gap:8px;align-items:center;}
+.kw-label{font-family:"IBM Plex Mono",monospace;font-size:10px;letter-spacing:.15em;text-transform:uppercase;color:var(--muted);margin-right:8px;}
+.kw{font-family:"IBM Plex Mono",monospace;font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted2);border:1px solid var(--line2);padding:4px 10px;}
 section{margin-bottom:64px;}
-
-.section-number{
-font-family:"IBM Plex Mono",monospace;
-font-size:10px;letter-spacing:.2em;
-text-transform:uppercase;color:var(--gold);
-display:block;margin-bottom:12px;
-}
-
-h2{
-font-family:"Cormorant Garamond",serif;
-font-size:clamp(22px,4vw,34px);
-font-weight:600;color:var(--text);
-margin-bottom:24px;line-height:1.2;
-}
-
-h3{
-font-family:"Cormorant Garamond",serif;
-font-size:20px;font-weight:400;
-font-style:italic;color:#c4beb4;
-margin:36px 0 14px;
-}
-
-p{
-font-size:17px;color:#c8c2b8;
-margin-bottom:18px;line-height:1.82;
-font-weight:300;
-}
+.section-number{font-family:"IBM Plex Mono",monospace;font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--gold);display:block;margin-bottom:12px;}
+h2{font-family:"Cormorant Garamond",serif;font-size:clamp(22px,4vw,34px);font-weight:600;color:var(--text);margin-bottom:24px;line-height:1.2;}
+h3{font-family:"Cormorant Garamond",serif;font-size:20px;font-weight:400;font-style:italic;color:#c4beb4;margin:36px 0 14px;}
+p{font-size:17px;color:#c8c2b8;margin-bottom:18px;line-height:1.82;font-weight:300;}
 p:last-child{margin-bottom:0;}
 strong{color:var(--text);font-weight:500;}
-
-/* PULL QUOTE */
-.pull-quote{
-border-left:3px solid var(--gold);
-padding:22px 28px;
-margin:36px 0;
-background:rgba(200,169,110,.04);
-}
-.pull-quote p{
-font-family:"Cormorant Garamond",serif;
-font-size:clamp(17px,2.5vw,22px);
-font-style:italic;color:var(--text);
-line-height:1.5;margin:0;
-}
-
-/* PRINCIPLE BOX */
-.principle-box{
-border:1px solid var(--line2);
-background:var(--surface);
-padding:26px 28px;margin:32px 0;
-}
-.principle-box .p-label{
-font-family:"IBM Plex Mono",monospace;
-font-size:10px;letter-spacing:.2em;
-text-transform:uppercase;color:var(--gold);
-display:block;margin-bottom:14px;
-}
-.principle-box p{
-font-family:"IBM Plex Mono",monospace;
-font-size:13px;color:var(--text);
-line-height:1.8;margin:0;font-weight:400;
-}
-
-/* DANGER NOTE */
-.danger-note{
-border-left:3px solid var(--danger);
-padding:18px 24px;margin:28px 0;
-background:rgba(192,57,43,.04);
-}
-.danger-note p{
-font-family:"IBM Plex Mono",monospace;
-font-size:12px;color:#d4796f;
-margin:0;letter-spacing:.02em;
-}
-
-/* LIST */
-ol.body-list{
-list-style:none;counter-reset:item;
-margin:22px 0 24px;
-}
-ol.body-list li{
-counter-increment:item;
-display:flex;gap:16px;
-margin-bottom:14px;
-color:#c8c2b8;font-weight:300;
-line-height:1.72;font-size:17px;
-}
-ol.body-list li::before{
-content:counter(item,decimal-leading-zero);
-font-family:"IBM Plex Mono",monospace;
-font-size:10px;color:var(--gold);
-min-width:28px;padding-top:5px;
-letter-spacing:.05em;
-}
-
-/* CONCLUSION */
-.conclusion-block{
-border-top:1px solid var(--line2);
-border-bottom:1px solid var(--line2);
-padding:48px 0;margin:56px 0;
-}
-
-/* FOOTER */
-.footer-bar{
-max-width:780px;margin:0 auto;
-padding:28px 24px 60px;
-border-top:1px solid var(--line);
-font-family:"IBM Plex Mono",monospace;
-font-size:11px;letter-spacing:.1em;
-color:#5c564f;
-display:flex;justify-content:space-between;
-flex-wrap:wrap;gap:12px;
-}
-
+.pull-quote{border-left:3px solid var(--gold);padding:22px 28px;margin:36px 0;background:rgba(200,169,110,.04);}
+.pull-quote p{font-family:"Cormorant Garamond",serif;font-size:clamp(17px,2.5vw,22px);font-style:italic;color:var(--text);line-height:1.5;margin:0;}
+.principle-box{border:1px solid var(--line2);background:var(--surface);padding:26px 28px;margin:32px 0;}
+.principle-box .p-label{font-family:"IBM Plex Mono",monospace;font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--gold);display:block;margin-bottom:14px;}
+.principle-box p{font-family:"IBM Plex Mono",monospace;font-size:13px;color:var(--text);line-height:1.8;margin:0;font-weight:400;}
+.danger-note{border-left:3px solid var(--danger);padding:18px 24px;margin:28px 0;background:rgba(192,57,43,.04);}
+.danger-note p{font-family:"IBM Plex Mono",monospace;font-size:12px;color:#d4796f;margin:0;letter-spacing:.02em;}
+ol.body-list{list-style:none;counter-reset:item;margin:22px 0 24px;}
+ol.body-list li{counter-increment:item;display:flex;gap:16px;margin-bottom:14px;color:#c8c2b8;font-weight:300;line-height:1.72;font-size:17px;}
+ol.body-list li::before{content:counter(item,decimal-leading-zero);font-family:"IBM Plex Mono",monospace;font-size:10px;color:var(--gold);min-width:28px;padding-top:5px;letter-spacing:.05em;}
+.conclusion-block{border-top:1px solid var(--line2);border-bottom:1px solid var(--line2);padding:48px 0;margin:56px 0;}
+.closing-block{max-width:780px;margin:0 auto;padding:0 24px 80px;}
+.closing-inner{border-top:1px solid var(--line2);padding-top:56px;}
+.closing-divider{width:32px;height:1px;background:var(--gold);margin:32px 0;opacity:0.6;}
+.footer-bar{max-width:780px;margin:0 auto;padding:28px 24px 60px;border-top:1px solid var(--line);font-family:"IBM Plex Mono",monospace;font-size:11px;letter-spacing:.1em;color:#5c564f;display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px;}
 @media(max-width:600px){
 .paper-wrap{padding:96px 18px 60px;}
 .abstract{padding:20px 18px;}
@@ -355,21 +95,13 @@ flex-wrap:wrap;gap:12px;
 </head>
 <body>
 
-<!-- TOPBAR -->
 <header class="topbar">
-<a href="index.html" class="brand">
-<span class="brand-line"></span>
-<span>Decision Authority Research</span>
-</a>
-<button class="menu-btn" id="openMenu" aria-label="Open Menu">
-<span></span><span></span><span></span>
-</button>
+<a href="index.html" class="brand"><span class="brand-line"></span><span>Decision Authority Research</span></a>
+<button class="menu-btn" id="openMenu" aria-label="Open Menu"><span></span><span></span><span></span></button>
 </header>
 
-<!-- OVERLAY -->
 <div class="overlay" id="overlay"></div>
 
-<!-- DRAWER -->
 <aside class="drawer" id="drawer">
 <div class="drawer-top">
 <div class="drawer-title">Navigation</div>
@@ -387,8 +119,9 @@ flex-wrap:wrap;gap:12px;
 <small>Research</small>
 <a class="link" href="research.html">Independent Research</a>
 <a class="link" href="whitepaper.html">White Paper</a>
-<a class="link current" href="working-paper.html">Working Paper</a>
+<a class="link current" href="board-brief.html">Board Brief</a>
 <a class="link" href="insights.html">Insights</a>
+<a class="link" href="/human-stop-boundary">Human Stop Boundary</a>
 </div>
 <div class="group">
 <small>Reference</small>
@@ -400,13 +133,10 @@ flex-wrap:wrap;gap:12px;
 <a href="mailto:Liran@liranbarshrim.com" class="mail-btn">Liran@liranbarshrim.com</a>
 </aside>
 
-<!-- PAPER -->
 <main class="paper-wrap">
 
 <span class="journal-tag">Decision Authority Research — Working Paper</span>
-
 <h1 class="paper-title">Named Stop Authority:<br><em>Why Diffused Accountability<br>Is No Longer a Safe Design</em></h1>
-
 <p class="paper-subtitle">Rethinking Organizational Governance in the Age of Autonomous Systems</p>
 
 <div class="author-block">
@@ -415,13 +145,11 @@ flex-wrap:wrap;gap:12px;
 <span class="author-meta">matrix-audit.com</span>
 </div>
 
-<!-- ABSTRACT -->
 <div class="abstract">
 <span class="abstract-label">Abstract</span>
 <p>Organizations have long distributed accountability across roles, committees, and processes as a rational response to complexity. This paper argues that such distribution, once a defensible design choice, has become structurally dangerous in environments where decisions execute faster than governance can respond. We introduce the concept of Named Stop Authority as a necessary condition for meaningful organizational control: the requirement that a specific individual, identified in advance, holds exclusive and protected power to halt an irreversible decision. We examine the conditions under which this authority is genuine versus ceremonial, the structural features that strip it of force, and the accountability gap that emerges when continuation is treated as the default state. The argument is not normative. It is diagnostic. Most organizations do not have a stop. They have the appearance of one.</p>
 </div>
 
-<!-- KEYWORDS -->
 <div class="keywords">
 <span class="kw-label">Keywords</span>
 <span class="kw">Named Stop Authority</span>
@@ -432,7 +160,6 @@ flex-wrap:wrap;gap:12px;
 <span class="kw">DAR</span>
 </div>
 
-<!-- S1 -->
 <section>
 <span class="section-number">01 — Introduction</span>
 <h2>The Accountability Gap Nobody Named</h2>
@@ -444,7 +171,6 @@ flex-wrap:wrap;gap:12px;
 <p>This paper introduces the concept of <strong>Named Stop Authority</strong> as the minimal governance unit required to make organizational control real rather than nominal. It examines what makes such authority genuine, what strips it of force, and why the absence of a named stop is not merely a governance gap but a deliberate organizational choice with measurable consequences.</p>
 </section>
 
-<!-- S2 -->
 <section>
 <span class="section-number">02 — The Design That Made Sense</span>
 <h2>Distributed Accountability as Rational Architecture</h2>
@@ -456,7 +182,6 @@ flex-wrap:wrap;gap:12px;
 <p>The critical assumption underlying this design was temporal. Distributed accountability works when there is enough time between decision and consequence for governance layers to engage. Remove that time, and distribution becomes diffusion. Diffusion in conditions of speed becomes concealment.</p>
 </section>
 
-<!-- S3 -->
 <section>
 <span class="section-number">03 — The Environment Changed</span>
 <h2>When Speed Breaks the Architecture</h2>
@@ -470,7 +195,6 @@ flex-wrap:wrap;gap:12px;
 <p>The language organizations use to describe this condition is revealing. "The system flagged it." "The process was followed." "No single person made that call." These formulations are not evasions in the ordinary sense. They are accurate descriptions of how accountability was architecturally distributed out of existence.</p>
 </section>
 
-<!-- S4 -->
 <section>
 <span class="section-number">04 — The Core Concept</span>
 <h2>What Named Stop Authority Actually Means</h2>
@@ -490,7 +214,6 @@ flex-wrap:wrap;gap:12px;
 <div class="principle-box"><span class="p-label">Core Principle</span><p>Stop is the default state. Continuation does not exist until explicitly released by a named individual bound to refusal. No release, no continuation. If continuation is available without that release, there is no stop.</p></div>
 </section>
 
-<!-- S5 -->
 <section>
 <span class="section-number">05 — Common Misidentifications</span>
 <h2>What Named Stop Authority Is Not</h2>
@@ -506,7 +229,6 @@ flex-wrap:wrap;gap:12px;
 <p>Who holds the stop. Who holds the release. Who escalates if neither acts. All three must be named. All three must be named before the decision process begins.</p>
 </section>
 
-<!-- S6 -->
 <section>
 <span class="section-number">06 — The Intuition Problem</span>
 <h2>When the Signal Precedes the Evidence</h2>
@@ -518,7 +240,6 @@ flex-wrap:wrap;gap:12px;
 <div class="principle-box"><span class="p-label">Precision Rule</span><p>Intuition may justify a pause.<br>Evidence must justify a stop.<br>In both cases: the authority is named before the signal arrives.</p></div>
 </section>
 
-<!-- S7 -->
 <section>
 <span class="section-number">07 — The Accountability Structure</span>
 <h2>Who Stops, Who Holds, Who Releases</h2>
@@ -533,7 +254,6 @@ flex-wrap:wrap;gap:12px;
 <div class="pull-quote"><p>"A stop without a named release authority is not governance. It is a delay with no owner. Someone must hold it. Someone must end it. Both names must appear in the document before the decision begins."</p></div>
 </section>
 
-<!-- S7.5 -->
 <section>
 <span class="section-number">07.5 — After the Stop</span>
 <h2>Suspension, Release, and the Accountability of Continuation</h2>
@@ -553,7 +273,6 @@ flex-wrap:wrap;gap:12px;
 <p>The trigger may be ambiguous. The authority may not be. But the authority is not only the authority to stop. It is the authority to hold, to release, and to bear the accountability for each of those acts in sequence.</p>
 </section>
 
-<!-- S8 -->
 <section>
 <span class="section-number">08 — Why Organizations Resist</span>
 <h2>The Political Economy of Named Accountability</h2>
@@ -566,7 +285,6 @@ flex-wrap:wrap;gap:12px;
 <p>The excuses organizations offer for the absence of named accountability, scale, complexity, culture, speed of change, are not explanations. They are the conditions under which named accountability is most necessary. The harder it is to assign a name, the more important it is to assign one.</p>
 </section>
 
-<!-- S8.1 -->
 <section>
 <span class="section-number">08.1 — Legitimate Objections</span>
 <h2>What the Critics Get Right</h2>
@@ -581,7 +299,6 @@ flex-wrap:wrap;gap:12px;
 <p>Who gets named will itself become a political contest. This is true. It is also true of every other governance assignment in an organization. The answer is not to avoid naming but to document the naming process with the same rigor applied to the authority itself. A stop authority appointed through transparent criteria is more defensible than one that emerged from informal influence. The political fight over the name is preferable to the absence of a name.</p>
 </section>
 
-<!-- S8.2 -->
 <section>
 <span class="section-number">08.2 — Minimum Viable Implementation</span>
 <h2>What the Smallest Real Version Looks Like</h2>
@@ -590,7 +307,6 @@ flex-wrap:wrap;gap:12px;
 <p>These five elements can be implemented inside existing governance structures. They do not require new legislation or new roles. They require specificity where organizations currently accept ambiguity. That specificity is the entire point.</p>
 </section>
 
-<!-- S8.5 -->
 <section>
 <span class="section-number">08.5 — The Hidden Decision-Maker</span>
 <h2>When No One Is Named, Momentum Decides</h2>
@@ -603,7 +319,6 @@ flex-wrap:wrap;gap:12px;
 <p>Knight Capital is not an isolated case. Boeing's MCAS system continued operating under conditions its pilots could not override through standard procedure. Automated credit and hiring systems produced discriminatory outcomes at scale before any named individual held authority to halt them. In each instance, the pattern is identical: the system continued because no one was named, in advance, to stop it.</p>
 </section>
 
-<!-- S9 -->
 <section>
 <span class="section-number">09 — Implications for AI Governance</span>
 <h2>The Autonomous System Problem</h2>
@@ -616,7 +331,6 @@ flex-wrap:wrap;gap:12px;
 <div class="principle-box"><span class="p-label">DAR Core Question</span><p>Who, by name, can stop the system before execution becomes irreversible?<br><br>Not a role. Not a committee. Not a policy. A person. Named. Before the decision begins.</p></div>
 </section>
 
-<!-- S9.5 -->
 <section>
 <span class="section-number">09.5 — The Upstream Effect</span>
 <h2>Authority Changes Behavior Before It Is Ever Used</h2>
@@ -626,7 +340,6 @@ flex-wrap:wrap;gap:12px;
 <p>This upstream effect is one of the least discussed and most consequential properties of the framework. Organizations that evaluate Named Stop Authority only by asking how often it would be used are measuring the wrong variable. The right variable is how much the system changes when everyone knows it exists.</p>
 </section>
 
-<!-- CONCLUSION -->
 <div class="conclusion-block">
 <section>
 <span class="section-number">10 — Conclusion</span>
@@ -642,26 +355,40 @@ flex-wrap:wrap;gap:12px;
 
 </main>
 
+<!-- CLOSING BLOCK -->
+<div class="closing-block">
+<div class="closing-inner">
+<p style="font-family:'Cormorant Garamond',serif;font-size:clamp(18px,3vw,26px);color:#e8e2d7;line-height:1.4;margin-bottom:0;font-weight:600;">Most organizations believe they have a stop.<br>Very few can name it.</p>
+<p style="font-family:'IBM Plex Mono',monospace;font-size:13px;color:#a7a097;margin-top:20px;margin-bottom:0;line-height:1.8;">If you cannot, the decision has already been made.<br>Continuation is your default.</p>
+<div class="closing-divider"></div>
+<p style="font-family:'IBM Plex Mono',monospace;font-size:12px;color:#7a7570;line-height:1.9;margin-bottom:24px;">For organizations operating irreversible decision systems,<br>this question is not theoretical.</p>
+<p style="font-family:'IBM Plex Mono',monospace;font-size:11px;color:#7a7570;margin-bottom:16px;letter-spacing:.05em;">Private review available.</p>
+<a href="contact.html" style="display:inline-block;font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.22em;text-transform:uppercase;color:#c8a96e;border-bottom:1px solid #c8a96e;padding-bottom:2px;text-decoration:none;">Contact</a>
+</div>
+</div>
+
+<div class="closing-block">
+<div class="closing-inner">
+<p style="font-family:'Cormorant Garamond',serif;font-size:clamp(18px,3vw,26px);color:#e8e2d7;line-height:1.4;margin-bottom:0;font-weight:600;">Most organizations believe they have a stop.<br>Very few can name it.</p>
+<p style="font-family:'IBM Plex Mono',monospace;font-size:13px;color:#a7a097;margin-top:20px;margin-bottom:0;line-height:1.8;">If you cannot, the decision has already been made.<br>Continuation is your default.</p>
+<div class="closing-divider"></div>
+<p style="font-family:'IBM Plex Mono',monospace;font-size:12px;color:#7a7570;line-height:1.9;margin-bottom:24px;">For organizations operating irreversible decision systems,<br>this question is not theoretical.</p>
+<p style="font-family:'IBM Plex Mono',monospace;font-size:11px;color:#7a7570;margin-bottom:16px;letter-spacing:.05em;">Private review available.</p>
+<a href="contact.html" style="display:inline-block;font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.22em;text-transform:uppercase;color:#c8a96e;border-bottom:1px solid #c8a96e;padding-bottom:2px;text-decoration:none;">Contact</a>
+</div>
+</div>
+
 <footer class="footer-bar">
-<span>&#169; 2026 Liran Bar-Shrim</span>
-<span>Decision Authority Research / Matrix Audit</span>
-<span>matrix-audit.com</span>
+<span>&#169; 2026 Liran Bar-Shrim. All rights reserved.</span>
 </footer>
 
 <script>
 var drawer=document.getElementById('drawer');
 var overlay=document.getElementById('overlay');
-document.getElementById('openMenu').onclick=function(){
-drawer.classList.add('active');
-overlay.classList.add('active');
-};
+document.getElementById('openMenu').onclick=function(){drawer.classList.add('active');overlay.classList.add('active');};
 document.getElementById('closeMenu').onclick=closeDrawer;
 overlay.onclick=closeDrawer;
-function closeDrawer(){
-drawer.classList.remove('active');
-overlay.classList.remove('active');
-}
+function closeDrawer(){drawer.classList.remove('active');overlay.classList.remove('active');}
 </script>
-
 </body>
-</html> 
+</html>
