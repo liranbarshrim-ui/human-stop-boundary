@@ -41,24 +41,31 @@ a{text-decoration:none;color:inherit;}
 h1{font-family:"Cormorant Garamond",serif;font-size:clamp(38px,8vw,72px);line-height:.96;font-weight:600;margin-bottom:24px;border-left:3px solid var(--gold);padding-left:20px;}
 .hero-sub{font-size:17px;color:var(--muted);line-height:1.8;padding-left:23px;max-width:540px;margin-bottom:12px;}
 .box{background:linear-gradient(180deg,#111,#0d0d0d);border:1px solid var(--line2);border-left:3px solid var(--gold);padding:26px;margin-bottom:14px;}
+.box-dim{background:linear-gradient(180deg,#0e0e0e,#0b0b0b);border:1px solid var(--line2);border-left:2px solid rgba(200,169,110,.35);padding:26px;margin-bottom:14px;}
 .label{font-family:"IBM Plex Mono",monospace;font-size:10px;letter-spacing:.22em;text-transform:uppercase;color:var(--gold);margin-bottom:12px;}
+.label-dim{font-family:"IBM Plex Mono",monospace;font-size:10px;letter-spacing:.22em;text-transform:uppercase;color:rgba(200,169,110,.5);margin-bottom:12px;}
 h2{font-family:"Cormorant Garamond",serif;font-size:clamp(24px,4vw,38px);line-height:1.05;margin-bottom:14px;font-weight:600;}
 p{font-size:17px;color:var(--muted);margin-bottom:12px;max-width:68ch;}
 strong{color:var(--text);}
 .pull{background:#101010;border-left:3px solid var(--gold);padding:20px 24px;font-family:"Cormorant Garamond",serif;font-size:clamp(20px,3vw,28px);line-height:1.3;margin-bottom:14px;}
-.section-gap{height:22px;}
+.pull-dim{background:#0c0c0c;border-left:2px solid rgba(200,169,110,.35);padding:20px 24px;font-family:"Cormorant Garamond",serif;font-size:clamp(17px,2.5vw,22px);line-height:1.4;margin-bottom:14px;color:#a7a097;}
+.check-list{list-style:none;margin:14px 0;padding:0;}
+.check-list li{font-size:16px;color:var(--muted);padding:8px 0;border-bottom:1px solid var(--line2);display:flex;align-items:flex-start;gap:12px;}
+.check-list li:last-child{border-bottom:none;}
+.check-list li:before{content:"—";color:var(--gold);opacity:.6;flex-shrink:0;margin-top:2px;}
 .nav-links{display:flex;flex-direction:column;gap:10px;margin-top:14px;}
 .nav-link{font-family:"IBM Plex Mono",monospace;font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--gold);border-bottom:1px solid var(--line2);padding-bottom:10px;}
 .nav-link:hover{color:var(--gold2);}
+.section-gap{height:22px;}
 .footer-bar{max-width:860px;margin:auto;padding:22px 18px 60px;border-top:1px solid var(--line);font-family:Inter,sans-serif;font-size:13px;color:#7c766f;display:flex;justify-content:space-between;position:relative;z-index:1;}
-@media(min-width:900px){.topbar{padding:0 34px;}.hero{padding-top:100px;}.box{padding:34px;}.footer-bar{padding:26px 34px 60px;}}
+@media(min-width:900px){.topbar{padding:0 34px;}.hero{padding-top:100px;}.box{padding:34px;}.box-dim{padding:34px;}.footer-bar{padding:26px 34px 60px;}}
 </style>
 </head>
 <body>
 
 <header class="topbar">
 <a href="index.html" class="brand"><span class="brand-line"></span><span>Decision Authority Research</span></a>
-<button class="menu-btn" id="openMenu" aria-label="Open Menu"><span></span><span></span><span></span></button>
+<button type="button" class="menu-btn" id="openMenu" aria-label="Open Menu"><span></span><span></span><span></span></button>
 </header>
 
 <div class="overlay" id="overlay"></div>
@@ -66,7 +73,7 @@ strong{color:var(--text);}
 <aside class="drawer" id="drawer">
 <div class="drawer-top">
 <div class="drawer-title">Navigation</div>
-<button class="close-btn" id="closeMenu">&#215;</button>
+<button type="button" class="close-btn" id="closeMenu">&#215;</button>
 </div>
 <div class="group">
 <small>Primary</small>
@@ -162,11 +169,34 @@ strong{color:var(--text);}
 <div class="section-gap"></div>
 
 <div class="container">
+<div class="box-dim">
+<div class="label-dim">The Oversight Layer</div>
+<h2>A stop without oversight is a declared control without enforcement.</h2>
+<p>The chain may exist.<br>That does not mean it operates.</p>
+<p>Oversight is external to the chain.</p>
+<p>Not the one who stops.<br>Not the one who holds.<br>Not the one who releases.</p>
+<ul class="check-list">
+<li>The stop was recorded</li>
+<li>The time boundary was observed</li>
+<li>The release included written rationale</li>
+<li>Escalation was triggered when required</li>
+</ul>
+<div class="pull-dim">Without this, separation of roles becomes symbolic.<br>Informal alignment replaces governance.</div>
+<p style="margin-top:14px;">Every stop creates a record that can be reviewed independently.</p>
+<p>Not for reporting. For verification.</p>
+<p><strong>If it cannot be verified independently, it did not happen as defined.</strong></p>
+</div>
+</div>
+
+<div class="section-gap"></div>
+
+<div class="container">
 <div class="pull">
 Who stops.<br>
 Who holds.<br>
 Who releases.<br>
-Who escalates if no name responds.<br><br>
+Who escalates if no name responds.<br>
+Who verifies the chain held.<br><br>
 If any name is missing,<br>
 the system is not governed.
 </div>
@@ -195,10 +225,10 @@ the system is not governed.
 <script>
 var drawer=document.getElementById('drawer');
 var overlay=document.getElementById('overlay');
-document.getElementById('openMenu').onclick=function(){drawer.classList.add('active');overlay.classList.add('active');};
+document.getElementById('openMenu').onclick=function(){drawer.classList.add('active');overlay.classList.add('active');document.body.style.overflow='hidden';};
 document.getElementById('closeMenu').onclick=closeDrawer;
 overlay.onclick=closeDrawer;
-function closeDrawer(){drawer.classList.remove('active');overlay.classList.remove('active');}
+function closeDrawer(){drawer.classList.remove('active');overlay.classList.remove('active');document.body.style.overflow='';}
 </script>
 
 </body>
