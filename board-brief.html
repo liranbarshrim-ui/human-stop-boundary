@@ -9,179 +9,419 @@
 <link rel="canonical" href="https://matrix-audit.com/board-brief.html">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@300;400;500&family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
-:root{--bg:#090909;--surface:#111111;--gold:#c8a96e;--red:#c0392b;--text:#e6e0d4;--muted:#7a7570;--border:#1e1e1e;--border2:#2a2a2a;}
-html,body{background:var(--bg);color:var(--text);font-family:'IBM Plex Mono',monospace;min-height:100vh;-webkit-font-smoothing:antialiased;}
-body::before{content:'';position:fixed;inset:0;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");pointer-events:none;z-index:0;opacity:0.5;}
+
+:root{
+  --bg:#0d0d0d;
+  --surface:#161616;
+  --surface2:#1c1c1c;
+  --gold:#c8a96e;
+  --gold-light:#e8d4a8;
+  --red:#c0392b;
+  --red-dim:#a93226;
+  --text:#ddd6cc;
+  --text-strong:#ede8e0;
+  --muted:#8a837a;
+  --muted-dim:#7a7368;
+  --border:#252525;
+  --border2:#1e1e1e;
+}
+
+html,body{
+  background:var(--bg);
+  color:var(--text);
+  font-family:'IBM Plex Mono',monospace;
+  min-height:100vh;
+  -webkit-font-smoothing:antialiased;
+}
+
+/* subtle grain — lighter opacity so it doesn't muddy contrast */
+body::before{
+  content:'';
+  position:fixed;
+  inset:0;
+  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.035'/%3E%3C/svg%3E");
+  pointer-events:none;
+  z-index:0;
+  opacity:0.35;
+}
+
 a{text-decoration:none;color:inherit;}
-.topbar{position:fixed;top:0;left:0;right:0;height:74px;display:flex;align-items:center;justify-content:space-between;padding:0 18px;z-index:1000;background:rgba(5,5,5,.92);backdrop-filter:blur(14px);border-bottom:1px solid var(--border);}
-.brand{display:flex;align-items:center;gap:12px;font-size:10px;letter-spacing:.28em;text-transform:uppercase;white-space:nowrap;}
-.brand-line{width:34px;height:2px;background:var(--gold);}
-.menu-btn{width:42px;height:42px;border:none;background:none;cursor:pointer;display:flex;flex-direction:column;justify-content:center;gap:6px;}
-.menu-btn span{height:2px;background:#fff;border-radius:4px;display:block;}
-.menu-btn span:nth-child(2){width:72%;margin-left:auto;}
-.overlay{position:fixed;inset:0;background:rgba(0,0,0,.55);opacity:0;visibility:hidden;transition:.25s;z-index:998;}
+
+/* ── TOPBAR ── */
+.topbar{
+  position:fixed;top:0;left:0;right:0;height:68px;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:0 20px;z-index:1000;
+  background:rgba(10,10,10,.96);
+  backdrop-filter:blur(16px);
+  border-bottom:1px solid var(--border);
+}
+.brand{
+  display:flex;align-items:center;gap:12px;
+  font-size:10px;letter-spacing:.28em;text-transform:uppercase;
+  color:var(--text);white-space:nowrap;
+}
+.brand-line{width:32px;height:2px;background:var(--gold);}
+
+.menu-btn{
+  width:42px;height:42px;border:none;background:none;cursor:pointer;
+  display:flex;flex-direction:column;justify-content:center;gap:6px;
+}
+.menu-btn span{height:1.5px;background:var(--text);border-radius:2px;display:block;transition:opacity .2s;}
+.menu-btn span:nth-child(2){width:68%;margin-left:auto;}
+
+/* ── DRAWER ── */
+.overlay{
+  position:fixed;inset:0;background:rgba(0,0,0,.6);
+  opacity:0;visibility:hidden;transition:.25s;z-index:998;
+}
 .overlay.active{opacity:1;visibility:visible;}
-.drawer{position:fixed;top:0;right:-100%;width:86%;max-width:420px;height:100vh;overflow-y:auto;z-index:999;padding:24px;transition:.3s ease;background:#0a0a0a;border-left:1px solid var(--border);}
+
+.drawer{
+  position:fixed;top:0;right:-100%;width:84%;max-width:400px;
+  height:100vh;overflow-y:auto;z-index:999;
+  padding:28px 24px;transition:.3s ease;
+  background:#0e0e0e;border-left:1px solid var(--border);
+}
 .drawer.active{right:0;}
-.drawer-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:18px;}
-.drawer-title{font-size:11px;letter-spacing:.28em;text-transform:uppercase;color:var(--gold);}
-.close-btn{font-size:38px;line-height:1;background:none;border:none;color:#fff;cursor:pointer;}
-.group{margin-top:18px;}
-.group small{display:block;font-size:10px;letter-spacing:.26em;text-transform:uppercase;color:var(--gold);margin-bottom:10px;}
-.drawer a.link{display:block;padding:14px 0;font-size:20px;border-bottom:1px solid var(--border);color:var(--text);font-family:'Cormorant Garamond',serif;}
-.drawer a.link:hover{color:var(--gold);}
+
+.drawer-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:22px;}
+.drawer-title{font-size:10px;letter-spacing:.28em;text-transform:uppercase;color:var(--gold);}
+.close-btn{font-size:34px;line-height:1;background:none;border:none;color:var(--text);cursor:pointer;opacity:.7;}
+.close-btn:hover{opacity:1;}
+
+.group{margin-top:20px;}
+.group small{
+  display:block;font-size:9px;letter-spacing:.26em;text-transform:uppercase;
+  color:var(--gold);margin-bottom:12px;opacity:.8;
+}
+.drawer a.link{
+  display:block;padding:13px 0;font-size:19px;
+  border-bottom:1px solid var(--border);
+  color:var(--text);font-family:'Cormorant Garamond',serif;
+  transition:color .15s;
+}
+.drawer a.link:hover{color:var(--gold-light);}
 .drawer a.link.current{color:var(--gold);}
-.private-btn{display:block;margin-top:22px;padding:16px;text-align:center;font-weight:700;letter-spacing:.18em;font-size:11px;text-transform:uppercase;background:linear-gradient(135deg,#d9bb79,#b88e45);color:#111;border-radius:2px;}
-.mail-btn{display:block;margin-top:12px;padding:14px;text-align:center;border:1px solid var(--border);color:#f3dfb4;font-size:12px;word-break:break-word;}
-.page{position:relative;z-index:1;max-width:760px;margin:0 auto;padding:110px 40px 80px 56px;border-left:1px solid var(--border2);min-height:100vh;}
-.page::before{content:'';position:fixed;left:calc(50% - 380px);top:0;bottom:0;width:3px;background:var(--gold);opacity:0.85;}
-.doc-tag{font-size:9px;letter-spacing:.22em;text-transform:uppercase;color:var(--gold);border:1px solid var(--gold);display:inline-block;padding:3px 8px;margin-bottom:28px;}
-.doc-title{font-family:'Cormorant Garamond',serif;font-size:clamp(28px,5vw,46px);font-weight:600;line-height:1.1;margin-bottom:8px;}
-.doc-meta{font-size:10px;color:var(--muted);letter-spacing:.1em;margin-bottom:48px;padding-bottom:32px;border-bottom:1px solid var(--border);}
-.question-block{border-left:3px solid var(--gold);padding:22px 24px;background:var(--surface);margin-bottom:40px;}
-.question-block p{font-family:'Cormorant Garamond',serif;font-size:clamp(20px,3vw,28px);font-style:italic;line-height:1.4;color:var(--text);}
-.section{margin-bottom:40px;}
-.section-label{font-size:9px;letter-spacing:.2em;text-transform:uppercase;color:var(--gold);margin-bottom:14px;padding-bottom:8px;border-bottom:1px solid var(--border);}
-.section-title{font-family:'Cormorant Garamond',serif;font-size:clamp(18px,3vw,24px);font-weight:600;margin-bottom:14px;line-height:1.2;}
-.body-text{font-size:13px;color:#b8b0a6;line-height:1.9;margin-bottom:12px;font-weight:300;}
-.body-text strong{color:var(--text);font-weight:500;}
-.finding{background:var(--surface);border:1px solid var(--border2);border-left:3px solid var(--gold);padding:16px 20px;margin-bottom:10px;font-size:12px;color:var(--text);line-height:1.7;}
-.danger{background:rgba(192,57,43,.03);border:1px solid var(--border2);border-left:3px solid var(--red);padding:16px 20px;margin-bottom:10px;font-size:12px;color:#d4796f;line-height:1.7;}
-.names-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin:20px 0;}
-.name-block{background:var(--surface);border:1px solid var(--border);padding:16px;}
-.name-num{font-size:9px;letter-spacing:.15em;color:var(--gold);opacity:0.6;margin-bottom:8px;}
-.name-role{font-family:'Cormorant Garamond',serif;font-size:16px;font-weight:600;color:var(--gold);margin-bottom:6px;}
-.name-desc{font-size:11px;color:var(--muted);line-height:1.6;}
-.divider{border:none;border-top:1px solid var(--border);margin:36px 0;}
-.closing{border-top:1px solid var(--border2);padding-top:48px;margin-top:48px;}
-.closing-headline{font-family:'Cormorant Garamond',serif;font-size:clamp(18px,3vw,24px);font-weight:600;color:var(--text);line-height:1.4;margin-bottom:16px;}
-.closing-sub{font-size:12px;color:var(--muted);line-height:1.9;margin-bottom:0;}
-.closing-divider{width:32px;height:1px;background:var(--gold);margin:24px 0;opacity:0.6;}
-.closing-bridge{font-size:11px;color:#5c564f;line-height:1.9;margin-bottom:20px;}
-.contact-link{display:inline-block;font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--gold);border-bottom:1px solid var(--gold);padding-bottom:2px;}
-.footer{margin-top:60px;padding-top:24px;border-top:1px solid var(--border);font-size:10px;color:var(--muted);opacity:0.5;}
-@media(max-width:600px){.page{padding:90px 20px 60px 32px;}.page::before{left:0;}.names-grid{grid-template-columns:1fr;}}
+
+.private-btn{
+  display:block;margin-top:24px;padding:15px;text-align:center;
+  font-weight:600;letter-spacing:.18em;font-size:10px;text-transform:uppercase;
+  background:linear-gradient(135deg,#d9bb79,#b88e45);
+  color:#111;border-radius:2px;
+}
+.mail-btn{
+  display:block;margin-top:12px;padding:13px;text-align:center;
+  border:1px solid var(--border);color:#c8b898;font-size:11px;
+  word-break:break-word;
+}
+
+/* ── PAGE ── */
+.page{
+  position:relative;z-index:1;
+  max-width:760px;margin:0 auto;
+  padding:110px 48px 90px 60px;
+  border-left:1px solid var(--border2);
+  min-height:100vh;
+}
+
+/* gold accent line */
+.page::before{
+  content:'';position:fixed;
+  left:calc(50% - 380px);top:0;bottom:0;
+  width:2px;background:var(--gold);opacity:.75;
+}
+
+/* ── DOCUMENT HEADER ── */
+.doc-tag{
+  font-size:9px;letter-spacing:.22em;text-transform:uppercase;
+  color:var(--gold);border:1px solid rgba(200,169,110,.35);
+  display:inline-block;padding:4px 10px;margin-bottom:30px;
+}
+
+.doc-title{
+  font-family:'Cormorant Garamond',serif;
+  font-size:clamp(30px,5vw,48px);
+  font-weight:600;line-height:1.08;margin-bottom:10px;
+  color:var(--text-strong);
+}
+
+.doc-meta{
+  font-size:10px;color:var(--muted);letter-spacing:.06em;
+  margin-bottom:52px;padding-bottom:28px;
+  border-bottom:1px solid var(--border);
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+}
+
+/* ── QUESTION BLOCK ── */
+.question-block{
+  border-left:3px solid var(--gold);
+  padding:24px 28px;
+  background:var(--surface);
+  margin-bottom:44px;
+}
+.question-block p{
+  font-family:'Cormorant Garamond',serif;
+  font-size:clamp(20px,3vw,27px);
+  font-style:italic;line-height:1.5;
+  color:var(--text-strong);
+}
+
+/* ── SECTIONS ── */
+.section{margin-bottom:44px;}
+
+.section-label{
+  font-size:9px;letter-spacing:.2em;text-transform:uppercase;
+  color:var(--gold);margin-bottom:14px;padding-bottom:8px;
+  border-bottom:1px solid var(--border);
+  opacity:.9;
+}
+
+.section-title{
+  font-family:'Cormorant Garamond',serif;
+  font-size:clamp(19px,3vw,25px);font-weight:600;
+  margin-bottom:16px;line-height:1.25;
+  color:var(--text-strong);
+}
+
+/* body text — Inter for readability, mono only for UI elements */
+.body-text{
+  font-size:14px;
+  font-family:'Inter',sans-serif;
+  color:#c0b8af;
+  line-height:1.85;
+  margin-bottom:14px;
+  font-weight:400;
+  letter-spacing:-.01em;
+}
+.body-text strong{color:var(--text-strong);font-weight:500;}
+
+/* ── FINDINGS ── */
+.finding{
+  background:var(--surface);
+  border:1px solid var(--border2);
+  border-left:3px solid var(--gold);
+  padding:18px 22px;
+  margin-bottom:10px;
+  font-size:13px;
+  font-family:'Inter',sans-serif;
+  color:var(--text);
+  line-height:1.75;
+  letter-spacing:-.01em;
+}
+
+.danger{
+  background:rgba(192,57,43,.05);
+  border:1px solid rgba(192,57,43,.18);
+  border-left:3px solid var(--red);
+  padding:18px 22px;
+  margin-bottom:10px;
+  font-size:13px;
+  font-family:'Inter',sans-serif;
+  color:#d9806e;
+  line-height:1.75;
+  letter-spacing:-.01em;
+}
+
+/* ── NAMES GRID ── */
+.names-grid{
+  display:grid;grid-template-columns:1fr 1fr 1fr;
+  gap:10px;margin:22px 0;
+}
+.name-block{
+  background:var(--surface);
+  border:1px solid var(--border);
+  border-top:2px solid rgba(200,169,110,.3);
+  padding:18px 16px;
+}
+.name-num{
+  font-size:9px;letter-spacing:.18em;
+  color:var(--gold);opacity:.5;margin-bottom:10px;
+}
+.name-role{
+  font-family:'Cormorant Garamond',serif;
+  font-size:18px;font-weight:600;
+  color:var(--gold-light);margin-bottom:8px;
+}
+.name-desc{
+  font-size:12px;color:var(--muted);
+  line-height:1.75;font-weight:400;
+  font-family:'Inter',sans-serif;
+}
+
+/* ── CLOSING ── */
+.closing{
+  border-top:1px solid var(--border2);
+  padding-top:52px;margin-top:52px;
+}
+.closing-headline{
+  font-family:'Cormorant Garamond',serif;
+  font-size:clamp(19px,3vw,25px);font-weight:600;
+  color:var(--text-strong);line-height:1.45;margin-bottom:16px;
+}
+.closing-sub{
+  font-size:14px;color:var(--muted);
+  line-height:1.9;margin-bottom:0;
+  font-weight:400;font-family:'Inter',sans-serif;
+}
+.closing-divider{width:32px;height:1px;background:var(--gold);margin:28px 0;opacity:.5;}
+.closing-bridge{
+  font-size:13px;color:var(--muted);
+  line-height:1.9;margin-bottom:20px;
+  font-family:'Inter',sans-serif;
+}
+.contact-link{
+  display:inline-block;font-size:10px;
+  letter-spacing:.22em;text-transform:uppercase;
+  color:var(--gold);border-bottom:1px solid rgba(200,169,110,.4);
+  padding-bottom:3px;transition:border-color .15s,color .15s;
+}
+.contact-link:hover{color:var(--gold-light);border-color:var(--gold-light);}
+
+/* ── FOOTER ── */
+.footer{
+  margin-top:64px;padding-top:22px;
+  border-top:1px solid var(--border);
+  font-size:10px;color:var(--muted-dim);
+  letter-spacing:.06em;
+}
+
+/* ── RESPONSIVE ── */
+@media(max-width:600px){
+  .page{padding:90px 20px 60px 28px;}
+  .page::before{left:0;}
+  .names-grid{grid-template-columns:1fr;}
+  .question-block{padding:18px 20px;}
+}
 </style>
 </head>
 <body>
 
 <header class="topbar">
-<a href="index.html" class="brand"><span class="brand-line"></span><span>Decision Authority Research</span></a>
-<button class="menu-btn" id="openMenu"><span></span><span></span><span></span></button>
+  <a href="index.html" class="brand">
+    <span class="brand-line"></span>
+    <span>Decision Authority Research</span>
+  </a>
+  <button class="menu-btn" id="openMenu">
+    <span></span><span></span><span></span>
+  </button>
 </header>
 
 <div class="overlay" id="overlay"></div>
 
 <aside class="drawer" id="drawer">
-<div class="drawer-top">
-<div class="drawer-title">Navigation</div>
-<button class="close-btn" id="closeMenu">&#215;</button>
-</div>
-<div class="group">
-<small>Primary</small>
-<a class="link" href="index.html">Home</a>
-<a class="link" href="dar.html">DAR</a>
-<a class="link" href="services.html">Services</a>
-<a class="link" href="about.html">About</a>
-<a class="link" href="contact.html">Contact</a>
-</div>
-<div class="group">
-<small>Research</small>
-<a class="link" href="research.html">Independent Research</a>
-<a class="link" href="whitepaper.html">White Paper</a>
-<a class="link current" href="board-brief.html">Board Brief</a>
-<a class="link" href="insights.html">Insights</a>
-<a class="link" href="/human-stop-boundary">Human Stop Boundary</a>
-</div>
-<div class="group">
-<small>Reference</small>
-<a class="link" href="definitions.html">Definitions</a>
-<a class="link" href="faq.html">FAQ</a>
-<a class="link" href="goodfaith.html">Good Faith Use</a>
-<a class="link" href="diagnostic.html">Governance Diagnostic</a>
-</div>
-<a href="contact.html" class="private-btn">Private Intake</a>
-<a href="mailto:Liran@liranbarshrim.com" class="mail-btn">Liran@liranbarshrim.com</a>
+  <div class="drawer-top">
+    <div class="drawer-title">Navigation</div>
+    <button class="close-btn" id="closeMenu">&#215;</button>
+  </div>
+  <div class="group">
+    <small>Primary</small>
+    <a class="link" href="index.html">Home</a>
+    <a class="link" href="dar.html">DAR</a>
+    <a class="link" href="services.html">Services</a>
+    <a class="link" href="about.html">About</a>
+    <a class="link" href="contact.html">Contact</a>
+  </div>
+  <div class="group">
+    <small>Research</small>
+    <a class="link" href="research.html">Independent Research</a>
+    <a class="link" href="whitepaper.html">White Paper</a>
+    <a class="link current" href="board-brief.html">Board Brief</a>
+    <a class="link" href="insights.html">Insights</a>
+    <a class="link" href="/human-stop-boundary">Human Stop Boundary</a>
+  </div>
+  <div class="group">
+    <small>Reference</small>
+    <a class="link" href="definitions.html">Definitions</a>
+    <a class="link" href="faq.html">FAQ</a>
+    <a class="link" href="goodfaith.html">Good Faith Use</a>
+    <a class="link" href="diagnostic.html">Governance Diagnostic</a>
+  </div>
+  <a href="contact.html" class="private-btn">Private Intake</a>
+  <a href="mailto:Liran@liranbarshrim.com" class="mail-btn">Liran@liranbarshrim.com</a>
 </aside>
 
 <div class="page">
 
-<div class="doc-tag">Board Brief</div>
-<div class="doc-title">Named Stop Authority</div>
-<div class="doc-meta">Decision Authority Research &nbsp;·&nbsp; Liran Bar-Shrim &nbsp;·&nbsp; 2026</div>
+  <div class="doc-tag">Board Brief</div>
+  <div class="doc-title">Named Stop Authority</div>
+  <div class="doc-meta">Decision Authority Research &nbsp;·&nbsp; Liran Bar-Shrim &nbsp;·&nbsp; 2026</div>
 
-<div class="question-block">
-  <p>If something goes wrong today, who by name can stop it before the outcome becomes irreversible?</p>
-</div>
-
-<div class="section">
-  <div class="section-label">The Gap</div>
-  <div class="section-title">Most boards can name who approves. Almost none can name who stops.</div>
-  <p class="body-text">Organizations invest heavily in approval authority. Budget sign-off, risk committee review, board oversight. These mechanisms are well-documented and well-understood.</p>
-  <p class="body-text">Stop authority is different. When a high-stakes decision must be halted before execution becomes irreversible, the question is not who approved it. The question is <strong>who, by name, has the explicit and protected authority to stop it.</strong></p>
-  <div class="finding">When no single name is committed in advance to stop, the default is continuation. Momentum decides. Not governance.</div>
-</div>
-
-<div class="section">
-  <div class="section-label">Why It Matters Now</div>
-  <div class="section-title">Autonomous systems execute faster than governance convenes.</div>
-  <p class="body-text">AI-driven credit decisions, automated trading, clinical support systems, and agentic workflows can produce irreversible outcomes before any human review process has formally begun.</p>
-  <p class="body-text">The governance question is no longer who reviews afterward. It is who can halt the system before execution crosses the point of no return.</p>
-  <div class="danger">When no person owns the stop, the system defaults to continuation. If nobody owns the brake, speed becomes the decision-maker.</div>
-</div>
-
-<div class="section">
-  <div class="section-label">The Structure</div>
-  <div class="section-title">Stop authority requires three names. Not one role. Not a committee.</div>
-  <p class="body-text">Each function is distinct and non-overlapping. The same individual cannot hold more than one.</p>
-  <div class="names-grid">
-    <div class="name-block">
-      <div class="name-num">01</div>
-      <div class="name-role">Stop</div>
-      <div class="name-desc">Named in advance. Empowered to halt execution. Protected from retaliation for good-faith invocation.</div>
-    </div>
-    <div class="name-block">
-      <div class="name-num">02</div>
-      <div class="name-role">Hold</div>
-      <div class="name-desc">Maintains suspension while governance responds. Accountable for the duration. Cannot release unilaterally.</div>
-    </div>
-    <div class="name-block">
-      <div class="name-num">03</div>
-      <div class="name-role">Release</div>
-      <div class="name-desc">A separate individual. Empowered to resume only after documented review. Release carries personal accountability.</div>
-    </div>
+  <div class="question-block">
+    <p>If something goes wrong today, who by name can stop it before the outcome becomes irreversible?</p>
   </div>
-  <div class="finding">Stop is the default state. Continuation does not exist until explicitly released by a named individual bound to refusal.</div>
-</div>
+  <div class="danger" style="margin-bottom:44px;">If this question cannot be answered in one sentence, accountability is already undefined.</div>
 
-<div class="section">
-  <div class="section-label">Board Exposure</div>
-  <div class="section-title">Where personal liability concentrates.</div>
-  <p class="body-text">When a decision produces harm and no named stop authority existed in advance, accountability defaults to those at the top of the governance chain. The absence of a named stop is not a neutral design choice. It is an exposure.</p>
-  <div class="danger">When an organization claims it has a stop mechanism but cannot produce a name, it does not have a stop mechanism. It has a stop narrative.</div>
-</div>
+  <div class="section">
+    <div class="section-label">The Gap</div>
+    <div class="section-title">Most boards can name who approves. Almost none can name who stops.</div>
+    <p class="body-text">Organizations invest heavily in approval authority. Budget sign-off, risk committee review, board oversight. These mechanisms are well-documented and well-understood.</p>
+    <p class="body-text">Stop authority is different. When a high-stakes decision must be halted before execution becomes irreversible, the question is not who approved it. The question is <strong>who, by name, has the explicit and protected authority to stop it.</strong></p>
+    <div class="finding">When no single name is committed in advance to stop, the default is continuation. Momentum decides. Not governance.</div>
+  </div>
 
-<div class="section">
-  <div class="section-label">Diagnostic</div>
-  <div class="section-title">Three questions for the board.</div>
-  <div class="finding">01 &nbsp;·&nbsp; For your most consequential automated decision today, who by name holds explicit stop authority?</div>
-  <div class="finding">02 &nbsp;·&nbsp; If that person invokes a stop, who by name holds it until governance responds?</div>
-  <div class="finding">03 &nbsp;·&nbsp; Who by name can release the stop, and what documentation is required before they may do so?</div>
-</div>
+  <div class="section">
+    <div class="section-label">Why It Matters Now</div>
+    <div class="section-title">Autonomous systems execute faster than governance convenes.</div>
+    <p class="body-text">AI-driven credit decisions, automated trading, clinical support systems, and agentic workflows can produce irreversible outcomes before any human review process has formally begun.</p>
+    <p class="body-text">The governance question is no longer who reviews afterward. It is who can halt the system before execution crosses the point of no return.</p>
+    <div class="danger">When no person owns the stop, the system defaults to continuation. If nobody owns the brake, speed becomes the decision-maker.</div>
+  </div>
 
-<div class="closing">
-  <div class="closing-headline">Most organizations believe they have a stop.<br>Very few can name it.</div>
-  <div class="closing-sub">If you cannot, the decision has already been made.<br>Continuation is your default.</div>
-  <div class="closing-divider"></div>
-  <div class="closing-bridge">For organizations operating irreversible decision systems,<br>this question is not theoretical.</div>
-  <p style="font-size:11px;color:#5c564f;margin-bottom:16px;letter-spacing:.05em;">Private review available.</p>
-  <a href="contact.html" class="contact-link">Contact</a>
-</div>
+  <div class="section">
+    <div class="section-label">The Structure</div>
+    <div class="section-title">Stop authority requires three names. Not one role. Not a committee.</div>
+    <p class="body-text">Each function is distinct and non-overlapping. The same individual cannot hold more than one.</p>
+    <div class="names-grid">
+      <div class="name-block">
+        <div class="name-num">01</div>
+        <div class="name-role">Stop</div>
+        <div class="name-desc">Named in advance. Empowered to halt execution. Protected from retaliation for good-faith invocation.</div>
+      </div>
+      <div class="name-block">
+        <div class="name-num">02</div>
+        <div class="name-role">Hold</div>
+        <div class="name-desc">Maintains suspension while governance responds. Accountable for the duration. Cannot release unilaterally.</div>
+      </div>
+      <div class="name-block">
+        <div class="name-num">03</div>
+        <div class="name-role">Release</div>
+        <div class="name-desc">A separate individual. Empowered to resume only after documented review. Release carries personal accountability.</div>
+      </div>
+    </div>
+    <div class="finding">Stop is the default state. Continuation does not exist until explicitly released by a named individual bound to refusal.</div>
+  </div>
 
-<div class="footer">&#169; 2026 Liran Bar-Shrim. All rights reserved.</div>
+  <div class="section">
+    <div class="section-label">Board Exposure</div>
+    <div class="section-title">Where personal liability concentrates.</div>
+    <p class="body-text">When a decision produces harm and no named stop authority existed in advance, accountability defaults to those at the top of the governance chain. The absence of a named stop is not a neutral design choice. It is an exposure.</p>
+    <div class="danger">When an organization claims it has a stop mechanism but cannot produce a name, it does not have a stop mechanism. It has a stop narrative.</div>
+  </div>
+
+  <div class="section">
+    <div class="section-label">Diagnostic</div>
+    <div class="section-title">Three questions for the board.</div>
+    <div class="finding">01 &nbsp;·&nbsp; For your most consequential automated decision today, who by name holds explicit stop authority?</div>
+    <div class="finding">02 &nbsp;·&nbsp; If that person invokes a stop, who by name holds it until governance responds?</div>
+    <div class="finding">03 &nbsp;·&nbsp; Who by name can release the stop, and what documentation is required before they may do so?</div>
+  </div>
+
+  <div class="danger" style="margin-bottom:0;">If you cannot name these three roles today, you are already operating without a stop.</div>
+
+  <div class="closing">
+    <div class="closing-headline">Most organizations believe they have a stop.<br>Very few can name it.</div>
+    <div class="closing-sub">If you cannot, the decision has already been made.<br>Continuation is your default.</div>
+    <div class="closing-divider"></div>
+    <div class="closing-bridge">For organizations operating irreversible decision systems,<br>this question is not theoretical.</div>
+    <p style="font-size:11px;color:var(--muted);margin-bottom:16px;letter-spacing:.05em;">Private review available.</p>
+    <a href="contact.html" class="contact-link">Request a Private Stop Review</a>
+  </div>
+
+  <div class="footer">&#169; 2026 Liran Bar-Shrim. All rights reserved.</div>
 
 </div>
 
