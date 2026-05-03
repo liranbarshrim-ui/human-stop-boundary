@@ -1,5 +1,5 @@
 When a decision becomes irreversible under uncertainty,
-someone must have the authority to stop it — by name.
+someone must be required to stop it — by name.
 
 ---
 
@@ -41,12 +41,10 @@ You are the event.
 
 ---
 
-DAR is a structural observation:
-
 In any system without a named stop-authority,
 accountability will manifest as blame.
 
 ---
 
-Liran Bar-Shrim  
+Liran Bar-Shrim
 https://matrix-audit.com
