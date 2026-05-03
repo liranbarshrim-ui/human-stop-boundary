@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Human Stop Boundary — Definition & Origin</title>
-<meta name="description" content="A Human Stop Boundary is the point at which a decision becomes irreversible under uncertainty, requiring a specifically named individual with explicit authority to stop it.">
+<meta name="description" content="A Human Stop Boundary is the point at which a decision becomes irreversible under uncertainty, requiring a specifically named individual with explicit obligation to stop it.">
 <meta name="author" content="Liran Bar-Shrim">
 <meta name="copyright" content="Liran Bar-Shrim">
 <link rel="canonical" href="https://matrix-audit.com/human-stop-boundary">
@@ -13,7 +13,7 @@
   "@context": "https://schema.org",
   "@type": "DefinedTerm",
   "name": "Human Stop Boundary",
-  "description": "The point at which a decision becomes irreversible under uncertainty, requiring a specifically named individual with explicit authority to stop it.",
+  "description": "The point at which a decision becomes irreversible under uncertainty, requiring a specifically named individual with explicit obligation to stop it.",
   "inDefinedTermSet": "Decision Authority Research",
   "author": {
     "@type": "Person",
@@ -25,7 +25,6 @@
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@300;400;500&family=Playfair+Display:wght@400;700&display=swap" rel="stylesheet">
 <style>
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
   :root {
     --bg: #090909;
     --surface: #111111;
@@ -36,7 +35,6 @@
     --border: #1e1e1e;
     --border2: #2a2a2a;
   }
-
   html, body {
     background: var(--bg);
     color: var(--text);
@@ -44,8 +42,6 @@
     min-height: 100vh;
     -webkit-font-smoothing: antialiased;
   }
-
-  /* grain overlay */
   body::before {
     content: '';
     position: fixed;
@@ -55,7 +51,6 @@
     z-index: 0;
     opacity: 0.6;
   }
-
   .page {
     position: relative;
     z-index: 1;
@@ -65,8 +60,6 @@
     border-left: 1px solid var(--border2);
     min-height: 100vh;
   }
-
-  /* left gold accent bar */
   .page::before {
     content: '';
     position: fixed;
@@ -77,8 +70,6 @@
     background: var(--gold);
     opacity: 0.85;
   }
-
-  /* tag */
   .tag {
     font-family: 'IBM Plex Mono', monospace;
     font-size: 10px;
@@ -92,7 +83,6 @@
     margin-bottom: 40px;
     opacity: 0.9;
   }
-
   h1 {
     font-family: 'Playfair Display', serif;
     font-size: clamp(28px, 5vw, 42px);
@@ -102,7 +92,6 @@
     margin-bottom: 6px;
     letter-spacing: -0.01em;
   }
-
   .subtitle {
     font-family: 'IBM Plex Mono', monospace;
     font-size: 11px;
@@ -111,15 +100,12 @@
     text-transform: uppercase;
     margin-bottom: 56px;
   }
-
-  /* definition block */
   .definition {
     border-left: 3px solid var(--gold);
     padding: 20px 24px;
     background: var(--surface);
     margin-bottom: 48px;
   }
-
   .definition p {
     font-family: 'Playfair Display', serif;
     font-size: 18px;
@@ -127,12 +113,9 @@
     color: var(--text);
     font-style: italic;
   }
-
-  /* section */
   .section {
     margin-bottom: 48px;
   }
-
   .section-label {
     font-size: 10px;
     letter-spacing: 0.2em;
@@ -142,27 +125,21 @@
     padding-bottom: 8px;
     border-bottom: 1px solid var(--border);
   }
-
-  /* credit */
   .credit {
     font-size: 13px;
     color: var(--muted);
     line-height: 1.7;
   }
-
   .credit strong {
     color: var(--text);
     font-weight: 400;
   }
-
-  /* problem list */
   .problem-list {
     list-style: none;
     display: flex;
     flex-direction: column;
     gap: 12px;
   }
-
   .problem-list li {
     font-size: 13px;
     color: var(--text);
@@ -170,7 +147,6 @@
     padding-left: 20px;
     position: relative;
   }
-
   .problem-list li::before {
     content: '—';
     position: absolute;
@@ -178,33 +154,25 @@
     color: var(--gold);
     opacity: 0.7;
   }
-
-  /* not block */
   .not-block {
     border-left: 3px solid var(--red);
     padding: 14px 20px;
     background: var(--surface);
   }
-
   .not-block p {
     font-size: 13px;
     color: var(--muted);
     line-height: 1.6;
   }
-
   .not-block strong {
     color: var(--text);
     font-weight: 400;
   }
-
-  /* divider */
   .divider {
     border: none;
     border-top: 1px solid var(--border);
     margin: 48px 0;
   }
-
-  /* link */
   .contact-link {
     display: inline-block;
     font-size: 11px;
@@ -216,12 +184,7 @@
     padding-bottom: 2px;
     transition: opacity 0.2s;
   }
-
-  .contact-link:hover {
-    opacity: 0.7;
-  }
-
-  /* footer */
+  .contact-link:hover { opacity: 0.7; }
   .footer {
     margin-top: 64px;
     font-size: 10px;
@@ -229,14 +192,9 @@
     letter-spacing: 0.1em;
     opacity: 0.5;
   }
-
   @media (max-width: 600px) {
-    .page {
-      padding: 60px 24px 60px 36px;
-    }
-    .page::before {
-      left: 0;
-    }
+    .page { padding: 60px 24px 60px 36px; }
+    .page::before { left: 0; }
   }
 </style>
 </head>
@@ -249,13 +207,13 @@
   <div class="subtitle">Definition &amp; Origin &nbsp;·&nbsp; 2026</div>
 
   <div class="definition">
-    <p>A Human Stop Boundary is the point at which a decision becomes irreversible under uncertainty, requiring a specifically named individual with explicit authority to stop it.</p>
+    <p>A Human Stop Boundary is the point at which a decision becomes irreversible under uncertainty, requiring a specifically named individual with explicit obligation to stop it.</p>
   </div>
 
   <div class="section">
     <div class="section-label">Origin</div>
     <p class="credit">
-      The term <strong>Human Stop Boundary</strong> was introduced by <strong>Liran Bar-Shrim</strong> in 2026 as part of Decision Authority Research (DAR). It emerged from a recurring observation across regulated industries: the gap between those who hold information and those with named authority to stop is not a structural accident. It is a design choice.
+      The term <strong>Human Stop Boundary</strong> was introduced by <strong>Liran Bar-Shrim</strong> in 2026 as part of Decision Authority Research (DAR). It emerged from a recurring observation across regulated industries: the gap between those who hold information and those with named obligation to stop is not a structural accident. It is a design choice.
     </p>
   </div>
 
@@ -272,7 +230,7 @@
   <div class="section">
     <div class="section-label">What This Is Not</div>
     <div class="not-block">
-      <p>This is not a policy or compliance framework. It is a question of authority. <strong>Who, by name, can stop the system before execution becomes irreversible?</strong></p>
+      <p>This is not a policy or compliance framework. It is a question of obligation. <strong>Who, by name, is required to stop the system before execution becomes irreversible?</strong></p>
     </div>
   </div>
 
