@@ -41,7 +41,7 @@ When both conditions exist, continuation requires a named human release. Without
 ## The Accountability Structure
 
 ### Stop Authority
-Named in advance. Empowered to halt continuation when trigger conditions are met.  
+Named in advance. Required to halt continuation when trigger conditions are met.  
 Protected from retaliation for good-faith invocation.  
 Cannot be the release authority.
 
@@ -145,7 +145,7 @@ Documentation improves not because it is mandated — but because people anticip
 | Audit | What happened |
 | Policy | What was allowed |
 | Human-in-the-loop | A person was present |
-| **Named Stop Authority** | **Who had the authority to stop it in real time** |
+| **Named Stop Authority** | **Who was required to stop it in real time** |
 
 Named Stop Authority does not replace these systems.  
 It asks the question none of them ask.
