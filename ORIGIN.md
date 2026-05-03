@@ -87,7 +87,7 @@ This is not a patent claim.
 This is not a claim of exclusive ownership over ideas of human accountability.  
 This is not a claim that no one else has thought about stop mechanisms.
 
-This is an early documented public formulation of a specific governance concept — the requirement for a **named individual, designated in advance, with protected authority to halt an irreversible decision** — as a distinct and necessary governance threshold.
+This is an early documented public formulation of a specific governance concept — the requirement for a **named individual, designated in advance, with protected obligation to halt an irreversible decision** — as a distinct and necessary governance threshold.
 
 ---
 
