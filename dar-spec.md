@@ -16,7 +16,7 @@ before a decision becomes irreversible under uncertainty.
 ### 2. Core Principle
 
 When a decision becomes irreversible under uncertainty,  
-someone must have the authority to stop it — by name.
+someone must be required to stop it — by name.
 
 ---
 
