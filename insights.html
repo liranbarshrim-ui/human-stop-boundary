@@ -12,7 +12,7 @@
 <style>
 :root{--bg:#090909;--surface:#111111;--gold:#c8a96e;--text:#e8e2d7;--muted:#a7a097;--line:rgba(255,255,255,.08);--line2:rgba(255,255,255,.05);--green:#00573a;--green-border:rgba(0,120,72,.3);--green-text:#7ecba0;--green-head:#b8e8cc;}
 *{margin:0;padding:0;box-sizing:border-box;}html{scroll-behavior:smooth;}
-body{font-family:Inter,sans-serif;background:var(--bg);color:var(--text);overflow-x:hidden;line-height:1.78;-webkit-font-smoothing:antialiased;}
+body{font-family:Inter,sans-serif;background:var(--bg);color:var(--text);overflow-x:hidden;line-height:1.78;-webkit-font-smoothing:antialiased;padding-top:74px;}
 body:before{content:"";position:fixed;inset:0;pointer-events:none;opacity:.05;background-image:linear-gradient(rgba(255,255,255,.03) 1px, transparent 1px),linear-gradient(90deg,rgba(255,255,255,.03) 1px,transparent 1px);background-size:40px 40px;}
 a{text-decoration:none;color:inherit;}
 .topbar{position:fixed;top:0;left:0;right:0;height:74px;display:flex;align-items:center;justify-content:space-between;padding:0 18px;z-index:1000;background:rgba(5,5,5,.84);backdrop-filter:blur(14px);border-bottom:1px solid var(--line2);}
@@ -34,12 +34,19 @@ a{text-decoration:none;color:inherit;}
 .drawer a.link:hover,.drawer a.link.active{color:#f1d59d;}
 .private-btn{display:block;margin-top:22px;padding:16px;border-radius:16px;text-align:center;font-weight:800;letter-spacing:.18em;font-size:13px;text-transform:uppercase;background:linear-gradient(135deg,#d9bb79,#b88e45);color:#111;}
 .mail-btn{display:block;margin-top:14px;padding:14px;text-align:center;border-radius:16px;border:1px solid var(--line);color:#f3dfb4;font-size:15px;word-break:break-word;}
-.container{max-width:860px;margin:auto;padding:128px 18px 80px;position:relative;z-index:1;}
-.meta{font-family:"IBM Plex Mono",monospace;font-size:10px;letter-spacing:.22em;text-transform:uppercase;color:var(--gold);margin-bottom:20px;}
-h1{font-family:"Playfair Display",serif;font-size:clamp(40px,8vw,68px);line-height:.95;margin-bottom:14px;border-left:3px solid var(--gold);padding-left:18px;}
+.container{max-width:860px;margin:auto;padding:40px 18px 80px;position:relative;z-index:1;}
+.meta{font-family:"IBM Plex Mono",monospace;font-size:10px;letter-spacing:.22em;text-transform:uppercase;color:var(--gold);margin-bottom:20px;margin-top:20px;}
+h1{font-family:"Playfair Display",serif;font-size:clamp(44px,9vw,72px);line-height:.95;margin-bottom:14px;border-left:3px solid var(--gold);padding-left:18px;}
 .sub{font-family:"IBM Plex Mono",monospace;font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--muted);padding-left:21px;margin-bottom:42px;}
 .box,section{background:linear-gradient(180deg,#111,#0d0d0d);border:1px solid var(--line2);padding:26px;margin-bottom:22px;}
 .box{border-left:3px solid var(--gold);}
+.essay-link{display:flex;justify-content:space-between;align-items:center;background:linear-gradient(180deg,#0d0d0d,#090909);border:1px solid rgba(200,169,110,.25);border-left:3px solid var(--gold);padding:22px 26px;margin-bottom:22px;transition:background .2s,padding-left .2s;}
+.essay-link:hover{background:#13110d;padding-left:30px;}
+.essay-link-left{display:flex;flex-direction:column;gap:6px;}
+.essay-link-label{font-family:"IBM Plex Mono",monospace;font-size:10px;letter-spacing:.22em;text-transform:uppercase;color:var(--gold);}
+.essay-link-title{font-family:"Playfair Display",serif;font-size:20px;color:var(--text);}
+.essay-link-desc{font-size:14px;color:var(--muted);}
+.essay-link-arrow{font-size:20px;color:var(--muted);flex-shrink:0;}
 section.green{border:1px solid var(--green-border);border-left:3px solid var(--green);background:linear-gradient(180deg,#071210,#050e0b);}
 section.green .label{color:var(--green-text);}
 section.green h2{color:var(--green-head);}
@@ -52,9 +59,9 @@ h2{font-family:"Playfair Display",serif;font-size:34px;line-height:1.05;margin-b
 p{font-size:17px;color:var(--muted);margin-bottom:14px;}
 strong{color:var(--text);}
 .list-item{padding:11px 0;border-bottom:1px solid var(--line2);color:var(--muted);}
-.pull{margin-top:18px;padding:20px;background:#101010;border-left:3px solid var(--gold);font-family:"Playfair Display",serif;font-size:25px;line-height:1.28;}
-.footer-doc{margin-top:38px;padding-top:24px;border-top:1px solid var(--line);font-family:"IBM Plex Mono",monospace;font-size:12px;color:#7c766f;}
-@media(min-width:900px){.topbar{padding:0 34px;}.container{padding:150px 34px 110px;}.box,section{padding:34px;}h2{font-size:38px;}p{font-size:18px;}}
+.pull{margin-top:18px;padding:20px;background:#101010;border-left:3px solid var(--gold);font-family:"Playfair Display",serif;font-size:clamp(18px,4vw,25px);line-height:1.28;}
+.footer-doc{margin-top:38px;padding-top:24px;border-top:1px solid var(--line);font-family:"IBM Plex Mono",monospace;font-size:11px;color:#7c766f;line-height:1.8;}
+@media(min-width:900px){.topbar{padding:0 34px;}.container{padding:130px 34px 110px;}.box,section{padding:34px;}h2{font-size:38px;}p{font-size:18px;}}
 </style>
 </head>
 <body>
@@ -102,6 +109,15 @@ strong{color:var(--text);}
 <h1>Ideas that pressure<br>usually hides.</h1>
 
 <div class="sub">Independent Governance Observations</div>
+
+<a href="why-organizations-fail-to-stop.html" class="essay-link">
+<div class="essay-link-left">
+<span class="essay-link-label">Essay &middot; 2026</span>
+<span class="essay-link-title">Why Organizations Fail to Stop</span>
+<span class="essay-link-desc">Organizations don&rsquo;t fail because no one is responsible. They fail because no one is required to stop.</span>
+</div>
+<span class="essay-link-arrow">&rarr;</span>
+</a>
 
 <div class="box">
 <div class="label">01 · Primary Insight</div>
@@ -177,7 +193,8 @@ strong{color:var(--text);}
 </section>
 
 <div class="footer-doc">
-&#169; 2026 Liran Bar-Shrim · Decision Authority Research · matrix-audit.com
+&#169; 2026 Liran Bar-Shrim<br>
+Decision Authority Research &middot; matrix-audit.com
 </div>
 
 </main>
