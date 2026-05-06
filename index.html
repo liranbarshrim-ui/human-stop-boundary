@@ -1,3 +1,497 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+
+<title>Decision Authority Research | Named Stop Authority</title>
+
+<meta name="description" content="Decision Authority Research examines refusal authority, irreversible execution, institutional momentum, and named authorization before continuation.">
+
+<meta name="robots" content="index,follow">
+
+<link rel="canonical" href="https://matrix-audit.com/">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&family=Cormorant+Garamond:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+<style>
+
+:root{
+--bg:#090909;
+--gold:#c8a96e;
+--gold2:#e8d4a8;
+--text:#e8e2d7;
+--muted:#a7a097;
+--line:rgba(255,255,255,.08);
+--line2:rgba(255,255,255,.05);
+}
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+}
+
+html{
+scroll-behavior:smooth;
+}
+
+body{
+font-family:Inter,sans-serif;
+background:var(--bg);
+color:var(--text);
+overflow-x:hidden;
+line-height:1.78;
+-webkit-font-smoothing:antialiased;
+}
+
+body:before{
+content:"";
+position:fixed;
+inset:0;
+pointer-events:none;
+opacity:.05;
+background-image:
+linear-gradient(rgba(255,255,255,.03) 1px,transparent 1px),
+linear-gradient(90deg,rgba(255,255,255,.03) 1px,transparent 1px);
+background-size:40px 40px;
+}
+
+a{
+text-decoration:none;
+color:inherit;
+}
+
+.topbar{
+position:fixed;
+top:0;
+left:0;
+right:0;
+height:74px;
+display:flex;
+align-items:center;
+justify-content:space-between;
+padding:0 18px;
+z-index:1000;
+background:rgba(5,5,5,.88);
+backdrop-filter:blur(14px);
+border-bottom:1px solid var(--line2);
+}
+
+.brand{
+display:flex;
+align-items:center;
+gap:12px;
+font-family:"IBM Plex Mono",monospace;
+font-size:10px;
+letter-spacing:.28em;
+text-transform:uppercase;
+white-space:nowrap;
+}
+
+.brand-line{
+width:34px;
+height:2px;
+background:var(--gold);
+}
+
+.menu-btn{
+width:42px;
+height:42px;
+border:none;
+background:none;
+cursor:pointer;
+display:flex;
+flex-direction:column;
+justify-content:center;
+gap:6px;
+}
+
+.menu-btn span{
+height:2px;
+background:#fff;
+border-radius:4px;
+}
+
+.menu-btn span:nth-child(2){
+width:72%;
+margin-left:auto;
+}
+
+.overlay{
+position:fixed;
+inset:0;
+background:rgba(0,0,0,.55);
+opacity:0;
+visibility:hidden;
+transition:.25s;
+z-index:998;
+}
+
+.overlay.active{
+opacity:1;
+visibility:visible;
+}
+
+.drawer{
+position:fixed;
+top:0;
+right:-100%;
+width:86%;
+max-width:420px;
+height:100vh;
+overflow-y:auto;
+z-index:999;
+padding:24px;
+transition:.3s ease;
+background:#0a0a0a;
+border-left:1px solid var(--line);
+}
+
+.drawer.active{
+right:0;
+}
+
+.drawer-top{
+display:flex;
+justify-content:space-between;
+align-items:center;
+margin-bottom:18px;
+}
+
+.drawer-title{
+font-family:"IBM Plex Mono",monospace;
+font-size:11px;
+letter-spacing:.28em;
+text-transform:uppercase;
+color:var(--gold);
+}
+
+.close-btn{
+font-size:38px;
+line-height:1;
+background:none;
+border:none;
+color:#fff;
+cursor:pointer;
+}
+
+.group{
+margin-top:18px;
+}
+
+.group small{
+display:block;
+font-family:"IBM Plex Mono",monospace;
+font-size:10px;
+letter-spacing:.26em;
+text-transform:uppercase;
+color:var(--gold);
+margin-bottom:10px;
+}
+
+.drawer a.link{
+display:block;
+padding:14px 0;
+font-size:20px;
+border-bottom:1px solid var(--line2);
+}
+
+.drawer a.link:hover{
+color:var(--gold2);
+}
+
+.private-btn{
+display:block;
+margin-top:22px;
+padding:16px;
+border-radius:16px;
+text-align:center;
+font-weight:800;
+letter-spacing:.18em;
+font-size:13px;
+text-transform:uppercase;
+background:linear-gradient(135deg,#d9bb79,#b88e45);
+color:#111;
+}
+
+.mail-btn{
+display:block;
+margin-top:14px;
+padding:14px;
+text-align:center;
+border-radius:16px;
+border:1px solid var(--line);
+color:#f3dfb4;
+font-size:15px;
+word-break:break-word;
+}
+
+.container{
+max-width:860px;
+margin:auto;
+padding:0 18px;
+position:relative;
+z-index:1;
+}
+
+.hero{
+padding-top:100px;
+padding-bottom:28px;
+}
+
+.meta{
+font-family:"IBM Plex Mono",monospace;
+font-size:10px;
+letter-spacing:.28em;
+text-transform:uppercase;
+color:var(--gold);
+margin-bottom:26px;
+}
+
+h1{
+font-family:"Cormorant Garamond",serif;
+font-size:clamp(32px,6vw,74px);
+line-height:1.0;
+font-weight:600;
+margin-bottom:24px;
+border-left:3px solid var(--gold);
+padding-left:20px;
+}
+
+.hero-sub{
+font-size:18px;
+color:var(--muted);
+line-height:1.8;
+padding-left:23px;
+max-width:650px;
+margin-bottom:14px;
+}
+
+.hero-intro{
+display:block;
+font-size:16px;
+color:#d7c7a0;
+font-weight:500;
+padding-left:23px;
+margin-bottom:12px;
+line-height:1.6;
+}
+
+.hero-hammer{
+font-family:"IBM Plex Mono",monospace;
+font-size:11px;
+letter-spacing:.18em;
+text-transform:uppercase;
+color:var(--gold);
+padding-left:23px;
+margin-bottom:28px;
+display:block;
+}
+
+.hero-cta{
+display:inline-block;
+padding:14px 30px;
+background:linear-gradient(135deg,#d9bb79,#b88e45);
+color:#0a0804;
+font-family:"IBM Plex Mono",monospace;
+font-size:10px;
+font-weight:500;
+letter-spacing:.22em;
+text-transform:uppercase;
+border-radius:4px;
+margin-left:23px;
+transition:opacity .2s;
+}
+
+.hero-cta:hover{
+opacity:.85;
+}
+
+.section-gap{
+height:22px;
+}
+
+.box{
+background:linear-gradient(180deg,#111,#0d0d0d);
+border:1px solid var(--line2);
+border-left:3px solid var(--gold);
+padding:28px;
+margin-bottom:14px;
+}
+
+.label{
+font-family:"IBM Plex Mono",monospace;
+font-size:10px;
+letter-spacing:.22em;
+text-transform:uppercase;
+color:var(--gold);
+margin-bottom:12px;
+}
+
+h2{
+font-family:"Cormorant Garamond",serif;
+font-size:clamp(24px,4vw,40px);
+line-height:1.05;
+margin-bottom:14px;
+font-weight:600;
+}
+
+p{
+font-size:17px;
+color:var(--muted);
+margin-bottom:12px;
+max-width:68ch;
+}
+
+strong{
+color:var(--text);
+}
+
+.pull{
+background:#101010;
+border-left:3px solid var(--gold);
+padding:22px 24px;
+font-family:"Cormorant Garamond",serif;
+font-size:clamp(20px,3vw,30px);
+line-height:1.35;
+margin-bottom:14px;
+}
+
+.cards{
+display:grid;
+grid-template-columns:1fr;
+gap:16px;
+}
+
+.mini-card{
+background:#0d0d0d;
+border:1px solid var(--line2);
+padding:22px;
+}
+
+.mini-card-title{
+font-family:"IBM Plex Mono",monospace;
+font-size:11px;
+letter-spacing:.18em;
+text-transform:uppercase;
+color:var(--gold);
+margin-bottom:12px;
+}
+
+.mini-card p{
+font-size:15px;
+margin-bottom:0;
+}
+
+.cta-box{
+background:linear-gradient(180deg,#111,#0d0d0d);
+border:1px solid var(--line2);
+padding:28px;
+margin-bottom:14px;
+}
+
+.cta-link{
+display:inline-block;
+margin-top:14px;
+padding:14px 28px;
+background:linear-gradient(135deg,#d9bb79,#b88e45);
+color:#0a0804;
+font-family:"IBM Plex Mono",monospace;
+font-size:10px;
+font-weight:500;
+letter-spacing:.22em;
+text-transform:uppercase;
+border-radius:4px;
+transition:opacity .2s;
+}
+
+.cta-link:hover{
+opacity:.85;
+}
+
+.footer-bar{
+max-width:860px;
+margin:auto;
+padding:22px 18px 60px;
+border-top:1px solid var(--line);
+display:flex;
+flex-direction:column;
+align-items:center;
+gap:10px;
+text-align:center;
+color:#8b8479;
+font-size:13px;
+position:relative;
+z-index:1;
+}
+
+.footer-link{
+color:#5f5952;
+font-size:11px;
+text-decoration:none;
+opacity:.72;
+transition:.2s;
+}
+
+.footer-link:hover{
+opacity:1;
+color:var(--gold);
+}
+
+@media(min-width:900px){
+
+.topbar{
+padding:0 34px;
+}
+
+.hero{
+padding-top:110px;
+}
+
+.box{
+padding:34px;
+}
+
+.cta-box{
+padding:34px;
+}
+
+.footer-bar{
+padding:26px 34px 60px;
+}
+
+.cards{
+grid-template-columns:repeat(3,1fr);
+}
+
+}
+
+</style>
+</head>
+
+<body>
+
+<header class="topbar">
+
+<a href="index.html" class="brand">
+<span class="brand-line"></span>
+<span>Decision Authority Research</span>
+</a>
+
+<button class="menu-btn" id="openMenu" aria-label="Open Menu">
+<span></span>
+<span></span>
+<span></span>
+</button>
+
+</header>
+
+<div class="overlay" id="overlay"></div>
+
 <aside class="drawer" id="drawer">
 
 <div class="drawer-top">
@@ -9,13 +503,9 @@
 <small>Primary</small>
 
 <a class="link" href="index.html">Home</a>
-
 <a class="link" href="dar.html">DAR</a>
-
 <a class="link" href="services.html">Services</a>
-
 <a class="link" href="about.html">About</a>
-
 <a class="link" href="contact.html">Contact</a>
 </div>
 
@@ -34,9 +524,9 @@
 
 <a class="link" href="irreversible.html">The Irreversible Question</a>
 
-<a class="link" href="case-studies.html">Case Studies</a>
+<a class="link" href="human-stop-boundary.html">Human Stop Boundary</a>
 
-<a class="link" href="/human-stop-boundary">Human Stop Boundary</a>
+<a class="link" href="case-studies.html">Case Studies</a>
 </div>
 
 <div class="group">
@@ -60,3 +550,299 @@ Liran@liranbarshrim.com
 </a>
 
 </aside>
+
+<main>
+
+<div class="container hero">
+
+<div class="meta">
+Decision Authority Research
+</div>
+
+<h1>
+When irreversible execution becomes possible under uncertainty,<br>
+continuation requires refusal authority &mdash; by name.
+</h1>
+
+<span class="hero-intro">
+Before irreversible execution proceeds, continuation must be authorized by name.
+</span>
+
+<span class="hero-intro" style="color:#e8d4a8;">
+If stopping has a cost, it won't happen.
+</span>
+
+<span class="hero-intro" style="color:#e8d4a8;">
+Stop is the default state.<br>
+Continuation requires a named decision.
+</span>
+
+<p class="hero-sub">
+Where irreversible execution exists, named authorization is a governance condition — not an option.
+</p>
+
+<span class="hero-hammer">
+No irreversible execution without named authorization.
+</span>
+
+<a href="contact.html" class="hero-cta">
+Private Inquiry
+</a>
+
+<p style="font-size:13px;color:#8f877c;padding-left:23px;margin-top:18px;">
+If your systems never face irreversible outcomes, this is not for you.
+</p>
+
+</div>
+
+<div class="section-gap"></div>
+
+<div class="container">
+
+<div class="pull">
+Organizations rarely fail because nobody approved the system.<br>
+They fail because nobody was required to refuse continuation.
+</div>
+
+</div>
+
+<div class="section-gap"></div>
+
+<div class="container">
+
+<div class="box">
+
+<div class="label">
+Structural Condition
+</div>
+
+<h2>
+Execution continues because responsibility becomes distributed across the system.
+</h2>
+
+<p>
+Modern institutions distribute action across approval, monitoring, compliance, legal review, deployment, and escalation.
+</p>
+
+<p>
+Each layer holds partial legitimacy.<br>
+No layer experiences total interruption responsibility.
+</p>
+
+<p>
+As procedural legitimacy increases, psychological interruption decreases.
+</p>
+
+</div>
+
+</div>
+
+<div class="section-gap"></div>
+
+<div class="container">
+
+<div class="cards">
+
+<div class="mini-card">
+<div class="mini-card-title">Momentum</div>
+<p>
+Systems continue because continuity is institutionally easier than interruption.
+</p>
+</div>
+
+<div class="mini-card">
+<div class="mini-card-title">Exposure</div>
+<p>
+The person who stops execution often absorbs the political and operational cost.
+</p>
+</div>
+
+<div class="mini-card">
+<div class="mini-card-title">Authority</div>
+<p>
+Where refusal authority is undefined, continuation becomes default behavior.
+</p>
+</div>
+
+</div>
+
+</div>
+
+<div class="section-gap"></div>
+
+<div class="container">
+
+<div class="box">
+
+<div class="label">
+The Core Gap
+</div>
+
+<h2>
+Most organizations define approval authority.<br>
+Almost none define refusal authority.
+</h2>
+
+<p>
+Approval structures are common:
+budget approval, escalation chains, legal review, deployment sign-off.
+</p>
+
+<p>
+But irreversible execution often proceeds without named refusal authority at the moment continuation becomes real.
+</p>
+
+<div class="pull" style="margin-top:20px;">
+If no one is required to stop continuation,<br>
+continuation becomes automatic.
+</div>
+
+</div>
+
+</div>
+
+<div class="section-gap"></div>
+
+<div class="container">
+
+<div class="box">
+
+<div class="label">
+Governance Anatomy
+</div>
+
+<h2>
+The system does not need malicious intent to continue.
+</h2>
+
+<p>
+Most irreversible failures do not emerge from obvious negligence.
+</p>
+
+<p>
+They emerge from institutional momentum:
+approved systems continuing under procedural legitimacy.
+</p>
+
+<p>
+The process was followed.<br>
+That is often why nobody stopped it.
+</p>
+
+</div>
+
+</div>
+
+<div class="section-gap"></div>
+
+<div class="container">
+
+<div class="pull">
+Stop is the default state.<br>
+Continuation requires named authorization.
+</div>
+
+</div>
+
+<div class="section-gap"></div>
+
+<div class="container">
+
+<div class="box">
+
+<div class="label">
+Research Structure
+</div>
+
+<h2>
+Decision Authority Research examines irreversible execution before failure becomes visible.
+</h2>
+
+<p>
+The focus is not retrospective blame.<br>
+The focus is structural legitimacy before continuation.
+</p>
+
+<p>
+Research areas include:
+institutional momentum, refusal authority, irreversible execution, governance exposure, and protected interruption structures.
+</p>
+
+</div>
+
+</div>
+
+<div class="section-gap"></div>
+
+<div class="container">
+
+<div class="cta-box">
+
+<div class="label">
+Private Advisory
+</div>
+
+<h2>
+Selective engagements.<br>
+Confidential by design.
+</h2>
+
+<p>
+Private advisory for boards, executives, governance leaders, and legal counsel facing irreversible operational decisions under uncertainty.
+</p>
+
+<p>
+If continuation requires institutional legitimacy, refusal authority must exist before execution proceeds.
+</p>
+
+<a href="contact.html" class="cta-link">
+Begin Private Inquiry
+</a>
+
+</div>
+
+</div>
+
+<div class="section-gap"></div>
+
+</main>
+
+<footer class="footer-bar">
+
+<span>
+&#169; 2026 Liran Bar-Shrim
+</span>
+
+<a href="irreversible.html" class="footer-link">
+The Irreversible Question →
+</a>
+
+<span>
+matrix-audit.com
+</span>
+
+</footer>
+
+<script>
+
+var drawer=document.getElementById('drawer');
+var overlay=document.getElementById('overlay');
+
+document.getElementById('openMenu').onclick=function(){
+drawer.classList.add('active');
+overlay.classList.add('active');
+};
+
+document.getElementById('closeMenu').onclick=closeDrawer;
+
+overlay.onclick=closeDrawer;
+
+function closeDrawer(){
+drawer.classList.remove('active');
+overlay.classList.remove('active');
+}
+
+</script>
+
+</body>
+</html>
