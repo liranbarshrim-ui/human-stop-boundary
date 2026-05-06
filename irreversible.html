@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>The Irreversible Question | Decision Authority Research</title>
+<meta name="description" content="A system can execute successfully while governance has already failed. The question is not whether the system failed. The question is whether continuation was ever authorized.">
+<meta name="robots" content="index,follow">
+<link rel="canonical" href="https://matrix-audit.com/irreversible.html">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Cormorant+Garamond:wght@400;600&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#090909;--gold:#c8a96e;--text:#e8e2d7;--muted:#a7a097;--line:rgba(255,255,255,.06);}
+*{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{background:var(--bg);color:var(--text);font-family:"IBM Plex Mono",monospace;min-height:100vh;-webkit-font-smoothing:antialiased;overflow-x:hidden;}
+body:before{content:"";position:fixed;inset:0;pointer-events:none;opacity:.04;background-image:linear-gradient(rgba(255,255,255,.03) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.03) 1px,transparent 1px);background-size:40px 40px;}
+
+.page{max-width:560px;margin:0 auto;padding:100px 28px 120px;}
+
+.domain{opacity:0;transform:translateY(8px);transition:opacity .5s ease, transform .5s ease;margin-bottom:64px;}
+.domain.visible{opacity:1;transform:translateY(0);}
+.domain-label{font-size:9px;letter-spacing:.24em;text-transform:uppercase;color:#3a3832;margin-bottom:16px;display:block;}
+.domain-context{font-family:"Cormorant Garamond",serif;font-size:clamp(15px,2.5vw,18px);line-height:1.7;color:#7a7570;border-left:1px solid #2a2826;padding-left:18px;}
+
+.sequence{display:flex;flex-direction:column;gap:0;}
+.step{padding:28px 0;border-bottom:1px solid var(--line);opacity:0;transform:translateY(12px);transition:opacity .6s ease, transform .6s ease;}
+.step.visible{opacity:1;transform:translateY(0);}
+.step:last-child{border-bottom:none;}
+.step-label{font-size:9px;letter-spacing:.24em;text-transform:uppercase;color:#52504c;margin-bottom:12px;display:block;}
+.step-fact{font-family:"Cormorant Garamond",serif;font-size:clamp(18px,3vw,24px);line-height:1.4;color:var(--muted);}
+.step-fact.confirmed{color:var(--text);}
+
+.divider{height:1px;background:rgba(200,169,110,.15);margin:48px 0;}
+
+.verdict{opacity:0;transform:translateY(12px);transition:opacity .8s ease .2s, transform .8s ease .2s;}
+.verdict.visible{opacity:1;transform:translateY(0);}
+.verdict-label{font-size:9px;letter-spacing:.24em;text-transform:uppercase;color:var(--gold);margin-bottom:20px;display:block;}
+.verdict-text{font-family:"Cormorant Garamond",serif;font-size:clamp(20px,3.5vw,28px);line-height:1.45;color:var(--text);border-left:2px solid var(--gold);padding-left:20px;margin-bottom:40px;}
+
+.conclusion{opacity:0;transform:translateY(12px);transition:opacity .8s ease .4s, transform .8s ease .4s;}
+.conclusion.visible{opacity:1;transform:translateY(0);}
+.conclusion-text{font-family:"Cormorant Garamond",serif;font-size:clamp(22px,4vw,32px);line-height:1.35;color:var(--text);margin-bottom:48px;}
+.conclusion-text em{font-style:italic;color:var(--gold);}
+
+.footer-link{opacity:0;transition:opacity .8s ease .6s;}
+.footer-link.visible{opacity:1;}
+.footer-link a{font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:#6a6560;text-decoration:none;border-bottom:1px solid #3a3632;padding-bottom:2px;transition:color .2s, border-color .2s;}
+.footer-link a:hover{color:var(--gold);border-color:var(--gold);}
+.footer-link span{color:#2a2a2a;margin:0 12px;}
+</style>
+</head>
+<body>
+
+<div class="page">
+
+  <div class="domain" id="domain">
+    <span class="domain-label">Consider</span>
+    <p class="domain-context">A credit decision. A clinical recommendation. An insurance denial. A trading instruction. An automated hiring outcome.<br><br>The model was accurate. The process was followed. The decision executed at scale.</p>
+  </div>
+
+  <div class="sequence">
+    <div class="step" id="s1">
+      <span class="step-label">The system</span>
+      <p class="step-fact confirmed">The system was approved.</p>
+    </div>
+    <div class="step" id="s2">
+      <span class="step-label">Validation</span>
+      <p class="step-fact confirmed">It passed every required check.</p>
+    </div>
+    <div class="step" id="s3">
+      <span class="step-label">Monitoring</span>
+      <p class="step-fact confirmed">Monitoring was active. No anomaly was detected.</p>
+    </div>
+    <div class="step" id="s4">
+      <span class="step-label">Legal</span>
+      <p class="step-fact confirmed">Legal cleared it. Risk signed off.</p>
+    </div>
+    <div class="step" id="s5">
+      <span class="step-label">Execution</span>
+      <p class="step-fact confirmed">It ran.</p>
+    </div>
+    <div class="step" id="s6">
+      <span class="step-label">The question</span>
+      <p class="step-fact">Who, by name, held the institutional right to refuse continuation before execution became irreversible?</p>
+    </div>
+    <div class="step" id="s7">
+      <span class="step-label">The answer</span>
+      <p class="step-fact">No named refusal authority existed.</p>
+    </div>
+  </div>
+
+  <div class="divider" id="divider" style="opacity:0;transition:opacity .6s ease;"></div>
+
+  <div class="verdict" id="verdict">
+    <span class="verdict-label">The condition</span>
+    <p class="verdict-text">The absence of anomaly does not create authorization.<br>A system can execute successfully while governance has already failed.</p>
+  </div>
+
+  <div class="conclusion" id="conclusion">
+    <p class="conclusion-text">If no one was required to refuse continuation,<br>continuation was <em>never authorized.</em><br><br>Continuation did not require authorization to proceed.</p>
+  </div>
+
+  <div class="footer-link" id="footerlink">
+    <a href="index.html">Decision Authority Research</a>
+    <span>·</span>
+    <a href="dar.html">DAR</a>
+    <span>·</span>
+    <a href="contact.html">Private Inquiry</a>
+  </div>
+
+</div>
+
+<script>
+function reveal() {
+  setTimeout(function(){ document.getElementById('domain').classList.add('visible'); }, 200);
+
+  var steps = ['s1','s2','s3','s4','s5','s6','s7'];
+  steps.forEach(function(id, i) {
+    setTimeout(function() {
+      var el = document.getElementById(id);
+      if (el) el.classList.add('visible');
+    }, 900 + i * 320);
+  });
+
+  setTimeout(function() {
+    var d = document.getElementById('divider');
+    if (d) d.style.opacity = '1';
+  }, 900 + 7 * 320 + 200);
+
+  setTimeout(function() {
+    document.getElementById('verdict').classList.add('visible');
+  }, 900 + 7 * 320 + 500);
+
+  setTimeout(function() {
+    document.getElementById('conclusion').classList.add('visible');
+  }, 900 + 7 * 320 + 1000);
+
+  setTimeout(function() {
+    document.getElementById('footerlink').classList.add('visible');
+  }, 900 + 7 * 320 + 1600);
+}
+
+window.addEventListener('load', reveal);
+</script>
+
+</body>
+</html>
