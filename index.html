@@ -3,455 +3,661 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>Decision Authority Research | Named Stop Authority</title>
-<meta name="description" content="Private advisory for boards, executives and counsel on named stop authority and irreversible decisions.">
+
+<title>Governance Anatomy | Decision Authority Research</title>
+
+<meta name="description" content="Case anatomy of irreversible execution, institutional momentum, and refusal authority.">
+
 <meta name="robots" content="index,follow">
-<link rel="canonical" href="https://matrix-audit.com/">
+
+<link rel="canonical" href="https://matrix-audit.com/governance-anatomy.html">
+
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&display=swap" rel="stylesheet">
+
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&family=Cormorant+Garamond:wght@400;600&display=swap" rel="stylesheet">
+
 <style>
-:root{--bg:#090909;--gold:#c8a96e;--gold2:#e8d4a8;--text:#e8e2d7;--muted:#a7a097;--line:rgba(255,255,255,.08);--line2:rgba(255,255,255,.05);}
-*{margin:0;padding:0;box-sizing:border-box;}html{scroll-behavior:smooth;}
-body{font-family:Inter,sans-serif;background:var(--bg);color:var(--text);overflow-x:hidden;line-height:1.78;-webkit-font-smoothing:antialiased;}
-body:before{content:"";position:fixed;inset:0;pointer-events:none;opacity:.05;background-image:linear-gradient(rgba(255,255,255,.03) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.03) 1px,transparent 1px);background-size:40px 40px;}
-a{text-decoration:none;color:inherit;}
-.topbar{position:fixed;top:0;left:0;right:0;height:74px;display:flex;align-items:center;justify-content:space-between;padding:0 18px;z-index:1000;background:rgba(5,5,5,.88);backdrop-filter:blur(14px);border-bottom:1px solid var(--line2);}
-.brand{display:flex;align-items:center;gap:12px;font-family:"IBM Plex Mono",monospace;font-size:10px;letter-spacing:.28em;text-transform:uppercase;white-space:nowrap;}
-.brand-line{width:34px;height:2px;background:var(--gold);}
-.menu-btn{width:42px;height:42px;border:none;background:none;cursor:pointer;display:flex;flex-direction:column;justify-content:center;gap:6px;}
-.menu-btn span{height:2px;background:#fff;border-radius:4px;}
-.menu-btn span:nth-child(2){width:72%;margin-left:auto;}
-.overlay{position:fixed;inset:0;background:rgba(0,0,0,.55);opacity:0;visibility:hidden;transition:.25s;z-index:998;}
-.overlay.active{opacity:1;visibility:visible;}
-.drawer{position:fixed;top:0;right:-100%;width:86%;max-width:420px;height:100vh;overflow-y:auto;z-index:999;padding:24px;transition:.3s ease;background:#0a0a0a;border-left:1px solid var(--line);}
-.drawer.active{right:0;}
-.drawer-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:18px;}
-.drawer-title{font-family:"IBM Plex Mono",monospace;font-size:11px;letter-spacing:.28em;text-transform:uppercase;color:var(--gold);}
-.close-btn{font-size:38px;line-height:1;background:none;border:none;color:#fff;cursor:pointer;}
-.group{margin-top:18px;}
-.group small{display:block;font-family:"IBM Plex Mono",monospace;font-size:10px;letter-spacing:.26em;text-transform:uppercase;color:var(--gold);margin-bottom:10px;}
-.drawer a.link{display:block;padding:14px 0;font-size:20px;border-bottom:1px solid var(--line2);}
-.drawer a.link:hover{color:var(--gold2);}
-.private-btn{display:block;margin-top:22px;padding:16px;border-radius:16px;text-align:center;font-weight:800;letter-spacing:.18em;font-size:13px;text-transform:uppercase;background:linear-gradient(135deg,#d9bb79,#b88e45);color:#111;}
-.mail-btn{display:block;margin-top:14px;padding:14px;text-align:center;border-radius:16px;border:1px solid var(--line);color:#f3dfb4;font-size:15px;word-break:break-word;}
-.container{max-width:860px;margin:auto;padding:0 18px;position:relative;z-index:1;}
-.hero{padding-top:90px;padding-bottom:22px;}
-.meta{font-family:"IBM Plex Mono",monospace;font-size:10px;letter-spacing:.28em;text-transform:uppercase;color:var(--gold);margin-bottom:26px;}
-h1{font-family:"Cormorant Garamond",serif;font-size:clamp(28px,6vw,72px);line-height:1.0;font-weight:600;margin-bottom:24px;border-left:3px solid var(--gold);padding-left:20px;}
-.hero-sub{font-size:17px;color:var(--muted);line-height:1.8;padding-left:23px;max-width:540px;margin-bottom:12px;}
-.hero-intro{display:block;font-size:16px;color:#d7c7a0;font-weight:500;padding-left:23px;margin-bottom:12px;line-height:1.6;}
-.hero-hammer{font-family:"IBM Plex Mono",monospace;font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--gold);padding-left:23px;margin-bottom:28px;display:block;}
-.hero-cta{display:inline-block;padding:14px 30px;background:linear-gradient(135deg,#d9bb79,#b88e45);color:#0a0804;font-family:"IBM Plex Mono",monospace;font-size:10px;font-weight:500;letter-spacing:.22em;text-transform:uppercase;border-radius:4px;margin-left:23px;transition:opacity .2s;}
-.hero-cta:hover{opacity:.85;}
-.box{background:linear-gradient(180deg,#111,#0d0d0d);border:1px solid var(--line2);border-left:3px solid var(--gold);padding:26px;margin-bottom:14px;}
-.label{font-family:"IBM Plex Mono",monospace;font-size:10px;letter-spacing:.22em;text-transform:uppercase;color:var(--gold);margin-bottom:12px;}
-h2{font-family:"Cormorant Garamond",serif;font-size:clamp(24px,4vw,38px);line-height:1.05;margin-bottom:14px;font-weight:600;}
-p{font-size:17px;color:var(--muted);margin-bottom:12px;max-width:68ch;}
-strong{color:var(--text);}
-.pull{background:#101010;border-left:3px solid var(--gold);padding:20px 24px;font-family:"Cormorant Garamond",serif;font-size:clamp(20px,3vw,28px);line-height:1.3;margin-bottom:14px;}
-.cta-box{background:linear-gradient(180deg,#111,#0d0d0d);border:1px solid var(--line2);padding:26px;margin-bottom:14px;}
-.cta-link{display:inline-block;margin-top:14px;padding:14px 28px;background:linear-gradient(135deg,#d9bb79,#b88e45);color:#0a0804;font-family:"IBM Plex Mono",monospace;font-size:10px;font-weight:500;letter-spacing:.22em;text-transform:uppercase;border-radius:4px;transition:opacity .2s;}
-.cta-link:hover{opacity:.85;}
-.section-gap{height:22px;}
-.footer-bar{max-width:860px;margin:auto;padding:22px 18px 60px;border-top:1px solid var(--line);font-family:Inter,sans-serif;font-size:13px;color:#7c766f;display:flex;justify-content:space-between;position:relative;z-index:1;}
-
-/* NOT box — cold, closed, no poetic tone */
-.not-box{background:#0c0c0c;border:1px solid rgba(200,169,110,.18);border-left:3px solid var(--gold);padding:26px;margin-bottom:14px;}
-.not-box p{font-size:15px;color:#7a7570;margin-bottom:6px;line-height:1.6;}
-.not-box .not-list{list-style:none;padding:0;margin:14px 0 20px;}
-.not-box .not-list li{font-family:"IBM Plex Mono",monospace;font-size:12px;color:#8a8480;letter-spacing:.05em;padding:6px 0;border-bottom:1px solid rgba(255,255,255,.04);}
-.not-box .not-list li:last-child{border-bottom:none;}
-.not-box .not-list li:before{content:"— ";color:#c8a96e;}
-.not-box .not-closing{font-size:15px;color:var(--text);font-weight:500;line-height:1.6;margin-top:6px;margin-bottom:0;}
-
-/* Counterexample — cold logic, no drama */
-.counter-box{background:#0a0a0a;border:1px solid rgba(255,255,255,.06);border-left:3px solid #52504c;padding:26px;margin-bottom:14px;}
-.counter-box .counter-facts{list-style:none;padding:0;margin:14px 0 22px;}
-.counter-box .counter-facts li{font-family:"IBM Plex Mono",monospace;font-size:12px;color:#8a8480;letter-spacing:.04em;padding:7px 0;border-bottom:1px solid rgba(255,255,255,.03);}
-.counter-box .counter-facts li:last-child{border-bottom:none;}
-.counter-box .counter-verdict{font-family:"IBM Plex Mono",monospace;font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--gold);margin-bottom:14px;display:block;}
-.counter-box .counter-question{font-size:16px;color:var(--text);line-height:1.6;margin-bottom:0;}
-
-@media(min-width:900px){.topbar{padding:0 34px;}.hero{padding-top:100px;}.hero-sub{font-size:19px;}.box{padding:34px;}.not-box{padding:34px;}.counter-box{padding:34px;}.cta-box{padding:34px;}.footer-bar{padding:26px 34px 60px;}}
-</style>
-</head>
-<body>
-
-<header class="topbar">
-<a href="index.html" class="brand"><span class="brand-line"></span><span>Decision Authority Research</span></a>
-<button class="menu-btn" id="openMenu" aria-label="Open Menu"><span></span><span></span><span></span></button>
-</header>
-
-<div class="overlay" id="overlay"></div>
-
-<aside class="drawer" id="drawer">
-<div class="drawer-top">
-<div class="drawer-title">Navigation</div>
-<button class="close-btn" id="closeMenu">&#215;</button>
-</div>
-<div class="group">
-<small>Primary</small>
-<a class="link" href="index.html">Home</a>
-<a class="link" href="dar.html">DAR</a>
-<a class="link" href="services.html">Services</a>
-<a class="link" href="about.html">About</a>
-<a class="link" href="contact.html">Contact</a>
-</div>
-<div class="group">
-<small>Research</small>
-<a class="link" href="research.html">Independent Research</a>
-<a class="link" href="whitepaper.html">White Paper</a>
-<a class="link" href="board-brief.html">Board Brief</a>
-<a class="link" href="insights.html">Insights</a>
-<a class="link" href="/human-stop-boundary">Human Stop Boundary</a>
-</div>
-<div class="group">
-<small>Reference</small>
-<a class="link" href="definitions.html">Definitions</a>
-<a class="link" href="faq.html">FAQ</a>
-<a class="link" href="goodfaith.html">Good Faith Use</a>
-<a class="link" href="diagnostic.html">Governance Diagnostic</a>
-</div>
-<a href="contact.html" class="private-btn">Private Intake</a>
-<a href="mailto:Liran@liranbarshrim.com" class="mail-btn">Liran@liranbarshrim.com</a>
-</aside>
-
-<main>
-
-<div class="container hero">
-<div class="meta">Decision Authority Research</div>
-<h1>When irreversible execution becomes possible under uncertainty,<br>continuation requires refusal authority &mdash; by name.</h1>
-<span class="hero-intro">Before irreversible execution proceeds, continuation must be authorized by name.</span>
-<span class="hero-intro" style="color:#e8d4a8;">If stopping has a cost, it won't happen.</span>
-<span class="hero-intro" style="color:#e8d4a8;">Stop is the default state.<br>Continuation requires a named decision.</span>
-<p class="hero-sub">Where irreversible execution exists, named authorization is a governance condition — not an option.</p>
-<span class="hero-hammer">No irreversible execution without named authorization.</span>
-<a href="contact.html" class="hero-cta">Private Inquiry</a>
-<p style="font-size:13px;color:#8f877c;padding-left:23px;margin-top:18px;">If your systems never face irreversible outcomes, this is not for you.</p>
-</div>
-
-<div class="section-gap"></div>
-
-<!-- BLOCK 1: WHAT DAR IS NOT -->
-<div class="container">
-<div class="not-box">
-<div class="label">What DAR Is Not</div>
-<p>DAR is not a technical layer. It does not belong to the same category as the following:</p>
-<ul class="not-list">
-<li>a safety system</li>
-<li>anomaly detection</li>
-<li>monitoring infrastructure</li>
-<li>human-in-the-loop optimization</li>
-<li>escalation tooling</li>
-<li>risk management software</li>
-<li>compliance automation</li>
-<li>AI oversight mechanism</li>
-</ul>
-<p class="not-closing">DAR does not optimize execution.<br>DAR defines whether execution is legitimate at all.</p>
-</div>
-</div>
-
-<div class="section-gap"></div>
-
-<!-- BLOCK 2: COUNTEREXAMPLE -->
-<div class="container">
-<div class="counter-box">
-<div class="label">Counterexample</div>
-<ul class="counter-facts">
-<li>The system passed validation.</li>
-<li>Monitoring was active.</li>
-<li>No anomaly was detected.</li>
-<li>No threshold was crossed.</li>
-<li>Legal cleared it.</li>
-<li>Risk signed off.</li>
-</ul>
-<span class="counter-verdict">The absence of anomaly does not create authorization.</span>
-<p class="counter-question">The question is not whether the system failed.<br><strong>The question is who holds the institutional right to refuse continuation — before failure becomes the proof.</strong></p>
-</div>
-</div>
-
-<div class="section-gap"></div>
-
-<!-- BLOCK 3: DEFINITIONS -->
-<div class="container">
-<div class="box" style="border-left-color:#52504c;">
-<div class="label">Definitions</div>
-<p style="margin-bottom:18px;"><strong>Execution</strong><br>
-<span style="font-size:15px;">The transition from approved capability to live irreversible action.</span></p>
-<p style="margin-bottom:18px;"><strong>Refusal Authority</strong><br>
-<span style="font-size:15px;">The institutional right, assigned by name, to deny continuation before irreversible execution.</span></p>
-<p style="margin-bottom:18px;"><strong>Legitimacy</strong><br>
-<span style="font-size:15px;">The condition under which irreversible execution is authorized by named authority. Not created by performance, validation, or approval.</span></p>
-<p style="margin-bottom:0;"><strong>DAR</strong><br>
-<span style="font-size:15px;">A governance constraint requiring named refusal authority before irreversible execution proceeds.</span></p>
-</div>
-</div>
-
-<div class="section-gap"></div>
-
-<div class="container">
-<div class="pull" style="font-size:clamp(18px,3vw,24px);line-height:1.5;">
-Continuation is not legitimate<br>
-until a named individual authorizes it &mdash;<br>
-and is accountable for that authorization.
-</div>
-</div>
-
-<div class="section-gap"></div>
-
-<div class="container">
-<div class="box">
-<div class="label">The Gap</div>
-<h2>Most organizations know how to approve decisions.<br>Almost none know who can refuse continuation.</h2>
-<p>Approval workflows, escalation structures, budget authority. These are well-defined in most organizations.</p>
-<div class="pull" style="margin-top:18px;font-size:clamp(18px,3vw,24px);">They built systems where failure belongs to everyone,<br>so it belongs to no one.</div>
-<p><strong>Where refusal authority is unassigned, responsibility is allocated only after the fact.</strong></p>
-</div>
-</div>
-
-
-
-<div class="section-gap"></div>
-
-<div class="container">
-<div class="box">
-<div class="label">The Missing Layer</div>
-<h2>Stopping has a cost.<br>No one wants to pay it.</h2>
-<p>The person required to stop is often the one who absorbs the delay, the missed target, the budget impact.</p>
-<p><strong>If stopping is not protected, it will not happen.</strong></p>
-<div class="pull" style="margin-top:18px;font-size:clamp(18px,3vw,24px);">Authority without protection is theater.</div>
-</div>
-</div>
-
-<div class="section-gap"></div>
-
-<div class="container">
-<div class="pull" style="font-size:clamp(18px,3vw,26px);line-height:1.4;">
-Systems preserve continuity.<br>
-Individuals absorb liability.
-</div>
-</div>
-
-<div class="section-gap"></div>
-
-<div class="container">
-<div class="box">
-<div class="label">The Question</div>
-<h2>Before the system runs.<br>Before the decision executes.<br>Before the output becomes irreversible.</h2>
-<p>Most governance structures define who approves. Almost none define who holds refusal authority.</p>
-<p><strong>Who, by name, is required to authorize continuation before it runs?</strong></p>
-<p style="font-family:'IBM Plex Mono',monospace;font-size:12px;color:var(--gold);letter-spacing:.05em;margin-bottom:16px;">Code defines what the system can do. Named authority defines whether continuation is legitimate.</p>
-<p>Not a team. Not a function. Not a committee. A person. Named in advance. Bound to refusal before continuation is authorized.</p>
-</div>
-</div>
-
-<div class="section-gap"></div>
-
-<div class="container">
-<div class="pull">
-Stop is the default state.<br>
-Continuation does not exist<br>
-until a named individual authorizes it.
-</div>
-</div>
-
-
-
-
-
-<div class="section-gap"></div>
-
-<div class="container">
-<p style="font-size:13px;color:#7a7570;line-height:1.6;">Core concept: <a href="/human-stop-boundary" style="color:#c8a96e;text-decoration:none;border-bottom:1px solid #c8a96e;">Human Stop Boundary</a></p>
-</div>
-
-
-
-<div class="section-gap"></div>
-
-<div class="container">
-<div class="pull" style="font-size:clamp(18px,3vw,26px);line-height:1.4;">
-If this question is irrelevant to you,<br>
-you do not need DAR.<br><br>
-If it is not,<br>
-you already understand why you are here.
-</div>
-</div>
-
-<div class="section-gap"></div>
-
-<div class="container">
-<div class="box">
-<div class="label">A Typical Moment</div>
-<p>A model is approved. Risk signed. Compliance cleared.</p>
-<p>It runs.</p>
-<p>One case feels wrong. Not clearly wrong. Just enough to pause.</p>
-<p><strong>No named authorization is required at that moment.</strong></p>
-<p>So it continues.</p>
-<div class="pull" style="margin-top:18px;font-size:clamp(18px,3vw,24px);">
-No failure. No violation.<br>
-No named authorization required.
-</div>
-</div>
-</div>
-
-<div class="section-gap"></div>
-
-<div class="container">
-<div class="box">
-<div class="label">Where Governance Breaks</div>
-<p>The system is approved.</p>
-<p>It runs.</p>
-<p>Uncertainty appears.</p>
-<p><strong>No named authorization is required at execution.</strong></p>
-<p>So it continues.</p>
-<p><strong>If you cannot name who holds refusal authority over your most critical system today,<br>the decision is already being made.</strong></p>
-</div>
-</div>
-
-
-
-<div class="section-gap"></div>
-
-<div class="container">
-<div class="box">
-<div class="label">Why This Fails Internally</div>
-<p>You can define roles. You can map processes. You can assign names.</p>
-<p><strong>The problem is not the mechanism.</strong></p>
-<p>The problem is this: the same system that must stop also pays for stopping.</p>
-<div class="pull" style="margin-top:18px;font-size:clamp(18px,3vw,24px);">If stopping carries a cost inside the system,<br>the system will continue.</div>
-</div>
-</div>
-
-
-
-<div class="section-gap"></div>
-
-<div class="container">
-<div class="pull" style="font-size:clamp(18px,3vw,26px);line-height:1.5;">
-If your most critical system runs today,<br>
-who is authorized to refuse continuation &mdash;<br>
-and who absorbs the institutional cost of doing so?
-</div>
-</div>
-
-<div class="section-gap"></div>
-
-<div class="container">
-<div class="pull" style="font-size:clamp(18px,3vw,26px);line-height:1.5;">
-If no one is named to stop,<br>
-someone will be named after.
-</div>
-</div>
-
-<div class="section-gap"></div>
-
-<div class="container">
-<div class="box">
-<div class="label">Final Check</div>
-<p>You can define the process.</p>
-<p>You can assign the role.</p>
-<p>You can document the decision.</p>
-<p><strong>None of that answers this:</strong></p>
-<div class="pull" style="margin-top:18px;font-size:clamp(18px,3vw,26px);">
-If it runs tomorrow,<br>
-who holds refusal authority &mdash;<br>
-and who protects them when they use it?
-</div>
-</div>
-</div>
-
-<div class="section-gap"></div>
-
-<div class="container">
-<div class="box">
-<div class="label">One Question</div>
-<p style="margin-bottom:18px;">Write the name.</p>
-<p style="font-size:12px;color:#7a7570;margin-bottom:10px;">A role is not enough.</p>
-<div style="border:1px solid rgba(255,255,255,.08);padding:18px;margin-bottom:14px;">
-<p style="color:#a7a097;margin:0;">____________________________</p>
-</div>
-<p style="font-size:14px;color:#a7a097;">If you cannot fill this line immediately,<br>continuation cannot be legitimately authorized.</p>
-</div>
-</div>
-
-<div class="section-gap"></div>
-
-<div class="container">
-<div class="pull" style="font-size:clamp(20px,3vw,30px);line-height:1.4;">
-Somewhere in your organization,<br>
-a system is running right now.<br><br>
-No named authority is required<br>
-before continuation.<br><br>
-The decision is already being made.
-</div>
-</div>
-
-<div class="section-gap"></div>
-
-<div class="container">
-<div class="box" style="border-left-color:#52504c;">
-<div class="label">What This Page Is</div>
-<p style="font-size:15px;color:#7a7570;">This page defines the condition. Not the structures that emerge once the condition becomes operational.</p>
-<p style="font-size:15px;color:#7a7570;">The implications of named refusal authority unfold across the DAR research structure.</p>
-<p style="font-size:13px;color:#52504c;margin-bottom:0;">DAR · White Paper · Definitions · Case Studies · Diagnostic</p>
-</div>
-</div>
-
-<div class="section-gap"></div>
-
-<div class="container">
-<div class="cta-box">
-<div class="label">Private Advisory</div>
-<h2>Selective engagements.<br>Confidential by design.</h2>
-<p>DAR is applied where irreversible execution cannot proceed on institutional inertia alone. Private engagements with boards, executives, and legal counsel where named legitimacy before continuation is the operative question.</p>
-<p><strong>Intake is by inquiry only.</strong></p>
-<p style="font-size:13px;color:#a89f92;margin-top:10px;">If you had to write the name &mdash; could you?</p>
-<p style="font-size:13px;color:#7a7570;margin-top:8px;">If not, continuation cannot be legitimately authorized.</p>
-<a href="contact.html" class="cta-link">Begin Private Inquiry</a>
-</div>
-</div>
-
-<div class="section-gap"></div>
-
-</main>
-
-<footer class="footer-bar"
-style="
+:root{
+--bg:#090909;
+--gold:#c8a96e;
+--gold2:#e8d4a8;
+--text:#e8e2d7;
+--muted:#a7a097;
+--line:rgba(255,255,255,.08);
+--line2:rgba(255,255,255,.05);
+}
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+}
+
+html{
+scroll-behavior:smooth;
+}
+
+body{
+font-family:Inter,sans-serif;
+background:var(--bg);
+color:var(--text);
+overflow-x:hidden;
+line-height:1.78;
+-webkit-font-smoothing:antialiased;
+}
+
+body:before{
+content:"";
+position:fixed;
+inset:0;
+pointer-events:none;
+opacity:.05;
+background-image:
+linear-gradient(rgba(255,255,255,.03) 1px,transparent 1px),
+linear-gradient(90deg,rgba(255,255,255,.03) 1px,transparent 1px);
+background-size:40px 40px;
+}
+
+a{
+text-decoration:none;
+color:inherit;
+}
+
+.topbar{
+position:fixed;
+top:0;
+left:0;
+right:0;
+height:74px;
+display:flex;
+align-items:center;
+justify-content:space-between;
+padding:0 18px;
+z-index:1000;
+background:rgba(5,5,5,.88);
+backdrop-filter:blur(14px);
+border-bottom:1px solid var(--line2);
+}
+
+.brand{
+display:flex;
+align-items:center;
+gap:12px;
+font-family:"IBM Plex Mono",monospace;
+font-size:10px;
+letter-spacing:.28em;
+text-transform:uppercase;
+white-space:nowrap;
+}
+
+.brand-line{
+width:34px;
+height:2px;
+background:var(--gold);
+}
+
+.menu-btn{
+width:42px;
+height:42px;
+border:none;
+background:none;
+cursor:pointer;
+display:flex;
+flex-direction:column;
+justify-content:center;
+gap:6px;
+}
+
+.menu-btn span{
+height:2px;
+background:#fff;
+border-radius:4px;
+}
+
+.menu-btn span:nth-child(2){
+width:72%;
+margin-left:auto;
+}
+
+.overlay{
+position:fixed;
+inset:0;
+background:rgba(0,0,0,.55);
+opacity:0;
+visibility:hidden;
+transition:.25s;
+z-index:998;
+}
+
+.overlay.active{
+opacity:1;
+visibility:visible;
+}
+
+.drawer{
+position:fixed;
+top:0;
+right:-100%;
+width:86%;
+max-width:420px;
+height:100vh;
+overflow-y:auto;
+z-index:999;
+padding:24px;
+transition:.3s ease;
+background:#0a0a0a;
+border-left:1px solid var(--line);
+}
+
+.drawer.active{
+right:0;
+}
+
+.drawer-top{
+display:flex;
+justify-content:space-between;
+align-items:center;
+margin-bottom:18px;
+}
+
+.drawer-title{
+font-family:"IBM Plex Mono",monospace;
+font-size:11px;
+letter-spacing:.28em;
+text-transform:uppercase;
+color:var(--gold);
+}
+
+.close-btn{
+font-size:38px;
+line-height:1;
+background:none;
+border:none;
+color:#fff;
+cursor:pointer;
+}
+
+.group{
+margin-top:18px;
+}
+
+.group small{
+display:block;
+font-family:"IBM Plex Mono",monospace;
+font-size:10px;
+letter-spacing:.26em;
+text-transform:uppercase;
+color:var(--gold);
+margin-bottom:10px;
+}
+
+.drawer a.link{
+display:block;
+padding:14px 0;
+font-size:20px;
+border-bottom:1px solid var(--line2);
+}
+
+.drawer a.link:hover{
+color:var(--gold2);
+}
+
+.private-btn{
+display:block;
+margin-top:22px;
+padding:16px;
+border-radius:16px;
+text-align:center;
+font-weight:800;
+letter-spacing:.18em;
+font-size:13px;
+text-transform:uppercase;
+background:linear-gradient(135deg,#d9bb79,#b88e45);
+color:#111;
+}
+
+.mail-btn{
+display:block;
+margin-top:14px;
+padding:14px;
+text-align:center;
+border-radius:16px;
+border:1px solid var(--line);
+color:#f3dfb4;
+font-size:15px;
+word-break:break-word;
+}
+
+.container{
+max-width:860px;
+margin:auto;
+padding:0 18px;
+position:relative;
+z-index:1;
+}
+
+.hero{
+padding-top:110px;
+padding-bottom:40px;
+}
+
+.meta{
+font-family:"IBM Plex Mono",monospace;
+font-size:10px;
+letter-spacing:.28em;
+text-transform:uppercase;
+color:var(--gold);
+margin-bottom:26px;
+}
+
+h1{
+font-family:"Cormorant Garamond",serif;
+font-size:clamp(34px,7vw,76px);
+line-height:1.0;
+font-weight:600;
+margin-bottom:28px;
+border-left:3px solid var(--gold);
+padding-left:22px;
+}
+
+.hero-sub{
+font-size:18px;
+color:var(--muted);
+line-height:1.8;
+max-width:700px;
+margin-bottom:18px;
+}
+
+.section-gap{
+height:24px;
+}
+
+.box{
+background:linear-gradient(180deg,#111,#0d0d0d);
+border:1px solid var(--line2);
+border-left:3px solid var(--gold);
+padding:28px;
+margin-bottom:14px;
+}
+
+.label{
+font-family:"IBM Plex Mono",monospace;
+font-size:10px;
+letter-spacing:.22em;
+text-transform:uppercase;
+color:var(--gold);
+margin-bottom:12px;
+}
+
+h2{
+font-family:"Cormorant Garamond",serif;
+font-size:clamp(24px,4vw,42px);
+line-height:1.05;
+margin-bottom:16px;
+font-weight:600;
+}
+
+p{
+font-size:17px;
+color:var(--muted);
+margin-bottom:14px;
+max-width:70ch;
+}
+
+strong{
+color:var(--text);
+}
+
+.pull{
+background:#101010;
+border-left:3px solid var(--gold);
+padding:22px 24px;
+font-family:"Cormorant Garamond",serif;
+font-size:clamp(22px,4vw,32px);
+line-height:1.35;
+margin-bottom:14px;
+}
+
+.footer-bar{
+max-width:860px;
+margin:auto;
+padding:22px 18px 60px;
+border-top:1px solid rgba(255,255,255,.08);
 display:flex;
 flex-direction:column;
 align-items:center;
 gap:10px;
 text-align:center;
-padding:22px 18px 60px;
-border-top:1px solid rgba(255,255,255,.08);
 color:#9a9388;
 font-size:13px;
-">
-<span>&#169; 2026 Liran Bar-Shrim</span>
-<a href="irreversible.html"
-style="
+position:relative;
+z-index:1;
+}
+
+.footer-link{
 color:#5a544d;
 font-size:11px;
 text-decoration:none;
 opacity:.72;
 white-space:nowrap;
 transition:opacity .2s ease,color .2s ease;
-">
-The Irreversible Question →
+}
+
+.footer-link:hover{
+opacity:1;
+color:var(--gold);
+}
+
+@media(min-width:900px){
+
+.topbar{
+padding:0 34px;
+}
+
+.container{
+padding:0 34px;
+}
+
+.box{
+padding:34px;
+}
+
+.footer-bar{
+padding:26px 34px 60px;
+}
+
+}
+</style>
+</head>
+
+<body>
+
+<header class="topbar">
+
+<a href="index.html" class="brand">
+<span class="brand-line"></span>
+<span>Decision Authority Research</span>
 </a>
 
-<span>matrix-audit.com</span>
+<button class="menu-btn" id="openMenu" aria-label="Open Menu">
+<span></span>
+<span></span>
+<span></span>
+</button>
+
+</header>
+
+<div class="overlay" id="overlay"></div>
+
+<aside class="drawer" id="drawer">
+
+<div class="drawer-top">
+<div class="drawer-title">Navigation</div>
+<button class="close-btn" id="closeMenu">&#215;</button>
+</div>
+
+<div class="group">
+<small>Primary</small>
+
+<a class="link" href="index.html">Home</a>
+<a class="link" href="dar.html">DAR</a>
+<a class="link" href="services.html">Services</a>
+<a class="link" href="about.html">About</a>
+<a class="link" href="contact.html">Contact</a>
+</div>
+
+<div class="group">
+<small>Research</small>
+
+<a class="link" href="research.html">Independent Research</a>
+
+<a class="link" href="whitepaper.html">White Paper</a>
+
+<a class="link" href="board-brief.html">Board Brief</a>
+
+<a class="link" href="insights.html">Insights</a>
+
+<a class="link" href="governance-anatomy.html">Governance Anatomy</a>
+
+<a class="link" href="irreversible.html">The Irreversible Question</a>
+
+<a class="link" href="/human-stop-boundary">Human Stop Boundary</a>
+</div>
+
+<div class="group">
+<small>Reference</small>
+
+<a class="link" href="definitions.html">Definitions</a>
+
+<a class="link" href="faq.html">FAQ</a>
+
+<a class="link" href="goodfaith.html">Good Faith Use</a>
+
+<a class="link" href="diagnostic.html">Governance Diagnostic</a>
+</div>
+
+<a href="contact.html" class="private-btn">
+Private Intake
+</a>
+
+<a href="mailto:Liran@liranbarshrim.com" class="mail-btn">
+Liran@liranbarshrim.com
+</a>
+
+</aside>
+
+<main>
+
+<div class="container hero">
+
+<div class="meta">
+Governance Anatomy
+</div>
+
+<h1>
+Case structures of irreversible execution under institutional momentum.
+</h1>
+
+<p class="hero-sub">
+This section examines how systems continue under procedural legitimacy even when no named refusal authority exists at execution.
+</p>
+
+<p class="hero-sub">
+The focus is not failure after the fact.
+The focus is the structural condition before continuation becomes irreversible.
+</p>
+
+</div>
+
+<div class="section-gap"></div>
+
+<div class="container">
+
+<div class="pull">
+Governance failure often begins<br>
+before the system fails.
+</div>
+
+</div>
+
+<div class="section-gap"></div>
+
+<div class="container">
+
+<div class="box">
+
+<div class="label">
+Structural Condition
+</div>
+
+<h2>
+Execution continues because no single moment feels personally owned.
+</h2>
+
+<p>
+Modern institutional systems distribute action across layers:
+approval, validation, compliance, monitoring, deployment, escalation.
+</p>
+
+<p>
+Each layer carries partial responsibility.
+No layer experiences total responsibility.
+</p>
+
+<p>
+As procedural legitimacy increases,
+psychological interruption decreases.
+</p>
+
+</div>
+
+</div>
+
+<div class="section-gap"></div>
+
+<div class="container">
+
+<div class="box">
+
+<div class="label">
+Momentum
+</div>
+
+<h2>
+The system does not require malicious intent to continue.
+</h2>
+
+<p>
+Most irreversible outcomes do not emerge from explicit negligence.
+</p>
+
+<p>
+They emerge from continuity:
+the natural pressure of approved systems moving forward under institutional momentum.
+</p>
+
+<div class="pull">
+The process was followed.<br>
+That is often why nobody stopped it.
+</div>
+
+</div>
+
+</div>
+
+<div class="section-gap"></div>
+
+<div class="container">
+
+<div class="box">
+
+<div class="label">
+Refusal Authority
+</div>
+
+<h2>
+Without protected refusal authority, continuation becomes procedural default.
+</h2>
+
+<p>
+Stopping carries operational cost:
+delay, escalation, exposure, political friction, financial pressure.
+</p>
+
+<p>
+Where stopping is punished internally,
+continuation becomes structurally favored.
+</p>
+
+<p>
+The issue is not whether a stop mechanism exists.
+The issue is whether refusal is institutionally survivable.
+</p>
+
+</div>
+
+</div>
+
+<div class="section-gap"></div>
+
+<div class="container">
+
+<div class="pull">
+If no one is required to authorize continuation,<br>
+continuation becomes automatic.
+</div>
+
+</div>
+
+<div class="section-gap"></div>
+
+<div class="container">
+
+<div class="box">
+
+<div class="label">
+Case Direction
+</div>
+
+<h2>
+Future case anatomy studies will examine moments where systems continued despite uncertainty.
+</h2>
+
+<p>
+Not as stories.
+Not as retrospectives.
+Not as moral failure.
+</p>
+
+<p>
+But as structural analysis of:
+authorization,
+institutional momentum,
+and refusal conditions before irreversible execution.
+</p>
+
+</div>
+
+</div>
+
+<div class="section-gap"></div>
+
+</main>
+
+<footer class="footer-bar">
+
+<span>
+&#169; 2026 Liran Bar-Shrim
+</span>
+
+<a href="index.html" class="footer-link">
+Decision Authority Research
+</a>
+
+<span>
+matrix-audit.com
+</span>
+
 </footer>
 
 <script>
 var drawer=document.getElementById('drawer');
 var overlay=document.getElementById('overlay');
-document.getElementById('openMenu').onclick=function(){drawer.classList.add('active');overlay.classList.add('active');};
+
+document.getElementById('openMenu').onclick=function(){
+drawer.classList.add('active');
+overlay.classList.add('active');
+};
+
 document.getElementById('closeMenu').onclick=closeDrawer;
+
 overlay.onclick=closeDrawer;
-function closeDrawer(){drawer.classList.remove('active');overlay.classList.remove('active');}
+
+function closeDrawer(){
+drawer.classList.remove('active');
+overlay.classList.remove('active');
+}
 </script>
 
 </body>
