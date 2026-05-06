@@ -3,232 +3,117 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
+
 <title>Governance Diagnostic | Decision Authority Research</title>
-<meta name="description" content="Three questions that reveal whether your organization has named refusal authority or only the appearance of one.">
+
+<meta name="description" content="Diagnostic questions for irreversible execution, refusal authority, and institutional continuation.">
+
 <meta name="robots" content="index,follow">
+
 <link rel="canonical" href="https://matrix-audit.com/diagnostic.html">
+
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&display=swap" rel="stylesheet">
+
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&family=Cormorant+Garamond:wght@400;600;700&display=swap" rel="stylesheet">
+
 <style>
-:root{--bg:#090909;--gold:#c8a96e;--gold2:#e8d4a8;--text:#e8e2d7;--muted:#a7a097;--line:rgba(255,255,255,.08);--line2:rgba(255,255,255,.05);--danger:#c0392b;--safe:#3d9970;}
-*{margin:0;padding:0;box-sizing:border-box;}html{scroll-behavior:smooth;}
-body{font-family:"IBM Plex Mono",monospace;background:var(--bg);color:var(--text);overflow-x:hidden;min-height:100vh;-webkit-font-smoothing:antialiased;}
-body:before{content:"";position:fixed;inset:0;pointer-events:none;opacity:.04;background-image:linear-gradient(rgba(255,255,255,.03) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.03) 1px,transparent 1px);background-size:40px 40px;}
-a{text-decoration:none;color:inherit;}
-.topbar{position:fixed;top:0;left:0;right:0;height:64px;display:flex;align-items:center;justify-content:space-between;padding:0 24px;z-index:100;background:rgba(5,5,5,.92);backdrop-filter:blur(14px);border-bottom:1px solid var(--line2);}
-.brand{display:flex;align-items:center;gap:10px;font-size:9px;letter-spacing:.28em;text-transform:uppercase;white-space:nowrap;color:var(--muted);}
-.brand-line{width:28px;height:2px;background:var(--gold);}
-.back-link{font-size:9px;letter-spacing:.2em;text-transform:uppercase;color:var(--muted);}
-.back-link:hover{color:var(--gold);}
-.wrap{max-width:640px;margin:0 auto;padding:100px 24px 80px;}
-.eyebrow{font-size:9px;letter-spacing:.28em;text-transform:uppercase;color:var(--gold);display:block;margin-bottom:24px;}
-.main-title{font-family:"Cormorant Garamond",serif;font-size:clamp(28px,5vw,44px);line-height:1.1;font-weight:600;margin-bottom:16px;border-left:3px solid var(--gold);padding-left:20px;}
-.main-sub{font-size:12px;color:var(--muted);line-height:1.8;padding-left:23px;margin-bottom:48px;}
-.progress-label{font-size:9px;letter-spacing:.15em;text-transform:uppercase;color:var(--muted);margin-bottom:10px;display:block;}
-.progress-bar{height:2px;background:var(--line2);margin-bottom:48px;position:relative;}
-.progress-fill{height:100%;background:var(--gold);transition:width .4s ease;}
-.question-block{display:none;animation:fadeIn .3s ease;}
-.question-block.active{display:block;}
-@keyframes fadeIn{from{opacity:0;transform:translateY(8px);}to{opacity:1;transform:translateY(0);}}
-.q-number{font-size:9px;letter-spacing:.22em;text-transform:uppercase;color:var(--gold);display:block;margin-bottom:14px;}
-.q-text{font-family:"Cormorant Garamond",serif;font-size:clamp(20px,3vw,28px);line-height:1.3;font-weight:600;color:var(--text);margin-bottom:10px;}
-.q-principle{font-size:11px;color:var(--muted);line-height:1.7;margin-bottom:28px;border-left:2px solid var(--line2);padding-left:14px;}
-.options{display:flex;flex-direction:column;gap:10px;}
-.option{display:block;padding:18px 20px;border:1px solid var(--line2);background:#0d0d0d;cursor:pointer;transition:.2s;}
-.option:hover{border-color:rgba(200,169,110,.4);background:#111;}
-.option.selected{border-color:var(--gold);background:rgba(200,169,110,.05);}
-.option-label{font-size:9px;letter-spacing:.18em;text-transform:uppercase;color:var(--gold);display:block;margin-bottom:5px;}
-.option-text{font-size:13px;color:var(--text);line-height:1.6;}
-.option-detail{font-size:11px;color:var(--muted);margin-top:4px;line-height:1.5;}
-.nav-row{display:flex;justify-content:flex-end;margin-top:28px;}
-.btn-next{padding:13px 26px;background:linear-gradient(135deg,#d9bb79,#b88e45);color:#111;font-family:"IBM Plex Mono",monospace;font-size:10px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;border:none;cursor:pointer;transition:opacity .2s;border-radius:3px;}
-.btn-next:hover{opacity:.85;}
-.btn-next:disabled{opacity:.25;cursor:not-allowed;}
-.result-block{display:none;animation:fadeIn .4s ease;}
-.result-block.active{display:block;}
-.result-verdict{font-family:"Cormorant Garamond",serif;font-size:clamp(20px,4vw,32px);line-height:1.2;font-weight:600;margin-bottom:18px;padding:24px;border-left:3px solid var(--danger);background:rgba(192,57,43,.04);}
-.result-verdict.partial{border-color:var(--gold);background:rgba(200,169,110,.04);}
-.result-verdict.clear{border-color:var(--safe);background:rgba(61,153,112,.04);}
-.result-body{font-size:14px;color:#c8c2b8;line-height:1.85;margin-bottom:24px;}
-.result-cta-box{border:1px solid var(--line2);background:#0d0d0d;padding:26px;margin-top:24px;}
-.result-cta-label{font-size:9px;letter-spacing:.22em;text-transform:uppercase;color:var(--gold);display:block;margin-bottom:10px;}
-.result-cta-text{font-family:"Cormorant Garamond",serif;font-size:20px;color:var(--text);margin-bottom:14px;line-height:1.3;}
-.cta-btn{display:inline-block;padding:13px 22px;background:linear-gradient(135deg,#d9bb79,#b88e45);color:#111;font-family:"IBM Plex Mono",monospace;font-size:10px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;text-decoration:none;margin-right:10px;margin-top:4px;border-radius:3px;}
-.cta-email{display:inline-block;padding:13px 22px;border:1px solid var(--line2);color:var(--gold2);font-family:"IBM Plex Mono",monospace;font-size:10px;letter-spacing:.18em;text-transform:uppercase;text-decoration:none;margin-top:4px;border-radius:3px;}
-.restart-btn{background:none;border:none;font-family:"IBM Plex Mono",monospace;font-size:9px;letter-spacing:.15em;text-transform:uppercase;color:var(--muted);cursor:pointer;margin-top:18px;display:block;}
-.restart-btn:hover{color:var(--text);}
-.footer-bar{max-width:640px;margin:0 auto;padding:22px 24px 60px;border-top:1px solid var(--line);font-family:Inter,sans-serif;font-size:13px;color:#5c564f;display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px;}
-</style>
-</head>
-<body>
 
-<header class="topbar">
-<a href="index.html" class="brand"><span class="brand-line"></span><span>Decision Authority Research</span></a>
-<a href="board-brief.html" class="back-link">Board Brief →</a>
-</header>
-
-<div class="wrap">
-
-<span class="eyebrow">Governance Authorization Diagnostic</span>
-<h1 class="main-title">Three names.<br>Do they exist?</h1>
-<p class="main-sub">Named refusal authority requires three distinct people. This diagnostic checks whether your organization has named all three — and whether continuation is authorized or proceeding by default.</p>
-
-<span class="progress-label" id="progressLabel">Question 1 of 3</span>
-<div class="progress-bar"><div class="progress-fill" id="progressFill" style="width:33%"></div></div>
-
-<!-- Q1: Refusal Authority -->
-<div class="question-block active" id="q1">
-<span class="q-number">01 — Refusal Authority</span>
-<h2 class="q-text">Who, by name, holds the institutional right to refuse continuation of your most consequential automated decision the moment something unexpected appears?</h2>
-<p class="q-principle">Refusal authority is named in advance. Not a role. Not a committee. A person. Where no name exists, continuation is authorized by default.</p>
-<div class="options">
-<div class="option" onclick="selectOpt(1,'a',this)">
-<span class="option-label">A</span>
-<span class="option-text">One specific person, named in writing, with documented refusal authority before execution proceeds.</span>
-</div>
-<div class="option" onclick="selectOpt(1,'b',this)">
-<span class="option-label">B</span>
-<span class="option-text">A senior leader would make the call, but refusal authority is not formally assigned.</span>
-<span class="option-detail">Authority exists in practice. Not in writing.</span>
-</div>
-<div class="option" onclick="selectOpt(1,'c',this)">
-<span class="option-label">C</span>
-<span class="option-text">It is unclear. Multiple people might be involved. No single name exists.</span>
-</div>
-</div>
-<div class="nav-row"><button class="btn-next" id="next1" disabled onclick="nextQ(2)">Next →</button></div>
-</div>
-
-<!-- Q2: Hold Authority -->
-<div class="question-block" id="q2">
-<span class="q-number">02 — Hold Authority</span>
-<h2 class="q-text">After refusal authority is invoked, who is responsible for ensuring execution remains suspended until a governance response arrives?</h2>
-<p class="q-principle">Hold authority is distinct from refusal authority. A refusal that no one owns becomes a refusal that dissolves. If maintaining the suspension requires convening, it has already failed.</p>
-<div class="options">
-<div class="option" onclick="selectOpt(2,'a',this)">
-<span class="option-label">A</span>
-<span class="option-text">A named individual, different from whoever invoked refusal, holds the decision in suspension until governance responds.</span>
-</div>
-<div class="option" onclick="selectOpt(2,'b',this)">
-<span class="option-label">B</span>
-<span class="option-text">The same person who refused is also responsible for maintaining the suspension.</span>
-<span class="option-detail">Refusal and hold are not separated.</span>
-</div>
-<div class="option" onclick="selectOpt(2,'c',this)">
-<span class="option-label">C</span>
-<span class="option-text">There is no defined hold mechanism. The refusal would likely dissolve under institutional pressure.</span>
-</div>
-</div>
-<div class="nav-row"><button class="btn-next" id="next2" disabled onclick="nextQ(3)">Next →</button></div>
-</div>
-
-<!-- Q3: Authorization Authority -->
-<div class="question-block" id="q3">
-<span class="q-number">03 — Authorization Authority</span>
-<h2 class="q-text">Who holds the documented right to authorize continuation — and is it a different person from whoever invoked refusal?</h2>
-<p class="q-principle">If the person who refuses can also authorize continuation, the refusal is a delay, not a governance event. Authorization must carry documented rationale and consequential personal exposure.</p>
-<div class="options">
-<div class="option" onclick="selectOpt(3,'a',this)">
-<span class="option-label">A</span>
-<span class="option-text">A third named individual holds authorization authority, separate from both refusal and hold. Authorization requires written rationale.</span>
-</div>
-<div class="option" onclick="selectOpt(3,'b',this)">
-<span class="option-label">B</span>
-<span class="option-text">A senior person would authorize continuation, but it is not formally separated or documented.</span>
-</div>
-<div class="option" onclick="selectOpt(3,'c',this)">
-<span class="option-label">C</span>
-<span class="option-text">There is no defined authorization process. Continuation resumes when institutional pressure requires it.</span>
-</div>
-</div>
-<div class="nav-row"><button class="btn-next" id="next3" disabled onclick="showResult()">See Result →</button></div>
-</div>
-
-<!-- Result -->
-<div class="result-block" id="result"></div>
-
-</div>
-
-<footer class="footer-bar">
-<span>© 2026 Liran Bar-Shrim</span>
-<span>Decision Authority Research · matrix-audit.com</span>
-</footer>
-
-<script>
-var answers = {};
-
-function selectOpt(q, val, el) {
-  answers['q' + q] = val;
-  var opts = document.querySelectorAll('#q' + q + ' .option');
-  opts.forEach(function(o){ o.classList.remove('selected'); });
-  el.classList.add('selected');
-  document.getElementById('next' + q).disabled = false;
+:root{
+--bg:#090909;
+--gold:#c8a96e;
+--gold2:#e8d4a8;
+--text:#e8e2d7;
+--muted:#a7a097;
+--line:rgba(255,255,255,.08);
+--line2:rgba(255,255,255,.05);
 }
 
-function nextQ(q) {
-  var prev = q - 1;
-  document.getElementById('q' + prev).classList.remove('active');
-  document.getElementById('q' + q).classList.add('active');
-  var pct = q === 2 ? 66 : 100;
-  document.getElementById('progressFill').style.width = pct + '%';
-  document.getElementById('progressLabel').textContent = 'Question ' + q + ' of 3';
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
 }
 
-function showResult() {
-  document.getElementById('q3').classList.remove('active');
-  document.getElementById('progressFill').style.width = '100%';
-  document.getElementById('progressLabel').textContent = 'Assessment complete';
-
-  var a1 = answers.q1;
-  var a2 = answers.q2;
-  var a3 = answers.q3;
-
-  var score = 0;
-  if (a1 === 'a') score += 2; else if (a1 === 'b') score += 1;
-  if (a2 === 'a') score += 2; else if (a2 === 'b') score += 1;
-  if (a3 === 'a') score += 2; else if (a3 === 'b') score += 1;
-
-  var html = '';
-
-  if (score >= 5) {
-    html = '<div class="result-verdict clear">All three names exist. The authorization chain is intact.</div>' +
-    '<p class="result-body">Named refusal authority, a separate hold authority, and a distinct authorization authority are all in place. This is rare. Most organizations with governance structures still leave at least one name undefined. The question now is whether these three roles are tested, understood by those who hold them, and enforceable when institutional pressure arrives.</p>';
-  } else if (score >= 3) {
-    html = '<div class="result-verdict partial">Partial structure. At least one name is missing.</div>' +
-    '<p class="result-body">Some elements of named refusal authority exist, but the authorization chain is incomplete. A structure missing one of three required names is not a partial governance mechanism. It is a mechanism that will fail at the link that is absent. The most common gap is between refusal and hold, or between hold and authorization. Wherever the name is absent, continuation fills the space.</p>';
-  } else {
-    html = '<div class="result-verdict">None of the three names exist. Continuation is proceeding without named authorization.</div>' +
-    '<p class="result-body">No named refusal authority. No named hold authority. No named authorization authority. When something unexpected appears, response will be assembled under pressure, without pre-assigned owners, and without a governance record. Accountability will arrive after the outcome. This is not a process failure. It is an architectural condition with measurable institutional consequences.</p>';
-  }
-
-  html += '<div class="result-cta-box">' +
-    '<span class="result-cta-label">Private Advisory</span>' +
-    '<p class="result-cta-text">DAR works with boards, executives and legal counsel to name all three authorities before they are needed.</p>' +
-    '<a href="contact.html" class="cta-btn">Private Intake</a>' +
-    '<a href="mailto:Liran@liranbarshrim.com" class="cta-email">Email Direct</a>' +
-    '</div>' +
-    '<button class="restart-btn" onclick="restart()">← Start again</button>';
-
-  var resultEl = document.getElementById('result');
-  resultEl.innerHTML = html;
-  resultEl.classList.add('active');
+html{
+scroll-behavior:smooth;
 }
 
-function restart() {
-  answers = {};
-  document.getElementById('result').classList.remove('active');
-  document.getElementById('result').innerHTML = '';
-  document.getElementById('q1').classList.add('active');
-  document.getElementById('progressFill').style.width = '33%';
-  document.getElementById('progressLabel').textContent = 'Question 1 of 3';
-  document.querySelectorAll('.option').forEach(function(o){ o.classList.remove('selected'); });
-  document.getElementById('next1').disabled = true;
-  document.getElementById('next2').disabled = true;
-  document.getElementById('next3').disabled = true;
+body{
+font-family:Inter,sans-serif;
+background:var(--bg);
+color:var(--text);
+overflow-x:hidden;
+line-height:1.78;
+-webkit-font-smoothing:antialiased;
 }
-</script>
 
-</body>
-</html>
- 
+body:before{
+content:"";
+position:fixed;
+inset:0;
+pointer-events:none;
+opacity:.05;
+background-image:
+linear-gradient(rgba(255,255,255,.03) 1px,transparent 1px),
+linear-gradient(90deg,rgba(255,255,255,.03) 1px,transparent 1px);
+background-size:40px 40px;
+}
+
+a{
+text-decoration:none;
+color:inherit;
+}
+
+.topbar{
+position:fixed;
+top:0;
+left:0;
+right:0;
+height:74px;
+display:flex;
+align-items:center;
+justify-content:space-between;
+padding:0 18px;
+z-index:1000;
+background:rgba(5,5,5,.88);
+backdrop-filter:blur(14px);
+border-bottom:1px solid var(--line2);
+}
+
+.brand{
+display:flex;
+align-items:center;
+gap:12px;
+font-family:"IBM Plex Mono",monospace;
+font-size:10px;
+letter-spacing:.28em;
+text-transform:uppercase;
+white-space:nowrap;
+}
+
+.brand-line{
+width:34px;
+height:2px;
+background:var(--gold);
+}
+
+.menu-btn{
+width:42px;
+height:42px;
+border:none;
+background:none;
+cursor:pointer;
+display:flex;
+flex-direction:column;
+justify-content:center;
+gap:6px;
+}
+
+.menu-btn span{
+height:2px;
+background:#fff;
+border-radius:4px;
+}
+
+.menu-btn span:nth-child(2
