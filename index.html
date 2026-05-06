@@ -38,7 +38,7 @@ a{text-decoration:none;color:inherit;}
 .container{max-width:860px;margin:auto;padding:0 18px;position:relative;z-index:1;}
 .hero{padding-top:90px;padding-bottom:22px;}
 .meta{font-family:"IBM Plex Mono",monospace;font-size:10px;letter-spacing:.28em;text-transform:uppercase;color:var(--gold);margin-bottom:26px;}
-h1{font-family:"Cormorant Garamond",serif;font-size:clamp(38px,8vw,72px);line-height:.96;font-weight:600;margin-bottom:24px;border-left:3px solid var(--gold);padding-left:20px;}
+h1{font-family:"Cormorant Garamond",serif;font-size:clamp(28px,6vw,72px);line-height:1.0;font-weight:600;margin-bottom:24px;border-left:3px solid var(--gold);padding-left:20px;}
 .hero-sub{font-size:17px;color:var(--muted);line-height:1.8;padding-left:23px;max-width:540px;margin-bottom:12px;}
 .hero-intro{display:block;font-size:16px;color:#d7c7a0;font-weight:500;padding-left:23px;margin-bottom:12px;line-height:1.6;}
 .hero-hammer{font-family:"IBM Plex Mono",monospace;font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--gold);padding-left:23px;margin-bottom:28px;display:block;}
@@ -55,7 +55,25 @@ strong{color:var(--text);}
 .cta-link:hover{opacity:.85;}
 .section-gap{height:22px;}
 .footer-bar{max-width:860px;margin:auto;padding:22px 18px 60px;border-top:1px solid var(--line);font-family:Inter,sans-serif;font-size:13px;color:#7c766f;display:flex;justify-content:space-between;position:relative;z-index:1;}
-@media(min-width:900px){.topbar{padding:0 34px;}.hero{padding-top:100px;}.hero-sub{font-size:19px;}.box{padding:34px;}.cta-box{padding:34px;}.footer-bar{padding:26px 34px 60px;}}
+
+/* NOT box — cold, closed, no poetic tone */
+.not-box{background:#0c0c0c;border:1px solid rgba(200,169,110,.18);border-left:3px solid var(--gold);padding:26px;margin-bottom:14px;}
+.not-box p{font-size:15px;color:#7a7570;margin-bottom:6px;line-height:1.6;}
+.not-box .not-list{list-style:none;padding:0;margin:14px 0 20px;}
+.not-box .not-list li{font-family:"IBM Plex Mono",monospace;font-size:12px;color:#8a8480;letter-spacing:.05em;padding:6px 0;border-bottom:1px solid rgba(255,255,255,.04);}
+.not-box .not-list li:last-child{border-bottom:none;}
+.not-box .not-list li:before{content:"— ";color:#c8a96e;}
+.not-box .not-closing{font-size:15px;color:var(--text);font-weight:500;line-height:1.6;margin-top:6px;margin-bottom:0;}
+
+/* Counterexample — cold logic, no drama */
+.counter-box{background:#0a0a0a;border:1px solid rgba(255,255,255,.06);border-left:3px solid #52504c;padding:26px;margin-bottom:14px;}
+.counter-box .counter-facts{list-style:none;padding:0;margin:14px 0 22px;}
+.counter-box .counter-facts li{font-family:"IBM Plex Mono",monospace;font-size:12px;color:#8a8480;letter-spacing:.04em;padding:7px 0;border-bottom:1px solid rgba(255,255,255,.03);}
+.counter-box .counter-facts li:last-child{border-bottom:none;}
+.counter-box .counter-verdict{font-family:"IBM Plex Mono",monospace;font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--gold);margin-bottom:14px;display:block;}
+.counter-box .counter-question{font-size:16px;color:var(--text);line-height:1.6;margin-bottom:0;}
+
+@media(min-width:900px){.topbar{padding:0 34px;}.hero{padding-top:100px;}.hero-sub{font-size:19px;}.box{padding:34px;}.not-box{padding:34px;}.counter-box{padding:34px;}.cta-box{padding:34px;}.footer-bar{padding:26px 34px 60px;}}
 </style>
 </head>
 <body>
@@ -103,25 +121,80 @@ strong{color:var(--text);}
 
 <div class="container hero">
 <div class="meta">Decision Authority Research</div>
-<h1>When a decision becomes irreversible under uncertainty,<br>someone must be required to stop it &mdash; by name.</h1>
-<span class="hero-intro">Before anything runs, someone must be required to release it.</span>
+<h1>When irreversible execution becomes possible under uncertainty,<br>continuation requires refusal authority &mdash; by name.</h1>
+<span class="hero-intro">Before irreversible execution proceeds, continuation must be authorized by name.</span>
 <span class="hero-intro" style="color:#e8d4a8;">If stopping has a cost, it won't happen.</span>
 <span class="hero-intro" style="color:#e8d4a8;">Stop is the default state.<br>Continuation requires a named decision.</span>
 <p class="hero-sub">When momentum would decide, DAR gives leadership one more decision before consequences harden.</p>
-<span class="hero-hammer">If no one is required to release it, it must not run.</span>
+<span class="hero-hammer">No irreversible execution without named authorization.</span>
 <a href="contact.html" class="hero-cta">Private Inquiry</a>
 <p style="font-size:13px;color:#8f877c;padding-left:23px;margin-top:18px;">If your systems never face irreversible outcomes, this is not for you.</p>
 </div>
 
 <div class="section-gap"></div>
 
+<!-- BLOCK 1: WHAT DAR IS NOT -->
+<div class="container">
+<div class="not-box">
+<div class="label">What DAR Is Not</div>
+<p>DAR is not a technical layer. It does not belong to the same category as the following:</p>
+<ul class="not-list">
+<li>a safety system</li>
+<li>anomaly detection</li>
+<li>monitoring infrastructure</li>
+<li>human-in-the-loop optimization</li>
+<li>escalation tooling</li>
+<li>risk management software</li>
+<li>compliance automation</li>
+<li>AI oversight mechanism</li>
+</ul>
+<p class="not-closing">DAR does not optimize execution.<br>DAR defines whether execution is legitimate at all.</p>
+</div>
+</div>
+
+<div class="section-gap"></div>
+
+<!-- BLOCK 2: COUNTEREXAMPLE -->
+<div class="container">
+<div class="counter-box">
+<div class="label">Counterexample</div>
+<ul class="counter-facts">
+<li>The system passed validation.</li>
+<li>Monitoring was active.</li>
+<li>No anomaly was detected.</li>
+<li>No threshold was crossed.</li>
+<li>Legal cleared it.</li>
+<li>Risk signed off.</li>
+</ul>
+<span class="counter-verdict">The absence of anomaly does not create authorization.</span>
+<p class="counter-question">The question is not whether the system failed.<br><strong>The question is who holds the institutional right to refuse continuation — before failure becomes the proof.</strong></p>
+</div>
+</div>
+
+<div class="section-gap"></div>
+
+<!-- BLOCK 3: DEFINITIONS -->
+<div class="container">
+<div class="box" style="border-left-color:#52504c;">
+<div class="label">Definitions</div>
+<p style="margin-bottom:18px;"><strong>Execution</strong><br>
+<span style="font-size:15px;">The transition from approved capability to live irreversible action.</span></p>
+<p style="margin-bottom:18px;"><strong>Refusal Authority</strong><br>
+<span style="font-size:15px;">The institutional right, assigned by name, to deny continuation before irreversible execution.</span></p>
+<p style="margin-bottom:18px;"><strong>Legitimacy</strong><br>
+<span style="font-size:15px;">The condition under which irreversible execution is authorized by named authority. Not created by performance, validation, or approval.</span></p>
+<p style="margin-bottom:0;"><strong>DAR</strong><br>
+<span style="font-size:15px;">A governance constraint requiring named refusal authority before irreversible execution proceeds.</span></p>
+</div>
+</div>
+
+<div class="section-gap"></div>
+
 <div class="container">
 <div class="pull" style="font-size:clamp(18px,3vw,24px);line-height:1.5;">
-It must not run.<br><br>
-And where DAR is applied,<br>
-it does not run<br>
-until a named individual explicitly releases it &mdash;<br>
-and is accountable for the consequences.
+Continuation is not legitimate<br>
+until a named individual authorizes it &mdash;<br>
+and is accountable for that authorization.
 </div>
 </div>
 
@@ -130,23 +203,14 @@ and is accountable for the consequences.
 <div class="container">
 <div class="box">
 <div class="label">The Gap</div>
-<h2>Most organizations know how to approve decisions.<br>Almost none know who can stop them.</h2>
+<h2>Most organizations know how to approve decisions.<br>Almost none know who can refuse continuation.</h2>
 <p>Approval workflows, escalation structures, budget authority. These are well-defined in most organizations.</p>
 <div class="pull" style="margin-top:18px;font-size:clamp(18px,3vw,24px);">They built systems where failure belongs to everyone,<br>so it belongs to no one.</div>
-<p><strong>Who can interrupt momentum immediately when new risk appears? Where this is unclear, responsibility becomes personal after the fact.</strong></p>
+<p><strong>Where refusal authority is unassigned, responsibility is allocated only after the fact.</strong></p>
 </div>
 </div>
 
-<div class="section-gap"></div>
 
-<div class="container">
-<div class="box">
-<div class="label">What DAR Changes</div>
-<p>Without DAR, momentum decides. With DAR, nothing executes until a named individual releases it.</p>
-<p style="font-family:'IBM Plex Mono',monospace;font-size:12px;color:var(--gold);letter-spacing:.05em;">When momentum would decide, DAR gives leadership one more decision.</p>
-<p style="font-family:'IBM Plex Mono',monospace;font-size:12px;color:var(--gold);letter-spacing:.05em;margin-top:10px;">Traceability makes the failure visible.<br>Governance prevents it.</p>
-</div>
-</div>
 
 <div class="section-gap"></div>
 
@@ -164,8 +228,8 @@ and is accountable for the consequences.
 
 <div class="container">
 <div class="pull" style="font-size:clamp(18px,3vw,26px);line-height:1.4;">
-The system holds.<br>
-The human pays.
+Systems preserve continuity.<br>
+Individuals absorb liability.
 </div>
 </div>
 
@@ -175,10 +239,10 @@ The human pays.
 <div class="box">
 <div class="label">The Question</div>
 <h2>Before the system runs.<br>Before the decision executes.<br>Before the output becomes irreversible.</h2>
-<p>Most governance structures define who approves. Almost none define who stops.</p>
-<p><strong>Who, by name, is required to release it before it runs?</strong></p>
-<p style="font-family:'IBM Plex Mono',monospace;font-size:12px;color:var(--gold);letter-spacing:.05em;margin-bottom:16px;">Code defines what the system can do. A named obligation defines when it must stop.</p>
-<p>Not a team. Not a function. Not a committee. A person. Named in advance. Accountable for refusal before continuation is allowed.</p>
+<p>Most governance structures define who approves. Almost none define who holds refusal authority.</p>
+<p><strong>Who, by name, is required to authorize continuation before it runs?</strong></p>
+<p style="font-family:'IBM Plex Mono',monospace;font-size:12px;color:var(--gold);letter-spacing:.05em;margin-bottom:16px;">Code defines what the system can do. Named authority defines whether continuation is legitimate.</p>
+<p>Not a team. Not a function. Not a committee. A person. Named in advance. Bound to refusal before continuation is authorized.</p>
 </div>
 </div>
 
@@ -188,7 +252,7 @@ The human pays.
 <div class="pull">
 Stop is the default state.<br>
 Continuation does not exist<br>
-until a named individual releases it.
+until a named individual authorizes it.
 </div>
 </div>
 
@@ -208,12 +272,12 @@ in advance, by name.
 <div class="pull" style="font-size:clamp(16px,2.5vw,22px);line-height:1.5;">
 A named person is not enough.<br>
 Proof is not enough.<br><br>
-Systems do not stop.<br>
-Only people stop.<br><br>
+Systems execute by default.<br>
+Only named authority interrupts continuation.<br><br>
 Control exists only at the moment<br>
 when one person, by name,<br>
-must release continuation.<br><br>
-If that moment does not exist,<br>
+holds the right to refuse.<br><br>
+If that right is not assigned in advance,<br>
 the system does not need permission.<br>
 It will continue.
 </div>
@@ -225,14 +289,7 @@ It will continue.
 <p style="font-size:13px;color:#7a7570;line-height:1.6;">Core concept: <a href="/human-stop-boundary" style="color:#c8a96e;text-decoration:none;border-bottom:1px solid #c8a96e;">Human Stop Boundary</a></p>
 </div>
 
-<div class="section-gap"></div>
 
-<div class="container">
-<div class="box">
-<div class="label">Who This Is For</div>
-<p>Boards, founders, general counsel, risk leaders, and operators facing decisions that should not be left to momentum.</p>
-</div>
-</div>
 
 <div class="section-gap"></div>
 
@@ -253,7 +310,7 @@ you already understand why you are here.
 <p>A model is approved. Risk signed. Compliance cleared.</p>
 <p>It runs.</p>
 <p>One case feels wrong. Not clearly wrong. Just enough to pause.</p>
-<p><strong>No one is required to release at that moment.</strong></p>
+<p><strong>No named authorization is required at that moment.</strong></p>
 <p>So it continues.</p>
 <div class="pull" style="margin-top:18px;font-size:clamp(18px,3vw,24px);">
 No failure. No violation.<br>
@@ -270,13 +327,9 @@ Just no one required to stop.
 <p>The system is approved.</p>
 <p>It runs.</p>
 <p>Uncertainty appears.</p>
-<p><strong>No one is required to release at execution.</strong></p>
+<p><strong>No named authorization is required at execution.</strong></p>
 <p>So it continues.</p>
-<p><strong>If you cannot name who must release your most critical system today,<br>the decision is already being made.</strong></p>
-<div class="pull" style="margin-top:18px;font-size:clamp(18px,3vw,24px);">
-If no one is required to release it,<br>
-the decision has already been made.
-</div>
+<p><strong>If you cannot name who holds refusal authority over your most critical system today,<br>the decision is already being made.</strong></p>
 </div>
 </div>
 
@@ -301,22 +354,15 @@ It does not brake.
 </div>
 </div>
 
-<div class="section-gap"></div>
 
-<div class="container">
-<div class="pull" style="font-size:clamp(18px,3vw,24px);line-height:1.4;">
-If stopping costs the system,<br>
-continuation is already decided.
-</div>
-</div>
 
 <div class="section-gap"></div>
 
 <div class="container">
 <div class="pull" style="font-size:clamp(18px,3vw,26px);line-height:1.5;">
 If your most critical system runs today,<br>
-who can stop it &mdash;<br>
-and who absorbs the cost when they do?
+who is authorized to refuse continuation &mdash;<br>
+and who absorbs the institutional cost of doing so?
 </div>
 </div>
 
@@ -340,11 +386,9 @@ someone will be named after.
 <p><strong>None of that answers this:</strong></p>
 <div class="pull" style="margin-top:18px;font-size:clamp(18px,3vw,26px);">
 If it runs tomorrow,<br>
-who is required to stop it &mdash;<br>
-and who protects them when they do?
+who holds refusal authority &mdash;<br>
+and who protects them when they use it?
 </div>
-<p style="margin-top:16px;">If you hesitate,<br>
-you are already relying on luck.</p>
 </div>
 </div>
 
@@ -358,7 +402,7 @@ you are already relying on luck.</p>
 <div style="border:1px solid rgba(255,255,255,.08);padding:18px;margin-bottom:14px;">
 <p style="color:#a7a097;margin:0;">____________________________</p>
 </div>
-<p style="font-size:14px;color:#a7a097;">If you cannot fill this line immediately,<br>the system should not run.</p>
+<p style="font-size:14px;color:#a7a097;">If you cannot fill this line immediately,<br>continuation cannot be legitimately authorized.</p>
 </div>
 </div>
 
@@ -368,7 +412,8 @@ you are already relying on luck.</p>
 <div class="pull" style="font-size:clamp(20px,3vw,30px);line-height:1.4;">
 Somewhere in your organization,<br>
 a system is running right now.<br><br>
-No one is required to stop it.<br><br>
+No named authority is required<br>
+before continuation.<br><br>
 The decision is already being made.
 </div>
 </div>
@@ -379,7 +424,7 @@ The decision is already being made.
 <div class="cta-box">
 <div class="label">Private Advisory</div>
 <h2>Selective engagements.<br>Confidential by design.</h2>
-<p>DAR works with boards, executives and legal counsel on stop authority design, unmanaged liability exposure, and governance decisions that cannot be easily reversed.</p>
+<p>DAR is applied where irreversible execution cannot proceed on institutional inertia alone. Private engagements with boards, executives, and legal counsel where named legitimacy before continuation is the operative question.</p>
 <p><strong>Intake is by inquiry only.</strong></p>
 <p style="font-size:13px;color:#a89f92;margin-top:10px;">If you had to write the name &mdash; could you?</p>
 <p style="font-size:13px;color:#7a7570;margin-top:8px;">If not, it should not run.</p>
