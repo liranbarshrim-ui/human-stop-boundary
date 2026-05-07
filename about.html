@@ -25,12 +25,7 @@
   --line: rgba(255,255,255,.06);
 }
 
-*, *::before, *::after {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
-
+*, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
 html { scroll-behavior: smooth; }
 
 body {
@@ -79,11 +74,7 @@ a { text-decoration: none; color: inherit; }
   color: var(--text);
 }
 
-.brand-rule {
-  width: 32px;
-  height: 1px;
-  background: var(--gold);
-}
+.brand-rule { width: 32px; height: 1px; background: var(--gold); }
 
 .nav-contact {
   font-family: "IBM Plex Mono", monospace;
@@ -95,6 +86,7 @@ a { text-decoration: none; color: inherit; }
 }
 .nav-contact:hover { opacity: .7; }
 
+/* ── HERO SPLIT ── */
 .hero {
   min-height: 100vh;
   display: grid;
@@ -109,16 +101,6 @@ a { text-decoration: none; color: inherit; }
   flex-direction: column;
   justify-content: center;
   padding: 80px 52px 80px 32px;
-  max-width: 600px;
-}
-
-.eyebrow {
-  font-family: "IBM Plex Mono", monospace;
-  font-size: 9px;
-  letter-spacing: .38em;
-  text-transform: uppercase;
-  color: var(--gold);
-  margin-bottom: 36px;
 }
 
 .hero-text h1 {
@@ -174,6 +156,7 @@ a { text-decoration: none; color: inherit; }
   color: var(--dim);
 }
 
+/* ── PORTRAIT — no quote overlay ── */
 .hero-portrait {
   position: relative;
   overflow: hidden;
@@ -198,39 +181,32 @@ a { text-decoration: none; color: inherit; }
   pointer-events: none;
 }
 
-.portrait-quote {
-  position: absolute;
-  bottom: 52px;
-  left: -28px;
-  right: 28px;
-  background: rgba(10,10,10,.82);
-  backdrop-filter: blur(12px);
-  border: 1px solid rgba(200,169,110,.18);
-  border-left: 2px solid var(--gold);
-  padding: 24px 28px;
-  z-index: 2;
+/* ── LOWER ── */
+.lower {
+  position: relative;
+  z-index: 1;
+  max-width: 680px;
+  margin: 0 auto;
+  padding: 60px 32px 100px;
+  border-top: 1px solid var(--line);
 }
 
-.portrait-quote p {
-  font-size: clamp(14px, 1.4vw, 18px);
+.quote-block {
+  background: #0d0d0d;
+  border-left: 3px solid var(--gold);
+  padding: 24px 28px;
+  margin-bottom: 40px;
+}
+
+.quote-block p {
+  font-size: clamp(18px, 2vw, 24px);
   font-weight: 300;
   line-height: 1.5;
   color: #d4cabb;
   font-style: italic;
 }
 
-.lower {
-  position: relative;
-  z-index: 1;
-  max-width: 680px;
-  margin: 0 auto;
-  padding: 80px 32px 100px;
-  border-top: 1px solid var(--line);
-}
-
-.back-row {
-  margin-top: 60px;
-}
+.back-row { margin-top: 60px; }
 
 .back-link {
   font-family: "IBM Plex Mono", monospace;
@@ -254,6 +230,7 @@ a { text-decoration: none; color: inherit; }
   color: var(--dim);
 }
 
+/* ── MOBILE ── */
 @media (max-width: 860px) {
 
   .topbar { padding: 0 20px; }
@@ -265,7 +242,7 @@ a { text-decoration: none; color: inherit; }
 
   .hero-portrait {
     height: 70vw;
-    max-height: 460px;
+    max-height: 420px;
     order: -1;
   }
 
@@ -275,22 +252,16 @@ a { text-decoration: none; color: inherit; }
       linear-gradient(to top, var(--bg) 0%, transparent 25%);
   }
 
-  .portrait-quote {
-    left: 16px;
-    right: 16px;
-    bottom: 20px;
-  }
-
   .hero-text {
     padding: 48px 20px 60px;
-    max-width: 100%;
   }
 
   .hero-text h1 {
     font-size: clamp(36px, 9vw, 58px);
   }
 
-  .lower { padding: 60px 20px 80px; }
+  .lower { padding: 50px 20px 80px; }
+  .back-row { margin-top: 40px; }
 
 }
 
@@ -320,8 +291,6 @@ a { text-decoration: none; color: inherit; }
   <section class="hero">
 
     <div class="hero-text">
-
-      <div class="eyebrow">About</div>
 
       <h1>A system can continue —<br>and justify<br>its own <em>continuation.</em></h1>
 
@@ -370,17 +339,18 @@ a { text-decoration: none; color: inherit; }
         src="https://i.postimg.cc/mkCYFrxr/liran-1.jpg"
         alt="Liran Bar-Shrim"
       >
-      <div class="portrait-quote">
-        <p>
-          Most systems define who approves.<br>
-          Almost none define who can refuse.
-        </p>
-      </div>
     </div>
 
   </section>
 
   <div class="lower">
+
+    <div class="quote-block">
+      <p>
+        Most systems define who approves.<br>
+        Almost none define who can refuse.
+      </p>
+    </div>
 
     <p class="body-block">
       The question is not whether people object.
