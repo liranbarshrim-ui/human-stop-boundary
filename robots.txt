@@ -1,4 +1,13 @@
 User-agent: *
-Allow: /
+Allow: /index.html
+Allow: /about.html
+Allow: /approval-is-not-refusal.html
+Allow: /human-in-the-loop.html
+Allow: /faq.html
+Allow: /whitepaper.html
+Allow: /goodfaith.html
+Allow: /og-image.png
+Allow: /google1305c86f2cce0142.html
+Disallow: /
 
 Sitemap: https://matrix-audit.com/sitemap.xml
