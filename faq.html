@@ -4,9 +4,9 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
 
-<title>FAQ | Decision Authority Research</title>
+<title>FAQ — Liran Bar-Shrim</title>
 
-<meta name="description" content="Frequently asked questions about Decision Authority Research, named authorization, refusal authority, irreversible execution, and governance structure.">
+<meta name="description" content="Questions about refusal authority, irreversible continuation, named authorization, and governance structure.">
 
 <meta name="robots" content="index,follow">
 
@@ -14,316 +14,210 @@
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&family=Cormorant+Garamond:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&display=swap" rel="stylesheet">
 
 <style>
 
-:root{
---bg:#090909;
---gold:#c8a96e;
---gold2:#e8d4a8;
---text:#e8e2d7;
---muted:#a7a097;
---line:rgba(255,255,255,.08);
---line2:rgba(255,255,255,.05);
+:root {
+  --bg: #080808;
+  --gold: #c8a96e;
+  --gold2: #ead9b3;
+  --text: #ebe5da;
+  --muted: #b8b0a4;
+  --dim: #7a7570;
+  --line: rgba(255,255,255,.06);
 }
 
-*{
-margin:0;
-padding:0;
-box-sizing:border-box;
+*, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+html { scroll-behavior: smooth; }
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: "Cormorant Garamond", Georgia, serif;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+  line-height: 1.8;
 }
 
-html{
-scroll-behavior:smooth;
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  opacity: .028;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-size: 180px;
 }
 
-body{
-font-family:Inter,sans-serif;
-background:var(--bg);
-color:var(--text);
-overflow-x:hidden;
-line-height:1.78;
--webkit-font-smoothing:antialiased;
+a { text-decoration: none; color: inherit; }
+
+/* ── TOPBAR ── */
+.topbar {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  height: 72px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 48px;
+  z-index: 100;
+  background: rgba(8,8,8,.92);
+  backdrop-filter: blur(16px);
+  border-bottom: 1px solid var(--line);
 }
 
-body:before{
-content:"";
-position:fixed;
-inset:0;
-pointer-events:none;
-opacity:.05;
-background-image:
-linear-gradient(rgba(255,255,255,.03) 1px,transparent 1px),
-linear-gradient(90deg,rgba(255,255,255,.03) 1px,transparent 1px);
-background-size:40px 40px;
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  font-family: "IBM Plex Mono", monospace;
+  font-size: 9.5px;
+  letter-spacing: .32em;
+  text-transform: uppercase;
+  color: var(--text);
 }
 
-a{
-text-decoration:none;
-color:inherit;
+.brand-rule { width: 32px; height: 1px; background: var(--gold); }
+
+.nav-contact {
+  font-family: "IBM Plex Mono", monospace;
+  font-size: 9.5px;
+  letter-spacing: .28em;
+  text-transform: uppercase;
+  color: var(--gold2);
+  transition: opacity .2s;
+}
+.nav-contact:hover { opacity: .7; }
+
+/* ── CONTAINERS ── */
+.wrap-narrow {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 0 48px;
+  position: relative;
+  z-index: 1;
 }
 
-.topbar{
-position:fixed;
-top:0;
-left:0;
-right:0;
-height:74px;
-display:flex;
-align-items:center;
-justify-content:space-between;
-padding:0 18px;
-z-index:1000;
-background:rgba(5,5,5,.88);
-backdrop-filter:blur(14px);
-border-bottom:1px solid var(--line2);
+/* ── HERO ── */
+.hero {
+  padding-top: 160px;
+  padding-bottom: 70px;
 }
 
-.brand{
-display:flex;
-align-items:center;
-gap:12px;
-font-family:"IBM Plex Mono",monospace;
-font-size:10px;
-letter-spacing:.28em;
-text-transform:uppercase;
-white-space:nowrap;
+.hero h1 {
+  font-size: clamp(40px, 6vw, 90px);
+  font-weight: 400;
+  line-height: .92;
+  letter-spacing: -.01em;
+  color: var(--text);
+  margin-bottom: 40px;
+  max-width: 18ch;
 }
 
-.brand-line{
-width:34px;
-height:2px;
-background:var(--gold);
+.hero h1 em {
+  font-style: italic;
+  color: var(--gold2);
 }
 
-.menu-btn{
-width:42px;
-height:42px;
-border:none;
-background:none;
-cursor:pointer;
-display:flex;
-flex-direction:column;
-justify-content:center;
-gap:6px;
+.hero-sub {
+  font-size: clamp(17px, 1.6vw, 21px);
+  font-weight: 300;
+  line-height: 1.9;
+  color: var(--muted);
+  max-width: 58ch;
 }
 
-.menu-btn span{
-height:2px;
-background:#fff;
-border-radius:4px;
+/* ── FAQ LIST ── */
+.faq-list {
+  padding-bottom: 80px;
 }
 
-.menu-btn span:nth-child(2){
-width:72%;
-margin-left:auto;
+.faq-item {
+  border-top: 1px solid var(--line);
+  padding: 48px 0;
 }
 
-.overlay{
-position:fixed;
-inset:0;
-background:rgba(0,0,0,.55);
-opacity:0;
-visibility:hidden;
-transition:.25s;
-z-index:998;
+.faq-item:last-child {
+  border-bottom: 1px solid var(--line);
 }
 
-.overlay.active{
-opacity:1;
-visibility:visible;
+.faq-q {
+  font-size: clamp(22px, 2.8vw, 38px);
+  font-weight: 400;
+  font-style: italic;
+  line-height: 1.1;
+  color: var(--text);
+  margin-bottom: 20px;
 }
 
-.drawer{
-position:fixed;
-top:0;
-right:-100%;
-width:86%;
-max-width:420px;
-height:100vh;
-overflow-y:auto;
-z-index:999;
-padding:24px;
-transition:.3s ease;
-background:#0a0a0a;
-border-left:1px solid var(--line);
+.faq-a {
+  font-size: clamp(16px, 1.4vw, 19px);
+  font-weight: 300;
+  color: var(--muted);
+  line-height: 1.85;
+  max-width: 60ch;
 }
 
-.drawer.active{
-right:0;
+.faq-a strong {
+  color: #c8c0b2;
+  font-weight: 400;
 }
 
-.drawer-top{
-display:flex;
-justify-content:space-between;
-align-items:center;
-margin-bottom:18px;
+/* ── FINAL ── */
+.final {
+  padding: 80px 0 100px;
+  border-top: 1px solid var(--line);
 }
 
-.drawer-title{
-font-family:"IBM Plex Mono",monospace;
-font-size:11px;
-letter-spacing:.28em;
-text-transform:uppercase;
-color:var(--gold);
+.back-link {
+  font-family: "IBM Plex Mono", monospace;
+  font-size: 9px;
+  letter-spacing: .28em;
+  text-transform: uppercase;
+  color: var(--dim);
+  transition: color .2s;
+  display: block;
+  margin-bottom: 14px;
+}
+.back-link:hover { color: var(--gold2); }
+
+.sig {
+  font-family: "IBM Plex Mono", monospace;
+  font-size: 9.5px;
+  letter-spacing: .26em;
+  text-transform: uppercase;
+  color: var(--dim);
+  margin-top: 28px;
 }
 
-.close-btn{
-font-size:38px;
-line-height:1;
-background:none;
-border:none;
-color:#fff;
-cursor:pointer;
+/* ── FOOTER ── */
+.footer {
+  position: relative;
+  z-index: 1;
+  text-align: center;
+  padding: 20px;
+  border-top: 1px solid var(--line);
+  font-family: "IBM Plex Mono", monospace;
+  font-size: 10px;
+  letter-spacing: .2em;
+  color: var(--dim);
 }
 
-.group{
-margin-top:18px;
+/* ── RESPONSIVE ── */
+@media (max-width: 860px) {
+  .topbar { padding: 0 20px; }
+  .wrap-narrow { padding: 0 20px; }
+  .hero { padding-top: 120px; padding-bottom: 50px; }
+  .faq-item { padding: 36px 0; }
 }
 
-.group small{
-display:block;
-font-family:"IBM Plex Mono",monospace;
-font-size:10px;
-letter-spacing:.26em;
-text-transform:uppercase;
-color:var(--gold);
-margin-bottom:10px;
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(16px); }
+  to   { opacity: 1; transform: translateY(0); }
 }
-
-.drawer a.link{
-display:block;
-padding:14px 0;
-font-size:20px;
-border-bottom:1px solid var(--line2);
-}
-
-.drawer a.link:hover{
-color:var(--gold2);
-}
-
-.mail-btn{
-display:block;
-margin-top:22px;
-padding:16px;
-text-align:center;
-border-radius:16px;
-border:1px solid var(--line);
-color:#f3dfb4;
-font-size:15px;
-word-break:break-word;
-}
-
-.container{
-max-width:860px;
-margin:auto;
-padding:0 18px;
-position:relative;
-z-index:1;
-}
-
-.hero{
-padding-top:120px;
-padding-bottom:40px;
-}
-
-.meta{
-font-family:"IBM Plex Mono",monospace;
-font-size:10px;
-letter-spacing:.28em;
-text-transform:uppercase;
-color:var(--gold);
-margin-bottom:26px;
-}
-
-h1{
-font-family:"Cormorant Garamond",serif;
-font-size:clamp(42px,7vw,80px);
-line-height:1;
-font-weight:600;
-margin-bottom:22px;
-max-width:900px;
-}
-
-.hero-sub{
-font-size:20px;
-color:#d7d0c4;
-line-height:1.8;
-max-width:720px;
-}
-
-.faq-list{
-padding-bottom:70px;
-}
-
-.faq-item{
-background:#101010;
-border:1px solid var(--line2);
-border-left:3px solid var(--gold);
-padding:28px;
-margin-bottom:18px;
-}
-
-.faq-question{
-font-family:"Cormorant Garamond",serif;
-font-size:clamp(28px,4vw,42px);
-line-height:1.1;
-margin-bottom:16px;
-color:#f0e6d2;
-}
-
-.faq-answer{
-font-size:18px;
-color:var(--muted);
-max-width:70ch;
-}
-
-.footer-bar{
-max-width:860px;
-margin:auto;
-padding:22px 18px 60px;
-border-top:1px solid var(--line);
-display:flex;
-flex-direction:column;
-align-items:center;
-gap:10px;
-text-align:center;
-color:#8b8479;
-font-size:13px;
-position:relative;
-z-index:1;
-}
-
-.footer-link{
-color:#5f5952;
-font-size:11px;
-text-decoration:none;
-opacity:.72;
-transition:.2s;
-}
-
-.footer-link:hover{
-opacity:1;
-color:var(--gold);
-}
-
-@media(min-width:900px){
-
-.topbar{
-padding:0 34px;
-}
-
-.hero{
-padding-top:150px;
-}
-
-.footer-bar{
-padding:26px 34px 60px;
-}
-
-}
+.hero { animation: fadeUp .9s ease both; }
 
 </style>
 </head>
@@ -331,238 +225,133 @@ padding:26px 34px 60px;
 <body>
 
 <header class="topbar">
-
-<a href="index.html" class="brand">
-<span class="brand-line"></span>
-<span>Decision Authority Research</span>
-</a>
-
-<button class="menu-btn" id="openMenu">
-<span></span>
-<span></span>
-<span></span>
-</button>
-
+  <a href="index.html" class="brand">
+    <span class="brand-rule"></span>
+    <span>Liran Bar-Shrim</span>
+  </a>
+  <a href="mailto:Liran@liranbarshrim.com" class="nav-contact">Contact</a>
 </header>
-
-<div class="overlay" id="overlay"></div>
-
-<aside class="drawer" id="drawer">
-
-<div class="drawer-top">
-<div class="drawer-title">Navigation</div>
-<button class="close-btn" id="closeMenu">&#215;</button>
-</div>
-
-<div class="group">
-
-<small>Main</small>
-
-<a class="link" href="index.html">Home</a>
-<a class="link" href="about.html">About</a>
-<a class="link" href="dar.html">DAR</a>
-<a class="link" href="services.html">Services</a>
-<a class="link" href="contact.html">Contact</a>
-
-</div>
-
-<div class="group">
-
-<small>Core Research</small>
-
-<a class="link" href="whitepaper.html">White Paper</a>
-<a class="link" href="governance-anatomy.html">Governance Anatomy</a>
-<a class="link" href="how-it-works.html">How It Works</a>
-<a class="link" href="diagnostic.html">Governance Diagnostic</a>
-<a class="link" href="definitions.html">Definitions</a>
-<a class="link" href="irreversible.html">The Irreversible Question</a>
-<a class="link" href="case-studies.html">Case Studies</a>
-
-</div>
-
-<div class="group">
-
-<small>Reference</small>
-
-<a class="link active" href="faq.html">FAQ</a>
-
-</div>
-
-<a href="mailto:Liran@liranbarshrim.com" class="mail-btn">
-Liran@liranbarshrim.com
-</a>
-
-</aside>
 
 <main>
 
-<section class="container hero">
+  <!-- HERO -->
+  <section class="hero wrap-narrow">
+    <h1>Questions about<br><em>refusal authority.</em></h1>
+    <p class="hero-sub">
+      On continuation, named authorization,
+      and the structural conditions required
+      before irreversible execution proceeds.
+    </p>
+  </section>
 
-<div class="meta">
-Frequently Asked Questions
-</div>
+  <!-- FAQ -->
+  <section class="faq-list wrap-narrow">
 
-<h1>
-Questions about continuation, refusal authority, and irreversible execution.
-</h1>
+    <div class="faq-item">
+      <div class="faq-q">What is this research about?</div>
+      <div class="faq-a">
+        It examines a structural gap in governance: the absence of a named individual
+        authorized to refuse irreversible continuation before execution proceeds.
+        Not who reviewed it. Not who approved it. Who could stop it.
+      </div>
+    </div>
 
-<p class="hero-sub">
-Decision Authority Research examines the human and structural conditions required before irreversible continuation proceeds.
-</p>
+    <div class="faq-item">
+      <div class="faq-q">What is the central question?</div>
+      <div class="faq-a">
+        Who, by name, has the authority to stop continuation
+        before irreversible execution proceeds?
+      </div>
+    </div>
 
-</section>
+    <div class="faq-item">
+      <div class="faq-q">What is refusal authority?</div>
+      <div class="faq-a">
+        The explicit operational ability to interrupt or refuse continuation
+        before irreversible execution occurs.
+        Not the ability to object. Not the ability to escalate.
+        The authority to stop.
+      </div>
+    </div>
 
-<section class="container faq-list">
+    <div class="faq-item">
+      <div class="faq-q">Why does continuation become automatic?</div>
+      <div class="faq-a">
+        In most organizations, continuation carries less personal cost than interruption.
+        Over time, systems optimize for continuation —
+        even when uncertainty remains unresolved.
+        Stopping requires authority. Continuing requires nothing.
+      </div>
+    </div>
 
-<div class="faq-item">
-<div class="faq-question">
-What is Decision Authority Research?
-</div>
+    <div class="faq-item">
+      <div class="faq-q">What does "named authorization" mean?</div>
+      <div class="faq-a">
+        A specific individual is explicitly responsible for authorizing continuation.
+        Without named responsibility, continuation becomes structurally automatic.
+        The name is not a formality. It is the mechanism.
+      </div>
+    </div>
 
-<div class="faq-answer">
-Decision Authority Research examines irreversible execution, refusal authority, institutional momentum, and named authorization before continuation proceeds.
-</div>
-</div>
+    <div class="faq-item">
+      <div class="faq-q">Is this a legal framework?</div>
+      <div class="faq-a">
+        No. This is independent writing and research focused on governance structure,
+        authority, and the conditions under which continuation becomes irreversible.
+        It is not legal advice and does not constitute legal guidance.
+      </div>
+    </div>
 
-<div class="faq-item">
-<div class="faq-question">
-What is the core question behind DAR?
-</div>
+    <div class="faq-item">
+      <div class="faq-q">Does this oppose automation or AI?</div>
+      <div class="faq-a">
+        No. The focus is not technology.
+        The focus is the human authorization structure
+        required before irreversible automated execution proceeds.
+      </div>
+    </div>
 
-<div class="faq-answer">
-The central question is simple:
-who, by name, has the authority to stop continuation before irreversible execution proceeds?
-</div>
-</div>
+    <div class="faq-item">
+      <div class="faq-q">What happens when nobody is required to refuse continuation?</div>
+      <div class="faq-a">
+        <strong>Continuation becomes automatic.</strong>
+        Not because everyone agreed —
+        but because interruption no longer exists operationally inside the structure.
+      </div>
+    </div>
 
-<div class="faq-item">
-<div class="faq-question">
-Why does continuation become dangerous?
-</div>
+    <div class="faq-item">
+      <div class="faq-q">What problem does distributed responsibility create?</div>
+      <div class="faq-a">
+        As responsibility spreads across systems, teams, and committees,
+        refusal authority does not spread with it.
+        It disappears.
+      </div>
+    </div>
 
-<div class="faq-answer">
-In many organizations, continuation carries less personal cost than interruption.
-Over time, systems optimize for continuation automatically — even when uncertainty remains unresolved.
-</div>
-</div>
+    <div class="faq-item">
+      <div class="faq-q">Who is this research for?</div>
+      <div class="faq-a">
+        Anyone inside a system where irreversible decisions are made
+        and where the question of who can stop them has no clear answer.
+      </div>
+    </div>
 
-<div class="faq-item">
-<div class="faq-question">
-What is refusal authority?
-</div>
+  </section>
 
-<div class="faq-answer">
-Refusal authority is the explicit operational ability to interrupt or refuse continuation before irreversible execution occurs.
-</div>
-</div>
-
-<div class="faq-item">
-<div class="faq-question">
-What does “named authorization” mean?
-</div>
-
-<div class="faq-answer">
-Named authorization means a specific individual is explicitly responsible for authorizing continuation.
-Without named responsibility, continuation becomes structurally automatic.
-</div>
-</div>
-
-<div class="faq-item">
-<div class="faq-question">
-Is DAR a legal framework?
-</div>
-
-<div class="faq-answer">
-No.
-DAR is a governance and decision-structure research framework focused on authority, interruption, accountability, and continuation under uncertainty.
-</div>
-</div>
-
-<div class="faq-item">
-<div class="faq-question">
-Does DAR oppose automation or AI?
-</div>
-
-<div class="faq-answer">
-No.
-DAR examines the governance conditions required before irreversible automated execution proceeds.
-The focus is not technology itself — but human authority before continuation.
-</div>
-</div>
-
-<div class="faq-item">
-<div class="faq-question">
-Why is interruption important?
-</div>
-
-<div class="faq-answer">
-A system that can continue but cannot meaningfully stop itself becomes structurally unstable under uncertainty.
-</div>
-</div>
-
-<div class="faq-item">
-<div class="faq-question">
-What problem does DAR identify?
-</div>
-
-<div class="faq-answer">
-Organizations often distribute responsibility across systems, teams, committees, and workflows.
-As responsibility diffuses, refusal disappears.
-</div>
-</div>
-
-<div class="faq-item">
-<div class="faq-question">
-What happens when nobody is required to refuse continuation?
-</div>
-
-<div class="faq-answer">
-Continuation becomes automatic.
-Not because everyone agreed —
-but because interruption no longer exists operationally inside the structure.
-</div>
-</div>
-
-</section>
+  <!-- FINAL -->
+  <section class="final wrap-narrow">
+    <a href="index.html" class="back-link">← Back to main</a>
+    <a href="human-in-the-loop.html" class="back-link">→ Human In The Loop</a>
+    <a href="whitepaper.html" class="back-link" style="margin-bottom:28px;">→ White Paper</a>
+    <div class="sig">Liran Bar-Shrim · Independent Writing & Research</div>
+  </section>
 
 </main>
 
-<footer class="footer-bar">
-
-<span>
-&#169; 2026 Liran Bar-Shrim
-</span>
-
-<a href="whitepaper.html" class="footer-link">
-White Paper →
-</a>
-
-<span>
-matrix-audit.com
-</span>
-
+<footer class="footer">
+  © 2026 Liran Bar-Shrim
 </footer>
-
-<script>
-
-var drawer=document.getElementById('drawer');
-var overlay=document.getElementById('overlay');
-
-document.getElementById('openMenu').onclick=function(){
-drawer.classList.add('active');
-overlay.classList.add('active');
-};
-
-document.getElementById('closeMenu').onclick=closeDrawer;
-
-overlay.onclick=closeDrawer;
-
-function closeDrawer(){
-drawer.classList.remove('active');
-overlay.classList.remove('active');
-}
-
-</script>
 
 </body>
 </html>
