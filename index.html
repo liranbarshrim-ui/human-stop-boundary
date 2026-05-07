@@ -213,15 +213,6 @@ a { text-decoration: none; color: inherit; }
   color: var(--text);
 }
 
-.nav-intro {
-  font-family: "IBM Plex Mono", monospace;
-  font-size: 9px;
-  letter-spacing: .32em;
-  text-transform: uppercase;
-  color: var(--dim);
-  margin-bottom: 28px;
-}
-
 /* ── NAV LINKS ── */
 .nav-section {
   padding: 60px 0 0;
@@ -240,12 +231,12 @@ a { text-decoration: none; color: inherit; }
   background: var(--card-bg);
   border: 1px solid rgba(255,255,255,.05);
   padding: 24px 28px;
-  transition: border-color .25s, background .25s;
+  transition: border-color .25s, transform .25s;
 }
 
 .nav-link:hover {
+  transform: translateY(-3px);
   border-color: rgba(200,169,110,.25);
-  background: #121212;
 }
 
 .nav-title {
@@ -342,7 +333,7 @@ a { text-decoration: none; color: inherit; }
 
   <!-- HERO -->
   <section class="hero wrap">
-    <h1>Approval is<br>not <em>refusal.</em></h1>
+    <h1>Approval<br>is not<br><em>refusal.</em></h1>
     <p class="hero-sub">
       A system can contain oversight,
       human review,
@@ -371,6 +362,10 @@ a { text-decoration: none; color: inherit; }
   <!-- SECTION 1 -->
   <section class="section wrap-narrow">
     <h2>The structure contains oversight.<br>It does not contain <em>refusal authority.</em></h2>
+    <p class="body-p">
+      The structure contains oversight.<br>
+      The structure does not contain refusal authority.
+    </p>
     <p class="body-p">
       AI systems, automated execution, and distributed approval chains
       increasingly separate the moment of continuation
@@ -402,8 +397,13 @@ a { text-decoration: none; color: inherit; }
   <section class="section wrap-narrow">
     <h2>One person.<br>One structural <em>question.</em></h2>
     <p class="body-p">
-      No institution behind it.<br>
-      Just the question itself.
+      Not a legal institution,
+      regulatory body,
+      or compliance organization.
+    </p>
+    <p class="body-p">
+      The question is not whether people object.<br>
+      The question is whether refusal exists structurally.
     </p>
     <div class="hero-statement">
       <p>
@@ -415,7 +415,6 @@ a { text-decoration: none; color: inherit; }
 
   <!-- NAV -->
   <section class="nav-section wrap">
-    <div class="nav-intro">Further reading</div>
     <div class="nav-grid">
 
       <a href="about.html" class="nav-link">
@@ -454,8 +453,8 @@ a { text-decoration: none; color: inherit; }
   <!-- FINAL -->
   <section class="final wrap-narrow">
     <div class="final-line">
-      Continuation was defined.<br>
-      Refusal was not.
+      The next irreversible decision will happen.<br>
+      Does anyone have the authority to refuse it?
     </div>
     <div class="sig">
       Liran Bar-Shrim · Independent Writing & Research
