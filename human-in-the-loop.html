@@ -4,9 +4,9 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
 
-<title>Human In The Loop | Decision Authority Research</title>
+<title>Human In The Loop — Liran Bar-Shrim</title>
 
-<meta name="description" content="A structural comparison between Human-in-the-Loop safeguards, governance controls, oversight systems, and named refusal authority before irreversible execution.">
+<meta name="description" content="A human inside the loop does not guarantee that a human can stop the loop. On the structural gap between oversight and refusal authority.">
 
 <meta name="robots" content="index,follow">
 
@@ -14,251 +14,356 @@
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&family=Cormorant+Garamond:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&display=swap" rel="stylesheet">
 
 <style>
 
-:root{
---bg:#090909;
---gold:#c8a96e;
---gold2:#e8d4a8;
---text:#e8e2d7;
---muted:#a7a097;
---line:rgba(255,255,255,.08);
---line2:rgba(255,255,255,.05);
+:root {
+  --bg: #080808;
+  --gold: #c8a96e;
+  --gold2: #ead9b3;
+  --text: #ebe5da;
+  --muted: #b8b0a4;
+  --dim: #7a7570;
+  --line: rgba(255,255,255,.06);
 }
 
-*{
-margin:0;
-padding:0;
-box-sizing:border-box;
+*, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+html { scroll-behavior: smooth; }
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: "Cormorant Garamond", Georgia, serif;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+  line-height: 1.8;
 }
 
-body{
-font-family:Inter,sans-serif;
-background:var(--bg);
-color:var(--text);
-line-height:1.78;
--webkit-font-smoothing:antialiased;
-overflow-x:hidden;
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  opacity: .028;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-size: 180px;
 }
 
-body:before{
-content:"";
-position:fixed;
-inset:0;
-pointer-events:none;
-opacity:.05;
-background-image:
-linear-gradient(rgba(255,255,255,.03) 1px,transparent 1px),
-linear-gradient(90deg,rgba(255,255,255,.03) 1px,transparent 1px);
-background-size:40px 40px;
+a { text-decoration: none; color: inherit; }
+
+/* ── TOPBAR ── */
+.topbar {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  height: 72px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 48px;
+  z-index: 100;
+  background: rgba(8,8,8,.92);
+  backdrop-filter: blur(16px);
+  border-bottom: 1px solid var(--line);
 }
 
-a{
-text-decoration:none;
-color:inherit;
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  font-family: "IBM Plex Mono", monospace;
+  font-size: 9.5px;
+  letter-spacing: .32em;
+  text-transform: uppercase;
+  color: var(--text);
 }
 
-.topbar{
-position:fixed;
-top:0;
-left:0;
-right:0;
-height:74px;
-display:flex;
-align-items:center;
-justify-content:space-between;
-padding:0 18px;
-z-index:1000;
-background:rgba(5,5,5,.88);
-backdrop-filter:blur(14px);
-border-bottom:1px solid var(--line2);
+.brand-rule { width: 32px; height: 1px; background: var(--gold); }
+
+.nav-contact {
+  font-family: "IBM Plex Mono", monospace;
+  font-size: 9.5px;
+  letter-spacing: .28em;
+  text-transform: uppercase;
+  color: var(--gold2);
+  transition: opacity .2s;
+}
+.nav-contact:hover { opacity: .7; }
+
+/* ── CONTAINERS ── */
+.wrap {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0 48px;
+  position: relative;
+  z-index: 1;
 }
 
-.brand{
-display:flex;
-align-items:center;
-gap:12px;
-font-family:"IBM Plex Mono",monospace;
-font-size:10px;
-letter-spacing:.28em;
-text-transform:uppercase;
-white-space:nowrap;
+.wrap-narrow {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 0 48px;
+  position: relative;
+  z-index: 1;
 }
 
-.brand-line{
-width:34px;
-height:2px;
-background:var(--gold);
+/* ── HERO ── */
+.hero {
+  padding-top: 160px;
+  padding-bottom: 80px;
 }
 
-.container{
-max-width:920px;
-margin:auto;
-padding:0 20px;
-position:relative;
-z-index:1;
+.hero h1 {
+  font-size: clamp(44px, 7vw, 110px);
+  font-weight: 400;
+  line-height: .9;
+  letter-spacing: -.02em;
+  color: var(--text);
+  margin-bottom: 52px;
+  max-width: 18ch;
 }
 
-.hero{
-padding-top:130px;
-padding-bottom:40px;
+.hero h1 em {
+  font-style: italic;
+  color: var(--gold2);
 }
 
-.meta{
-font-family:"IBM Plex Mono",monospace;
-font-size:10px;
-letter-spacing:.28em;
-text-transform:uppercase;
-color:var(--gold);
-margin-bottom:24px;
+.hero-sub {
+  font-size: clamp(18px, 1.8vw, 22px);
+  font-weight: 300;
+  line-height: 1.9;
+  color: var(--muted);
+  max-width: 58ch;
 }
 
-h1{
-font-family:"Cormorant Garamond",serif;
-font-size:clamp(42px,7vw,88px);
-line-height:.96;
-font-weight:600;
-margin-bottom:24px;
-max-width:900px;
+.hero-statement {
+  background: #0d0d0d;
+  border-left: 3px solid var(--gold);
+  padding: 44px 52px;
+  margin-top: 64px;
 }
 
-.hero-sub{
-font-size:21px;
-line-height:1.8;
-color:#d7d0c4;
-max-width:760px;
-margin-bottom:22px;
+.hero-statement p {
+  font-size: clamp(24px, 3.2vw, 48px);
+  font-weight: 300;
+  font-style: italic;
+  line-height: 1.2;
+  color: #f2e8d5;
 }
 
-.statement{
-background:#101010;
-border-left:3px solid var(--gold);
-padding:28px;
-margin-top:28px;
+/* ── PAUSE ── */
+.pause-1 {
+  padding: 100px 0;
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+  margin: 20px 0;
+  position: relative;
+  z-index: 1;
 }
 
-.statement p{
-font-family:"Cormorant Garamond",serif;
-font-size:clamp(28px,4vw,42px);
-line-height:1.2;
-color:#f0e6d2;
+.pause-1 .pause-line {
+  font-size: clamp(26px, 3.8vw, 58px);
+  font-weight: 300;
+  font-style: italic;
+  line-height: 1.2;
+  color: var(--text);
+  max-width: 600px;
+  margin: 0 0 0 48px;
 }
 
-.section{
-padding:34px 0;
+.pause-2 {
+  padding: 80px 0;
+  margin: 20px 0;
+  text-align: center;
+  position: relative;
+  z-index: 1;
 }
 
-.label{
-font-family:"IBM Plex Mono",monospace;
-font-size:10px;
-letter-spacing:.22em;
-text-transform:uppercase;
-color:var(--gold);
-margin-bottom:12px;
+.pause-2 .pause-line {
+  font-size: clamp(18px, 2.4vw, 40px);
+  font-weight: 300;
+  font-style: italic;
+  line-height: 1.35;
+  color: var(--text);
+  opacity: .58;
+  max-width: 580px;
+  margin: 0 auto;
+  padding: 0 48px;
 }
 
-h2{
-font-family:"Cormorant Garamond",serif;
-font-size:clamp(28px,4vw,46px);
-line-height:1.05;
-margin-bottom:18px;
-font-weight:600;
+/* ── SECTIONS ── */
+.section {
+  padding: 80px 0;
+  border-top: 1px solid var(--line);
 }
 
-p{
-font-size:18px;
-color:var(--muted);
-margin-bottom:18px;
-max-width:72ch;
+.section h2 {
+  font-size: clamp(30px, 4.2vw, 60px);
+  font-weight: 400;
+  line-height: 1.0;
+  margin-bottom: 32px;
+  max-width: 22ch;
 }
 
-.grid{
-display:grid;
-grid-template-columns:1fr;
-gap:18px;
-margin-top:26px;
+.section h2 em {
+  font-style: italic;
+  color: var(--gold2);
 }
 
-.card{
-background:#0f0f0f;
-border:1px solid var(--line2);
-padding:28px;
+.body-p {
+  font-size: clamp(17px, 1.4vw, 20px);
+  font-weight: 300;
+  color: var(--muted);
+  margin-bottom: 22px;
+  max-width: 62ch;
+  line-height: 1.9;
 }
 
-.card-title{
-font-family:"IBM Plex Mono",monospace;
-font-size:11px;
-letter-spacing:.18em;
-text-transform:uppercase;
-color:var(--gold);
-margin-bottom:14px;
+.pull {
+  background: #0d0d0d;
+  border-left: 3px solid var(--gold);
+  padding: 32px 44px;
+  margin-top: 48px;
+  font-size: clamp(19px, 2.2vw, 36px);
+  font-weight: 300;
+  line-height: 1.35;
+  font-style: italic;
+  color: var(--text);
 }
 
-.compare{
-margin-top:30px;
-border:1px solid var(--line2);
+/* ── TRUTH BLOCKS ── */
+.truth-blocks { margin-top: 56px; }
+
+.truth-header {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  border-bottom: 1px solid rgba(255,255,255,.1);
+  padding-bottom: 14px;
 }
 
-.row{
-display:grid;
-grid-template-columns:1fr;
-border-bottom:1px solid var(--line2);
+.truth-col-label {
+  font-family: "IBM Plex Mono", monospace;
+  font-size: 9px;
+  letter-spacing: .28em;
+  text-transform: uppercase;
+  color: var(--gold);
+  padding: 0 4px;
 }
 
-.cell{
-padding:22px;
+.truth-block {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  border-bottom: 1px solid var(--line);
+  transition: background .2s;
 }
 
-.head{
-background:#111;
-font-family:"IBM Plex Mono",monospace;
-font-size:11px;
-letter-spacing:.18em;
-text-transform:uppercase;
-color:var(--gold);
+.truth-block:hover { background: rgba(255,255,255,.014); }
+.truth-block:last-child { border-bottom: none; }
+
+.tb-left {
+  padding: 32px 32px 32px 4px;
+  font-size: clamp(16px, 1.3vw, 18px);
+  font-weight: 300;
+  color: var(--muted);
+  line-height: 1.75;
+  border-right: 1px solid var(--line);
 }
 
-.pull{
-background:#101010;
-border-left:3px solid var(--gold);
-padding:24px;
-font-family:"Cormorant Garamond",serif;
-font-size:clamp(24px,4vw,40px);
-line-height:1.25;
-margin-top:28px;
+.tb-right {
+  padding: 32px 4px 32px 32px;
+  font-size: clamp(16px, 1.3vw, 18px);
+  font-weight: 300;
+  color: #c8c0b2;
+  line-height: 1.75;
+  font-style: normal;
 }
 
-.footer{
-padding:40px 20px 60px;
-border-top:1px solid var(--line2);
-text-align:center;
-font-size:13px;
-color:#80786d;
-margin-top:60px;
+/* ── GROUNDING ── */
+.grounding {
+  margin-top: 36px;
+  font-family: "IBM Plex Mono", monospace;
+  font-size: 10px;
+  letter-spacing: .16em;
+  text-transform: uppercase;
+  color: var(--dim);
+  line-height: 2.2;
 }
 
-@media(min-width:900px){
-
-.row{
-grid-template-columns:1fr 1fr;
+/* ── FINAL ── */
+.final {
+  padding: 100px 0 120px;
+  border-top: 1px solid var(--line);
+  margin-top: 20px;
 }
 
-.grid{
-grid-template-columns:repeat(2,1fr);
+.final-q {
+  font-size: clamp(36px, 5vw, 80px);
+  font-weight: 400;
+  font-style: italic;
+  line-height: 1.0;
+  color: var(--text);
+  margin-bottom: 52px;
+  max-width: 18ch;
 }
 
-.topbar{
-padding:0 34px;
+.back-link {
+  font-family: "IBM Plex Mono", monospace;
+  font-size: 9px;
+  letter-spacing: .28em;
+  text-transform: uppercase;
+  color: var(--dim);
+  transition: color .2s;
+  display: block;
+  margin-bottom: 14px;
+}
+.back-link:hover { color: var(--gold2); }
+
+.sig {
+  font-family: "IBM Plex Mono", monospace;
+  font-size: 9.5px;
+  letter-spacing: .26em;
+  text-transform: uppercase;
+  color: var(--dim);
 }
 
-.hero{
-padding-top:150px;
+/* ── FOOTER ── */
+.footer {
+  position: relative;
+  z-index: 1;
+  text-align: center;
+  padding: 20px;
+  border-top: 1px solid var(--line);
+  font-family: "IBM Plex Mono", monospace;
+  font-size: 10px;
+  letter-spacing: .2em;
+  color: var(--dim);
 }
 
+/* ── RESPONSIVE ── */
+@media (max-width: 860px) {
+  .topbar { padding: 0 20px; }
+  .wrap { padding: 0 20px; }
+  .wrap-narrow { padding: 0 20px; }
+  .hero { padding-top: 120px; padding-bottom: 60px; }
+  .hero-statement { padding: 28px 24px; }
+  .pull { padding: 24px 28px; }
+  .pause-1 { padding: 70px 0; }
+  .pause-1 .pause-line { margin: 0 20px; max-width: 100%; }
+  .pause-2 { padding: 60px 0; }
+  .pause-2 .pause-line { padding: 0 20px; }
+  .truth-header { display: none; }
+  .truth-block { grid-template-columns: 1fr; }
+  .tb-left { padding: 24px 0 12px; border-right: none; border-bottom: 1px solid var(--line); }
+  .tb-right { padding: 12px 0 24px; }
+  .final { padding: 70px 0 80px; }
 }
+
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(16px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.hero { animation: fadeUp .9s ease both; }
 
 </style>
 </head>
@@ -266,270 +371,149 @@ padding-top:150px;
 <body>
 
 <header class="topbar">
-
-<a href="index.html" class="brand">
-<span class="brand-line"></span>
-<span>Decision Authority Research</span>
-</a>
-
+  <a href="index.html" class="brand">
+    <span class="brand-rule"></span>
+    <span>Liran Bar-Shrim</span>
+  </a>
+  <a href="mailto:Liran@liranbarshrim.com" class="nav-contact">Contact</a>
 </header>
 
 <main>
 
-<section class="hero container">
+  <!-- HERO -->
+  <section class="hero wrap">
+    <h1>Human review<br>is not<br><em>refusal authority.</em></h1>
+    <p class="hero-sub">
+      Most modern governance systems already include human oversight:
+      review committees, approval chains, validation steps,
+      monitoring systems, and escalation procedures.
+    </p>
+    <p class="hero-sub">
+      Yet irreversible continuation still happens
+      without meaningful interruption.
+    </p>
+    <div class="hero-statement">
+      <p>
+        A human inside the loop does not guarantee
+        that a human can stop the loop.
+      </p>
+    </div>
+  </section>
 
-<div class="meta">
-Human Oversight
-</div>
+  <!-- PAUSE 1 -->
+  <div class="pause-1">
+    <div class="pause-line">
+      Oversight is not<br>
+      the same as<br>
+      the authority to interrupt.
+    </div>
+  </div>
 
-<h1>
-Human-in-the-loop is not the same as refusal authority.
-</h1>
+  <!-- SECTION 1 -->
+  <section class="section wrap-narrow">
+    <h2>The problem is not<br>the absence of humans.<br>It is the absence of <em>named authority.</em></h2>
+    <p class="body-p">
+      Human review, approval chains, and monitoring systems
+      define who observed, who signed off, who escalated.
+    </p>
+    <p class="body-p">
+      They rarely define who, by name,
+      is authorized to refuse continuation
+      once institutional momentum already exists.
+    </p>
+    <div class="pull">
+      As responsibility distributes across functions and systems,
+      refusal authority does not distribute with it.<br>
+      It disappears.
+    </div>
+    <div class="grounding">
+      AI systems<br>
+      Distributed execution<br>
+      Institutional escalation
+    </div>
+  </section>
 
-<p class="hero-sub">
-Most modern governance systems already include oversight layers:
-review committees,
-approval chains,
-human validation,
-monitoring systems,
-compliance controls,
-and escalation procedures.
-</p>
+  <!-- SECTION 2: TRUTH BLOCKS -->
+  <section class="section wrap">
+    <h2>What oversight provides.<br>What it <em>does not.</em></h2>
 
-<p class="hero-sub">
-Yet irreversible continuation still happens without meaningful interruption.
-</p>
+    <div class="truth-blocks">
 
-<div class="statement">
-<p>
-A human inside the loop does not guarantee that a human can stop the loop.
-</p>
-</div>
+      <div class="truth-header">
+        <div class="truth-col-label">What Oversight Provides</div>
+        <div class="truth-col-label">What It Does Not Provide</div>
+      </div>
 
-</section>
+      <div class="truth-block">
+        <div class="tb-left">A human reviews the process.</div>
+        <div class="tb-right">Named authority to refuse continuation.</div>
+      </div>
 
-<section class="section container">
+      <div class="truth-block">
+        <div class="tb-left">Responsibility is distributed across teams.</div>
+        <div class="tb-right">Distributed responsibility can eliminate refusal authority entirely.</div>
+      </div>
 
-<div class="label">
-Existing Safeguards
-</div>
+      <div class="truth-block">
+        <div class="tb-left">Escalation channels exist.</div>
+        <div class="tb-right">Escalation delays responsibility. It does not interrupt execution.</div>
+      </div>
 
-<h2>
-Most organizations already have protection layers.
-</h2>
+      <div class="truth-block">
+        <div class="tb-left">The system includes approvals.</div>
+        <div class="tb-right">Approval is not refusal. It does not guarantee interruption capacity.</div>
+      </div>
 
-<div class="grid">
+      <div class="truth-block">
+        <div class="tb-left">Controls focus on policy compliance.</div>
+        <div class="tb-right">Compliance with policy is not the same as authority before irreversible continuation.</div>
+      </div>
 
-<div class="card">
-<div class="card-title">
-Human-In-The-Loop
-</div>
-<p>
-Human review before automated execution or escalation.
-</p>
-</div>
+    </div>
 
-<div class="card">
-<div class="card-title">
-Approval Chains
-</div>
-<p>
-Multi-level authorization structures designed to distribute operational responsibility.
-</p>
-</div>
+  </section>
 
-<div class="card">
-<div class="card-title">
-Compliance Programs
-</div>
-<p>
-Internal policies, controls, and regulatory governance procedures.
-</p>
-</div>
+  <!-- PAUSE 2 -->
+  <div class="pause-2">
+    <div class="pause-line">
+      Organizations usually know that execution is happening.<br>
+      The problem is that interruption carries institutional cost.
+    </div>
+  </div>
 
-<div class="card">
-<div class="card-title">
-Risk Committees
-</div>
-<p>
-Oversight groups responsible for reviewing operational or strategic risk.
-</p>
-</div>
+  <!-- SECTION 3 -->
+  <section class="section wrap-narrow">
+    <h2>Under pressure,<br><em>oversight becomes observational.</em></h2>
+    <p class="body-p">
+      As systems scale, continuation becomes structurally easier than refusal.
+      The cost of stopping — institutional, political, financial — accumulates.
+    </p>
+    <p class="body-p">
+      Under those conditions, human oversight can shift
+      from sovereign authority to passive observation.
+    </p>
+    <p class="body-p">
+      A safeguard only becomes real when someone can refuse continuation
+      without ambiguity — and is named in advance to do so.
+    </p>
+  </section>
 
-<div class="card">
-<div class="card-title">
-AI Safety Layers
-</div>
-<p>
-Monitoring systems, alignment controls, escalation triggers, and intervention thresholds.
-</p>
-</div>
-
-<div class="card">
-<div class="card-title">
-Audit Structures
-</div>
-<p>
-Post-event accountability, traceability, and procedural verification.
-</p>
-</div>
-
-</div>
-
-</section>
-
-<section class="section container">
-
-<div class="label">
-Structural Difference
-</div>
-
-<h2>
-DAR examines a different question.
-</h2>
-
-<p>
-Most governance systems examine execution responsibility:
-who reviewed,
-who approved,
-who monitored,
-or who complied with procedure.
-</p>
-
-<p>
-Decision Authority Research examines whether a specific individual is operationally authorized to refuse irreversible continuation before execution proceeds.
-</p>
-
-<div class="pull">
-RACI defines responsibility.<br>
-DAR defines refusal authority.
-</div>
-
-</section>
-
-<section class="section container">
-
-<div class="label">
-Comparison
-</div>
-
-<h2>
-Why existing safeguards may still fail.
-</h2>
-
-<div class="compare">
-
-<div class="row">
-<div class="cell head">Traditional Safeguards</div>
-<div class="cell head">DAR Perspective</div>
-</div>
-
-<div class="row">
-<div class="cell">
-A human reviews the process.
-</div>
-<div class="cell">
-Who can explicitly stop irreversible continuation?
-</div>
-</div>
-
-<div class="row">
-<div class="cell">
-Responsibility is distributed across teams.
-</div>
-<div class="cell">
-Distributed responsibility can eliminate refusal authority.
-</div>
-</div>
-
-<div class="row">
-<div class="cell">
-Oversight exists through meetings and escalation.
-</div>
-<div class="cell">
-Escalation is not the same as interruption.
-</div>
-</div>
-
-<div class="row">
-<div class="cell">
-The system includes approvals.
-</div>
-<div class="cell">
-Approval does not guarantee meaningful refusal capacity.
-</div>
-</div>
-
-<div class="row">
-<div class="cell">
-Controls focus on policy compliance.
-</div>
-<div class="cell">
-DAR focuses on authority before irreversible continuation.
-</div>
-</div>
-
-</div>
-
-</section>
-
-<section class="section container">
-
-<div class="label">
-Core Observation
-</div>
-
-<h2>
-The missing layer is often not visibility.
-</h2>
-
-<p>
-Organizations usually know that execution is happening.
-The deeper problem is that interruption carries institutional, political, financial, or operational cost.
-</p>
-
-<p>
-As systems scale,
-continuation becomes structurally easier than refusal.
-</p>
-
-<p>
-Under those conditions,
-“human oversight” can quietly become observational rather than sovereign.
-</p>
-
-<div class="statement">
-<p>
-A safeguard only becomes real when someone can refuse continuation without ambiguity.
-</p>
-</div>
-
-</section>
-
-<section class="section container">
-
-<div class="label">
-Decision Authority Research
-</div>
-
-<h2>
-The central DAR question.
-</h2>
-
-<p>
-Before irreversible execution proceeds under uncertainty:
-
-who,
-by name,
-is authorized to stop continuation?
-</p>
-
-</section>
+  <!-- FINAL -->
+  <section class="final wrap-narrow">
+    <div class="final-q">
+      Who, by name,<br>
+      is authorized to refuse?
+    </div>
+    <a href="index.html" class="back-link">← Back to main</a>
+    <a href="approval-is-not-refusal.html" class="back-link">→ Approval Is Not Refusal</a>
+    <a href="whitepaper.html" class="back-link" style="margin-bottom:28px;">→ White Paper</a>
+    <div class="sig">Liran Bar-Shrim · Independent Writing & Research</div>
+  </section>
 
 </main>
 
 <footer class="footer">
-© 2026 Liran Bar-Shrim · matrix-audit.com
+  © 2026 Liran Bar-Shrim
 </footer>
 
 </body>
