@@ -9,6 +9,17 @@
 <meta name="description" content="A system can contain oversight, human review, escalation, and approval — and still contain nobody authorized to stop irreversible continuation.">
 
 <meta name="robots" content="index,follow">
+    <meta property="og:title" content="Approval Is Not Refusal — Liran Bar-Shrim">
+    <meta property="og:description" content="A system can contain oversight, human review, escalation, and approval — and still contain nobody authorized to stop irreversible continuation.">
+    <meta name="twitter:title" content="Approval Is Not Refusal — Liran Bar-Shrim">
+    <meta name="twitter:description" content="A system can contain oversight, human review, escalation, and approval — and still contain nobody authorized to stop irreversible continuation.">
+    <meta property="og:image" content="https://matrix-audit.com/og-image.png">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="Liran Bar-Shrim">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:image" content="https://matrix-audit.com/og-image.png">
 
 <link rel="canonical" href="https://matrix-audit.com/">
 
@@ -213,6 +224,15 @@ a { text-decoration: none; color: inherit; }
   color: var(--text);
 }
 
+.nav-intro {
+  font-family: "IBM Plex Mono", monospace;
+  font-size: 9px;
+  letter-spacing: .32em;
+  text-transform: uppercase;
+  color: var(--dim);
+  margin-bottom: 28px;
+}
+
 /* ── NAV LINKS ── */
 .nav-section {
   padding: 60px 0 0;
@@ -228,15 +248,18 @@ a { text-decoration: none; color: inherit; }
 
 .nav-link {
   display: block;
-  background: var(--card-bg);
-  border: 1px solid rgba(255,255,255,.05);
+  background: linear-gradient(135deg, #141414 0%, #0f0f0f 100%);
+  border: 1px solid rgba(200,169,110,.15);
+  border-left: 3px solid var(--gold);
   padding: 24px 28px;
-  transition: border-color .25s, transform .25s;
+  transition: border-color .3s, background .3s, box-shadow .3s;
 }
 
 .nav-link:hover {
-  transform: translateY(-3px);
-  border-color: rgba(200,169,110,.25);
+  border-color: rgba(200,169,110,.5);
+  border-left-color: var(--gold);
+  background: linear-gradient(135deg, #181818 0%, #131313 100%);
+  box-shadow: 0 4px 24px rgba(200,169,110,.06);
 }
 
 .nav-title {
@@ -333,7 +356,7 @@ a { text-decoration: none; color: inherit; }
 
   <!-- HERO -->
   <section class="hero wrap">
-    <h1>Approval<br>is not<br><em>refusal.</em></h1>
+    <h1>Approval is<br>not <em>refusal.</em></h1>
     <p class="hero-sub">
       A system can contain oversight,
       human review,
@@ -362,10 +385,6 @@ a { text-decoration: none; color: inherit; }
   <!-- SECTION 1 -->
   <section class="section wrap-narrow">
     <h2>The structure contains oversight.<br>It does not contain <em>refusal authority.</em></h2>
-    <p class="body-p">
-      The structure contains oversight.<br>
-      The structure does not contain refusal authority.
-    </p>
     <p class="body-p">
       AI systems, automated execution, and distributed approval chains
       increasingly separate the moment of continuation
@@ -397,13 +416,8 @@ a { text-decoration: none; color: inherit; }
   <section class="section wrap-narrow">
     <h2>One person.<br>One structural <em>question.</em></h2>
     <p class="body-p">
-      Not a legal institution,
-      regulatory body,
-      or compliance organization.
-    </p>
-    <p class="body-p">
-      The question is not whether people object.<br>
-      The question is whether refusal exists structurally.
+      No institution behind it.<br>
+      Just the question itself.
     </p>
     <div class="hero-statement">
       <p>
@@ -415,6 +429,7 @@ a { text-decoration: none; color: inherit; }
 
   <!-- NAV -->
   <section class="nav-section wrap">
+    <div class="nav-intro">Further reading</div>
     <div class="nav-grid">
 
       <a href="about.html" class="nav-link">
@@ -453,8 +468,8 @@ a { text-decoration: none; color: inherit; }
   <!-- FINAL -->
   <section class="final wrap-narrow">
     <div class="final-line">
-      The next irreversible decision will happen.<br>
-      Does anyone have the authority to refuse it?
+      Continuation was defined.<br>
+      Refusal was not.
     </div>
     <div class="sig">
       Liran Bar-Shrim · Independent Writing & Research
