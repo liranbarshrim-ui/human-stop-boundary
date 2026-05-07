@@ -3,219 +3,563 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>Named Refusal Authority | White Paper | Decision Authority Research</title>
-<meta name="description" content="A governance white paper on named refusal authority, legitimacy of continuation, and institutional accountability in irreversible decisions.">
+
+<title>Named Refusal Authority — White Paper — Liran Bar-Shrim</title>
+
+<meta name="description" content="A governance paper on named refusal authority, legitimacy of continuation, and institutional accountability in irreversible decisions.">
+
 <meta name="robots" content="index,follow">
+
 <link rel="canonical" href="https://matrix-audit.com/whitepaper.html">
+
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&display=swap" rel="stylesheet">
+
 <style>
-:root{--bg:#090909;--gold:#c8a96e;--gold2:#e8d4a8;--text:#e8e2d7;--muted:#a7a097;--line:rgba(255,255,255,.08);--line2:rgba(255,255,255,.05);--danger:#c0392b;}
-*{margin:0;padding:0;box-sizing:border-box;}html{scroll-behavior:smooth;}
-body{font-family:Inter,sans-serif;background:var(--bg);color:var(--text);overflow-x:hidden;line-height:1.78;-webkit-font-smoothing:antialiased;}
-body:before{content:"";position:fixed;inset:0;pointer-events:none;opacity:.05;background-image:linear-gradient(rgba(255,255,255,.03) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.03) 1px,transparent 1px);background-size:40px 40px;}
-a{text-decoration:none;color:inherit;}
-.topbar{position:fixed;top:0;left:0;right:0;height:74px;display:flex;align-items:center;justify-content:space-between;padding:0 18px;z-index:1000;background:rgba(5,5,5,.88);backdrop-filter:blur(14px);border-bottom:1px solid var(--line2);}
-.brand{display:flex;align-items:center;gap:12px;font-family:"IBM Plex Mono",monospace;font-size:10px;letter-spacing:.28em;text-transform:uppercase;white-space:nowrap;}
-.brand-line{width:34px;height:2px;background:var(--gold);}
-.menu-btn{width:42px;height:42px;border:none;background:none;cursor:pointer;display:flex;flex-direction:column;justify-content:center;gap:6px;}
-.menu-btn span{height:2px;background:#fff;border-radius:4px;}
-.menu-btn span:nth-child(2){width:72%;margin-left:auto;}
-.overlay{position:fixed;inset:0;background:rgba(0,0,0,.55);opacity:0;visibility:hidden;transition:.25s;z-index:998;}
-.overlay.active{opacity:1;visibility:visible;}
-.drawer{position:fixed;top:0;right:-100%;width:86%;max-width:420px;height:100vh;overflow-y:auto;z-index:999;padding:24px;transition:.3s ease;background:#0a0a0a;border-left:1px solid var(--line);}
-.drawer.active{right:0;}
-.drawer-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:18px;}
-.drawer-title{font-family:"IBM Plex Mono",monospace;font-size:11px;letter-spacing:.28em;text-transform:uppercase;color:var(--gold);}
-.close-btn{font-size:38px;line-height:1;background:none;border:none;color:#fff;cursor:pointer;}
-.group{margin-top:18px;}
-.group small{display:block;font-family:"IBM Plex Mono",monospace;font-size:10px;letter-spacing:.26em;text-transform:uppercase;color:var(--gold);margin-bottom:10px;}
-.drawer a.link{display:block;padding:14px 0;font-size:20px;border-bottom:1px solid var(--line2);}
-.drawer a.link:hover{color:var(--gold2);}
-.private-btn{display:block;margin-top:22px;padding:16px;border-radius:16px;text-align:center;font-weight:800;letter-spacing:.18em;font-size:13px;text-transform:uppercase;background:linear-gradient(135deg,#d9bb79,#b88e45);color:#111;}
-.mail-btn{display:block;margin-top:14px;padding:14px;text-align:center;border-radius:16px;border:1px solid var(--line);color:#f3dfb4;font-size:15px;word-break:break-word;}
-.container{max-width:860px;margin:auto;padding:110px 18px 80px;position:relative;z-index:1;}
-.meta{font-family:"IBM Plex Mono",monospace;font-size:10px;letter-spacing:.22em;text-transform:uppercase;color:var(--gold);margin-bottom:20px;}
-h1{font-family:"Cormorant Garamond",serif;font-size:clamp(28px,6vw,62px);line-height:1.0;font-weight:600;margin-bottom:14px;border-left:3px solid var(--gold);padding-left:20px;}
-.sub{font-family:"IBM Plex Mono",monospace;font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--muted);padding-left:23px;margin-bottom:48px;}
-.box{background:linear-gradient(180deg,#111,#0d0d0d);border:1px solid var(--line2);border-left:3px solid var(--gold);padding:26px;margin-bottom:22px;}
-.section{background:linear-gradient(180deg,#111,#0d0d0d);border:1px solid var(--line2);padding:26px;margin-bottom:22px;}
-.danger-section{background:rgba(192,57,43,.03);border:1px solid var(--line2);border-left:3px solid var(--danger);padding:26px;margin-bottom:22px;}
-.label{font-family:"IBM Plex Mono",monospace;font-size:10px;letter-spacing:.22em;text-transform:uppercase;color:var(--gold);margin-bottom:12px;}
-.label-danger{font-family:"IBM Plex Mono",monospace;font-size:10px;letter-spacing:.22em;text-transform:uppercase;color:#c0392b;margin-bottom:12px;}
-h2{font-family:"Cormorant Garamond",serif;font-size:clamp(22px,4vw,34px);line-height:1.05;margin-bottom:14px;font-weight:600;}
-p{font-size:17px;color:var(--muted);margin-bottom:14px;max-width:68ch;}
-strong{color:var(--text);}
-.list-item{padding:11px 0;border-bottom:1px solid var(--line2);color:var(--muted);font-size:15px;}
-.list-item:last-child{border-bottom:none;}
-.pull{margin-top:18px;padding:20px 24px;background:#101010;border-left:3px solid var(--gold);font-family:"Cormorant Garamond",serif;font-size:clamp(18px,2.5vw,24px);line-height:1.4;color:var(--text);}
-.three-chain{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;margin:20px 0;}
-.chain-item{background:#0d0d0d;border:1px solid var(--line2);padding:16px;}
-.chain-num{font-family:"IBM Plex Mono",monospace;font-size:9px;letter-spacing:.18em;color:var(--gold);opacity:.6;margin-bottom:8px;}
-.chain-title{font-family:"Cormorant Garamond",serif;font-size:18px;font-weight:600;color:var(--gold2);margin-bottom:6px;}
-.chain-desc{font-size:12px;color:var(--muted);line-height:1.6;}
-.footer-bar{max-width:860px;margin:auto;padding:22px 18px 60px;border-top:1px solid var(--line);font-family:Inter,sans-serif;font-size:13px;color:#7c766f;display:flex;justify-content:space-between;}
-@media(min-width:900px){.topbar{padding:0 34px;}.container{padding:130px 34px 110px;}.box,.section,.danger-section{padding:34px;}.footer-bar{padding:26px 34px 60px;}}
-@media(max-width:600px){.three-chain{grid-template-columns:1fr;}}
+
+:root {
+  --bg: #080808;
+  --gold: #c8a96e;
+  --gold2: #ead9b3;
+  --text: #ebe5da;
+  --muted: #b8b0a4;
+  --dim: #7a7570;
+  --danger: #a83232;
+  --line: rgba(255,255,255,.06);
+  --line-danger: rgba(168,50,50,.3);
+}
+
+*, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+html { scroll-behavior: smooth; }
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: "Cormorant Garamond", Georgia, serif;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+  line-height: 1.85;
+}
+
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  opacity: .028;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-size: 180px;
+}
+
+a { text-decoration: none; color: inherit; }
+
+/* ── TOPBAR ── */
+.topbar {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  height: 72px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 48px;
+  z-index: 100;
+  background: rgba(8,8,8,.92);
+  backdrop-filter: blur(16px);
+  border-bottom: 1px solid var(--line);
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  font-family: "IBM Plex Mono", monospace;
+  font-size: 9.5px;
+  letter-spacing: .32em;
+  text-transform: uppercase;
+  color: var(--text);
+}
+
+.brand-rule { width: 32px; height: 1px; background: var(--gold); }
+
+.nav-contact {
+  font-family: "IBM Plex Mono", monospace;
+  font-size: 9.5px;
+  letter-spacing: .28em;
+  text-transform: uppercase;
+  color: var(--gold2);
+  transition: opacity .2s;
+}
+.nav-contact:hover { opacity: .7; }
+
+/* ── CONTAINER ── */
+.wrap {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 0 48px;
+  position: relative;
+  z-index: 1;
+}
+
+/* ── HERO ── */
+.hero {
+  padding-top: 160px;
+  padding-bottom: 70px;
+  border-bottom: 1px solid var(--line);
+}
+
+.doc-meta {
+  font-family: "IBM Plex Mono", monospace;
+  font-size: 9px;
+  letter-spacing: .32em;
+  text-transform: uppercase;
+  color: var(--dim);
+  margin-bottom: 32px;
+}
+
+.hero h1 {
+  font-size: clamp(36px, 5.5vw, 78px);
+  font-weight: 400;
+  line-height: .92;
+  letter-spacing: -.01em;
+  color: var(--text);
+  margin-bottom: 36px;
+  max-width: 18ch;
+}
+
+.hero h1 em {
+  font-style: italic;
+  color: var(--gold2);
+}
+
+.hero-summary {
+  font-size: clamp(17px, 1.5vw, 20px);
+  font-weight: 300;
+  line-height: 1.9;
+  color: var(--muted);
+  max-width: 60ch;
+}
+
+/* ── DOCUMENT SECTIONS ── */
+.doc-section {
+  padding: 60px 0;
+  border-bottom: 1px solid var(--line);
+}
+
+.doc-section:last-of-type {
+  border-bottom: none;
+}
+
+.section-num {
+  font-family: "IBM Plex Mono", monospace;
+  font-size: 9px;
+  letter-spacing: .28em;
+  text-transform: uppercase;
+  color: var(--dim);
+  margin-bottom: 20px;
+}
+
+.doc-section h2 {
+  font-size: clamp(26px, 3.5vw, 52px);
+  font-weight: 400;
+  line-height: 1.0;
+  margin-bottom: 28px;
+  max-width: 22ch;
+}
+
+.doc-section h2 em {
+  font-style: italic;
+  color: var(--gold2);
+}
+
+.body-p {
+  font-size: clamp(16px, 1.4vw, 19px);
+  font-weight: 300;
+  color: var(--muted);
+  margin-bottom: 20px;
+  max-width: 62ch;
+  line-height: 1.9;
+}
+
+.body-p strong {
+  color: #c8c0b2;
+  font-weight: 400;
+}
+
+/* ── PULL QUOTE ── */
+.pull {
+  background: #0d0d0d;
+  border-left: 3px solid var(--gold);
+  padding: 28px 36px;
+  margin: 36px 0;
+  font-size: clamp(18px, 2vw, 30px);
+  font-weight: 300;
+  line-height: 1.4;
+  font-style: italic;
+  color: var(--text);
+}
+
+.pull-danger {
+  background: rgba(168,50,50,.04);
+  border-left: 3px solid var(--danger);
+  padding: 28px 36px;
+  margin: 36px 0;
+  font-size: clamp(17px, 1.8vw, 26px);
+  font-weight: 300;
+  line-height: 1.45;
+  font-style: italic;
+  color: #d4a0a0;
+}
+
+/* ── DANGER SECTION ── */
+.danger-marker {
+  font-family: "IBM Plex Mono", monospace;
+  font-size: 9px;
+  letter-spacing: .28em;
+  text-transform: uppercase;
+  color: var(--danger);
+  margin-bottom: 20px;
+  opacity: .8;
+}
+
+/* ── THREE NAMES ── */
+.three-names {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 0;
+  margin: 36px 0;
+  border: 1px solid var(--line);
+}
+
+.name-block {
+  padding: 28px 32px;
+  border-bottom: 1px solid var(--line);
+}
+
+.name-block:last-child { border-bottom: none; }
+
+.name-num {
+  font-family: "IBM Plex Mono", monospace;
+  font-size: 9px;
+  letter-spacing: .22em;
+  color: var(--dim);
+  margin-bottom: 10px;
+}
+
+.name-title {
+  font-size: clamp(18px, 2vw, 26px);
+  font-weight: 400;
+  color: var(--gold2);
+  margin-bottom: 10px;
+}
+
+.name-desc {
+  font-size: clamp(15px, 1.3vw, 17px);
+  font-weight: 300;
+  color: var(--muted);
+  line-height: 1.75;
+  max-width: 52ch;
+}
+
+/* ── ITEM LIST ── */
+.item-list {
+  margin: 24px 0;
+  border-top: 1px solid var(--line);
+}
+
+.item-row {
+  padding: 14px 0;
+  border-bottom: 1px solid var(--line);
+  font-size: clamp(15px, 1.3vw, 17px);
+  font-weight: 300;
+  color: var(--muted);
+  line-height: 1.6;
+}
+
+/* ── FINAL NAV ── */
+.final {
+  padding: 80px 0 100px;
+  border-top: 1px solid var(--line);
+}
+
+.back-link {
+  font-family: "IBM Plex Mono", monospace;
+  font-size: 9px;
+  letter-spacing: .28em;
+  text-transform: uppercase;
+  color: var(--dim);
+  transition: color .2s;
+  display: block;
+  margin-bottom: 14px;
+}
+.back-link:hover { color: var(--gold2); }
+
+.sig {
+  font-family: "IBM Plex Mono", monospace;
+  font-size: 9.5px;
+  letter-spacing: .26em;
+  text-transform: uppercase;
+  color: var(--dim);
+  margin-top: 28px;
+}
+
+/* ── FOOTER ── */
+.footer {
+  position: relative;
+  z-index: 1;
+  text-align: center;
+  padding: 20px;
+  border-top: 1px solid var(--line);
+  font-family: "IBM Plex Mono", monospace;
+  font-size: 10px;
+  letter-spacing: .2em;
+  color: var(--dim);
+}
+
+/* ── RESPONSIVE ── */
+@media (max-width: 860px) {
+  .topbar { padding: 0 20px; }
+  .wrap { padding: 0 20px; }
+  .hero { padding-top: 120px; }
+  .pull { padding: 22px 24px; }
+  .pull-danger { padding: 22px 24px; }
+  .name-block { padding: 22px 20px; }
+}
+
+@media (min-width: 700px) {
+  .three-names { grid-template-columns: repeat(3, 1fr); }
+  .name-block { border-bottom: none; border-right: 1px solid var(--line); }
+  .name-block:last-child { border-right: none; }
+}
+
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(16px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.hero { animation: fadeUp .9s ease both; }
+
 </style>
 </head>
+
 <body>
 
 <header class="topbar">
-<a href="index.html" class="brand"><span class="brand-line"></span><span>Decision Authority Research</span></a>
-<button class="menu-btn" id="openMenu" aria-label="Open Menu"><span></span><span></span><span></span></button>
+  <a href="index.html" class="brand">
+    <span class="brand-rule"></span>
+    <span>Liran Bar-Shrim</span>
+  </a>
+  <a href="mailto:Liran@liranbarshrim.com" class="nav-contact">Contact</a>
 </header>
 
-<div class="overlay" id="overlay"></div>
+<main>
 
-<aside class="drawer" id="drawer">
-<div class="drawer-top">
-<div class="drawer-title">Navigation</div>
-<button class="close-btn" id="closeMenu">&#215;</button>
-</div>
-<div class="group">
-<small>Primary</small>
-<a class="link" href="index.html">Home</a>
-<a class="link" href="dar.html">DAR</a>
-<a class="link" href="services.html">Services</a>
-<a class="link" href="about.html">About</a>
-<a class="link" href="contact.html">Contact</a>
-</div>
-<div class="group">
-<small>Research</small>
-<a class="link" href="research.html">Independent Research</a>
-<a class="link" href="whitepaper.html">White Paper</a>
-<a class="link" href="board-brief.html">Board Brief</a>
-<a class="link" href="insights.html">Insights</a>
-</div>
-<div class="group">
-<small>Reference</small>
-<a class="link" href="definitions.html">Definitions</a>
-<a class="link" href="faq.html">FAQ</a>
-<a class="link" href="goodfaith.html">Good Faith Use</a>
-<a class="link" href="diagnostic.html">Governance Diagnostic</a>
-</div>
-<a href="contact.html" class="private-btn">Private Intake</a>
-<a href="mailto:Liran@liranbarshrim.com" class="mail-btn">Liran@liranbarshrim.com</a>
-</aside>
+  <!-- HERO -->
+  <section class="hero wrap">
+    <div class="doc-meta">White Paper · 2026 · Independent Writing & Research</div>
+    <h1>Named Refusal Authority<br>in <em>Irreversible Decisions</em></h1>
+    <p class="hero-summary">
+      Modern organizations are optimized for execution speed.
+      Many remain underprepared for one critical condition:
+      when irreversible execution proceeds,
+      who holds the institutional right to refuse continuation?
+    </p>
+  </section>
 
-<main class="container">
+  <!-- SECTION 1 -->
+  <div class="doc-section wrap">
+    <div class="section-num">I — The Governance Gap</div>
+    <h2>Authorization for continuation is rarely defined<br>before execution begins.</h2>
+    <p class="body-p">
+      Most organizations maintain clear approval workflows, budget authority,
+      reporting lines, and escalation structures.
+      Very few define who holds the institutional right to refuse continuation
+      when new uncertainty appears mid-execution.
+    </p>
+    <p class="body-p">
+      Where this is unassigned, responsibility may later become personal
+      while authorization had previously been undefined.
+    </p>
+    <div class="pull">
+      If no named refusal authority exists,
+      continuation is already authorized by default.
+      The organization has not made a governance decision.
+      It has avoided one.
+    </div>
+  </div>
 
-<div class="meta">White Paper · 2026</div>
-<h1>Named Refusal Authority<br>in Irreversible Decisions</h1>
-<div class="sub">A Governance White Paper — Decision Authority Research</div>
+  <!-- SECTION 2 -->
+  <div class="doc-section wrap">
+    <div class="section-num">II — The Problem</div>
+    <h2>Most systems know how to approve.<br>Almost none define<br>who holds <em>refusal authority.</em></h2>
+    <p class="body-p">
+      During consequential execution, multiple teams may be involved
+      while no one clearly holds authorization to refuse continuation.
+    </p>
+    <div class="item-list">
+      <div class="item-row">Production incidents</div>
+      <div class="item-row">Cyber events</div>
+      <div class="item-row">AI deployments</div>
+      <div class="item-row">Financial transactions</div>
+      <div class="item-row">Operational emergencies</div>
+    </div>
+    <p class="body-p">
+      The absence of anomaly does not create authorization.
+      The question is not whether the system failed.
+      The question is who holds refusal authority
+      before failure becomes the proof.
+    </p>
+  </div>
 
-<div class="box">
-<div class="label">Executive Summary</div>
-<p>Modern organizations are increasingly optimized for execution speed. Yet many remain underprepared for one critical condition: when irreversible execution proceeds, who holds the institutional right to refuse continuation?</p>
-<p>This paper proposes a governance principle: define Named Refusal Authority in advance for a narrow class of consequential decisions. Not one name, but three. Each with a distinct and non-overlapping function. Continuation without that structure is not authorized. It is proceeding by default.</p>
-</div>
+  <!-- SECTION 3 -->
+  <div class="doc-section wrap">
+    <div class="section-num">III — The Three Names</div>
+    <h2>Named Refusal Authority requires<br>three distinct <em>individuals.</em></h2>
+    <p class="body-p">
+      A refusal without a separate hold owner becomes a refusal that dissolves.
+      A hold without a separate authorization authority becomes an unowned delay.
+      All three must be named before execution begins.
+    </p>
 
-<div class="section">
-<div class="label">The Hidden Governance Gap</div>
-<h2>Authorization for continuation is rarely defined before execution begins.</h2>
-<p>Many organizations maintain clear approval workflows, budget authority, reporting lines, and escalation structures. Who holds the institutional right to refuse continuation when new uncertainty appears mid-execution?</p>
-<p>Where this is unassigned, responsibility may later become personal while authorization had previously been undefined.</p>
-</div>
+    <div class="three-names">
+      <div class="name-block">
+        <div class="name-num">01</div>
+        <div class="name-title">Refusal Authority</div>
+        <div class="name-desc">Named in advance. Holds the institutional right to deny continuation when trigger conditions are met. Cannot be the authorization authority.</div>
+      </div>
+      <div class="name-block">
+        <div class="name-num">02</div>
+        <div class="name-title">Hold Authority</div>
+        <div class="name-desc">Suspends execution while governance responds. Distinct from refusal authority. If the hold requires convening, it has already dissolved.</div>
+      </div>
+      <div class="name-block">
+        <div class="name-num">03</div>
+        <div class="name-title">Authorization Authority</div>
+        <div class="name-desc">A third named individual. Required to authorize continuation only following documented review. Authorization requires written rationale.</div>
+      </div>
+    </div>
+  </div>
 
-<div class="section">
-<div class="label">The Problem</div>
-<h2>Most systems know how to approve. Almost none define who holds refusal authority.</h2>
-<p>During consequential execution, multiple teams may be involved while no one clearly holds authorization to refuse continuation.</p>
-<div class="list-item">Production incidents</div>
-<div class="list-item">Cyber events</div>
-<div class="list-item">AI deployments</div>
-<div class="list-item">Financial transactions</div>
-<div class="list-item">Operational emergencies</div>
-<p style="margin-top:16px;">The absence of anomaly does not create authorization. The question is not whether the system failed. The question is who holds refusal authority before failure becomes the proof.</p>
-</div>
+  <!-- SECTION 4: OVERRIDE RISK -->
+  <div class="doc-section wrap">
+    <div class="danger-marker">Override Risk</div>
+    <h2>When authorization was granted informally<br>over a <em>refusal.</em></h2>
+    <p class="body-p">
+      Refusal authority was invoked. Someone senior authorized continuation —
+      not formally, not in writing. The refusal was real. The override was also real.
+      By the time the outcome arrived, the person who refused
+      was no longer relevant to the conversation.
+    </p>
+    <div class="pull-danger">
+      When refusal authority is invoked and then overridden without documentation,
+      the failure becomes personal. The person who refused has a record.
+      The person who authorized continuation often does not.
+    </div>
+  </div>
 
-<div class="section">
-<div class="label">The Three Named Authorities</div>
-<h2>Named Refusal Authority requires three distinct people.</h2>
-<p>A refusal without a separate hold owner becomes a refusal that dissolves. A hold without a separate authorization authority becomes an unowned delay. All three must be named before execution begins.</p>
-<div class="three-chain">
-<div class="chain-item">
-<div class="chain-num">01</div>
-<div class="chain-title">Refusal Authority</div>
-<div class="chain-desc">Named in advance. Holds the institutional right to deny continuation when trigger conditions are met. Cannot be the authorization authority.</div>
-</div>
-<div class="chain-item">
-<div class="chain-num">02</div>
-<div class="chain-title">Hold Authority</div>
-<div class="chain-desc">Suspends execution while governance responds. Distinct from refusal authority. If the hold requires convening, it has already dissolved.</div>
-</div>
-<div class="chain-item">
-<div class="chain-num">03</div>
-<div class="chain-title">Authorization Authority</div>
-<div class="chain-desc">A third named individual. Required to authorize continuation only following documented review. Authorization requires written rationale.</div>
-</div>
-</div>
-</div>
+  <!-- SECTION 5: ESCALATION FAILURE -->
+  <div class="doc-section wrap">
+    <div class="danger-marker">Escalation Failure</div>
+    <h2>When no authorization is granted<br>and <em>no one responds.</em></h2>
+    <p class="body-p">
+      Refusal authority was invoked. Hold is active.
+      The authorization authority was notified. No response followed.
+      A refusal that can dissolve in silence was never fully designed.
+    </p>
+    <p class="body-p">
+      Every refusal requires a named escalation path:
+      one identified senior authority who must respond
+      when the authorization authority fails to do so within a defined period.
+      Silence is not a neutral outcome. It is a governance failure requiring documentation.
+    </p>
+  </div>
 
-<div class="danger-section">
-<div class="label-danger">Override Risk</div>
-<h2>When authorization was granted informally over a refusal.</h2>
-<p>Refusal authority was invoked. Someone senior authorized continuation, not formally, not in writing. The refusal was real. The override was also real. By the time the outcome arrived, the person who refused was no longer relevant to the conversation.</p>
-<div class="pull">When refusal authority is invoked and then overridden without documentation, the failure becomes personal. The person who refused has a record. The person who authorized continuation often does not.</div>
-</div>
+  <!-- SECTION 6: COST TRANSFER -->
+  <div class="doc-section wrap">
+    <div class="danger-marker">Cost Transfer Problem</div>
+    <h2>When the refusal was correct<br>and the cost fell on<br>the person who <em>refused.</em></h2>
+    <p class="body-p">
+      Refusal authority was invoked. The concern proved valid.
+      Continuation proceeded anyway.
+      If the institutional cost of a correct refusal is absorbed by the person who invoked it,
+      future refusals will not be invoked.
+      The governance mechanism destroys itself through its own incentive structure.
+    </p>
+    <div class="pull-danger">
+      If the person who refused correctly absorbs the institutional cost of being right,
+      the next refusal will never arrive.
+    </div>
+  </div>
 
-<div class="danger-section">
-<div class="label-danger">Escalation Failure</div>
-<h2>When no authorization is granted and no one responds.</h2>
-<p>Refusal authority was invoked. Hold is active. The authorization authority was notified. No response followed. A refusal that can dissolve in silence was never fully designed.</p>
-<p>Every refusal requires a named escalation path: one identified senior authority who must respond when the authorization authority fails to do so within a defined period. Silence is not a neutral outcome. It is a governance failure requiring documentation.</p>
-</div>
+  <!-- SECTION 7: OVERSIGHT -->
+  <div class="doc-section wrap">
+    <div class="section-num">IV — Oversight</div>
+    <h2>Refusal authority must be fast.<br>Its use must be <em>reviewable.</em></h2>
+    <p class="body-p">
+      Refusal authority without oversight can become arbitrary veto power.
+      An oversight mechanism without real refusal authority becomes symbolic process.
+    </p>
+    <div class="item-list">
+      <div class="item-row">Immediate obligation when trigger conditions arise</div>
+      <div class="item-row">Rapid secondary review</div>
+      <div class="item-row">Written rationale for refusal and for authorization over refusal</div>
+      <div class="item-row">Named escalation path</div>
+      <div class="item-row">Board or audit visibility</div>
+    </div>
+    <div class="pull">
+      Refusal authority without review becomes veto.<br>
+      Review without refusal authority becomes theater.
+    </div>
+  </div>
 
-<div class="danger-section">
-<div class="label-danger">Cost Transfer Problem</div>
-<h2>When the refusal was correct and the cost fell on the person who refused.</h2>
-<p>Refusal authority was invoked. The concern proved valid. Continuation proceeded anyway. If the institutional cost of a correct refusal is absorbed by the person who invoked it, future refusals will not be invoked. The governance mechanism destroys itself through its own incentive structure.</p>
-<div class="pull">If the person who refused correctly absorbs the institutional cost of being right, the next refusal will never arrive.</div>
-</div>
+  <!-- SECTION 8: AI -->
+  <div class="doc-section wrap">
+    <div class="section-num">V — Autonomous Systems</div>
+    <h2>The faster the system,<br>the clearer the authorization<br>structure must <em>be.</em></h2>
+    <p class="body-p">
+      Automation compresses time between signal and irreversible consequence.
+      When AI removes the visible decision-maker,
+      governance must restore the visible authority.
+    </p>
+    <p class="body-p">
+      The question is not who reviews later.
+      It is who holds refusal authority before execution becomes irreversible.
+    </p>
+    <div class="pull">
+      No irreversible execution without named authorization.
+    </div>
+  </div>
 
-<div class="section">
-<div class="label">Oversight of Refusal Authority</div>
-<h2>Refusal authority must be fast. Its use must be reviewable.</h2>
-<p>Refusal authority without oversight can become arbitrary veto power. An oversight mechanism without real refusal authority becomes symbolic process.</p>
-<div class="list-item">Immediate obligation when trigger conditions arise</div>
-<div class="list-item">Rapid secondary review</div>
-<div class="list-item">Written rationale for refusal and for authorization over refusal</div>
-<div class="list-item">Named escalation path</div>
-<div class="list-item">Board or audit visibility</div>
-<div class="pull">Refusal authority without review becomes veto.<br>Review without refusal authority becomes theater.</div>
-</div>
+  <!-- SECTION 9: CLOSING -->
+  <div class="doc-section wrap">
+    <div class="section-num">VI — Closing</div>
+    <h2>Strong organizations are not defined<br>only by <em>execution speed.</em></h2>
+    <p class="body-p">
+      They are also defined by whether someone holds the institutional right
+      to refuse continuation — and whether that right belongs to a name,
+      not a process.
+    </p>
+    <p class="body-p">
+      If no named refusal authority exists,
+      continuation is already authorized by default.
+      The organization has not made a governance decision.
+      It has avoided one.
+    </p>
+  </div>
 
-<div class="section">
-<div class="label">AI and Autonomous Systems</div>
-<h2>The faster the system, the clearer the authorization structure must be.</h2>
-<p>Automation compresses time between signal and irreversible consequence. When AI removes the visible decision-maker, governance must restore the visible authority. The question is not who reviews later. It is who holds refusal authority before execution becomes irreversible.</p>
-<div class="pull">No irreversible execution without named authorization.</div>
-</div>
-
-<div class="section">
-<div class="label">Closing</div>
-<h2>Strong organizations are not defined only by execution speed.</h2>
-<p>They are also defined by whether someone holds the institutional right to refuse continuation — and whether that right belongs to a name, not a process.</p>
-<p>If no named refusal authority exists, continuation is already authorized by default. The organization has not made a governance decision. It has avoided one.</p>
-</div>
+  <!-- FINAL -->
+  <section class="final wrap">
+    <a href="index.html" class="back-link">← Back to main</a>
+    <a href="faq.html" class="back-link">→ FAQ</a>
+    <a href="goodfaith.html" class="back-link" style="margin-bottom:28px;">→ Good Faith Use</a>
+    <div class="sig">Liran Bar-Shrim · Independent Writing & Research · 2026</div>
+  </section>
 
 </main>
 
-<footer class="footer-bar">
-<span>&#169; 2026 Liran Bar-Shrim</span>
-<span>matrix-audit.com</span>
+<footer class="footer">
+  © 2026 Liran Bar-Shrim
 </footer>
-
-<script>
-var drawer=document.getElementById('drawer');
-var overlay=document.getElementById('overlay');
-document.getElementById('openMenu').onclick=function(){drawer.classList.add('active');overlay.classList.add('active');};
-document.getElementById('closeMenu').onclick=closeDrawer;
-overlay.onclick=closeDrawer;
-function closeDrawer(){drawer.classList.remove('active');overlay.classList.remove('active');}
-</script>
 
 </body>
 </html>
