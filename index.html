@@ -4,13 +4,13 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
 
-<title>Decision Authority Research | Named Stop Authority</title>
+<title>The Human Moment | Decision Authority Research</title>
 
-<meta name="description" content="Decision Authority Research examines refusal authority, irreversible execution, institutional momentum, and named authorization before continuation.">
+<meta name="description" content="Every irreversible system eventually reaches the same human moment: someone can continue, but nobody is required to stop it.">
 
 <meta name="robots" content="index,follow">
 
-<link rel="canonical" href="https://matrix-audit.com/">
+<link rel="canonical" href="https://matrix-audit.com/human-moment.html">
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -225,8 +225,8 @@ z-index:1;
 }
 
 .hero{
-padding-top:100px;
-padding-bottom:28px;
+padding-top:120px;
+padding-bottom:34px;
 }
 
 .meta{
@@ -235,59 +235,51 @@ font-size:10px;
 letter-spacing:.28em;
 text-transform:uppercase;
 color:var(--gold);
-margin-bottom:26px;
+margin-bottom:28px;
 }
 
 h1{
 font-family:"Cormorant Garamond",serif;
-font-size:clamp(32px,6vw,74px);
-line-height:1.0;
+font-size:clamp(42px,7vw,90px);
+line-height:.96;
 font-weight:600;
-margin-bottom:24px;
-border-left:3px solid var(--gold);
-padding-left:20px;
+margin-bottom:26px;
+max-width:900px;
 }
 
-.hero-sub{
-font-size:18px;
-color:var(--muted);
+.hero-line{
+width:90px;
+height:2px;
+background:var(--gold);
+margin-bottom:32px;
+}
+
+.lead{
+font-size:21px;
 line-height:1.8;
-padding-left:23px;
-max-width:650px;
-margin-bottom:14px;
+color:#d7d0c4;
+max-width:720px;
+margin-bottom:24px;
 }
 
-.hero-intro{
-display:block;
-font-size:16px;
-color:#d7c7a0;
-font-weight:500;
-padding-left:23px;
-margin-bottom:12px;
-line-height:1.6;
-}
-
-.hero-hammer{
-font-family:"IBM Plex Mono",monospace;
-font-size:11px;
-letter-spacing:.18em;
-text-transform:uppercase;
-color:var(--gold);
-padding-left:23px;
-margin-bottom:28px;
-display:block;
-}
-
-.section-gap{
-height:22px;
-}
-
-.box{
-background:linear-gradient(180deg,#111,#0d0d0d);
-border:1px solid var(--line2);
+.statement{
+background:#101010;
 border-left:3px solid var(--gold);
 padding:28px;
-margin-bottom:14px;
+margin-top:34px;
+margin-bottom:22px;
+}
+
+.statement p{
+font-family:"Cormorant Garamond",serif;
+font-size:clamp(26px,4vw,40px);
+line-height:1.25;
+color:#f0e6d2;
+margin:0;
+}
+
+.section{
+padding:28px 0;
 }
 
 .label{
@@ -301,59 +293,72 @@ margin-bottom:12px;
 
 h2{
 font-family:"Cormorant Garamond",serif;
-font-size:clamp(24px,4vw,40px);
+font-size:clamp(28px,4vw,46px);
 line-height:1.05;
-margin-bottom:14px;
+margin-bottom:16px;
 font-weight:600;
 }
 
 p{
-font-size:17px;
+font-size:18px;
 color:var(--muted);
-margin-bottom:12px;
-max-width:68ch;
+margin-bottom:18px;
+max-width:70ch;
 }
 
-.pull{
-background:#101010;
-border-left:3px solid var(--gold);
-padding:22px 24px;
-font-family:"Cormorant Garamond",serif;
-font-size:clamp(20px,3vw,30px);
-line-height:1.35;
-margin-bottom:14px;
-}
-
-.cards{
+.grid{
 display:grid;
 grid-template-columns:1fr;
-gap:16px;
+gap:18px;
+margin-top:28px;
 }
 
-.mini-card{
-background:#0d0d0d;
+.card{
+background:#0e0e0e;
 border:1px solid var(--line2);
-padding:22px;
-transition:.2s;
+padding:28px;
+transition:.25s;
 }
 
-.mini-card:hover{
-transform:translateY(-3px);
+.card:hover{
+transform:translateY(-4px);
 border-color:rgba(200,169,110,.35);
 }
 
-.mini-card-title{
+.card-title{
 font-family:"IBM Plex Mono",monospace;
 font-size:11px;
 letter-spacing:.18em;
 text-transform:uppercase;
 color:var(--gold);
-margin-bottom:12px;
+margin-bottom:16px;
 }
 
-.mini-card p{
-font-size:15px;
+.card p{
+font-size:16px;
 margin-bottom:0;
+}
+
+.final-block{
+margin-top:50px;
+padding:34px 0 70px;
+border-top:1px solid var(--line);
+}
+
+.final-line{
+font-family:"Cormorant Garamond",serif;
+font-size:clamp(30px,5vw,54px);
+line-height:1.15;
+margin-bottom:24px;
+max-width:760px;
+}
+
+.signature{
+font-family:"IBM Plex Mono",monospace;
+font-size:11px;
+letter-spacing:.22em;
+text-transform:uppercase;
+color:var(--gold);
 }
 
 .footer-bar{
@@ -392,19 +397,15 @@ padding:0 34px;
 }
 
 .hero{
-padding-top:110px;
+padding-top:150px;
 }
 
-.box{
-padding:34px;
+.grid{
+grid-template-columns:repeat(2,1fr);
 }
 
 .footer-bar{
 padding:26px 34px 60px;
-}
-
-.cards{
-grid-template-columns:repeat(2,1fr);
 }
 
 }
@@ -511,114 +512,147 @@ Liran@liranbarshrim.com
 
 <main>
 
-<div class="container hero">
+<section class="hero container">
 
 <div class="meta">
-Decision Authority Research
+The Human Moment
 </div>
 
 <h1>
-When irreversible execution becomes possible under uncertainty,<br>
-continuation requires refusal authority &mdash; by name.
+No irreversible execution without named authorization.
 </h1>
 
-<span class="hero-intro">
-Before irreversible execution proceeds, continuation must be authorized by name.
-</span>
+<div class="hero-line"></div>
 
-<span class="hero-intro" style="color:#e8d4a8;">
-If stopping has a cost, it won't happen.
-</span>
-
-<span class="hero-intro" style="color:#e8d4a8;">
-Stop is the default state.<br>
-Continuation requires a named decision.
-</span>
-
-<p class="hero-sub">
-Where irreversible execution exists, named authorization is a governance condition — not an option.
+<p class="lead">
+Every irreversible system eventually reaches the same human moment:
+someone can continue,
+but nobody is required to stop continuation.
 </p>
 
-<span class="hero-hammer">
-No irreversible execution without named authorization.
-</span>
+<p class="lead">
+At that point,
+continuation becomes automatic.
+Not because everyone agreed —
+but because refusal no longer exists inside the structure.
+</p>
 
+<div class="statement">
+<p>
+Organizations rarely collapse because nobody approved the system.<br><br>
+
+They collapse because nobody was required to refuse continuation.
+</p>
 </div>
 
-<div class="section-gap"></div>
+</section>
 
-<div class="container">
-
-<div class="pull">
-Organizations rarely fail because nobody approved the system.<br>
-They fail because nobody was required to refuse continuation.
-</div>
-
-</div>
-
-<div class="section-gap"></div>
-
-<div class="container">
-
-<div class="box">
+<section class="section container">
 
 <div class="label">
-Research Structure
+Structural Reality
 </div>
 
 <h2>
-Core research paths.
+The system continues by default.
 </h2>
 
 <p>
-Decision Authority Research examines institutional momentum, refusal authority, irreversible execution, and legitimacy before continuation proceeds.
+In most organizations, continuation carries less personal cost than interruption.
+The result is predictable:
+execution proceeds even when uncertainty remains unresolved.
 </p>
 
+<p>
+Meetings occur.
+Reviews happen.
+Dashboards remain green.
+But the authority to stop irreversible continuation never becomes operational.
+</p>
+
+<div class="grid">
+
+<div class="card">
+<div class="card-title">
+Distributed Responsibility
+</div>
+<p>
+When responsibility is spread across systems, committees, and workflows,
+refusal disappears into process.
+</p>
+</div>
+
+<div class="card">
+<div class="card-title">
+Institutional Momentum
+</div>
+<p>
+Once execution begins,
+continuation becomes structurally easier than interruption.
+</p>
+</div>
+
+<div class="card">
+<div class="card-title">
+Human Cost
+</div>
+<p>
+If stopping carries political, financial, or organizational cost,
+most systems silently optimize for continuation.
+</p>
+</div>
+
+<div class="card">
+<div class="card-title">
+Named Authority
+</div>
+<p>
+A stop mechanism only exists if a specific individual is explicitly authorized to refuse continuation.
+</p>
 </div>
 
 </div>
 
-<div class="section-gap"></div>
+</section>
 
-<div class="container">
+<section class="section container">
 
-<div class="cards">
-
-<a href="governance-anatomy.html" class="mini-card">
-<div class="mini-card-title">Governance Anatomy</div>
-<p>Structural analysis of continuation under distributed responsibility.</p>
-</a>
-
-<a href="whitepaper.html" class="mini-card">
-<div class="mini-card-title">White Paper</div>
-<p>Named refusal authority and governance legitimacy before execution.</p>
-</a>
-
-<a href="how-it-works.html" class="mini-card">
-<div class="mini-card-title">How It Works</div>
-<p>Operational interruption structure before irreversible continuation.</p>
-</a>
-
-<a href="diagnostic.html" class="mini-card">
-<div class="mini-card-title">Governance Diagnostic</div>
-<p>Questions organizations should answer before continuation proceeds.</p>
-</a>
-
-<a href="definitions.html" class="mini-card">
-<div class="mini-card-title">Definitions</div>
-<p>Core DAR terminology and governance definitions.</p>
-</a>
-
-<a href="case-studies.html" class="mini-card">
-<div class="mini-card-title">Case Studies</div>
-<p>Institutional failure patterns under distributed execution.</p>
-</a>
-
+<div class="label">
+Decision Authority Research
 </div>
 
+<h2>
+DAR examines the point before continuation.
+</h2>
+
+<p>
+Decision Authority Research studies refusal authority,
+irreversible execution,
+institutional momentum,
+and governance legitimacy before continuation proceeds.
+</p>
+
+<p>
+The central question is not whether a system can continue.
+The central question is whether anyone is required —
+by name —
+to stop it.
+</p>
+
+</section>
+
+<section class="container final-block">
+
+<div class="final-line">
+Before the next irreversible decision,
+someone must have the authority to stop continuation — by name.
 </div>
 
-<div class="section-gap"></div>
+<div class="signature">
+Decision Authority Research
+</div>
+
+</section>
 
 </main>
 
