@@ -6,7 +6,7 @@
 
 <title>Approval Is Not Refusal</title>
 
-<meta name="description" content="A system can contain oversight, escalation, human review, and approval — and still contain nobody authorized to stop irreversible continuation.">
+<meta name="description" content="A system can contain oversight, human review, escalation, and approval — and still contain nobody authorized to stop irreversible continuation.">
 
 <meta name="robots" content="index,follow">
 
@@ -129,7 +129,7 @@ margin-bottom:26px;
 
 h1{
 font-family:"Cormorant Garamond",serif;
-font-size:clamp(54px,9vw,118px);
+font-size:clamp(56px,9vw,122px);
 line-height:.9;
 font-weight:600;
 margin-bottom:30px;
@@ -230,6 +230,40 @@ font-size:16px;
 margin-bottom:0;
 }
 
+.nav-grid{
+display:grid;
+grid-template-columns:1fr;
+gap:16px;
+margin-top:34px;
+}
+
+.nav-link{
+display:block;
+background:#0f0f0f;
+border:1px solid rgba(255,255,255,.05);
+padding:26px;
+transition:.25s;
+}
+
+.nav-link:hover{
+transform:translateY(-3px);
+border-color:rgba(200,169,110,.3);
+}
+
+.nav-title{
+font-family:"IBM Plex Mono",monospace;
+font-size:11px;
+letter-spacing:.18em;
+text-transform:uppercase;
+color:var(--gold);
+margin-bottom:12px;
+}
+
+.nav-desc{
+font-size:16px;
+color:var(--muted);
+}
+
 .final{
 padding:70px 0 90px;
 border-top:1px solid var(--line);
@@ -267,6 +301,10 @@ padding:0 36px;
 }
 
 .grid{
+grid-template-columns:repeat(2,1fr);
+}
+
+.nav-grid{
 grid-template-columns:repeat(2,1fr);
 }
 
@@ -448,6 +486,76 @@ The work focuses on a single structural question:
 <p>
 Who, by name, is authorized to stop irreversible continuation?
 </p>
+</div>
+
+</section>
+
+<section class="section container">
+
+<div class="label">
+Core Reading
+</div>
+
+<h2>
+Research and framework pages.
+</h2>
+
+<div class="nav-grid">
+
+<a href="about.html" class="nav-link">
+<div class="nav-title">
+About
+</div>
+<div class="nav-desc">
+Background, framing, and context behind the project.
+</div>
+</a>
+
+<a href="approval-is-not-refusal.html" class="nav-link">
+<div class="nav-title">
+Approval Is Not Refusal
+</div>
+<div class="nav-desc">
+The structural gap between oversight and interruption authority.
+</div>
+</a>
+
+<a href="human-in-the-loop.html" class="nav-link">
+<div class="nav-title">
+Human In The Loop
+</div>
+<div class="nav-desc">
+Why human review does not necessarily create refusal authority.
+</div>
+</a>
+
+<a href="whitepaper.html" class="nav-link">
+<div class="nav-title">
+White Paper
+</div>
+<div class="nav-desc">
+Core governance framing and named refusal authority research.
+</div>
+</a>
+
+<a href="faq.html" class="nav-link">
+<div class="nav-title">
+FAQ
+</div>
+<div class="nav-desc">
+Frequently asked questions regarding DAR and governance structure.
+</div>
+</a>
+
+<a href="goodfaith.html" class="nav-link">
+<div class="nav-title">
+Good Faith Use
+</div>
+<div class="nav-desc">
+Scope, limitations, and intended use of the framework.
+</div>
+</a>
+
 </div>
 
 </section>
