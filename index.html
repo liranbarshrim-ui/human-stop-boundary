@@ -130,7 +130,7 @@ a { text-decoration: none; color: inherit; }
 
 /* PAUSE */
 .pause {
-  padding: 120px 0;
+  padding: 104px 0;
   border-top: 1px solid var(--line);
   border-bottom: 1px solid var(--line);
   margin: 20px 0;
@@ -160,7 +160,7 @@ a { text-decoration: none; color: inherit; }
 }
 
 /* SECTIONS */
-.section { padding: 92px 0; border-top: 1px solid var(--line); }
+.section { padding: 88px 0; border-top: 1px solid var(--line); }
 .section h2 {
   font-size: clamp(24px, 4.2vw, 60px);
   font-weight: 400;
@@ -218,7 +218,7 @@ a { text-decoration: none; color: inherit; }
 }
 
 /* NAV LINKS */
-.nav-section { padding: 72px 0 0; border-top: 1px solid var(--line); margin-top: 56px; }
+.nav-section { padding: 88px 0 0; border-top: 1px solid var(--line); margin-top: 0; }
 .nav-grid { display: grid; grid-template-columns: 1fr; gap: 14px; }
 .nav-link {
   display: block;
@@ -226,13 +226,14 @@ a { text-decoration: none; color: inherit; }
   border: 1px solid rgba(200,169,110,.15);
   border-left: 3px solid var(--gold);
   padding: 24px 28px;
-  transition: border-color .3s, background .3s, box-shadow .3s;
+  transition: border-color .35s ease, background .35s ease, transform .35s ease, box-shadow .35s ease;
 }
 .nav-link:hover {
   border-color: rgba(200,169,110,.5);
   border-left-color: var(--gold);
   background: linear-gradient(135deg, #181818 0%, #131313 100%);
-  box-shadow: 0 4px 24px rgba(200,169,110,.06);
+  box-shadow: 0 10px 30px rgba(0,0,0,.28);
+  transform: translateY(-2px);
 }
 .nav-title {
   font-family: "IBM Plex Mono", monospace;
@@ -246,7 +247,7 @@ a { text-decoration: none; color: inherit; }
 
 /* OBSERVATION SERIES */
 .obs-series {
-  padding: 110px 0 90px;
+  padding: 104px 0 88px;
   border-top: 1px solid var(--line);
   margin-top: 20px;
   position: relative;
@@ -283,12 +284,14 @@ a { text-decoration: none; color: inherit; }
   padding: 28px 24px;
   display: block;
   border-top: 2px solid transparent;
-  transition: border-color .25s, background .25s;
+  transition: border-color .35s ease, background .35s ease, transform .35s ease, box-shadow .35s ease;
   text-decoration: none;
 }
 .obs-card:hover {
   background: #101010;
   border-top-color: var(--gold);
+  transform: translateY(-2px);
+  box-shadow: 0 10px 30px rgba(0,0,0,.28);
 }
 .obs-num {
   font-family: "IBM Plex Mono", monospace;
@@ -382,18 +385,18 @@ a { text-decoration: none; color: inherit; }
   .wrap { padding: 0 20px; }
   .wrap-narrow { padding: 0 20px; }
   .hero { padding-top: 120px; padding-bottom: 48px; }
-  .hero h1 { font-size: 32px; line-height: 1.0; margin-bottom: 32px; }
+  .hero h1 { font-size: 26px; line-height: 1.0; margin-bottom: 28px; }
   .hero-sub { font-size: 16px; }
   .hero-statement { padding: 20px 20px; }
   .hero-statement p { font-size: 20px; line-height: 1.3; }
   .pause { padding: 56px 0; }
-  .pause-line { font-size: 24px; margin: 0 20px; max-width: 100%; }
+  .pause-line { font-size: 20px; margin: 0 20px; max-width: 100%; }
   .section { padding: 56px 0; }
   .section h2 { font-size: 20px; line-height: 1.2; max-width: 100%; }
   .body-p { font-size: 16px; max-width: 100%; }
   .pull { font-size: 16px; padding: 18px 20px; line-height: 1.5; }
   .final { padding: 56px 0 64px; }
-  .final-line { font-size: 28px; }
+  .final-line { font-size: 22px; }
   .obs-grid { grid-template-columns: 1fr; }
   .obs-card { border-top: none; border-left: 2px solid transparent; }
   .obs-card:hover { border-left-color: var(--gold); border-top-color: transparent; }
@@ -422,7 +425,7 @@ a { text-decoration: none; color: inherit; }
     <span class="brand-rule"></span>
     <span>Liran Bar-Shrim</span>
   </a>
-  <a href="mailto:Liran@liranbarshrim.com" class="nav-contact">Contact</a>
+  <a href="mailto:Liran@liranbarshrim.com" class="nav-contact">Correspondence</a>
 </header>
 
 <main>
