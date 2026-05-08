@@ -53,7 +53,6 @@ body::before {
 
 a { text-decoration: none; color: inherit; }
 
-/* ── TOPBAR ── */
 .topbar {
   position: fixed;
   top: 0; left: 0; right: 0;
@@ -91,7 +90,6 @@ a { text-decoration: none; color: inherit; }
 }
 .nav-contact:hover { opacity: .7; }
 
-/* ── CONTAINERS ── */
 .wrap {
   max-width: 1280px;
   margin: 0 auto;
@@ -108,11 +106,7 @@ a { text-decoration: none; color: inherit; }
   z-index: 1;
 }
 
-/* ── HERO ── */
-.hero {
-  padding-top: 140px;
-  padding-bottom: 80px;
-}
+.hero { padding-top: 140px; padding-bottom: 80px; }
 
 .hero h1 {
   font-size: clamp(60px, 10vw, 140px);
@@ -124,10 +118,7 @@ a { text-decoration: none; color: inherit; }
   max-width: 14ch;
 }
 
-.hero h1 em {
-  font-style: italic;
-  color: var(--gold2);
-}
+.hero h1 em { font-style: italic; color: var(--gold2); }
 
 .hero-sub {
   font-size: clamp(18px, 1.8vw, 23px);
@@ -152,7 +143,6 @@ a { text-decoration: none; color: inherit; }
   color: #f2e8d5;
 }
 
-/* ── PAUSE 1 — asymmetric, left-weighted ── */
 .pause-1 {
   padding: 100px 0;
   border-top: 1px solid var(--line);
@@ -172,7 +162,6 @@ a { text-decoration: none; color: inherit; }
   margin: 0 0 0 48px;
 }
 
-/* ── PAUSE 2 — quieter, centered ── */
 .pause-2 {
   padding: 80px 0;
   margin: 20px 0;
@@ -193,11 +182,7 @@ a { text-decoration: none; color: inherit; }
   padding: 0 48px;
 }
 
-/* ── SECTIONS ── */
-.section {
-  padding: 80px 0;
-  border-top: 1px solid var(--line);
-}
+.section { padding: 80px 0; border-top: 1px solid var(--line); }
 
 .section h2 {
   font-size: clamp(30px, 4.2vw, 60px);
@@ -207,10 +192,7 @@ a { text-decoration: none; color: inherit; }
   max-width: 22ch;
 }
 
-.section h2 em {
-  font-style: italic;
-  color: var(--gold2);
-}
+.section h2 em { font-style: italic; color: var(--gold2); }
 
 .body-p {
   font-size: clamp(17px, 1.4vw, 20px);
@@ -233,7 +215,6 @@ a { text-decoration: none; color: inherit; }
   color: var(--text);
 }
 
-/* ── GROUNDING — colder, list-like ── */
 .grounding {
   margin-top: 36px;
   font-family: "IBM Plex Mono", monospace;
@@ -244,10 +225,7 @@ a { text-decoration: none; color: inherit; }
   line-height: 2.2;
 }
 
-/* ── EDITORIAL TRUTH BLOCKS ── */
-.truth-blocks {
-  margin-top: 56px;
-}
+.truth-blocks { margin-top: 56px; }
 
 .truth-header {
   display: grid;
@@ -290,10 +268,8 @@ a { text-decoration: none; color: inherit; }
   font-weight: 300;
   color: #c8c0b2;
   line-height: 1.75;
-  font-style: normal;
 }
 
-/* ── FINAL ── */
 .final {
   padding: 100px 0 120px;
   border-top: 1px solid var(--line);
@@ -330,7 +306,6 @@ a { text-decoration: none; color: inherit; }
   color: var(--dim);
 }
 
-/* ── FOOTER ── */
 .footer {
   position: relative;
   z-index: 1;
@@ -343,7 +318,6 @@ a { text-decoration: none; color: inherit; }
   color: var(--dim);
 }
 
-/* ── RESPONSIVE ── */
 @media (max-width: 860px) {
   .topbar { padding: 0 20px; }
   .wrap { padding: 0 20px; }
@@ -357,11 +331,7 @@ a { text-decoration: none; color: inherit; }
   .pause-2 .pause-line { padding: 0 20px; }
   .truth-header { display: none; }
   .truth-block { grid-template-columns: 1fr; }
-  .tb-observed {
-    padding: 24px 0 12px;
-    border-right: none;
-    border-bottom: 1px solid var(--line);
-  }
+  .tb-observed { padding: 24px 0 12px; border-right: none; border-bottom: 1px solid var(--line); }
   .tb-reality { padding: 12px 0 24px; }
   .final { padding: 70px 0 80px; }
 }
@@ -382,12 +352,11 @@ a { text-decoration: none; color: inherit; }
     <span class="brand-rule"></span>
     <span>Liran Bar-Shrim</span>
   </a>
-  <a href="mailto:Liran@liranbarshrim.com" class="nav-contact">Contact</a>
+  <a href="mailto:Liran@liranbarshrim.com" class="nav-contact">Correspondence</a>
 </header>
 
 <main>
 
-  <!-- HERO -->
   <section class="hero wrap">
     <h1>Approval<br>is not<br><em>refusal.</em></h1>
     <p class="hero-sub">
@@ -404,7 +373,6 @@ a { text-decoration: none; color: inherit; }
     </div>
   </section>
 
-  <!-- PAUSE 1 — asymmetric, left -->
   <div class="pause-1">
     <div class="pause-line">
       No one refused.<br>
@@ -412,7 +380,6 @@ a { text-decoration: none; color: inherit; }
     </div>
   </div>
 
-  <!-- SECTION 1 -->
   <section class="section wrap-narrow">
     <h2>The structure contains oversight.<br>It does not contain <em>refusal authority.</em></h2>
     <p class="body-p">
@@ -437,47 +404,37 @@ a { text-decoration: none; color: inherit; }
     </div>
   </section>
 
-  <!-- SECTION 2: TRUTH BLOCKS -->
   <section class="section wrap">
     <h2>What the structure shows.<br>What it <em>conceals.</em></h2>
 
     <div class="truth-blocks">
-
       <div class="truth-header">
         <div class="truth-col-label">Observed Structure</div>
         <div class="truth-col-label">Underlying Reality</div>
       </div>
-
       <div class="truth-block">
         <div class="tb-observed">A human approved the workflow.</div>
         <div class="tb-reality">Approval became procedural rather than sovereign.</div>
       </div>
-
       <div class="truth-block">
         <div class="tb-observed">Escalation channels existed.</div>
         <div class="tb-reality">Escalation delayed responsibility instead of interrupting execution.</div>
       </div>
-
       <div class="truth-block">
         <div class="tb-observed">Everyone assumed oversight existed somewhere else.</div>
         <div class="tb-reality">Responsibility became structurally diffused.</div>
       </div>
-
       <div class="truth-block">
         <div class="tb-observed">The system technically allowed interruption.</div>
         <div class="tb-reality">The organizational cost of stopping made interruption unrealistic.</div>
       </div>
-
       <div class="truth-block">
         <div class="tb-observed">Multiple teams reviewed the decision.</div>
         <div class="tb-reality">Nobody had the authority to refuse continuation once momentum formed.</div>
       </div>
-
     </div>
-
   </section>
 
-  <!-- PAUSE 2 — quieter -->
   <div class="pause-2">
     <div class="pause-line">
       The question is never whether the system can continue.<br>
@@ -485,7 +442,6 @@ a { text-decoration: none; color: inherit; }
     </div>
   </div>
 
-  <!-- SECTION 3 -->
   <section class="section wrap-narrow">
     <h2>The question is not whether<br>people object.<br>The question is whether <em>refusal exists structurally.</em></h2>
     <p class="body-p">
@@ -499,7 +455,6 @@ a { text-decoration: none; color: inherit; }
     </p>
   </section>
 
-  <!-- FINAL -->
   <section class="final wrap-narrow">
     <div class="final-q">
       Who, by name,<br>
@@ -518,4 +473,3 @@ a { text-decoration: none; color: inherit; }
 
 </body>
 </html>
- 
