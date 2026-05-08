@@ -11,6 +11,8 @@ Allow: /knight-capital.html
 Allow: /crowdstrike.html
 Allow: /boeing.html
 Allow: /escalation-snapshot.html
+Allow: /governance-risk-brief.html
+Allow: /named-authority-record.html
 Allow: /og-image.png
 Allow: /google1305c86f2cce0142.html
 Disallow: /
