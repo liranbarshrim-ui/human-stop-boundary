@@ -3,32 +3,25 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
-
 <title>FAQ — Liran Bar-Shrim</title>
-
 <meta name="description" content="Questions about refusal authority, irreversible continuation, named authorization, and governance structure.">
-
 <meta name="robots" content="index,follow">
-    <meta property="og:title" content="FAQ — Liran Bar-Shrim">
-    <meta property="og:description" content="Questions about refusal authority, irreversible continuation, named authorization, and governance structure.">
-    <meta name="twitter:title" content="FAQ — Liran Bar-Shrim">
-    <meta name="twitter:description" content="Questions about refusal authority, irreversible continuation, named authorization, and governance structure.">
-    <meta property="og:image" content="https://matrix-audit.com/og-image.png">
-    <meta property="og:image:width" content="1200">
-    <meta property="og:image:height" content="630">
-    <meta property="og:type" content="website">
-    <meta property="og:site_name" content="Liran Bar-Shrim">
-    <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:image" content="https://matrix-audit.com/og-image.png">
-
+<meta property="og:title" content="FAQ — Liran Bar-Shrim">
+<meta property="og:description" content="Questions about refusal authority, irreversible continuation, named authorization, and governance structure.">
+<meta name="twitter:title" content="FAQ — Liran Bar-Shrim">
+<meta name="twitter:description" content="Questions about refusal authority, irreversible continuation, named authorization, and governance structure.">
+<meta property="og:image" content="https://matrix-audit.com/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Liran Bar-Shrim">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://matrix-audit.com/og-image.png">
 <link rel="canonical" href="https://matrix-audit.com/faq.html">
-
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&display=swap" rel="stylesheet">
-
 <style>
-
 :root {
   --bg: #080808;
   --gold: #c8a96e;
@@ -38,10 +31,8 @@
   --dim: #7a7570;
   --line: rgba(255,255,255,.06);
 }
-
 *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
 html { scroll-behavior: smooth; }
-
 body {
   background: var(--bg);
   color: var(--text);
@@ -50,7 +41,6 @@ body {
   -webkit-font-smoothing: antialiased;
   line-height: 1.8;
 }
-
 body::before {
   content: "";
   position: fixed;
@@ -61,10 +51,7 @@ body::before {
   background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
   background-size: 180px;
 }
-
 a { text-decoration: none; color: inherit; }
-
-/* ── TOPBAR ── */
 .topbar {
   position: fixed;
   top: 0; left: 0; right: 0;
@@ -78,7 +65,6 @@ a { text-decoration: none; color: inherit; }
   backdrop-filter: blur(16px);
   border-bottom: 1px solid var(--line);
 }
-
 .brand {
   display: flex;
   align-items: center;
@@ -89,9 +75,7 @@ a { text-decoration: none; color: inherit; }
   text-transform: uppercase;
   color: var(--text);
 }
-
 .brand-rule { width: 32px; height: 1px; background: var(--gold); }
-
 .nav-contact {
   font-family: "IBM Plex Mono", monospace;
   font-size: 9.5px;
@@ -101,8 +85,6 @@ a { text-decoration: none; color: inherit; }
   transition: opacity .2s;
 }
 .nav-contact:hover { opacity: .7; }
-
-/* ── CONTAINERS ── */
 .wrap-narrow {
   max-width: 800px;
   margin: 0 auto;
@@ -110,13 +92,7 @@ a { text-decoration: none; color: inherit; }
   position: relative;
   z-index: 1;
 }
-
-/* ── HERO ── */
-.hero {
-  padding-top: 160px;
-  padding-bottom: 70px;
-}
-
+.hero { padding-top: 160px; padding-bottom: 70px; }
 .hero h1 {
   font-size: clamp(40px, 6vw, 90px);
   font-weight: 400;
@@ -126,12 +102,7 @@ a { text-decoration: none; color: inherit; }
   margin-bottom: 40px;
   max-width: 18ch;
 }
-
-.hero h1 em {
-  font-style: italic;
-  color: var(--gold2);
-}
-
+.hero h1 em { font-style: italic; color: var(--gold2); }
 .hero-sub {
   font-size: clamp(17px, 1.6vw, 21px);
   font-weight: 300;
@@ -139,21 +110,9 @@ a { text-decoration: none; color: inherit; }
   color: var(--muted);
   max-width: 58ch;
 }
-
-/* ── FAQ LIST ── */
-.faq-list {
-  padding-bottom: 80px;
-}
-
-.faq-item {
-  border-top: 1px solid var(--line);
-  padding: 48px 0;
-}
-
-.faq-item:last-child {
-  border-bottom: 1px solid var(--line);
-}
-
+.faq-list { padding-bottom: 80px; }
+.faq-item { border-top: 1px solid var(--line); padding: 48px 0; }
+.faq-item:last-child { border-bottom: 1px solid var(--line); }
 .faq-q {
   font-size: clamp(22px, 2.8vw, 38px);
   font-weight: 400;
@@ -162,7 +121,6 @@ a { text-decoration: none; color: inherit; }
   color: var(--text);
   margin-bottom: 20px;
 }
-
 .faq-a {
   font-size: clamp(16px, 1.4vw, 19px);
   font-weight: 300;
@@ -170,18 +128,8 @@ a { text-decoration: none; color: inherit; }
   line-height: 1.85;
   max-width: 60ch;
 }
-
-.faq-a strong {
-  color: #c8c0b2;
-  font-weight: 400;
-}
-
-/* ── FINAL ── */
-.final {
-  padding: 80px 0 100px;
-  border-top: 1px solid var(--line);
-}
-
+.faq-a strong { color: #c8c0b2; font-weight: 400; }
+.final { padding: 80px 0 100px; border-top: 1px solid var(--line); }
 .back-link {
   font-family: "IBM Plex Mono", monospace;
   font-size: 9px;
@@ -193,7 +141,6 @@ a { text-decoration: none; color: inherit; }
   margin-bottom: 14px;
 }
 .back-link:hover { color: var(--gold2); }
-
 .sig {
   font-family: "IBM Plex Mono", monospace;
   font-size: 9.5px;
@@ -202,8 +149,6 @@ a { text-decoration: none; color: inherit; }
   color: var(--dim);
   margin-top: 28px;
 }
-
-/* ── FOOTER ── */
 .footer {
   position: relative;
   z-index: 1;
@@ -215,21 +160,17 @@ a { text-decoration: none; color: inherit; }
   letter-spacing: .2em;
   color: var(--dim);
 }
-
-/* ── RESPONSIVE ── */
 @media (max-width: 860px) {
   .topbar { padding: 0 20px; }
   .wrap-narrow { padding: 0 20px; }
   .hero { padding-top: 120px; padding-bottom: 50px; }
   .faq-item { padding: 36px 0; }
 }
-
 @keyframes fadeUp {
   from { opacity: 0; transform: translateY(16px); }
   to   { opacity: 1; transform: translateY(0); }
 }
 .hero { animation: fadeUp .9s ease both; }
-
 </style>
 </head>
 
@@ -245,7 +186,6 @@ a { text-decoration: none; color: inherit; }
 
 <main>
 
-  <!-- HERO -->
   <section class="hero wrap-narrow">
     <h1>Questions about<br><em>refusal authority.</em></h1>
     <p class="hero-sub">
@@ -255,7 +195,6 @@ a { text-decoration: none; color: inherit; }
     </p>
   </section>
 
-  <!-- FAQ -->
   <section class="faq-list wrap-narrow">
 
     <div class="faq-item">
@@ -360,11 +299,10 @@ a { text-decoration: none; color: inherit; }
 
   </section>
 
-  <!-- FINAL -->
   <section class="final wrap-narrow">
     <a href="index.html" class="back-link">← Back to main</a>
     <a href="human-in-the-loop.html" class="back-link">→ Human In The Loop</a>
-    <a href="whitepaper.html" class="back-link" style="margin-bottom:28px;">→ White Paper</a>
+    <a href="whitepaper.html" class="back-link" style="margin-bottom:28px;">→ Research Note</a>
     <div class="sig">Liran Bar-Shrim · Independent Writing & Research</div>
   </section>
 
