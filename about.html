@@ -3,29 +3,23 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
-
-<title>About — Liran Bar-Shrim</title>
-<meta name="description" content="Where the question began. Watching systems continue — and justify their own continuation.">
+<title>About — Decision Authority Research</title>
+<meta name="description" content="What this work examines, how it proceeds, and what it does not claim.">
 <meta name="robots" content="index,follow">
-    <meta property="og:title" content="About — Liran Bar-Shrim">
-    <meta property="og:description" content="Where the question began. Watching systems continue — and justify their own continuation.">
-    <meta name="twitter:title" content="About — Liran Bar-Shrim">
-    <meta name="twitter:description" content="Where the question began. Watching systems continue — and justify their own continuation.">
-    <meta property="og:image" content="https://matrix-audit.com/og-image.png">
-    <meta property="og:image:width" content="1200">
-    <meta property="og:image:height" content="630">
-    <meta property="og:type" content="website">
-    <meta property="og:site_name" content="Liran Bar-Shrim">
-    <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:image" content="https://matrix-audit.com/og-image.png">
+<meta property="og:title" content="About — Decision Authority Research">
+<meta property="og:description" content="What this work examines, how it proceeds, and what it does not claim.">
+<meta property="og:image" content="https://matrix-audit.com/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Liran Bar-Shrim">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://matrix-audit.com/og-image.png">
 <link rel="canonical" href="https://matrix-audit.com/about.html">
-
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&display=swap" rel="stylesheet">
-
 <style>
-
 :root {
   --bg: #080808;
   --gold: #c8a96e;
@@ -34,6 +28,8 @@
   --muted: #b8b0a4;
   --dim: #7a7570;
   --line: rgba(255,255,255,.06);
+  --surface: #0d0d0d;
+  --faint: #1e1e1e;
 }
 
 *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
@@ -97,14 +93,123 @@ a { text-decoration: none; color: inherit; }
 }
 .nav-contact:hover { opacity: .7; }
 
-/* ── HERO SPLIT ── */
-.hero {
-  min-height: 100vh;
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  padding-top: 72px;
+/* RESEARCH FRAMING — new top section */
+.research-frame {
+  padding: 120px 32px 64px;
+  max-width: 720px;
+  margin: 0 auto;
   position: relative;
   z-index: 1;
+  border-bottom: 1px solid var(--line);
+}
+
+.rf-eyebrow {
+  font-family: "IBM Plex Mono", monospace;
+  font-size: 9px;
+  letter-spacing: .28em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 32px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.rf-eyebrow::before { content: ''; width: 24px; height: 1px; background: var(--gold); }
+
+.rf-title {
+  font-size: clamp(28px, 4vw, 52px);
+  font-weight: 300;
+  line-height: 1.1;
+  color: var(--text);
+  margin-bottom: 40px;
+  max-width: 18ch;
+}
+
+.rf-title em { font-style: italic; color: var(--gold); }
+
+/* Three research definition blocks */
+.rf-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1px;
+  background: var(--faint);
+  border: 1px solid var(--faint);
+  margin-bottom: 40px;
+}
+
+.rf-cell {
+  background: var(--surface);
+  padding: 20px 24px;
+  display: grid;
+  grid-template-columns: 120px 1fr;
+  gap: 20px;
+  align-items: start;
+}
+
+.rf-cell-label {
+  font-family: "IBM Plex Mono", monospace;
+  font-size: 8px;
+  letter-spacing: .18em;
+  text-transform: uppercase;
+  color: var(--dim);
+  padding-top: 3px;
+  line-height: 1.5;
+}
+
+.rf-cell-text {
+  font-size: clamp(15px, 1.4vw, 17px);
+  font-weight: 300;
+  color: var(--muted);
+  line-height: 1.75;
+}
+
+.rf-cell-text strong { color: var(--text); font-weight: 400; }
+
+.rf-series-link {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 16px 20px;
+  border: 1px solid var(--faint);
+  border-left: 3px solid var(--gold);
+  background: var(--surface);
+  transition: border-color .2s;
+  text-decoration: none;
+  color: inherit;
+}
+
+.rf-series-link:hover { border-color: rgba(200,169,110,.4); }
+
+.rf-series-link-text {
+  font-size: 13px;
+  color: var(--muted);
+  line-height: 1.5;
+}
+
+.rf-series-link-label {
+  font-family: "IBM Plex Mono", monospace;
+  font-size: 8px;
+  letter-spacing: .18em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 4px;
+}
+
+.rf-series-link-arrow {
+  font-size: 14px;
+  color: var(--dim);
+  margin-left: auto;
+  flex-shrink: 0;
+}
+
+/* HERO — identity section, preserved */
+.hero {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  position: relative;
+  z-index: 1;
+  border-top: 1px solid var(--line);
 }
 
 .hero-text {
@@ -114,51 +219,45 @@ a { text-decoration: none; color: inherit; }
   padding: 80px 52px 80px 32px;
 }
 
-.hero-text h1 {
-  font-size: clamp(38px, 5.5vw, 76px);
+.hero-text h2 {
+  font-size: clamp(28px, 3.5vw, 48px);
   font-weight: 400;
   font-style: italic;
-  line-height: 1.0;
+  line-height: 1.1;
   color: var(--text);
   margin-bottom: 44px;
   max-width: 16ch;
 }
 
-.hero-text h1 em {
-  font-style: normal;
-  color: var(--gold2);
-}
+.hero-text h2 em { font-style: normal; color: var(--gold2); }
 
 .body-block {
-  font-size: clamp(17px, 1.5vw, 20px);
+  font-size: clamp(16px, 1.4vw, 19px);
   font-weight: 300;
   line-height: 1.85;
   color: var(--muted);
-  margin-bottom: 24px;
+  margin-bottom: 22px;
   max-width: 52ch;
 }
 
-.body-block strong {
-  color: #d4cec6;
-  font-weight: 400;
-}
+.body-block strong { color: #d4cec6; font-weight: 400; }
 
 .rule-statement {
   border-left: 2px solid var(--gold);
   padding-left: 22px;
-  margin: 42px 0;
+  margin: 40px 0;
 }
 
 .rule-statement p {
-  font-size: clamp(19px, 2vw, 26px);
+  font-size: clamp(17px, 1.8vw, 24px);
   font-weight: 400;
   line-height: 1.4;
   color: var(--text);
 }
 
 .sig {
-  margin-top: 52px;
-  padding-top: 28px;
+  margin-top: 48px;
+  padding-top: 24px;
   border-top: 1px solid var(--line);
   font-family: "IBM Plex Mono", monospace;
   font-size: 9px;
@@ -167,7 +266,7 @@ a { text-decoration: none; color: inherit; }
   color: var(--dim);
 }
 
-/* ── PORTRAIT — no quote overlay ── */
+/* PORTRAIT */
 .hero-portrait {
   position: relative;
   overflow: hidden;
@@ -192,7 +291,7 @@ a { text-decoration: none; color: inherit; }
   pointer-events: none;
 }
 
-/* ── LOWER ── */
+/* LOWER */
 .lower {
   position: relative;
   z-index: 1;
@@ -203,7 +302,7 @@ a { text-decoration: none; color: inherit; }
 }
 
 .quote-block {
-  background: #0d0d0d;
+  background: var(--surface);
   border-left: 3px solid var(--gold);
   padding: 24px 28px;
   margin-bottom: 40px;
@@ -241,49 +340,29 @@ a { text-decoration: none; color: inherit; }
   color: var(--dim);
 }
 
-/* ── MOBILE ── */
 @media (max-width: 860px) {
-
   .topbar { padding: 0 20px; }
-
-  .hero {
-    grid-template-columns: 1fr;
-    min-height: auto;
-  }
-
-  .hero-portrait {
-    height: 70vw;
-    max-height: 420px;
-    order: -1;
-  }
-
+  .research-frame { padding: 100px 20px 48px; }
+  .rf-cell { grid-template-columns: 1fr; gap: 8px; }
+  .hero { grid-template-columns: 1fr; }
+  .hero-portrait { height: 70vw; max-height: 420px; order: -1; }
   .hero-portrait::after {
     background:
       linear-gradient(to bottom, var(--bg) 0%, transparent 30%),
       linear-gradient(to top, var(--bg) 0%, transparent 25%);
   }
-
-  .hero-text {
-    padding: 48px 20px 60px;
-  }
-
-  .hero-text h1 {
-    font-size: clamp(36px, 9vw, 58px);
-  }
-
+  .hero-text { padding: 48px 20px 60px; }
   .lower { padding: 50px 20px 80px; }
   .back-row { margin-top: 40px; }
-
 }
 
 @keyframes fadeUp {
   from { opacity: 0; transform: translateY(18px); }
   to   { opacity: 1; transform: translateY(0); }
 }
-
-.hero-text { animation: fadeUp .9s ease both; }
-.hero-portrait { animation: fadeUp 1.1s .15s ease both; }
-
+.research-frame { animation: fadeUp .9s ease both; }
+.hero-text { animation: fadeUp 1s .1s ease both; }
+.hero-portrait { animation: fadeUp 1.1s .2s ease both; }
 </style>
 </head>
 
@@ -299,11 +378,44 @@ a { text-decoration: none; color: inherit; }
 
 <main>
 
-  <section class="hero">
+  <!-- RESEARCH FRAMING -->
+  <div class="research-frame">
+    <div class="rf-eyebrow">Decision Authority Research</div>
+    <h1 class="rf-title">What this work<br>examines — and<br>what it does <em>not claim.</em></h1>
 
+    <div class="rf-grid">
+      <div class="rf-cell">
+        <div class="rf-cell-label">What is examined</div>
+        <div class="rf-cell-text">The structural relationship between <strong>continuity architecture</strong> and <strong>interruption architecture</strong> in governance systems. Specifically: at what point does continuation cease to require explicit re-authorization from a named individual, and what does the public record show about that condition?</div>
+      </div>
+      <div class="rf-cell">
+        <div class="rf-cell-label">How it proceeds</div>
+        <div class="rf-cell-text">Through observation of publicly available post-incident records, regulatory findings, and documented governance failures. Each case is examined for the presence or absence of a named individual with prior, explicit commitment to refuse continuation under uncertainty. No insider knowledge is claimed.</div>
+      </div>
+      <div class="rf-cell">
+        <div class="rf-cell-label">What is not claimed</div>
+        <div class="rf-cell-text">This work does not attribute fault or negligence to named individuals. It does not offer legal interpretation. It does not claim to explain the internal decisions of any organization. It identifies a <strong>recurring structural pattern</strong> observable from the public record across multiple domains.</div>
+      </div>
+      <div class="rf-cell">
+        <div class="rf-cell-label">The recurring question</div>
+        <div class="rf-cell-text">Who, by name, was explicitly committed in advance to refuse continuation — before the decision became irreversible? If that name does not exist before the event, the question cannot be answered after it.</div>
+      </div>
+    </div>
+
+    <a href="observation-series.html" class="rf-series-link">
+      <div>
+        <div class="rf-series-link-label">Governance Observation Series</div>
+        <div class="rf-series-link-text">Three domains. Three timescales. The pattern observed across financial execution, software deployment, and safety certification.</div>
+      </div>
+      <div class="rf-series-link-arrow">→</div>
+    </a>
+  </div>
+
+  <!-- IDENTITY — preserved, repositioned -->
+  <section class="hero">
     <div class="hero-text">
 
-      <h1>A system can continue —<br>and justify<br>its own <em>continuation.</em></h1>
+      <h2>A system can continue —<br>and justify<br>its own <em>continuation.</em></h2>
 
       <p class="body-block">
         The question did not begin as theory.
@@ -335,8 +447,9 @@ a { text-decoration: none; color: inherit; }
       <p class="body-block">
         One person.
         No institution behind it.
-        No formal authority.
-        Just the question itself.
+        Just the question itself —
+        and a body of observation that asks it
+        across domains.
       </p>
 
       <div class="sig">
@@ -346,16 +459,12 @@ a { text-decoration: none; color: inherit; }
     </div>
 
     <div class="hero-portrait">
-      <img
-        src="https://i.postimg.cc/mkCYFrxr/liran-1.jpg"
-        alt="Liran Bar-Shrim"
-      >
+      <img src="https://i.postimg.cc/mkCYFrxr/liran-1.jpg" alt="Liran Bar-Shrim">
     </div>
-
   </section>
 
+  <!-- LOWER -->
   <div class="lower">
-
     <div class="quote-block">
       <p>
         Most systems define who approves.<br>
@@ -375,7 +484,6 @@ a { text-decoration: none; color: inherit; }
     <div class="back-row">
       <a href="index.html" class="back-link">← Back to main</a>
     </div>
-
   </div>
 
 </main>
