@@ -10,6 +10,7 @@ Allow: /observation-series.html
 Allow: /knight-capital.html
 Allow: /crowdstrike.html
 Allow: /boeing.html
+Allow: /escalation-snapshot.html
 Allow: /og-image.png
 Allow: /google1305c86f2cce0142.html
 Disallow: /
