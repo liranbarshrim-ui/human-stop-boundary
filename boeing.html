@@ -1,0 +1,676 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Boeing Question — Decision Authority Research</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@300;400;500&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&display=swap');
+
+  :root {
+    --bg: #090909;
+    --surface: #0f0f0f;
+    --accent: #c8a96e;
+    --danger: #c0392b;
+    --text: #e6e0d4;
+    --muted: #7a7570;
+    --faint: #3a3530;
+    --border: #1a1a1a;
+    --border-strong: #2a2a2a;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 14px;
+    line-height: 1.7;
+    overflow-x: hidden;
+  }
+
+  body::after {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.035'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 9999;
+  }
+
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    padding: 16px 40px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: rgba(9,9,9,0.92);
+    backdrop-filter: blur(8px);
+    border-bottom: 1px solid var(--border);
+  }
+
+  .nav-brand { font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--accent); }
+  .nav-link { font-size: 10px; letter-spacing: 0.15em; text-transform: uppercase; color: var(--muted); text-decoration: none; }
+  .nav-link:hover { color: var(--accent); }
+
+  .hero {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    padding: 120px 40px 80px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .hero-label {
+    font-size: 9px;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--danger);
+    margin-bottom: 24px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .hero-label::before { content: ''; width: 24px; height: 1px; background: var(--danger); }
+
+  .series-link {
+    font-size: 9px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 16px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .series-link::before { content: '←'; color: var(--faint); }
+
+  h1 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(48px, 8vw, 96px);
+    font-weight: 300;
+    line-height: 1.0;
+    color: var(--text);
+    margin-bottom: 32px;
+    max-width: 900px;
+  }
+
+  h1 em { font-style: italic; color: var(--accent); }
+
+  .hero-sub {
+    font-size: 12px;
+    color: var(--muted);
+    max-width: 520px;
+    line-height: 1.8;
+    margin-bottom: 48px;
+  }
+
+  .hero-stats {
+    display: flex;
+    gap: 48px;
+    padding-top: 32px;
+    border-top: 1px solid var(--border);
+    flex-wrap: wrap;
+  }
+
+  .stat-num {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 36px;
+    font-weight: 300;
+    color: var(--danger);
+    line-height: 1;
+    margin-bottom: 4px;
+  }
+
+  .stat-label {
+    font-size: 9px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+
+  .content {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 80px 40px;
+  }
+
+  .section-marker {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 32px;
+  }
+
+  .marker-num { font-size: 9px; letter-spacing: 0.2em; color: var(--faint); }
+  .marker-label { font-size: 9px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--accent); }
+  .marker-line { flex: 1; height: 1px; background: var(--border); }
+
+  /* ACCUMULATION TIMELINE — different from other cases */
+  .accum-timeline { margin: 0 0 80px; }
+
+  .accum-item {
+    display: grid;
+    grid-template-columns: 100px 1fr;
+    gap: 0;
+    margin-bottom: 0;
+    position: relative;
+  }
+
+  .accum-item::after {
+    content: '';
+    position: absolute;
+    left: 100px;
+    top: 0; bottom: 0;
+    width: 1px;
+    background: var(--border);
+  }
+
+  .accum-year {
+    font-size: 11px;
+    color: var(--muted);
+    padding: 20px 16px 20px 0;
+    text-align: right;
+    letter-spacing: 0.05em;
+  }
+
+  .accum-content {
+    padding: 16px 0 16px 28px;
+    border-bottom: 1px solid var(--border);
+    position: relative;
+    z-index: 1;
+  }
+
+  .accum-content::before {
+    content: '';
+    position: absolute;
+    left: -4px; top: 24px;
+    width: 7px; height: 7px;
+    background: var(--border-strong);
+    border: 1px solid var(--muted);
+    z-index: 2;
+  }
+
+  .accum-item.escalating .accum-content::before {
+    background: #d4a017;
+    border-color: #d4a017;
+  }
+
+  .accum-item.critical .accum-content::before {
+    background: var(--danger);
+    border-color: var(--danger);
+  }
+
+  .accum-item:last-child .accum-content { border-bottom: none; }
+
+  .accum-title {
+    font-size: 11px;
+    font-weight: 500;
+    color: var(--text);
+    letter-spacing: 0.05em;
+    margin-bottom: 6px;
+  }
+
+  .accum-item.escalating .accum-title { color: #d4a017; }
+  .accum-item.critical .accum-title { color: var(--danger); }
+
+  .accum-body { font-size: 12px; color: var(--muted); line-height: 1.75; }
+
+  .prose-section { margin-bottom: 64px; }
+
+  .prose-section h2 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(24px, 3vw, 36px);
+    font-weight: 300;
+    color: var(--text);
+    line-height: 1.2;
+    margin-bottom: 24px;
+  }
+
+  .prose-section p {
+    font-size: 13px;
+    color: var(--muted);
+    line-height: 1.85;
+    margin-bottom: 16px;
+    max-width: 640px;
+  }
+
+  .prose-section p strong { color: var(--text); font-weight: 500; }
+
+  .pull-quote {
+    border-left: 3px solid var(--accent);
+    padding: 24px 32px;
+    margin: 40px 0;
+    background: var(--surface);
+  }
+
+  .pull-quote p {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(18px, 2.5vw, 24px);
+    font-weight: 300;
+    font-style: italic;
+    color: var(--text);
+    line-height: 1.5;
+    margin: 0;
+    max-width: none;
+  }
+
+  .core-observation {
+    border-left: 3px solid var(--text);
+    padding: 24px 32px;
+    margin: 32px 0;
+    background: var(--surface);
+  }
+
+  .core-observation p {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: clamp(13px, 1.8vw, 16px);
+    font-weight: 300;
+    color: var(--text);
+    line-height: 1.6;
+    margin: 0;
+    letter-spacing: -0.01em;
+  }
+
+  .danger-quote {
+    border-left: 3px solid var(--danger);
+    padding: 24px 32px;
+    margin: 40px 0;
+    background: var(--surface);
+  }
+
+  .danger-quote p {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(16px, 2vw, 20px);
+    font-weight: 300;
+    font-style: italic;
+    color: var(--danger);
+    line-height: 1.5;
+    margin: 0;
+    max-width: none;
+  }
+
+  .existed-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1px;
+    background: var(--border);
+    border: 1px solid var(--border);
+    margin: 32px 0;
+  }
+
+  .existed-cell { background: var(--surface); padding: 20px; }
+
+  .existed-cell .ec-label {
+    font-size: 9px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    margin-bottom: 12px;
+  }
+
+  .existed-cell.yes .ec-label { color: var(--muted); }
+  .existed-cell.no .ec-label { color: var(--danger); }
+
+  .existed-cell ul { list-style: none; padding: 0; }
+
+  .existed-cell ul li {
+    font-size: 12px;
+    color: var(--muted);
+    padding: 5px 0;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+    line-height: 1.5;
+  }
+
+  .existed-cell ul li:last-child { border-bottom: none; }
+  .existed-cell.yes ul li::before { content: '✓'; color: var(--muted); font-size: 10px; flex-shrink: 0; margin-top: 2px; }
+  .existed-cell.no ul li::before { content: '×'; color: var(--danger); font-size: 12px; flex-shrink: 0; margin-top: 1px; }
+
+  /* SERIES TAXONOMY */
+  .taxonomy {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1px;
+    background: var(--border);
+    border: 1px solid var(--border);
+    margin: 32px 0;
+  }
+
+  .taxonomy-cell {
+    background: var(--surface);
+    padding: 20px;
+  }
+
+  .taxonomy-cell .tc-label {
+    font-size: 9px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 8px;
+  }
+
+  .taxonomy-cell .tc-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 16px;
+    color: var(--text);
+    margin-bottom: 6px;
+    font-weight: 300;
+    line-height: 1.3;
+  }
+
+  .taxonomy-cell .tc-type {
+    font-size: 10px;
+    color: var(--accent);
+    letter-spacing: 0.05em;
+  }
+
+  .taxonomy-cell.active {
+    border-top: 2px solid var(--accent);
+  }
+
+  .final-question {
+    border-top: 1px solid var(--border-strong);
+    padding-top: 64px;
+    margin-top: 64px;
+  }
+
+  .fq-label {
+    font-size: 9px;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 32px;
+  }
+
+  .fq-text {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(28px, 5vw, 52px);
+    font-weight: 300;
+    color: var(--text);
+    line-height: 1.2;
+    margin-bottom: 40px;
+    max-width: 700px;
+  }
+
+  .fq-text em { color: var(--accent); font-style: italic; }
+
+  .fq-sub {
+    font-size: 12px;
+    color: var(--muted);
+    line-height: 1.8;
+    max-width: 560px;
+    margin-bottom: 48px;
+  }
+
+  .series-nav {
+    display: flex;
+    gap: 16px;
+    margin-top: 48px;
+    padding-top: 32px;
+    border-top: 1px solid var(--border);
+    flex-wrap: wrap;
+  }
+
+  .series-item {
+    padding: 12px 16px;
+    border: 1px solid var(--border);
+    font-size: 10px;
+    color: var(--muted);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+
+  .series-item.active { border-color: var(--accent); color: var(--accent); }
+  .series-item.done { border-color: var(--faint); color: var(--faint); }
+
+  .attribution-note {
+    font-size: 10px;
+    color: var(--faint);
+    line-height: 1.6;
+    margin-top: 32px;
+    padding-top: 24px;
+    border-top: 1px solid var(--border);
+    max-width: 560px;
+  }
+
+  .footer {
+    border-top: 1px solid var(--border);
+    padding: 32px 40px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .footer-brand { font-size: 10px; letter-spacing: 0.15em; color: var(--muted); }
+  .footer-link { font-size: 10px; letter-spacing: 0.1em; color: var(--accent); text-decoration: none; }
+
+  @media (max-width: 600px) {
+    nav { padding: 14px 20px; }
+    .hero { padding: 100px 20px 60px; }
+    .content { padding: 60px 20px; }
+    .hero-stats { gap: 24px; }
+    .existed-grid, .taxonomy { grid-template-columns: 1fr; }
+    .accum-item { grid-template-columns: 70px 1fr; }
+    .footer { flex-direction: column; gap: 12px; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-brand">DAR™ — Decision Authority Research</div>
+  <a href="https://matrix-audit.com" class="nav-link">matrix-audit.com</a>
+</nav>
+
+<section class="hero">
+  <div class="series-link">Observation Series — No. 3 of 3</div>
+  <div class="hero-label">Governance Observation · Case Study</div>
+  <h1>The Boeing<br><em>Question</em></h1>
+  <p class="hero-sub">
+    The 737 MAX certification path extended across years of accumulated decisions. Each individual decision appeared bounded and revisable. The public record raises a structural question: at what point did the certification path cease to require explicit re-authorization under conditions of accumulating uncertainty?
+  </p>
+  <div class="hero-stats">
+    <div class="stat">
+      <div class="stat-num">346</div>
+      <div class="stat-label">Lives lost across two crashes</div>
+    </div>
+    <div class="stat">
+      <div class="stat-num">Years</div>
+      <div class="stat-label">Of accumulated decisions</div>
+    </div>
+    <div class="stat">
+      <div class="stat-num">20+</div>
+      <div class="stat-label">Months grounded after crashes</div>
+    </div>
+  </div>
+</section>
+
+<div class="content">
+
+  <div class="prose-section" style="margin-top: 0; padding-top: 0;">
+    <p style="border-left: 3px solid var(--accent); padding-left: 20px; color: var(--text);">
+      This observation differs from the preceding cases in a significant way. Knight Capital and CrowdStrike involved acute failure events measurable in minutes. The Boeing MCAS governance question is structural and longitudinal: it concerns how a certification path accumulates irreversibility across time, such that no single decision appears to be the moment of commitment — even as the cumulative path becomes increasingly difficult to reverse.
+    </p>
+  </div>
+
+  <div class="section-marker">
+    <span class="marker-num">01</span>
+    <span class="marker-label">Accumulation of decisions</span>
+    <span class="marker-line"></span>
+  </div>
+
+  <div class="accum-timeline">
+
+    <div class="accum-item">
+      <div class="accum-year">2011</div>
+      <div class="accum-content">
+        <div class="accum-title">737 MAX program launched under competitive pressure</div>
+        <div class="accum-body">Boeing launches the 737 MAX to compete with Airbus A320neo. A key constraint: the aircraft must be certifiable as a derivative of the existing 737 family, not as a new type. This allows airlines to avoid full pilot retraining. The constraint shapes every subsequent design and certification decision.</div>
+      </div>
+    </div>
+
+    <div class="accum-item escalating">
+      <div class="accum-year">2012–2016</div>
+      <div class="accum-content">
+        <div class="accum-title">MCAS developed to address aerodynamic behavior</div>
+        <div class="accum-body">New CFM LEAP engines require repositioning on the wing, altering the aircraft's handling characteristics at high angles of attack. MCAS — Maneuvering Characteristics Augmentation System — is developed to compensate. The system is designed to activate automatically, without pilot awareness, to adjust the horizontal stabilizer. The decision to keep MCAS's existence undisclosed in pilot documentation is made during this period.</div>
+      </div>
+    </div>
+
+    <div class="accum-item escalating">
+      <div class="accum-year">2016–2017</div>
+      <div class="accum-content">
+        <div class="accum-title">FAA delegates certification authority. MCAS authority expanded.</div>
+        <div class="accum-body">The FAA delegates significant portions of certification review to Boeing's own engineers under Organization Designation Authorization. Separately, MCAS's authority over the stabilizer is expanded — the system is given greater range of movement than originally assessed — without a corresponding reassessment of its failure modes or pilot recovery time. The public record indicates this expansion was not flagged for additional regulatory review.</div>
+      </div>
+    </div>
+
+    <div class="accum-item escalating">
+      <div class="accum-year">Oct 2018</div>
+      <div class="accum-content">
+        <div class="accum-title">Lion Air Flight 610. 189 lives lost.</div>
+        <div class="accum-body">MCAS activates based on a faulty angle-of-attack sensor reading. Pilots, unaware of the system's existence and not trained on its recovery procedure, are unable to counteract repeated nose-down commands. The aircraft enters the Java Sea 13 minutes after takeoff. The 737 MAX continues flying.</div>
+      </div>
+    </div>
+
+    <div class="accum-item critical">
+      <div class="accum-year">Mar 2019</div>
+      <div class="accum-content">
+        <div class="accum-title">Ethiopian Airlines Flight 302. 157 lives lost.</div>
+        <div class="accum-body">An identical failure sequence. MCAS activates on a faulty sensor. Pilots follow Boeing's updated emergency procedure — which proves insufficient against the system's authority. The aircraft crashes six minutes after takeoff. Regulators ground the 737 MAX globally. The aircraft does not return to service for 20 months.</div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- THE STRUCTURAL QUESTION -->
+  <div class="section-marker">
+    <span class="marker-num">02</span>
+    <span class="marker-label">The structural question</span>
+    <span class="marker-line"></span>
+  </div>
+
+  <div class="prose-section">
+    <h2>Each decision appeared bounded.<br>The path did not.</h2>
+    <p>The Boeing MCAS case does not present a single moment of identifiable governance failure. It presents a sequence of decisions — competitive framing, design constraints, certification delegation, system expansion, documentation choices — each of which appeared manageable and revisable in isolation.</p>
+    <p>The structural question DAR observes is different: <strong>at what point did the cumulative path cease to require explicit re-authorization under conditions of accumulating uncertainty?</strong></p>
+
+    <div class="core-observation">
+      <p>Each individual decision appeared reversible.<br>The certification path, as a whole, accumulated toward irreversibility.<br>The public record does not identify the point at which re-authorization was required.</p>
+    </div>
+
+    <p>This is what distinguishes the Boeing case from the preceding two. Knight Capital and CrowdStrike involved systems moving faster than human decision cycles. Boeing involved a certification path moving slowly enough that each decision appeared considered — while the cumulative trajectory approached a condition from which return became increasingly costly, and ultimately was not taken before loss of life.</p>
+  </div>
+
+  <!-- WHAT EXISTED -->
+  <div class="section-marker">
+    <span class="marker-num">03</span>
+    <span class="marker-label">What was present. What the record does not show.</span>
+    <span class="marker-line"></span>
+  </div>
+
+  <div class="existed-grid">
+    <div class="existed-cell yes">
+      <div class="ec-label">What existed</div>
+      <ul>
+        <li>FAA certification authority and delegation framework</li>
+        <li>Internal Boeing engineering review processes</li>
+        <li>Safety assessment documentation for MCAS</li>
+        <li>Regulatory communication channels between Boeing and FAA</li>
+        <li>Post-Lion Air internal awareness of MCAS behavior</li>
+        <li>Congressional oversight after grounding</li>
+      </ul>
+    </div>
+    <div class="existed-cell no">
+      <div class="ec-label">What the public record does not identify</div>
+      <ul>
+        <li>A named individual with explicit authority to pause the certification path under accumulating uncertainty</li>
+        <li>A defined threshold at which MCAS authority expansion required independent re-authorization</li>
+        <li>A condition under which the derivative-type constraint required explicit re-examination</li>
+        <li>A named stop authority between Lion Air and Ethiopian Airlines</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="pull-quote">
+    <p>The governance structures present were designed to certify. The public record does not identify a named individual whose explicit release was required before the certification path could continue under accumulating uncertainty.</p>
+  </div>
+
+  <div class="danger-quote">
+    <p>When each decision appears reversible, the path toward irreversibility has no formal encounter with refusal.</p>
+  </div>
+
+  <!-- THE PATTERN -->
+  <div class="section-marker">
+    <span class="marker-num">04</span>
+    <span class="marker-label">The pattern across three cases</span>
+    <span class="marker-line"></span>
+  </div>
+
+  <div class="prose-section">
+    <p>Across three domains — financial execution, software deployment, and safety certification — a structural relationship appears in the public record. In each case, the system was organized around a path designed for continuity. In each case, the interruption condition was either absent, slower than the primary path, or not tied to a named individual with prior commitment.</p>
+  </div>
+
+  <div class="taxonomy">
+    <div class="taxonomy-cell">
+      <div class="tc-label">No. 1 · Knight Capital · 2012</div>
+      <div class="tc-title">Execution without interruption</div>
+      <div class="tc-type">Velocity: seconds</div>
+    </div>
+    <div class="taxonomy-cell">
+      <div class="tc-label">No. 2 · CrowdStrike · 2024</div>
+      <div class="tc-title">Propagation without interruption</div>
+      <div class="tc-type">Velocity: minutes</div>
+    </div>
+    <div class="taxonomy-cell active">
+      <div class="tc-label">No. 3 · Boeing MCAS · 2011–2019</div>
+      <div class="tc-title">Certification without interruption</div>
+      <div class="tc-type">Velocity: years</div>
+    </div>
+  </div>
+
+  <div class="prose-section">
+    <p>The velocity differs. The structure does not. In each case, the path toward the irreversible outcome did not require the explicit release of a named individual before continuation was permitted. Oversight existed. Process existed. Named stop authority, committed in advance, does not appear in the public record of any of the three cases.</p>
+  </div>
+
+  <!-- FINAL QUESTION -->
+  <div class="final-question">
+    <div class="fq-label">The question this case leaves behind</div>
+    <div class="fq-text">
+      At what point did the certification path require <em>explicit re-authorization</em> under accumulating uncertainty?
+    </div>
+    <p class="fq-sub">
+      Not who approved each individual decision. Not which regulator signed the final certificate.<br><br>
+      At what specific condition of accumulating uncertainty was a named individual required to explicitly release continuation — rather than having the path proceed by default toward the next decision?<br><br>
+      If that condition does not exist within the certification architecture, then the path toward irreversibility has no formal encounter with refusal. It accumulates, decision by decision, until the cost of stopping exceeds the cost of continuing. And then it continues.
+    </p>
+
+    <div class="series-nav">
+      <div class="series-item done">No. 1 · Knight Capital</div>
+      <div class="series-item done">No. 2 · CrowdStrike</div>
+      <div class="series-item active">No. 3 · Boeing MCAS</div>
+    </div>
+
+    <div class="attribution-note">
+      This observation is drawn from publicly available records including congressional testimony, the Joint Authorities Technical Review (JATR) report, the House Transportation Committee investigation (2020), and public reporting on Boeing's 737 MAX certification process. DAR makes no claim to insider knowledge of Boeing's or the FAA's internal governance. This observation does not attribute individual fault or negligence. It identifies a structural governance question observable from the public record.
+    </div>
+  </div>
+
+</div>
+
+<footer class="footer">
+  <div class="footer-brand">Decision Authority Research &nbsp;·&nbsp; Governance Observation Series</div>
+  <a href="https://matrix-audit.com" class="footer-link">matrix-audit.com</a>
+</footer>
+
+</body>
+</html>
