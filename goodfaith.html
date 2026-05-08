@@ -3,21 +3,14 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
-
 <title>Good Faith Use — Liran Bar-Shrim</title>
-
 <meta name="description" content="Scope, limits, and intended use of this research. Clarity can support judgment. It cannot replace it.">
-
 <meta name="robots" content="index,follow">
-
 <link rel="canonical" href="https://matrix-audit.com/goodfaith.html">
-
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&display=swap" rel="stylesheet">
-
 <style>
-
 :root {
   --bg: #080808;
   --gold: #c8a96e;
@@ -27,10 +20,8 @@
   --dim: #7a7570;
   --line: rgba(255,255,255,.06);
 }
-
 *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
 html { scroll-behavior: smooth; }
-
 body {
   background: var(--bg);
   color: var(--text);
@@ -39,7 +30,6 @@ body {
   -webkit-font-smoothing: antialiased;
   line-height: 1.85;
 }
-
 body::before {
   content: "";
   position: fixed;
@@ -50,10 +40,7 @@ body::before {
   background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
   background-size: 180px;
 }
-
 a { text-decoration: none; color: inherit; }
-
-/* ── TOPBAR ── */
 .topbar {
   position: fixed;
   top: 0; left: 0; right: 0;
@@ -67,7 +54,6 @@ a { text-decoration: none; color: inherit; }
   backdrop-filter: blur(16px);
   border-bottom: 1px solid var(--line);
 }
-
 .brand {
   display: flex;
   align-items: center;
@@ -78,9 +64,7 @@ a { text-decoration: none; color: inherit; }
   text-transform: uppercase;
   color: var(--text);
 }
-
 .brand-rule { width: 32px; height: 1px; background: var(--gold); }
-
 .nav-contact {
   font-family: "IBM Plex Mono", monospace;
   font-size: 9.5px;
@@ -90,23 +74,8 @@ a { text-decoration: none; color: inherit; }
   transition: opacity .2s;
 }
 .nav-contact:hover { opacity: .7; }
-
-/* ── CONTAINER ── */
-.wrap {
-  max-width: 800px;
-  margin: 0 auto;
-  padding: 0 48px;
-  position: relative;
-  z-index: 1;
-}
-
-/* ── HERO ── */
-.hero {
-  padding-top: 160px;
-  padding-bottom: 70px;
-  border-bottom: 1px solid var(--line);
-}
-
+.wrap { max-width: 800px; margin: 0 auto; padding: 0 48px; position: relative; z-index: 1; }
+.hero { padding-top: 160px; padding-bottom: 70px; border-bottom: 1px solid var(--line); }
 .hero h1 {
   font-size: clamp(36px, 5.5vw, 78px);
   font-weight: 400;
@@ -116,12 +85,7 @@ a { text-decoration: none; color: inherit; }
   margin-bottom: 36px;
   max-width: 20ch;
 }
-
-.hero h1 em {
-  font-style: italic;
-  color: var(--gold2);
-}
-
+.hero h1 em { font-style: italic; color: var(--gold2); }
 .hero-sub {
   font-size: clamp(17px, 1.5vw, 21px);
   font-weight: 300;
@@ -129,17 +93,8 @@ a { text-decoration: none; color: inherit; }
   color: var(--muted);
   max-width: 58ch;
 }
-
-/* ── SECTIONS ── */
-.doc-section {
-  padding: 56px 0;
-  border-bottom: 1px solid var(--line);
-}
-
-.doc-section:last-of-type {
-  border-bottom: none;
-}
-
+.doc-section { padding: 56px 0; border-bottom: 1px solid var(--line); }
+.doc-section:last-of-type { border-bottom: none; }
 .section-marker {
   font-family: "IBM Plex Mono", monospace;
   font-size: 9px;
@@ -148,7 +103,6 @@ a { text-decoration: none; color: inherit; }
   color: var(--dim);
   margin-bottom: 20px;
 }
-
 .doc-section h2 {
   font-size: clamp(24px, 3.2vw, 48px);
   font-weight: 400;
@@ -156,12 +110,7 @@ a { text-decoration: none; color: inherit; }
   margin-bottom: 24px;
   max-width: 22ch;
 }
-
-.doc-section h2 em {
-  font-style: italic;
-  color: var(--gold2);
-}
-
+.doc-section h2 em { font-style: italic; color: var(--gold2); }
 .body-p {
   font-size: clamp(16px, 1.4vw, 19px);
   font-weight: 300;
@@ -170,13 +119,7 @@ a { text-decoration: none; color: inherit; }
   max-width: 62ch;
   line-height: 1.9;
 }
-
-.body-p strong {
-  color: #c8c0b2;
-  font-weight: 400;
-}
-
-/* ── PULL ── */
+.body-p strong { color: #c8c0b2; font-weight: 400; }
 .pull {
   background: #0d0d0d;
   border-left: 3px solid var(--gold);
@@ -188,42 +131,12 @@ a { text-decoration: none; color: inherit; }
   font-style: italic;
   color: var(--text);
 }
-
-/* ── PRINCIPLE LIST ── */
-.principle-list {
-  margin: 28px 0;
-}
-
-.principle-item {
-  padding: 24px 0;
-  border-bottom: 1px solid var(--line);
-}
-
-.principle-item:first-child {
-  border-top: 1px solid var(--line);
-}
-
-.principle-title {
-  font-size: clamp(17px, 1.8vw, 24px);
-  font-weight: 400;
-  color: var(--text);
-  margin-bottom: 8px;
-}
-
-.principle-desc {
-  font-size: clamp(15px, 1.3vw, 17px);
-  font-weight: 300;
-  color: var(--muted);
-  line-height: 1.75;
-  max-width: 58ch;
-}
-
-/* ── FINAL ── */
-.final {
-  padding: 80px 0 100px;
-  border-top: 1px solid var(--line);
-}
-
+.principle-list { margin: 28px 0; }
+.principle-item { padding: 24px 0; border-bottom: 1px solid var(--line); }
+.principle-item:first-child { border-top: 1px solid var(--line); }
+.principle-title { font-size: clamp(17px, 1.8vw, 24px); font-weight: 400; color: var(--text); margin-bottom: 8px; }
+.principle-desc { font-size: clamp(15px, 1.3vw, 17px); font-weight: 300; color: var(--muted); line-height: 1.75; max-width: 58ch; }
+.final { padding: 80px 0 100px; border-top: 1px solid var(--line); }
 .back-link {
   font-family: "IBM Plex Mono", monospace;
   font-size: 9px;
@@ -235,7 +148,6 @@ a { text-decoration: none; color: inherit; }
   margin-bottom: 14px;
 }
 .back-link:hover { color: var(--gold2); }
-
 .sig {
   font-family: "IBM Plex Mono", monospace;
   font-size: 9.5px;
@@ -244,8 +156,6 @@ a { text-decoration: none; color: inherit; }
   color: var(--dim);
   margin-top: 28px;
 }
-
-/* ── FOOTER ── */
 .footer {
   position: relative;
   z-index: 1;
@@ -257,8 +167,6 @@ a { text-decoration: none; color: inherit; }
   letter-spacing: .2em;
   color: var(--dim);
 }
-
-/* ── RESPONSIVE ── */
 @media (max-width: 860px) {
   .topbar { padding: 0 20px; }
   .wrap { padding: 0 20px; }
@@ -266,13 +174,11 @@ a { text-decoration: none; color: inherit; }
   .pull { padding: 22px 24px; }
   .doc-section { padding: 44px 0; }
 }
-
 @keyframes fadeUp {
   from { opacity: 0; transform: translateY(16px); }
   to   { opacity: 1; transform: translateY(0); }
 }
 .hero { animation: fadeUp .9s ease both; }
-
 </style>
 </head>
 
@@ -288,7 +194,6 @@ a { text-decoration: none; color: inherit; }
 
 <main>
 
-  <!-- HERO -->
   <section class="hero wrap">
     <h1>Clarity supports judgment.<br>It does not <em>replace it.</em></h1>
     <p class="hero-sub">
@@ -298,7 +203,6 @@ a { text-decoration: none; color: inherit; }
     </p>
   </section>
 
-  <!-- SECTION 1: PURPOSE -->
   <div class="doc-section wrap">
     <div class="section-marker">Purpose</div>
     <h2>What this research is <em>for.</em></h2>
@@ -318,7 +222,6 @@ a { text-decoration: none; color: inherit; }
     </div>
   </div>
 
-  <!-- SECTION 2: LIMITS -->
   <div class="doc-section wrap">
     <div class="section-marker">Limits</div>
     <h2>What this research is <em>not.</em></h2>
@@ -340,42 +243,33 @@ a { text-decoration: none; color: inherit; }
     </p>
   </div>
 
-  <!-- SECTION 3: PRINCIPLES -->
   <div class="doc-section wrap">
     <div class="section-marker">Principles</div>
     <h2>Good faith <em>means substance.</em></h2>
-
     <div class="principle-list">
-
       <div class="principle-item">
         <div class="principle-title">Authority is human.</div>
         <div class="principle-desc">Documents may assign power. Only identifiable people can exercise it when timing matters.</div>
       </div>
-
       <div class="principle-item">
         <div class="principle-title">No cosmetic governance.</div>
         <div class="principle-desc">Processes that look serious but cannot interrupt danger are appearances, not control.</div>
       </div>
-
       <div class="principle-item">
         <div class="principle-title">Stop power needs oversight.</div>
         <div class="principle-desc">Unchecked stop authority can become veto abuse. No stop authority can become unmanaged momentum.</div>
       </div>
-
       <div class="principle-item">
         <div class="principle-title">Escalation must be real.</div>
         <div class="principle-desc">If authority is unclear during pressure, the framework has already failed.</div>
       </div>
-
       <div class="principle-item">
         <div class="principle-title">Use should be honest.</div>
         <div class="principle-desc">Application should be proportionate, lawful, and directed toward genuine governance improvement — not liability management or appearance of compliance.</div>
       </div>
-
     </div>
   </div>
 
-  <!-- SECTION 4: CLOSING QUESTION -->
   <div class="doc-section wrap">
     <div class="section-marker">The Question</div>
     <h2>If the decision mattered tomorrow,<br>would authority be <em>clear today?</em></h2>
@@ -386,10 +280,9 @@ a { text-decoration: none; color: inherit; }
     </p>
   </div>
 
-  <!-- FINAL -->
   <section class="final wrap">
     <a href="index.html" class="back-link">← Back to main</a>
-    <a href="whitepaper.html" class="back-link">→ White Paper</a>
+    <a href="whitepaper.html" class="back-link">→ Research Note</a>
     <a href="faq.html" class="back-link" style="margin-bottom:28px;">→ FAQ</a>
     <div class="sig">Liran Bar-Shrim · Independent Writing & Research · 2026</div>
   </section>
@@ -402,4 +295,3 @@ a { text-decoration: none; color: inherit; }
 
 </body>
 </html>
- 
