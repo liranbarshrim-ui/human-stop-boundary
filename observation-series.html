@@ -1,0 +1,572 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Governance Observation Series — Decision Authority Research</title>
+<meta name="description" content="Three domains. Three timescales. One recurring structural question: at what point did continuation cease to require explicit re-authorization from a named individual?">
+<meta name="robots" content="index,follow">
+<meta property="og:title" content="Governance Observation Series — Decision Authority Research">
+<meta property="og:description" content="Three domains. Three timescales. One recurring structural question.">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Liran Bar-Shrim">
+<link rel="canonical" href="https://matrix-audit.com/observation-series.html">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@300;400;500&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #080808;
+  --surface: #0d0d0d;
+  --gold: #c8a96e;
+  --gold2: #ead9b3;
+  --text: #ebe5da;
+  --muted: #b8b0a4;
+  --dim: #7a7570;
+  --faint: #2a2a2a;
+  --line: rgba(255,255,255,.05);
+}
+
+*, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+html { scroll-behavior: smooth; }
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'IBM Plex Mono', monospace;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+  line-height: 1.7;
+}
+
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  opacity: .028;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-size: 180px;
+}
+
+a { text-decoration: none; color: inherit; }
+
+/* NAV */
+nav {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  height: 64px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 48px;
+  z-index: 100;
+  background: rgba(8,8,8,.94);
+  backdrop-filter: blur(16px);
+  border-bottom: 1px solid var(--line);
+}
+
+.nav-brand {
+  font-size: 9px;
+  letter-spacing: .28em;
+  text-transform: uppercase;
+  color: var(--gold);
+}
+
+.nav-back {
+  font-size: 9px;
+  letter-spacing: .2em;
+  text-transform: uppercase;
+  color: var(--dim);
+  transition: color .2s;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.nav-back:hover { color: var(--text); }
+.nav-back::before { content: '←'; }
+
+/* HERO */
+.hero {
+  padding: 140px 48px 80px;
+  max-width: 1200px;
+  margin: 0 auto;
+  position: relative;
+  z-index: 1;
+  border-bottom: 1px solid var(--line);
+}
+
+.hero-eyebrow {
+  font-size: 9px;
+  letter-spacing: .28em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 32px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.hero-eyebrow::before { content: ''; width: 32px; height: 1px; background: var(--gold); }
+
+.hero h1 {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(40px, 7vw, 88px);
+  font-weight: 300;
+  line-height: 1.0;
+  color: var(--text);
+  margin-bottom: 40px;
+  max-width: 16ch;
+}
+
+.hero h1 em { font-style: italic; color: var(--gold); }
+
+.hero-premise {
+  font-size: clamp(13px, 1.2vw, 15px);
+  color: var(--muted);
+  max-width: 52ch;
+  line-height: 1.85;
+  margin-bottom: 48px;
+}
+
+/* TAXONOMY STRIP */
+.taxonomy-strip {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1px;
+  background: var(--faint);
+  border: 1px solid var(--faint);
+  max-width: 600px;
+}
+
+.tx-cell {
+  background: var(--surface);
+  padding: 14px 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.tx-domain {
+  font-size: 8px;
+  letter-spacing: .15em;
+  text-transform: uppercase;
+  color: var(--dim);
+}
+
+.tx-velocity {
+  font-size: 11px;
+  color: var(--gold);
+  letter-spacing: .05em;
+}
+
+/* MAIN CONTENT */
+.main {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 48px 96px;
+  position: relative;
+  z-index: 1;
+}
+
+/* FRAMING */
+.framing {
+  padding: 64px 0;
+  border-bottom: 1px solid var(--line);
+  max-width: 640px;
+}
+
+.framing-label {
+  font-size: 9px;
+  letter-spacing: .22em;
+  text-transform: uppercase;
+  color: var(--dim);
+  margin-bottom: 20px;
+}
+
+.framing p {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(18px, 2vw, 24px);
+  font-weight: 300;
+  color: var(--muted);
+  line-height: 1.6;
+  margin-bottom: 16px;
+}
+
+.framing p strong {
+  color: var(--text);
+  font-weight: 400;
+}
+
+/* CASE CARDS */
+.cases {
+  padding: 64px 0;
+}
+
+.cases-label {
+  font-size: 9px;
+  letter-spacing: .22em;
+  text-transform: uppercase;
+  color: var(--dim);
+  margin-bottom: 32px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.cases-label::after { content: ''; flex: 1; height: 1px; background: var(--faint); }
+
+.case-card {
+  display: grid;
+  grid-template-columns: 80px 1fr auto;
+  gap: 0;
+  border: 1px solid var(--faint);
+  margin-bottom: 1px;
+  transition: border-color .2s, background .2s;
+  text-decoration: none;
+  color: inherit;
+  position: relative;
+  overflow: hidden;
+}
+
+.case-card::before {
+  content: '';
+  position: absolute;
+  left: 0; top: 0; bottom: 0;
+  width: 2px;
+  background: transparent;
+  transition: background .2s;
+}
+
+.case-card:hover {
+  border-color: rgba(200,169,110,.25);
+  background: rgba(200,169,110,.02);
+}
+
+.case-card:hover::before { background: var(--gold); }
+
+.case-num {
+  padding: 28px 20px;
+  border-right: 1px solid var(--faint);
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-end;
+}
+
+.case-num span {
+  font-size: 9px;
+  letter-spacing: .15em;
+  color: var(--faint);
+  margin-top: 4px;
+}
+
+.case-body { padding: 28px 32px; }
+
+.case-domain {
+  font-size: 9px;
+  letter-spacing: .18em;
+  text-transform: uppercase;
+  color: var(--dim);
+  margin-bottom: 10px;
+}
+
+.case-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(20px, 2.2vw, 28px);
+  font-weight: 300;
+  color: var(--text);
+  line-height: 1.2;
+  margin-bottom: 12px;
+}
+
+.case-desc {
+  font-size: 12px;
+  color: var(--muted);
+  line-height: 1.75;
+  max-width: 56ch;
+}
+
+.case-meta {
+  padding: 28px 28px 28px 16px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: flex-end;
+  border-left: 1px solid var(--faint);
+  min-width: 140px;
+}
+
+.case-velocity {
+  font-size: 9px;
+  letter-spacing: .15em;
+  text-transform: uppercase;
+  color: var(--gold);
+}
+
+.case-stats {
+  text-align: right;
+}
+
+.case-stat-num {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 28px;
+  font-weight: 300;
+  color: rgba(192,57,43,.7);
+  line-height: 1;
+  margin-bottom: 2px;
+}
+
+.case-stat-label {
+  font-size: 8px;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  color: var(--dim);
+  line-height: 1.4;
+}
+
+/* STRUCTURAL OBSERVATION */
+.structural {
+  padding: 64px 0;
+  border-top: 1px solid var(--line);
+}
+
+.structural-label {
+  font-size: 9px;
+  letter-spacing: .22em;
+  text-transform: uppercase;
+  color: var(--dim);
+  margin-bottom: 32px;
+}
+
+.obs-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1px;
+  background: var(--faint);
+  border: 1px solid var(--faint);
+  margin-bottom: 40px;
+}
+
+.obs-cell {
+  background: var(--surface);
+  padding: 24px 20px;
+}
+
+.obs-cell-label {
+  font-size: 8px;
+  letter-spacing: .15em;
+  text-transform: uppercase;
+  color: var(--dim);
+  margin-bottom: 10px;
+}
+
+.obs-cell-text {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 15px;
+  font-weight: 300;
+  color: var(--muted);
+  line-height: 1.5;
+}
+
+.obs-cell-text em {
+  font-style: italic;
+  color: var(--text);
+}
+
+.structural-q {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(18px, 2.2vw, 26px);
+  font-weight: 300;
+  font-style: italic;
+  color: var(--text);
+  line-height: 1.45;
+  max-width: 640px;
+  border-left: 3px solid var(--gold);
+  padding-left: 28px;
+}
+
+/* SCOPE NOTE */
+.scope {
+  padding: 40px 0 0;
+  border-top: 1px solid var(--faint);
+  margin-top: 48px;
+}
+
+.scope p {
+  font-size: 11px;
+  color: var(--dim);
+  line-height: 1.75;
+  max-width: 64ch;
+  letter-spacing: .01em;
+}
+
+/* FOOTER */
+footer {
+  border-top: 1px solid var(--line);
+  padding: 24px 48px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: relative;
+  z-index: 1;
+}
+
+.footer-left {
+  font-size: 9px;
+  letter-spacing: .15em;
+  text-transform: uppercase;
+  color: var(--dim);
+}
+
+.footer-right a {
+  font-size: 9px;
+  letter-spacing: .15em;
+  text-transform: uppercase;
+  color: var(--gold);
+  text-decoration: none;
+}
+
+@media (max-width: 768px) {
+  nav { padding: 0 20px; }
+  .hero { padding: 120px 20px 60px; }
+  .main { padding: 0 20px 80px; }
+  .taxonomy-strip { grid-template-columns: 1fr; max-width: 100%; }
+  .case-card { grid-template-columns: 48px 1fr; }
+  .case-meta { display: none; }
+  .obs-grid { grid-template-columns: 1fr; }
+  footer { padding: 20px; flex-direction: column; gap: 12px; text-align: center; }
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-brand">Decision Authority Research</div>
+  <a href="index.html" class="nav-back">Return to index</a>
+</nav>
+
+<section class="hero">
+  <div class="hero-eyebrow">Governance Observation Series</div>
+  <h1>Three domains.<br>One recurring<br><em>structural question.</em></h1>
+  <p class="hero-premise">
+    The same pattern appears across financial execution, software deployment, and safety certification. The variable is not the industry. It is the velocity of continuation.
+  </p>
+  <div class="taxonomy-strip">
+    <div class="tx-cell">
+      <div class="tx-domain">Financial Execution</div>
+      <div class="tx-velocity">Velocity: seconds</div>
+    </div>
+    <div class="tx-cell">
+      <div class="tx-domain">Software Deployment</div>
+      <div class="tx-velocity">Velocity: minutes</div>
+    </div>
+    <div class="tx-cell">
+      <div class="tx-domain">Safety Certification</div>
+      <div class="tx-velocity">Velocity: years</div>
+    </div>
+  </div>
+</section>
+
+<div class="main">
+
+  <!-- FRAMING -->
+  <div class="framing">
+    <div class="framing-label">What this series observes</div>
+    <p>Each case is drawn from the public record. No insider knowledge is claimed. No fault is attributed to named individuals.</p>
+    <p>What the public record makes visible, across three separate domains, is a <strong>recurring structural relationship</strong> between continuity architecture and interruption architecture.</p>
+    <p>In each case: the path toward continuation was faster, more automated, or more institutionally embedded than the path toward interruption. And in each case, the public record does not identify a named individual whose explicit release was required before continuation could proceed under conditions of material uncertainty.</p>
+  </div>
+
+  <!-- CASES -->
+  <div class="cases">
+    <div class="cases-label">Observations</div>
+
+    <a href="knight-capital.html" class="case-card">
+      <div class="case-num"><span>01</span></div>
+      <div class="case-body">
+        <div class="case-domain">Financial Execution · Knight Capital Group · 2012</div>
+        <div class="case-title">Execution without interruption</div>
+        <div class="case-desc">An automated trading system executed 4 million transactions in 45 minutes. Alerts were visible. Escalation occurred. The public record does not identify a named individual with prior, explicit authority to halt execution before the loss became unrecoverable.</div>
+      </div>
+      <div class="case-meta">
+        <div class="case-velocity">Velocity: seconds</div>
+        <div class="case-stats">
+          <div class="case-stat-num">$440M</div>
+          <div class="case-stat-label">Unrecoverable<br>in 45 minutes</div>
+        </div>
+      </div>
+    </a>
+
+    <a href="crowdstrike.html" class="case-card">
+      <div class="case-num"><span>02</span></div>
+      <div class="case-body">
+        <div class="case-domain">Software Deployment · CrowdStrike · 2024</div>
+        <div class="case-title">Propagation without interruption</div>
+        <div class="case-desc">A content update propagated to 8.5 million devices in under 90 minutes. The deployment path was optimized for velocity. The interruption path remained manual and slower than propagation. The public record does not identify a named stop authority for the deployment.</div>
+      </div>
+      <div class="case-meta">
+        <div class="case-velocity">Velocity: minutes</div>
+        <div class="case-stats">
+          <div class="case-stat-num">8.5M</div>
+          <div class="case-stat-label">Devices<br>affected</div>
+        </div>
+      </div>
+    </a>
+
+    <a href="boeing.html" class="case-card">
+      <div class="case-num"><span>03</span></div>
+      <div class="case-body">
+        <div class="case-domain">Safety Certification · Boeing 737 MAX · 2011–2019</div>
+        <div class="case-title">Certification without interruption</div>
+        <div class="case-desc">A certification path accumulated across years of individually bounded decisions. Each decision appeared reversible. The path as a whole accumulated toward irreversibility. The public record does not identify the point at which re-authorization under accumulating uncertainty was required.</div>
+      </div>
+      <div class="case-meta">
+        <div class="case-velocity">Velocity: years</div>
+        <div class="case-stats">
+          <div class="case-stat-num">346</div>
+          <div class="case-stat-label">Lives lost<br>across two crashes</div>
+        </div>
+      </div>
+    </a>
+
+  </div>
+
+  <!-- STRUCTURAL OBSERVATION -->
+  <div class="structural">
+    <div class="structural-label">The recurring structure</div>
+
+    <div class="obs-grid">
+      <div class="obs-cell">
+        <div class="obs-cell-label">What appeared in each case</div>
+        <div class="obs-cell-text">Oversight. Process. Escalation channels. <em>Approval authority.</em></div>
+      </div>
+      <div class="obs-cell">
+        <div class="obs-cell-label">What the public record does not show</div>
+        <div class="obs-cell-text">A named individual with <em>prior, explicit commitment</em> to refuse continuation under uncertainty.</div>
+      </div>
+      <div class="obs-cell">
+        <div class="obs-cell-label">The structural relationship</div>
+        <div class="obs-cell-text">The continuation path was <em>faster or more embedded</em> than the interruption path.</div>
+      </div>
+    </div>
+
+    <div class="structural-q">
+      At what point did continuation cease to require explicit re-authorization from a named individual — and who, by name, held that authority before the event?
+    </div>
+
+    <div class="scope">
+      <p>These observations are drawn from publicly available post-incident analyses, regulatory findings, congressional testimony, and published reporting. DAR makes no claim to insider knowledge of any of the organizations examined. No fault or negligence is attributed to named individuals. The governance gap identified in each case is structural and observable from the public record alone.</p>
+    </div>
+  </div>
+
+</div>
+
+<footer>
+  <div class="footer-left">Decision Authority Research · Governance Observation Series</div>
+  <div class="footer-right"><a href="matrix-audit.com">matrix-audit.com</a></div>
+</footer>
+
+</body>
+</html>
