@@ -162,7 +162,7 @@ a { text-decoration: none; color: inherit; }
 }
 @media (max-width: 860px) {
   .topbar { padding: 0 20px; }
-  .wrap-narrow { padding: 0 20px; }
+  .wrap-narrow { padding: 0 20px; max-width: 100%; }
   .hero { padding-top: 120px; padding-bottom: 50px; }
   .faq-item { padding: 36px 0; }
 }
@@ -171,6 +171,15 @@ a { text-decoration: none; color: inherit; }
   to   { opacity: 1; transform: translateY(0); }
 }
 .hero { animation: fadeUp .9s ease both; }
+
+@media (max-width: 640px) {
+  .wrap, .wrap-narrow {
+    padding-left: 20px !important;
+    padding-right: 20px !important;
+    max-width: 100% !important;
+  }
+  body { overflow-x: hidden !important; }
+}
 </style>
 </head>
 
@@ -314,4 +323,3 @@ a { text-decoration: none; color: inherit; }
 
 </body>
 </html>
- 
