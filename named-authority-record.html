@@ -1,0 +1,609 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Named Authority Record — Decision Authority Research</title>
+<meta name="description" content="A structural governance artifact defining named interruption authority before irreversible execution conditions emerge.">
+<meta name="robots" content="index,follow">
+<meta property="og:title" content="Named Authority Record — Decision Authority Research">
+<meta property="og:description" content="A structural governance artifact defining named interruption authority before irreversible execution conditions emerge.">
+<meta property="og:image" content="https://matrix-audit.com/og-image.png">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Decision Authority Research">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://matrix-audit.com/og-image.png">
+<link rel="canonical" href="https://matrix-audit.com/named-authority-record.html">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@300;400;500&family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #070707;
+  --surface: #0c0c0c;
+  --surface2: #0f0f0f;
+  --gold: #c8a96e;
+  --text: #e2dcd4;
+  --muted: #7a7570;
+  --dim: #3d3830;
+  --line: rgba(255,255,255,.05);
+  --line-strong: rgba(255,255,255,.08);
+  --amber: #9f8a55;
+  --danger: #8a5050;
+}
+
+*, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+html { scroll-behavior: smooth; overflow-x: hidden; }
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'IBM Plex Mono', monospace;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+  line-height: 1.6;
+}
+
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  opacity: .025;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-size: 180px;
+}
+
+a { text-decoration: none; color: inherit; }
+
+/* NAV */
+nav {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  height: 52px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 40px;
+  z-index: 100;
+  background: rgba(7,7,7,.95);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--line);
+}
+
+.nav-brand {
+  font-size: 8px;
+  letter-spacing: .22em;
+  text-transform: uppercase;
+  color: var(--gold);
+}
+
+.nav-back {
+  font-size: 8px;
+  letter-spacing: .18em;
+  text-transform: uppercase;
+  color: var(--muted);
+  transition: color .2s;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.nav-back::before { content: '←'; }
+.nav-back:hover { color: var(--text); }
+
+/* PAGE */
+.page {
+  max-width: 680px;
+  margin: 0 auto;
+  padding: 88px 40px 88px;
+  position: relative;
+  z-index: 1;
+}
+
+/* PAGE HEADER */
+.page-header {
+  padding-bottom: 28px;
+  margin-bottom: 36px;
+  border-bottom: 1px solid var(--line-strong);
+}
+
+.header-top {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  margin-bottom: 20px;
+  gap: 20px;
+}
+
+.header-id {
+  font-size: 8px;
+  letter-spacing: .2em;
+  color: var(--muted);
+}
+
+.header-status {
+  font-size: 8px;
+  letter-spacing: .16em;
+  text-transform: uppercase;
+  padding: 3px 10px;
+  border: 1px solid rgba(200,169,110,.3);
+  color: var(--gold);
+  white-space: nowrap;
+}
+
+.page-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(26px, 4vw, 40px);
+  font-weight: 300;
+  color: var(--text);
+  line-height: 1.15;
+  margin-bottom: 10px;
+}
+
+.page-subtitle {
+  font-size: 10px;
+  color: var(--muted);
+  letter-spacing: .08em;
+  line-height: 1.6;
+}
+
+.page-note {
+  margin-top: 16px;
+  padding: 10px 14px;
+  border-left: 2px solid var(--dim);
+  font-size: 9px;
+  color: var(--muted);
+  line-height: 1.65;
+  letter-spacing: .02em;
+}
+
+/* RECORD BLOCK */
+.record {
+  background: var(--surface);
+  border: 1px solid var(--line-strong);
+  margin-bottom: 2px;
+  box-shadow: 0 8px 24px rgba(0,0,0,.2);
+  filter: contrast(1.01);
+}
+
+/* RECORD SECTION HEADER */
+.rec-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 18px;
+  background: var(--surface2);
+  border-bottom: 1px solid var(--line);
+}
+
+.rec-section {
+  font-size: 7px;
+  letter-spacing: .22em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.rec-id {
+  font-size: 7px;
+  letter-spacing: .12em;
+  color: var(--dim);
+}
+
+/* FIELDS */
+.field-group {
+  padding: 4px 0;
+}
+
+.field {
+  display: grid;
+  grid-template-columns: 180px 1fr;
+  border-bottom: 1px solid rgba(255,255,255,.025);
+  min-height: 40px;
+}
+
+.field:last-child { border-bottom: none; }
+
+.field-label {
+  font-size: 8px;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  color: var(--muted);
+  padding: 12px 18px;
+  border-right: 1px solid rgba(255,255,255,.025);
+  background: rgba(255,255,255,.008);
+  display: flex;
+  align-items: flex-start;
+  line-height: 1.5;
+}
+
+.field-value {
+  font-size: 11px;
+  color: var(--text);
+  padding: 12px 18px;
+  line-height: 1.55;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.field-value sub {
+  display: block;
+  font-size: 9px;
+  color: var(--muted);
+  margin-top: 3px;
+  letter-spacing: .02em;
+}
+
+.field-value.pending { color: var(--amber); }
+.field-value.withheld { color: var(--danger); }
+.field-value.released { color: #5a8a6a; }
+.field-value.ts { color: var(--muted); font-size: 10px; }
+
+/* CONDITION BLOCK */
+.condition-block {
+  padding: 14px 18px;
+  border-top: 1px solid var(--line);
+  background: rgba(255,255,255,.012);
+}
+
+.condition-label {
+  font-size: 7px;
+  letter-spacing: .2em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 8px;
+}
+
+.condition-text {
+  font-size: 11px;
+  color: var(--text);
+  line-height: 1.65;
+  font-style: italic;
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 15px;
+  font-weight: 300;
+}
+
+/* STATUS FOOTER */
+.status-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 18px;
+  border-top: 1px solid var(--line-strong);
+  background: var(--surface2);
+}
+
+.sf-label {
+  font-size: 8px;
+  letter-spacing: .16em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.sf-value {
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: .06em;
+  text-transform: uppercase;
+}
+
+.sf-value.withheld { color: var(--danger); }
+.sf-value.released { color: #5a8a6a; }
+.sf-value.pending { color: var(--amber); }
+
+/* RECORD GAP */
+.record-gap {
+  height: 20px;
+  display: flex;
+  align-items: center;
+  padding: 0 18px;
+}
+
+.record-gap span {
+  font-size: 7px;
+  letter-spacing: .18em;
+  text-transform: uppercase;
+  color: var(--dim);
+}
+
+/* OVERRIDE NOTE */
+.override-note {
+  background: rgba(138,80,80,.05);
+  border-left: 2px solid var(--danger);
+  padding: 12px 16px;
+  font-size: 10px;
+  color: var(--muted);
+  line-height: 1.65;
+  margin: 0;
+}
+
+.override-note strong { color: var(--danger); font-weight: 500; }
+
+/* PAGE FOOTER NOTE */
+.footer-note {
+  margin-top: 40px;
+  padding-top: 24px;
+  border-top: 1px solid var(--line);
+  font-size: 9px;
+  color: var(--muted);
+  line-height: 1.75;
+  max-width: 54ch;
+}
+
+.footer-note a {
+  color: var(--gold);
+  border-bottom: 1px solid rgba(200,169,110,.2);
+  transition: border-color .2s;
+}
+
+.footer-note a:hover { border-color: var(--gold); }
+
+footer {
+  border-top: 1px solid var(--line);
+  padding: 18px 40px;
+  display: flex;
+  justify-content: space-between;
+  position: relative;
+  z-index: 1;
+  font-size: 8px;
+  letter-spacing: .12em;
+  color: var(--muted);
+}
+
+@media (max-width: 600px) {
+  nav { padding: 0 20px; }
+  .page { padding: 76px 20px 64px; }
+  .field { grid-template-columns: 1fr; }
+  .field-label { border-right: none; border-bottom: 1px solid rgba(255,255,255,.025); padding: 10px 14px 6px; }
+  .field-value { padding: 6px 14px 10px; }
+  footer { flex-direction: column; gap: 6px; padding: 14px 20px; }
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-brand">Decision Authority Research</div>
+  <a href="index.html" class="nav-back">Return to index</a>
+</nav>
+
+<div class="page">
+
+  <div class="page-header">
+    <div class="header-top">
+      <div class="header-id">NAR Series · Illustrative Governance Artifact</div>
+      <div class="header-status">Specimen Record</div>
+    </div>
+    <div class="page-title">Named Authority<br>Record</div>
+    <div class="page-subtitle">Structural governance artifact · Named interruption authority designation</div>
+    <div class="page-note">Names, organizations, execution contexts, and decisions are fictional. The structural conditions these records reflect are not. These records exist to illustrate what named interruption authority looks like when designated before an event — not reconstructed after it.</div>
+  </div>
+
+  <!-- RECORD A -->
+  <div class="record">
+
+    <div class="rec-header">
+      <div class="rec-section">Section 01 — Authority Structure</div>
+      <div class="rec-id">NAR-2026-0118-A</div>
+    </div>
+
+    <div class="field-group">
+      <div class="field">
+        <div class="field-label">Execution Class</div>
+        <div class="field-value">Autonomous Deployment<sub>Irreversible propagation window · Global infrastructure</sub></div>
+      </div>
+      <div class="field">
+        <div class="field-label">Primary Refusal Authority</div>
+        <div class="field-value">A. Rivera<sub>Senior Infrastructure Integrity Lead</sub></div>
+      </div>
+      <div class="field">
+        <div class="field-label">Hold Authority</div>
+        <div class="field-value">D. Osei<sub>Deployment Continuity Governance</sub></div>
+      </div>
+      <div class="field">
+        <div class="field-label">Authorization Authority</div>
+        <div class="field-value">T. Nakamura<sub>Operational Governance Lead</sub></div>
+      </div>
+      <div class="field">
+        <div class="field-label">Designated</div>
+        <div class="field-value ts">2026-01-18 · Prior to deployment window</div>
+      </div>
+    </div>
+
+    <div class="rec-header" style="border-top:1px solid var(--line);">
+      <div class="rec-section">Section 02 — Release Dependency</div>
+      <div class="rec-id"></div>
+    </div>
+
+    <div class="condition-block">
+      <div class="condition-label">Continuation Condition</div>
+      <div class="condition-text">Continuation prohibited without explicit release from Primary Refusal Authority under unresolved rollback uncertainty or anomalous propagation behavior.</div>
+    </div>
+
+    <div class="field-group">
+      <div class="field">
+        <div class="field-label">Release Threshold</div>
+        <div class="field-value">Rollback behavior verified across all active deployment zones</div>
+      </div>
+      <div class="field">
+        <div class="field-label">Default State</div>
+        <div class="field-value withheld">Continuation withheld</div>
+      </div>
+    </div>
+
+    <div class="rec-header" style="border-top:1px solid var(--line);">
+      <div class="rec-section">Section 03 — Escalation Interval</div>
+      <div class="rec-id"></div>
+    </div>
+
+    <div class="field-group">
+      <div class="field">
+        <div class="field-label">Response Interval</div>
+        <div class="field-value">90 minutes from hold invocation</div>
+      </div>
+      <div class="field">
+        <div class="field-label">Escalation Path</div>
+        <div class="field-value">Executive Infrastructure Oversight<sub>Activated if Authorization Authority fails to respond within interval</sub></div>
+      </div>
+      <div class="field">
+        <div class="field-label">Silence Protocol</div>
+        <div class="field-value">Non-response within interval does not authorize continuation. Silence is treated as unresolved hold.</div>
+      </div>
+    </div>
+
+    <div class="rec-header" style="border-top:1px solid var(--line);">
+      <div class="rec-section">Section 04 — Override Record</div>
+      <div class="rec-id"></div>
+    </div>
+
+    <div class="field-group">
+      <div class="field">
+        <div class="field-label">Override Status</div>
+        <div class="field-value released">No override recorded</div>
+      </div>
+      <div class="field">
+        <div class="field-label">Release Issued</div>
+        <div class="field-value ts">2026-01-18 · A. Rivera · Written · 23:44 UTC</div>
+      </div>
+    </div>
+
+    <div class="rec-header" style="border-top:1px solid var(--line);">
+      <div class="rec-section">Section 05 — Continuation Status</div>
+      <div class="rec-id"></div>
+    </div>
+
+    <div class="status-footer">
+      <div class="sf-label">Continuation Status</div>
+      <div class="sf-value released">Released · Named · Documented</div>
+    </div>
+
+  </div>
+
+  <div class="record-gap"><span>Second record</span></div>
+
+  <!-- RECORD B — incomplete, override condition -->
+  <div class="record">
+
+    <div class="rec-header">
+      <div class="rec-section">Section 01 — Authority Structure</div>
+      <div class="rec-id">NAR-2026-0302-C</div>
+    </div>
+
+    <div class="field-group">
+      <div class="field">
+        <div class="field-label">Execution Class</div>
+        <div class="field-value">Automated Financial Execution<sub>High-volume batch · Irreversible settlement window</sub></div>
+      </div>
+      <div class="field">
+        <div class="field-label">Primary Refusal Authority</div>
+        <div class="field-value">S. Lindqvist<sub>Risk Execution Lead</sub></div>
+      </div>
+      <div class="field">
+        <div class="field-label">Hold Authority</div>
+        <div class="field-value pending">Not designated at time of execution<sub>Designated role unfilled · Continuity gap recorded</sub></div>
+      </div>
+      <div class="field">
+        <div class="field-label">Authorization Authority</div>
+        <div class="field-value">P. Walsh<sub>Senior Trading Infrastructure</sub></div>
+      </div>
+      <div class="field">
+        <div class="field-label">Designated</div>
+        <div class="field-value ts">2026-03-02 · Partial designation · Hold Authority absent</div>
+      </div>
+    </div>
+
+    <div class="rec-header" style="border-top:1px solid var(--line);">
+      <div class="rec-section">Section 02 — Release Dependency</div>
+      <div class="rec-id"></div>
+    </div>
+
+    <div class="condition-block">
+      <div class="condition-label">Continuation Condition</div>
+      <div class="condition-text">Continuation prohibited without explicit release under anomalous position accumulation or unresolved model behavior deviation.</div>
+    </div>
+
+    <div class="field-group">
+      <div class="field">
+        <div class="field-label">Release Threshold</div>
+        <div class="field-value">Position accumulation within validated parameters</div>
+      </div>
+      <div class="field">
+        <div class="field-label">Default State</div>
+        <div class="field-value withheld">Continuation withheld</div>
+      </div>
+    </div>
+
+    <div class="rec-header" style="border-top:1px solid var(--line);">
+      <div class="rec-section">Section 03 — Escalation Interval</div>
+      <div class="rec-id"></div>
+    </div>
+
+    <div class="field-group">
+      <div class="field">
+        <div class="field-label">Response Interval</div>
+        <div class="field-value">30 minutes from refusal invocation</div>
+      </div>
+      <div class="field">
+        <div class="field-label">Escalation Path</div>
+        <div class="field-value">Risk Governance Committee<sub>Activated if Authorization Authority fails to respond within interval</sub></div>
+      </div>
+    </div>
+
+    <div class="rec-header" style="border-top:1px solid var(--line);">
+      <div class="rec-section">Section 04 — Override Record</div>
+      <div class="rec-id"></div>
+    </div>
+
+    <div class="field-group">
+      <div class="field">
+        <div class="field-label">Refusal Invoked</div>
+        <div class="field-value ts">07 Mar 2026 / 09:41 · S. Lindqvist</div>
+      </div>
+      <div class="field">
+        <div class="field-label">Override Issued</div>
+        <div class="field-value ts">09:53:12 UTC · P. Walsh · Verbal · Undocumented</div>
+      </div>
+      <div class="field">
+        <div class="field-label">Written Rationale</div>
+        <div class="field-value pending">Not provided at time of override</div>
+      </div>
+      <div class="field">
+        <div class="field-label">Audit Attachment</div>
+        <div class="field-value pending">Unavailable at time of review</div>
+      </div>
+    </div>
+
+    <div class="override-note">
+      <strong>Override condition flagged.</strong> Continuation proceeded on verbal authorization without written rationale. Refusal record exists. Override documentation does not. Governance review pending.
+    </div>
+
+    <div class="rec-header" style="border-top:1px solid var(--line);">
+      <div class="rec-section">Section 05 — Continuation Status</div>
+      <div class="rec-id"></div>
+    </div>
+
+    <div class="status-footer">
+      <div class="sf-label">Continuation Status</div>
+      <div class="sf-value pending">Proceeded · Rationale Absent</div>
+    </div>
+
+  </div>
+
+  <div class="footer-note">
+    These records are illustrative. The Named Authority Record is a structural governance artifact designating named interruption authority before irreversible execution conditions emerge — not a response to them.<br><br>
+    <a href="escalation-snapshot.html">Escalation Snapshot →</a> &nbsp;·&nbsp;
+    <a href="governance-risk-brief.html">Governance Risk Brief →</a> &nbsp;·&nbsp;
+    <a href="observation-series.html">Observation Series →</a>
+  </div>
+
+</div>
+
+<footer>
+  <span>Decision Authority Research · Named Authority Record</span>
+  <span>matrix-audit.com</span>
+</footer>
+
+</body>
+</html>
