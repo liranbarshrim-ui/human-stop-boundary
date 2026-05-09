@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>The Boeing Question — Decision Authority Research</title>
+<title>The Boeing Question — Liran Bar-Shrim</title>
 <style>
   @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@300;400;500&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&display=swap');
 
@@ -42,7 +42,7 @@
 
   nav {
     position: fixed;
-    top: 0; left: 0; right: 0;
+    top: 32px; left: 0; right: 0;
     z-index: 100;
     padding: 16px 40px;
     display: flex;
@@ -462,16 +462,26 @@
     .accum-item { grid-template-columns: 70px 1fr; }
     .footer { flex-direction: column; gap: 12px; }
   }
+
+@media (max-width: 640px) {
+  .wrap, .wrap-narrow {
+    padding-left: 20px !important;
+    padding-right: 20px !important;
+    max-width: 100% !important;
+  }
+  body { overflow-x: hidden !important; }
+}
 </style>
 </head>
-<body>
+<body><div style="position:fixed;top:0;left:0;right:0;z-index:200;background:#090909;border-bottom:1px solid #1a1a1a;height:32px;display:flex;align-items:center;justify-content:space-between;padding:0 40px;"><a href="index.html" style="font-family:IBM Plex Mono,monospace;font-size:8px;letter-spacing:.2em;text-transform:uppercase;color:#7a7570;text-decoration:none;">← Governance Observation Series</a><span style="font-family:IBM Plex Mono,monospace;font-size:8px;letter-spacing:.2em;text-transform:uppercase;color:#c8a96e;">Velocity: years</span></div>
 
 <nav>
-  <div class="nav-brand">DAR™ — Decision Authority Research</div>
+  <div class="nav-brand">Liran Bar-Shrim</div>
   <a href="https://matrix-audit.com" class="nav-link">matrix-audit.com</a>
 </nav>
 
 <section class="hero">
+  <div style="font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:.15em;text-transform:uppercase;color:#3a3530;margin-bottom:8px;">No. 3 of 3 · Governance Observation Series</div>
   <div class="series-link">Observation Series — No. 3 of 3</div>
   <div class="hero-label">Governance Observation · Case Study</div>
   <h1>The Boeing<br><em>Question</em></h1>
@@ -530,7 +540,7 @@
       <div class="accum-year">2016–2017</div>
       <div class="accum-content">
         <div class="accum-title">FAA delegates certification authority. MCAS authority expanded.</div>
-        <div class="accum-body">The FAA delegates significant portions of certification review to Boeing's own engineers under Organization Designation Authorization. Separately, MCAS's authority over the stabilizer is expanded — the system is given greater range of movement than originally assessed — without a corresponding reassessment of its failure modes or pilot recovery time. The public record indicates this expansion was not flagged for additional regulatory review.</div>
+        <div class="accum-body">The FAA delegates significant portions of certification review to Boeing's own engineers under Organization Designation Authorization. Separately, MCAS's authority over the stabilizer is expanded — the system is given greater range of movement than originally assessed — while the public record does not clearly make visible a corresponding reassessment of its failure modes or pilot recovery time, or whether this expansion triggered additional regulatory review.</div>
       </div>
     </div>
 
@@ -538,7 +548,7 @@
       <div class="accum-year">Oct 2018</div>
       <div class="accum-content">
         <div class="accum-title">Lion Air Flight 610. 189 lives lost.</div>
-        <div class="accum-body">MCAS activates based on a faulty angle-of-attack sensor reading. Pilots, unaware of the system's existence and not trained on its recovery procedure, are unable to counteract repeated nose-down commands. The aircraft enters the Java Sea 13 minutes after takeoff. The 737 MAX continues flying.</div>
+        <div class="accum-body">MCAS activates based on a faulty angle-of-attack sensor reading. Pilots, unaware of the system's existence and not trained on its recovery procedure, are unable to counteract repeated nose-down commands. The aircraft enters the Java Sea 13 minutes after takeoff. The aircraft remains in service.</div>
       </div>
     </div>
 
@@ -563,6 +573,10 @@
     <h2>Each decision appeared bounded.<br>The path did not.</h2>
     <p>The Boeing MCAS case does not present a single moment of identifiable governance failure. It presents a sequence of decisions — competitive framing, design constraints, certification delegation, system expansion, documentation choices — each of which appeared manageable and revisable in isolation.</p>
     <p>The structural question DAR observes is different: <strong>at what point did the cumulative path cease to require explicit re-authorization under conditions of accumulating uncertainty?</strong></p>
+
+    <div class="danger-quote" style="margin: 32px 0;">
+      <p>When each decision appears reversible, the path toward irreversibility has no formal encounter with refusal.</p>
+    </div>
 
     <div class="core-observation">
       <p>Each individual decision appeared reversible.<br>The certification path, as a whole, accumulated toward irreversibility.<br>The public record does not identify the point at which re-authorization was required.</p>
@@ -591,7 +605,7 @@
       </ul>
     </div>
     <div class="existed-cell no">
-      <div class="ec-label">What the public record does not identify</div>
+      <div class="ec-label">What the public record does not make visible</div>
       <ul>
         <li>A named individual with explicit authority to pause the certification path under accumulating uncertainty</li>
         <li>A defined threshold at which MCAS authority expansion required independent re-authorization</li>
@@ -602,11 +616,7 @@
   </div>
 
   <div class="pull-quote">
-    <p>The governance structures present were designed to certify. The public record does not identify a named individual whose explicit release was required before the certification path could continue under accumulating uncertainty.</p>
-  </div>
-
-  <div class="danger-quote">
-    <p>When each decision appears reversible, the path toward irreversibility has no formal encounter with refusal.</p>
+    <p>The public record makes visible governance structures oriented toward certification. It does not clearly make visible a named individual whose explicit authorization was required before the certification path could continue under accumulating uncertainty.</p>
   </div>
 
   <!-- THE PATTERN -->
@@ -639,7 +649,7 @@
   </div>
 
   <div class="prose-section">
-    <p>The velocity differs. The structure does not. In each case, the path toward the irreversible outcome did not require the explicit release of a named individual before continuation was permitted. Oversight existed. Process existed. Named stop authority, committed in advance, does not appear in the public record of any of the three cases.</p>
+    <p>The velocity differs. The structure does not. In each case, the path toward the irreversible outcome does not appear, in the public record, to have required the explicit authorization of a named individual before continuation proceeded. Oversight existed. Process existed. Named stop authority — visible in the public record as designated in advance — does not appear in any of the three cases.</p>
   </div>
 
   <!-- FINAL QUESTION -->
@@ -651,7 +661,7 @@
     <p class="fq-sub">
       Not who approved each individual decision. Not which regulator signed the final certificate.<br><br>
       At what specific condition of accumulating uncertainty was a named individual required to explicitly release continuation — rather than having the path proceed by default toward the next decision?<br><br>
-      If that condition does not exist within the certification architecture, then the path toward irreversibility has no formal encounter with refusal. It accumulates, decision by decision, until the cost of stopping exceeds the cost of continuing. And then it continues.
+      If such a condition is not made visible within the certification architecture, the path toward irreversibility may have no formal encounter with refusal. It accumulates, decision by decision, until continuation no longer requires explicit reconsideration.
     </p>
 
     <div class="series-nav">
@@ -661,17 +671,17 @@
     </div>
 
     <div class="attribution-note">
-      This observation is drawn from publicly available records including congressional testimony, the Joint Authorities Technical Review (JATR) report, the House Transportation Committee investigation (2020), and public reporting on Boeing's 737 MAX certification process. DAR makes no claim to insider knowledge of Boeing's or the FAA's internal governance. This observation does not attribute individual fault or negligence. It identifies a structural governance question observable from the public record.
+      This observation is drawn from publicly available records including congressional testimony, the Joint Authorities Technical Review (JATR) report, the House Transportation Committee investigation (2020), and public reporting on Boeing's 737 MAX certification process. DAR makes no claim to insider knowledge of Boeing's or the FAA's internal governance. This observation does not attribute individual fault or negligence. It identifies a structural pattern observable from the public record alone.
     </div>
   </div>
 
 </div>
 
-<footer class="footer">
-  <div class="footer-brand">Decision Authority Research &nbsp;·&nbsp; Governance Observation Series</div>
+<div style="text-align:center;padding:12px 40px;border-top:1px solid #1a1a1a;font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:.15em;color:#3a3530;">Part of the <a href="index.html" style="color:#c8a96e;text-decoration:none;">Governance Observation Series</a> · Liran Bar-Shrim · matrix-audit.com</div>
+<footer class="footer" style="display:none;">
+  <div class="footer-brand">Liran Bar-Shrim &nbsp;·&nbsp; Governance Observation Series</div>
   <a href="https://matrix-audit.com" class="footer-link">matrix-audit.com</a>
 </footer>
 
 </body>
 </html>
- 
