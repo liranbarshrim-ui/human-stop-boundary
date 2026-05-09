@@ -3,38 +3,43 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>Escalation Snapshot — Decision Authority Research</title>
-<meta name="description" content="An illustrative governance record showing what named stop authority looks like when invoked.">
+<title>Who Is Authorized to Stop the System? — Liran Bar-Shrim</title>
+<meta name="description" content="A governance risk brief on autonomous execution, accountability, and named interruption authority.">
 <meta name="robots" content="index,follow">
-<link rel="canonical" href="https://matrix-audit.com/escalation-snapshot.html">
+<meta property="og:title" content="Who Is Authorized to Stop the System?">
+<meta property="og:description" content="A governance risk brief on autonomous execution, accountability, and named interruption authority.">
+<meta property="og:image" content="https://matrix-audit.com/og-image.png">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Liran Bar-Shrim">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://matrix-audit.com/og-image.png">
+<link rel="canonical" href="https://matrix-audit.com/governance-risk-brief.html">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@300;400;500&family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@300;400;500&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&display=swap" rel="stylesheet">
 <style>
 :root {
-  --bg: #090909;
-  --surface: #0e0e0e;
-  --surface2: #111111;
+  --bg: #080808;
+  --surface: #0d0d0d;
   --gold: #c8a96e;
-  --text: #e6e0d4;
-  --muted: #7a7570;
-  --dim: #3a3530;
-  --danger: #c0392b;
-  --amber: #d4a017;
-  --line: rgba(255,255,255,.05);
-  --line-strong: rgba(255,255,255,.09);
+  --gold2: #ead9b3;
+  --text: #ebe5da;
+  --muted: #b8b0a4;
+  --dim: #7a7570;
+  --faint: #2a2a2a;
+  --line: rgba(255,255,255,.055);
 }
 
 *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
-html { scroll-behavior: smooth; }
+html { scroll-behavior: smooth; overflow-x: hidden; }
 
 body {
   background: var(--bg);
   color: var(--text);
-  font-family: 'IBM Plex Mono', monospace;
+  font-family: 'Cormorant Garamond', Georgia, serif;
   overflow-x: hidden;
   -webkit-font-smoothing: antialiased;
-  line-height: 1.6;
+  line-height: 1.8;
 }
 
 body::before {
@@ -43,461 +48,516 @@ body::before {
   inset: 0;
   pointer-events: none;
   z-index: 0;
-  opacity: .03;
+  opacity: .028;
   background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
   background-size: 180px;
 }
 
 a { text-decoration: none; color: inherit; }
 
-nav {
+/* NAV */
+.topbar {
   position: fixed;
   top: 0; left: 0; right: 0;
-  height: 56px;
+  height: 64px;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 0 40px;
+  padding: 0 48px;
   z-index: 100;
-  background: rgba(9,9,9,.94);
-  backdrop-filter: blur(12px);
+  background: rgba(8,8,8,.92);
+  backdrop-filter: blur(16px);
   border-bottom: 1px solid var(--line);
 }
 
-.nav-brand {
-  font-size: 9px;
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 9.5px;
+  letter-spacing: .32em;
+  text-transform: uppercase;
+  color: var(--text);
+}
+
+.brand-rule { width: 32px; height: 1px; background: var(--gold); }
+
+.nav-right {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 9.5px;
+  letter-spacing: .28em;
+  text-transform: uppercase;
+  color: var(--gold2);
+  transition: opacity .2s;
+}
+.nav-right:hover { opacity: .7; }
+
+/* PAGE */
+.page {
+  max-width: 760px;
+  margin: 0 auto;
+  padding: 112px 48px 96px;
+  position: relative;
+  z-index: 1;
+}
+
+/* DOC META */
+.doc-meta {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  margin-bottom: 40px;
+  padding-bottom: 24px;
+  border-bottom: 1px solid var(--line);
+}
+
+.doc-label {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 8px;
   letter-spacing: .22em;
   text-transform: uppercase;
   color: var(--gold);
 }
 
-.nav-back {
-  font-size: 9px;
-  letter-spacing: .18em;
-  text-transform: uppercase;
+.doc-sep {
+  width: 1px;
+  height: 12px;
+  background: var(--faint);
+}
+
+.doc-date {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 8px;
+  letter-spacing: .15em;
+  color: var(--dim);
+}
+
+/* TITLE */
+.doc-title {
+  font-size: clamp(32px, 5vw, 64px);
+  font-weight: 300;
+  line-height: 1.05;
+  color: var(--text);
+  margin-bottom: 20px;
+  max-width: 16ch;
+}
+
+.doc-title em { font-style: italic; color: var(--gold); }
+
+.doc-subtitle {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 11px;
+  letter-spacing: .08em;
   color: var(--muted);
-  transition: color .2s;
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
-.nav-back::before { content: '←'; }
-.nav-back:hover { color: var(--text); }
-
-/* PAGE */
-.page {
-  max-width: 680px;
-  margin: 0 auto;
-  padding: 96px 40px 96px;
-  position: relative;
-  z-index: 1;
+  margin-bottom: 64px;
+  line-height: 1.6;
+  max-width: 52ch;
 }
 
-/* HEADER NOTE */
-.page-header {
-  margin-bottom: 48px;
-  padding-bottom: 32px;
+/* SECTIONS */
+.section {
+  margin-bottom: 56px;
+  padding-bottom: 56px;
   border-bottom: 1px solid var(--line);
 }
 
-.page-eyebrow {
-  font-size: 8px;
-  letter-spacing: .24em;
-  text-transform: uppercase;
-  color: var(--muted);
-  margin-bottom: 12px;
+.section:last-of-type {
+  border-bottom: none;
+  margin-bottom: 0;
 }
 
-.page-title {
-  font-family: 'Cormorant Garamond', serif;
-  font-size: clamp(22px, 3vw, 32px);
+.section-marker {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 8px;
+  letter-spacing: .22em;
+  text-transform: uppercase;
+  color: var(--dim);
+  margin-bottom: 20px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.section-marker::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: var(--faint);
+}
+
+.section h2 {
+  font-size: clamp(20px, 2.5vw, 30px);
   font-weight: 300;
   color: var(--text);
   line-height: 1.2;
+  margin-bottom: 20px;
+  max-width: 36ch;
+}
+
+.section h2 em { font-style: italic; color: var(--gold); }
+
+.body-p {
+  font-size: clamp(16px, 1.4vw, 18px);
+  font-weight: 300;
+  color: var(--muted);
+  line-height: 1.85;
   margin-bottom: 16px;
+  max-width: 60ch;
 }
 
-.page-note {
-  font-size: 11px;
-  color: var(--muted);
-  line-height: 1.7;
-  max-width: 52ch;
-  border-left: 2px solid var(--dim);
-  padding-left: 16px;
+.body-p strong { color: var(--text); font-weight: 400; }
+
+/* CONDITION LIST */
+.condition-list {
+  margin: 24px 0;
+  border-top: 1px solid var(--line);
 }
 
-/* RECORD */
-.record {
-  background: var(--surface);
-  border: 1px solid var(--line-strong);
-  position: relative;
-}
-
-/* STATUS BAR */
-.status-bar {
+.condition-item {
   display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 10px 20px;
-  background: var(--surface2);
-  border-bottom: 1px solid var(--line-strong);
-}
-
-.status-id {
-  font-size: 8px;
-  letter-spacing: .18em;
-  color: var(--muted);
-}
-
-.status-badge {
-  font-size: 8px;
-  letter-spacing: .18em;
-  text-transform: uppercase;
-  padding: 3px 10px;
-  border: 1px solid;
-  font-weight: 500;
-}
-
-.status-badge.hold {
-  color: var(--amber);
-  border-color: var(--amber);
-  background: rgba(212,160,23,.05);
-}
-
-.status-badge.active {
-  color: #3d9970;
-  border-color: #3d9970;
-  background: rgba(61,153,112,.05);
-}
-
-.status-badge.unresolved {
-  color: var(--danger);
-  border-color: var(--danger);
-  background: rgba(192,57,43,.05);
-}
-
-/* RECORD HEADER */
-.record-header {
-  padding: 24px 24px 20px;
-  border-bottom: 1px solid var(--line);
-}
-
-.record-type {
-  font-size: 8px;
-  letter-spacing: .2em;
-  text-transform: uppercase;
-  color: var(--muted);
-  margin-bottom: 8px;
-}
-
-.record-title {
-  font-size: 13px;
-  font-weight: 500;
-  color: var(--text);
-  letter-spacing: .04em;
-}
-
-/* FIELDS */
-.field-group {
-  padding: 20px 24px;
-  border-bottom: 1px solid var(--line);
-}
-
-.field-group:last-child { border-bottom: none; }
-
-.field {
-  display: grid;
-  grid-template-columns: 180px 1fr;
-  gap: 8px 20px;
-  padding: 8px 0;
-  border-bottom: 1px solid rgba(255,255,255,.03);
-  align-items: start;
-}
-
-.field:last-child { border-bottom: none; }
-
-.field-label {
-  font-size: 8px;
-  letter-spacing: .15em;
-  text-transform: uppercase;
-  color: var(--muted);
-  padding-top: 2px;
-  line-height: 1.5;
-}
-
-.field-value {
-  font-size: 12px;
-  color: var(--text);
-  line-height: 1.55;
-}
-
-.field-value.pending {
-  color: var(--amber);
-}
-
-.field-value.invoked {
-  color: var(--danger);
-}
-
-.field-value.timestamp {
-  color: var(--muted);
-  font-size: 11px;
-}
-
-.field-value.name {
-  color: var(--text);
-}
-
-.field-value sub {
-  display: block;
-  font-size: 10px;
-  color: var(--muted);
-  margin-top: 2px;
-}
-
-/* ESCALATION NOTE */
-.escalation-note {
-  background: rgba(212,160,23,.04);
-  border-left: 2px solid var(--amber);
-  padding: 14px 16px;
-  margin: 0;
-  font-size: 11px;
-  color: var(--muted);
-  line-height: 1.65;
-}
-
-.escalation-note strong {
-  color: var(--amber);
-  font-weight: 500;
-}
-
-/* CONTINUATION STATUS */
-.continuation-status {
-  padding: 16px 24px;
-  background: rgba(192,57,43,.04);
-  border-top: 1px solid rgba(192,57,43,.15);
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
   gap: 16px;
+  padding: 12px 0;
+  border-bottom: 1px solid rgba(255,255,255,.03);
+  align-items: flex-start;
 }
 
-.cs-label {
-  font-size: 8px;
-  letter-spacing: .2em;
-  text-transform: uppercase;
-  color: var(--muted);
+.condition-marker {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 9px;
+  color: var(--faint);
+  flex-shrink: 0;
+  margin-top: 4px;
+  letter-spacing: .05em;
 }
 
-.cs-value {
+.condition-text {
+  font-family: 'IBM Plex Mono', monospace;
   font-size: 11px;
-  font-weight: 500;
-  color: var(--danger);
-  letter-spacing: .06em;
-  text-transform: uppercase;
+  color: var(--muted);
+  line-height: 1.6;
+  letter-spacing: .02em;
 }
 
-/* SECOND RECORD */
-.record-divider {
-  height: 32px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  position: relative;
+/* SCENARIO */
+.scenario {
+  background: var(--surface);
+  border-left: 2px solid var(--faint);
+  padding: 24px 28px;
+  margin: 28px 0;
 }
 
-.record-divider::before {
-  content: '';
-  position: absolute;
-  left: 0; right: 0;
-  height: 1px;
-  background: var(--line);
-}
-
-.record-divider span {
+.scenario-label {
+  font-family: 'IBM Plex Mono', monospace;
   font-size: 8px;
   letter-spacing: .2em;
   text-transform: uppercase;
   color: var(--dim);
-  background: var(--bg);
-  padding: 0 12px;
-  position: relative;
+  margin-bottom: 14px;
 }
 
-/* FOOTER NOTE */
-.footer-note {
-  margin-top: 48px;
-  padding-top: 28px;
-  border-top: 1px solid var(--line);
-  font-size: 10px;
+.scenario-body {
+  font-size: clamp(15px, 1.3vw, 17px);
+  font-weight: 300;
   color: var(--muted);
-  line-height: 1.75;
-  max-width: 56ch;
+  line-height: 1.8;
 }
 
-.footer-note a {
-  color: var(--gold);
-  border-bottom: 1px solid rgba(200,169,110,.25);
-  transition: border-color .2s;
+.scenario-body em {
+  font-style: normal;
+  color: var(--text);
 }
 
-.footer-note a:hover { border-color: var(--gold); }
+/* PULL */
+.pull {
+  border-left: 3px solid var(--gold);
+  padding: 20px 28px;
+  margin: 28px 0;
+  background: var(--surface);
+}
+
+.pull p {
+  font-size: clamp(17px, 1.8vw, 22px);
+  font-weight: 300;
+  font-style: italic;
+  color: var(--text);
+  line-height: 1.5;
+}
+
+/* AUTHORITY STRUCTURE */
+.authority-grid {
+  margin: 28px 0;
+  border: 1px solid var(--faint);
+}
+
+.authority-row {
+  display: grid;
+  grid-template-columns: 160px 1fr;
+  border-bottom: 1px solid var(--faint);
+}
+
+.authority-row:last-child { border-bottom: none; }
+
+.authority-label {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 9px;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  color: var(--dim);
+  padding: 14px 16px;
+  border-right: 1px solid var(--faint);
+  background: var(--surface);
+  display: flex;
+  align-items: center;
+}
+
+.authority-desc {
+  font-size: 13px;
+  color: var(--muted);
+  padding: 14px 20px;
+  line-height: 1.6;
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 11px;
+  letter-spacing: .01em;
+}
+
+/* CLOSING */
+.closing-line {
+  font-size: clamp(20px, 2.8vw, 34px);
+  font-weight: 300;
+  font-style: italic;
+  color: var(--text);
+  line-height: 1.3;
+  max-width: 38ch;
+  margin-bottom: 40px;
+}
+
+/* RELATED */
+.related {
+  margin-top: 48px;
+  padding-top: 32px;
+  border-top: 1px solid var(--line);
+}
+
+.related-label {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 8px;
+  letter-spacing: .22em;
+  text-transform: uppercase;
+  color: var(--dim);
+  margin-bottom: 16px;
+}
+
+.related-links {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.related-link {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 10px;
+  letter-spacing: .12em;
+  color: var(--muted);
+  text-decoration: none;
+  transition: color .2s;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.related-link::before { content: '→'; color: var(--faint); }
+.related-link:hover { color: var(--gold); }
+
+/* SIG */
+.sig {
+  margin-top: 48px;
+  padding-top: 24px;
+  border-top: 1px solid var(--line);
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 9px;
+  letter-spacing: .18em;
+  text-transform: uppercase;
+  color: var(--dim);
+}
 
 footer {
   border-top: 1px solid var(--line);
-  padding: 20px 40px;
+  padding: 20px 48px;
   display: flex;
   justify-content: space-between;
   position: relative;
   z-index: 1;
+  font-family: 'IBM Plex Mono', monospace;
   font-size: 9px;
   letter-spacing: .12em;
-  color: var(--muted);
+  color: var(--dim);
 }
 
-@media (max-width: 600px) {
-  nav { padding: 0 20px; }
-  .page { padding: 80px 20px 64px; }
-  .field { grid-template-columns: 1fr; gap: 4px; }
-  .field-label { padding-top: 0; }
+@media (max-width: 640px) {
+  .topbar { padding: 0 20px; }
+  .page { padding: 96px 20px 64px; }
+  .authority-row { grid-template-columns: 1fr; }
+  .authority-label { border-right: none; border-bottom: 1px solid var(--faint); }
   footer { flex-direction: column; gap: 8px; padding: 16px 20px; }
 }
 </style>
 </head>
 <body>
 
-<nav>
-  <div class="nav-brand">Decision Authority Research</div>
-  <a href="index.html" class="nav-back">Return to index</a>
-</nav>
+<header class="topbar">
+  <a href="index.html" class="brand">
+    <span class="brand-rule"></span>
+    <span>Liran Bar-Shrim</span>
+  </a>
+  <a href="mailto:Liran@liranbarshrim.com" class="nav-right">Correspondence</a>
+</header>
 
 <div class="page">
 
-  <div class="page-header">
-    <div class="page-eyebrow">Illustrative Governance Record</div>
-    <div class="page-title">What named stop authority<br>looks like when invoked.</div>
-    <p class="page-note">The following are illustrative escalation snapshots. Names, organizations, and decisions are fictional. The structural conditions they reflect are not.</p>
+  <div class="doc-meta">
+    <div class="doc-label">Governance Risk Brief</div>
+    <div class="doc-sep"></div>
+    <div class="doc-date">2026 · Independent Writing & Research</div>
   </div>
 
-  <!-- RECORD 1 -->
-  <div class="record">
-    <div class="status-bar">
-      <div class="status-id">DAR-2026-0214-A</div>
-      <div class="status-badge hold">Hold Active</div>
-    </div>
+  <h1 class="doc-title">Who Is Authorized<br>to <em>Stop</em><br>the System?</h1>
 
-    <div class="record-header">
-      <div class="record-type">Decision Type</div>
-      <div class="record-title">Model Deployment — Production Release / Global Rollout</div>
-    </div>
+  <p class="doc-subtitle">On autonomous execution, accountability fragmentation,<br>and named interruption authority.</p>
 
-    <div class="field-group">
-      <div class="field">
-        <div class="field-label">Refusal Authority</div>
-        <div class="field-value name">M. Chen<sub>Deployment Integrity Lead</sub></div>
-      </div>
-      <div class="field">
-        <div class="field-label">Hold Invoked</div>
-        <div class="field-value timestamp">2026-02-14 / 22:14 UTC</div>
-      </div>
-      <div class="field">
-        <div class="field-label">Trigger Condition</div>
-        <div class="field-value">Unresolved uncertainty regarding rollback propagation behavior under partial deployment conditions. Threshold exceeded per pre-established authorization criteria.</div>
-      </div>
-    </div>
+  <!-- 1. OPENING OBSERVATION -->
+  <div class="section">
+    <div class="section-marker">Opening Observation</div>
+    <p class="body-p">As execution becomes increasingly autonomous, interruption authority becomes increasingly ambiguous.</p>
+    <p class="body-p">Systems accelerate. Accountability fragments. Escalation exists. <strong>Named refusal often does not.</strong></p>
+    <p class="body-p">The question is not whether organizations intend to maintain control. Most do. The question is whether a named individual exists — before execution — whose explicit release is required before continuation proceeds under conditions of material uncertainty.</p>
+  </div>
 
-    <div class="field-group">
-      <div class="field">
-        <div class="field-label">Hold Authority</div>
-        <div class="field-value name">R. Okafor<sub>Infrastructure Release Governance</sub></div>
-      </div>
-      <div class="field">
-        <div class="field-label">Authorization Authority</div>
-        <div class="field-value pending">Response pending<sub>Notified 2026-02-14 / 22:18 UTC</sub></div>
-      </div>
-      <div class="field">
-        <div class="field-label">Defined Response Interval</div>
-        <div class="field-value timestamp">90 minutes from hold invocation</div>
-      </div>
-    </div>
+  <!-- 2. GOVERNANCE CONDITIONS -->
+  <div class="section">
+    <div class="section-marker">Governance Conditions</div>
+    <h2>When these conditions are present,<br>interruption authority becomes <em>structurally ambiguous.</em></h2>
 
-    <div class="escalation-note">
-      <strong>Escalation triggered.</strong> No response received within defined interval. Record forwarded to Executive Infrastructure Oversight per pre-established escalation path. Continuation remains unauthorized pending explicit release.
-    </div>
-
-    <div class="continuation-status">
-      <div class="cs-label">Continuation Status</div>
-      <div class="cs-value">Not Authorized</div>
+    <div class="condition-list">
+      <div class="condition-item">
+        <div class="condition-marker">01</div>
+        <div class="condition-text">Automated continuation without explicit release condition</div>
+      </div>
+      <div class="condition-item">
+        <div class="condition-marker">02</div>
+        <div class="condition-text">Distributed approval structures with no named interruption authority</div>
+      </div>
+      <div class="condition-item">
+        <div class="condition-marker">03</div>
+        <div class="condition-text">Escalation latency that exceeds the reversibility window</div>
+      </div>
+      <div class="condition-item">
+        <div class="condition-marker">04</div>
+        <div class="condition-text">Override conditions that are undocumented or verbal</div>
+      </div>
+      <div class="condition-item">
+        <div class="condition-marker">05</div>
+        <div class="condition-text">Continuation that proceeds without explicit release from a named individual</div>
+      </div>
+      <div class="condition-item">
+        <div class="condition-marker">06</div>
+        <div class="condition-text">Refusal authority that is assumed rather than designated in advance</div>
+      </div>
     </div>
   </div>
 
-  <div class="record-divider"><span>second record</span></div>
+  <!-- 3. ILLUSTRATIVE SCENARIO -->
+  <div class="section">
+    <div class="section-marker">Illustrative Scenario</div>
+    <h2>Uncertainty appeared.<br>Continuation proceeded.<br><em>Authority remained structurally unclear.</em></h2>
 
-  <!-- RECORD 2 -->
-  <div class="record">
-    <div class="status-bar">
-      <div class="status-id">DAR-2026-0307-C</div>
-      <div class="status-badge unresolved">Override — Under Review</div>
-    </div>
-
-    <div class="record-header">
-      <div class="record-type">Decision Type</div>
-      <div class="record-title">Automated Transaction Execution — High-Volume Batch / Irreversible</div>
-    </div>
-
-    <div class="field-group">
-      <div class="field">
-        <div class="field-label">Refusal Authority</div>
-        <div class="field-value name">S. Lindqvist<sub>Risk Execution Lead</sub></div>
-      </div>
-      <div class="field">
-        <div class="field-label">Refusal Invoked</div>
-        <div class="field-value timestamp invoked">2026-03-07 / 09:41 UTC</div>
-      </div>
-      <div class="field">
-        <div class="field-label">Trigger Condition</div>
-        <div class="field-value">Anomalous position accumulation detected during pre-execution window. Pattern inconsistent with validated model behavior.</div>
+    <div class="scenario">
+      <div class="scenario-label">Model Release / Infrastructure Deployment</div>
+      <div class="scenario-body">
+        A deployment proceeds under standard release conditions. During propagation, anomalous behavior is detected. <em>Alerts exist. Monitoring is active. Escalation channels are open.</em><br><br>
+        No named individual holds prior, explicit commitment to refuse continuation before the deployment window closes. The escalation path reaches a committee. The committee convenes. By the time a decision is possible, the deployment has exceeded its reversibility threshold.<br><br>
+        The question that follows — <em>who was authorized to stop this</em> — has no answer that precedes the event.
       </div>
     </div>
 
-    <div class="field-group">
-      <div class="field">
-        <div class="field-label">Authorization Authority</div>
-        <div class="field-value name">P. Walsh<sub>Senior Trading Infrastructure</sub></div>
+    <div class="scenario" style="margin-top:12px;">
+      <div class="scenario-label">Automated Financial Execution</div>
+      <div class="scenario-body">
+        A trading system executes at speed. Position accumulation deviates from expected parameters. <em>Risk systems flag the condition. Personnel observe it.</em><br><br>
+        Continuation does not require explicit release. Stopping requires action. Action requires authority. Authority is distributed. Forty-five minutes later, the position is unrecoverable.<br><br>
+        The record shows who observed. <em>It does not show who was named in advance to stop.</em>
       </div>
-      <div class="field">
-        <div class="field-label">Override Issued</div>
-        <div class="field-value timestamp">2026-03-07 / 09:53 UTC — verbal, undocumented</div>
-      </div>
-      <div class="field">
-        <div class="field-label">Written Rationale</div>
-        <div class="field-value pending">Not provided at time of override</div>
-      </div>
-      <div class="field">
-        <div class="field-label">Execution Proceeded</div>
-        <div class="field-value timestamp">2026-03-07 / 09:54 UTC</div>
-      </div>
-    </div>
-
-    <div class="escalation-note" style="border-left-color: var(--danger); background: rgba(192,57,43,.04);">
-      <strong style="color:var(--danger);">Review initiated.</strong> Override issued verbally without documented rationale. Refusal record exists. Override documentation does not. Discrepancy flagged for governance review. Outcome assessment ongoing.
-    </div>
-
-    <div class="continuation-status">
-      <div class="cs-label">Continuation Status</div>
-      <div class="cs-value" style="color:var(--amber);">Proceeded — Rationale Absent</div>
     </div>
   </div>
 
-  <div class="footer-note">
-    These records are illustrative. They are designed to show the structural conditions named stop authority is meant to produce: a point before the event, a name attached to the decision to halt, and a record that exists regardless of what follows.<br><br>
-    The governance gap they reflect — between who saw the problem and who was named to stop it — is the subject of the <a href="observation-series.html">Governance Observation Series</a>.
+  <!-- 4. STRUCTURAL OBSERVATION -->
+  <div class="section">
+    <div class="section-marker">Structural Observation</div>
+
+    <div class="pull">
+      <p>The governance problem is not only whether someone can intervene. It is whether interruption authority exists before continuation becomes operationally irreversible.</p>
+    </div>
+
+    <p class="body-p">Oversight structures typically define who reviewed, who approved, who monitored. They rarely define who, by name, was committed in advance to refuse continuation under conditions of material uncertainty.</p>
+
+    <p class="body-p">When that name does not exist before the event, it cannot be identified after it. The record shows process. It does not show authority.</p>
+
+    <p class="body-p"><strong>In automated environments, responsibility can drift faster than authority is named.</strong></p>
   </div>
+
+  <!-- 5. NAMED INTERRUPTION AUTHORITY -->
+  <div class="section">
+    <div class="section-marker">Named Interruption Authority</div>
+    <h2>What named interruption authority<br><em>requires.</em></h2>
+
+    <div class="authority-grid">
+      <div class="authority-row">
+        <div class="authority-label">Named in advance</div>
+        <div class="authority-desc">A specific individual — not a function, not a committee — designated before execution begins.</div>
+      </div>
+      <div class="authority-row">
+        <div class="authority-label">Explicit trigger</div>
+        <div class="authority-desc">A defined condition under which continuation requires explicit release before proceeding.</div>
+      </div>
+      <div class="authority-row">
+        <div class="authority-label">Escalation path</div>
+        <div class="authority-desc">A named escalation authority who must respond if the primary authority does not act within a defined interval.</div>
+      </div>
+      <div class="authority-row">
+        <div class="authority-label">Override documentation</div>
+        <div class="authority-desc">Any continuation that proceeds over a refusal must carry written rationale from a named authorization authority.</div>
+      </div>
+      <div class="authority-row">
+        <div class="authority-label">Prior commitment</div>
+        <div class="authority-desc">The record of named authority exists before the event — not as a response to it.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 6. CLOSING -->
+  <div class="section">
+    <div class="section-marker">Closing</div>
+    <div class="closing-line">The absence of interruption authority often becomes visible only after continuation occurs.</div>
+    <p class="body-p">At that point, the question of who was authorized to stop it has no answer that precedes the event. Governance becomes visible at the moment continuation requires a name.</p>
+  </div>
+
+  <!-- RELATED -->
+  <div class="related">
+    <div class="related-label">Related</div>
+    <div class="related-links">
+      <a href="observation-series.html" class="related-link">Governance Observation Series — three domains, three timescales</a>
+      <a href="escalation-snapshot.html" class="related-link">Escalation Snapshot — illustrative governance records</a>
+      <a href="whitepaper.html" class="related-link">Research Note — named refusal authority in irreversible decisions</a>
+      <a href="index.html" class="related-link">Return to main</a>
+    </div>
+  </div>
+
+  <div class="sig">Liran Bar-Shrim · Independent Writing & Research · 2026</div>
 
 </div>
 
 <footer>
-  <span>Decision Authority Research · Illustrative Governance Record</span>
+  <span>Liran Bar-Shrim · Governance Risk Brief</span>
   <span>matrix-audit.com</span>
 </footer>
 
