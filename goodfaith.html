@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
 <title>Good Faith Use — Liran Bar-Shrim</title>
-<meta name="description" content="Scope, limits, and intended use of this research. Clarity can support judgment. It cannot replace it.">
+<meta name="description" content="Scope, limits, and intended use of this work. Clarity can support judgment. It cannot replace it.">
 <meta name="robots" content="index,follow">
 <link rel="canonical" href="https://matrix-audit.com/goodfaith.html">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -74,7 +74,13 @@ a { text-decoration: none; color: inherit; }
   transition: opacity .2s;
 }
 .nav-contact:hover { opacity: .7; }
-.wrap { max-width: 800px; margin: 0 auto; padding: 0 48px; position: relative; z-index: 1; }
+.wrap {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 0 48px;
+  position: relative;
+  z-index: 1;
+}
 .hero { padding-top: 160px; padding-bottom: 70px; border-bottom: 1px solid var(--line); }
 .hero h1 {
   font-size: clamp(36px, 5.5vw, 78px);
@@ -168,6 +174,8 @@ a { text-decoration: none; color: inherit; }
   color: var(--dim);
 }
 @media (max-width: 860px) {
+  body { overflow-x: hidden; }
+  * { max-width: 100%; }
   .topbar { padding: 0 20px; }
   .wrap { padding: 0 20px; }
   .hero { padding-top: 120px; padding-bottom: 50px; }
@@ -179,6 +187,15 @@ a { text-decoration: none; color: inherit; }
   to   { opacity: 1; transform: translateY(0); }
 }
 .hero { animation: fadeUp .9s ease both; }
+
+@media (max-width: 640px) {
+  .wrap, .wrap-narrow {
+    padding-left: 20px !important;
+    padding-right: 20px !important;
+    max-width: 100% !important;
+  }
+  body { overflow-x: hidden !important; }
+}
 </style>
 </head>
 
@@ -189,7 +206,7 @@ a { text-decoration: none; color: inherit; }
     <span class="brand-rule"></span>
     <span>Liran Bar-Shrim</span>
   </a>
-  <a href="mailto:Liran@liranbarshrim.com" class="nav-contact">Contact</a>
+  <a href="mailto:Liran@liranbarshrim.com" class="nav-contact">Correspondence</a>
 </header>
 
 <main>
@@ -197,41 +214,39 @@ a { text-decoration: none; color: inherit; }
   <section class="hero wrap">
     <h1>Clarity supports judgment.<br>It does not <em>replace it.</em></h1>
     <p class="hero-sub">
-      Scope, limits, and intended use of this research.
-      What it is for. What it is not.
+      Scope, limits, and intended use.
+      What this work is for. What it is not.
       And what remains the responsibility of people, not frameworks.
     </p>
   </section>
 
   <div class="doc-section wrap">
     <div class="section-marker">Purpose</div>
-    <h2>What this research is <em>for.</em></h2>
+    <h2>What this work is <em>for.</em></h2>
     <p class="body-p">
       This work exists to identify a structural gap in governance:
-      the absence of a named individual authorized to refuse irreversible continuation
-      before execution proceeds.
+      the absence of a named individual authorized to interrupt continuation before irreversible conditions emerge.
     </p>
     <p class="body-p">
       It is intended to support organizations in clarifying authority,
-      reducing preventable exposure, and naming who can stop continuation
-      before the question becomes irreversible.
+      reducing preventable exposure, and naming who can interrupt continuation before it becomes irreversible.
     </p>
     <div class="pull">
       A framework can define accountability.<br>
       Only people can exercise it.
     </div>
+    <p class="body-p">
+      Clarity does not eliminate difficult decisions.
+      It makes responsibility visible before pressure arrives.
+    </p>
   </div>
 
   <div class="doc-section wrap">
     <div class="section-marker">Limits</div>
-    <h2>What this research is <em>not.</em></h2>
+    <h2>What this work is <em>not.</em></h2>
     <p class="body-p">
-      This is not legal advice. Not compliance certification.
-      Not insurance. Not a guarantee against loss.
-    </p>
-    <p class="body-p">
-      It may support governance quality,
-      but it does not replace legal, regulatory, technical, or fiduciary duties.
+      This work does not replace legal, regulatory, technical, or fiduciary responsibility.
+      It does not certify compliance, guarantee outcomes, or eliminate risk.
       Responsibility for decisions remains with officers, boards, operators,
       and designated decision-makers.
     </p>
@@ -239,7 +254,7 @@ a { text-decoration: none; color: inherit; }
       <strong>Policies do not stop events.
       Committees do not stop events.
       Slides do not stop events.</strong>
-      Timely authority exercised by a real person does.
+      Timely authority exercised by a named person can.
     </p>
   </div>
 
@@ -264,8 +279,8 @@ a { text-decoration: none; color: inherit; }
         <div class="principle-desc">If authority is unclear during pressure, the framework has already failed.</div>
       </div>
       <div class="principle-item">
-        <div class="principle-title">Use should be honest.</div>
-        <div class="principle-desc">Application should be proportionate, lawful, and directed toward genuine governance improvement — not liability management or appearance of compliance.</div>
+        <div class="principle-title">Governance should be real.</div>
+        <div class="principle-desc">Application should be proportionate, lawful, and directed toward genuine governance improvement — not the appearance of governance.</div>
       </div>
     </div>
   </div>
@@ -282,9 +297,9 @@ a { text-decoration: none; color: inherit; }
 
   <section class="final wrap">
     <a href="index.html" class="back-link">← Back to main</a>
-    <a href="whitepaper.html" class="back-link">→ Research Note</a>
+    <a href="whitepaper.html" class="back-link">→ Governance Note</a>
     <a href="faq.html" class="back-link" style="margin-bottom:28px;">→ FAQ</a>
-    <div class="sig">Liran Bar-Shrim · Independent Writing & Research · 2026</div>
+    <div class="sig">Liran Bar-Shrim · Independent Writing · 2026</div>
   </section>
 
 </main>
@@ -295,4 +310,3 @@ a { text-decoration: none; color: inherit; }
 
 </body>
 </html>
- 
