@@ -130,9 +130,9 @@ a{
 /* CONTAINERS */
 
 .wrap{
-  max-width:1280px;
+  max-width:1240px;
   margin:0 auto;
-  padding:0 48px;
+  padding:0 32px;
   position:relative;
   z-index:1;
 }
@@ -140,7 +140,7 @@ a{
 .wrap-narrow{
   max-width:800px;
   margin:0 auto;
-  padding:0 48px;
+  padding:0 32px;
   position:relative;
   z-index:1;
 }
@@ -210,7 +210,7 @@ a{
   line-height:1.2;
   color:var(--text);
   max-width:560px;
-  margin:0 0 0 48px;
+  margin:0 auto;
 }
 
 .pause-line::before{
@@ -548,8 +548,30 @@ a{
     padding:18px 20px;
   }
 
+  .obs-series{
+    padding-left:0;
+    padding-right:0;
+  }
+
+  .obs-label,
+  .obs-intro,
+  .obs-taxonomy-note,
+  .obs-links{
+    padding-left:20px;
+    padding-right:20px;
+  }
+
   .obs-grid{
     grid-template-columns:1fr;
+    margin-left:0;
+    margin-right:0;
+    border-left:none;
+    border-right:none;
+  }
+
+  .obs-card{
+    padding-left:20px;
+    padding-right:20px;
   }
 
   .nav-section{
@@ -588,6 +610,7 @@ a{
 <body>
 
 <header class="topbar">
+
   <a href="index.html" class="brand">
     <span class="brand-rule"></span>
     <span>Liran Bar-Shrim</span>
@@ -596,6 +619,7 @@ a{
   <a href="mailto:Liran@liranbarshrim.com" class="nav-contact">
     Correspondence
   </a>
+
 </header>
 
 <main>
@@ -696,8 +720,6 @@ a{
 
 </section>
 
-<!-- OBSERVATION SERIES -->
-
 <section class="obs-series wrap">
 
   <div class="obs-label">Governance Observation Series</div>
@@ -739,30 +761,25 @@ a{
     from a named individual?
   </div>
 
-  <div style="margin-bottom:12px;">
-    <a href="escalation-snapshot.html"
-       style="font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:.18em;text-transform:uppercase;color:var(--gold);border-bottom:1px solid rgba(200,169,110,.25);padding-bottom:1px;">
-      Example governance record →
-    </a>
-  </div>
+  <div class="obs-links">
 
-  <div style="margin-bottom:12px;">
-    <a href="governance-risk-brief.html"
-       style="font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:.18em;text-transform:uppercase;color:var(--gold);border-bottom:1px solid rgba(200,169,110,.25);padding-bottom:1px;">
-      Governance risk brief →
-    </a>
-  </div>
+    <div style="margin-bottom:12px;">
+      <a href="governance-risk-brief.html"
+         style="font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:.18em;text-transform:uppercase;color:var(--gold);border-bottom:1px solid rgba(200,169,110,.25);padding-bottom:1px;">
+        Governance risk brief →
+      </a>
+    </div>
 
-  <div style="margin-bottom:12px;">
-    <a href="named-authority-record.html"
-       style="font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:.18em;text-transform:uppercase;color:var(--gold);border-bottom:1px solid rgba(200,169,110,.25);padding-bottom:1px;">
-      Named authority record →
-    </a>
+    <div style="margin-bottom:12px;">
+      <a href="named-authority-record.html"
+         style="font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:.18em;text-transform:uppercase;color:var(--gold);border-bottom:1px solid rgba(200,169,110,.25);padding-bottom:1px;">
+        Named authority record →
+      </a>
+    </div>
+
   </div>
 
 </section>
-
-<!-- NAV -->
 
 <section class="nav-section wrap">
 
