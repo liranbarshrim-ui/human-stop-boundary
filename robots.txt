@@ -17,4 +17,4 @@ Allow: /og-image.png
 Allow: /google1305c86f2cce0142.html
 Disallow: /
 
-Sitemap: https://matrix-audit.com/sitemap.xml
+Sitemap: https://matrix-audit.com/sitemap.xml 
