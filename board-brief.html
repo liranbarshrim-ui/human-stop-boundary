@@ -2,593 +2,675 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>Named Refusal Authority — Board Brief | Decision Authority Research</title>
-<meta name="description" content="A board-level brief on named refusal authority and legitimacy of continuation in irreversible decisions. Decision Authority Research.">
-<meta name="robots" content="index,follow">
-<link rel="canonical" href="https://matrix-audit.com/board-brief.html">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
-
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Boeing Question — Decision Authority Research</title>
 <style>
+  @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@300;400;500&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&display=swap');
 
-*,*::before,*::after{
-box-sizing:border-box;
-margin:0;
-padding:0;
-}
+  :root {
+    --bg: #090909;
+    --surface: #0f0f0f;
+    --accent: #c8a96e;
+    --danger: #c0392b;
+    --text: #e6e0d4;
+    --muted: #7a7570;
+    --faint: #3a3530;
+    --border: #1a1a1a;
+    --border-strong: #2a2a2a;
+  }
 
-:root{
---bg:#0d0d0d;
---surface:#161616;
---surface2:#1c1c1c;
---gold:#c8a96e;
---gold-light:#e8d4a8;
---red:#c0392b;
---text:#ddd6cc;
---text-strong:#ede8e0;
---muted:#8a837a;
---muted-dim:#7a7368;
---border:#252525;
---border2:#1e1e1e;
-}
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
 
-html,body{
-background:var(--bg);
-color:var(--text);
-font-family:'IBM Plex Mono',monospace;
-min-height:100vh;
--webkit-font-smoothing:antialiased;
-}
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 14px;
+    line-height: 1.7;
+    overflow-x: hidden;
+  }
 
-body::before{
-content:'';
-position:fixed;
-inset:0;
-background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.035'/%3E%3C/svg%3E");
-pointer-events:none;
-z-index:0;
-opacity:0.35;
-}
+  body::after {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.035'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 9999;
+  }
 
-a{
-text-decoration:none;
-color:inherit;
-}
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    padding: 16px 40px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: rgba(9,9,9,0.92);
+    backdrop-filter: blur(8px);
+    border-bottom: 1px solid var(--border);
+  }
 
-.topbar{
-position:fixed;
-top:0;
-left:0;
-right:0;
-height:68px;
-display:flex;
-align-items:center;
-justify-content:space-between;
-padding:0 20px;
-z-index:1000;
-background:rgba(10,10,10,.96);
-backdrop-filter:blur(16px);
-border-bottom:1px solid var(--border);
-}
+  .nav-brand { font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--accent); }
+  .nav-link { font-size: 10px; letter-spacing: 0.15em; text-transform: uppercase; color: var(--muted); text-decoration: none; }
+  .nav-link:hover { color: var(--accent); }
 
-.brand{
-display:flex;
-align-items:center;
-gap:12px;
-font-size:10px;
-letter-spacing:.28em;
-text-transform:uppercase;
-color:var(--text);
-white-space:nowrap;
-}
+  .hero {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    padding: 120px 40px 80px;
+    border-bottom: 1px solid var(--border);
+  }
 
-.brand-line{
-width:32px;
-height:2px;
-background:var(--gold);
-}
+  .hero-label {
+    font-size: 9px;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--danger);
+    margin-bottom: 24px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
 
-.menu-btn{
-width:42px;
-height:42px;
-border:none;
-background:none;
-cursor:pointer;
-display:flex;
-flex-direction:column;
-justify-content:center;
-gap:6px;
-}
+  .hero-label::before { content: ''; width: 24px; height: 1px; background: var(--danger); }
 
-.menu-btn span{
-height:1.5px;
-background:var(--text);
-border-radius:2px;
-display:block;
-}
+  .series-link {
+    font-size: 9px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 16px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
 
-.menu-btn span:nth-child(2){
-width:68%;
-margin-left:auto;
-}
+  .series-link::before { content: '←'; color: var(--faint); }
 
-.overlay{
-position:fixed;
-inset:0;
-background:rgba(0,0,0,.6);
-opacity:0;
-visibility:hidden;
-transition:.25s;
-z-index:998;
-}
+  h1 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(48px, 8vw, 96px);
+    font-weight: 300;
+    line-height: 1.0;
+    color: var(--text);
+    margin-bottom: 32px;
+    max-width: 900px;
+  }
 
-.overlay.active{
-opacity:1;
-visibility:visible;
-}
+  h1 em { font-style: italic; color: var(--accent); }
 
-.drawer{
-position:fixed;
-top:0;
-right:-100%;
-width:84%;
-max-width:400px;
-height:100vh;
-overflow-y:auto;
-z-index:999;
-padding:28px 24px;
-transition:.3s ease;
-background:#0e0e0e;
-border-left:1px solid var(--border);
-}
+  .hero-sub {
+    font-size: 12px;
+    color: var(--muted);
+    max-width: 520px;
+    line-height: 1.8;
+    margin-bottom: 48px;
+  }
 
-.drawer.active{
-right:0;
-}
+  .hero-stats {
+    display: flex;
+    gap: 48px;
+    padding-top: 32px;
+    border-top: 1px solid var(--border);
+    flex-wrap: wrap;
+  }
 
-.drawer-top{
-display:flex;
-justify-content:space-between;
-align-items:center;
-margin-bottom:22px;
-}
+  .stat-num {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 36px;
+    font-weight: 300;
+    color: var(--danger);
+    line-height: 1;
+    margin-bottom: 4px;
+  }
 
-.drawer-title{
-font-size:10px;
-letter-spacing:.28em;
-text-transform:uppercase;
-color:var(--gold);
-}
+  .stat-label {
+    font-size: 9px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
 
-.close-btn{
-font-size:34px;
-line-height:1;
-background:none;
-border:none;
-color:var(--text);
-cursor:pointer;
-opacity:.7;
-}
+  .content {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 80px 40px;
+  }
 
-.group{
-margin-top:20px;
-}
+  .section-marker {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 32px;
+  }
 
-.group small{
-display:block;
-font-size:9px;
-letter-spacing:.26em;
-text-transform:uppercase;
-color:var(--gold);
-margin-bottom:12px;
-opacity:.8;
-}
+  .marker-num { font-size: 9px; letter-spacing: 0.2em; color: var(--faint); }
+  .marker-label { font-size: 9px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--accent); }
+  .marker-line { flex: 1; height: 1px; background: var(--border); }
 
-.drawer a.link{
-display:block;
-padding:13px 0;
-font-size:19px;
-border-bottom:1px solid var(--border);
-color:var(--text);
-font-family:'Cormorant Garamond',serif;
-transition:color .15s;
-}
+  /* ACCUMULATION TIMELINE — different from other cases */
+  .accum-timeline { margin: 0 0 80px; }
 
-.drawer a.link:hover{
-color:var(--gold-light);
-}
+  .accum-item {
+    display: grid;
+    grid-template-columns: 100px 1fr;
+    gap: 0;
+    margin-bottom: 0;
+    position: relative;
+  }
 
-.drawer a.link.current{
-color:var(--gold);
-}
+  .accum-item::after {
+    content: '';
+    position: absolute;
+    left: 100px;
+    top: 0; bottom: 0;
+    width: 1px;
+    background: var(--border);
+  }
 
-.mail-btn{
-display:block;
-margin-top:12px;
-padding:13px;
-text-align:center;
-border:1px solid var(--border);
-color:#c8b898;
-font-size:11px;
-word-break:break-word;
-}
+  .accum-year {
+    font-size: 11px;
+    color: var(--muted);
+    padding: 20px 16px 20px 0;
+    text-align: right;
+    letter-spacing: 0.05em;
+  }
 
-.page{
-position:relative;
-z-index:1;
-max-width:760px;
-margin:0 auto;
-padding:110px 48px 90px 60px;
-border-left:1px solid var(--border2);
-min-height:100vh;
-}
+  .accum-content {
+    padding: 16px 0 16px 28px;
+    border-bottom: 1px solid var(--border);
+    position: relative;
+    z-index: 1;
+  }
 
-.page::before{
-content:'';
-position:fixed;
-left:calc(50% - 380px);
-top:0;
-bottom:0;
-width:2px;
-background:var(--gold);
-opacity:.75;
-}
+  .accum-content::before {
+    content: '';
+    position: absolute;
+    left: -4px; top: 24px;
+    width: 7px; height: 7px;
+    background: var(--border-strong);
+    border: 1px solid var(--muted);
+    z-index: 2;
+  }
 
-.doc-tag{
-font-size:9px;
-letter-spacing:.22em;
-text-transform:uppercase;
-color:var(--gold);
-border:1px solid rgba(200,169,110,.35);
-display:inline-block;
-padding:4px 10px;
-margin-bottom:30px;
-}
+  .accum-item.escalating .accum-content::before {
+    background: #d4a017;
+    border-color: #d4a017;
+  }
 
-.doc-title{
-font-family:'Cormorant Garamond',serif;
-font-size:clamp(28px,5vw,48px);
-font-weight:600;
-line-height:1.08;
-margin-bottom:10px;
-color:var(--text-strong);
-}
+  .accum-item.critical .accum-content::before {
+    background: var(--danger);
+    border-color: var(--danger);
+  }
 
-.doc-meta{
-font-size:10px;
-color:var(--muted);
-letter-spacing:.06em;
-margin-bottom:52px;
-padding-bottom:28px;
-border-bottom:1px solid var(--border);
-}
+  .accum-item:last-child .accum-content { border-bottom: none; }
 
-.question-block{
-border-left:3px solid var(--gold);
-padding:24px 28px;
-background:var(--surface);
-margin-bottom:44px;
-}
+  .accum-title {
+    font-size: 11px;
+    font-weight: 500;
+    color: var(--text);
+    letter-spacing: 0.05em;
+    margin-bottom: 6px;
+  }
 
-.question-block p{
-font-family:'Cormorant Garamond',serif;
-font-size:clamp(20px,3vw,27px);
-font-style:italic;
-line-height:1.5;
-color:var(--text-strong);
-}
+  .accum-item.escalating .accum-title { color: #d4a017; }
+  .accum-item.critical .accum-title { color: var(--danger); }
 
-.section{
-margin-bottom:44px;
-}
+  .accum-body { font-size: 12px; color: var(--muted); line-height: 1.75; }
 
-.section-label{
-font-size:9px;
-letter-spacing:.2em;
-text-transform:uppercase;
-color:var(--gold);
-margin-bottom:14px;
-padding-bottom:8px;
-border-bottom:1px solid var(--border);
-}
+  .prose-section { margin-bottom: 64px; }
 
-.section-title{
-font-family:'Cormorant Garamond',serif;
-font-size:clamp(19px,3vw,25px);
-font-weight:600;
-margin-bottom:16px;
-line-height:1.25;
-color:var(--text-strong);
-}
+  .prose-section h2 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(24px, 3vw, 36px);
+    font-weight: 300;
+    color: var(--text);
+    line-height: 1.2;
+    margin-bottom: 24px;
+  }
 
-.body-text{
-font-size:14px;
-font-family:'Inter',sans-serif;
-color:#c0b8af;
-line-height:1.85;
-margin-bottom:14px;
-}
+  .prose-section p {
+    font-size: 13px;
+    color: var(--muted);
+    line-height: 1.85;
+    margin-bottom: 16px;
+    max-width: 640px;
+  }
 
-.finding{
-background:var(--surface);
-border:1px solid var(--border2);
-border-left:3px solid var(--gold);
-padding:18px 22px;
-margin-bottom:10px;
-font-size:13px;
-font-family:'Inter',sans-serif;
-color:var(--text);
-line-height:1.75;
-}
+  .prose-section p strong { color: var(--text); font-weight: 500; }
 
-.danger{
-background:rgba(192,57,43,.05);
-border:1px solid rgba(192,57,43,.18);
-border-left:3px solid var(--red);
-padding:18px 22px;
-margin-bottom:10px;
-font-size:13px;
-font-family:'Inter',sans-serif;
-color:#d9806e;
-line-height:1.75;
-}
+  .pull-quote {
+    border-left: 3px solid var(--accent);
+    padding: 24px 32px;
+    margin: 40px 0;
+    background: var(--surface);
+  }
 
-.names-grid{
-display:grid;
-grid-template-columns:1fr 1fr 1fr;
-gap:10px;
-margin:22px 0;
-}
+  .pull-quote p {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(18px, 2.5vw, 24px);
+    font-weight: 300;
+    font-style: italic;
+    color: var(--text);
+    line-height: 1.5;
+    margin: 0;
+    max-width: none;
+  }
 
-.name-block{
-background:var(--surface);
-border:1px solid var(--border);
-padding:18px 16px;
-}
+  .core-observation {
+    border-left: 3px solid var(--text);
+    padding: 24px 32px;
+    margin: 32px 0;
+    background: var(--surface);
+  }
 
-.name-num{
-font-size:9px;
-letter-spacing:.18em;
-color:var(--gold);
-opacity:.5;
-margin-bottom:10px;
-}
+  .core-observation p {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: clamp(13px, 1.8vw, 16px);
+    font-weight: 300;
+    color: var(--text);
+    line-height: 1.6;
+    margin: 0;
+    letter-spacing: -0.01em;
+  }
 
-.name-role{
-font-family:'Cormorant Garamond',serif;
-font-size:18px;
-font-weight:600;
-color:var(--gold-light);
-margin-bottom:8px;
-}
+  .danger-quote {
+    border-left: 3px solid var(--danger);
+    padding: 24px 32px;
+    margin: 40px 0;
+    background: var(--surface);
+  }
 
-.name-desc{
-font-size:12px;
-color:var(--muted);
-line-height:1.75;
-font-family:'Inter',sans-serif;
-}
+  .danger-quote p {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(16px, 2vw, 20px);
+    font-weight: 300;
+    font-style: italic;
+    color: var(--danger);
+    line-height: 1.5;
+    margin: 0;
+    max-width: none;
+  }
 
-.footer{
-margin-top:64px;
-padding-top:22px;
-border-top:1px solid var(--border);
-font-size:10px;
-color:var(--muted-dim);
-letter-spacing:.06em;
-}
+  .existed-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1px;
+    background: var(--border);
+    border: 1px solid var(--border);
+    margin: 32px 0;
+  }
 
-@media(max-width:600px){
+  .existed-cell { background: var(--surface); padding: 20px; }
 
-.page{
-padding:90px 20px 60px 28px;
-}
+  .existed-cell .ec-label {
+    font-size: 9px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    margin-bottom: 12px;
+  }
 
-.page::before{
-left:0;
-}
+  .existed-cell.yes .ec-label { color: var(--muted); }
+  .existed-cell.no .ec-label { color: var(--danger); }
 
-.names-grid{
-grid-template-columns:1fr;
-}
+  .existed-cell ul { list-style: none; padding: 0; }
 
-.question-block{
-padding:18px 20px;
-}
+  .existed-cell ul li {
+    font-size: 12px;
+    color: var(--muted);
+    padding: 5px 0;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+    line-height: 1.5;
+  }
 
-}
+  .existed-cell ul li:last-child { border-bottom: none; }
+  .existed-cell.yes ul li::before { content: '✓'; color: var(--muted); font-size: 10px; flex-shrink: 0; margin-top: 2px; }
+  .existed-cell.no ul li::before { content: '×'; color: var(--danger); font-size: 12px; flex-shrink: 0; margin-top: 1px; }
 
+  /* SERIES TAXONOMY */
+  .taxonomy {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1px;
+    background: var(--border);
+    border: 1px solid var(--border);
+    margin: 32px 0;
+  }
+
+  .taxonomy-cell {
+    background: var(--surface);
+    padding: 20px;
+  }
+
+  .taxonomy-cell .tc-label {
+    font-size: 9px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 8px;
+  }
+
+  .taxonomy-cell .tc-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 16px;
+    color: var(--text);
+    margin-bottom: 6px;
+    font-weight: 300;
+    line-height: 1.3;
+  }
+
+  .taxonomy-cell .tc-type {
+    font-size: 10px;
+    color: var(--accent);
+    letter-spacing: 0.05em;
+  }
+
+  .taxonomy-cell.active {
+    border-top: 2px solid var(--accent);
+  }
+
+  .final-question {
+    border-top: 1px solid var(--border-strong);
+    padding-top: 64px;
+    margin-top: 64px;
+  }
+
+  .fq-label {
+    font-size: 9px;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 32px;
+  }
+
+  .fq-text {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(28px, 5vw, 52px);
+    font-weight: 300;
+    color: var(--text);
+    line-height: 1.2;
+    margin-bottom: 40px;
+    max-width: 700px;
+  }
+
+  .fq-text em { color: var(--accent); font-style: italic; }
+
+  .fq-sub {
+    font-size: 12px;
+    color: var(--muted);
+    line-height: 1.8;
+    max-width: 560px;
+    margin-bottom: 48px;
+  }
+
+  .series-nav {
+    display: flex;
+    gap: 16px;
+    margin-top: 48px;
+    padding-top: 32px;
+    border-top: 1px solid var(--border);
+    flex-wrap: wrap;
+  }
+
+  .series-item {
+    padding: 12px 16px;
+    border: 1px solid var(--border);
+    font-size: 10px;
+    color: var(--muted);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+
+  .series-item.active { border-color: var(--accent); color: var(--accent); }
+  .series-item.done { border-color: var(--faint); color: var(--faint); }
+
+  .attribution-note {
+    font-size: 10px;
+    color: var(--faint);
+    line-height: 1.6;
+    margin-top: 32px;
+    padding-top: 24px;
+    border-top: 1px solid var(--border);
+    max-width: 560px;
+  }
+
+  .footer {
+    border-top: 1px solid var(--border);
+    padding: 32px 40px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .footer-brand { font-size: 10px; letter-spacing: 0.15em; color: var(--muted); }
+  .footer-link { font-size: 10px; letter-spacing: 0.1em; color: var(--accent); text-decoration: none; }
+
+  @media (max-width: 600px) {
+    nav { padding: 14px 20px; }
+    .hero { padding: 100px 20px 60px; }
+    .content { padding: 60px 20px; }
+    .hero-stats { gap: 24px; }
+    .existed-grid, .taxonomy { grid-template-columns: 1fr; }
+    .accum-item { grid-template-columns: 70px 1fr; }
+    .footer { flex-direction: column; gap: 12px; }
+  }
 </style>
 </head>
-
 <body>
 
-<header class="topbar">
+<nav>
+  <div class="nav-brand">DAR™ — Decision Authority Research</div>
+  <a href="https://matrix-audit.com" class="nav-link">matrix-audit.com</a>
+</nav>
 
-<a href="index.html" class="brand">
-<span class="brand-line"></span>
-<span>Decision Authority Research</span>
-</a>
+<section class="hero">
+  <div class="series-link">Observation Series — No. 3 of 3</div>
+  <div class="hero-label">Governance Observation · Case Study</div>
+  <h1>The Boeing<br><em>Question</em></h1>
+  <p class="hero-sub">
+    The 737 MAX certification path extended across years of accumulated decisions. Each individual decision appeared bounded and revisable. The public record raises a structural question: at what point did the certification path cease to require explicit re-authorization under conditions of accumulating uncertainty?
+  </p>
+  <div class="hero-stats">
+    <div class="stat">
+      <div class="stat-num">346</div>
+      <div class="stat-label">Lives lost across two crashes</div>
+    </div>
+    <div class="stat">
+      <div class="stat-num">Years</div>
+      <div class="stat-label">Of accumulated decisions</div>
+    </div>
+    <div class="stat">
+      <div class="stat-num">20+</div>
+      <div class="stat-label">Months grounded after crashes</div>
+    </div>
+  </div>
+</section>
 
-<button class="menu-btn" id="openMenu">
-<span></span>
-<span></span>
-<span></span>
-</button>
+<div class="content">
 
-</header>
+  <div class="prose-section" style="margin-top: 0; padding-top: 0;">
+    <p style="border-left: 3px solid var(--accent); padding-left: 20px; color: var(--text);">
+      This observation differs from the preceding cases in a significant way. Knight Capital and CrowdStrike involved acute failure events measurable in minutes. The Boeing MCAS governance question is structural and longitudinal: it concerns how a certification path accumulates irreversibility across time, such that no single decision appears to be the moment of commitment — even as the cumulative path becomes increasingly difficult to reverse.
+    </p>
+  </div>
 
-<div class="overlay" id="overlay"></div>
+  <div class="section-marker">
+    <span class="marker-num">01</span>
+    <span class="marker-label">Accumulation of decisions</span>
+    <span class="marker-line"></span>
+  </div>
 
-<aside class="drawer" id="drawer">
+  <div class="accum-timeline">
 
-<div class="drawer-top">
-<div class="drawer-title">Navigation</div>
-<button class="close-btn" id="closeMenu">&#215;</button>
+    <div class="accum-item">
+      <div class="accum-year">2011</div>
+      <div class="accum-content">
+        <div class="accum-title">737 MAX program launched under competitive pressure</div>
+        <div class="accum-body">Boeing launches the 737 MAX to compete with Airbus A320neo. A key constraint: the aircraft must be certifiable as a derivative of the existing 737 family, not as a new type. This allows airlines to avoid full pilot retraining. The constraint shapes every subsequent design and certification decision.</div>
+      </div>
+    </div>
+
+    <div class="accum-item escalating">
+      <div class="accum-year">2012–2016</div>
+      <div class="accum-content">
+        <div class="accum-title">MCAS developed to address aerodynamic behavior</div>
+        <div class="accum-body">New CFM LEAP engines require repositioning on the wing, altering the aircraft's handling characteristics at high angles of attack. MCAS — Maneuvering Characteristics Augmentation System — is developed to compensate. The system is designed to activate automatically, without pilot awareness, to adjust the horizontal stabilizer. The decision to keep MCAS's existence undisclosed in pilot documentation is made during this period.</div>
+      </div>
+    </div>
+
+    <div class="accum-item escalating">
+      <div class="accum-year">2016–2017</div>
+      <div class="accum-content">
+        <div class="accum-title">FAA delegates certification authority. MCAS authority expanded.</div>
+        <div class="accum-body">The FAA delegates significant portions of certification review to Boeing's own engineers under Organization Designation Authorization. Separately, MCAS's authority over the stabilizer is expanded — the system is given greater range of movement than originally assessed — without a corresponding reassessment of its failure modes or pilot recovery time. The public record indicates this expansion was not flagged for additional regulatory review.</div>
+      </div>
+    </div>
+
+    <div class="accum-item escalating">
+      <div class="accum-year">Oct 2018</div>
+      <div class="accum-content">
+        <div class="accum-title">Lion Air Flight 610. 189 lives lost.</div>
+        <div class="accum-body">MCAS activates based on a faulty angle-of-attack sensor reading. Pilots, unaware of the system's existence and not trained on its recovery procedure, are unable to counteract repeated nose-down commands. The aircraft enters the Java Sea 13 minutes after takeoff. The 737 MAX continues flying.</div>
+      </div>
+    </div>
+
+    <div class="accum-item critical">
+      <div class="accum-year">Mar 2019</div>
+      <div class="accum-content">
+        <div class="accum-title">Ethiopian Airlines Flight 302. 157 lives lost.</div>
+        <div class="accum-body">An identical failure sequence. MCAS activates on a faulty sensor. Pilots follow Boeing's updated emergency procedure — which proves insufficient against the system's authority. The aircraft crashes six minutes after takeoff. Regulators ground the 737 MAX globally. The aircraft does not return to service for 20 months.</div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- THE STRUCTURAL QUESTION -->
+  <div class="section-marker">
+    <span class="marker-num">02</span>
+    <span class="marker-label">The structural question</span>
+    <span class="marker-line"></span>
+  </div>
+
+  <div class="prose-section">
+    <h2>Each decision appeared bounded.<br>The path did not.</h2>
+    <p>The Boeing MCAS case does not present a single moment of identifiable governance failure. It presents a sequence of decisions — competitive framing, design constraints, certification delegation, system expansion, documentation choices — each of which appeared manageable and revisable in isolation.</p>
+    <p>The structural question DAR observes is different: <strong>at what point did the cumulative path cease to require explicit re-authorization under conditions of accumulating uncertainty?</strong></p>
+
+    <div class="core-observation">
+      <p>Each individual decision appeared reversible.<br>The certification path, as a whole, accumulated toward irreversibility.<br>The public record does not identify the point at which re-authorization was required.</p>
+    </div>
+
+    <p>This is what distinguishes the Boeing case from the preceding two. Knight Capital and CrowdStrike involved systems moving faster than human decision cycles. Boeing involved a certification path moving slowly enough that each decision appeared considered — while the cumulative trajectory approached a condition from which return became increasingly costly, and ultimately was not taken before loss of life.</p>
+  </div>
+
+  <!-- WHAT EXISTED -->
+  <div class="section-marker">
+    <span class="marker-num">03</span>
+    <span class="marker-label">What was present. What the record does not show.</span>
+    <span class="marker-line"></span>
+  </div>
+
+  <div class="existed-grid">
+    <div class="existed-cell yes">
+      <div class="ec-label">What existed</div>
+      <ul>
+        <li>FAA certification authority and delegation framework</li>
+        <li>Internal Boeing engineering review processes</li>
+        <li>Safety assessment documentation for MCAS</li>
+        <li>Regulatory communication channels between Boeing and FAA</li>
+        <li>Post-Lion Air internal awareness of MCAS behavior</li>
+        <li>Congressional oversight after grounding</li>
+      </ul>
+    </div>
+    <div class="existed-cell no">
+      <div class="ec-label">What the public record does not identify</div>
+      <ul>
+        <li>A named individual with explicit authority to pause the certification path under accumulating uncertainty</li>
+        <li>A defined threshold at which MCAS authority expansion required independent re-authorization</li>
+        <li>A condition under which the derivative-type constraint required explicit re-examination</li>
+        <li>A named stop authority between Lion Air and Ethiopian Airlines</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="pull-quote">
+    <p>The governance structures present were designed to certify. The public record does not identify a named individual whose explicit release was required before the certification path could continue under accumulating uncertainty.</p>
+  </div>
+
+  <div class="danger-quote">
+    <p>When each decision appears reversible, the path toward irreversibility has no formal encounter with refusal.</p>
+  </div>
+
+  <!-- THE PATTERN -->
+  <div class="section-marker">
+    <span class="marker-num">04</span>
+    <span class="marker-label">The pattern across three cases</span>
+    <span class="marker-line"></span>
+  </div>
+
+  <div class="prose-section">
+    <p>Across three domains — financial execution, software deployment, and safety certification — a structural relationship appears in the public record. In each case, the system was organized around a path designed for continuity. In each case, the interruption condition was either absent, slower than the primary path, or not tied to a named individual with prior commitment.</p>
+  </div>
+
+  <div class="taxonomy">
+    <div class="taxonomy-cell">
+      <div class="tc-label">No. 1 · Knight Capital · 2012</div>
+      <div class="tc-title">Execution without interruption</div>
+      <div class="tc-type">Velocity: seconds</div>
+    </div>
+    <div class="taxonomy-cell">
+      <div class="tc-label">No. 2 · CrowdStrike · 2024</div>
+      <div class="tc-title">Propagation without interruption</div>
+      <div class="tc-type">Velocity: minutes</div>
+    </div>
+    <div class="taxonomy-cell active">
+      <div class="tc-label">No. 3 · Boeing MCAS · 2011–2019</div>
+      <div class="tc-title">Certification without interruption</div>
+      <div class="tc-type">Velocity: years</div>
+    </div>
+  </div>
+
+  <div class="prose-section">
+    <p>The velocity differs. The structure does not. In each case, the path toward the irreversible outcome did not require the explicit release of a named individual before continuation was permitted. Oversight existed. Process existed. Named stop authority, committed in advance, does not appear in the public record of any of the three cases.</p>
+  </div>
+
+  <!-- FINAL QUESTION -->
+  <div class="final-question">
+    <div class="fq-label">The question this case leaves behind</div>
+    <div class="fq-text">
+      At what point did the certification path require <em>explicit re-authorization</em> under accumulating uncertainty?
+    </div>
+    <p class="fq-sub">
+      Not who approved each individual decision. Not which regulator signed the final certificate.<br><br>
+      At what specific condition of accumulating uncertainty was a named individual required to explicitly release continuation — rather than having the path proceed by default toward the next decision?<br><br>
+      If that condition does not exist within the certification architecture, then the path toward irreversibility has no formal encounter with refusal. It accumulates, decision by decision, until the cost of stopping exceeds the cost of continuing. And then it continues.
+    </p>
+
+    <div class="series-nav">
+      <div class="series-item done">No. 1 · Knight Capital</div>
+      <div class="series-item done">No. 2 · CrowdStrike</div>
+      <div class="series-item active">No. 3 · Boeing MCAS</div>
+    </div>
+
+    <div class="attribution-note">
+      This observation is drawn from publicly available records including congressional testimony, the Joint Authorities Technical Review (JATR) report, the House Transportation Committee investigation (2020), and public reporting on Boeing's 737 MAX certification process. DAR makes no claim to insider knowledge of Boeing's or the FAA's internal governance. This observation does not attribute individual fault or negligence. It identifies a structural governance question observable from the public record.
+    </div>
+  </div>
+
 </div>
 
-<div class="group">
-
-<small>Research</small>
-
-<a class="link" href="index.html">Home</a>
-
-<a class="link" href="governance-anatomy.html">Governance Anatomy</a>
-
-<a class="link" href="whitepaper.html">White Paper</a>
-
-<a class="link current" href="board-brief.html">Board Brief</a>
-
-<a class="link" href="how-it-works.html">How It Works</a>
-
-<a class="link" href="diagnostic.html">Governance Diagnostic</a>
-
-<a class="link" href="definitions.html">Definitions</a>
-
-<a class="link" href="faq.html">FAQ</a>
-
-</div>
-
-<a href="mailto:Liran@liranbarshrim.com" class="mail-btn">
-Liran@liranbarshrim.com
-</a>
-
-</aside>
-
-<div class="page">
-
-<div class="doc-tag">Board Brief</div>
-
-<div class="doc-title">
-Named Refusal Authority
-</div>
-
-<div class="doc-meta">
-Decision Authority Research · Liran Bar-Shrim · 2026
-</div>
-
-<div class="question-block">
-<p>
-If irreversible execution proceeds today, who by name holds the institutional right to refuse continuation before outcomes become permanent?
-</p>
-</div>
-
-<div class="danger" style="margin-bottom:44px;">
-If this question cannot be answered with a name, refusal authority is unassigned. Continuation is already authorized by default.
-</div>
-
-<div class="section">
-
-<div class="section-label">
-The Gap
-</div>
-
-<div class="section-title">
-Most boards can name who approves. Almost none can name who holds refusal authority.
-</div>
-
-<p class="body-text">
-Organizations invest heavily in approval authority. Budget sign-off, risk committee review, board oversight.
-</p>
-
-<p class="body-text">
-Refusal authority is different. The question is not who approved continuation. The question is who, by name, holds the institutional right to refuse continuation before irreversible execution proceeds.
-</p>
-
-<div class="finding">
-Where no named refusal authority exists, continuation proceeds by default.
-</div>
-
-</div>
-
-<div class="section">
-
-<div class="section-label">
-Structure
-</div>
-
-<div class="section-title">
-Named refusal authority requires three distinct roles.
-</div>
-
-<div class="names-grid">
-
-<div class="name-block">
-<div class="name-num">01</div>
-<div class="name-role">Refusal</div>
-<div class="name-desc">
-Named in advance. Holds the institutional right to deny continuation.
-</div>
-</div>
-
-<div class="name-block">
-<div class="name-num">02</div>
-<div class="name-role">Hold</div>
-<div class="name-desc">
-Maintains suspension while governance responds.
-</div>
-</div>
-
-<div class="name-block">
-<div class="name-num">03</div>
-<div class="name-role">Authorization</div>
-<div class="name-desc">
-Separate named authority required to resume continuation.
-</div>
-</div>
-
-</div>
-
-</div>
-
-<div class="section">
-
-<div class="section-label">
-Board Exposure
-</div>
-
-<div class="section-title">
-Where personal accountability concentrates.
-</div>
-
-<p class="body-text">
-When irreversible execution produces harm and no named refusal authority existed beforehand, accountability often concentrates after the fact.
-</p>
-
-<div class="danger">
-If authorization cannot be assigned by name, continuation becomes institutional momentum rather than governance.
-</div>
-
-</div>
-
-<div class="footer">
-&#169; 2026 Liran Bar-Shrim · Decision Authority Research
-</div>
-
-</div>
-
-<script>
-
-var drawer=document.getElementById('drawer');
-var overlay=document.getElementById('overlay');
-
-document.getElementById('openMenu').onclick=function(){
-drawer.classList.add('active');
-overlay.classList.add('active');
-};
-
-document.getElementById('closeMenu').onclick=closeDrawer;
-
-overlay.onclick=closeDrawer;
-
-function closeDrawer(){
-drawer.classList.remove('active');
-overlay.classList.remove('active');
-}
-
-</script>
+<footer class="footer">
+  <div class="footer-brand">Decision Authority Research &nbsp;·&nbsp; Governance Observation Series</div>
+  <a href="https://matrix-audit.com" class="footer-link">matrix-audit.com</a>
+</footer>
 
 </body>
 </html>
