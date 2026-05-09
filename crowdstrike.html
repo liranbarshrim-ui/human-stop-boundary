@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>The CrowdStrike Question — Decision Authority Research</title>
+<title>The CrowdStrike Question — Liran Bar-Shrim</title>
 <style>
   @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@300;400;500&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&display=swap');
 
@@ -42,7 +42,7 @@
 
   nav {
     position: fixed;
-    top: 0; left: 0; right: 0;
+    top: 32px; left: 0; right: 0;
     z-index: 100;
     padding: 16px 40px;
     display: flex;
@@ -452,16 +452,26 @@
     .tl-item { grid-template-columns: 56px 1fr; }
     .footer { flex-direction: column; gap: 12px; }
   }
+
+@media (max-width: 640px) {
+  .wrap, .wrap-narrow {
+    padding-left: 20px !important;
+    padding-right: 20px !important;
+    max-width: 100% !important;
+  }
+  body { overflow-x: hidden !important; }
+}
 </style>
 </head>
-<body>
+<body><div style="position:fixed;top:0;left:0;right:0;z-index:200;background:#090909;border-bottom:1px solid #1a1a1a;height:32px;display:flex;align-items:center;justify-content:space-between;padding:0 40px;"><a href="index.html" style="font-family:IBM Plex Mono,monospace;font-size:8px;letter-spacing:.2em;text-transform:uppercase;color:#7a7570;text-decoration:none;">← Governance Observation Series</a><span style="font-family:IBM Plex Mono,monospace;font-size:8px;letter-spacing:.2em;text-transform:uppercase;color:#c8a96e;">Velocity: minutes</span></div>
 
 <nav>
-  <div class="nav-brand">DAR™ — Decision Authority Research</div>
+  <div class="nav-brand">Liran Bar-Shrim</div>
   <a href="https://matrix-audit.com" class="nav-link">matrix-audit.com</a>
 </nav>
 
 <section class="hero">
+  <div style="font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:.15em;text-transform:uppercase;color:#3a3530;margin-bottom:8px;">No. 2 of 3 · Governance Observation Series</div>
   <div class="series-link">Observation Series — No. 2 of 3</div>
   <div class="hero-label">Governance Observation · Case Study</div>
   <h1>The CrowdStrike<br><em>Question</em></h1>
@@ -521,7 +531,7 @@
       <div class="tl-time">04:09–05:27 UTC</div>
       <div class="tl-content">
         <div class="tl-title">Propagation continues. Devices begin crashing.</div>
-        <div class="tl-body">Within minutes, Windows systems running Falcon sensor versions 7.11 and above begin entering boot loops. The defective logic in Channel File 291 causes a null pointer dereference on read. Systems crash to BSOD and cannot recover automatically. The update continues propagating while the failure pattern becomes visible. The deployment path and the interruption path are not symmetrical in speed.</div>
+        <div class="tl-body">Within minutes, Windows systems running Falcon sensor begin entering boot loops. Systems crash and cannot recover automatically. Propagation continues while the failure pattern becomes visible. The deployment path and the interruption path are not symmetrical in speed.</div>
       </div>
     </div>
 
@@ -529,7 +539,16 @@
       <div class="tl-time">05:27 UTC</div>
       <div class="tl-content">
         <div class="tl-title">CrowdStrike reverts the file.</div>
-        <div class="tl-body">The defective Channel File 291 is reverted. But reversion does not repair already-crashed systems. Each affected device requires manual intervention: boot into safe mode, locate and delete the file, restart. For organizations with hundreds or thousands of affected endpoints, this becomes a multi-day recovery operation. The update was automated. The recovery was not.</div>
+        <div class="tl-body">The defective file is reverted. But reversion does not repair already-crashed systems. Each affected device requires manual intervention: boot into safe mode, locate and delete the file, restart.</div>
+      </div>
+    </div>
+
+    <div class="tl-item" style="margin-top: 0;">
+      <div class="tl-time"></div>
+      <div class="tl-content" style="border: none; padding-top: 0;">
+        <div style="border-left: 3px solid var(--text); padding: 16px 20px; background: var(--surface); margin: 8px 0 0;">
+          <p style="font-family: 'IBM Plex Mono', monospace; font-size: 15px; font-weight: 300; color: var(--text); line-height: 1.5; margin: 0; letter-spacing: -0.01em;">The update was automated.<br>The recovery was not.</p>
+        </div>
       </div>
     </div>
 
@@ -582,18 +601,18 @@
       </ul>
     </div>
     <div class="existed-cell no">
-      <div class="ec-label">What the public record does not identify</div>
+      <div class="ec-label">What the public record does not make visible</div>
       <ul>
         <li>A named individual with explicit authority to pause global propagation mid-deployment</li>
         <li>A pre-defined uncertainty threshold triggering mandatory re-authorization</li>
-        <li>A condition under which continuation required explicit release before proceeding</li>
+        <li>A condition under which continuation required explicit authorization before proceeding</li>
         <li>A named stop authority designated in advance for Rapid Response Content deployment</li>
       </ul>
     </div>
   </div>
 
   <div class="pull-quote">
-    <p>The question is not whether governance existed. It is whether, at the moment propagation became materially risky, any named individual held prior commitment to refuse continuation.</p>
+    <p>The question is not whether governance existed. It is whether, at the moment propagation became materially risky, any named individual held explicit prior authority to refuse continuation.</p>
   </div>
 
   <!-- CONTRAST WITH KNIGHT -->
@@ -611,17 +630,17 @@
     <div class="contrast-cell">
       <div class="cc-label">Knight Capital · 2012</div>
       <div class="cc-title">Execution without interruption</div>
-      <div class="cc-body">Automated trading system executes under speed. The system's default state is continuation. Stopping requires action. Action requires authority. Authority is distributed. 45 minutes. $440M.</div>
+      <div class="cc-body">Automated trading system executes under speed. The system's default state is continuation. Stopping requires action. Action requires authority. The public record does not make visible a named stop authority. 45 minutes. $440M.</div>
     </div>
     <div class="contrast-cell">
       <div class="cc-label">CrowdStrike · 2024</div>
       <div class="cc-title">Propagation without interruption</div>
-      <div class="cc-body">Automated content update propagates under trust. Deployment is faster than detection. Interruption is manual and slower than propagation. 78 minutes. 8.5M devices. Recovery measured in days.</div>
+      <div class="cc-body">Automated content update propagates under trust. Propagation moved faster than organizational interruption. Recovery was manual. 78 minutes. 8.5M devices. Recovery measured in days.</div>
     </div>
   </div>
 
   <div class="danger-quote">
-    <p>In both cases, the system was not designed to stop. It was designed to continue. The absence of a named interruption authority is not incidental to that design. It appears to be consistent with it.</p>
+    <p>In both cases, the system was not designed to stop. It was designed to continue. The architecture appears structurally optimized for continuity rather than interruption.</p>
   </div>
 
   <!-- FINAL QUESTION -->
@@ -632,8 +651,8 @@
     </div>
     <p class="fq-sub">
       Not who was responsible after the outage. Not who escalated during recovery.<br><br>
-      At what specific condition in the deployment path was a named individual required to explicitly release continuation — rather than having continuation proceed by default?<br><br>
-      If that condition does not exist before deployment, the interruption path will always be slower than the propagation path. And the question of who could have stopped it will have no answer that precedes the event.
+      At what specific condition in the deployment path was a named individual required to explicitly authorize continuation — rather than having continuation proceed by default?<br><br>
+      If that condition does not exist before deployment, the interruption path is likely to remain slower than the propagation path. And the question of who could have stopped it will have no answer that precedes the event.
     </p>
 
     <div class="series-nav">
@@ -643,14 +662,15 @@
     </div>
 
     <div class="attribution-note">
-      This observation is drawn from publicly available post-incident analysis, congressional testimony, and CrowdStrike's published Preliminary Post Incident Review (July 2024). DAR makes no claim to insider knowledge of CrowdStrike's internal release governance. The governance gap identified here is structural and observable from the public record. DAR does not assert fault or negligence on the part of any individual.
+      This observation is drawn from publicly available post-incident analysis, congressional testimony, and CrowdStrike's published Preliminary Post Incident Review (July 2024). DAR makes no claim to insider knowledge of CrowdStrike's internal release governance. The structural pattern discussed here is observable from the public record alone. DAR does not assert fault or negligence on the part of any individual.
     </div>
   </div>
 
 </div>
 
-<footer class="footer">
-  <div class="footer-brand">Decision Authority Research &nbsp;·&nbsp; Governance Observation Series</div>
+<div style="text-align:center;padding:12px 40px;border-top:1px solid #1a1a1a;font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:.15em;color:#3a3530;">Part of the <a href="index.html" style="color:#c8a96e;text-decoration:none;">Governance Observation Series</a> · Decision Authority Research · matrix-audit.com</div>
+<footer class="footer" style="display:none;">
+  <div class="footer-brand">Liran Bar-Shrim &nbsp;·&nbsp; Governance Observation Series</div>
   <a href="https://matrix-audit.com" class="footer-link">matrix-audit.com</a>
 </footer>
 
