@@ -160,7 +160,7 @@ a { text-decoration: none; color: inherit; }
 .rf-cell-text {
   font-size: clamp(15px, 1.4vw, 17px);
   font-weight: 300;
-  color: var(--muted);
+  color: #c0b8ae;
   line-height: 1.75;
 }
 
@@ -183,7 +183,7 @@ a { text-decoration: none; color: inherit; }
 
 .rf-series-link-text {
   font-size: 13px;
-  color: var(--muted);
+  color: #c0b8ae;
   line-height: 1.5;
 }
 
@@ -235,7 +235,7 @@ a { text-decoration: none; color: inherit; }
   font-size: clamp(16px, 1.4vw, 19px);
   font-weight: 300;
   line-height: 1.85;
-  color: var(--muted);
+  color: #c0b8ae;
   margin-bottom: 22px;
   max-width: 52ch;
 }
@@ -363,6 +363,15 @@ a { text-decoration: none; color: inherit; }
 .research-frame { animation: fadeUp .9s ease both; }
 .hero-text { animation: fadeUp 1s .1s ease both; }
 .hero-portrait { animation: fadeUp 1.1s .2s ease both; }
+
+@media (max-width: 640px) {
+  .wrap, .wrap-narrow {
+    padding-left: 20px !important;
+    padding-right: 20px !important;
+    max-width: 100% !important;
+  }
+  body { overflow-x: hidden !important; }
+}
 </style>
 </head>
 
@@ -373,7 +382,7 @@ a { text-decoration: none; color: inherit; }
     <span class="brand-rule"></span>
     <span>Liran Bar-Shrim</span>
   </a>
-  <a href="mailto:Liran@liranbarshrim.com" class="nav-contact">Contact</a>
+  <a href="mailto:Liran@liranbarshrim.com" class="nav-contact">Correspondence</a>
 </header>
 
 <main>
@@ -386,7 +395,7 @@ a { text-decoration: none; color: inherit; }
     <div class="rf-grid">
       <div class="rf-cell">
         <div class="rf-cell-label">What is examined</div>
-        <div class="rf-cell-text">The structural relationship between <strong>continuity architecture</strong> and <strong>interruption architecture</strong> in governance systems. Specifically: at what point does continuation cease to require explicit re-authorization from a named individual, and what does the public record show about that condition?</div>
+        <div class="rf-cell-text">How organizations define continuation — and who holds the authority to refuse continuation. Specifically: at what point does continuation cease to require explicit re-authorization from a named individual, and what does the public record show about that condition?</div>
       </div>
       <div class="rf-cell">
         <div class="rf-cell-label">How it proceeds</div>
@@ -405,10 +414,15 @@ a { text-decoration: none; color: inherit; }
     <a href="observation-series.html" class="rf-series-link">
       <div>
         <div class="rf-series-link-label">Governance Observation Series</div>
-        <div class="rf-series-link-text">Three domains. Three timescales. The pattern observed across financial execution, software deployment, and safety certification.</div>
+        <div class="rf-series-link-text">The pattern observed across financial execution, software deployment, and safety certification.</div>
       </div>
       <div class="rf-series-link-arrow">→</div>
     </a>
+  </div>
+
+  <!-- TRANSITION -->
+  <div style="position:relative;z-index:1;padding:32px 32px;max-width:720px;margin:0 auto;border-bottom:1px solid var(--line);">
+    <p style="font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.12em;color:var(--dim);line-height:1.8;">This work begins after continuation has already occurred — when the question of who could have stopped it no longer has a name that precedes the event.</p>
   </div>
 
   <!-- IDENTITY — preserved, repositioned -->
@@ -427,7 +441,7 @@ a { text-decoration: none; color: inherit; }
         after the moment they should have stopped.
         <strong>Not because stopping was impossible.
         Because no one had been clearly assigned
-        the authority to stop it.</strong>
+        the authority to refuse continuation.</strong>
       </p>
 
       <div class="rule-statement">
@@ -445,11 +459,9 @@ a { text-decoration: none; color: inherit; }
       </p>
 
       <p class="body-block">
-        One person.
-        No institution behind it.
-        Just the question itself —
-        and a body of observation that asks it
-        across domains.
+        Independent writing and research.
+        Institutionally unaffiliated.
+        Focused on one recurring governance question.
       </p>
 
       <div class="sig">
@@ -468,17 +480,13 @@ a { text-decoration: none; color: inherit; }
     <div class="quote-block">
       <p>
         Most systems define who approves.<br>
-        Almost none define who can refuse.
+        Almost none define who holds named refusal authority.
       </p>
     </div>
 
     <p class="body-block">
-      The question is not whether people object.
-    </p>
-
-    <p class="body-block">
-      The question is whether refusal exists structurally —
-      before the decision becomes irreversible.
+      Before continuation becomes irreversible,
+      who still has the authority to refuse?
     </p>
 
     <div class="back-row">
