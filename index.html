@@ -384,9 +384,11 @@ a { text-decoration: none; color: inherit; }
   .nav-grid { grid-template-columns: repeat(2, 1fr); }
 }
 @media (max-width: 860px) {
+  body { overflow-x: hidden; }
+  * { max-width: 100%; }
   .topbar { padding: 0 20px; }
-  .wrap { padding: 0 20px; }
-  .wrap-narrow { padding: 0 20px; }
+  .wrap { padding: 0 20px; max-width: 100%; }
+  .wrap-narrow { padding: 0 20px; max-width: 100%; }
   .hero { padding-top: 120px; padding-bottom: 48px; }
   .hero h1 { font-size: 26px; line-height: 1.0; margin-bottom: 28px; }
   .hero-sub { font-size: 16px; }
@@ -418,6 +420,15 @@ a { text-decoration: none; color: inherit; }
   to   { opacity: 1; transform: translateY(0); }
 }
 .hero { animation: fadeUp .9s ease both; }
+
+@media (max-width: 640px) {
+  .wrap, .wrap-narrow {
+    padding-left: 20px !important;
+    padding-right: 20px !important;
+    max-width: 100% !important;
+  }
+  body { overflow-x: hidden !important; }
+}
 </style>
 </head>
 
