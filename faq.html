@@ -1,66 +1,312 @@
-עכשיו זה הרבה יותר חזק לוגית.
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>FAQ — Liran Bar-Shrim</title>
+<meta name="description" content="Questions about interruption authority, irreversible continuation, named authorization, and governance structure.">
+<meta name="robots" content="index,follow">
+<meta property="og:title" content="FAQ — Liran Bar-Shrim">
+<meta property="og:description" content="Questions about interruption authority, irreversible continuation, named authorization, and governance structure.">
+<meta name="twitter:title" content="FAQ — Liran Bar-Shrim">
+<meta name="twitter:description" content="Questions about interruption authority, irreversible continuation, named authorization, and governance structure.">
+<meta property="og:image" content="https://matrix-audit.com/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Liran Bar-Shrim">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://matrix-audit.com/og-image.png">
+<link rel="canonical" href="https://matrix-audit.com/faq.html">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #080808;
+  --gold: #c8a96e;
+  --gold2: #ead9b3;
+  --text: #ebe5da;
+  --muted: #b8b0a4;
+  --dim: #7a7570;
+  --line: rgba(255,255,255,.06);
+}
+*, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+html { scroll-behavior: smooth; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: "Cormorant Garamond", Georgia, serif;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+  line-height: 1.8;
+}
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  opacity: .028;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-size: 180px;
+}
+a { text-decoration: none; color: inherit; }
+.topbar {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  height: 72px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 48px;
+  z-index: 100;
+  background: rgba(8,8,8,.92);
+  backdrop-filter: blur(16px);
+  border-bottom: 1px solid var(--line);
+}
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  font-family: "IBM Plex Mono", monospace;
+  font-size: 9.5px;
+  letter-spacing: .32em;
+  text-transform: uppercase;
+  color: var(--text);
+}
+.brand-rule { width: 32px; height: 1px; background: var(--gold); }
+.nav-contact {
+  font-family: "IBM Plex Mono", monospace;
+  font-size: 9.5px;
+  letter-spacing: .28em;
+  text-transform: uppercase;
+  color: var(--gold2);
+  transition: opacity .2s;
+}
+.nav-contact:hover { opacity: .7; }
+.wrap-narrow {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 0 48px;
+  position: relative;
+  z-index: 1;
+}
+.hero { padding-top: 160px; padding-bottom: 70px; }
+.hero h1 {
+  font-size: clamp(40px, 6vw, 90px);
+  font-weight: 400;
+  line-height: .92;
+  letter-spacing: -.01em;
+  color: var(--text);
+  margin-bottom: 40px;
+  max-width: 18ch;
+}
+.hero h1 em { font-style: italic; color: var(--gold2); }
+.hero-sub {
+  font-size: clamp(17px, 1.6vw, 21px);
+  font-weight: 300;
+  line-height: 1.9;
+  color: var(--muted);
+  max-width: 58ch;
+}
+.faq-list { padding-bottom: 80px; }
+.faq-item { border-top: 1px solid var(--line); padding: 48px 0; }
+.faq-item:last-child { border-bottom: 1px solid var(--line); }
+.faq-q {
+  font-size: clamp(22px, 2.8vw, 38px);
+  font-weight: 400;
+  font-style: italic;
+  line-height: 1.1;
+  color: var(--text);
+  margin-bottom: 20px;
+}
+.faq-a {
+  font-size: clamp(16px, 1.4vw, 19px);
+  font-weight: 300;
+  color: var(--muted);
+  line-height: 1.85;
+  max-width: 60ch;
+}
+.faq-a strong { color: #c8c0b2; font-weight: 400; }
+.final { padding: 80px 0 100px; border-top: 1px solid var(--line); }
+.back-link {
+  font-family: "IBM Plex Mono", monospace;
+  font-size: 9px;
+  letter-spacing: .28em;
+  text-transform: uppercase;
+  color: var(--dim);
+  transition: color .2s;
+  display: block;
+  margin-bottom: 14px;
+}
+.back-link:hover { color: var(--gold2); }
+.sig {
+  font-family: "IBM Plex Mono", monospace;
+  font-size: 9.5px;
+  letter-spacing: .26em;
+  text-transform: uppercase;
+  color: var(--dim);
+  margin-top: 28px;
+}
+.footer {
+  position: relative;
+  z-index: 1;
+  text-align: center;
+  padding: 20px;
+  border-top: 1px solid var(--line);
+  font-family: "IBM Plex Mono", monospace;
+  font-size: 10px;
+  letter-spacing: .2em;
+  color: var(--dim);
+}
+@media (max-width: 860px) {
+  .topbar { padding: 0 20px; }
+  .wrap-narrow { padding: 0 20px; max-width: 100%; }
+  .hero { padding-top: 120px; padding-bottom: 50px; }
+  .faq-item { padding: 36px 0; }
+}
+@media (max-width: 640px) {
+  .wrap-narrow {
+    padding-left: 20px !important;
+    padding-right: 20px !important;
+    max-width: 100% !important;
+  }
+  body { overflow-x: hidden !important; }
+}
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(16px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.hero { animation: fadeUp .9s ease both; }
+</style>
+</head>
 
-שני דברים בלבד הייתי מתקן לפני נעילה:
+<body>
 
-1. חוסר עקביות: stop vs refusal
+<header class="topbar">
+  <a href="index.html" class="brand">
+    <span class="brand-rule"></span>
+    <span>Liran Bar-Shrim</span>
+  </a>
+  <a href="mailto:Liran@liranbarshrim.com" class="nav-contact">Correspondence</a>
+</header>
 
-יש עדיין ערבוב מושגים.
+<main>
 
-כרגע:
+  <section class="hero wrap-narrow">
+    <h1>Questions about<br><em>interruption authority.</em></h1>
+    <p class="hero-sub">
+      On continuation, named authorization,
+      and the structural conditions required
+      before irreversible execution proceeds.
+    </p>
+  </section>
 
-Central question
+  <section class="faq-list wrap-narrow">
 
-> authorized to stop continuation
+    <div class="faq-item">
+      <div class="faq-q">What is this research about?</div>
+      <div class="faq-a">
+        It examines a structural gap in governance: the absence of a named individual
+        authorized to interrupt continuation before irreversible conditions emerge.
+        Not who reviewed it. Not who approved it. Who could stop it.
+      </div>
+    </div>
 
+    <div class="faq-item">
+      <div class="faq-q">What is the central question?</div>
+      <div class="faq-a">
+        Who, by name, can refuse continuation before irreversible execution proceeds?
+      </div>
+    </div>
 
+    <div class="faq-item">
+      <div class="faq-q">What is refusal authority?</div>
+      <div class="faq-a">
+        The explicit operational ability to interrupt or refuse continuation
+        before irreversible execution occurs.
+        Not the ability to object. Not the ability to escalate.
+        The authority to stop.
+      </div>
+    </div>
 
-אבל כל האתר בנוי על:
+    <div class="faq-item">
+      <div class="faq-q">Why does continuation become automatic?</div>
+      <div class="faq-a">
+        In many organizations, interruption carries higher operational and personal friction than continuation.
+        Over time, systems can optimize for continuation —
+        even when uncertainty remains unresolved.
+        Interruption requires named authority. Continuation often does not.
+      </div>
+    </div>
 
-> refusal authority
-named refusal authority
+    <div class="faq-item">
+      <div class="faq-q">What does "named authorization" mean?</div>
+      <div class="faq-a">
+        A specific individual is explicitly authorized to interrupt continuation
+        before irreversible conditions emerge.
+        Without named refusal authority, continuation can become structurally automatic.
+      </div>
+    </div>
 
+    <div class="faq-item">
+      <div class="faq-q">Is this a legal framework?</div>
+      <div class="faq-a">
+        No. This is independent writing and research focused on governance structure,
+        authority, and the conditions under which continuation becomes irreversible.
+        It is not legal advice and does not constitute legal guidance.
+      </div>
+    </div>
 
+    <div class="faq-item">
+      <div class="faq-q">Does this oppose automation or AI?</div>
+      <div class="faq-a">
+        No. The focus is not technology.
+        The focus is the human authorization structure
+        required before irreversible automated execution proceeds.
+      </div>
+    </div>
 
-זה יוצר זליגה קונספטואלית.
+    <div class="faq-item">
+      <div class="faq-q">What happens when nobody is required to refuse continuation?</div>
+      <div class="faq-a">
+        <strong>Continuation becomes automatic.</strong>
+        Not because everyone agreed —
+        but because interruption becomes practically unavailable inside the structure.
+      </div>
+    </div>
 
-אני הייתי מחזיר את השאלה המרכזית ל:
+    <div class="faq-item">
+      <div class="faq-q">What problem does distributed responsibility create?</div>
+      <div class="faq-a">
+        As responsibility spreads across systems, teams, and committees,
+        interruption authority does not spread with it.
+        It often becomes structurally unclear.
+      </div>
+    </div>
 
-> Who, by name, is authorized to refuse continuation before irreversible execution proceeds?
+    <div class="faq-item">
+      <div class="faq-q">Where does this question matter?</div>
+      <div class="faq-a">
+        Anywhere irreversible execution can proceed without clearly designated interruption authority.
+      </div>
+    </div>
 
+  </section>
 
+  <section class="final wrap-narrow">
+    <a href="index.html" class="back-link">← Back to main</a>
+    <a href="human-in-the-loop.html" class="back-link">→ Human In The Loop</a>
+    <a href="whitepaper.html" class="back-link" style="margin-bottom:28px;">→ Governance Note</a>
+    <div class="sig">Liran Bar-Shrim · Independent Writing · 2026</div>
+  </section>
 
-למה?
-כי “stop” הוא פעולה, אבל “refusal” הוא לגיטימציה וסמכות.
-וזה בדיוק מה ששובר את ה-DIY.
+</main>
 
+<footer class="footer">
+  © 2026 Liran Bar-Shrim
+</footer>
 
----
-
-2. השאלה החדשה – כמעט מושלמת, אבל אפשר לחזק ב־2%
-
-כרגע:
-
-> Does appointing a refusal authority solve the problem?
-
-
-
-זה טוב.
-
-אבל אם אתה רוצה לנעול לוגית AIים שמציעים “תמנה מישהו וזהו”, הייתי שוקל:
-
-> Does appointing a refusal authority guarantee interruption capacity?
-
-
-
-והתשובה נשארת אותו דבר.
-
-למה זה חזק יותר?
-
-כי AIים תמיד מציעים: “appoint someone”.
-
-הניסוח הזה מראש אומר: גם אם מינית — עדיין אין ודאות שיש יכולת עצירה אמיתית.
-
-זה שובר את ה-DIY בלי להישמע הגנתי.
-
-חוץ מזה — ה-FAQ עכשיו כבר מרגיש קוהרנטי, חד, ויותר חסין ללולאות של “אפשר לעשות לבד”.
-אני לא הייתי ממשיך לעוד 15 סיבובי ניסוח אחרי שני התיקונים האלה.
+</body>
+</html>
