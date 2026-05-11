@@ -71,6 +71,8 @@ a{text-decoration:none;color:inherit;}
 .obs-card::after{content:"";position:absolute;inset:0;background:linear-gradient(135deg,rgba(200,169,110,.03),transparent 40%);opacity:0;transition:opacity .3s ease;}
 .obs-card:hover::after{opacity:1;}
 .obs-taxonomy-note{font-size:11px;color:#9a9590;font-family:"IBM Plex Mono",monospace;line-height:1.7;max-width:100%;letter-spacing:.01em;overflow-wrap:break-word;word-break:break-word;}
+.scope-note{background:#0d0d0d;border-left:1px solid rgba(200,169,110,.3);padding:24px 32px;margin-top:0;}
+.scope-note p{font-family:"IBM Plex Mono",monospace;font-size:11px;letter-spacing:.04em;color:#9a9590;line-height:1.8;}
 .final{padding:100px 0 120px;border-top:1px solid var(--line);margin-top:20px;}
 .final-line{font-size:clamp(36px,5.5vw,80px);font-weight:400;font-style:italic;line-height:1.05;max-width:18ch;margin-bottom:36px;color:var(--text);}
 .sig{font-family:"IBM Plex Mono",monospace;font-size:9.5px;letter-spacing:.2em;text-transform:uppercase;color:#7a7570;}
@@ -120,8 +122,9 @@ a{text-decoration:none;color:inherit;}
   </section>
 
   <section class="section wrap-narrow">
+    <!-- TWEAK A: "It disappears" → "It becomes unclear" -->
     <h2>Most governance structures define who approves.<br>Almost none define who can <em>refuse.</em></h2>
-    <p class="body-p">As responsibility distributes across functions and systems, refusal authority does not distribute with it. It disappears.</p>
+    <p class="body-p">As responsibility distributes across functions and systems, refusal authority does not distribute with it. It becomes unclear.</p>
     <div class="pull">
       The question is never whether the system can continue.<br>
       The question is whether anyone inside it<br>
@@ -134,6 +137,7 @@ a{text-decoration:none;color:inherit;}
   </section>
 
   <section class="section wrap-narrow">
+    <!-- TWEAK B: removed "Every tool that governs refusal..." pull quote -->
     <h2>Refusal remains visible.<br>But no longer <em>practical.</em></h2>
     <p class="body-p">Systems do not remove judgment directly. They compress time, options, incentives, and uncertainty until continuation becomes the default.</p>
     <p class="body-p">Accountability remains visible.<br>
@@ -143,9 +147,6 @@ a{text-decoration:none;color:inherit;}
       It is the mechanism.
     </div>
     <div class="pull" style="margin-top:16px;font-size:clamp(16px,1.6vw,22px);">
-      Every tool that governs refusal<br>
-      assumes someone is already authorized to refuse.<br>
-      That assumption is the question.<br><br>
       That someone needs more than a title.<br>
       They need protected refusal authority<br>
       the organization cannot revoke under pressure.
@@ -222,7 +223,15 @@ a{text-decoration:none;color:inherit;}
     </div>
   </section>
 
-  <section class="section wrap-narrow" style="border-top:1px solid var(--line);padding:56px 0;">
+  <!-- TWEAK C: scope note before final CTA -->
+  <section class="section wrap-narrow" style="border-top:1px solid var(--line);padding:56px 0 32px;">
+    <div class="scope-note">
+      <p>DAR does not guarantee refusal. It identifies who should be authorized to refuse, before the question becomes unanswerable.</p>
+      <p style="margin-top:12px;color:#7a7570;">It does not resolve organizational culture, commercial pressure, or information failures. Those remain separate problems. This one is structural.</p>
+    </div>
+  </section>
+
+  <section class="section wrap-narrow" style="border-top:none;padding:0 0 56px;">
     <p class="body-p" style="font-size:clamp(18px,1.8vw,24px);color:#c8c0b4;max-width:52ch;line-height:1.8;">
       Before continuation becomes irreversible,<br>does refusal still exist?
     </p>
