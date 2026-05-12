@@ -3,344 +3,148 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>Named Refusal Authority | Matrix Audit</title>
-<meta name="description" content="Approval enables continuation. Named refusal authority is what makes continuation conditional. Private perspective on refusal authority, executive accountability, and irreversible decisions.">
+<title>Named Refusal Authority — Liran Bar-Shrim</title>
+<meta name="description" content="Approval exists. Stop authority often does not. Who, by name, is authorized to say no before the point of no return?">
 <meta name="robots" content="index,follow">
 <link rel="canonical" href="https://matrix-audit.com/stop-authority.html">
-<meta property="og:title" content="Named Refusal Authority | Matrix Audit">
-<meta property="og:description" content="Approval grants capability. Named authority determines whether continuation is legitimate.">
+<meta property="og:title" content="Named Refusal Authority — Liran Bar-Shrim">
+<meta property="og:description" content="Approval exists. Stop authority often does not.">
 <meta property="og:type" content="website">
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+<meta property="og:image" content="https://matrix-audit.com/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:site_name" content="Liran Bar-Shrim">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://matrix-audit.com/og-image.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&display=swap" rel="stylesheet">
 <style>
-:root{--bg:#090909;--surface:#111111;--gold:#c8a96e;--text:#e8e2d7;--muted:#a7a097;--soft:#8f8880;--border:#1d1d1d;--border2:#2a2a2a;--danger:#c0392b;}
-*{margin:0;padding:0;box-sizing:border-box;}
+:root{--bg:#080808;--gold:#c8a96e;--gold2:#ead9b3;--text:#ebe5da;--muted:#b8b0a4;--dim:#7a7570;--line:rgba(255,255,255,.06);}
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
 html{scroll-behavior:smooth;}
-body{background:var(--bg);color:var(--text);font-family:Inter,system-ui,sans-serif;overflow-x:hidden;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;line-height:1.7;}
-body:before{content:'';position:fixed;inset:0;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 240 240' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.025'/%3E%3C/svg%3E");opacity:.55;pointer-events:none;z-index:0;}
+body{background:var(--bg);color:var(--text);font-family:"Cormorant Garamond",Georgia,serif;overflow-x:hidden;-webkit-font-smoothing:antialiased;line-height:1.8;}
+body::before{content:"";position:fixed;inset:0;pointer-events:none;z-index:0;opacity:.028;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");background-size:180px;}
 a{text-decoration:none;color:inherit;}
-.topbar{position:sticky;top:0;z-index:999;display:flex;justify-content:space-between;align-items:center;padding:18px 24px;background:rgba(9,9,9,.94);backdrop-filter:blur(10px);border-bottom:1px solid rgba(255,255,255,.04);}
-.brand{display:flex;align-items:center;gap:12px;text-decoration:none;color:var(--text);font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.28em;text-transform:uppercase;}
-.brand-line{width:18px;height:1px;background:var(--gold);}
-.menu-btn{display:flex;flex-direction:column;justify-content:center;gap:5px;background:none;border:none;cursor:pointer;padding:6px;}
-.menu-btn span{display:block;width:22px;height:1.5px;background:var(--text);transition:background .2s;}
-.menu-btn:hover span{background:var(--gold);}
-.overlay{position:fixed;inset:0;background:rgba(0,0,0,.6);opacity:0;visibility:hidden;transition:.25s;z-index:998;}
-.overlay.active{opacity:1;visibility:visible;}
-.side-menu{position:fixed;top:0;right:-340px;width:300px;max-width:90%;height:100vh;overflow-y:auto;background:#0d0d0d;border-left:1px solid var(--border);padding:28px 24px 48px;transition:.28s cubic-bezier(.4,0,.2,1);z-index:999;}
-.side-menu.active{right:0;}
-.menu-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:28px;}
-.menu-head-brand{font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:.24em;text-transform:uppercase;color:var(--gold);}
-.close-btn{background:none;border:none;font-size:26px;line-height:1;color:var(--muted);cursor:pointer;transition:.2s;}
-.close-btn:hover{color:var(--text);}
-.menu-group{border-top:1px solid var(--border);padding-top:20px;margin-top:20px;}
-.menu-label{font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:.22em;text-transform:uppercase;color:var(--gold);margin-bottom:12px;}
-.menu-group a{display:flex;align-items:center;gap:10px;padding:9px 0;text-decoration:none;color:var(--muted);font-size:14px;border-bottom:1px solid rgba(255,255,255,.03);transition:.18s;}
-.menu-group a:last-child{border-bottom:none;}
-.menu-group a:hover{color:var(--text);padding-left:4px;}
-.menu-group a.active{color:var(--gold);}
-.menu-divider-line{display:inline-block;width:12px;height:1px;background:var(--border2);flex-shrink:0;}
-.menu-cta{display:block;margin-top:28px;padding:14px 20px;border:1px solid var(--gold);color:var(--gold)!important;font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.2em;text-transform:uppercase;text-align:center;text-decoration:none;transition:.2s;}
-.menu-cta:hover{background:var(--gold);color:#111!important;}
-.menu-email{display:block;margin-top:8px;padding:12px 20px;border:1px solid var(--border2);color:var(--muted)!important;font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:.08em;text-align:center;text-decoration:none;transition:.2s;}
-.menu-email:hover{border-color:var(--gold);color:var(--gold)!important;}
-.container{position:relative;z-index:1;max-width:980px;margin:0 auto;padding:70px 28px 110px;}
-.hero{border-left:3px solid var(--gold);padding-left:24px;margin-bottom:58px;}
-.hero-label{font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.24em;text-transform:uppercase;color:#b8aa8a;margin-bottom:18px;}
-.hero h1{font-family:'Playfair Display',serif;font-size:clamp(22px,4vw,46px);line-height:1.1;letter-spacing:-.01em;margin-bottom:24px;max-width:860px;}
-.hero p{font-size:18px;line-height:1.9;color:var(--muted);max-width:760px;margin-bottom:20px;}
-.hero-intro{display:block;font-size:16px;color:#d7c7a0;font-weight:500;margin-bottom:28px;line-height:1.6;}
-.statement{background:linear-gradient(180deg,#111,#0d0d0d);border:1px solid var(--border2);border-left:3px solid var(--gold);padding:34px;margin-bottom:62px;font-family:'Playfair Display',serif;font-size:clamp(20px,3vw,30px);line-height:1.35;}
-.section{padding:54px 0;border-top:1px solid rgba(255,255,255,.05);}
-.section-label{font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.22em;text-transform:uppercase;color:var(--gold);margin-bottom:14px;}
-.section h2{font-family:'Playfair Display',serif;font-size:clamp(22px,3.5vw,36px);line-height:1.1;margin-bottom:20px;}
-.section p{font-size:17px;color:var(--muted);max-width:760px;margin-bottom:14px;}
-.grid2{display:grid;grid-template-columns:1fr 1fr;gap:32px;}
-.box{background:linear-gradient(180deg,#121212,#0d0d0d);border:1px solid #262626;border-left:3px solid var(--gold);padding:28px 24px;}
-.box h3{font-family:'Playfair Display',serif;font-size:22px;line-height:1.1;margin-bottom:14px;}
-.box p{font-size:15px;color:var(--muted);line-height:1.8;margin-bottom:12px;}
-.box p:last-child{margin-bottom:0;}
-.box-danger{background:linear-gradient(180deg,#130d0d,#0d0d0d);border:1px solid #2a1a1a;border-left:3px solid var(--danger);padding:28px 24px;}
-.box-danger h3{font-family:'Playfair Display',serif;font-size:22px;line-height:1.1;margin-bottom:14px;}
-.box-danger .danger-label{font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:.22em;text-transform:uppercase;color:var(--danger);margin-bottom:14px;opacity:.8;}
-.box-danger p{font-size:15px;color:var(--muted);line-height:1.8;margin-bottom:12px;}
-.box-danger p:last-child{margin-bottom:0;}
-.stack{display:grid;gap:0;margin-top:28px;}
-.stack-item{padding:16px 20px;background:linear-gradient(180deg,#121212,#0d0d0d);border:1px solid var(--border2);border-top:none;font-size:15px;color:var(--muted);line-height:1.7;}
-.stack-item:first-child{border-top:1px solid var(--border2);}
-.pull{margin-top:32px;padding:34px;background:linear-gradient(180deg,#111,#0d0d0d);border:1px solid var(--border2);border-left:3px solid var(--gold);font-family:'Playfair Display',serif;font-size:clamp(20px,2.5vw,28px);line-height:1.3;}
-.center{text-align:center;}
-.center .section-label{display:inline-block;}
-.center h2{margin-left:auto;margin-right:auto;}
-.center p{margin-left:auto;margin-right:auto;}
-.center .actions{justify-content:center;}
-.actions{display:flex;gap:14px;flex-wrap:wrap;margin-top:28px;}
-.btn{display:inline-block;padding:16px 24px;font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.18em;text-transform:uppercase;font-weight:500;transition:.2s;border:1px solid var(--border2);color:var(--text);}
-.btn-primary{background:var(--gold);color:#111;border-color:var(--gold);}
-.btn:hover,.btn-primary:hover{transform:translateY(-2px);}
-.footer-banner{margin-top:74px;border:1px solid var(--border2);background:#0d0d0d;}
-.footer-link{display:flex;justify-content:space-between;align-items:center;padding:20px 24px;text-decoration:none;color:var(--text);border-bottom:1px solid var(--border2);transition:.18s;}
-.footer-link:last-child{border-bottom:none;}
-.footer-link:hover{background:#151515;padding-left:28px;}
-.footer-link-left{display:flex;flex-direction:column;gap:4px;}
-.footer-link-label{font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:.22em;text-transform:uppercase;color:var(--gold);}
-.footer-link-title{font-family:'Playfair Display',serif;font-size:17px;line-height:1.2;}
-.footer-link-arrow{font-family:'IBM Plex Mono',monospace;font-size:14px;color:var(--muted);}
-.footer{margin-top:28px;padding-top:28px;border-top:1px solid var(--border2);font-size:11px;letter-spacing:.08em;color:#6e6964;font-family:'IBM Plex Mono',monospace;}
+.topbar{position:fixed;top:0;left:0;right:0;height:72px;display:flex;align-items:center;justify-content:space-between;padding:0 48px;z-index:100;background:rgba(8,8,8,.92);backdrop-filter:blur(16px);border-bottom:1px solid var(--line);}
+.brand{display:flex;align-items:center;gap:14px;font-family:"IBM Plex Mono",monospace;font-size:9.5px;letter-spacing:.32em;text-transform:uppercase;color:var(--text);}
+.brand-rule{width:32px;height:1px;background:var(--gold);}
+.nav-contact{font-family:"IBM Plex Mono",monospace;font-size:9.5px;letter-spacing:.28em;text-transform:uppercase;color:var(--gold2);transition:opacity .2s;}
+.nav-contact:hover{opacity:.7;}
+.wrap{max-width:800px;margin:0 auto;padding:0 48px;position:relative;z-index:1;}
+.hero{padding-top:160px;padding-bottom:80px;}
+.hero-label{font-family:"IBM Plex Mono",monospace;font-size:9px;letter-spacing:.32em;text-transform:uppercase;color:var(--gold);margin-bottom:20px;}
+.hero h1{font-size:clamp(36px,6vw,80px);font-weight:400;line-height:.92;letter-spacing:-.01em;color:var(--text);margin-bottom:40px;max-width:16ch;}
+.hero h1 em{font-style:italic;color:var(--gold2);}
+.hero-sub{font-size:clamp(18px,1.8vw,23px);font-weight:300;line-height:1.9;color:#c0b8ae;max-width:54ch;}
+.statement{background:#0d0d0d;border-left:3px solid var(--gold);padding:36px 44px;margin:0 0 80px;font-size:clamp(22px,3vw,38px);font-weight:300;font-style:italic;line-height:1.2;color:#f2e8d5;}
+.section{padding:64px 0;border-top:1px solid var(--line);}
+.section-label{font-family:"IBM Plex Mono",monospace;font-size:9px;letter-spacing:.32em;text-transform:uppercase;color:var(--gold);margin-bottom:16px;}
+.body-p{font-size:clamp(17px,1.5vw,21px);font-weight:300;color:#c0b8ae;margin-bottom:20px;max-width:58ch;line-height:1.9;}
+.pull{background:#0d0d0d;border-left:3px solid var(--gold);padding:28px 36px;margin-top:36px;font-size:clamp(18px,2.2vw,30px);font-weight:300;line-height:1.4;font-style:italic;color:var(--text);}
+.cases{margin-top:32px;display:grid;gap:1px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.04);}
+.case{background:#0c0c0c;padding:20px 24px;border-left:2px solid transparent;transition:border-color .2s;}
+.case:hover{border-left-color:var(--gold);}
+.case-domain{font-family:"IBM Plex Mono",monospace;font-size:9px;letter-spacing:.18em;text-transform:uppercase;color:var(--dim);margin-bottom:8px;}
+.case-desc{font-size:clamp(15px,1.3vw,18px);font-weight:300;color:var(--muted);line-height:1.7;}
+.shift{padding:64px 0 100px;border-top:1px solid var(--line);}
+.shift-line{font-size:clamp(20px,2.8vw,38px);font-weight:300;font-style:italic;line-height:1.3;color:var(--text);max-width:52ch;margin-bottom:28px;}
+.shift-note{font-family:"IBM Plex Mono",monospace;font-size:11px;letter-spacing:.04em;color:var(--dim);max-width:54ch;line-height:1.8;}
+.final{padding:80px 0 100px;border-top:1px solid var(--line);}
+.final-q{font-size:clamp(22px,3vw,42px);font-weight:400;font-style:italic;line-height:1.1;margin-bottom:36px;max-width:20ch;}
+.begin-link{display:inline-block;font-family:"IBM Plex Mono",monospace;font-size:9px;letter-spacing:.22em;text-transform:uppercase;color:var(--gold);border-bottom:1px solid rgba(200,169,110,.3);padding-bottom:2px;transition:opacity .2s;}
+.begin-link:hover{opacity:.7;}
+.sig{font-family:"IBM Plex Mono",monospace;font-size:9.5px;letter-spacing:.2em;text-transform:uppercase;color:var(--dim);margin-top:48px;}
+.footer{position:relative;z-index:1;padding:20px 48px;border-top:1px solid var(--line);font-family:"IBM Plex Mono",monospace;font-size:9px;letter-spacing:.08em;color:var(--dim);}
 @media(max-width:860px){
-.container{padding:56px 18px 90px;}
-.hero h1{font-size:clamp(20px,7vw,32px);}
-.hero p,.section p{font-size:16px;}
-.grid2{grid-template-columns:1fr;}
-.btn{width:100%;text-align:center;}
+.topbar{padding:0 20px;}
+.wrap{padding:0 20px;max-width:100%;}
+.hero{padding-top:120px;padding-bottom:48px;}
+.statement{padding:20px 24px;}
+.section{padding:48px 0;}
+.pull{padding:20px 24px;}
+.footer{padding:20px;}
 }
+@keyframes fadeUp{from{opacity:0;transform:translateY(16px);}to{opacity:1;transform:translateY(0);}}
+.hero{animation:fadeUp .9s ease both;}
 </style>
 </head>
 <body>
 
 <header class="topbar">
-  <a href="index.html" class="brand">
-    <span class="brand-line"></span>
-    <span>Decision Authority Research</span>
-  </a>
-  <button class="menu-btn" id="openMenu" aria-label="Open menu">
-    <span></span><span></span><span></span>
-  </button>
+  <a href="index.html" class="brand"><span class="brand-rule"></span><span>Liran Bar-Shrim</span></a>
+  <a href="mailto:Liran@liranbarshrim.com" class="nav-contact">Correspondence</a>
 </header>
 
-<div class="overlay" id="overlay"></div>
+<main>
 
-<aside class="side-menu" id="menu">
-  <div class="menu-head">
-    <span class="menu-head-brand">Matrix Audit</span>
-    <button class="close-btn" id="closeMenu">&times;</button>
-  </div>
-  <div class="menu-group" style="border-top:none;padding-top:0;margin-top:0;">
-    <div class="menu-label">Primary</div>
-    <a href="index.html"><span class="menu-divider-line"></span>Home</a>
-    <a href="dar.html"><span class="menu-divider-line"></span>DAR</a>
-    <a href="services.html"><span class="menu-divider-line"></span>Services</a>
-    <a href="about.html"><span class="menu-divider-line"></span>About</a>
-  </div>
-  <div class="menu-group">
-    <div class="menu-label">Research</div>
-    <a href="research.html"><span class="menu-divider-line"></span>Independent Research</a>
-    <a href="whitepaper.html"><span class="menu-divider-line"></span>White Paper</a>
-  </div>
-  <div class="menu-group">
-    <div class="menu-label">Insights</div>
-    <a href="exposure.html"><span class="menu-divider-line"></span>When Failure Lands on One Name</a>
-    <a href="failure-points.html"><span class="menu-divider-line"></span>Where Accountability Breaks</a>
-    <a href="we.html"><span class="menu-divider-line"></span>The Death of We</a>
-    <a href="stop-authority.html" class="active"><span class="menu-divider-line"></span>Refusal Authority</a>
-    <a href="ai-governance.html"><span class="menu-divider-line"></span>AI Governance</a>
-  </div>
-  <div class="menu-group">
-    <div class="menu-label">Knowledge</div>
-    <a href="definitions.html"><span class="menu-divider-line"></span>Definitions</a>
-    <a href="faq.html"><span class="menu-divider-line"></span>FAQ</a>
-    <a href="case-studies.html"><span class="menu-divider-line"></span>Case Studies</a>
-    <a href="goodfaith.html"><span class="menu-divider-line"></span>Good Faith Use</a>
-  </div>
-  <a href="contact.html" class="menu-cta">Private Intake</a>
-  <a href="mailto:Liran@liranbarshrim.com" class="menu-email">Liran@liranbarshrim.com</a>
-</aside>
-
-<main class="container">
-
-  <section class="hero">
+  <section class="hero wrap">
     <div class="hero-label">Named Refusal Authority</div>
-    <h1>Authorization does not appear after failure.<br>It must exist before execution proceeds.</h1>
-    <p>When careers depend on continuation, who holds the institutional right to refuse. When execution is already in motion, who is authorized to deny it before it becomes irreversible. And if no one is named — continuation is already the answer.</p>
-    <span class="hero-intro">Before irreversible execution proceeds, continuation must be authorized by name.</span>
+    <h1>Who, by name,<br>is authorized<br>to say <em>no?</em></h1>
+    <p class="hero-sub">Before the point of no return — not who reviewed it, not who escalated it. Who could stop it.</p>
   </section>
 
-  <div class="statement">
-    Who holds refusal authority before execution becomes irreversible?<br>
-    Who is authorized to deny continuation — by name, in advance?<br>
-    If no one is named, continuation is already the answer.
+  <div class="wrap">
+    <div class="statement">
+      Approval exists.<br>
+      Refusal authority often does not.
+    </div>
   </div>
 
-  <section class="section">
-    <div class="grid2">
-      <div>
-        <div class="section-label">The Illusion of Shared Authorization</div>
-        <p>During normal operations, authorization often appears distributed.</p>
-        <p>Stakeholders reviewed it. Committees approved it. Teams aligned on it.</p>
-        <p>That language survives while outcomes remain positive.</p>
-        <p>When failure appears, shared authorization collapses into one question:</p>
-        <div class="pull" style="margin-top:20px;font-size:clamp(18px,2.5vw,26px);">Who was authorized to refuse continuation?</div>
-      </div>
-      <div>
-        <div class="section-label">What Changes Under Pressure</div>
-        <p>Once consequences become personal, names matter more than process maps.</p>
-        <p>Boards, regulators, investors, and counterparties rarely ask which slide deck existed.</p>
-        <p>They ask who knew, who approved, and who held refusal authority before continuation proceeded.</p>
-      </div>
-    </div>
-  </section>
-
-  <section class="section">
-    <div class="grid2">
-      <div class="box">
-        <h3>Refusal Authority Is Not Policy</h3>
-        <p>Refusal authority is not real because it appears in governance documents.</p>
-        <p>It is real only when a specifically identified person holds the institutional right to deny continuation — by name, in advance.</p>
-      </div>
-      <div class="box">
-        <h3>Nominal vs Operational</h3>
-        <p>If refusal authority is unassigned, continuation was never actually conditional. Authorization did not exist.</p>
-        <p>Real authority must be usable before execution becomes irreversible.</p>
-      </div>
-    </div>
-  </section>
-
-  <section class="section">
-    <div class="section-label">Authorization Over Refusal</div>
-    <h2>Defining who holds refusal authority is not enough. You must also define who can authorize continuation over that refusal — and at what cost.</h2>
-    <p>Every organization with named refusal authority has an implicit question it rarely asks: who can authorize continuation over that refusal, under what conditions, and who bears the consequences if that authorization was wrong.</p>
-    <p>Without answers to those questions, refusal authority becomes procedural rather than real. A senior leader who can say "proceed anyway" without formal accountability has not been constrained by the refusal. The refusal has been bypassed.</p>
-    <div class="grid2" style="margin-top:32px;">
-      <div class="box">
-        <h3>Refusal Is Not the End</h3>
-        <p>Named refusal is the beginning of a decision, not the end of one.</p>
-        <p>When refusal authority is invoked, two things must already be defined: who is authorized to grant continuation, and what is required before that authorization is given.</p>
-        <p>If neither is defined in advance, refusal authority dissolves under institutional pressure.</p>
-      </div>
-      <div class="box-danger">
-        <div class="danger-label">Authorization Over Refusal</div>
-        <h3>Who Can Authorize Continuation After Refusal</h3>
-        <p>The person who can authorize continuation over a refusal must be named in advance, at a level above the refusal authority itself.</p>
-        <p>That person must be personally accountable for the authorization decision. If the authorization was wrong, the consequences must be traceable back to a name.</p>
-        <p>Without that traceability, authorization is just institutional pressure with a formal costume.</p>
-      </div>
-    </div>
+  <section class="section wrap">
+    <div class="section-label">Why This Happens</div>
+    <p class="body-p">Most organizations define clearly who approves. Procedures. Hierarchies. Escalation paths.</p>
+    <p class="body-p">But approval is not refusal. A system can contain oversight, review, and sign-off — and still contain no named individual authorized to stop continuation before it becomes irreversible.</p>
+    <p class="body-p">When nobody is explicitly required to refuse, continuation becomes the default. Not because everyone agreed. Because stopping required a name that was never assigned.</p>
     <div class="pull">
-      Refusal authority protects the institution.<br>
-      Authorization over refusal exposes whoever grants it.
+      Observation is not authority.<br>
+      Escalation does not create refusal authority.<br>
+      Approval is not refusal.
     </div>
   </section>
 
-  <section class="section">
-    <div class="section-label">Protection for the Person Who Refuses</div>
-    <h2>Refusal authority without institutional protection is non-operative.</h2>
-    <p>If the person named to refuse continuation cannot exercise that authority without fear of retaliation, the authority is nominal. Cautious professionals will avoid such roles. Ambitious ones will accept them while privately deferring to whoever holds real power.</p>
-    <p>Any serious governance structure must answer this explicitly: is the person who invokes refusal authority protected from organizational consequences when acting in good faith, based on reasonable professional judgment?</p>
-    <div class="stack">
-      <div class="stack-item">Protection must be stated before the crisis, not offered after it.</div>
-      <div class="stack-item">Acting in good faith means documented reasoning, not perfect outcomes.</div>
-      <div class="stack-item">Refusal that results in punishment is a signal that named authority does not exist.</div>
-    </div>
-  </section>
-
-  <section class="section">
-    <div class="section-label">Oversight of Refusal Authority</div>
-    <h2>Refusal authority without oversight is power without accountability.</h2>
-    <p>The person holding refusal authority can use it correctly. They can also use it to block rivals, delay commercial moves, conceal their own failures, or accumulate organizational influence.</p>
-    <p>Without oversight, the authority becomes a weapon.</p>
-    <div class="stack">
-      <div class="stack-item">Who verifies that refusal authority is exercised on professional grounds, not personal interest.</div>
-      <div class="stack-item">Who documents each refusal and the reasoning behind it.</div>
-      <div class="stack-item">Who can challenge a refusal that appears unfounded.</div>
-      <div class="stack-item">What happens if refusal authority is found to have been exercised improperly.</div>
-    </div>
-    <div class="pull">
-      Oversight does not weaken refusal authority.<br>
-      It is what makes refusal authority credible.
-    </div>
-  </section>
-
-  <section class="section">
-    <div class="section-label">Where This Applies</div>
-    <div class="stack">
-      <div class="stack-item">AI systems executing faster than authorization can follow.</div>
-      <div class="stack-item">Financial execution paths with compressed reaction windows.</div>
-      <div class="stack-item">Product launches under deadline pressure.</div>
-      <div class="stack-item">Regulated operations under escalation stress.</div>
-      <div class="stack-item">Board decisions with irreversible downstream effects.</div>
-    </div>
-    <div class="pull">
-      If no named refusal authority exists,<br>
-      continuation is already authorized by default.
-    </div>
-  </section>
-
-  <section class="section">
-    <div class="grid2">
-      <div>
-        <div class="section-label">Executive Question</div>
-        <p>Who is authorized by name to refuse continuation of your next irreversible execution?</p>
-        <p>Who is named to authorize continuation over that refusal — and what do they personally absorb if that authorization was wrong?</p>
-        <p>If the answer requires meetings, escalation chains, or interpretation, authorization does not exist.</p>
+  <section class="section wrap">
+    <div class="section-label">Where It Appears</div>
+    <div class="cases">
+      <div class="case">
+        <div class="case-domain">Financial Execution</div>
+        <div class="case-desc">A system moves faster than any individual can track. Everyone monitors. Nobody is named to stop.</div>
       </div>
-      <div>
-        <div class="section-label">Practical Principle</div>
-        <p>When uncertainty rises and reversibility falls, named authority becomes more valuable than process.</p>
-        <p>Legitimacy before the event is stronger than explanation after it.</p>
+      <div class="case">
+        <div class="case-domain">Software Deployment</div>
+        <div class="case-desc">A release propagates across infrastructure. Approval existed. Named refusal authority did not.</div>
+      </div>
+      <div class="case">
+        <div class="case-domain">AI Systems</div>
+        <div class="case-desc">Automated execution proceeds. Human oversight is present. Nobody is explicitly named to refuse continuation.</div>
       </div>
     </div>
   </section>
 
-  <section class="section center">
-    <div class="section-label">Private Inquiry</div>
-    <h2>Discuss a live decision before authorization becomes personal liability.</h2>
-    <p>For boards, executives, founders, counsel, and operators facing consequential decisions already in motion.</p>
-    <div class="actions">
-      <a href="contact.html" class="btn btn-primary">Private Intake</a>
-      <a href="dar.html" class="btn">Explore DAR</a>
+  <section class="shift wrap">
+    <div class="shift-line">
+      If the answer requires meetings, escalation chains, or interpretation — authority may not exist where it needs to.
     </div>
+    <p class="shift-note">The question is not whether oversight exists. The question is whether anyone, by name, is authorized to refuse continuation before it becomes irreversible — and whether that authority is practically available when time matters.</p>
   </section>
 
-  <div class="footer-banner">
-    <a href="dar.html" class="footer-link">
-      <div class="footer-link-left">
-        <span class="footer-link-label">Framework</span>
-        <span class="footer-link-title">Decision Authority Record</span>
-      </div>
-      <span class="footer-link-arrow">&rarr;</span>
-    </a>
-    <a href="exposure.html" class="footer-link">
-      <div class="footer-link-left">
-        <span class="footer-link-label">Essay</span>
-        <span class="footer-link-title">When Failure Lands on One Name</span>
-      </div>
-      <span class="footer-link-arrow">&rarr;</span>
-    </a>
-    <a href="failure-points.html" class="footer-link">
-      <div class="footer-link-left">
-        <span class="footer-link-label">Cases</span>
-        <span class="footer-link-title">Where Accountability Breaks</span>
-      </div>
-      <span class="footer-link-arrow">&rarr;</span>
-    </a>
-    <a href="contact.html" class="footer-link">
-      <div class="footer-link-left">
-        <span class="footer-link-label">Contact</span>
-        <span class="footer-link-title">Private Intake</span>
-      </div>
-      <span class="footer-link-arrow">&rarr;</span>
-    </a>
-  </div>
-
-  <div class="footer">
-    &copy; 2026 Liran Bar-Shrim. All rights reserved.
-  </div>
+  <section class="final wrap">
+    <div style="height:1px;background:var(--line);margin-bottom:80px;"></div>
+    <div class="final-q">If this question is difficult to answer in your organization — that is where the conversation begins.</div>
+    <a href="mailto:Liran@liranbarshrim.com" class="begin-link">Begin here →</a>
+    <div style="margin-top:20px;">
+      <a href="stop-authority-long.html" style="font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--gold2);text-decoration:none;border-bottom:1px solid rgba(200,169,110,.4);padding-bottom:1px;">Read the full note →</a>
+    </div>
+    <div class="sig">Liran Bar-Shrim · 2026</div>
+  </section>
 
 </main>
 
-<script>
-const menu = document.getElementById('menu');
-const overlay = document.getElementById('overlay');
-document.getElementById('openMenu').onclick = function() {
-  menu.classList.add('active');
-  overlay.classList.add('active');
-};
-document.getElementById('closeMenu').onclick = closeMenu;
-overlay.onclick = closeMenu;
-function closeMenu() {
-  menu.classList.remove('active');
-  overlay.classList.remove('active');
-}
-</script>
+<footer class="footer">
+  © 2026 Liran Bar-Shrim &nbsp;·&nbsp;
+  <a href="faq.html" style="color:var(--dim);">FAQ</a> &nbsp;·&nbsp;
+  <a href="index.html" style="color:var(--dim);">Home</a>
+</footer>
 
 </body>
 </html>
