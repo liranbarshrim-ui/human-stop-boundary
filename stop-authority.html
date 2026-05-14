@@ -42,6 +42,8 @@ a{text-decoration:none;color:inherit;}
 .section-label{font-family:"IBM Plex Mono",monospace;font-size:9px;letter-spacing:.32em;text-transform:uppercase;color:var(--gold);margin-bottom:16px;}
 .body-p{font-size:clamp(17px,1.5vw,21px);font-weight:300;color:#c0b8ae;margin-bottom:20px;max-width:58ch;line-height:1.9;}
 .pull{background:#0d0d0d;border-left:3px solid var(--gold);padding:28px 36px;margin-top:36px;font-size:clamp(18px,2.2vw,30px);font-weight:300;line-height:1.4;font-style:italic;color:var(--text);}
+.not-yet{background:#0a0a0a;border-left:3px solid rgba(200,169,110,.4);padding:28px 36px;margin-top:28px;font-size:clamp(16px,1.6vw,22px);font-weight:300;line-height:1.7;color:var(--muted);}
+.not-yet strong{color:var(--gold2);font-weight:400;font-style:italic;}
 .cases{margin-top:32px;display:grid;gap:1px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.04);}
 .case{background:#0c0c0c;padding:20px 24px;border-left:2px solid transparent;transition:border-color .2s;}
 .case:hover{border-left-color:var(--gold);}
@@ -63,6 +65,7 @@ a{text-decoration:none;color:inherit;}
 .statement{padding:20px 24px;}
 .section{padding:48px 0;}
 .pull{padding:20px 24px;}
+.not-yet{padding:20px 24px;}
 .footer{padding:20px;}
 }
 @keyframes fadeUp{from{opacity:0;transform:translateY(16px);}to{opacity:1;transform:translateY(0);}}
@@ -96,10 +99,20 @@ a{text-decoration:none;color:inherit;}
     <p class="body-p">Most organizations define clearly who approves. Procedures. Hierarchies. Escalation paths.</p>
     <p class="body-p">But approval is not refusal. A system can contain oversight, review, and sign-off — and still contain no named individual authorized to stop continuation before it becomes irreversible.</p>
     <p class="body-p">When nobody is explicitly required to refuse, continuation becomes the default. Not because everyone agreed. Because stopping required a name that was never assigned.</p>
+
+    <div class="not-yet">
+      In practice, the missing authority is often not the authority to cancel.<br><br>
+      It is the authority to say: <strong>"not yet."</strong><br><br>
+      Not yet because uncertainty remains unresolved.<br>
+      Not yet because continuation may already be approaching the irreversible threshold.<br>
+      Not yet until someone named can justify proceeding.
+    </div>
+
     <div class="pull">
       Observation is not authority.<br>
       Escalation does not create refusal authority.<br>
-      Approval is not refusal.
+      Approval is not refusal.<br>
+      <span style="display:block;margin-top:16px;font-size:clamp(15px,1.8vw,24px);color:var(--muted);">The authority to say "not yet" is often the one nobody assigns.</span>
     </div>
   </section>
 
