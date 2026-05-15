@@ -21,6 +21,7 @@
   --dim: #3a3530;
   --danger: #9b5c58;
   --amber: #9f8a55;
+  --green: #3d9970;
   --line: rgba(255,255,255,.05);
   --line-strong: rgba(255,255,255,.09);
 }
@@ -84,7 +85,6 @@ nav {
 .nav-back::before { content: '←'; }
 .nav-back:hover { color: var(--text); }
 
-/* PAGE */
 .page {
   max-width: 680px;
   margin: 0 auto;
@@ -93,7 +93,6 @@ nav {
   z-index: 1;
 }
 
-/* HEADER NOTE */
 .page-header {
   margin-bottom: 48px;
   padding-bottom: 32px;
@@ -126,7 +125,6 @@ nav {
   padding-left: 16px;
 }
 
-/* RECORD */
 .record {
   background: var(--surface);
   border: 1px solid var(--line-strong);
@@ -137,7 +135,6 @@ nav {
   filter: contrast(1.015);
 }
 
-/* STATUS BAR */
 .status-bar {
   display: flex;
   align-items: center;
@@ -169,8 +166,8 @@ nav {
 }
 
 .status-badge.active {
-  color: #3d9970;
-  border-color: #3d9970;
+  color: var(--green);
+  border-color: var(--green);
   background: rgba(61,153,112,.05);
 }
 
@@ -180,7 +177,6 @@ nav {
   background: transparent;
 }
 
-/* RECORD HEADER */
 .record-header {
   padding: 24px 24px 20px;
   border-bottom: 1px solid var(--line);
@@ -203,7 +199,6 @@ nav {
   line-height: 1.3;
 }
 
-/* FIELDS */
 .field-group {
   padding: 20px 24px;
   border-bottom: 1px solid var(--line);
@@ -237,22 +232,11 @@ nav {
   line-height: 1.55;
 }
 
-.field-value.pending {
-  color: var(--amber);
-}
-
-.field-value.invoked {
-  color: var(--danger);
-}
-
-.field-value.timestamp {
-  color: var(--muted);
-  font-size: 11px;
-}
-
-.field-value.name {
-  color: var(--text);
-}
+.field-value.pending { color: var(--amber); }
+.field-value.invoked { color: var(--danger); }
+.field-value.resolved { color: var(--green); }
+.field-value.timestamp { color: var(--muted); font-size: 11px; }
+.field-value.name { color: var(--text); }
 
 .field-value sub {
   display: block;
@@ -261,7 +245,6 @@ nav {
   margin-top: 2px;
 }
 
-/* ESCALATION NOTE */
 .escalation-note {
   background: rgba(212,160,23,.03);
   border-left: 2px solid var(--amber);
@@ -277,7 +260,21 @@ nav {
   font-weight: 500;
 }
 
-/* CONTINUATION STATUS */
+.resolution-note {
+  background: rgba(61,153,112,.03);
+  border-left: 2px solid var(--green);
+  padding: 14px 16px;
+  margin: 0;
+  font-size: 11px;
+  color: var(--muted);
+  line-height: 1.65;
+}
+
+.resolution-note strong {
+  color: var(--green);
+  font-weight: 500;
+}
+
 .continuation-status {
   padding: 16px 24px;
   background: rgba(192,57,43,.03);
@@ -286,6 +283,11 @@ nav {
   align-items: center;
   justify-content: space-between;
   gap: 16px;
+}
+
+.continuation-status.authorized {
+  background: rgba(61,153,112,.03);
+  border-top: 1px solid rgba(61,153,112,.1);
 }
 
 .cs-label {
@@ -303,8 +305,10 @@ nav {
   text-transform: uppercase;
 }
 
-/* SECOND RECORD */
-/* FOOTER NOTE */
+.cs-value.authorized {
+  color: var(--green);
+}
+
 .footer-note {
   margin-top: 48px;
   padding-top: 28px;
@@ -341,15 +345,6 @@ footer {
   .field { grid-template-columns: 1fr; gap: 4px; }
   .field-label { padding-top: 0; }
   footer { flex-direction: column; gap: 8px; padding: 16px 20px; }
-}
-
-@media (max-width: 640px) {
-  .wrap, .wrap-narrow {
-    padding-left: 20px !important;
-    padding-right: 20px !important;
-    max-width: 100% !important;
-  }
-  body { overflow-x: hidden !important; }
 }
 </style>
 </head>
@@ -487,6 +482,72 @@ footer {
     <div class="continuation-status">
       <div class="cs-label">Continuation Status</div>
       <div class="cs-value" style="color:var(--amber);">Proceeded — Rationale Absent</div>
+    </div>
+  </div>
+
+  <div style="height:1px;background:var(--line);opacity:.55;margin:28px 0 26px;"></div>
+
+  <!-- RECORD 3 -->
+  <div class="record">
+    <div class="status-bar">
+      <div class="status-id">DAR-2026-0419-B</div>
+      <div class="status-badge active">Continuation Authorized</div>
+    </div>
+
+    <div class="record-header">
+      <div class="record-type">Decision Type</div>
+      <div class="record-title">Regulated Data Processing — Cross-Border Transfer / Batch Execution</div>
+    </div>
+
+    <div class="field-group">
+      <div class="field">
+        <div class="field-label">Interruption Authority</div>
+        <div class="field-value name">A. Reyes<sub>Data Governance Lead</sub></div>
+      </div>
+      <div class="field">
+        <div class="field-label">Hold Invoked</div>
+        <div class="field-value timestamp">2026-04-19 14:07 UTC</div>
+      </div>
+      <div class="field">
+        <div class="field-label">Trigger Condition</div>
+        <div class="field-value">Recipient jurisdiction flagged for updated regulatory guidance not yet incorporated into transfer protocol. Uncertainty material at time of invocation.</div>
+      </div>
+    </div>
+
+    <div class="field-group">
+      <div class="field">
+        <div class="field-label">Hold Authority</div>
+        <div class="field-value name">K. Brennan<sub>Chief Compliance Officer</sub></div>
+      </div>
+      <div class="field">
+        <div class="field-label">Review Initiated</div>
+        <div class="field-value timestamp">2026-04-19 14:23 UTC</div>
+      </div>
+      <div class="field">
+        <div class="field-label">Uncertainty Assessment</div>
+        <div class="field-value resolved">Guidance reviewed. Jurisdiction confirmed compliant under existing framework. Transfer within approved parameters.</div>
+      </div>
+      <div class="field">
+        <div class="field-label">Written Rationale</div>
+        <div class="field-value resolved">Documented. Reference: CCO-2026-0419-TR.</div>
+      </div>
+      <div class="field">
+        <div class="field-label">Authorization Issued</div>
+        <div class="field-value timestamp">2026-04-19 14:51 UTC</div>
+      </div>
+      <div class="field">
+        <div class="field-label">Audit Attachment</div>
+        <div class="field-value resolved">Available. Signed by authorization authority.</div>
+      </div>
+    </div>
+
+    <div class="resolution-note">
+      <strong>Continuation explicitly authorized.</strong> Hold reviewed by designated authority within defined interval. Uncertainty resolved. Written rationale documented prior to authorization. Execution proceeded under named release.
+    </div>
+
+    <div class="continuation-status authorized">
+      <div class="cs-label">Continuation Status</div>
+      <div class="cs-value authorized">Authorized — Rationale Documented</div>
     </div>
   </div>
 
