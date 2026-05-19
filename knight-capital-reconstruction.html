@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Authority Reconstruction #02 — Knight Capital — Liran Bar-Shrim</title>
+<meta name="description" content="A forensic reconstruction of interruption authority during the Knight Capital execution window. 09:30 — 09:58 ET, August 1, 2012.">
+<meta name="robots" content="index,follow">
+<link rel="canonical" href="https://matrix-audit.com/knight-capital-reconstruction.html">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#080808;
+  --gold:#c8a96e;
+  --gold2:#ead9b3;
+  --text:#ebe5da;
+  --muted:#b8b0a4;
+  --dim:#7a7570;
+  --line:rgba(255,255,255,.06);
+}
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;overflow-x:hidden;}
+body{
+  background:var(--bg);
+  color:var(--text);
+  font-family:"Cormorant Garamond",Georgia,serif;
+  overflow-x:hidden;
+  -webkit-font-smoothing:antialiased;
+  line-height:1.85;
+}
+body::before{
+  content:"";position:fixed;inset:0;pointer-events:none;z-index:0;opacity:.028;
+  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-size:180px;
+}
+a{text-decoration:none;color:inherit;}
+.topbar{position:fixed;top:0;left:0;right:0;height:72px;display:flex;align-items:center;justify-content:space-between;padding:0 48px;z-index:100;background:rgba(8,8,8,.88);backdrop-filter:blur(16px);border-bottom:1px solid var(--line);}
+.brand{display:flex;align-items:center;gap:14px;font-family:"IBM Plex Mono",monospace;font-size:9.5px;letter-spacing:.32em;text-transform:uppercase;color:var(--text);}
+.brand-rule{width:32px;height:1px;background:var(--gold);}
+.nav-back{font-family:"IBM Plex Mono",monospace;font-size:9px;letter-spacing:.22em;text-transform:uppercase;color:var(--dim);border-bottom:1px solid rgba(255,255,255,.08);padding-bottom:1px;transition:color .2s;}
+.nav-back:hover{color:var(--gold2);}
+.wrap{max-width:760px;margin:0 auto;padding:0 48px;position:relative;z-index:1;}
+.hero{padding-top:148px;padding-bottom:80px;}
+.rec-index{font-family:"IBM Plex Mono",monospace;font-size:9px;letter-spacing:.32em;text-transform:uppercase;color:var(--gold);margin-bottom:20px;}
+.hero h1{font-size:clamp(38px,6vw,88px);font-weight:400;line-height:.9;letter-spacing:-.02em;margin-bottom:32px;}
+.hero h1 em{font-style:italic;color:var(--gold2);}
+.window-label{font-family:"IBM Plex Mono",monospace;font-size:11px;letter-spacing:.18em;color:var(--dim);margin-bottom:48px;}
+.hero-note{font-size:clamp(16px,1.4vw,19px);font-weight:300;color:var(--muted);max-width:58ch;line-height:1.9;border-left:1px solid rgba(200,169,110,.3);padding-left:24px;}
+.divider{border:none;border-top:1px solid var(--line);margin:0;position:relative;z-index:1;}
+.step{padding:64px 0;border-bottom:1px solid var(--line);}
+.step-num{font-family:"IBM Plex Mono",monospace;font-size:9px;letter-spacing:.28em;text-transform:uppercase;color:var(--gold);margin-bottom:20px;}
+.step h2{font-size:clamp(26px,3.5vw,48px);font-weight:400;line-height:1.08;margin-bottom:20px;}
+.step h2 em{font-style:italic;color:var(--gold2);}
+.step p{font-size:clamp(16px,1.4vw,19px);font-weight:300;color:var(--muted);max-width:62ch;line-height:1.9;margin-bottom:16px;}
+.step p:last-of-type{margin-bottom:0;}
+.date{font-family:"IBM Plex Mono",monospace;font-size:10px;letter-spacing:.18em;color:var(--dim);margin-bottom:12px;display:block;}
+.doc-anchor{margin-top:28px;padding:20px 24px;background:#0d0d0d;border-left:1px solid rgba(200,169,110,.3);}
+.doc-anchor-label{font-family:"IBM Plex Mono",monospace;font-size:8px;letter-spacing:.28em;text-transform:uppercase;color:var(--dim);margin-bottom:8px;}
+.doc-anchor p{font-size:15px;color:#c8c0b2;font-style:italic;line-height:1.7;margin:0;max-width:none;}
+.doc-anchor cite{display:block;margin-top:8px;font-family:"IBM Plex Mono",monospace;font-size:9px;letter-spacing:.08em;color:var(--dim);font-style:normal;}
+.pull{margin-top:40px;padding:28px 36px;background:#0d0d0d;border-left:3px solid var(--gold);font-size:clamp(18px,2.2vw,32px);font-weight:300;font-style:italic;line-height:1.35;color:var(--text);}
+.question{margin-top:40px;padding-left:28px;border-left:1px solid rgba(200,169,110,.4);font-size:clamp(20px,2.8vw,42px);font-weight:300;font-style:italic;line-height:1.2;color:#f0e8d5;}
+.obs-list{margin-top:32px;display:grid;gap:0;}
+.obs-item{padding:18px 0;border-bottom:1px solid var(--line);font-size:clamp(15px,1.3vw,18px);font-weight:300;color:var(--muted);display:flex;gap:20px;align-items:baseline;}
+.obs-item:last-child{border-bottom:none;}
+.obs-check{font-family:"IBM Plex Mono",monospace;font-size:9px;color:var(--gold);letter-spacing:.08em;flex-shrink:0;}
+.obs-x{font-family:"IBM Plex Mono",monospace;font-size:9px;color:var(--dim);letter-spacing:.08em;flex-shrink:0;}
+.final{padding:88px 0 110px;border-top:1px solid var(--line);}
+.final-line{font-size:clamp(32px,5vw,72px);font-weight:400;font-style:italic;line-height:1.05;max-width:18ch;margin-bottom:36px;color:var(--text);}
+.sig{font-family:"IBM Plex Mono",monospace;font-size:9.5px;letter-spacing:.2em;text-transform:uppercase;color:var(--dim);}
+.back-link{display:inline-block;margin-top:40px;font-family:"IBM Plex Mono",monospace;font-size:9px;letter-spacing:.22em;text-transform:uppercase;color:var(--gold);border-bottom:1px solid rgba(200,169,110,.3);padding-bottom:2px;}
+.footer{position:relative;z-index:1;text-align:center;padding:20px;border-top:1px solid var(--line);font-family:"IBM Plex Mono",monospace;font-size:9px;letter-spacing:.08em;color:var(--dim);}
+@media(max-width:860px){.topbar{padding:0 20px;}.wrap{padding:0 20px;max-width:100%;}.hero{padding-top:112px;padding-bottom:56px;}.step{padding:48px 0;}.pull{font-size:16px;padding:20px 22px;}.question{font-size:22px;}.final{padding:64px 0 80px;}.final-line{font-size:28px;}}
+@media(max-width:640px){.wrap{padding-left:20px!important;padding-right:20px!important;}body{overflow-x:hidden!important;}}
+@keyframes fadeUp{from{opacity:0;transform:translateY(16px);}to{opacity:1;transform:translateY(0);}}
+.hero{animation:fadeUp .9s ease both;}
+</style>
+</head>
+<body>
+
+<header class="topbar">
+  <a href="index.html" class="brand"><span class="brand-rule"></span><span>Liran Bar-Shrim</span></a>
+  <a href="case-studies.html" class="nav-back">← Case Studies</a>
+</header>
+
+<main>
+
+  <section class="hero wrap">
+    <div class="rec-index">Authority Reconstruction · #02</div>
+    <h1>Knight Capital<br><em>The Interruption Window</em></h1>
+    <div class="window-label">09:30 — 09:58 ET · August 1, 2012</div>
+    <p class="hero-note">
+      This is not a reconstruction of the software failure.<br>
+      It is a reconstruction of interruption authority under unresolved uncertainty.
+    </p>
+  </section>
+
+  <hr class="divider">
+
+  <section class="step wrap">
+    <div class="step-num">01 — Activation</div>
+    <span class="date">09:30 ET · August 1, 2012</span>
+    <h2>Market opens.<br><em>Execution begins.</em></h2>
+    <p>
+      Knight Capital Group was one of the largest equity market makers in the United States,
+      responsible for approximately 10% of all U.S. equity trading volume.
+    </p>
+    <p>
+      At 09:30, the market opened. Knight's SMARS routing system began processing incoming orders.
+      On seven of eight servers, the new deployment functioned correctly.
+      On the eighth, dormant legacy code had been reactivated during the prior week's deployment.
+    </p>
+    <p>
+      Execution was live. The anomaly was already in motion.
+    </p>
+  </section>
+
+  <section class="step wrap">
+    <div class="step-num">02 — Signal</div>
+    <span class="date">09:30 — ~09:38 ET</span>
+    <h2>Abnormal behavior<br><em>becomes visible.</em></h2>
+    <p>
+      Within minutes of market open, Knight's systems began generating orders at abnormal volume.
+      The firm was buying high and selling low across 154 stocks simultaneously,
+      at a rate and pattern inconsistent with any intended trading strategy.
+    </p>
+    <p>
+      External market participants noticed the anomaly before Knight's internal systems produced a clear diagnostic.
+      Other firms contacted Knight. Market activity in affected stocks surged.
+    </p>
+    <div class="doc-anchor">
+      <div class="doc-anchor-label">Documentary Basis</div>
+      <p>Knight's executions constituted more than 50% of trading volume in certain stocks during this period, causing price movements exceeding 10% in 37 securities.</p>
+      <cite>Source: SEC Order — Knight Capital Group, Inc., October 16, 2013</cite>
+    </div>
+  </section>
+
+  <section class="step wrap">
+    <div class="step-num">03 — Escalation Under Uncertainty</div>
+    <span class="date">~09:38 ET</span>
+    <h2>Source unclear.<br><em>Continuation persists.</em></h2>
+    <p>
+      Knight personnel recognized that something was wrong.
+      The source of the anomaly remained undiagnosed.
+    </p>
+    <p>
+      In an attempt to resolve the issue, engineers decided to revert all servers to the prior software version.
+      This decision — made under pressure without confirmed diagnosis — had the opposite effect.
+      The legacy code that had caused the anomaly was now deployed across all eight servers.
+      Execution volume increased.
+    </p>
+    <p>
+      Documented incident-response procedures were insufficient to rapidly identify
+      and interrupt abnormal execution while the source remained unclear.
+    </p>
+    <div class="doc-anchor">
+      <div class="doc-anchor-label">Documentary Basis</div>
+      <p>Knight had no written incident-response procedures for this type of event. After concluding the issue was with the new code, engineers reverted all servers to the prior version — which contained the defective Power Peg code — causing the anomaly to expand across all eight servers.</p>
+      <cite>Source: SEC Order — Knight Capital Group, Inc., October 16, 2013</cite>
+    </div>
+  </section>
+
+  <section class="step wrap">
+    <div class="step-num">04 — Continuation Logic</div>
+    <span class="date">09:38 — 09:58 ET</span>
+    <h2>Continuation persisted<br><em>under unresolved diagnosis.</em></h2>
+    <p>
+      Unlike Boeing, where continuation was explicitly justified under an accepted remediation plan,
+      Knight's continuation was not a documented institutional decision.
+    </p>
+    <p>
+      Execution persisted while the source of the anomaly remained unresolved.
+      Documented interruption pathways under uncertainty remained unclear in practice.
+    </p>
+    <div class="pull">
+      The anomaly was visible.<br>
+      Interruption lagged diagnosis.
+    </div>
+    <p style="margin-top:32px;">
+      By 09:58, engineers identified the root cause and shut down SMARS.
+      By that point, over 4 million executions had occurred across 154 stocks.
+      Losses exceeded $460 million.
+    </p>
+  </section>
+
+  <section class="step wrap">
+    <div class="step-num">05 — The Interruption Question</div>
+    <h2>Once abnormal execution<br><em>became visible but undiagnosed,</em><br>who owned interruption?</h2>
+    <p>
+      This is not a question about intent, competence, or engineering judgment.
+    </p>
+    <p>
+      It is a structural question:
+    </p>
+    <div class="question">
+      Once abnormal execution was visible but its source remained unclear, who, by name, was authorized to interrupt continuation pending diagnosis?
+    </div>
+  </section>
+
+  <section class="step wrap">
+    <div class="step-num">06 — Structural Observation</div>
+    <h2>What existed.<br><em>What remained unclear.</em></h2>
+    <div class="obs-list">
+      <div class="obs-item">
+        <span class="obs-check">EXISTS</span>
+        <span>Engineering response — personnel engaged immediately</span>
+      </div>
+      <div class="obs-item">
+        <span class="obs-check">EXISTS</span>
+        <span>Escalation — external parties flagged the anomaly</span>
+      </div>
+      <div class="obs-item">
+        <span class="obs-check">EXISTS</span>
+        <span>Diagnosis effort — engineers worked to identify the source</span>
+      </div>
+      <div class="obs-item">
+        <span class="obs-check">EXISTS</span>
+        <span>Technical interruption capability — SMARS could be shut down</span>
+      </div>
+      <div class="obs-item">
+        <span class="obs-x">UNCLEAR</span>
+        <span>Named interruption authority — who was authorized to halt execution before diagnosis was confirmed</span>
+      </div>
+      <div class="obs-item">
+        <span class="obs-x">UNCLEAR</span>
+        <span>Documented interruption pathway under unresolved uncertainty — unclear in available records</span>
+      </div>
+    </div>
+    <p style="margin-top:32px;">
+      Interruption capability existed technically.
+      Interruption authority under unresolved uncertainty remained difficult to identify in practice.
+    </p>
+  </section>
+
+  <section class="final wrap">
+    <div class="final-line">The anomaly was visible.<br>Interruption followed diagnosis.</div>
+    <div class="sig">Liran Bar-Shrim · Authority Reconstruction #02 · 2026</div>
+    <a href="case-studies.html" class="back-link">← Return to Case Studies</a>
+  </section>
+
+</main>
+
+<footer class="footer">
+  © 2026 Liran Bar-Shrim &nbsp;·&nbsp;
+  <a href="faq.html" style="color:var(--dim);text-decoration:none;">FAQ</a> &nbsp;·&nbsp;
+  <a href="goodfaith.html" style="color:var(--dim);text-decoration:none;">Good Faith Use</a>
+</footer>
+
+</body>
+</html>
