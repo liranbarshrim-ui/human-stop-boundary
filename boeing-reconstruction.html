@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Authority Reconstruction #01 — Boeing 737 MAX — Liran Bar-Shrim</title>
+<meta name="description" content="A forensic reconstruction of refusal authority during the Boeing 737 MAX refusal window. 29 Oct 2018 — 13 Mar 2019.">
+<meta name="robots" content="index,follow">
+<link rel="canonical" href="https://matrix-audit.com/boeing-reconstruction.html">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#080808;
+  --gold:#c8a96e;
+  --gold2:#ead9b3;
+  --text:#ebe5da;
+  --muted:#b8b0a4;
+  --dim:#7a7570;
+  --line:rgba(255,255,255,.06);
+  --line2:rgba(200,169,110,.15);
+}
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;overflow-x:hidden;}
+body{
+  background:var(--bg);
+  color:var(--text);
+  font-family:"Cormorant Garamond",Georgia,serif;
+  overflow-x:hidden;
+  -webkit-font-smoothing:antialiased;
+  line-height:1.85;
+}
+body::before{
+  content:"";
+  position:fixed;
+  inset:0;
+  pointer-events:none;
+  z-index:0;
+  opacity:.028;
+  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-size:180px;
+}
+a{text-decoration:none;color:inherit;}
+
+.topbar{
+  position:fixed;top:0;left:0;right:0;height:72px;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:0 48px;z-index:100;
+  background:rgba(8,8,8,.88);
+  backdrop-filter:blur(16px);
+  border-bottom:1px solid var(--line);
+}
+.brand{
+  display:flex;align-items:center;gap:14px;
+  font-family:"IBM Plex Mono",monospace;
+  font-size:9.5px;letter-spacing:.32em;text-transform:uppercase;color:var(--text);
+}
+.brand-rule{width:32px;height:1px;background:var(--gold);}
+.nav-back{
+  font-family:"IBM Plex Mono",monospace;
+  font-size:9px;letter-spacing:.22em;text-transform:uppercase;
+  color:var(--dim);border-bottom:1px solid rgba(255,255,255,.08);
+  padding-bottom:1px;transition:color .2s;
+}
+.nav-back:hover{color:var(--gold2);}
+
+.wrap{max-width:760px;margin:0 auto;padding:0 48px;position:relative;z-index:1;}
+
+/* hero */
+.hero{padding-top:148px;padding-bottom:80px;}
+.rec-index{
+  font-family:"IBM Plex Mono",monospace;
+  font-size:9px;letter-spacing:.32em;text-transform:uppercase;
+  color:var(--gold);margin-bottom:20px;
+}
+.hero h1{
+  font-size:clamp(38px,6vw,88px);
+  font-weight:400;line-height:.9;
+  letter-spacing:-.02em;
+  margin-bottom:32px;
+}
+.hero h1 em{font-style:italic;color:var(--gold2);}
+.window-label{
+  font-family:"IBM Plex Mono",monospace;
+  font-size:11px;letter-spacing:.18em;
+  color:var(--dim);margin-bottom:48px;
+}
+.hero-note{
+  font-size:clamp(16px,1.4vw,19px);
+  font-weight:300;color:var(--muted);
+  max-width:58ch;line-height:1.9;
+  border-left:1px solid rgba(200,169,110,.3);
+  padding-left:24px;
+}
+
+/* divider */
+.divider{
+  border:none;border-top:1px solid var(--line);
+  margin:0;position:relative;z-index:1;
+}
+
+/* step */
+.step{
+  padding:64px 0;
+  border-bottom:1px solid var(--line);
+}
+.step-num{
+  font-family:"IBM Plex Mono",monospace;
+  font-size:9px;letter-spacing:.28em;text-transform:uppercase;
+  color:var(--gold);margin-bottom:20px;
+}
+.step h2{
+  font-size:clamp(26px,3.5vw,48px);
+  font-weight:400;line-height:1.08;
+  margin-bottom:20px;
+}
+.step h2 em{font-style:italic;color:var(--gold2);}
+.step p{
+  font-size:clamp(16px,1.4vw,19px);
+  font-weight:300;color:var(--muted);
+  max-width:62ch;line-height:1.9;
+  margin-bottom:16px;
+}
+.step p:last-of-type{margin-bottom:0;}
+
+/* date marker */
+.date{
+  font-family:"IBM Plex Mono",monospace;
+  font-size:10px;letter-spacing:.18em;
+  color:var(--dim);margin-bottom:12px;
+  display:block;
+}
+
+/* document anchor */
+.doc-anchor{
+  margin-top:28px;
+  padding:20px 24px;
+  background:#0d0d0d;
+  border-left:1px solid rgba(200,169,110,.3);
+}
+.doc-anchor-label{
+  font-family:"IBM Plex Mono",monospace;
+  font-size:8px;letter-spacing:.28em;text-transform:uppercase;
+  color:var(--dim);margin-bottom:8px;
+}
+.doc-anchor p{
+  font-size:15px;color:#c8c0b2;
+  font-style:italic;line-height:1.7;
+  margin:0;max-width:none;
+}
+.doc-anchor cite{
+  display:block;margin-top:8px;
+  font-family:"IBM Plex Mono",monospace;
+  font-size:9px;letter-spacing:.08em;
+  color:var(--dim);font-style:normal;
+}
+
+/* pull */
+.pull{
+  margin-top:40px;
+  padding:28px 36px;
+  background:#0d0d0d;
+  border-left:3px solid var(--gold);
+  font-size:clamp(18px,2.2vw,32px);
+  font-weight:300;font-style:italic;
+  line-height:1.35;color:var(--text);
+}
+
+/* question */
+.question{
+  margin-top:40px;
+  padding-left:28px;
+  border-left:1px solid rgba(200,169,110,.4);
+  font-size:clamp(20px,2.8vw,42px);
+  font-weight:300;font-style:italic;
+  line-height:1.2;color:#f0e8d5;
+}
+
+/* observation list */
+.obs-list{
+  margin-top:32px;
+  display:grid;gap:0;
+}
+.obs-item{
+  padding:18px 0;
+  border-bottom:1px solid var(--line);
+  font-size:clamp(15px,1.3vw,18px);
+  font-weight:300;color:var(--muted);
+  display:flex;gap:20px;align-items:baseline;
+}
+.obs-item:last-child{border-bottom:none;}
+.obs-check{
+  font-family:"IBM Plex Mono",monospace;
+  font-size:9px;color:var(--gold);
+  letter-spacing:.08em;flex-shrink:0;
+}
+.obs-x{
+  font-family:"IBM Plex Mono",monospace;
+  font-size:9px;color:var(--dim);
+  letter-spacing:.08em;flex-shrink:0;
+}
+
+/* final */
+.final{
+  padding:88px 0 110px;
+  border-top:1px solid var(--line);
+}
+.final-line{
+  font-size:clamp(32px,5vw,72px);
+  font-weight:400;font-style:italic;
+  line-height:1.05;max-width:18ch;
+  margin-bottom:36px;color:var(--text);
+}
+.sig{
+  font-family:"IBM Plex Mono",monospace;
+  font-size:9.5px;letter-spacing:.2em;
+  text-transform:uppercase;color:var(--dim);
+}
+.back-link{
+  display:inline-block;margin-top:40px;
+  font-family:"IBM Plex Mono",monospace;
+  font-size:9px;letter-spacing:.22em;text-transform:uppercase;
+  color:var(--gold);border-bottom:1px solid rgba(200,169,110,.3);
+  padding-bottom:2px;
+}
+
+.footer{
+  position:relative;z-index:1;
+  text-align:center;padding:20px;
+  border-top:1px solid var(--line);
+  font-family:"IBM Plex Mono",monospace;
+  font-size:9px;letter-spacing:.08em;color:var(--dim);
+}
+
+@media(max-width:860px){
+  .topbar{padding:0 20px;}
+  .wrap{padding:0 20px;max-width:100%;}
+  .hero{padding-top:112px;padding-bottom:56px;}
+  .step{padding:48px 0;}
+  .pull{font-size:16px;padding:20px 22px;}
+  .question{font-size:22px;}
+  .final{padding:64px 0 80px;}
+  .final-line{font-size:28px;}
+}
+@media(max-width:640px){
+  .wrap{padding-left:20px!important;padding-right:20px!important;}
+  body{overflow-x:hidden!important;}
+}
+@keyframes fadeUp{
+  from{opacity:0;transform:translateY(16px);}
+  to{opacity:1;transform:translateY(0);}
+}
+.hero{animation:fadeUp .9s ease both;}
+</style>
+</head>
+<body>
+
+<header class="topbar">
+  <a href="index.html" class="brand"><span class="brand-rule"></span><span>Liran Bar-Shrim</span></a>
+  <a href="case-studies.html" class="nav-back">← Case Studies</a>
+</header>
+
+<main>
+
+  <section class="hero wrap">
+    <div class="rec-index">Authority Reconstruction · #01</div>
+    <h1>Boeing 737 MAX<br><em>The Refusal Window</em></h1>
+    <div class="window-label">29 Oct 2018 — 13 Mar 2019</div>
+    <p class="hero-note">
+      This is not a reconstruction of blame.<br>
+      It is a reconstruction of authority under unresolved uncertainty.
+    </p>
+  </section>
+
+  <hr class="divider">
+
+  <section class="step wrap">
+    <div class="step-num">01 — Signal</div>
+    <span class="date">29 Oct 2018</span>
+    <h2>Lion Air Flight 610.<br><em>The signal emerges.</em></h2>
+    <p>
+      The crash into the Java Sea resulted in 189 fatalities.
+      Investigators identified MCAS — the Maneuvering Characteristics Augmentation System —
+      as a significant contributing factor.
+    </p>
+    <p>
+      FAA's Continued Operational Safety process was triggered.
+      The fleet remained in service.
+    </p>
+  </section>
+
+  <section class="step wrap">
+    <div class="step-num">02 — Quantified Risk</div>
+    <span class="date">Nov – Dec 2018</span>
+    <h2>TARAM.<br><em>Risk becomes a number.</em></h2>
+    <p>
+      FAA engineers conducted quantitative risk analyses.
+      The Transport Airplane Risk Assessment Methodology produced projected fatality estimates
+      if the identified design issue remained unresolved.
+    </p>
+    <p>
+      Risk was not unknown. Risk was not unexamined. Risk was measured.
+    </p>
+    <div class="doc-anchor">
+      <div class="doc-anchor-label">Documentary Basis</div>
+      <p>FAA's Corrective Action Review Board reviewed the results of Lion Air TARAM risk analyses and evaluated corrective actions and implementation timelines.</p>
+      <cite>Source: DOT OIG Report No. AV2023025, April 26, 2023 (Exhibit D)</cite>
+    </div>
+  </section>
+
+  <section class="step wrap">
+    <div class="step-num">03 — Institutional Review</div>
+    <span class="date">Nov 7 · Nov 14 · Nov 28 · Dec 12, 2018</span>
+    <h2>CARB convenes.<br><em>Oversight is present.</em></h2>
+    <p>
+      The Corrective Action Review Board met multiple times.
+      An Emergency Airworthiness Directive was issued on November 7.
+      A corrective action plan was evaluated and accepted.
+      Boeing was assigned a timeline for software remediation.
+    </p>
+    <p>
+      Oversight existed. Escalation existed. Documentation existed.
+    </p>
+    <div class="doc-anchor">
+      <div class="doc-anchor-label">Documentary Basis</div>
+      <p>FAA issued an emergency airworthiness directive on November 7 that directed operators of the MAX to revise their airplane flight manuals. This AD was an interim action designed to mitigate risk until Boeing could develop and implement a software update.</p>
+      <cite>Source: DOT OIG Report No. AV2023025, April 26, 2023</cite>
+    </div>
+  </section>
+
+  <section class="step wrap">
+    <div class="step-num">04 — Continuation Logic</div>
+    <span class="date">Dec 2018 — Mar 2019</span>
+    <h2>Continuation<br><em>acquires documented justification.</em></h2>
+    <p>
+      Following the December 2018 CARB session, FAA accepted a corrective action plan and timeline.
+      Continuation was explicitly permitted pending implementation of the software fix.
+      The fleet remained operational.
+    </p>
+    <p>
+      This is the structural condition this reconstruction examines:
+      not the absence of process, but the presence of documented continuation logic.
+    </p>
+    <div class="pull">
+      Continuation was not accidental.<br>
+      It was explicitly justified.
+    </div>
+    <div class="doc-anchor">
+      <div class="doc-anchor-label">Documentary Basis</div>
+      <p>FAA followed its established processes following the Lion Air accident, including completing quantitative assessments, convening a technical board to evaluate corrective actions, and coming to an agreement with Boeing regarding a timeframe for implementing those corrective actions.</p>
+      <cite>Source: DOT OIG Report No. AV2023025, April 26, 2023</cite>
+    </div>
+  </section>
+
+  <section class="step wrap">
+    <div class="step-num">05 — The Refusal Question</div>
+    <h2>Once continuation<br><em>became authorized,</em><br>who owned refusal?</h2>
+    <p>
+      This is not a question about intent. Not about capability. Not about whether individuals understood the risk.
+    </p>
+    <p>
+      It is a structural question:
+    </p>
+    <div class="question">
+      Once continuation was explicitly permitted pending remediation, who was named in advance to own refusal under unresolved uncertainty?
+    </div>
+  </section>
+
+  <section class="step wrap">
+    <div class="step-num">06 — Structural Observation</div>
+    <h2>What existed.<br><em>What remained unclear.</em></h2>
+    <div class="obs-list">
+      <div class="obs-item">
+        <span class="obs-check">EXISTS</span>
+        <span>Oversight — FAA Continued Operational Safety process</span>
+      </div>
+      <div class="obs-item">
+        <span class="obs-check">EXISTS</span>
+        <span>Escalation — CARB convened multiple times</span>
+      </div>
+      <div class="obs-item">
+        <span class="obs-check">EXISTS</span>
+        <span>Quantified risk — TARAM analyses conducted</span>
+      </div>
+      <div class="obs-item">
+        <span class="obs-check">EXISTS</span>
+        <span>Interim mitigation — Emergency AD issued</span>
+      </div>
+      <div class="obs-item">
+        <span class="obs-check">EXISTS</span>
+        <span>Documented continuation logic — corrective action timeline accepted</span>
+      </div>
+      <div class="obs-item">
+        <span class="obs-x">UNCLEAR</span>
+        <span>Refusal ownership under unresolved uncertainty — who was named, in advance, to refuse continuation if remediation did not hold?</span>
+      </div>
+    </div>
+    <p style="margin-top:32px;">
+      Refusal authority was not absent as a concept.
+      It was diffuse as a named, pre-assigned structural function.
+    </p>
+  </section>
+
+  <section class="final wrap">
+    <div class="final-line">Continuation was defined.<br>Refusal was not.</div>
+    <div class="sig">Liran Bar-Shrim · Authority Reconstruction #01 · 2026</div>
+    <a href="case-studies.html" class="back-link">← Return to Case Studies</a>
+  </section>
+
+</main>
+
+<footer class="footer">
+  © 2026 Liran Bar-Shrim &nbsp;·&nbsp;
+  <a href="faq.html" style="color:var(--dim);text-decoration:none;">FAQ</a> &nbsp;·&nbsp;
+  <a href="goodfaith.html" style="color:var(--dim);text-decoration:none;">Good Faith Use</a>
+</footer>
+
+</body>
+</html>
