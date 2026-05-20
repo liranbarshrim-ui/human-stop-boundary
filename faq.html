@@ -4,12 +4,12 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
 <title>FAQ — Liran Bar-Shrim</title>
-<meta name="description" content="Questions about interruption authority, irreversible continuation, named authorization, and governance structure.">
+<meta name="description" content="Questions about refusal authority, irreversible continuation, named refusal authority, and governance structure.">
 <meta name="robots" content="index,follow">
 <meta property="og:title" content="FAQ — Liran Bar-Shrim">
-<meta property="og:description" content="Questions about interruption authority, irreversible continuation, named authorization, and governance structure.">
+<meta property="og:description" content="Questions about refusal authority, irreversible continuation, named refusal authority, and governance structure.">
 <meta name="twitter:title" content="FAQ — Liran Bar-Shrim">
-<meta name="twitter:description" content="Questions about interruption authority, irreversible continuation, named authorization, and governance structure.">
+<meta name="twitter:description" content="Questions about refusal authority, irreversible continuation, named refusal authority, and governance structure.">
 <meta property="og:image" content="https://matrix-audit.com/og-image.png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
@@ -129,6 +129,18 @@ a { text-decoration: none; color: inherit; }
   max-width: 60ch;
 }
 .faq-a strong { color: #c8c0b2; font-weight: 400; }
+.credibility-block {
+  border-top: 1px solid var(--line);
+  padding: 48px 0 64px;
+}
+.credibility-block p {
+  font-family: "IBM Plex Mono", monospace;
+  font-size: 11px;
+  letter-spacing: .04em;
+  color: var(--dim);
+  line-height: 1.8;
+  max-width: 56ch;
+}
 .final { padding: 80px 0 100px; border-top: 1px solid var(--line); }
 .back-link {
   font-family: "IBM Plex Mono", monospace;
@@ -195,9 +207,9 @@ a { text-decoration: none; color: inherit; }
 <main>
 
   <section class="hero wrap-narrow">
-    <h1>Questions about<br><em>interruption authority.</em></h1>
+    <h1>Questions about<br><em>refusal authority.</em></h1>
     <p class="hero-sub">
-      On continuation, named authorization,
+      On continuation, refusal authority,
       and the structural conditions required
       before irreversible execution proceeds.
     </p>
@@ -223,27 +235,36 @@ a { text-decoration: none; color: inherit; }
     <div class="faq-item">
       <div class="faq-q">What is refusal authority?</div>
       <div class="faq-a">
-        The explicit operational ability to interrupt or refuse continuation
+        The explicit operational ability to refuse continuation
         before irreversible execution occurs.
         Not the ability to object. Not the ability to escalate.
-        The authority to stop.
+        The authority to refuse continuation.
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-q">Why aren't there published case studies?</div>
+      <div class="faq-a">
+        DAR is designed to operate before failure becomes visible. Where it functions as intended, the outcome is a decision that quietly changed course, not an incident that required documentation.<br><br>
+        In many cases, success looks like the absence of escalation, which makes it structurally difficult to reference publicly.<br><br>
+        Confidentiality is not simply a constraint of the work. In many cases, it is part of the value.
       </div>
     </div>
 
     <div class="faq-item">
       <div class="faq-q">Why does continuation become automatic?</div>
       <div class="faq-a">
-        In many organizations, interruption carries higher operational and personal friction than continuation.
+        In many organizations, refusal carries higher operational and personal friction than continuation.
         Over time, systems can optimize for continuation —
         even when uncertainty remains unresolved.
-        Interruption requires named authority. Continuation often does not.
+        Refusal requires named authority. Continuation often does not.
       </div>
     </div>
 
     <div class="faq-item">
-      <div class="faq-q">What does "named authorization" mean?</div>
+      <div class="faq-q">What does "named authority" mean?</div>
       <div class="faq-a">
-        A specific individual is explicitly identified in advance to interrupt continuation
+        A specific individual is explicitly identified in advance to refuse continuation
         before irreversible conditions emerge.<br><br>
         Not a committee.<br>
         Not a general function.<br>
@@ -252,18 +273,27 @@ a { text-decoration: none; color: inherit; }
     </div>
 
     <div class="faq-item">
-      <div class="faq-q">What happens in real time?</div>
+      <div class="faq-q">Is this the same as Human-in-the-Loop?</div>
       <div class="faq-a">
-        Formal authority may exist on paper.<br>
-        Under pressure, continuation can shift toward whoever is operationally available at the moment.<br><br>
-        The question is whether interruption authority remains clear when continuation matters.
+        No. Human presence does not necessarily create refusal authority.<br><br>
+        A human may review, escalate, or approve — while no clearly designated individual remains authorized to refuse continuation in practice.<br><br>
+        The question is not whether a human is present. The question is whether that human holds explicit authority to refuse.
       </div>
     </div>
 
     <div class="faq-item">
-      <div class="faq-q">What if interruption authority exists only in procedure?</div>
+      <div class="faq-q">What happens in real time?</div>
       <div class="faq-a">
-        If interruption authority requires reopening policy documents during time pressure,
+        Formal authority may exist on paper.<br>
+        Under pressure, continuation can shift toward whoever is practically positioned to proceed.<br><br>
+        The question is whether refusal authority remains clear when continuation matters.
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-q">What if refusal authority exists only in procedure?</div>
+      <div class="faq-a">
+        If refusal authority requires reopening policy documents during time pressure,
         continuation may already be operationally underway.<br><br>
         The question is not whether authority exists.<br>
         The question is whether it remains practically available when time matters.
@@ -293,7 +323,7 @@ a { text-decoration: none; color: inherit; }
       <div class="faq-a">
         <strong>Continuation becomes automatic.</strong>
         Not because everyone agreed —
-        but because interruption becomes practically unavailable inside the structure.
+        but because refusal becomes practically unavailable inside the structure.
       </div>
     </div>
 
@@ -301,7 +331,7 @@ a { text-decoration: none; color: inherit; }
       <div class="faq-q">What problem does distributed responsibility create?</div>
       <div class="faq-a">
         As responsibility spreads across systems, teams, and committees,
-        interruption authority does not spread with it.
+        refusal authority does not spread with it.
         It often becomes structurally unclear.
       </div>
     </div>
@@ -309,12 +339,16 @@ a { text-decoration: none; color: inherit; }
     <div class="faq-item">
       <div class="faq-q">Where does this question matter?</div>
       <div class="faq-a">
-        Anywhere irreversible execution can proceed without clearly designated interruption authority.<br><br>
-        The question is not only whether interruption authority exists, but whether it remains practically available when continuation matters most. The structural conditions that make that possible remain under active research.
+        Anywhere irreversible execution can proceed without clearly designated refusal authority.<br><br>
+        The question is not only whether refusal authority exists, but whether it remains practically available when continuation matters most.
       </div>
     </div>
 
   </section>
+
+  <div class="credibility-block wrap-narrow">
+    <p>Public case studies are naturally limited. This work operates before failure becomes visible.</p>
+  </div>
 
   <section class="final wrap-narrow">
     <a href="index.html" class="back-link">← Back to main</a>
