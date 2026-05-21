@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Authority Drift — Liran Bar-Shrim</title>
+<meta name="description" content="Refusal authority can exist on paper and disappear in practice. The question is not whether someone was appointed. It is whether the authority survived the appointment.">
+<meta name="robots" content="index,follow">
+<meta property="og:title" content="Authority Drift — Liran Bar-Shrim">
+<meta property="og:description" content="Refusal authority can exist on paper and disappear in practice. The question is not whether someone was appointed. It is whether the authority survived the appointment.">
+<meta property="og:image" content="https://matrix-audit.com/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Liran Bar-Shrim">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Authority Drift — Liran Bar-Shrim">
+<meta name="twitter:description" content="Refusal authority can exist on paper and disappear in practice. The question is not whether someone was appointed. It is whether the authority survived the appointment.">
+<meta name="twitter:image" content="https://matrix-audit.com/og-image.png">
+<link rel="canonical" href="https://matrix-audit.com/authority-drift.html">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#080808;--gold:#c8a96e;--gold2:#ead9b3;--text:#ebe5da;--muted:#b8b0a4;--dim:#7a7570;--line:rgba(255,255,255,.06);}
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;overflow-x:hidden;}
+body{background:var(--bg);color:var(--text);font-family:"Cormorant Garamond",Georgia,serif;overflow-x:hidden;-webkit-font-smoothing:antialiased;line-height:1.8;}
+body::before{content:"";position:fixed;inset:0;pointer-events:none;z-index:0;opacity:.028;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");background-size:180px;}
+a{text-decoration:none;color:inherit;}
+.topbar{position:fixed;top:0;left:0;right:0;height:72px;display:flex;align-items:center;justify-content:space-between;padding:0 48px;z-index:100;background:rgba(8,8,8,.82);backdrop-filter:blur(16px);border-bottom:1px solid var(--line);}
+.brand{display:flex;align-items:center;gap:14px;font-family:"IBM Plex Mono",monospace;font-size:9.5px;letter-spacing:.32em;text-transform:uppercase;color:var(--text);}
+.brand-rule{width:32px;height:1px;background:var(--gold);}
+.nav-contact{font-family:"IBM Plex Mono",monospace;font-size:9.5px;letter-spacing:.28em;text-transform:uppercase;color:var(--gold2);transition:opacity .2s;}
+.nav-contact:hover{opacity:.7;}
+.wrap-narrow{max-width:800px;margin:0 auto;padding:0 48px;position:relative;z-index:1;}
+.hero{padding-top:160px;padding-bottom:96px;}
+.hero h1{font-size:clamp(42px,9vw,120px);font-weight:400;line-height:.88;letter-spacing:-.02em;color:var(--text);margin-bottom:56px;max-width:14ch;}
+.hero h1 em{font-style:italic;color:var(--gold2);}
+.hero-sub{font-size:clamp(18px,1.8vw,23px);font-weight:300;line-height:1.9;color:#c0b8ae;max-width:58ch;}
+.pull{background:#0d0d0d;border-left:3px solid var(--gold);padding:32px 44px;margin-top:48px;font-size:clamp(16px,2.2vw,36px);font-weight:300;line-height:1.45;font-style:italic;color:var(--text);}
+.pause{padding:104px 0;border-top:1px solid var(--line);border-bottom:1px solid var(--line);margin:20px 0;position:relative;z-index:1;}
+.pause-line{position:relative;padding-left:28px;font-size:clamp(24px,3.5vw,56px);font-weight:300;font-style:italic;line-height:1.25;color:var(--text);max-width:560px;margin:0 0 0 48px;}
+.pause-line::before{content:"";position:absolute;left:0;top:6px;bottom:6px;width:1px;background:rgba(200,169,110,.35);}
+.drift-sequence{position:relative;z-index:1;padding:88px 0;border-top:1px solid var(--line);}
+.drift-sequence-inner{max-width:800px;margin:0 auto;padding:0 48px;}
+.drift-label{font-family:"IBM Plex Mono",monospace;font-size:9px;letter-spacing:.22em;text-transform:uppercase;color:var(--dim);margin-bottom:48px;}
+.drift-step{display:flex;gap:32px;align-items:flex-start;margin-bottom:40px;padding-bottom:40px;border-bottom:1px solid var(--line);}
+.drift-step:last-child{border-bottom:none;margin-bottom:0;padding-bottom:0;}
+.drift-n{font-family:"IBM Plex Mono",monospace;font-size:11px;letter-spacing:.1em;color:rgba(200,169,110,.3);padding-top:6px;min-width:28px;}
+.drift-text{font-size:clamp(17px,1.8vw,26px);font-weight:300;line-height:1.6;color:#c0b8ae;}
+.drift-text em{font-style:italic;color:var(--text);}
+.anchor{position:relative;z-index:1;padding:88px 0;border-top:1px solid var(--line);}
+.anchor-inner{max-width:800px;margin:0 auto;padding:0 48px;}
+.anchor-line{font-size:clamp(22px,3.5vw,56px);font-weight:300;font-style:italic;line-height:1.3;color:var(--text);border-left:3px solid var(--gold);padding-left:36px;max-width:22ch;}
+.crit{background:transparent;border-left:1px solid rgba(200,169,110,.5);padding-left:34px;margin-top:80px;}
+.crit p{font-size:clamp(28px,4.5vw,66px);line-height:1.05;color:#f5ead7;}
+.final{padding:100px 0 120px;border-top:1px solid var(--line);margin-top:40px;}
+.final-line{font-size:clamp(32px,5vw,72px);font-weight:400;font-style:italic;line-height:1.05;max-width:20ch;margin-bottom:36px;color:var(--text);}
+.sig{font-family:"IBM Plex Mono",monospace;font-size:9.5px;letter-spacing:.2em;text-transform:uppercase;color:#7a7570;}
+.back{display:inline-block;margin-top:32px;font-family:"IBM Plex Mono",monospace;font-size:9px;letter-spacing:.22em;text-transform:uppercase;color:var(--gold);border-bottom:1px solid rgba(200,169,110,.3);padding-bottom:2px;}
+.footer{position:relative;z-index:1;text-align:center;padding:20px;border-top:1px solid var(--line);font-family:"IBM Plex Mono",monospace;font-size:9px;letter-spacing:.08em;color:#7a7570;}
+@media(max-width:860px){.topbar{padding:0 20px;}.wrap-narrow{padding:0 20px;max-width:100%;}.hero{padding-top:120px;padding-bottom:48px;}.hero h1{font-size:28px;}.hero-sub{font-size:17px;}.pause{padding:56px 0;}.pause-line{font-size:20px;margin:0 20px;}.pull{font-size:16px;padding:18px 20px;}.final{padding:56px 0 64px;}.final-line{font-size:22px;}.drift-sequence-inner,.anchor-inner{padding:0 20px;}.anchor-line{font-size:20px;}.drift-text{font-size:16px;}}
+@keyframes fadeUp{from{opacity:0;transform:translateY(16px);}to{opacity:1;transform:translateY(0);}}
+.hero{animation:fadeUp .9s ease both;}
+@media(max-width:640px){.wrap-narrow{padding-left:20px !important;padding-right:20px !important;max-width:100% !important;}body{overflow-x:hidden !important;}}
+</style>
+</head>
+<body>
+
+<header class="topbar">
+  <a href="index.html" class="brand"><span class="brand-rule"></span><span>Liran Bar-Shrim</span></a>
+  <a href="mailto:Liran@liranbarshrim.com" class="nav-contact">Correspondence</a>
+</header>
+
+<main>
+
+  <section class="hero wrap-narrow">
+    <h1>Authority<br><em>drift.</em></h1>
+    <p class="hero-sub">
+      Refusal authority can be clearly assigned and still disappear.
+      Not through a single decision.
+      Through gradual erosion that leaves no visible trace.
+    </p>
+    <div class="pull" style="margin-top:48px;font-size:clamp(20px,2.8vw,44px);">
+      The person still exists.<br>
+      The authority no longer does.
+    </div>
+  </section>
+
+  <div class="pause">
+    <div class="pause-line">
+      The organizational chart did not change.<br>
+      The appointment was never revoked.<br>
+      The authority drifted anyway.
+    </div>
+  </div>
+
+  <section style="padding:52px 0 24px;" class="wrap-narrow">
+    <div class="pull" style="background:transparent;border-left:1px solid rgba(200,169,110,.28);padding:22px 28px;margin-top:0;font-size:clamp(18px,2vw,30px);font-style:italic;">
+      This is not a story about people who failed.<br><br>
+      It is a story about structures that allowed authority
+      to become technically present and operationally absent.
+    </div>
+  </section>
+
+  <div class="drift-sequence">
+    <div class="drift-sequence-inner">
+      <div class="drift-label">How authority drifts — without anyone deciding it should</div>
+
+      <div class="drift-step">
+        <div class="drift-n">01</div>
+        <div class="drift-text">The person changes. The title survives. <em>The responsibility to refuse quietly does not.</em></div>
+      </div>
+
+      <div class="drift-step">
+        <div class="drift-n">02</div>
+        <div class="drift-text">Escalation becomes routine. What was designed as an exception becomes a workflow. <em>Refusal stops being expected. Continuation becomes the operational default.</em></div>
+      </div>
+
+      <div class="drift-step">
+        <div class="drift-n">03</div>
+        <div class="drift-text">Continuation grows costly to interrupt. Schedules, commitments, and momentum accumulate. <em>Refusal becomes socially expensive before it becomes structurally impossible.</em></div>
+      </div>
+
+      <div class="drift-step">
+        <div class="drift-n">04</div>
+        <div class="drift-text">The record still shows a named authority. Audits pass. Reviews conclude nothing is missing. <em>Refusal authority is technically present and operationally absent.</em></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="anchor">
+    <div class="anchor-inner">
+      <div class="anchor-line">
+        Authority is not tested in calm conditions.<br>
+        It is tested when continuation becomes costly.
+      </div>
+
+      <div class="pull" style="margin-top:64px;">
+        The question is not whether someone is named.<br>
+        The question is whether the named person<br>
+        can still refuse — now, under current pressure,<br>
+        against the people currently in the room.
+      </div>
+
+      <div class="crit" style="margin-top:80px;">
+        <p>Does the authority<br>survive the appointment?</p>
+        <p style="margin-top:20px;font-size:clamp(18px,2.5vw,38px);color:var(--gold2);font-style:italic;font-weight:300;">Or does it drift quietly into the record?</p>
+      </div>
+
+      <p style="margin-top:72px;font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.06em;color:var(--dim);font-style:normal;line-height:1.8;">What was assigned in advance, before pressure, before ambiguity, before organizational reinterpretation?</p>
+      <a href="index.html" class="back">The structural question →</a>
+    </div>
+  </div>
+
+  <section class="final wrap-narrow">
+    <div class="final-line">The appointment is the protection.<br><br>But only if the authority survives the appointment.</div>
+    <div class="sig">Liran Bar-Shrim · 2026</div>
+  </section>
+
+</main>
+
+<footer class="footer">
+  © 2026 Liran Bar-Shrim &nbsp;·&nbsp; <a href="faq.html" style="color:var(--dim);text-decoration:none;">FAQ</a> &nbsp;·&nbsp; <a href="goodfaith.html" style="color:var(--dim);text-decoration:none;">Good Faith Use</a>
+</footer>
+
+</body>
+</html>
