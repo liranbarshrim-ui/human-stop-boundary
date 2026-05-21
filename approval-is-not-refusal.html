@@ -49,7 +49,17 @@ a{text-decoration:none;color:inherit;}
 .sig{font-family:"IBM Plex Mono",monospace;font-size:9.5px;letter-spacing:.2em;text-transform:uppercase;color:#7a7570;}
 .back{display:inline-block;margin-top:32px;font-family:"IBM Plex Mono",monospace;font-size:9px;letter-spacing:.22em;text-transform:uppercase;color:var(--gold);border-bottom:1px solid rgba(200,169,110,.3);padding-bottom:2px;}
 .footer{position:relative;z-index:1;text-align:center;padding:20px;border-top:1px solid var(--line);font-family:"IBM Plex Mono",monospace;font-size:9px;letter-spacing:.08em;color:#7a7570;}
-@media(max-width:860px){.topbar{padding:0 20px;}.wrap-narrow{padding:0 20px;max-width:100%;}.hero{padding-top:120px;padding-bottom:48px;}.hero h1{font-size:26px;}.hero-sub{font-size:17px;}.pause{padding:56px 0;}.pause-line{font-size:20px;margin:0 20px;}.pull{font-size:16px;padding:18px 20px;}.final{padding:56px 0 64px;}.final-line{font-size:22px;}}
+.distinction{position:relative;z-index:1;padding:80px 0;border-top:1px solid var(--line);}
+.distinction-inner{max-width:800px;margin:0 auto;padding:0 48px;}
+.distinction-label{font-family:"IBM Plex Mono",monospace;font-size:9px;letter-spacing:.22em;text-transform:uppercase;color:var(--dim);margin-bottom:40px;}
+.distinction-row{display:grid;grid-template-columns:1fr 1fr;gap:2px;margin-top:8px;}
+.distinction-col{padding:32px 36px;font-size:clamp(15px,1.6vw,22px);font-weight:300;line-height:1.7;color:var(--muted);}
+.distinction-col.left{background:#0e0e0e;border-left:1px solid rgba(200,169,110,.15);}
+.distinction-col.right{background:#0b0b0b;border-left:3px solid var(--gold);}
+.distinction-col strong{display:block;font-family:"IBM Plex Mono",monospace;font-size:9px;letter-spacing:.2em;text-transform:uppercase;color:var(--dim);margin-bottom:16px;font-weight:400;}
+.distinction-col.right strong{color:var(--gold);}
+.distinction-col em{font-style:italic;color:var(--text);}
+@media(max-width:860px){.topbar{padding:0 20px;}.wrap-narrow{padding:0 20px;max-width:100%;}.hero{padding-top:120px;padding-bottom:48px;}.hero h1{font-size:26px;}.hero-sub{font-size:17px;}.pause{padding:56px 0;}.pause-line{font-size:20px;margin:0 20px;}.pull{font-size:16px;padding:18px 20px;}.final{padding:56px 0 64px;}.final-line{font-size:22px;}.distinction-row{grid-template-columns:1fr;}.distinction-inner{padding:0 20px;}.distinction-col{padding:24px 20px;}}
 @keyframes fadeUp{from{opacity:0;transform:translateY(16px);}to{opacity:1;transform:translateY(0);}}
 .hero{animation:fadeUp .9s ease both;}
 @media(max-width:640px){.wrap-narrow{padding-left:20px !important;padding-right:20px !important;max-width:100% !important;}body{overflow-x:hidden !important;}}
@@ -87,13 +97,40 @@ a{text-decoration:none;color:inherit;}
   <section style="padding:52px 0 24px;" class="wrap-narrow">
     <div class="pull" style="background:transparent;border-left:1px solid rgba(200,169,110,.28);padding:22px 28px;margin-top:0;font-size:clamp(18px,2vw,30px);font-style:italic;">
       A system can contain oversight, human review, escalation, and approval,
-      and still leave the question of stopping without a named owner.
+      and still leave the question of stopping unanswered.
       <br><br>
       That is not safety.
       <br>
       That is the appearance of safety.
     </div>
   </section>
+
+  <!-- NEW SECTION: possibility vs authority -->
+  <div class="distinction">
+    <div class="distinction-inner">
+      <div class="distinction-label">The distinction that is rarely made explicit</div>
+      <div class="distinction-row">
+        <div class="distinction-col left">
+          <strong>Possibility of refusal</strong>
+          Someone <em>could</em> stop it.<br>
+          No one is required to.<br>
+          No one is named.<br>
+          No one carries refusal authority.
+        </div>
+        <div class="distinction-col right">
+          <strong>Refusal authority</strong>
+          Someone is <em>named in advance.</em><br>
+          Expected to decide.<br>
+          Authorized to stop.<br>
+          Refusal is carried by name.
+        </div>
+      </div>
+      <div class="pull" style="margin-top:48px;font-size:clamp(16px,2vw,32px);">
+        Being able to stop is not the same as being responsible to stop.<br><br>
+        If refusal belongs to everyone, refusal belongs to no one.
+      </div>
+    </div>
+  </div>
 
   <section style="padding:88px 0;" class="wrap-narrow">
     <div class="pull">
