@@ -3,77 +3,93 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>Authority Reconstruction #03 — CrowdStrike — Liran Bar-Shrim</title>
-<meta name="description" content="A forensic reconstruction of interruption authority during the CrowdStrike propagation window. 04:09 — 05:27 UTC, July 19, 2024.">
+<title>Authority Reconstruction #02 — CrowdStrike — Liran Bar-Shrim</title>
+<meta name="description" content="A reconstruction of interruption authority during the CrowdStrike propagation window. 04:09 — 05:27 UTC, July 19, 2024.">
 <meta name="robots" content="index,follow">
+<meta property="og:title" content="CrowdStrike — The Propagation Window — Liran Bar-Shrim">
+<meta property="og:description" content="A reconstruction of interruption authority during propagation under trusted deployment. 78 minutes.">
+<meta property="og:image" content="https://matrix-audit.com/og-image.png">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Liran Bar-Shrim">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://matrix-audit.com/og-image.png">
 <link rel="canonical" href="https://matrix-audit.com/crowdstrike-reconstruction.html">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&display=swap" rel="stylesheet">
 <style>
 :root{
-  --bg:#080808;
-  --gold:#c8a96e;
-  --gold2:#ead9b3;
-  --text:#ebe5da;
-  --muted:#b8b0a4;
-  --dim:#7a7570;
+  --bg:#080808;--gold:#c8a96e;--gold2:#ead9b3;
+  --text:#ebe5da;--muted:#d8d2c8;--dim:#7a7570;
   --line:rgba(255,255,255,.06);
 }
 *,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
 html{scroll-behavior:smooth;overflow-x:hidden;}
-body{
-  background:var(--bg);
-  color:var(--text);
-  font-family:"Cormorant Garamond",Georgia,serif;
-  overflow-x:hidden;
-  -webkit-font-smoothing:antialiased;
-  line-height:1.85;
-}
-body::before{
-  content:"";position:fixed;inset:0;pointer-events:none;z-index:0;opacity:.028;
-  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
-  background-size:180px;
-}
+body{background:var(--bg);color:var(--text);font-family:"Cormorant Garamond",Georgia,serif;overflow-x:hidden;-webkit-font-smoothing:antialiased;line-height:1.85;}
+body::before{content:"";position:fixed;inset:0;pointer-events:none;z-index:0;opacity:.028;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");background-size:180px;}
 a{text-decoration:none;color:inherit;}
-.topbar{position:fixed;top:0;left:0;right:0;height:72px;display:flex;align-items:center;justify-content:space-between;padding:0 48px;z-index:100;background:rgba(8,8,8,.88);backdrop-filter:blur(16px);border-bottom:1px solid var(--line);}
+
+.topbar{position:fixed;top:0;left:0;right:0;height:72px;display:flex;align-items:center;justify-content:space-between;padding:0 48px;z-index:100;background:rgba(8,8,8,.92);backdrop-filter:blur(16px);border-bottom:1px solid var(--line);}
 .brand{display:flex;align-items:center;gap:14px;font-family:"IBM Plex Mono",monospace;font-size:9.5px;letter-spacing:.32em;text-transform:uppercase;color:var(--text);}
 .brand-rule{width:32px;height:1px;background:var(--gold);}
-.nav-back{font-family:"IBM Plex Mono",monospace;font-size:9px;letter-spacing:.22em;text-transform:uppercase;color:var(--dim);border-bottom:1px solid rgba(255,255,255,.08);padding-bottom:1px;transition:color .2s;}
+.nav-back{font-family:"IBM Plex Mono",monospace;font-size:9px;letter-spacing:.22em;text-transform:uppercase;color:var(--dim);transition:color .2s;}
 .nav-back:hover{color:var(--gold2);}
-.wrap{max-width:760px;margin:0 auto;padding:0 48px;position:relative;z-index:1;}
+
+.wrap{max-width:720px;margin:0 auto;padding:0 48px;position:relative;z-index:1;}
+
 .hero{padding-top:148px;padding-bottom:80px;}
 .rec-index{font-family:"IBM Plex Mono",monospace;font-size:9px;letter-spacing:.32em;text-transform:uppercase;color:var(--gold);margin-bottom:20px;}
-.hero h1{font-size:clamp(38px,6vw,88px);font-weight:400;line-height:.9;letter-spacing:-.02em;margin-bottom:32px;}
+.hero h1{font-size:clamp(36px,6vw,88px);font-weight:400;line-height:.9;letter-spacing:-.02em;margin-bottom:32px;}
 .hero h1 em{font-style:italic;color:var(--gold2);}
 .window-label{font-family:"IBM Plex Mono",monospace;font-size:11px;letter-spacing:.18em;color:var(--dim);margin-bottom:48px;}
-.hero-note{font-size:clamp(16px,1.4vw,19px);font-weight:300;color:var(--muted);max-width:58ch;line-height:1.9;border-left:1px solid rgba(200,169,110,.3);padding-left:24px;}
+.hero-note{font-size:clamp(16px,1.4vw,19px);font-weight:300;color:var(--muted);max-width:56ch;line-height:1.9;border-left:1px solid rgba(200,169,110,.3);padding-left:24px;}
+
 .divider{border:none;border-top:1px solid var(--line);margin:0;position:relative;z-index:1;}
+
 .step{padding:64px 0;border-bottom:1px solid var(--line);}
 .step-num{font-family:"IBM Plex Mono",monospace;font-size:9px;letter-spacing:.28em;text-transform:uppercase;color:var(--gold);margin-bottom:20px;}
-.step h2{font-size:clamp(26px,3.5vw,48px);font-weight:400;line-height:1.08;margin-bottom:20px;}
+.step h2{font-size:clamp(24px,3.5vw,46px);font-weight:400;line-height:1.08;margin-bottom:20px;}
 .step h2 em{font-style:italic;color:var(--gold2);}
-.step p{font-size:clamp(16px,1.4vw,19px);font-weight:300;color:var(--muted);max-width:62ch;line-height:1.9;margin-bottom:16px;}
+.step p{font-size:clamp(16px,1.4vw,19px);font-weight:300;color:var(--muted);max-width:60ch;line-height:1.9;margin-bottom:16px;}
 .step p:last-of-type{margin-bottom:0;}
+
 .date{font-family:"IBM Plex Mono",monospace;font-size:10px;letter-spacing:.18em;color:var(--dim);margin-bottom:12px;display:block;}
-.doc-anchor{margin-top:28px;padding:20px 24px;background:#0d0d0d;border-left:1px solid rgba(200,169,110,.3);}
+
+/* DOC ANCHOR — gold bar */
+.doc-anchor{margin-top:28px;padding-left:20px;border-left:1px solid rgba(200,169,110,.3);}
 .doc-anchor-label{font-family:"IBM Plex Mono",monospace;font-size:8px;letter-spacing:.28em;text-transform:uppercase;color:var(--dim);margin-bottom:8px;}
-.doc-anchor p{font-size:15px;color:#c8c0b2;font-style:italic;line-height:1.7;margin:0;max-width:none;}
+.doc-anchor p{font-size:15px;color:var(--muted);font-style:italic;line-height:1.7;margin:0;max-width:none;}
 .doc-anchor cite{display:block;margin-top:8px;font-family:"IBM Plex Mono",monospace;font-size:9px;letter-spacing:.08em;color:var(--dim);font-style:normal;}
-.pull{margin-top:40px;padding:28px 36px;background:#0d0d0d;border-left:3px solid var(--gold);font-size:clamp(18px,2.2vw,32px);font-weight:300;font-style:italic;line-height:1.35;color:var(--text);}
-.question{margin-top:40px;padding-left:28px;border-left:1px solid rgba(200,169,110,.4);font-size:clamp(20px,2.8vw,42px);font-weight:300;font-style:italic;line-height:1.2;color:#f0e8d5;}
+
+/* PULL — gold bar */
+.pull{margin-top:40px;border-left:2px solid var(--gold);padding-left:24px;font-size:clamp(18px,2.2vw,30px);font-weight:300;font-style:italic;line-height:1.4;color:var(--text);}
+
+.question{margin-top:40px;padding-left:28px;border-left:1px solid rgba(200,169,110,.4);font-size:clamp(18px,2.5vw,38px);font-weight:300;font-style:italic;line-height:1.25;color:#f0e8d5;}
+
 .obs-list{margin-top:32px;display:grid;gap:0;}
-.obs-item{padding:18px 0;border-bottom:1px solid var(--line);font-size:clamp(15px,1.3vw,18px);font-weight:300;color:var(--muted);display:flex;gap:20px;align-items:baseline;}
+.obs-item{padding:18px 0;border-bottom:1px solid var(--line);font-size:clamp(15px,1.3vw,17px);font-weight:300;color:var(--muted);display:flex;gap:20px;align-items:baseline;}
 .obs-item:last-child{border-bottom:none;}
 .obs-check{font-family:"IBM Plex Mono",monospace;font-size:9px;color:var(--gold);letter-spacing:.08em;flex-shrink:0;}
 .obs-x{font-family:"IBM Plex Mono",monospace;font-size:9px;color:var(--dim);letter-spacing:.08em;flex-shrink:0;}
+
 .final{padding:88px 0 110px;border-top:1px solid var(--line);}
-.final-line{font-size:clamp(32px,5vw,72px);font-weight:400;font-style:italic;line-height:1.05;max-width:18ch;margin-bottom:36px;color:var(--text);}
+.final-line{font-size:clamp(28px,5vw,68px);font-weight:400;font-style:italic;line-height:1.05;max-width:18ch;margin-bottom:36px;color:var(--text);}
 .sig{font-family:"IBM Plex Mono",monospace;font-size:9.5px;letter-spacing:.2em;text-transform:uppercase;color:var(--dim);}
 .back-link{display:inline-block;margin-top:40px;font-family:"IBM Plex Mono",monospace;font-size:9px;letter-spacing:.22em;text-transform:uppercase;color:var(--gold);border-bottom:1px solid rgba(200,169,110,.3);padding-bottom:2px;}
+
 .footer{position:relative;z-index:1;text-align:center;padding:20px;border-top:1px solid var(--line);font-family:"IBM Plex Mono",monospace;font-size:9px;letter-spacing:.08em;color:var(--dim);}
-@media(max-width:860px){.topbar{padding:0 20px;}.wrap{padding:0 20px;max-width:100%;}.hero{padding-top:112px;padding-bottom:56px;}.step{padding:48px 0;}.pull{font-size:16px;padding:20px 22px;}.question{font-size:22px;}.final{padding:64px 0 80px;}.final-line{font-size:28px;}}
-@media(max-width:640px){.wrap{padding-left:20px!important;padding-right:20px!important;}body{overflow-x:hidden!important;}}
+.footer a{color:var(--dim);transition:color .2s;}
+.footer a:hover{color:var(--gold);}
+
+@media(max-width:860px){
+  .topbar{padding:0 20px;}
+  .wrap{padding:0 20px;max-width:100%;}
+  .hero{padding-top:112px;padding-bottom:56px;}
+  .step{padding:48px 0;}
+  .step p{line-height:1.75;}
+  .final{padding:64px 0 80px;}
+}
+@media(max-width:640px){body{overflow-x:hidden!important;}}
 @keyframes fadeUp{from{opacity:0;transform:translateY(16px);}to{opacity:1;transform:translateY(0);}}
 .hero{animation:fadeUp .9s ease both;}
 </style>
@@ -82,13 +98,13 @@ a{text-decoration:none;color:inherit;}
 
 <header class="topbar">
   <a href="index.html" class="brand"><span class="brand-rule"></span><span>Liran Bar-Shrim</span></a>
-  <a href="case-studies.html" class="nav-back">← Case Studies</a>
+  <a href="index.html" class="nav-back">← Index</a>
 </header>
 
 <main>
 
   <section class="hero wrap">
-    <div class="rec-index">Authority Reconstruction · #03</div>
+    <div class="rec-index">Authority Reconstruction · #02</div>
     <h1>CrowdStrike<br><em>The Propagation Window</em></h1>
     <div class="window-label">04:09 — 05:27 UTC · July 19, 2024</div>
     <p class="hero-note">
@@ -103,17 +119,8 @@ a{text-decoration:none;color:inherit;}
     <div class="step-num">01 — Deployment</div>
     <span class="date">04:09 UTC · July 19, 2024</span>
     <h2>Routine update.<br><em>Automatic propagation begins.</em></h2>
-    <p>
-      CrowdStrike distributed a sensor configuration update, Channel File 291,
-      to Windows systems running its Falcon endpoint security platform.
-      The update was part of routine operations, distributed automatically to customers
-      who had configured their systems to receive updates as released.
-    </p>
-    <p>
-      CrowdStrike's Falcon platform was deployed across approximately 24,000 customers,
-      including nearly 60% of Fortune 500 companies.
-      The update required no customer action to install.
-    </p>
+    <p>CrowdStrike distributed a sensor configuration update, Channel File 291, to Windows systems running its Falcon endpoint security platform. The update was part of routine operations, distributed automatically to customers who had configured their systems to receive updates as released.</p>
+    <p>CrowdStrike's Falcon platform was deployed across approximately 24,000 customers, including nearly 60% of Fortune 500 companies. The update required no customer action to install.</p>
     <div class="doc-anchor">
       <div class="doc-anchor-label">Documentary Basis</div>
       <p>At 04:09 UTC on July 19, CrowdStrike released a sensor configuration update for Windows hosts as part of ongoing operations. The update contained a logic error that caused an out-of-bounds memory read, resulting in system crashes across affected machines.</p>
@@ -125,16 +132,8 @@ a{text-decoration:none;color:inherit;}
     <div class="step-num">02 — Propagation</div>
     <span class="date">04:09 — 05:27 UTC</span>
     <h2>Systems crash.<br><em>Propagation continues.</em></h2>
-    <p>
-      Within minutes, systems receiving the update began crashing.
-      Affected machines entered a boot loop or recovery state,
-      unable to restart normally without manual intervention on each device.
-    </p>
-    <p>
-      Because the update deployed automatically, propagation did not require any affirmative action
-      by customer organizations. Receiving the update was the default state.
-      Interrupting propagation required explicit, coordinated action before or during distribution.
-    </p>
+    <p>Within minutes, systems receiving the update began crashing. Affected machines entered a boot loop or recovery state, unable to restart normally without manual intervention on each device.</p>
+    <p>Because the update deployed automatically, propagation did not require any affirmative action by customer organizations. Receiving the update was the default state. Interrupting propagation required explicit, coordinated action before or during distribution.</p>
     <div class="doc-anchor">
       <div class="doc-anchor-label">Documentary Basis</div>
       <p>Approximately 8.5 million Windows devices were affected. Because many systems had to be remediated manually, restoring full operations was expected to take days. Systems that had already received the update before CrowdStrike identified and reverted the file could not be automatically recovered.</p>
@@ -146,17 +145,8 @@ a{text-decoration:none;color:inherit;}
     <div class="step-num">03 — Reversion</div>
     <span class="date">05:27 UTC</span>
     <h2>CrowdStrike identifies<br><em>and reverts.</em></h2>
-    <p>
-      At 05:27 UTC, CrowdStrike identified the logic error and reverted Channel File 291.
-      For systems that had not yet received the update, the reversion was effective.
-      For systems that had already installed the defective file, reversion did not restore function.
-      Manual remediation was required on each affected machine.
-    </p>
-    <p>
-      The structural condition this reconstruction examines is not the defect itself,
-      but the propagation window between 04:09 and 05:27 UTC —
-      78 minutes during which the update continued to reach customer systems automatically.
-    </p>
+    <p>At 05:27 UTC, CrowdStrike identified the logic error and reverted Channel File 291. For systems that had not yet received the update, the reversion was effective. For systems that had already installed the defective file, reversion did not restore function. Manual remediation was required on each affected machine.</p>
+    <p>The structural condition this reconstruction examines is not the defect itself, but the propagation window between 04:09 and 05:27 UTC — 78 minutes during which the update continued to reach customer systems automatically.</p>
     <div class="pull">
       Propagation was the default.<br>
       Interruption required explicit action<br>
@@ -166,17 +156,10 @@ a{text-decoration:none;color:inherit;}
 
   <section class="step wrap">
     <div class="step-num">04 — The Interruption Question</div>
-    <h2>Propagation was automatic.<br><em>Who owned interruption?</em></h2>
-    <p>
-      The structural question here is different from Boeing and Knight Capital.
-    </p>
-    <p>
-      Boeing: continuation was institutionally justified under an accepted remediation plan.
-      Knight: continuation persisted while the source of the anomaly remained unresolved.
-      CrowdStrike: propagation was the organizational default. Interruption required opt-in.
-    </p>
+    <h2>Propagation was automatic.<br><em>Who carried interruption?</em></h2>
+    <p>Boeing asked who carried refusal.<br>CrowdStrike asked who carried interruption.</p>
     <div class="question">
-      Once propagation began under trusted deployment infrastructure, who, by name, within each receiving organization, was authorized to interrupt update acceptance before systems became unreachable?
+      Who carried interruption — by name?
     </div>
   </section>
 
@@ -184,46 +167,28 @@ a{text-decoration:none;color:inherit;}
     <div class="step-num">05 — Structural Observation</div>
     <h2>What existed.<br><em>What remained unclear.</em></h2>
     <div class="obs-list">
-      <div class="obs-item">
-        <span class="obs-check">EXISTS</span>
-        <span>Vendor reversion — CrowdStrike identified and reverted the defective file at 05:27 UTC</span>
-      </div>
-      <div class="obs-item">
-        <span class="obs-check">EXISTS</span>
-        <span>Technical interruption capability — customers could configure staged rollouts or delayed update acceptance</span>
-      </div>
-      <div class="obs-item">
-        <span class="obs-check">EXISTS</span>
-        <span>Post-incident remediation — CrowdStrike and Microsoft provided recovery guidance</span>
-      </div>
-      <div class="obs-item">
-        <span class="obs-x">UNCLEAR</span>
-        <span>Named interruption authority within receiving organizations — who was designated in advance to halt automatic update propagation before irreversibility</span>
-      </div>
-      <div class="obs-item">
-        <span class="obs-x">UNCLEAR</span>
-        <span>Pre-defined propagation boundary — documented threshold at which automatic acceptance would pause pending human authorization</span>
-      </div>
+      <div class="obs-item"><span class="obs-check">EXISTS</span><span>Vendor reversion — CrowdStrike identified and reverted the defective file at 05:27 UTC</span></div>
+      <div class="obs-item"><span class="obs-check">EXISTS</span><span>Technical interruption capability — customers could configure staged rollouts or delayed update acceptance</span></div>
+      <div class="obs-item"><span class="obs-check">EXISTS</span><span>Post-incident remediation — CrowdStrike and Microsoft provided recovery guidance</span></div>
+      <div class="obs-item"><span class="obs-x">UNCLEAR</span><span>Who was named in advance to carry interruption authority before systems became unreachable</span></div>
+      <div class="obs-item"><span class="obs-x">UNCLEAR</span><span>Pre-defined propagation boundary — documented threshold at which automatic acceptance would pause pending human authorization</span></div>
     </div>
-    <p style="margin-top:32px;">
-      Interruption capability existed for customers who had configured staged rollouts in advance.
-      For most organizations, propagation proceeded under the default configuration
-      until systems were already unreachable.
-    </p>
+    <p style="margin-top:32px;">Propagation had a default.<br>Interruption depended on prior design.</p>
   </section>
 
   <section class="final wrap">
-    <div class="final-line">Propagation was the default.<br>Interruption required prior design.</div>
-    <div class="sig">Liran Bar-Shrim · Authority Reconstruction #03 · 2026</div>
-    <a href="case-studies.html" class="back-link">← Return to Case Studies</a>
+    <div class="final-line">Propagation was defined.<br>Interruption was not.</div>
+    <div class="sig">Liran Bar-Shrim · Authority Reconstruction · 2026</div>
+    <a href="index.html" class="back-link">← Back to Index</a>
   </section>
 
 </main>
 
 <footer class="footer">
   © 2026 Liran Bar-Shrim &nbsp;·&nbsp;
-  <a href="faq.html" style="color:var(--dim);text-decoration:none;">FAQ</a> &nbsp;·&nbsp;
-  <a href="goodfaith.html" style="color:var(--dim);text-decoration:none;">Good Faith Use</a>
+  <a href="faq.html">FAQ</a> &nbsp;·&nbsp;
+  <a href="goodfaith.html">Good Faith Use</a> &nbsp;·&nbsp;
+  <a href="index.html">Index</a>
 </footer>
 
 </body>
