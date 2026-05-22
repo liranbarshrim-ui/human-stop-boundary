@@ -16,7 +16,7 @@
   --gold: #c8a96e;
   --gold2: #ead9b3;
   --text: #ebe5da;
-  --muted: #b8b0a4;
+  --muted: #d8d2c8;
   --dim: #7a7570;
   --line: rgba(255,255,255,.06);
 }
@@ -32,179 +32,151 @@ body {
 }
 body::before {
   content: "";
-  position: fixed;
-  inset: 0;
-  pointer-events: none;
-  z-index: 0;
-  opacity: .028;
+  position: fixed; inset: 0;
+  pointer-events: none; z-index: 0; opacity: .028;
   background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
   background-size: 180px;
 }
 a { text-decoration: none; color: inherit; }
 .topbar {
-  position: fixed;
-  top: 0; left: 0; right: 0;
-  height: 72px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 0 48px;
-  z-index: 100;
-  background: rgba(8,8,8,.92);
-  backdrop-filter: blur(16px);
+  position: fixed; top: 0; left: 0; right: 0; height: 72px;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 0 48px; z-index: 100;
+  background: rgba(8,8,8,.92); backdrop-filter: blur(16px);
   border-bottom: 1px solid var(--line);
 }
 .brand {
-  display: flex;
-  align-items: center;
-  gap: 14px;
+  display: flex; align-items: center; gap: 14px;
   font-family: "IBM Plex Mono", monospace;
-  font-size: 9.5px;
-  letter-spacing: .32em;
-  text-transform: uppercase;
-  color: var(--text);
+  font-size: 9.5px; letter-spacing: .32em; text-transform: uppercase; color: var(--text);
 }
 .brand-rule { width: 32px; height: 1px; background: var(--gold); }
 .nav-contact {
   font-family: "IBM Plex Mono", monospace;
-  font-size: 9.5px;
-  letter-spacing: .28em;
-  text-transform: uppercase;
-  color: var(--gold2);
-  transition: opacity .2s;
+  font-size: 9.5px; letter-spacing: .28em; text-transform: uppercase;
+  color: var(--gold2); transition: opacity .2s;
 }
 .nav-contact:hover { opacity: .7; }
+
 .wrap {
-  max-width: 800px;
-  margin: 0 auto;
-  padding: 0 48px;
-  position: relative;
-  z-index: 1;
+  max-width: 720px; margin: 0 auto;
+  padding: 0 48px; position: relative; z-index: 1;
 }
+
+/* HERO */
 .hero { padding-top: 160px; padding-bottom: 70px; border-bottom: 1px solid var(--line); }
+.hero-label {
+  font-family: "IBM Plex Mono", monospace;
+  font-size: 9px; letter-spacing: .32em; text-transform: uppercase;
+  color: var(--dim); margin-bottom: 40px;
+}
 .hero h1 {
   font-size: clamp(36px, 5.5vw, 78px);
-  font-weight: 400;
-  line-height: .92;
-  letter-spacing: -.01em;
-  color: var(--text);
-  margin-bottom: 36px;
-  max-width: 20ch;
+  font-weight: 400; line-height: 1.05;
+  letter-spacing: -.01em; color: var(--text);
+  margin-bottom: 36px; max-width: 20ch;
 }
 .hero h1 em { font-style: italic; color: var(--gold2); }
 .hero-sub {
   font-size: clamp(17px, 1.5vw, 21px);
-  font-weight: 300;
-  line-height: 1.9;
-  color: var(--muted);
-  max-width: 58ch;
+  font-weight: 300; line-height: 1.9;
+  color: var(--muted); max-width: 52ch;
+  border-left: 1px solid rgba(200,169,110,.25);
+  padding-left: 24px;
 }
+
+/* SECTIONS */
 .doc-section { padding: 56px 0; border-bottom: 1px solid var(--line); }
 .doc-section:last-of-type { border-bottom: none; }
 .section-marker {
   font-family: "IBM Plex Mono", monospace;
-  font-size: 9px;
-  letter-spacing: .28em;
-  text-transform: uppercase;
-  color: var(--dim);
-  margin-bottom: 20px;
+  font-size: 9px; letter-spacing: .28em; text-transform: uppercase;
+  color: var(--dim); margin-bottom: 20px;
 }
 .doc-section h2 {
   font-size: clamp(24px, 3.2vw, 48px);
-  font-weight: 400;
-  line-height: 1.05;
-  margin-bottom: 24px;
-  max-width: 22ch;
+  font-weight: 400; line-height: 1.05;
+  margin-bottom: 24px; max-width: 22ch;
 }
 .doc-section h2 em { font-style: italic; color: var(--gold2); }
 .body-p {
   font-size: clamp(16px, 1.4vw, 19px);
-  font-weight: 300;
-  color: var(--muted);
-  margin-bottom: 20px;
-  max-width: 62ch;
-  line-height: 1.9;
+  font-weight: 300; color: var(--muted);
+  margin-bottom: 20px; max-width: 60ch; line-height: 1.9;
 }
-.body-p strong { color: #c8c0b2; font-weight: 400; }
+.body-p strong { color: var(--text); font-weight: 400; }
+
+/* PULL — gold bar, no background */
 .pull {
-  background: #0d0d0d;
-  border-left: 3px solid var(--gold);
-  padding: 28px 36px;
+  border-left: 2px solid var(--gold);
+  padding-left: 24px;
   margin: 36px 0;
-  font-size: clamp(18px, 2vw, 30px);
-  font-weight: 300;
-  line-height: 1.4;
-  font-style: italic;
-  color: var(--text);
+  font-size: clamp(18px, 2vw, 28px);
+  font-weight: 300; line-height: 1.45;
+  font-style: italic; color: var(--text);
 }
+
 .bridge {
   font-size: clamp(16px, 1.4vw, 19px);
-  font-weight: 300;
-  font-style: italic;
-  color: var(--dim);
-  max-width: 62ch;
-  line-height: 1.9;
-  padding: 32px 0 0;
+  font-weight: 300; font-style: italic;
+  color: var(--dim); max-width: 60ch;
+  line-height: 1.9; padding: 32px 0 0;
 }
+
+/* PRINCIPLES */
 .principle-list { margin: 28px 0; }
 .principle-item { padding: 24px 0; border-bottom: 1px solid var(--line); }
 .principle-item:first-child { border-top: 1px solid var(--line); }
-.principle-title { font-size: clamp(17px, 1.8vw, 24px); font-weight: 400; color: var(--text); margin-bottom: 8px; }
-.principle-desc { font-size: clamp(15px, 1.3vw, 17px); font-weight: 300; color: var(--muted); line-height: 1.75; max-width: 58ch; }
+.principle-title {
+  font-size: clamp(17px, 1.8vw, 22px);
+  font-weight: 400; color: var(--text); margin-bottom: 8px;
+}
+.principle-desc {
+  font-size: clamp(15px, 1.3vw, 17px);
+  font-weight: 300; color: var(--muted);
+  line-height: 1.75; max-width: 56ch;
+}
+
+/* FINAL */
 .final { padding: 80px 0 100px; border-top: 1px solid var(--line); }
 .back-link {
   font-family: "IBM Plex Mono", monospace;
-  font-size: 9px;
-  letter-spacing: .28em;
-  text-transform: uppercase;
-  color: var(--dim);
-  transition: color .2s;
-  display: block;
-  margin-bottom: 14px;
+  font-size: 9px; letter-spacing: .28em; text-transform: uppercase;
+  color: var(--dim); transition: color .2s;
+  display: block; margin-bottom: 14px;
 }
 .back-link:hover { color: var(--gold2); }
 .sig {
   font-family: "IBM Plex Mono", monospace;
-  font-size: 9.5px;
-  letter-spacing: .26em;
-  text-transform: uppercase;
-  color: var(--dim);
-  margin-top: 28px;
+  font-size: 9.5px; letter-spacing: .26em; text-transform: uppercase;
+  color: var(--dim); margin-top: 28px;
 }
+
 .footer {
-  position: relative;
-  z-index: 1;
-  text-align: center;
-  padding: 20px;
+  position: relative; z-index: 1;
+  text-align: center; padding: 20px;
   border-top: 1px solid var(--line);
   font-family: "IBM Plex Mono", monospace;
-  font-size: 10px;
-  letter-spacing: .2em;
-  color: var(--dim);
+  font-size: 9px; letter-spacing: .08em; color: var(--dim);
 }
+.footer a { color: var(--dim); transition: color .2s; }
+.footer a:hover { color: var(--gold); }
+
 @media (max-width: 860px) {
-  body { overflow-x: hidden; }
-  * { max-width: 100%; }
   .topbar { padding: 0 20px; }
-  .wrap { padding: 0 20px; }
+  .wrap { padding: 0 24px; max-width: 100%; box-sizing: border-box; }
   .hero { padding-top: 120px; padding-bottom: 50px; }
-  .pull { padding: 22px 24px; }
   .doc-section { padding: 44px 0; }
+  .body-p { line-height: 1.75; }
+}
+@media (max-width: 640px) {
+  body { overflow-x: hidden !important; }
 }
 @keyframes fadeUp {
   from { opacity: 0; transform: translateY(16px); }
   to   { opacity: 1; transform: translateY(0); }
 }
 .hero { animation: fadeUp .9s ease both; }
-
-@media (max-width: 640px) {
-  .wrap, .wrap-narrow {
-    padding-left: 20px !important;
-    padding-right: 20px !important;
-    max-width: 100% !important;
-  }
-  body { overflow-x: hidden !important; }
-}
 </style>
 </head>
 
@@ -221,11 +193,12 @@ a { text-decoration: none; color: inherit; }
 <main>
 
   <section class="hero wrap">
+    <div class="hero-label">A Structural Question</div>
     <h1>Clarity supports judgment.<br>It does not <em>replace it.</em></h1>
     <p class="hero-sub">
       Scope, limits, and intended use.
       What this work is for. What it is not.
-      And what remains the responsibility of people, not frameworks.
+      And what remains human responsibility.
     </p>
   </section>
 
@@ -234,11 +207,12 @@ a { text-decoration: none; color: inherit; }
     <h2>What this work is <em>for.</em></h2>
     <p class="body-p">
       This work exists to identify a structural gap in governance:
-      the absence of a named individual authorized to interrupt continuation before irreversible conditions emerge.
+      the absence of a named individual authorized to interrupt continuation
+      before irreversible conditions emerge.
     </p>
     <p class="body-p">
-      It is intended to support organizations in clarifying authority,
-      reducing preventable exposure, and naming who can interrupt continuation before it becomes irreversible.
+      It is intended to support organizations in clarifying authority
+      and naming who can interrupt continuation before irreversible conditions emerge.
     </p>
     <div class="pull">
       A framework can define accountability.<br>
@@ -263,7 +237,7 @@ a { text-decoration: none; color: inherit; }
       <strong>Policies do not stop events.
       Committees do not stop events.
       Slides do not stop events.</strong>
-      Timely authority exercised by a named person can.
+      Timely authority exercised by a named person can interrupt them.
     </p>
     <p class="bridge">
       This question becomes operationally relevant in environments where systems act under pressure, uncertainty, and potentially irreversible consequences.
@@ -301,8 +275,8 @@ a { text-decoration: none; color: inherit; }
     <div class="section-marker">The Question</div>
     <h2>If the decision mattered tomorrow,<br>would authority be <em>clear today?</em></h2>
     <p class="body-p">
-      Not in a policy document.<br>
-      Not in an org chart.<br>
+      Not in policy.<br>
+      Not in structure.<br>
       In a name.
     </p>
   </div>
@@ -311,13 +285,15 @@ a { text-decoration: none; color: inherit; }
     <a href="index.html" class="back-link">← Back to main</a>
     <a href="whitepaper.html" class="back-link">→ Governance Note</a>
     <a href="faq.html" class="back-link" style="margin-bottom:28px;">→ FAQ</a>
-    <div class="sig">Liran Bar-Shrim · Independent Writing · 2026</div>
+    <div class="sig">Liran Bar-Shrim · 2026</div>
   </section>
 
 </main>
 
 <footer class="footer">
-  © 2026 Liran Bar-Shrim
+  © 2026 Liran Bar-Shrim &nbsp;·&nbsp;
+  <a href="faq.html">FAQ</a> &nbsp;·&nbsp;
+  <a href="index.html">Index</a>
 </footer>
 
 </body>
