@@ -4,10 +4,10 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
 <title>Named Authority Record — Liran Bar-Shrim</title>
-<meta name="description" content="A structural governance artifact defining named interruption authority before irreversible execution conditions emerge.">
+<meta name="description" content="A structural governance artifact defining named refusal authority before irreversible execution conditions emerge.">
 <meta name="robots" content="index,follow">
 <meta property="og:title" content="Named Authority Record — Liran Bar-Shrim">
-<meta property="og:description" content="A structural governance artifact defining named interruption authority before irreversible execution conditions emerge.">
+<meta property="og:description" content="A structural governance artifact defining named refusal authority before irreversible execution conditions emerge.">
 <meta property="og:image" content="https://matrix-audit.com/og-image.png">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Liran Bar-Shrim">
@@ -19,364 +19,110 @@
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@300;400;500&family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300&display=swap" rel="stylesheet">
 <style>
 :root {
-  --bg: #070707;
-  --surface: #0c0c0c;
+  --bg: #080808;
+  --surface: #0d0d0d;
   --surface2: #0f0f0f;
   --gold: #c8a96e;
-  --text: #e2dcd4;
-  --muted: #a0998f;
-  --dim: #5a5550;
-  --line: rgba(255,255,255,.05);
-  --line-strong: rgba(255,255,255,.08);
-  --amber: #9f8a55;
-  --danger: #8a5050;
+  --gold2: #ead9b3;
+  --text: #ebe5da;
+  --muted: #d8d2c8;
+  --dim: #7a7570;
+  --line: rgba(255,255,255,.06);
+  --line-strong: rgba(255,255,255,.09);
+  --amber: #c8a96e;
+  --danger: #a83232;
 }
 
-*, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
-html { scroll-behavior: smooth; overflow-x: hidden; }
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth;overflow-x:hidden}
+body{background:var(--bg);color:var(--text);font-family:'IBM Plex Mono',monospace;overflow-x:hidden;-webkit-font-smoothing:antialiased;line-height:1.6}
+body::before{content:"";position:fixed;inset:0;pointer-events:none;z-index:0;opacity:.025;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");background-size:180px}
+a{text-decoration:none;color:inherit}
 
-body {
-  background: var(--bg);
-  color: var(--text);
-  font-family: 'IBM Plex Mono', monospace;
-  overflow-x: hidden;
-  -webkit-font-smoothing: antialiased;
-  line-height: 1.6;
-}
-
-body::before {
-  content: "";
-  position: fixed;
-  inset: 0;
-  pointer-events: none;
-  z-index: 0;
-  opacity: .025;
-  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
-  background-size: 180px;
-}
-
-a { text-decoration: none; color: inherit; }
-
-/* NAV */
-nav {
-  position: fixed;
-  top: 0; left: 0; right: 0;
-  height: 52px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 0 40px;
-  z-index: 100;
-  background: rgba(7,7,7,.95);
-  backdrop-filter: blur(12px);
-  border-bottom: 1px solid var(--line);
-}
-
-.nav-brand {
-  font-size: 8px;
-  letter-spacing: .22em;
-  text-transform: uppercase;
-  color: var(--gold);
-}
-
-.nav-back {
-  font-size: 8px;
-  letter-spacing: .18em;
-  text-transform: uppercase;
-  color: #9a9590;
-  transition: color .2s;
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
-.nav-back::before { content: '←'; }
-.nav-back:hover { color: var(--text); }
+/* TOPBAR — aligned with site */
+.topbar{position:fixed;top:0;left:0;right:0;height:72px;display:flex;align-items:center;justify-content:space-between;padding:0 48px;z-index:100;background:rgba(8,8,8,.92);backdrop-filter:blur(16px);border-bottom:1px solid var(--line)}
+.brand{display:flex;align-items:center;gap:14px;font-family:"IBM Plex Mono",monospace;font-size:9.5px;letter-spacing:.32em;text-transform:uppercase;color:var(--text)}
+.brand-rule{width:32px;height:1px;background:var(--gold)}
+.nav-back{font-family:"IBM Plex Mono",monospace;font-size:9px;letter-spacing:.22em;text-transform:uppercase;color:var(--dim);transition:color .2s}
+.nav-back:hover{color:var(--gold2)}
 
 /* PAGE */
-.page {
-  max-width: 680px;
-  margin: 0 auto;
-  padding: 88px 40px 88px;
-  position: relative;
-  z-index: 1;
-}
+.page{max-width:680px;margin:0 auto;padding:108px 48px 88px;position:relative;z-index:1}
 
 /* PAGE HEADER */
-.page-header {
-  padding-bottom: 28px;
-  margin-bottom: 36px;
-  border-bottom: 1px solid var(--line-strong);
-}
+.page-header{padding-bottom:28px;margin-bottom:36px;border-bottom:1px solid var(--line-strong)}
+.header-top{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:20px;gap:20px}
+.header-id{font-size:8px;letter-spacing:.2em;color:var(--dim)}
+.header-status{font-size:8px;letter-spacing:.16em;text-transform:uppercase;padding:3px 10px;border:1px solid rgba(200,169,110,.3);color:var(--gold);white-space:nowrap}
+.page-title{font-family:'Cormorant Garamond',serif;font-size:clamp(26px,4vw,40px);font-weight:300;color:var(--text);line-height:1.15;margin-bottom:10px}
+.page-subtitle{font-size:10px;color:var(--dim);letter-spacing:.08em;line-height:1.6}
+.page-note{margin-top:16px;padding:10px 14px;border-left:2px solid var(--dim);font-size:9px;color:var(--dim);line-height:1.65;letter-spacing:.02em}
 
-.header-top {
-  display: flex;
-  align-items: flex-start;
-  justify-content: space-between;
-  margin-bottom: 20px;
-  gap: 20px;
-}
-
-.header-id {
-  font-size: 8px;
-  letter-spacing: .2em;
-  color: #9a9590;
-}
-
-.header-status {
-  font-size: 8px;
-  letter-spacing: .16em;
-  text-transform: uppercase;
-  padding: 3px 10px;
-  border: 1px solid rgba(200,169,110,.3);
-  color: var(--gold);
-  white-space: nowrap;
-}
-
-.page-title {
-  font-family: 'Cormorant Garamond', serif;
-  font-size: clamp(26px, 4vw, 40px);
-  font-weight: 300;
-  color: var(--text);
-  line-height: 1.15;
-  margin-bottom: 10px;
-}
-
-.page-subtitle {
-  font-size: 10px;
-  color: #9a9590;
-  letter-spacing: .08em;
-  line-height: 1.6;
-}
-
-.page-note {
-  margin-top: 16px;
-  padding: 10px 14px;
-  border-left: 2px solid var(--dim);
-  font-size: 9px;
-  color: #9a9590;
-  line-height: 1.65;
-  letter-spacing: .02em;
-}
-
-/* RECORD BLOCK */
-.record {
-  background: var(--surface);
-  border: 1px solid var(--line-strong);
-  margin-bottom: 2px;
-  box-shadow: 0 8px 24px rgba(0,0,0,.2);
-  filter: contrast(1.01);
-}
-
-/* RECORD SECTION HEADER */
-.rec-header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 10px 18px;
-  background: var(--surface2);
-  border-bottom: 1px solid var(--line);
-}
-
-.rec-section {
-  font-size: 7px;
-  letter-spacing: .22em;
-  text-transform: uppercase;
-  color: #9a9590;
-}
-
-.rec-id {
-  font-size: 7px;
-  letter-spacing: .12em;
-  color: var(--dim);
-}
+/* RECORD */
+.record{background:var(--surface);border:1px solid var(--line-strong);margin-bottom:2px}
+.rec-header{display:flex;align-items:center;justify-content:space-between;padding:10px 18px;background:var(--surface2);border-bottom:1px solid var(--line)}
+.rec-section{font-size:7px;letter-spacing:.22em;text-transform:uppercase;color:var(--dim)}
+.rec-id{font-size:7px;letter-spacing:.12em;color:var(--dim)}
 
 /* FIELDS */
-.field-group {
-  padding: 4px 0;
-}
+.field-group{padding:4px 0}
+.field{display:grid;grid-template-columns:180px 1fr;border-bottom:1px solid rgba(255,255,255,.025);min-height:40px}
+.field:last-child{border-bottom:none}
+.field-label{font-size:8px;letter-spacing:.14em;text-transform:uppercase;color:var(--dim);padding:12px 18px;border-right:1px solid rgba(255,255,255,.025);background:rgba(255,255,255,.008);display:flex;align-items:flex-start;line-height:1.5}
+.field-value{font-size:11px;color:var(--muted);padding:12px 18px;line-height:1.55;display:flex;flex-direction:column;justify-content:center}
+.field-value sub{display:block;font-size:9px;color:var(--dim);margin-top:3px;letter-spacing:.02em}
+.field-value.pending{color:var(--amber)}
+.field-value.withheld{color:var(--danger)}
+.field-value.released{color:#5a8a6a}
+.field-value.ts{color:var(--dim);font-size:10px}
 
-.field {
-  display: grid;
-  grid-template-columns: 180px 1fr;
-  border-bottom: 1px solid rgba(255,255,255,.025);
-  min-height: 40px;
-}
-
-.field:last-child { border-bottom: none; }
-
-.field-label {
-  font-size: 8px;
-  letter-spacing: .14em;
-  text-transform: uppercase;
-  color: #9a9590;
-  padding: 12px 18px;
-  border-right: 1px solid rgba(255,255,255,.025);
-  background: rgba(255,255,255,.008);
-  display: flex;
-  align-items: flex-start;
-  line-height: 1.5;
-}
-
-.field-value {
-  font-size: 11px;
-  color: var(--text);
-  padding: 12px 18px;
-  line-height: 1.55;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-}
-
-.field-value sub {
-  display: block;
-  font-size: 9px;
-  color: #9a9590;
-  margin-top: 3px;
-  letter-spacing: .02em;
-}
-
-.field-value.pending { color: var(--amber); }
-.field-value.withheld { color: var(--danger); }
-.field-value.released { color: #5a8a6a; }
-.field-value.ts { color: #9a9590; font-size: 10px; }
-
-/* CONDITION BLOCK */
-.condition-block {
-  padding: 14px 18px;
-  border-top: 1px solid var(--line);
-  background: rgba(255,255,255,.012);
-}
-
-.condition-label {
-  font-size: 7px;
-  letter-spacing: .2em;
-  text-transform: uppercase;
-  color: #9a9590;
-  margin-bottom: 8px;
-}
-
-.condition-text {
-  font-size: 11px;
-  color: var(--text);
-  line-height: 1.65;
-  font-style: italic;
-  font-family: 'Cormorant Garamond', serif;
-  font-size: 15px;
-  font-weight: 300;
-}
+/* CONDITION */
+.condition-block{padding:14px 18px;border-top:1px solid var(--line);background:rgba(255,255,255,.012)}
+.condition-label{font-size:7px;letter-spacing:.2em;text-transform:uppercase;color:var(--dim);margin-bottom:8px}
+.condition-text{font-family:'Cormorant Garamond',serif;font-size:15px;font-weight:300;font-style:italic;color:var(--text);line-height:1.65}
 
 /* STATUS FOOTER */
-.status-footer {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 12px 18px;
-  border-top: 1px solid var(--line-strong);
-  background: var(--surface2);
-}
-
-.sf-label {
-  font-size: 8px;
-  letter-spacing: .16em;
-  text-transform: uppercase;
-  color: #9a9590;
-}
-
-.sf-value {
-  font-size: 10px;
-  font-weight: 500;
-  letter-spacing: .06em;
-  text-transform: uppercase;
-}
-
-.sf-value.withheld { color: var(--danger); }
-.sf-value.released { color: #5a8a6a; }
-.sf-value.pending { color: var(--amber); }
+.status-footer{display:flex;align-items:center;justify-content:space-between;padding:12px 18px;border-top:1px solid var(--line-strong);background:var(--surface2)}
+.sf-label{font-size:8px;letter-spacing:.16em;text-transform:uppercase;color:var(--dim)}
+.sf-value{font-size:10px;font-weight:500;letter-spacing:.06em;text-transform:uppercase}
+.sf-value.withheld{color:var(--danger)}
+.sf-value.released{color:#5a8a6a}
+.sf-value.pending{color:var(--amber)}
 
 /* RECORD GAP */
-.record-gap {
-  height: 20px;
-  display: flex;
-  align-items: center;
-  padding: 0 18px;
-}
-
-.record-gap span {
-  font-size: 7px;
-  letter-spacing: .18em;
-  text-transform: uppercase;
-  color: var(--dim);
-}
+.record-gap{height:20px;display:flex;align-items:center;padding:0 18px}
+.record-gap span{font-size:7px;letter-spacing:.18em;text-transform:uppercase;color:var(--dim)}
 
 /* OVERRIDE NOTE */
-.override-note {
-  background: rgba(138,80,80,.05);
-  border-left: 2px solid var(--danger);
-  padding: 12px 16px;
-  font-size: 10px;
-  color: #9a9590;
-  line-height: 1.65;
-  margin: 0;
+.override-note{background:rgba(168,50,50,.05);border-left:2px solid var(--danger);padding:12px 16px;font-size:10px;color:var(--dim);line-height:1.65}
+.override-note strong{color:var(--danger);font-weight:500}
+
+/* FOOTER NOTE */
+.footer-note{margin-top:40px;padding-top:24px;border-top:1px solid var(--line);font-size:9px;color:var(--dim);line-height:1.75;max-width:54ch}
+.footer-note a{color:var(--gold);border-bottom:1px solid rgba(200,169,110,.2);transition:border-color .2s}
+.footer-note a:hover{border-color:var(--gold)}
+
+.site-footer{border-top:1px solid var(--line);padding:20px 48px;display:flex;justify-content:space-between;position:relative;z-index:1;font-family:"IBM Plex Mono",monospace;font-size:9px;letter-spacing:.08em;color:var(--dim)}
+.site-footer a{color:var(--dim);transition:color .2s}
+.site-footer a:hover{color:var(--gold)}
+
+@media(max-width:860px){
+  .topbar{padding:0 20px}
+  .page{padding:96px 20px 64px}
+  .field{grid-template-columns:1fr}
+  .field-label{border-right:none;border-bottom:1px solid rgba(255,255,255,.025);padding:10px 14px 6px}
+  .field-value{padding:6px 14px 10px}
+  .site-footer{flex-direction:column;gap:6px;padding:14px 20px}
 }
-
-.override-note strong { color: var(--danger); font-weight: 500; }
-
-/* PAGE FOOTER NOTE */
-.footer-note {
-  margin-top: 40px;
-  padding-top: 24px;
-  border-top: 1px solid var(--line);
-  font-size: 9px;
-  color: #9a9590;
-  line-height: 1.75;
-  max-width: 54ch;
-}
-
-.footer-note a {
-  color: var(--gold);
-  border-bottom: 1px solid rgba(200,169,110,.2);
-  transition: border-color .2s;
-}
-
-.footer-note a:hover { border-color: var(--gold); }
-
-footer {
-  border-top: 1px solid var(--line);
-  padding: 18px 40px;
-  display: flex;
-  justify-content: space-between;
-  position: relative;
-  z-index: 1;
-  font-size: 8px;
-  letter-spacing: .12em;
-  color: #9a9590;
-}
-
-@media (max-width: 600px) {
-  nav { padding: 0 20px; }
-  .page { padding: 76px 20px 64px; }
-  .field { grid-template-columns: 1fr; }
-  .field-label { border-right: none; border-bottom: 1px solid rgba(255,255,255,.025); padding: 10px 14px 6px; }
-  .field-value { padding: 6px 14px 10px; }
-  footer { flex-direction: column; gap: 6px; padding: 14px 20px; }
-}
-
-@media (max-width: 640px) {
-  .wrap, .wrap-narrow {
-    padding-left: 20px !important;
-    padding-right: 20px !important;
-    max-width: 100% !important;
-  }
-  body { overflow-x: hidden !important; }
-}
+@media(max-width:640px){body{overflow-x:hidden !important}}
 </style>
 </head>
 <body>
 
-<nav>
-  <div class="nav-brand">Liran Bar-Shrim</div>
-  <a href="index.html" class="nav-back">Return to index</a>
-</nav>
+<header class="topbar">
+  <a href="index.html" class="brand"><span class="brand-rule"></span><span>Liran Bar-Shrim</span></a>
+  <a href="index.html" class="nav-back">← Index</a>
+</header>
 
 <div class="page">
 
@@ -386,25 +132,23 @@ footer {
       <div class="header-status">Specimen Record</div>
     </div>
     <div class="page-title">Named Authority<br>Record</div>
-    <div class="page-subtitle">Structural governance artifact · named interruption authority designation</div>
-    <div class="page-note">Names, organizations, execution contexts, and decisions are fictional. These records exist to illustrate what named interruption authority looks like when designated before an event — not reconstructed after it.</div>
+    <div class="page-subtitle">Structural governance artifact · named refusal authority designation</div>
+    <div class="page-note">Names, organizations, execution contexts, and decisions are fictional. These records exist to illustrate what named refusal authority looks like when designated before an event — not reconstructed after it.</div>
   </div>
 
   <!-- RECORD A -->
   <div class="record">
-
     <div class="rec-header">
       <div class="rec-section">Section 01 — Authority Structure</div>
       <div class="rec-id">NAR-2026-0118-A</div>
     </div>
-
     <div class="field-group">
       <div class="field">
         <div class="field-label">Execution Class</div>
         <div class="field-value">Autonomous Deployment<sub>Irreversible propagation window · Global infrastructure</sub></div>
       </div>
       <div class="field">
-        <div class="field-label">Primary Interruption Authority</div>
+        <div class="field-label">Primary Refusal Authority</div>
         <div class="field-value">A. Rivera<sub>Senior Infrastructure Integrity Lead</sub></div>
       </div>
       <div class="field">
@@ -425,12 +169,10 @@ footer {
       <div class="rec-section">Section 02 — Authorization Dependency</div>
       <div class="rec-id"></div>
     </div>
-
     <div class="condition-block">
       <div class="condition-label">Continuation Condition</div>
-      <div class="condition-text">Continuation prohibited without explicit authorization from Primary Interruption Authority under unresolved rollback uncertainty or anomalous propagation behavior.</div>
+      <div class="condition-text">Continuation not authorized without explicit authorization from Primary Refusal Authority under unresolved rollback uncertainty or anomalous propagation behavior.</div>
     </div>
-
     <div class="field-group">
       <div class="field">
         <div class="field-label">Authorization Threshold</div>
@@ -446,7 +188,6 @@ footer {
       <div class="rec-section">Section 03 — Escalation Interval</div>
       <div class="rec-id"></div>
     </div>
-
     <div class="field-group">
       <div class="field">
         <div class="field-label">Response Interval</div>
@@ -464,14 +205,11 @@ footer {
     <div style="padding:14px 18px;border-top:1px solid var(--line);border-bottom:1px solid var(--line);background:rgba(200,169,110,.03);">
       <div style="font-family:'Cormorant Garamond',serif;font-size:16px;font-weight:300;font-style:italic;color:var(--text);line-height:1.4;border-left:2px solid var(--gold);padding-left:14px;">Silence is treated as unresolved hold.</div>
     </div>
-    <div class="field-group">
-    </div>
 
     <div class="rec-header" style="border-top:1px solid var(--line);">
       <div class="rec-section">Section 04 — Override Record</div>
       <div class="rec-id"></div>
     </div>
-
     <div class="field-group">
       <div class="field">
         <div class="field-label">Override Status</div>
@@ -487,31 +225,27 @@ footer {
       <div class="rec-section">Section 05 — Continuation Status</div>
       <div class="rec-id"></div>
     </div>
-
     <div class="status-footer">
       <div class="sf-label">Continuation Status</div>
       <div class="sf-value released">Released · Named · Documented</div>
     </div>
-
   </div>
 
   <div class="record-gap"><span>Supplemental record · override condition</span></div>
 
-  <!-- RECORD B — incomplete, override condition -->
+  <!-- RECORD B -->
   <div class="record">
-
     <div class="rec-header">
       <div class="rec-section">Section 01 — Authority Structure</div>
       <div class="rec-id">NAR-2026-0302-C</div>
     </div>
-
     <div class="field-group">
       <div class="field">
         <div class="field-label">Execution Class</div>
         <div class="field-value">Automated Financial Execution<sub>High-volume batch · Irreversible settlement window</sub></div>
       </div>
       <div class="field">
-        <div class="field-label">Primary Interruption Authority</div>
+        <div class="field-label">Primary Refusal Authority</div>
         <div class="field-value">S. Lindqvist<sub>Risk Execution Lead</sub></div>
       </div>
       <div class="field">
@@ -532,12 +266,10 @@ footer {
       <div class="rec-section">Section 02 — Authorization Dependency</div>
       <div class="rec-id"></div>
     </div>
-
     <div class="condition-block">
       <div class="condition-label">Continuation Condition</div>
-      <div class="condition-text">Continuation prohibited without explicit authorization under anomalous position accumulation or unresolved model behavior deviation.</div>
+      <div class="condition-text">Continuation not authorized without explicit authorization under anomalous position accumulation or unresolved model behavior deviation.</div>
     </div>
-
     <div class="field-group">
       <div class="field">
         <div class="field-label">Authorization Threshold</div>
@@ -553,7 +285,6 @@ footer {
       <div class="rec-section">Section 03 — Escalation Interval</div>
       <div class="rec-id"></div>
     </div>
-
     <div class="field-group">
       <div class="field">
         <div class="field-label">Response Interval</div>
@@ -569,7 +300,6 @@ footer {
       <div class="rec-section">Section 04 — Override Record</div>
       <div class="rec-id"></div>
     </div>
-
     <div class="field-group">
       <div class="field">
         <div class="field-label">Hold Invoked</div>
@@ -588,7 +318,6 @@ footer {
         <div class="field-value pending">Unavailable at time of review</div>
       </div>
     </div>
-
     <div class="override-note">
       <strong>Override condition flagged.</strong> Continuation proceeded on verbal authorization without written rationale. Hold record exists. Override documentation does not. Governance review pending.
     </div>
@@ -597,26 +326,28 @@ footer {
       <div class="rec-section">Section 05 — Continuation Status</div>
       <div class="rec-id"></div>
     </div>
-
     <div class="status-footer">
       <div class="sf-label">Continuation Status</div>
       <div class="sf-value pending">Proceeded · Rationale Absent</div>
     </div>
-
   </div>
 
   <div class="footer-note">
-    These records are illustrative. The Named Authority Record is a structural governance artifact designating named interruption authority before irreversible execution conditions emerge — not a response to them.<br><br>
-    <a href="escalation-snapshot.html">Escalation Snapshot →</a> &nbsp;·&nbsp;
-    <a href="governance-risk-brief.html">Governance Risk Brief →</a> &nbsp;·&nbsp;
-    <a href="observation-series.html">Observation Series →</a>
+    These records are illustrative. The Named Authority Record is a structural governance artifact designating named refusal authority before irreversible execution conditions emerge — not a response to them.<br><br>
+    <a href="whitepaper.html">Research Note →</a> &nbsp;·&nbsp;
+    <a href="dar-matrix.html">Research Matrix →</a> &nbsp;·&nbsp;
+    <a href="index.html">Index →</a>
   </div>
 
 </div>
 
-<footer>
-  <span>Liran Bar-Shrim · Named Authority Record</span>
-  <span>matrix-audit.com</span>
+<footer class="site-footer">
+  <span>© 2026 Liran Bar-Shrim</span>
+  <span>
+    <a href="faq.html">FAQ</a> &nbsp;·&nbsp;
+    <a href="goodfaith.html">Good Faith Use</a> &nbsp;·&nbsp;
+    <a href="index.html">Index</a>
+  </span>
 </footer>
 
 </body>
