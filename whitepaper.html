@@ -3,388 +3,147 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
-
 <title>Named Refusal Authority — Research Note — Liran Bar-Shrim</title>
-
 <meta name="description" content="A governance research note on named refusal authority, legitimacy of continuation, and institutional accountability in irreversible decisions.">
-
 <meta name="robots" content="index,follow">
-    <meta property="og:title" content="Named Refusal Authority — Research Note — Liran Bar-Shrim">
-    <meta property="og:description" content="A governance research note on named refusal authority, legitimacy of continuation, and institutional accountability in irreversible decisions.">
-    <meta name="twitter:title" content="Named Refusal Authority — Research Note — Liran Bar-Shrim">
-    <meta name="twitter:description" content="A governance research note on named refusal authority, legitimacy of continuation, and institutional accountability in irreversible decisions.">
-    <meta property="og:image" content="https://matrix-audit.com/og-image.png">
-    <meta property="og:image:width" content="1200">
-    <meta property="og:image:height" content="630">
-    <meta property="og:type" content="website">
-    <meta property="og:site_name" content="Liran Bar-Shrim">
-    <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:image" content="https://matrix-audit.com/og-image.png">
-
+<meta property="og:title" content="Named Refusal Authority — Research Note — Liran Bar-Shrim">
+<meta property="og:description" content="A governance research note on named refusal authority, legitimacy of continuation, and institutional accountability in irreversible decisions.">
+<meta property="og:image" content="https://matrix-audit.com/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Liran Bar-Shrim">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://matrix-audit.com/og-image.png">
 <link rel="canonical" href="https://matrix-audit.com/whitepaper.html">
-
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&display=swap" rel="stylesheet">
-
 <style>
-
 :root {
   --bg: #080808;
   --gold: #c8a96e;
   --gold2: #ead9b3;
   --text: #ebe5da;
-  --muted: #b8b0a4;
+  --muted: #d8d2c8;
   --dim: #7a7570;
   --danger: #a83232;
   --line: rgba(255,255,255,.06);
-  --line-danger: rgba(168,50,50,.3);
+}
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--text);font-family:"Cormorant Garamond",Georgia,serif;overflow-x:hidden;-webkit-font-smoothing:antialiased;line-height:1.85}
+body::before{content:"";position:fixed;inset:0;pointer-events:none;z-index:0;opacity:.028;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");background-size:180px}
+a{text-decoration:none;color:inherit}
+
+.topbar{position:fixed;top:0;left:0;right:0;height:72px;display:flex;align-items:center;justify-content:space-between;padding:0 48px;z-index:100;background:rgba(8,8,8,.92);backdrop-filter:blur(16px);border-bottom:1px solid var(--line)}
+.brand{display:flex;align-items:center;gap:14px;font-family:"IBM Plex Mono",monospace;font-size:9.5px;letter-spacing:.32em;text-transform:uppercase;color:var(--text)}
+.brand-rule{width:32px;height:1px;background:var(--gold)}
+.nav-contact{font-family:"IBM Plex Mono",monospace;font-size:9.5px;letter-spacing:.28em;text-transform:uppercase;color:var(--gold2);transition:opacity .2s}
+.nav-contact:hover{opacity:.7}
+
+.wrap{max-width:720px;margin:0 auto;padding:0 48px;position:relative;z-index:1}
+
+/* HERO */
+.hero{padding-top:160px;padding-bottom:70px;border-bottom:1px solid var(--line)}
+.doc-meta{font-family:"IBM Plex Mono",monospace;font-size:9px;letter-spacing:.32em;text-transform:uppercase;color:var(--dim);margin-bottom:32px}
+.hero h1{font-size:clamp(36px,5.5vw,78px);font-weight:400;line-height:1.0;letter-spacing:-.01em;color:var(--text);margin-bottom:36px;max-width:18ch}
+.hero h1 em{font-style:italic;color:var(--gold2)}
+.hero-summary{font-size:clamp(17px,1.5vw,20px);font-weight:300;line-height:1.9;color:var(--muted);max-width:58ch;border-left:1px solid rgba(200,169,110,.25);padding-left:24px}
+
+/* SECTIONS */
+.doc-section{padding:60px 0;border-bottom:1px solid var(--line)}
+.doc-section:last-of-type{border-bottom:none}
+.section-num{font-family:"IBM Plex Mono",monospace;font-size:9px;letter-spacing:.28em;text-transform:uppercase;color:var(--dim);margin-bottom:20px}
+.doc-section h2{font-size:clamp(24px,3.5vw,50px);font-weight:400;line-height:1.05;margin-bottom:28px;max-width:22ch}
+.doc-section h2 em{font-style:italic;color:var(--gold2)}
+.body-p{font-size:clamp(16px,1.4vw,19px);font-weight:300;color:var(--muted);margin-bottom:20px;max-width:60ch;line-height:1.9}
+.body-p strong{color:var(--text);font-weight:400}
+
+/* PULL — gold bar, no background */
+.pull{
+  border-left:2px solid var(--gold);
+  padding-left:24px;
+  margin:36px 0;
+  font-size:clamp(18px,2vw,28px);
+  font-weight:300;line-height:1.45;font-style:italic;color:var(--text);
 }
 
-*, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
-html { scroll-behavior: smooth; }
-
-body {
-  background: var(--bg);
-  color: var(--text);
-  font-family: "Cormorant Garamond", Georgia, serif;
-  overflow-x: hidden;
-  -webkit-font-smoothing: antialiased;
-  line-height: 1.85;
+/* PULL DANGER — red bar */
+.pull-danger{
+  border-left:2px solid var(--danger);
+  padding-left:24px;
+  margin:36px 0;
+  font-size:clamp(17px,1.8vw,24px);
+  font-weight:300;line-height:1.5;font-style:italic;
+  color:#d4a0a0;
 }
 
-body::before {
-  content: "";
-  position: fixed;
-  inset: 0;
-  pointer-events: none;
-  z-index: 0;
-  opacity: .028;
-  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
-  background-size: 180px;
+.danger-marker{font-family:"IBM Plex Mono",monospace;font-size:9px;letter-spacing:.28em;text-transform:uppercase;color:var(--danger);margin-bottom:20px;opacity:.8}
+
+/* THREE NAMES */
+.three-names{display:grid;grid-template-columns:1fr;gap:0;margin:36px 0;border:1px solid var(--line)}
+.name-block{padding:28px 32px;border-bottom:1px solid var(--line)}
+.name-block:last-child{border-bottom:none}
+.name-num{font-family:"IBM Plex Mono",monospace;font-size:9px;letter-spacing:.22em;color:var(--dim);margin-bottom:10px}
+.name-title{font-size:clamp(17px,2vw,24px);font-weight:400;color:var(--gold2);margin-bottom:10px}
+.name-desc{font-size:clamp(15px,1.3vw,17px);font-weight:300;color:var(--muted);line-height:1.75;max-width:52ch}
+
+/* ITEM LIST */
+.item-list{margin:24px 0;border-top:1px solid var(--line)}
+.item-row{padding:14px 0;border-bottom:1px solid var(--line);font-size:clamp(15px,1.3vw,17px);font-weight:300;color:var(--muted);line-height:1.6}
+
+/* FINAL */
+.final{padding:80px 0 100px;border-top:1px solid var(--line)}
+.back-link{font-family:"IBM Plex Mono",monospace;font-size:9px;letter-spacing:.28em;text-transform:uppercase;color:var(--dim);transition:color .2s;display:block;margin-bottom:14px}
+.back-link:hover{color:var(--gold2)}
+.sig{font-family:"IBM Plex Mono",monospace;font-size:9.5px;letter-spacing:.26em;text-transform:uppercase;color:var(--dim);margin-top:28px}
+
+.footer{position:relative;z-index:1;text-align:center;padding:20px;border-top:1px solid var(--line);font-family:"IBM Plex Mono",monospace;font-size:9px;letter-spacing:.08em;color:var(--dim)}
+.footer a{color:var(--dim);transition:color .2s}
+.footer a:hover{color:var(--gold)}
+
+@media(max-width:860px){
+  .topbar{padding:0 20px}
+  .wrap{padding:0 20px}
+  .hero{padding-top:120px}
+  .doc-section{padding:44px 0}
+  .body-p{line-height:1.75}
+  .name-block{padding:22px 20px}
 }
-
-a { text-decoration: none; color: inherit; }
-
-.topbar {
-  position: fixed;
-  top: 0; left: 0; right: 0;
-  height: 72px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 0 48px;
-  z-index: 100;
-  background: rgba(8,8,8,.92);
-  backdrop-filter: blur(16px);
-  border-bottom: 1px solid var(--line);
+@media(min-width:700px){
+  .three-names{grid-template-columns:repeat(3,1fr)}
+  .name-block{border-bottom:none;border-right:1px solid var(--line)}
+  .name-block:last-child{border-right:none}
 }
-
-.brand {
-  display: flex;
-  align-items: center;
-  gap: 14px;
-  font-family: "IBM Plex Mono", monospace;
-  font-size: 9.5px;
-  letter-spacing: .32em;
-  text-transform: uppercase;
-  color: var(--text);
-}
-
-.brand-rule { width: 32px; height: 1px; background: var(--gold); }
-
-.nav-contact {
-  font-family: "IBM Plex Mono", monospace;
-  font-size: 9.5px;
-  letter-spacing: .28em;
-  text-transform: uppercase;
-  color: var(--gold2);
-  transition: opacity .2s;
-}
-.nav-contact:hover { opacity: .7; }
-
-.wrap {
-  max-width: 800px;
-  margin: 0 auto;
-  padding: 0 48px;
-  position: relative;
-  z-index: 1;
-}
-
-.hero {
-  padding-top: 160px;
-  padding-bottom: 70px;
-  border-bottom: 1px solid var(--line);
-}
-
-.doc-meta {
-  font-family: "IBM Plex Mono", monospace;
-  font-size: 9px;
-  letter-spacing: .32em;
-  text-transform: uppercase;
-  color: var(--dim);
-  margin-bottom: 32px;
-}
-
-.hero h1 {
-  font-size: clamp(36px, 5.5vw, 78px);
-  font-weight: 400;
-  line-height: .92;
-  letter-spacing: -.01em;
-  color: var(--text);
-  margin-bottom: 36px;
-  max-width: 18ch;
-}
-
-.hero h1 em { font-style: italic; color: var(--gold2); }
-
-.hero-summary {
-  font-size: clamp(17px, 1.5vw, 20px);
-  font-weight: 300;
-  line-height: 1.9;
-  color: #c0b8ae;
-  max-width: 60ch;
-  margin-bottom: 32px;
-}
-
-.hero-series-link {
-  display: inline-flex;
-  align-items: center;
-  gap: 12px;
-  padding: 12px 16px;
-  border: 1px solid rgba(200,169,110,.2);
-  border-left: 3px solid var(--gold);
-  background: #0d0d0d;
-  font-family: "IBM Plex Mono", monospace;
-  font-size: 9px;
-  letter-spacing: .15em;
-  text-transform: uppercase;
-  color: var(--gold);
-  transition: border-color .2s;
-}
-
-.hero-series-link:hover { border-color: rgba(200,169,110,.5); }
-
-.doc-section {
-  padding: 60px 0;
-  border-bottom: 1px solid var(--line);
-}
-
-.doc-section:last-of-type { border-bottom: none; }
-
-.section-num {
-  font-family: "IBM Plex Mono", monospace;
-  font-size: 9px;
-  letter-spacing: .28em;
-  text-transform: uppercase;
-  color: var(--dim);
-  margin-bottom: 20px;
-}
-
-.doc-section h2 {
-  font-size: clamp(26px, 3.5vw, 52px);
-  font-weight: 400;
-  line-height: 1.0;
-  margin-bottom: 28px;
-  max-width: 22ch;
-}
-
-.doc-section h2 em { font-style: italic; color: var(--gold2); }
-
-.body-p {
-  font-size: clamp(16px, 1.4vw, 19px);
-  font-weight: 300;
-  color: #c0b8ae;
-  margin-bottom: 20px;
-  max-width: 62ch;
-  line-height: 1.9;
-}
-
-.body-p strong { color: #c8c0b2; font-weight: 400; }
-
-.pull {
-  background: #0d0d0d;
-  border-left: 3px solid var(--gold);
-  padding: 28px 36px;
-  margin: 36px 0;
-  font-size: clamp(18px, 2vw, 30px);
-  font-weight: 300;
-  line-height: 1.4;
-  font-style: italic;
-  color: var(--text);
-}
-
-.pull-danger {
-  background: rgba(168,50,50,.04);
-  border-left: 3px solid var(--danger);
-  padding: 28px 36px;
-  margin: 36px 0;
-  font-size: clamp(17px, 1.8vw, 26px);
-  font-weight: 300;
-  line-height: 1.45;
-  font-style: italic;
-  color: #d4a0a0;
-}
-
-.danger-marker {
-  font-family: "IBM Plex Mono", monospace;
-  font-size: 9px;
-  letter-spacing: .28em;
-  text-transform: uppercase;
-  color: var(--danger);
-  margin-bottom: 20px;
-  opacity: .8;
-}
-
-.three-names {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 0;
-  margin: 36px 0;
-  border: 1px solid var(--line);
-}
-
-.name-block {
-  padding: 28px 32px;
-  border-bottom: 1px solid var(--line);
-}
-
-.name-block:last-child { border-bottom: none; }
-
-.name-num {
-  font-family: "IBM Plex Mono", monospace;
-  font-size: 9px;
-  letter-spacing: .22em;
-  color: var(--dim);
-  margin-bottom: 10px;
-}
-
-.name-title {
-  font-size: clamp(18px, 2vw, 26px);
-  font-weight: 400;
-  color: var(--gold2);
-  margin-bottom: 10px;
-}
-
-.name-desc {
-  font-size: clamp(15px, 1.3vw, 17px);
-  font-weight: 300;
-  color: #c0b8ae;
-  line-height: 1.75;
-  max-width: 52ch;
-}
-
-.item-list { margin: 24px 0; border-top: 1px solid var(--line); }
-
-.item-row {
-  padding: 14px 0;
-  border-bottom: 1px solid var(--line);
-  font-size: clamp(15px, 1.3vw, 17px);
-  font-weight: 300;
-  color: #c0b8ae;
-  line-height: 1.6;
-}
-
-.final {
-  padding: 80px 0 100px;
-  border-top: 1px solid var(--line);
-}
-
-.back-link {
-  font-family: "IBM Plex Mono", monospace;
-  font-size: 9px;
-  letter-spacing: .28em;
-  text-transform: uppercase;
-  color: var(--dim);
-  transition: color .2s;
-  display: block;
-  margin-bottom: 14px;
-}
-.back-link:hover { color: var(--gold2); }
-
-.sig {
-  font-family: "IBM Plex Mono", monospace;
-  font-size: 9.5px;
-  letter-spacing: .26em;
-  text-transform: uppercase;
-  color: var(--dim);
-  margin-top: 28px;
-}
-
-.footer {
-  position: relative;
-  z-index: 1;
-  text-align: center;
-  padding: 20px;
-  border-top: 1px solid var(--line);
-  font-family: "IBM Plex Mono", monospace;
-  font-size: 10px;
-  letter-spacing: .2em;
-  color: var(--dim);
-}
-
-@media (max-width: 860px) {
-  .topbar { padding: 0 20px; }
-  .wrap { padding: 0 20px; }
-  .hero { padding-top: 120px; }
-  .pull { padding: 22px 24px; }
-  .pull-danger { padding: 22px 24px; }
-  .name-block { padding: 22px 20px; }
-}
-
-@media (min-width: 700px) {
-  .three-names { grid-template-columns: repeat(3, 1fr); }
-  .name-block { border-bottom: none; border-right: 1px solid var(--line); }
-  .name-block:last-child { border-right: none; }
-}
-
-@keyframes fadeUp {
-  from { opacity: 0; transform: translateY(16px); }
-  to   { opacity: 1; transform: translateY(0); }
-}
-.hero { animation: fadeUp .9s ease both; }
-
-
-@media (max-width: 640px) {
-  .wrap, .wrap-narrow {
-    padding-left: 20px !important;
-    padding-right: 20px !important;
-    max-width: 100% !important;
-  }
-  body { overflow-x: hidden !important; }
-}
+@media(max-width:640px){body{overflow-x:hidden !important}}
+@keyframes fadeUp{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
+.hero{animation:fadeUp .9s ease both}
 </style>
 </head>
 
 <body>
 
 <header class="topbar">
-  <a href="index.html" class="brand">
-    <span class="brand-rule"></span>
-    <span>Liran Bar-Shrim</span>
-  </a>
+  <a href="index.html" class="brand"><span class="brand-rule"></span><span>Liran Bar-Shrim</span></a>
   <a href="mailto:Liran@liranbarshrim.com" class="nav-contact">Correspondence</a>
 </header>
 
 <main>
 
   <section class="hero wrap">
-    <div class="doc-meta">Research Note · 2026 · Independent Writing & Research</div>
+    <div class="doc-meta">Research Note · 2026</div>
     <h1>Named Refusal Authority<br>in <em>Irreversible Decisions</em></h1>
     <p class="hero-summary">
       Modern organizations are optimized for execution speed.
       Many remain underprepared for one critical condition:
-      before irreversible execution proceeds,
-      who holds named interruption authority?
+      before irreversible conditions emerge — who holds named refusal authority?
     </p>
-    <a href="observation-series.html" class="hero-series-link">
-      Governance Observation Series →
-    </a>
   </section>
 
   <div class="doc-section wrap">
     <div class="section-num">I — The Governance Gap</div>
-    <h2>Authorization for continuation is rarely defined<br>before execution begins.</h2>
+    <h2>Authorization to refuse continuation is rarely defined before execution begins.</h2>
     <p class="body-p">
       Most organizations maintain clear approval workflows, budget authority,
       reporting lines, and escalation structures.
@@ -405,7 +164,7 @@ a { text-decoration: none; color: inherit; }
 
   <div class="doc-section wrap">
     <div class="section-num">II — The Problem</div>
-    <h2>Most systems know how to approve.<br>Almost none define<br>who holds <em>refusal authority.</em></h2>
+    <h2>Most systems know how to authorize continuation.<br>Almost none define<br>who holds <em>refusal authority.</em></h2>
     <p class="body-p">
       During consequential execution, multiple teams may be involved
       while no one clearly holds authorization to refuse continuation.
@@ -427,13 +186,10 @@ a { text-decoration: none; color: inherit; }
 
   <div class="doc-section wrap">
     <div class="section-num">III — The Three Names</div>
-    <h2>In practice, refusal, hold, and continuation<br>rarely belong to the <em>same person.</em></h2>
+    <h2>In many consequential environments,<br>interruption, hold, and continuation authority<br>may require <em>distinct ownership.</em></h2>
     <p class="body-p">
-      A refusal without a separate hold owner becomes a refusal that dissolves.
-      A hold without a separate authorization authority becomes an unowned delay.
-      Under pressure, these roles often converge.
+      Under pressure, these distinctions often collapse.
     </p>
-
     <div class="three-names">
       <div class="name-block">
         <div class="name-num">01</div>
@@ -460,7 +216,7 @@ a { text-decoration: none; color: inherit; }
       Refusal authority was invoked. Someone senior authorized continuation —
       not formally, not in writing. The refusal was real. The override was also real.
       By the time the outcome arrived, the person who refused
-      was no longer relevant to the conversation.
+      was often no longer part of the accountability chain.
     </p>
     <div class="pull-danger">
       When refusal authority is invoked and then overridden without documentation,
@@ -513,10 +269,10 @@ a { text-decoration: none; color: inherit; }
     </p>
     <p class="body-p">
       The question is not who reviews later.
-      It is who holds refusal authority before execution becomes irreversible.
+      It is who holds the authority to refuse before irreversible conditions emerge.
     </p>
     <div class="pull">
-      No irreversible execution without named authorization.
+      The faster the system, the clearer named authorization must become.
     </div>
   </div>
 
@@ -524,28 +280,29 @@ a { text-decoration: none; color: inherit; }
     <div class="section-num">VI — Closing</div>
     <h2>Strong organizations are not defined<br>only by <em>execution speed.</em></h2>
     <p class="body-p">
-      They are also defined by whether someone holds named interruption authority —
+      They are also defined by whether someone holds named refusal authority —
       and whether that authority belongs to a person,
       not a process.
     </p>
-    <p class="body-p">
-      Before continuation becomes irreversible,
-      who still has the authority to refuse?
-    </p>
+    <div class="pull" style="margin-top:40px;">
+      When a decision becomes irreversible under uncertainty, someone must have the authority to stop it — by name.
+    </div>
   </div>
 
   <section class="final wrap">
-    <a href="observation-series.html" class="back-link">→ Governance Observation Series</a>
     <a href="index.html" class="back-link">← Back to main</a>
     <a href="faq.html" class="back-link">→ FAQ</a>
     <a href="goodfaith.html" class="back-link" style="margin-bottom:28px;">→ Good Faith Use</a>
-    <div class="sig">Liran Bar-Shrim · Independent Writing & Research · 2026</div>
+    <div class="sig">Liran Bar-Shrim · 2026</div>
   </section>
 
 </main>
 
 <footer class="footer">
-  © 2026 Liran Bar-Shrim
+  © 2026 Liran Bar-Shrim &nbsp;·&nbsp;
+  <a href="faq.html">FAQ</a> &nbsp;·&nbsp;
+  <a href="goodfaith.html">Good Faith Use</a> &nbsp;·&nbsp;
+  <a href="index.html">Index</a>
 </footer>
 
 </body>
