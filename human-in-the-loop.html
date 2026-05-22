@@ -6,9 +6,8 @@
 <title>Human In The Loop — Liran Bar-Shrim</title>
 <meta name="description" content="A human inside the loop does not guarantee that a human can stop the loop. On the structural gap between oversight and refusal authority.">
 <meta name="robots" content="index,follow">
-<meta name="author" content="Liran Bar-Shrim">
 <meta property="og:title" content="Human In The Loop — Liran Bar-Shrim">
-<meta property="og:description" content="A human inside the loop does not guarantee that a human can stop the loop. On the structural gap between oversight and refusal authority.">
+<meta property="og:description" content="A human inside the loop does not guarantee that a human can stop the loop.">
 <meta property="og:type" content="article">
 <meta property="og:url" content="https://matrix-audit.com/human-in-the-loop.html">
 <meta property="og:image" content="https://matrix-audit.com/og-image.png">
@@ -23,82 +22,142 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&display=swap" rel="stylesheet">
 <style>
-:root{--bg:#080808;--gold:#c8a96e;--gold2:#ead9b3;--text:#ebe5da;--muted:#b8b0a4;--dim:#7a7570;--line:rgba(255,255,255,.06)}
-*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}html{scroll-behavior:smooth}
+:root{
+  --bg:#080808;--gold:#c8a96e;--gold2:#ead9b3;
+  --text:#ebe5da;--muted:#d8d2c8;--dim:#7a7570;
+  --line:rgba(255,255,255,.06);
+}
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
 body{background:var(--bg);color:var(--text);font-family:"Cormorant Garamond",Georgia,serif;overflow-x:hidden;-webkit-font-smoothing:antialiased;line-height:1.8}
 body::before{content:"";position:fixed;inset:0;pointer-events:none;z-index:0;opacity:.028;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");background-size:180px}
 a{text-decoration:none;color:inherit}
+
 .topbar{position:fixed;top:0;left:0;right:0;height:72px;display:flex;align-items:center;justify-content:space-between;padding:0 48px;z-index:100;background:rgba(8,8,8,.92);backdrop-filter:blur(16px);border-bottom:1px solid var(--line)}
 .brand{display:flex;align-items:center;gap:14px;font-family:"IBM Plex Mono",monospace;font-size:9.5px;letter-spacing:.32em;text-transform:uppercase;color:var(--text)}
 .brand-rule{width:32px;height:1px;background:var(--gold)}
 .nav-contact{font-family:"IBM Plex Mono",monospace;font-size:9.5px;letter-spacing:.28em;text-transform:uppercase;color:var(--gold2);transition:opacity .2s}
 .nav-contact:hover{opacity:.7}
+
 .wrap{max-width:1280px;margin:0 auto;padding:0 48px;position:relative;z-index:1}
-.wrap-narrow{max-width:800px;margin:0 auto;padding:0 48px;position:relative;z-index:1}
+.wrap-narrow{max-width:720px;margin:0 auto;padding:0 48px;position:relative;z-index:1}
+
+/* HERO */
 .hero{padding-top:160px;padding-bottom:80px}
-.hero h1{font-size:clamp(44px,7vw,110px);font-weight:400;line-height:.9;letter-spacing:-.02em;color:var(--text);margin-bottom:52px;max-width:18ch}
+.hero-label{font-family:"IBM Plex Mono",monospace;font-size:9px;letter-spacing:.32em;text-transform:uppercase;color:var(--dim);margin-bottom:40px}
+.hero h1{font-size:clamp(40px,7vw,110px);font-weight:400;line-height:.95;letter-spacing:-.02em;color:var(--text);margin-bottom:48px;max-width:18ch}
 .hero h1 em{font-style:italic;color:var(--gold2)}
-.hero-sub{font-size:clamp(18px,1.8vw,22px);font-weight:300;line-height:1.9;color:var(--muted);max-width:58ch;margin-bottom:16px}
-.hero-statement{background:#0d0d0d;border-left:3px solid var(--gold);padding:44px 52px;margin-top:64px}
-.hero-statement p{font-size:clamp(24px,3.2vw,48px);font-weight:300;font-style:italic;line-height:1.2;color:#f2e8d5}
-.pause-1{padding:100px 0;border-top:1px solid var(--line);border-bottom:1px solid var(--line);margin:20px 0;position:relative;z-index:1}
-.pause-1 .pause-line{font-size:clamp(26px,3.8vw,58px);font-weight:300;font-style:italic;line-height:1.2;color:var(--text);max-width:600px;margin:0 0 0 48px}
-.pause-2{padding:80px 0;margin:20px 0;text-align:center;position:relative;z-index:1}
-.pause-2 .pause-line{font-size:clamp(18px,2.4vw,40px);font-weight:300;font-style:italic;line-height:1.35;color:var(--text);opacity:.58;max-width:580px;margin:0 auto;padding:0 48px}
+.hero-sub{font-size:clamp(17px,1.6vw,21px);font-weight:300;line-height:1.9;color:var(--muted);max-width:56ch;margin-bottom:16px}
+
+/* HERO STATEMENT — gold bar, no card */
+.hero-statement{
+  border-left:2px solid var(--gold);
+  padding-left:24px;
+  margin-top:56px;
+}
+.hero-statement p{font-size:clamp(20px,2.8vw,40px);font-weight:300;font-style:italic;line-height:1.3;color:var(--text)}
+
+/* PAUSE */
+.pause-1{padding:96px 0;border-top:1px solid var(--line);border-bottom:1px solid var(--line);margin:20px 0;position:relative;z-index:1}
+.pause-line{position:relative;padding-left:28px;font-size:clamp(24px,3.8vw,56px);font-weight:300;font-style:italic;line-height:1.2;color:var(--text);max-width:600px;margin:0 0 0 48px}
+.pause-line::before{content:"";position:absolute;left:0;top:6px;bottom:6px;width:1px;background:rgba(200,169,110,.35)}
+
+/* SECTIONS */
 .section{padding:80px 0;border-top:1px solid var(--line)}
-.section h2{font-size:clamp(30px,4.2vw,60px);font-weight:400;line-height:1.0;margin-bottom:32px;max-width:22ch}
+.section h2{font-size:clamp(28px,4vw,58px);font-weight:400;line-height:1.0;margin-bottom:32px;max-width:22ch}
 .section h2 em{font-style:italic;color:var(--gold2)}
-.body-p{font-size:clamp(17px,1.4vw,20px);font-weight:300;color:var(--muted);margin-bottom:22px;max-width:62ch;line-height:1.9}
-.pull{background:#0d0d0d;border-left:3px solid var(--gold);padding:32px 44px;margin-top:48px;font-size:clamp(19px,2.2vw,36px);font-weight:300;line-height:1.35;font-style:italic;color:var(--text)}
-.truth-blocks{margin-top:56px}
+.body-p{font-size:clamp(16px,1.4vw,19px);font-weight:300;color:var(--muted);margin-bottom:22px;max-width:60ch;line-height:1.85}
+
+/* PULL — gold bar */
+.pull{
+  border-left:2px solid var(--gold);
+  padding-left:24px;
+  margin-top:40px;
+  font-size:clamp(18px,2vw,30px);
+  font-weight:300;line-height:1.45;font-style:italic;color:var(--text);
+}
+
+/* TRUTH TABLE */
+.truth-blocks{margin-top:48px}
 .truth-header{display:grid;grid-template-columns:1fr 1fr;border-bottom:1px solid rgba(255,255,255,.1);padding-bottom:14px}
 .truth-col-label{font-family:"IBM Plex Mono",monospace;font-size:9px;letter-spacing:.28em;text-transform:uppercase;color:var(--gold);padding:0 4px}
 .truth-block{display:grid;grid-template-columns:1fr 1fr;border-bottom:1px solid var(--line);transition:background .2s}
 .truth-block:hover{background:rgba(255,255,255,.014)}
 .truth-block:last-child{border-bottom:none}
-.tb-left{padding:32px 32px 32px 4px;font-size:clamp(16px,1.3vw,18px);font-weight:300;color:var(--muted);line-height:1.75;border-right:1px solid var(--line)}
-.tb-right{padding:32px 4px 32px 32px;font-size:clamp(16px,1.3vw,18px);font-weight:300;color:#c8c0b2;line-height:1.75}
-.grounding{margin-top:36px;font-family:"IBM Plex Mono",monospace;font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--dim);line-height:2.2}
+.tb-left{padding:28px 28px 28px 4px;font-size:clamp(15px,1.3vw,17px);font-weight:300;color:var(--muted);line-height:1.75;border-right:1px solid var(--line)}
+.tb-right{padding:28px 4px 28px 28px;font-size:clamp(15px,1.3vw,17px);font-weight:300;color:var(--text);line-height:1.75}
+
+/* PAUSE 2 */
+.pause-2{padding:80px 0;margin:20px 0;position:relative;z-index:1;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+.pause-2 .pause-line{margin:0 0 0 48px;opacity:.7}
+
+/* CLOSING SECTION */
+.closing-section{padding:56px 0;border-top:1px solid var(--line)}
+.closing-p{font-size:clamp(18px,1.8vw,24px);font-weight:300;color:var(--muted);line-height:1.8;max-width:52ch}
+
+/* FINAL */
 .final{padding:100px 0 120px;border-top:1px solid var(--line);margin-top:20px}
-.final-q{font-size:clamp(36px,5vw,80px);font-weight:400;font-style:italic;line-height:1.0;color:var(--text);margin-bottom:52px;max-width:18ch}
-.back-link{font-family:"IBM Plex Mono",monospace;font-size:9px;letter-spacing:.28em;text-transform:uppercase;color:var(--dim);transition:color .2s;display:inline-block;margin-bottom:28px}
+.final-q{font-size:clamp(32px,5vw,72px);font-weight:400;font-style:italic;line-height:1.05;color:var(--text);margin-bottom:52px;max-width:18ch}
+.back-link{font-family:"IBM Plex Mono",monospace;font-size:9px;letter-spacing:.28em;text-transform:uppercase;color:var(--dim);transition:color .2s;display:inline-block;margin-bottom:14px}
 .back-link:hover{color:var(--gold2)}
-.sig{font-family:"IBM Plex Mono",monospace;font-size:9.5px;letter-spacing:.26em;text-transform:uppercase;color:var(--dim)}
-.footer{position:relative;z-index:1;text-align:center;padding:20px;border-top:1px solid var(--line);font-family:"IBM Plex Mono",monospace;font-size:10px;letter-spacing:.2em;color:var(--dim)}
-@media(max-width:860px){.topbar{padding:0 20px}.wrap{padding:0 20px}.wrap-narrow{padding:0 20px}.hero{padding-top:120px;padding-bottom:60px}.hero-statement{padding:28px 24px}.pull{padding:24px 28px}.pause-1{padding:70px 0}.pause-1 .pause-line{margin:0 20px;max-width:100%}.pause-2{padding:60px 0}.pause-2 .pause-line{padding:0 20px}.truth-header{display:none}.truth-block{grid-template-columns:1fr}.tb-left{padding:24px 0 12px;border-right:none;border-bottom:1px solid var(--line)}.tb-right{padding:12px 0 24px}.final{padding:70px 0 80px}}
+.sig{font-family:"IBM Plex Mono",monospace;font-size:9.5px;letter-spacing:.26em;text-transform:uppercase;color:var(--dim);margin-top:28px}
+
+.footer{position:relative;z-index:1;text-align:center;padding:20px;border-top:1px solid var(--line);font-family:"IBM Plex Mono",monospace;font-size:9px;letter-spacing:.08em;color:var(--dim)}
+.footer a{color:var(--dim);transition:color .2s}
+.footer a:hover{color:var(--gold)}
+
+@media(max-width:860px){
+  .topbar{padding:0 20px}
+  .wrap{padding:0 20px}
+  .wrap-narrow{padding:0 20px}
+  .hero{padding-top:120px;padding-bottom:60px}
+  .pause-1{padding:64px 0}
+  .pause-line{margin:0 20px;max-width:100%}
+  .pause-2{padding:56px 0}
+  .section{padding:56px 0}
+  .truth-header{display:none}
+  .truth-block{grid-template-columns:1fr}
+  .tb-left{padding:20px 0 10px;border-right:none;border-bottom:1px solid var(--line)}
+  .tb-right{padding:10px 0 20px}
+  .body-p{line-height:1.75}
+  .final{padding:70px 0 80px}
+}
+@media(max-width:640px){body{overflow-x:hidden !important}}
 @keyframes fadeUp{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
 .hero{animation:fadeUp .9s ease both}
-
-@media (max-width: 640px) {
-  .wrap, .wrap-narrow {
-    padding-left: 20px !important;
-    padding-right: 20px !important;
-    max-width: 100% !important;
-  }
-  body { overflow-x: hidden !important; }
-}
 </style>
 </head>
 <body>
+
 <header class="topbar">
   <a href="index.html" class="brand"><span class="brand-rule"></span><span>Liran Bar-Shrim</span></a>
   <a href="mailto:Liran@liranbarshrim.com" class="nav-contact">Correspondence</a>
 </header>
+
 <main>
-  <section class="hero wrap">
+  <section class="hero wrap-narrow">
+    <div class="hero-label">False Reassurance</div>
     <h1>Human review<br>is not<br><em>refusal authority.</em></h1>
     <p class="hero-sub">Most modern governance systems already include human oversight: review committees, approval chains, validation steps, monitoring systems, and escalation procedures.</p>
-    <p class="hero-sub">Yet irreversible continuation still happens without meaningful interruption.</p>
-    <div class="hero-statement"><p>A human inside the loop does not guarantee that a human can stop the loop.</p></div>
+    <p class="hero-sub">Yet continuation still becomes irreversible without anyone clearly authorized to stop it.</p>
+    <div class="hero-statement">
+      <p>A human inside the loop does not guarantee that a human can stop the loop.</p>
+    </div>
   </section>
-  <div class="pause-1"><div class="pause-line">Oversight is not<br>the same as<br>the authority to refuse continuation.</div></div>
+
+  <div class="pause-1">
+    <div class="pause-line">Oversight is not<br>the same as<br>the authority to refuse continuation.</div>
+  </div>
+
   <section class="section wrap-narrow">
-    <h2>The problem is not<br>the absence of humans.<br>It is the absence of <em>named authority.</em></h2>
+    <h2>The problem is not the absence of humans.<br>It is the absence of <em>named authority.</em></h2>
     <p class="body-p">Human review, approval chains, and monitoring systems define who observed, who signed off, who escalated.</p>
-    <p class="body-p">They rarely define who, by name, is authorized to refuse continuation once institutional momentum already exists.</p>
-    <div class="pull">As responsibility distributes across functions and systems, refusal authority rarely distributes with it.<br>It often becomes structurally unclear.</div>
-    <div class="grounding">AI systems<br>Healthcare escalation<br>Financial systems</div>
+    <p class="body-p">They rarely define who, by name, is authorized to interrupt continuation once momentum takes hold.</p>
+    <div class="pull">
+      As responsibility distributes across functions and systems, refusal authority rarely distributes with it.<br>It often becomes structurally unclear.
+    </div>
   </section>
+
   <section class="section wrap">
     <h2>What oversight provides.<br>What it <em>does not.</em></h2>
     <div class="truth-blocks">
@@ -106,22 +165,42 @@ a{text-decoration:none;color:inherit}
         <div class="truth-col-label">What Oversight Provides</div>
         <div class="truth-col-label">What It Does Not Provide</div>
       </div>
-      <div class="truth-block"><div class="tb-left">A human reviews the process.</div><div class="tb-right">Named authority to refuse continuation.</div></div>
-      <div class="truth-block"><div class="tb-left">Responsibility is distributed across teams.</div><div class="tb-right">Distributed responsibility can eliminate refusal authority entirely.</div></div>
-      <div class="truth-block"><div class="tb-left">Escalation channels exist.</div><div class="tb-right">Escalation delays responsibility. It does not interrupt execution.</div></div>
-      <div class="truth-block"><div class="tb-left">The system includes approvals.</div><div class="tb-right">Approval is not refusal. It does not guarantee interruption capacity.</div></div>
-      <div class="truth-block"><div class="tb-left">Controls focus on policy compliance.</div><div class="tb-right">Compliance with policy is not the same as authority before irreversible continuation.</div></div>
+      <div class="truth-block">
+        <div class="tb-left">A human reviews the process.</div>
+        <div class="tb-right">Named authority to refuse continuation.</div>
+      </div>
+      <div class="truth-block">
+        <div class="tb-left">Responsibility is distributed across teams.</div>
+        <div class="tb-right">Distributed responsibility can eliminate refusal authority entirely.</div>
+      </div>
+      <div class="truth-block">
+        <div class="tb-left">Escalation channels exist.</div>
+        <div class="tb-right">Escalation transfers responsibility. It does not necessarily interrupt execution.</div>
+      </div>
+      <div class="truth-block">
+        <div class="tb-left">The system includes approvals.</div>
+        <div class="tb-right">Approval is not refusal. It does not guarantee interruption capacity.</div>
+      </div>
+      <div class="truth-block">
+        <div class="tb-left">Controls focus on policy compliance.</div>
+        <div class="tb-right">Compliance with policy is not the same as authority before irreversible conditions emerge.</div>
+      </div>
     </div>
   </section>
-  <div class="pause-2"><div class="pause-line">Organizations usually know that execution is happening.<br>The problem is that interruption carries institutional cost.</div></div>
+
+  <div class="pause-2">
+    <div class="pause-line">Organizations usually know that execution is happening.<br>The problem is that interruption carries institutional cost.</div>
+  </div>
+
   <section class="section wrap-narrow">
     <h2>Under pressure,<br><em>oversight becomes observational.</em></h2>
     <p class="body-p">As systems scale, continuation becomes structurally easier than refusal. The cost of stopping — institutional, political, financial — accumulates.</p>
-    <p class="body-p">Under those conditions, human oversight can quietly shift from sovereign authority to passive observation.</p>
+    <p class="body-p">Under those conditions, human oversight can quietly shift from interruption authority to passive observation.</p>
     <p class="body-p">A safeguard only becomes real when someone can refuse continuation without ambiguity — and is named in advance to do so.</p>
   </section>
-  <section class="section wrap-narrow" style="padding:56px 0;">
-    <p class="body-p" style="font-size:clamp(18px,1.8vw,24px);color:#c8c0b4;max-width:52ch;line-height:1.8;">
+
+  <section class="closing-section wrap-narrow">
+    <p class="closing-p">
       A human inside the loop may observe.<br>
       That does not mean someone exists<br>
       with the authority to refuse continuation.
@@ -129,11 +208,20 @@ a{text-decoration:none;color:inherit}
   </section>
 
   <section class="final wrap-narrow">
-    <div class="final-q">Who, by name,<br>is authorized<br>to refuse<br>before continuation<br>becomes irreversible?</div>
-    <a href="index.html" class="back-link">← Back to main</a>
-    <div class="sig">Liran Bar-Shrim · Governance · Refusal Authority · Irreversible Decisions</div>
+    <div class="final-q">Who, by name,<br>is authorized<br>to refuse<br>before irreversible<br>conditions emerge?</div>
+    <a href="index.html" class="back-link">← Back to main</a><br>
+    <a href="approval-is-not-refusal.html" class="back-link">→ Approval Is Not Refusal</a><br>
+    <a href="momentum-made-the-decision.html" class="back-link">→ Momentum Made the Decision</a>
+    <div class="sig">Liran Bar-Shrim · 2026</div>
   </section>
 </main>
-<footer class="footer">© 2026 Liran Bar-Shrim</footer>
+
+<footer class="footer">
+  © 2026 Liran Bar-Shrim &nbsp;·&nbsp;
+  <a href="faq.html">FAQ</a> &nbsp;·&nbsp;
+  <a href="goodfaith.html">Good Faith Use</a> &nbsp;·&nbsp;
+  <a href="index.html">Index</a>
+</footer>
+
 </body>
 </html>
