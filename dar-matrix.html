@@ -4,10 +4,10 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Who Holds Refusal Authority? — Research Matrix</title>
-<meta name="description" content="23 real-world cases testing one question: after refusal, can execution proceed anyway?">
+<meta name="description" content="26 real-world and emerging cases testing one operational question: after refusal, can execution proceed anyway?">
 <meta name="robots" content="index,follow">
 <meta property="og:title" content="Who Holds Refusal Authority? — Research Matrix">
-<meta property="og:description" content="23 real-world cases testing one question: after refusal, can execution proceed anyway?">
+<meta property="og:description" content="26 real-world and emerging cases testing one operational question: after refusal, can execution proceed anyway?">
 <meta property="og:image" content="https://matrix-audit.com/og-image.png">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Liran Bar-Shrim">
@@ -76,7 +76,7 @@ a{text-decoration:none;color:inherit}
 /* STATS */
 .stats{display:grid;grid-template-columns:repeat(5,1fr);gap:2px;margin-bottom:40px}
 .stat-box{background:var(--surface);border:1px solid var(--line);padding:16px;text-align:center}
-.stat-number{font-family:'Cormorant Garamond',serif;font-size:32px;display:block;line-height:1;margin-bottom:6px}
+.stat-number{font-family:'Cormorant Garamond',serif;font-size:22px;display:block;line-height:1;margin-bottom:6px}
 .stat-number.l3{color:var(--safe)}
 .stat-number.l2{color:var(--warn)}
 .stat-number.l1{color:var(--danger)}
@@ -173,8 +173,8 @@ col.c-conf{width:100px}
   <div class="header">
     <div class="header-tag">Research Matrix · v3 · 2026</div>
     <h1>Who Holds Refusal Authority?</h1>
-    <p>23 real-world cases testing one operational question: after refusal, can execution proceed anyway? The binary YES/NO is replaced by three operational levels. Confidence levels reflect evidence quality, not ideological commitment.</p>
-    <p style="font-size:10px;color:var(--dim2);margin-top:8px;line-height:1.7;">Three N/A cases represent epistemic failures and sit outside the taxonomy by design.</p>
+    <p>26 real-world and emerging cases testing one operational question: after refusal, can execution proceed anyway? A binary test yields three operational forms. Confidence levels reflect evidence quality, not ideological commitment.</p>
+    <p style="font-size:10px;color:var(--dim2);margin-top:8px;line-height:1.7;">Three N/A cases are excluded because the failure mode is epistemic rather than authority-related.</p>
   </div>
 
   <div class="taxonomy">
@@ -205,6 +205,21 @@ col.c-conf{width:100px}
     <span style="color:var(--safe);font-size:12px;">No → Level 3.</span></div>
   </div>
 
+  <div style="margin:34px 0 38px;max-width:680px;padding-left:24px;border-left:1px solid rgba(200,169,110,.28);">
+    <p style="font-family:'Cormorant Garamond',serif;font-size:clamp(20px,2vw,30px);font-weight:300;font-style:italic;color:var(--text);line-height:1.45;margin:0;">
+      The domain changes.<br>
+      The velocity changes.<br>
+      The question does not.
+    </p>
+  </div>
+
+  <div style="margin:34px 0 34px;max-width:680px;padding-left:24px;border-left:1px solid rgba(200,169,110,.22);">
+    <p style="font-family:'Cormorant Garamond',serif;font-size:clamp(18px,1.8vw,28px);font-style:italic;font-weight:300;line-height:1.45;color:var(--text);margin:0;">
+      Across sectors, approval appears designed.<br>
+      Refusal often appears improvised.
+    </p>
+  </div>
+
   <div class="conf-legend">
     <span class="conf-legend-label">Confidence:</span>
     <span class="conf-legend-item"><span class="conf conf-high">High</span> Documented in regulation or well-evidenced case record</span>
@@ -213,10 +228,10 @@ col.c-conf{width:100px}
   </div>
 
   <div class="stats">
-    <div class="stat-box"><span class="stat-number accent">23</span><span class="stat-label">Cases Total</span></div>
+    <div class="stat-box"><span class="stat-number accent">26</span><span class="stat-label">Cases Total</span></div>
     <div class="stat-box"><span class="stat-number l3">5</span><span class="stat-label">Level 3 — Independent</span></div>
     <div class="stat-box"><span class="stat-number l2">5</span><span class="stat-label">Level 2 — Conditional</span></div>
-    <div class="stat-box"><span class="stat-number l1">10</span><span class="stat-label">Level 1 — Advisory<br>(incl. 3 AI/agentic)</span></div>
+    <div class="stat-box"><span class="stat-number l1">13</span><span class="stat-label">Level 1 — Advisory<br>(13 total, incl. 3 AI/agentic)</span></div>
     <div class="stat-box"><span class="stat-number na">3</span><span class="stat-label">N/A — Epistemic</span></div>
   </div>
 
@@ -440,7 +455,7 @@ col.c-conf{width:100px}
           <td><span class="conf conf-medium">Medium</span></td>
         </tr>
 
-        <tr class="group-header"><td colspan="7">Group E — AI / Agentic Cases (included in L1 count)</td></tr>
+        <tr class="group-header"><td colspan="7">Group E — AI / Agentic Cases (Included in L1 Count)</td></tr>
 
         <tr>
           <td><span class="case-name">LLM Production Deploy</span><span class="case-sub">Typical enterprise, 2024</span></td>
@@ -476,21 +491,22 @@ col.c-conf{width:100px}
     </table>
   </div>
 
+
   <div class="findings">
     <div class="finding-box key">
       <div class="finding-label">Key Finding — Post Taxonomy</div>
       <ul>
         <li>Approval authority is usually explicit. Refusal authority often defaults to escalation.</li>
-        <li>L3 appears most consistently where irreversibility is physically salient and regulation explicitly mandates independent refusal</li>
+        <li>L3 appears most consistently where irreversibility is salient and refusal authority is operationally or institutionally enforced</li>
         <li>L2 appears as a common observed pattern in mature regulated environments — veto exists, but appeal path remains open</li>
         <li>L1 is the dominant observed pattern across AI/agentic cases examined here</li>
         <li>CRO veto (banking) is L2, not L3 — the appeal path to Board is the distinguishing feature</li>
         <li>Challenger is L1 — refusal authority existed informally, was then actively removed under pressure</li>
-        <li>The gap is not binary. It is a spectrum.</li>
+        <li>The question is binary. The observed answers are not.</li>
       </ul>
     </div>
     <div class="finding-box open">
-      <div class="finding-label">Open Questions — Next Phase</div>
+      <div class="finding-label">Open Questions — Field Verification</div>
       <ul>
         <li>When does a Conditional Refusal Authority (L2) become operationally equivalent to L3?</li>
         <li>Can L3 be institutionalized in digital systems without a physical mechanism equivalent to the andon cord or PAL?</li>
@@ -503,8 +519,8 @@ col.c-conf{width:100px}
 
   <div class="hypothesis">
     <div class="hypothesis-label">Working Hypothesis</div>
-    <div class="hypothesis-text">Refusal authority appears most consistently institutionalized where irreversibility is physically salient and regulation explicitly mandates independent refusal. Outside those domains, approval authority appears clearer than refusal authority, which often defaults to escalation.</div>
-    <div class="hypothesis-sub">Not all veto authority constitutes refusal authority. A veto that can be routinely overridden through escalation functions as procedural friction. Refusal authority exists when continuation cannot proceed without resolving the refusal itself.</div>
+    <div class="hypothesis-text">Independent refusal authority is most consistently observed in domains where irreversibility is salient and refusal authority is operationally or institutionally enforced.</div>
+    <div class="hypothesis-sub">Not all veto authority constitutes refusal authority. A veto that can be routinely overridden through escalation functions as procedural friction. Refusal authority exists when continuation cannot proceed without resolving the refusal.</div>
   </div>
 
   <div class="footnote">
