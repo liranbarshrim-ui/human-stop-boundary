@@ -7,154 +7,56 @@
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=IBM+Plex+Mono:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
   :root {
-    --bg: #090909;
-    --surface: #111111;
-    --gold: #c8a96e;
-    --gold-dim: #7a6340;
-    --text: #e6e0d4;
-    --muted: #52504c;
-    --muted-light: #7a7570;
-    --border: #1e1e1e;
-    --border-light: #2a2a2a;
-    --danger: #c0392b;
-    --safe: #3d9970;
+    --bg: #090909; --surface: #111111; --gold: #c8a96e; --gold-dim: #7a6340;
+    --text: #e6e0d4; --muted: #52504c; --muted-light: #7a7570;
+    --border: #1e1e1e; --border-light: #2a2a2a; --safe: #3d9970;
   }
-
-  body {
-    background: var(--bg);
-    color: var(--text);
-    font-family: 'IBM Plex Mono', monospace;
-    min-height: 100vh;
-    padding: 48px 40px;
-    position: relative;
-    overflow-x: hidden;
-  }
-
-  body::before {
-    content: '';
-    position: fixed;
-    inset: 0;
-    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
-    pointer-events: none;
-    z-index: 0;
-  }
-
-  .page {
-    max-width: 1100px;
-    margin: 0 auto;
-    position: relative;
-    z-index: 1;
-  }
-
-  .header {
-    border-left: 3px solid var(--gold);
-    padding-left: 24px;
-    margin-bottom: 56px;
-  }
-
-  .label {
-    font-family: 'IBM Plex Mono', monospace;
-    font-size: 10px;
-    font-weight: 500;
-    letter-spacing: 0.18em;
-    text-transform: uppercase;
-    color: var(--gold);
-    margin-bottom: 10px;
-  }
-
-  .title {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 36px;
-    font-weight: 600;
-    color: var(--text);
-    line-height: 1.15;
-    margin-bottom: 8px;
-  }
-
-  .subtitle {
-    font-size: 12px;
-    color: var(--muted-light);
-    letter-spacing: 0.06em;
-  }
-
-  .questions {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 1px;
-    background: var(--border);
-    margin-bottom: 48px;
-    border: 1px solid var(--border);
-  }
-
-  .question-block {
-    background: var(--surface);
-    padding: 24px 28px;
-  }
-
+  body { background: var(--bg); color: var(--text); font-family: 'IBM Plex Mono', monospace; min-height: 100vh; padding: 48px 40px; position: relative; overflow-x: hidden; }
+  body::before { content: ''; position: fixed; inset: 0; background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E"); pointer-events: none; z-index: 0; }
+  .page { max-width: 1100px; margin: 0 auto; position: relative; z-index: 1; }
+  .header { border-left: 3px solid var(--gold); padding-left: 24px; margin-bottom: 56px; }
+  .label { font-size: 10px; font-weight: 500; letter-spacing: 0.18em; text-transform: uppercase; color: var(--gold); margin-bottom: 10px; }
+  .title { font-family: 'Cormorant Garamond', serif; font-size: 36px; font-weight: 600; color: var(--text); line-height: 1.15; margin-bottom: 8px; }
+  .subtitle { font-size: 12px; color: var(--muted-light); letter-spacing: 0.06em; }
+  .questions { display: grid; grid-template-columns: 1fr 1fr; gap: 1px; background: var(--border); margin-bottom: 48px; border: 1px solid var(--border); }
+  .question-block { background: var(--surface); padding: 24px 28px; }
   .q-layer { font-size: 9px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--muted); margin-bottom: 8px; }
   .q-layer.active { color: var(--gold); }
-  .q-text { font-family: 'Cormorant Garamond', serif; font-size: 20px; font-style: italic; color: var(--text); line-height: 1.4; }
+  .q-text { font-family: 'Cormorant Garamond', serif; font-size: 20px; font-style: italic; line-height: 1.4; }
   .q-text.active { color: var(--text); }
   .q-text.dim { color: var(--muted-light); }
-
-  .taxonomy {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 1px;
-    background: var(--border);
-    border: 1px solid var(--border);
-    margin-bottom: 48px;
-  }
-
+  .taxonomy { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1px; background: var(--border); border: 1px solid var(--border); margin-bottom: 48px; }
   .taxon { background: var(--surface); padding: 20px 20px 18px; }
-
-  .taxon-tag {
-    font-size: 9px;
-    font-weight: 500;
-    letter-spacing: 0.16em;
-
-.cases-label { font-size: 9px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--muted); margin-bottom: 16px; }
-
+  .taxon-tag { font-size: 9px; font-weight: 500; letter-spacing: 0.16em; text-transform: uppercase; padding: 3px 7px; display: inline-block; margin-bottom: 12px; border: 1px solid; }
+  .taxon-tag.person { color: #c8a96e; border-color: #7a6340; }
+  .taxon-tag.role { color: #5dade2; border-color: #2e6e8e; }
+  .taxon-tag.struct { color: #3d9970; border-color: #2a6e50; }
+  .taxon-tag.unlocated { color: #bb8fce; border-color: #6c3483; }
+  .taxon-def { font-size: 11px; color: var(--muted-light); line-height: 1.6; }
+  .cases-label { font-size: 9px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--muted); margin-bottom: 16px; }
   .cases { border: 1px solid var(--border); overflow: hidden; }
-
-  .case-row {
-    display: grid;
-    grid-template-columns: 220px 1fr 1fr 160px;
-    gap: 0;
-    border-bottom: 1px solid var(--border);
-    background: var(--surface);
-    transition: background 0.15s;
-  }
-
+  .case-row { display: grid; grid-template-columns: 220px 1fr 1fr 160px; border-bottom: 1px solid var(--border); background: var(--surface); transition: background 0.15s; }
   .case-row:last-child { border-bottom: none; }
   .case-row:hover { background: #161616; }
   .case-row.header-row { background: var(--bg); border-bottom: 1px solid var(--border-light); }
   .case-row.header-row:hover { background: var(--bg); }
-
   .cell { padding: 16px 20px; border-right: 1px solid var(--border); font-size: 11px; display: flex; align-items: center; }
   .cell:last-child { border-right: none; }
   .cell.col-name { font-family: 'Cormorant Garamond', serif; font-size: 15px; font-weight: 600; color: var(--text); }
-  .cell.col-l1 { color: var(--muted-light); line-height: 1.5; font-size: 11px; }
-  .cell.col-l2 { color: var(--muted-light); line-height: 1.5; font-size: 11px; }
+  .cell.col-l1, .cell.col-l2 { color: var(--muted-light); line-height: 1.5; }
   .cell.col-tag { justify-content: flex-start; }
   .col-header { font-size: 9px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--muted); }
-
   .badge { font-size: 9px; font-weight: 500; letter-spacing: 0.14em; text-transform: uppercase; padding: 4px 9px; border: 1px solid; white-space: nowrap; }
-  .badge.person { color: var(--gold); border-color: var(--gold-dim); }
-  .badge.role   { color: #5dade2; border-color: #2e6e8e; }
-  .badge.struct { color: var(--safe); border-color: #2a6e50; }
+  .badge.person { color: #c8a96e; border-color: #7a6340; }
+  .badge.role { color: #5dade2; border-color: #2e6e8e; }
+  .badge.struct { color: #3d9970; border-color: #2a6e50; }
   .badge.unlocated { color: #bb8fce; border-color: #6c3483; }
-  .taxon-tag.unlocated { color: #bb8fce; border-color: #6c3483; }
-  .badge.unknown { color: var(--muted-light); border-color: var(--muted); }
-
+  .badge.unknown { color: #7a7570; border-color: #52504c; }
   .formulation { margin-top: 48px; border-left: 3px solid var(--gold); padding: 24px 32px; background: var(--surface); border-top: 1px solid var(--border); border-right: 1px solid var(--border); border-bottom: 1px solid var(--border); }
   .form-text { font-family: 'Cormorant Garamond', serif; font-size: 19px; font-style: italic; color: var(--text); line-height: 1.7; }
   .form-text span { color: var(--gold); font-style: normal; font-weight: 600; }
-
   .footer { margin-top: 36px; font-size: 9px; letter-spacing: 0.1em; color: var(--muted); text-transform: uppercase; display: flex; gap: 24px; }
-
   @media (max-width: 800px) {
     body { padding: 32px 20px; }
     .questions { grid-template-columns: 1fr; }
@@ -169,15 +71,13 @@
 </head>
 <body>
 <div class="page">
-
   <div class="header">
     <div class="label">Decision Authority Research — Internal</div>
     <h1 class="title">DAR Layer II<br>Authority Architecture</h1>
     <div class="subtitle">May 2026 &nbsp;·&nbsp; Conceptual development &nbsp;·&nbsp; Not for external distribution</div>
-    <div class="subtitle" style="margin-top:8px;font-style:italic;color:var(--muted-light);">Layer II asks: Is the name portable?</div>
-    <div class="subtitle" style="margin-top:6px;color:var(--muted);">Classification model — provisional &nbsp;·&nbsp; Working model v0.2</div>
+    <div class="subtitle" style="margin-top:8px;font-style:italic;color:#7a7570;">Layer II asks: Is the name portable?</div>
+    <div class="subtitle" style="margin-top:6px;color:#52504c;">Classification model — provisional &nbsp;·&nbsp; Working model v0.2</div>
   </div>
-
   <div class="questions">
     <div class="question-block">
       <div class="q-layer">Layer I — Original</div>
@@ -188,94 +88,69 @@
       <div class="q-text active">If that person disappeared tomorrow — where would refusal authority live?</div>
     </div>
   </div>
-
   <div class="taxonomy">
-    <div class="taxon">
-      <div class="taxon-tag person">PERSON</div>
-      <div class="taxon-def">Authority lives in individual judgment, relationships, or memory. Not transferable. Disappears with the person.</div>
-    </div>
-    <div class="taxon">
-      <div class="taxon-tag role">ROLE</div>
-      <div class="taxon-def">Authority attached to the title. Survives — but only if explicitly scoped and documented as belonging to the role, not the individual.</div>
-    </div>
-    <div class="taxon">
-      <div class="taxon-tag struct">STRUCTURE</div>
-      <div class="taxon-def">Authority written into governance artifacts. Named, bounded, with an explicit continuity mechanism. Survives absence automatically.</div>
-    </div>
-    <div class="taxon">
-      <div class="taxon-tag unlocated">UNLOCATED</div>
-      <div class="taxon-def">Authority could not be located in person, role, or documented structure. No recoverable authority anchor could be identified.</div>
-    </div>
+    <div class="taxon"><div class="taxon-tag person">PERSON</div><div class="taxon-def">Authority lives in individual judgment, relationships, or memory. Not transferable. Disappears with the person.</div></div>
+    <div class="taxon"><div class="taxon-tag role">ROLE</div><div class="taxon-def">Authority attached to the title. Survives — but only if explicitly scoped and documented as belonging to the role, not the individual.</div></div>
+    <div class="taxon"><div class="taxon-tag struct">STRUCTURE</div><div class="taxon-def">Authority written into governance artifacts. Named, bounded, with an explicit continuity mechanism. Survives absence automatically.</div></div>
+    <div class="taxon"><div class="taxon-tag unlocated">UNLOCATED</div><div class="taxon-def">Authority could not be located in person, role, or documented structure. No recoverable authority anchor could be identified.</div></div>
   </div>
-
   <div class="cases-label">Case distribution — Layer I × Layer II</div>
-
-<div class="cases">
+  <div class="cases">
     <div class="case-row header-row">
       <div class="cell col-header">Case</div>
       <div class="cell col-header">Layer I — Who can stop?</div>
       <div class="cell col-header">Layer II — Where does authority live?</div>
       <div class="cell col-header">Classification</div>
     </div>
-
     <div class="case-row">
       <div class="cell col-name">Toyota Andon</div>
       <div class="cell col-l1">Any operator can stop. Team leader releases.</div>
       <div class="cell col-l2">Written into production structure. Survives any individual. No succession required.</div>
       <div class="cell col-tag"><span class="badge struct">STRUCTURE</span></div>
     </div>
-
     <div class="case-row">
-      <div class="cell col-name">Surgical Timeout<br><span style="font-family:'IBM Plex Mono';font-size:10px;color:var(--muted-light);font-weight:300;">WHO / Joint Commission</span></div>
+      <div class="cell col-name">Surgical Timeout<br><span style="font-size:10px;color:#7a7570;font-weight:300;">WHO / Joint Commission</span></div>
       <div class="cell col-l1">Any team member, regardless of rank, can halt the procedure.</div>
-      <div class="cell col-l2">Protocol-level. If surgeon is replaced, incoming surgeon inherits the authority — no re-authorization needed.</div>
+      <div class="cell col-l2">Protocol-level. Incoming surgeon inherits the authority — no re-authorization needed.</div>
       <div class="cell col-tag"><span class="badge struct">STRUCTURE</span></div>
     </div>
-
     <div class="case-row">
-      <div class="cell col-name">Nuclear Command<br><span style="font-family:'IBM Plex Mono';font-size:10px;color:var(--muted-light);font-weight:300;">US launch authority</span></div>
+      <div class="cell col-name">Nuclear Command<br><span style="font-size:10px;color:#7a7570;font-weight:300;">US launch authority</span></div>
       <div class="cell col-l1">Launch: PAL + two-person rule + chain of command. Fully documented.</div>
       <div class="cell col-l2">Launch authority: STRUCTURE. Refusal authority — who can say not yet to the President — publicly undocumented.</div>
-      <div class="cell col-tag"><span class="badge struct">STRUCTURE</span><span style="font-size:9px;color:var(--muted);margin-left:6px;">launch only</span></div>
+      <div class="cell col-tag"><span class="badge struct">STRUCTURE</span><span style="font-size:9px;color:#52504c;margin-left:6px;">launch only</span></div>
     </div>
-
     <div class="case-row">
-      <div class="cell col-name">FDA Clinical Hold<br><span style="font-family:'IBM Plex Mono';font-size:10px;color:var(--muted-light);font-weight:300;">21 CFR 312.42</span></div>
+      <div class="cell col-name">FDA Clinical Hold<br><span style="font-size:10px;color:#7a7570;font-weight:300;">21 CFR 312.42</span></div>
       <div class="cell col-l1">Division Director, named in regulation. Authority is explicit and bounded.</div>
       <div class="cell col-l2">Belongs to the role, not the individual. Acting Director inherits — but requires appointment. Not automatic.</div>
       <div class="cell col-tag"><span class="badge role">ROLE</span></div>
     </div>
-
     <div class="case-row">
-      <div class="cell col-name">Risk Function Continuity<br><span style="font-family:'IBM Plex Mono';font-size:10px;color:var(--muted-light);font-weight:300;">Listed company, SGX — May 2026</span></div>
+      <div class="cell col-name">Risk Function Continuity<br><span style="font-size:10px;color:#7a7570;font-weight:300;">Listed company, SGX — May 2026</span></div>
       <div class="cell col-l1">CRO named in reports. Part of assurance chain to Board. No risk committee.</div>
       <div class="cell col-l2">Role continuity asserted after sudden death. Authority continuity: undocumented. No interim CRO disclosed publicly.</div>
       <div class="cell col-tag"><span class="badge person">PERSON</span></div>
     </div>
-
     <div class="case-row">
-      <div class="cell col-name">Boeing 737 MAX<br><span style="font-family:'IBM Plex Mono';font-size:10px;color:var(--muted-light);font-weight:300;">MCAS / FAA delegation</span></div>
+      <div class="cell col-name">Boeing 737 MAX<br><span style="font-size:10px;color:#7a7570;font-weight:300;">MCAS / FAA delegation</span></div>
       <div class="cell col-l1">Engineers raised concerns. Named stop authority: absent or overridden.</div>
       <div class="cell col-l2">Formally role-based. Operationally dependent on individuals. Refusal authority fragmented across actors.</div>
-      <div class="cell col-tag"><span class="badge role">ROLE</span><span style="font-size:9px;color:var(--muted-light);margin:0 5px;">→</span><span class="badge person">PERSON</span></div>
+      <div class="cell col-tag"><span class="badge role">ROLE</span><span style="font-size:9px;color:#7a7570;margin:0 5px;">→</span><span class="badge person">PERSON</span></div>
     </div>
-
     <div class="case-row">
-      <div class="cell col-name">Knight Capital<br><span style="font-family:'IBM Plex Mono';font-size:10px;color:var(--muted-light);font-weight:300;">Aug 1, 2012 — 45 min</span></div>
+      <div class="cell col-name">Knight Capital<br><span style="font-size:10px;color:#7a7570;font-weight:300;">Aug 1, 2012 — 45 min</span></div>
       <div class="cell col-l1">No written procedures. No named authority to stop SMARS. 45 minutes of continuation.</div>
       <div class="cell col-l2">No person held it. No role defined it. No structure encoded it. Authority unlocated.</div>
       <div class="cell col-tag"><span class="badge unlocated">UNLOCATED</span></div>
     </div>
-
     <div class="case-row">
-      <div class="cell col-name">CrowdStrike<br><span style="font-family:'IBM Plex Mono';font-size:10px;color:var(--muted-light);font-weight:300;">July 2024 deployment</span></div>
+      <div class="cell col-name">CrowdStrike<br><span style="font-size:10px;color:#7a7570;font-weight:300;">July 2024 deployment</span></div>
       <div class="cell col-l1">Interruption pathway: unclear from public record.</div>
       <div class="cell col-l2">Insufficient public evidence to classify. Internal governance not disclosed.</div>
       <div class="cell col-tag"><span class="badge unknown">UNKNOWN</span></div>
     </div>
-
   </div>
-
   <div class="formulation">
     <div class="form-text">
       The reports named a person.<br>
@@ -286,25 +161,11 @@
       Continuity is the rest of it.
     </div>
   </div>
-
   <div class="footer">
     <span>Decision Authority Research</span>
     <span>matrix-audit.com</span>
     <span>Internal use only</span>
   </div>
-
 </div>
 </body>
 </html>
-    text-transform: uppercase;
-    padding: 3px 7px;
-    display: inline-block;
-    margin-bottom: 12px;
-    border: 1px solid;
-  }
-
-  .taxon-tag.person { color: var(--gold); border-color: var(--gold-dim); }
-  .taxon-tag.role   { color: #5dade2; border-color: #2e6e8e; }
-  .taxon-tag.struct { color: var(--safe); border-color: #2a6e50; }
-  .taxon-tag.unlocated { color: #bb8fce; border-color: #6c3483; }
-  .taxon-def { font-size: 11px; color: var(--muted-light); line-height: 1.6; }
