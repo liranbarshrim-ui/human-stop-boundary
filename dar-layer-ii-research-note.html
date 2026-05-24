@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Authority Continuity — DAR Research Note</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,600&family=IBM+Plex+Mono:wght@300;400&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg: #090909;
+    --surface: #0f0f0f;
+    --gold: #c8a96e;
+    --gold-dim: #7a6340;
+    --text: #e6e0d4;
+    --muted: #52504c;
+    --muted-light: #7a7570;
+    --border: #1e1e1e;
+  }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Cormorant Garamond', serif;
+    min-height: 100vh;
+    padding: 80px 40px;
+    position: relative;
+  }
+
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.035'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .page {
+    max-width: 680px;
+    margin: 0 auto;
+    position: relative;
+    z-index: 1;
+  }
+
+  /* status bar */
+  .status {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 64px;
+    display: flex;
+    gap: 24px;
+    flex-wrap: wrap;
+  }
+
+  .status-dot {
+    color: var(--gold);
+    margin-right: 6px;
+  }
+
+  /* opening boundary */
+  .boundary {
+    border-left: 2px solid var(--border);
+    padding: 16px 24px;
+    margin-bottom: 64px;
+    background: var(--surface);
+  }
+
+  .boundary p {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px;
+    color: var(--muted-light);
+    line-height: 1.8;
+    letter-spacing: 0.03em;
+  }
+
+  /* section */
+  .section {
+    margin-bottom: 56px;
+  }
+
+  .section-label {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .section-label::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--border);
+  }
+
+  /* question pair */
+  .questions {
+    margin-bottom: 0;
+  }
+
+  .q-item {
+    padding: 20px 0;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .q-item:last-child { border-bottom: none; }
+
+  .q-tag {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 8px;
+  }
+
+  .q-tag.active { color: var(--gold); }
+
+  .q-text {
+    font-size: 22px;
+    font-style: italic;
+    line-height: 1.45;
+    color: var(--text);
+  }
+
+  .q-text.dim { color: var(--muted-light); font-size: 19px; }
+
+  /* taxonomy */
+  .taxonomy-list {
+    list-style: none;
+  }
+
+  .taxon-item {
+    display: grid;
+    grid-template-columns: 120px 1fr;
+    gap: 0;
+    padding: 14px 0;
+    border-bottom: 1px solid var(--border);
+    align-items: start;
+  }
+
+  .taxon-item:last-child { border-bottom: none; }
+
+  .taxon-name {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10px;
+    font-weight: 400;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    padding-top: 2px;
+  }
+
+  .taxon-name.person { color: var(--gold); }
+  .taxon-name.role { color: #5dade2; }
+  .taxon-name.structure { color: #3d9970; }
+  .taxon-name.unlocated { color: #bb8fce; }
+  .taxon-name.unknown { color: var(--muted-light); }
+
+  .taxon-def {
+    font-size: 16px;
+    color: var(--muted-light);
+    line-height: 1.5;
+  }
+
+  /* evidence strip */
+  .evidence {
+    border: 1px solid var(--border);
+  }
+
+  .ev-row {
+    display: grid;
+    grid-template-columns: 180px 1fr 110px;
+    border-bottom: 1px solid var(--border);
+    background: var(--surface);
+  }
+
+  .ev-row:last-child { border-bottom: none; }
+
+  .ev-row.header { background: var(--bg); }
+
+  .ev-cell {
+    padding: 13px 16px;
+    border-right: 1px solid var(--border);
+    font-size: 13px;
+    line-height: 1.4;
+  }
+
+  .ev-cell:last-child { border-right: none; }
+
+  .ev-cell.header-cell {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+
+  .ev-case { font-weight: 600; color: var(--text); }
+  .ev-obs { color: var(--muted-light); font-size: 13px; }
+
+  .ev-badge {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    display: inline-block;
+    padding: 3px 7px;
+    border: 1px solid;
+  }
+
+  .ev-badge.structure { color: #3d9970; border-color: #2a6e50; }
+  .ev-badge.unlocated { color: #bb8fce; border-color: #6c3483; }
+  .ev-badge.declared { color: #5dade2; border-color: #2e6e8e; }
+  .ev-badge.role { color: #5dade2; border-color: #2e6e8e; }
+
+  /* limits */
+  .limits {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    padding: 24px 28px;
+  }
+
+  .limits-title {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 16px;
+  }
+
+  .limit-item {
+    font-size: 15px;
+    color: var(--muted-light);
+    line-height: 1.6;
+    padding: 6px 0;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    gap: 12px;
+    align-items: baseline;
+  }
+
+  .limit-item:last-child { border-bottom: none; }
+
+  .limit-dash {
+    font-family: 'IBM Plex Mono', monospace;
+    color: var(--muted);
+    font-size: 11px;
+    flex-shrink: 0;
+  }
+
+  /* formulation */
+  .formulation {
+    border-left: 2px solid var(--gold);
+    padding: 0 0 0 28px;
+  }
+
+  .form-line {
+    font-size: 22px;
+    font-style: italic;
+    line-height: 1.7;
+    color: var(--text);
+  }
+
+  .form-line.accent {
+    color: var(--gold);
+    font-style: normal;
+    font-weight: 600;
+  }
+
+  /* footer */
+  .footer {
+    margin-top: 64px;
+    padding-top: 24px;
+    border-top: 1px solid var(--border);
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--muted);
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  @media (max-width: 600px) {
+    body { padding: 48px 24px; }
+    .taxon-item { grid-template-columns: 1fr; gap: 6px; }
+    .ev-row { grid-template-columns: 1fr; }
+    .ev-cell { border-right: none; border-bottom: 1px solid var(--border); }
+    .ev-cell:last-child { border-bottom: none; }
+    .ev-row.header { display: none; }
+    .footer { flex-direction: column; }
+  }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <div class="status">
+    <span><span class="status-dot">·</span> Decision Authority Research</span>
+    <span><span class="status-dot">·</span> Research Note</span>
+    <span><span class="status-dot">·</span> Working model v0.2</span>
+    <span><span class="status-dot">·</span> May 2026</span>
+  </div>
+
+  <div class="boundary">
+    <p>This is an observational research note, not a governance framework.<br>
+    It does not claim to explain organizational failure.<br>
+    It asks a narrower question: where does refusal authority survive when the person disappears?</p>
+  </div>
+
+  <div class="section">
+    <div class="section-label">The question</div>
+    <div class="questions">
+      <div class="q-item">
+        <div class="q-tag">Layer I</div>
+        <div class="q-text dim">Who, by name, is authorized to refuse continuation before a decision becomes irreversible?</div>
+      </div>
+      <div class="q-item">
+        <div class="q-tag active">Layer II</div>
+        <div class="q-text">If that person disappeared tomorrow — where would refusal authority live?</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-label">Where authority can live</div>
+    <ul class="taxonomy-list">
+      <li class="taxon-item">
+        <span class="taxon-name person">Person</span>
+        <span class="taxon-def">Lives in an individual. Not transferable. Disappears with them.</span>
+      </li>
+      <li class="taxon-item">
+        <span class="taxon-name role">Role</span>
+        <span class="taxon-def">Attached to a title. Survives only if explicitly bounded and documented as belonging to the role, not the individual. Vulnerable to regression.</span>
+      </li>
+      <li class="taxon-item">
+        <span class="taxon-name structure">Structure (Held)</span>
+        <span class="taxon-def">Encoded in governance artifacts. Has demonstrably survived pressure. No succession decision required.</span>
+      </li>
+      <li class="taxon-item">
+        <span class="taxon-name structure">Structure (Declared)</span>
+        <span class="taxon-def">Written down but untested under pressure. Indistinguishable from Role without a stress event.</span>
+      </li>
+      <li class="taxon-item">
+        <span class="taxon-name unlocated">Unlocated</span>
+        <span class="taxon-def">No recoverable authority anchor could be identified. Distinct from Role: not absent, unlocatable.</span>
+      </li>
+      <li class="taxon-item">
+        <span class="taxon-name unknown">Unknown</span>
+        <span class="taxon-def">Insufficient public evidence to classify.</span>
+      </li>
+    </ul>
+  </div>
+
+  <div class="section">
+    <div class="section-label">Four observations</div>
+    <div class="evidence">
+      <div class="ev-row header">
+        <div class="ev-cell header-cell">Case</div>
+        <div class="ev-cell header-cell">Observation</div>
+        <div class="ev-cell header-cell">Classification</div>
+      </div>
+      <div class="ev-row">
+        <div class="ev-cell ev-case">Toyota Andon</div>
+        <div class="ev-cell ev-obs">Refusal authority written into the production structure. Survives any individual. Rotation does not reset authority.</div>
+        <div class="ev-cell"><span class="ev-badge structure">Structure (Held)</span></div>
+      </div>
+      <div class="ev-row">
+        <div class="ev-cell ev-case">Knight Capital<br><span style="font-size:11px;color:#52504c;">Aug 2012, 45 min</span></div>
+        <div class="ev-cell ev-obs">No written procedures. No named authority. No person, role, or structure held it. 45 minutes of continuation.</div>
+        <div class="ev-cell"><span class="ev-badge unlocated">Unlocated</span></div>
+      </div>
+      <div class="ev-row">
+        <div class="ev-cell ev-case">OpenAI Board<br><span style="font-size:11px;color:#52504c;">Nov 2023</span></div>
+        <div class="ev-cell ev-obs">Formal authority documented and exercised. Overridden by informal network within 96 hours. Declared, not Held.</div>
+        <div class="ev-cell"><span class="ev-badge declared">Structure (Declared)</span></div>
+      </div>
+      <div class="ev-row">
+        <div class="ev-cell ev-case">ICU Triage<br><span style="font-size:11px;color:#52504c;">NY/NJ protocol</span></div>
+        <div class="ev-cell ev-obs">Triage Officer role defined, authority explicit, rotation documented. Refusal authority separated from clinical judgment. Survived shift change.</div>
+        <div class="ev-cell"><span class="ev-badge role">Role → Structure</span></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-label">What this note does not claim</div>
+    <div class="limits">
+      <div class="limits-title">Explicit boundaries</div>
+      <div class="limit-item"><span class="limit-dash">—</span> That formal structure always governs. Structure (Declared) may not hold under pressure.</div>
+      <div class="limit-item"><span class="limit-dash">—</span> That Role is stable. Role is a transitional state, always vulnerable to regression toward Person or Unlocated.</div>
+      <div class="limit-item"><span class="limit-dash">—</span> That distributed systems resist classification entirely. They resist classification only when refusal authority is not explicitly separated from other authority.</div>
+      <div class="limit-item"><span class="limit-dash">—</span> That this taxonomy is complete. Several cases remain Unknown. ICU protocols vary by institution.</div>
+      <div class="limit-item"><span class="limit-dash">—</span> That governance failure follows from absence of named authority. Absence creates vulnerability. It does not determine outcome.</div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="formulation">
+      <div class="form-line">The reports named a person.</div>
+      <div class="form-line">But a name is not a mechanism.</div>
+      <div class="form-line">When the person disappeared, continuity remained undocumented.</div>
+      <div class="form-line" style="margin-top:24px;">&nbsp;</div>
+      <div class="form-line accent">A named authority is not yet an institutional authority.</div>
+      <div class="form-line">The appointment is the beginning of the answer.</div>
+      <div class="form-line">Continuity is the rest of it.</div>
+    </div>
+  </div>
+
+  <div class="footer">
+    <span>matrix-audit.com</span>
+    <span>Decision Authority Research</span>
+    <span>Not for external distribution</span>
+  </div>
+
+</div>
+</body>
+</html>
