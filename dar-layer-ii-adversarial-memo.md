@@ -237,6 +237,10 @@ UNLOCATED (native): Knight Capital. Never anchored.
 3. ROLE confirmed as transitional marker, not endpoint.
 4. Negative case pending — Microsoft/Nadella 2014. Hypothesis: Layer II adds little explanatory power where continuity held without visible refusal discontinuity. If silent — that is information, not failure.
 
+**Negative Case — Microsoft 2013–2014 (CEO transition):** STRUCTURE (Held). Low explanatory gain. Continuity occurred as documented. Board appointed a formal search committee with named authority. Ballmer remained until successor named. No observable refusal discontinuity. Layer II mostly silent.
+
+**Boundary condition confirmed:** Layer II is informative when continuity is contested, discontinuous, degraded, or under pressure. It is largely silent when continuity is orderly, documented, and unchallenged. Silence is a valid outcome.
+
 **Do not update the website until negative case is complete.**
 
 The taxonomy has passed v0.2 stress testing with qualifications. It is not broken. It is bounded.
