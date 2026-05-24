@@ -223,18 +223,21 @@ Network Override is a modifier hypothesis, not a class. It requires 2–3 additi
 
 STRUCTURE (Held): Toyota, FAA ATCSCC. Stable by design.
 ROLE → STRUCTURE: JPMorgan post-2013. Institutionalizing after failure.
-ROLE → PERSON: Boeing, JPMorgan pre-2012. Authority absorbed by individuals.
+ROLE → PERSON (passive drift): Boeing, JPMorgan pre-2012. Authority absorbed by individuals under cultural or growth pressure.
+ROLE → PERSON (removal override): Lehman 2007. Refusal authority formally assigned, exercised, then role holder removed after documented friction with executive direction. Operative authority concentrated in CEO.
 ROLE → UNLOCATED: SVB 2022. Authority collapsed into absence.
 UNLOCATED (native): Knight Capital. Never anchored.
 
-SVB introduces a pattern not previously observed: anchored → degraded → unlocated. Distinct from Knight (never anchored) and from Boeing/JPMorgan pre-2012 (degraded into person).
+**Modifiers note:** Mechanisms of degradation are observational modifiers, not additional taxonomy classes. Passive drift, removal override, and vacuum are all sub-patterns of ROLE → PERSON or ROLE → UNLOCATED. They describe how degradation occurred, not a distinct location of authority.
 
-1. ICU triage — needs a dedicated research pass before classification.
-2. The documented vs. operative STRUCTURE distinction needs development.
-3. ROLE should be reframed as a trajectory marker, not an endpoint.
-4. SVB growth override remains modifier hypothesis — not established inference.
+**Lehman boundary:** Antoncic raised risk concerns at odds with executive direction and was subsequently removed from the role. Causality between refusal and removal is documented in alignment but not established as direct cause.
 
-**Do not update the website until these are resolved.**
+1. ICU triage — classified: ROLE approaching STRUCTURE (Declared) where protocols exist. PERSON where protocols absent. Variance by institution.
+2. The documented vs. operative STRUCTURE distinction resolved by Held/Declared refinement.
+3. ROLE confirmed as transitional marker, not endpoint.
+4. Negative case pending — Microsoft/Nadella 2014. Hypothesis: Layer II adds little explanatory power where continuity held without visible refusal discontinuity. If silent — that is information, not failure.
+
+**Do not update the website until negative case is complete.**
 
 The taxonomy has passed v0.2 stress testing with qualifications. It is not broken. It is bounded.
 
