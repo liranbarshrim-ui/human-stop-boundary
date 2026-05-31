@@ -28,13 +28,9 @@
   --muted: #d8d2c8;
   --dim: #7a7570;
   --line: rgba(255,255,255,.06);
-  --surface: #0d0d0d;
-  --faint: #1a1a1a;
 }
-
 *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
 html { scroll-behavior: smooth; }
-
 body {
   background: var(--bg);
   color: var(--text);
@@ -42,7 +38,6 @@ body {
   overflow-x: hidden;
   -webkit-font-smoothing: antialiased;
 }
-
 body::before {
   content: "";
   position: fixed;
@@ -53,10 +48,7 @@ body::before {
   background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
   background-size: 180px;
 }
-
 a { text-decoration: none; color: inherit; }
-
-/* TOPBAR */
 .topbar {
   position: fixed;
   top: 0; left: 0; right: 0;
@@ -82,8 +74,6 @@ a { text-decoration: none; color: inherit; }
   color: var(--gold2); transition: opacity .2s;
 }
 .nav-contact:hover { opacity: .7; }
-
-/* MAIN FRAME */
 .frame {
   max-width: 720px;
   margin: 0 auto;
@@ -91,8 +81,6 @@ a { text-decoration: none; color: inherit; }
   position: relative;
   z-index: 1;
 }
-
-/* EYEBROW */
 .eyebrow {
   font-family: "IBM Plex Mono", monospace;
   font-size: 9px; letter-spacing: .28em; text-transform: uppercase;
@@ -101,8 +89,6 @@ a { text-decoration: none; color: inherit; }
   display: flex; align-items: center; gap: 14px;
 }
 .eyebrow::before { content: ''; width: 24px; height: 1px; background: var(--gold); }
-
-/* TITLE */
 .page-title {
   font-size: clamp(28px, 4vw, 52px);
   font-weight: 300; line-height: 1.08;
@@ -111,8 +97,6 @@ a { text-decoration: none; color: inherit; }
   max-width: 18ch;
 }
 .page-title em { font-style: italic; color: var(--gold); }
-
-/* OPENING THOUGHT */
 .opening {
   font-size: clamp(17px, 1.6vw, 21px);
   font-weight: 300; font-style: italic;
@@ -123,13 +107,10 @@ a { text-decoration: none; color: inherit; }
   padding-left: 24px;
   margin-bottom: 72px;
 }
-
-/* RESEARCH SECTIONS — editorial, not cards */
 .research-sections {
   border-top: 1px solid var(--line);
   margin-bottom: 72px;
 }
-
 .rs-item {
   padding: 36px 0;
   border-bottom: 1px solid var(--line);
@@ -138,7 +119,6 @@ a { text-decoration: none; color: inherit; }
   gap: 32px;
   align-items: start;
 }
-
 .rs-label {
   font-family: "IBM Plex Mono", monospace;
   font-size: 8.5px; letter-spacing: .2em; text-transform: uppercase;
@@ -146,7 +126,6 @@ a { text-decoration: none; color: inherit; }
   padding-top: 4px;
   line-height: 1.6;
 }
-
 .rs-text {
   font-size: clamp(16px, 1.5vw, 19px);
   font-weight: 300;
@@ -154,20 +133,6 @@ a { text-decoration: none; color: inherit; }
   line-height: 1.85;
 }
 .rs-text strong { color: var(--text); font-weight: 400; }
-
-/* PULL */
-.pull {
-  border-left: 2px solid var(--gold);
-  padding-left: 24px;
-  margin-bottom: 72px;
-}
-.pull p {
-  font-size: clamp(18px, 2vw, 26px);
-  font-weight: 300; line-height: 1.45;
-  color: var(--text);
-}
-
-/* BODY */
 .body-text {
   font-size: clamp(17px, 1.5vw, 20px);
   font-weight: 300; line-height: 1.85;
@@ -176,8 +141,6 @@ a { text-decoration: none; color: inherit; }
   max-width: 58ch;
 }
 .body-text strong { color: var(--text); font-weight: 400; }
-
-/* PORTRAIT — small, at bottom */
 .portrait-block {
   margin: 64px 0 48px;
   display: flex;
@@ -206,15 +169,6 @@ a { text-decoration: none; color: inherit; }
   font-size: 9px; letter-spacing: .2em; text-transform: uppercase;
   color: var(--dim);
 }
-.portrait-note {
-  font-size: clamp(15px, 1.4vw, 17px);
-  font-weight: 300; font-style: italic;
-  color: #a8a09a;
-  line-height: 1.65;
-  max-width: 36ch;
-}
-
-/* CLOSING THOUGHT */
 .closing-thought {
   margin: 72px 0 56px;
   border-left: 1px solid rgba(200,169,110,.28);
@@ -227,8 +181,6 @@ a { text-decoration: none; color: inherit; }
   line-height: 1.4;
   color: var(--text);
 }
-
-/* BACK */
 .back-row { margin-top: 48px; }
 .back-link {
   font-family: "IBM Plex Mono", monospace;
@@ -236,8 +188,6 @@ a { text-decoration: none; color: inherit; }
   color: var(--dim); transition: color .2s;
 }
 .back-link:hover { color: var(--gold2); }
-
-/* FOOTER */
 .footer {
   position: relative; z-index: 1;
   text-align: center; padding: 20px;
@@ -247,18 +197,14 @@ a { text-decoration: none; color: inherit; }
 }
 .footer a { color: var(--dim); transition: color .2s; }
 .footer a:hover { color: var(--gold); }
-
-/* RESPONSIVE */
 @media (max-width: 860px) {
   .topbar { padding: 0 20px; }
   .frame { padding: 108px 20px 64px; }
   .rs-item { grid-template-columns: 1fr; gap: 12px; }
   .rs-label { padding-top: 0; }
-  .rs-text { line-height: 1.75; }
   .portrait-block { flex-direction: column; gap: 20px; }
   .portrait-img { width: 90px; height: 112px; }
 }
-
 @keyframes fadeUp {
   from { opacity: 0; transform: translateY(16px); }
   to   { opacity: 1; transform: translateY(0); }
@@ -284,18 +230,17 @@ a { text-decoration: none; color: inherit; }
   <h1 class="page-title">What this work<br>examines — and<br>what it does <em>not claim.</em></h1>
 
   <p class="opening">
-    Most organizations define who approves.<br>
-    Far fewer define who can refuse continuation.
+    This work focuses on a single structural question: before a decision becomes irreversible, who, by name, is authorized to refuse it?
   </p>
 
   <div class="research-sections">
     <div class="rs-item">
       <div class="rs-label">What is examined</div>
-      <div class="rs-text">How organizations define continuation — and who holds the authority to refuse it. Specifically: at what point does continuation cease to require explicit re-authorization from a named individual, and what does the public record show about that condition?</div>
+      <div class="rs-text">How organizations assign authority to refuse continuation — and what the public record shows about what happens when that authority is absent, unnamed, or overridden before a decision becomes irreversible.</div>
     </div>
     <div class="rs-item">
       <div class="rs-label">How it proceeds</div>
-      <div class="rs-text">Through observation of publicly available post-incident records, regulatory findings, and documented governance failures. Each case is examined for the presence or absence of a named individual with prior, explicit commitment to refuse continuation under uncertainty.</div>
+      <div class="rs-text">Through observation of publicly available post-incident records, regulatory findings, and documented governance failures. Each case is examined for the presence or absence of a named individual expected to refuse continuation before a decision became irreversible.</div>
     </div>
     <div class="rs-item">
       <div class="rs-label">What is not claimed</div>
