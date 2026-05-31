@@ -1,0 +1,513 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Glossary — DAR | matrix-audit.com</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=IBM+Plex+Mono:wght@300;400;500&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:        #080808;
+      --surface:   #0d0d0d;
+      --border:    #1a1a1a;
+      --border-2:  #242424;
+      --gold:      #c8a96e;
+      --gold2:     #ead9b3;
+      --gold-dim:  rgba(200,169,110,0.10);
+      --gold-line: rgba(200,169,110,0.25);
+      --text:      #ebe5da;
+      --muted:     #c8c2b8;
+      --dim:       #7a7570;
+      --muted-2:   #52504c;
+      --line:      rgba(255,255,255,.06);
+      --danger:    #c0392b;
+      --safe:      #3d9970;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 18px;
+      line-height: 1.7;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    /* grain overlay */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+      pointer-events: none;
+      z-index: 0;
+      opacity: 0.6;
+    }
+
+    /* ── layout ── */
+    .page {
+      position: relative;
+      z-index: 1;
+      max-width: 720px;
+      margin: 0 auto;
+      padding: 120px 40px 120px 56px;
+    }
+
+    @media (max-width: 600px) {
+      .page { padding: 60px 24px 80px 32px; }
+      body { font-size: 16px; }
+    }
+
+    /* ── topbar ── */
+    .topbar {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      height: 72px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 48px;
+      z-index: 100;
+      background: rgba(8,8,8,.82);
+      backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--line);
+    }
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 9.5px;
+      letter-spacing: .32em;
+      text-transform: uppercase;
+      color: var(--text);
+      text-decoration: none;
+    }
+    .brand-rule { width: 32px; height: 1px; background: var(--gold); }
+    .nav-contact {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 9.5px;
+      letter-spacing: .28em;
+      text-transform: uppercase;
+      color: var(--gold2);
+      text-decoration: none;
+      transition: opacity .2s;
+    }
+    .nav-contact:hover { opacity: .7; }
+
+    /* ── header ── */
+    .header {
+      margin-bottom: 64px;
+      border-bottom: 1px solid var(--border-2);
+      padding-bottom: 40px;
+    }
+
+    .label {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 10px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 20px;
+      display: block;
+    }
+
+    h1 {
+      font-size: clamp(2rem, 5vw, 2.8rem);
+      font-weight: 300;
+      letter-spacing: 0.02em;
+      line-height: 1.2;
+      color: var(--text);
+      margin-bottom: 20px;
+    }
+
+    .header-desc {
+      font-size: 1rem;
+      color: var(--muted);
+      font-style: italic;
+      font-weight: 300;
+      line-height: 1.6;
+      max-width: 520px;
+    }
+
+    /* ── core question ── */
+    .core-question {
+      border-left: 2px solid var(--gold);
+      padding: 28px 32px;
+      background: var(--gold-dim);
+      margin-bottom: 72px;
+    }
+
+    .core-question .cq-label {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 10px;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 16px;
+      display: block;
+    }
+
+    .core-question p {
+      font-size: clamp(1.1rem, 2.5vw, 1.35rem);
+      font-weight: 400;
+      font-style: italic;
+      color: var(--text);
+      line-height: 1.5;
+    }
+
+    /* ── term entries ── */
+    .terms { display: flex; flex-direction: column; gap: 0; }
+
+    .term {
+      padding: 48px 0;
+      border-bottom: 1px solid var(--border);
+      opacity: 0;
+      transform: translateY(16px);
+      animation: fadeUp 0.5s forwards;
+    }
+
+    .term:last-child { border-bottom: none; }
+
+    @keyframes fadeUp {
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .term:nth-child(1) { animation-delay: 0.1s; }
+    .term:nth-child(2) { animation-delay: 0.2s; }
+    .term:nth-child(3) { animation-delay: 0.3s; }
+    .term:nth-child(4) { animation-delay: 0.4s; }
+    .term:nth-child(5) { animation-delay: 0.5s; }
+
+    .term-header {
+      display: flex;
+      align-items: baseline;
+      gap: 16px;
+      margin-bottom: 20px;
+      flex-wrap: wrap;
+    }
+
+    .term-name {
+      font-size: clamp(1.3rem, 3vw, 1.7rem);
+      font-weight: 500;
+      letter-spacing: 0.01em;
+      color: var(--text);
+    }
+
+    .term-index {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 10px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--muted-2);
+    }
+
+    .term-body {
+      font-size: 1rem;
+      color: var(--text);
+      line-height: 1.75;
+      font-weight: 300;
+      max-width: 600px;
+    }
+
+    .term-body p + p { margin-top: 12px; }
+
+    /* inline emphasis */
+    .term-body strong {
+      font-weight: 500;
+      color: var(--text);
+    }
+
+    /* ── functional test ── */
+    .functional-test {
+      margin: 56px 0 0;
+      border: 1px solid var(--border-2);
+      background: var(--surface);
+      padding: 36px 40px;
+    }
+
+    @media (max-width: 600px) {
+      .functional-test { padding: 28px 24px; }
+    }
+
+    .ft-label {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 10px;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 20px;
+      display: block;
+    }
+
+    .ft-question {
+      font-size: clamp(1rem, 2.2vw, 1.2rem);
+      font-style: italic;
+      font-weight: 400;
+      color: var(--text);
+      margin-bottom: 28px;
+      line-height: 1.5;
+    }
+
+    .ft-results {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .ft-row {
+      display: flex;
+      align-items: baseline;
+      gap: 16px;
+    }
+
+    .ft-answer {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 12px;
+      font-weight: 500;
+      letter-spacing: 0.06em;
+      min-width: 28px;
+    }
+
+    .ft-answer.yes { color: var(--danger); }
+    .ft-answer.no  { color: var(--safe); }
+
+    .ft-arrow {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 12px;
+      color: var(--muted-2);
+    }
+
+    .ft-result {
+      font-size: 0.95rem;
+      color: var(--text);
+      font-weight: 300;
+    }
+
+    /* ── secondary effect ── */
+    .secondary-effect {
+      margin-top: 72px;
+      padding-top: 48px;
+      border-top: 1px solid var(--border);
+    }
+
+    .se-label {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 10px;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 20px;
+      display: block;
+    }
+
+    .se-title {
+      font-size: clamp(1.1rem, 2.5vw, 1.4rem);
+      font-weight: 400;
+      color: var(--text);
+      margin-bottom: 16px;
+    }
+
+    .se-body {
+      font-size: 0.95rem;
+      color: var(--muted);
+      line-height: 1.75;
+      font-weight: 300;
+      max-width: 580px;
+    }
+
+    .se-body p + p { margin-top: 12px; }
+
+    .se-note {
+      margin-top: 20px;
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 11px;
+      color: var(--muted-2);
+      line-height: 1.6;
+      border-left: 1px solid var(--border-2);
+      padding-left: 16px;
+    }
+
+    /* ── footer ── */
+    .footer {
+      margin-top: 100px;
+      padding-top: 32px;
+      border-top: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    .footer-site {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 11px;
+      color: var(--muted-2);
+      letter-spacing: 0.08em;
+    }
+
+    .footer-links {
+      display: flex;
+      gap: 24px;
+    }
+
+    .footer-links a {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 11px;
+      color: var(--muted);
+      text-decoration: none;
+      letter-spacing: 0.08em;
+      transition: color 0.2s;
+    }
+
+    .footer-links a:hover { color: var(--gold); }
+  </style>
+</head>
+<body>
+<header class="topbar">
+  <a href="index.html" class="brand"><span class="brand-rule"></span><span>Liran Bar-Shrim</span></a>
+  <a href="mailto:Liran@liranbarshrim.com" class="nav-contact">Correspondence</a>
+</header>
+
+<main>
+<div class="page">
+
+  <!-- header -->
+  <header class="header">
+    <span class="label">Decision Authority Research</span>
+    <h1>Defined Terms</h1>
+    <p class="header-desc">
+      A working vocabulary for the question DAR asks.
+      The terms, distinctions, and test used to examine refusal authority.
+    </p>
+  </header>
+
+  <!-- core question -->
+  <div class="core-question">
+    <span class="cq-label">Core Question</span>
+    <p>Before an irreversible action proceeds, who is authorized to stop it — by name?</p>
+  </div>
+
+  <!-- terms -->
+  <div class="terms">
+
+    <!-- 1. Irreversible Commitment -->
+    <div class="term">
+      <div class="term-header">
+        <span class="term-name">Irreversible Commitment</span>
+        <span class="term-index">01</span>
+      </div>
+      <div class="term-body">
+        <p>The point at which a decision or action can no longer be undone, recalled, or meaningfully corrected. Once crossed, consequences proceed independent of intent.</p>
+        <p>DAR is concerned specifically with the moment <em>before</em> this threshold. What happens after is a different problem.</p>
+      </div>
+    </div>
+
+    <!-- 2. Named Authority -->
+    <div class="term">
+      <div class="term-header">
+        <span class="term-name">Named Authority</span>
+        <span class="term-index">02</span>
+      </div>
+      <div class="term-body">
+        <p>A specific individual — identifiable by name, not by role or committee — who carries explicit authorization to act at a defined decision point.</p>
+        <p>A title is not a name. A process is not a person. <strong>Named authority requires that a specific individual can be identified before the decision is required.</strong></p>
+      </div>
+    </div>
+
+    <!-- 3. Control Point -->
+    <div class="term">
+      <div class="term-header">
+        <span class="term-name">Control Point</span>
+        <span class="term-index">03</span>
+      </div>
+      <div class="term-body">
+        <p>A position in a process where review, approval, or documentation occurs. If the person in this role refuses or raises concerns, the process may slow — but continuation remains available without an explicit release from that individual.</p>
+        <p>Control points generate records. They do not determine whether the process can proceed.</p>
+      </div>
+    </div>
+
+    <!-- 4. Stop Authority -->
+    <div class="term">
+      <div class="term-header">
+        <span class="term-name">Stop Authority</span>
+        <span class="term-index">04</span>
+      </div>
+      <div class="term-body">
+        <p>A position where continuation is unavailable without an explicit release from a named individual. If that person refuses, the process cannot proceed without an override — and that override must itself be attributed to a named decision-maker.</p>
+        <p><strong>Stop authority is not seniority. It is not the authority to recommend stopping.</strong> It is the structural condition in which continuation is blocked until someone, by name, releases it.</p>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- functional test -->
+  <div class="functional-test">
+    <span class="ft-label">Functional Test</span>
+    <p class="ft-question">If the person says no, can the process continue anyway?</p>
+    <div class="ft-results">
+      <div class="ft-row">
+        <span class="ft-answer yes">Yes</span>
+        <span class="ft-arrow">→</span>
+        <span class="ft-result">Control Point</span>
+      </div>
+      <div class="ft-row">
+        <span class="ft-answer no">No</span>
+        <span class="ft-arrow">→</span>
+        <span class="ft-result">Stop Authority</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- orphaned responsibility -->
+  <div class="terms" style="margin-top:0;">
+
+    <!-- 5. Orphaned Responsibility -->
+    <div class="term">
+      <div class="term-header">
+        <span class="term-name">Orphaned Responsibility</span>
+        <span class="term-index">05</span>
+      </div>
+      <div class="term-body">
+        <p>A condition in which accountability for a decision exists in principle but is held by no one in particular. Everyone reviewed. Everyone approved. No one stopped. After the fact, no individual carries the decision.</p>
+        <p>Orphaned responsibility may emerge when systems are designed around approval while leaving refusal authority undefined.</p>
+        <p><em>The goal is not to prevent failure. The goal is to prevent orphaned responsibility.</em></p>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- secondary effect -->
+  <div class="secondary-effect">
+    <span class="se-label">Potential Secondary Effect</span>
+    <p class="se-title">On behavior before the decision point</p>
+    <div class="se-body">
+      <p>When a specific individual is explicitly authorized to stop an irreversible action, that authority may influence how concerns are raised, discussed, and escalated before the final decision point.</p>
+      <p><strong>DAR does not depend on this effect.</strong> Its purpose is only to determine whether a named stop authority exists at the point of irreversible commitment.</p>
+    </div>
+    <p class="se-note">This is an observed tendency, not a guaranteed outcome. DAR makes no claim about organizational culture or behavioral change.</p>
+  </div>
+
+  <!-- closing question -->
+  <div style="margin-top:80px;padding-top:64px;border-top:1px solid rgba(200,169,110,.2);">
+    <span style="font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:#52504c;display:block;margin-bottom:24px;">Core Question</span>
+    <p style="font-size:clamp(1.4rem,3.5vw,2.2rem);font-weight:400;font-style:italic;line-height:1.2;color:#ebe5da;max-width:22ch;">Before an irreversible action proceeds, who is authorized to stop it — by name?</p>
+  </div>
+
+  <!-- footer -->
+  <footer class="footer" style="position:relative;z-index:1;text-align:center;padding:20px;border-top:1px solid var(--line);font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:.08em;color:#7a7570;">
+    © 2026 Liran Bar-Shrim &nbsp;·&nbsp;
+    <a href="faq.html" style="color:var(--dim);text-decoration:none;">FAQ</a> &nbsp;·&nbsp;
+    <a href="goodfaith.html" style="color:var(--dim);text-decoration:none;">Good Faith Use</a>
+  </footer>
+
+</div>
+</main>
+</body>
+</html>
