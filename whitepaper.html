@@ -27,8 +27,10 @@
   --text: #ebe5da;
   --muted: #d8d2c8;
   --dim: #7a7570;
+  --dim2: #52504c;
   --danger: #a83232;
   --line: rgba(255,255,255,.06);
+  --gold-line: rgba(200,169,110,.25);
 }
 *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
 html{scroll-behavior:smooth}
@@ -49,49 +51,31 @@ a{text-decoration:none;color:inherit}
 .doc-meta{font-family:"IBM Plex Mono",monospace;font-size:9px;letter-spacing:.32em;text-transform:uppercase;color:var(--dim);margin-bottom:32px}
 .hero h1{font-size:clamp(36px,5.5vw,78px);font-weight:400;line-height:1.0;letter-spacing:-.01em;color:var(--text);margin-bottom:36px;max-width:18ch}
 .hero h1 em{font-style:italic;color:var(--gold2)}
-.hero-summary{font-size:clamp(17px,1.5vw,20px);font-weight:300;line-height:1.9;color:var(--muted);max-width:58ch;border-left:1px solid rgba(200,169,110,.25);padding-left:24px}
+.hero-summary{font-size:clamp(17px,1.5vw,20px);font-weight:300;line-height:1.9;color:var(--muted);max-width:58ch;border-left:1px solid var(--gold-line);padding-left:24px}
 
 /* SECTIONS */
 .doc-section{padding:60px 0;border-bottom:1px solid var(--line)}
 .doc-section:last-of-type{border-bottom:none}
 .section-num{font-family:"IBM Plex Mono",monospace;font-size:9px;letter-spacing:.28em;text-transform:uppercase;color:var(--dim);margin-bottom:20px}
-.doc-section h2{font-size:clamp(24px,3.5vw,50px);font-weight:400;line-height:1.05;margin-bottom:28px;max-width:22ch}
+.doc-section h2{font-size:clamp(22px,3vw,44px);font-weight:400;line-height:1.1;margin-bottom:28px;max-width:24ch}
 .doc-section h2 em{font-style:italic;color:var(--gold2)}
 .body-p{font-size:clamp(16px,1.4vw,19px);font-weight:300;color:var(--muted);margin-bottom:20px;max-width:60ch;line-height:1.9}
 .body-p strong{color:var(--text);font-weight:400}
 
-/* PULL — gold bar, no background */
-.pull{
-  border-left:2px solid var(--gold);
-  padding-left:24px;
-  margin:36px 0;
-  font-size:clamp(18px,2vw,28px);
-  font-weight:300;line-height:1.45;font-style:italic;color:var(--text);
-}
+/* PULL */
+.pull{border-left:2px solid var(--gold);padding-left:24px;margin:36px 0;font-size:clamp(18px,2vw,26px);font-weight:300;line-height:1.5;font-style:italic;color:var(--text);}
 
-/* PULL DANGER — red bar */
-.pull-danger{
-  border-left:2px solid var(--danger);
-  padding-left:24px;
-  margin:36px 0;
-  font-size:clamp(17px,1.8vw,24px);
-  font-weight:300;line-height:1.5;font-style:italic;
-  color:#d4a0a0;
-}
+/* PULL DANGER */
+.pull-danger{border-left:2px solid var(--danger);padding-left:24px;margin:36px 0;font-size:clamp(17px,1.8vw,22px);font-weight:300;line-height:1.55;font-style:italic;color:#d4a0a0;}
 
 .danger-marker{font-family:"IBM Plex Mono",monospace;font-size:9px;letter-spacing:.28em;text-transform:uppercase;color:var(--danger);margin-bottom:20px;opacity:.8}
 
-/* THREE NAMES */
-.three-names{display:grid;grid-template-columns:1fr;gap:0;margin:36px 0;border:1px solid var(--line)}
-.name-block{padding:28px 32px;border-bottom:1px solid var(--line)}
-.name-block:last-child{border-bottom:none}
-.name-num{font-family:"IBM Plex Mono",monospace;font-size:9px;letter-spacing:.22em;color:var(--dim);margin-bottom:10px}
-.name-title{font-size:clamp(17px,2vw,24px);font-weight:400;color:var(--gold2);margin-bottom:10px}
-.name-desc{font-size:clamp(15px,1.3vw,17px);font-weight:300;color:var(--muted);line-height:1.75;max-width:52ch}
-
-/* ITEM LIST */
-.item-list{margin:24px 0;border-top:1px solid var(--line)}
-.item-row{padding:14px 0;border-bottom:1px solid var(--line);font-size:clamp(15px,1.3vw,17px);font-weight:300;color:var(--muted);line-height:1.6}
+/* DAR LINK */
+.dar-link{padding:32px 36px;background:rgba(200,169,110,.05);border-left:2px solid rgba(200,169,110,.3);margin-top:48px;}
+.dar-link-label{font-family:"IBM Plex Mono",monospace;font-size:9px;letter-spacing:.2em;text-transform:uppercase;color:var(--dim2);margin-bottom:16px;display:block;}
+.dar-link-text{font-size:clamp(15px,1.4vw,18px);font-weight:300;color:var(--muted);line-height:1.7;margin-bottom:20px;max-width:50ch;}
+.dar-link-cta{font-family:"IBM Plex Mono",monospace;font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--gold);border-bottom:1px solid rgba(200,169,110,.3);padding-bottom:2px;transition:opacity .2s;}
+.dar-link-cta:hover{opacity:.7;}
 
 /* FINAL */
 .final{padding:80px 0 100px;border-top:1px solid var(--line)}
@@ -109,12 +93,6 @@ a{text-decoration:none;color:inherit}
   .hero{padding-top:120px}
   .doc-section{padding:44px 0}
   .body-p{line-height:1.75}
-  .name-block{padding:22px 20px}
-}
-@media(min-width:700px){
-  .three-names{grid-template-columns:repeat(3,1fr)}
-  .name-block{border-bottom:none;border-right:1px solid var(--line)}
-  .name-block:last-child{border-right:none}
 }
 @media(max-width:640px){body{overflow-x:hidden !important}}
 @keyframes fadeUp{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
@@ -135,19 +113,18 @@ a{text-decoration:none;color:inherit}
     <div class="doc-meta">Research Note · 2026</div>
     <h1>Named Refusal Authority<br>in <em>Irreversible Decisions</em></h1>
     <p class="hero-summary">
-      Modern organizations are optimized for execution speed.
-      Many remain underprepared for one critical condition:
-      before irreversible conditions emerge — who holds named refusal authority?
+      Organizations usually define who can approve. This work examines the narrower question:
+      who, by name, can still interrupt continuation before continuation becomes the decision?
     </p>
   </section>
 
   <div class="doc-section wrap">
     <div class="section-num">I — The Governance Gap</div>
-    <h2>Authorization to refuse continuation is rarely defined before execution begins.</h2>
+    <h2>Authorization to refuse is rarely defined before execution begins.</h2>
     <p class="body-p">
       Most organizations maintain clear approval workflows, budget authority,
       reporting lines, and escalation structures.
-      Very few define who holds the institutional right to refuse continuation
+      Very few define who holds the right to refuse continuation
       when new uncertainty appears mid-execution.
     </p>
     <p class="body-p">
@@ -164,48 +141,39 @@ a{text-decoration:none;color:inherit}
 
   <div class="doc-section wrap">
     <div class="section-num">II — The Problem</div>
-    <h2>Most systems know how to authorize continuation.<br>Almost none define<br>who holds <em>refusal authority.</em></h2>
+    <h2>Most systems know how to authorize continuation.<br>Almost none define who holds <em>refusal authority.</em></h2>
     <p class="body-p">
       During consequential execution, multiple teams may be involved
       while no one clearly holds authorization to refuse continuation.
+      The domain changes. The structural gap does not.
     </p>
-    <div class="item-list">
-      <div class="item-row">Production incidents</div>
-      <div class="item-row">Cyber events</div>
-      <div class="item-row">AI deployments</div>
-      <div class="item-row">Financial transactions</div>
-      <div class="item-row">Operational emergencies</div>
-    </div>
     <p class="body-p">
       The absence of anomaly does not create authorization.
       The question is not whether the system failed.
       The question is who holds refusal authority
       before failure becomes the proof.
     </p>
+    <div class="pull">
+      Approval scales under pressure.<br>
+      Refusal rarely does.
+    </div>
   </div>
 
   <div class="doc-section wrap">
-    <div class="section-num">III — The Three Names</div>
-    <h2>In many consequential environments,<br>interruption, hold, and continuation authority<br>may require <em>distinct ownership.</em></h2>
+    <div class="section-num">III — Why Refusal Disappears</div>
+    <h2>Refusal authority rarely disappears through revocation.<br>It disappears through <em>accumulated hesitation.</em></h2>
     <p class="body-p">
-      Under pressure, these distinctions often collapse.
+      The person remains. The authority quietly does not.
+      Under pressure, refusal authority often weakens precisely when its cost becomes personal.
     </p>
-    <div class="three-names">
-      <div class="name-block">
-        <div class="name-num">01</div>
-        <div class="name-title">Refusal Authority</div>
-        <div class="name-desc">Named in advance. Holds the institutional right to deny continuation when trigger conditions are met. Cannot be the authorization authority.</div>
-      </div>
-      <div class="name-block">
-        <div class="name-num">02</div>
-        <div class="name-title">Hold Authority</div>
-        <div class="name-desc">Suspends execution while governance responds. Distinct from refusal authority. If the hold requires convening, it has already dissolved.</div>
-      </div>
-      <div class="name-block">
-        <div class="name-num">03</div>
-        <div class="name-title">Authorization Authority</div>
-        <div class="name-desc">A third named individual. Required to authorize continuation only following documented review. Authorization requires written rationale.</div>
-      </div>
+    <p class="body-p">
+      Expertise can be collective. Named refusal authority rarely is.
+      Oversight is not refusal authority. Escalation is not refusal authority.
+      Approval is not refusal.
+    </p>
+    <div class="pull">
+      In high-momentum systems, silence acquires operational meaning.<br>
+      A refusal that dissolves through non-response was never fully designed.
     </div>
   </div>
 
@@ -232,36 +200,39 @@ a{text-decoration:none;color:inherit}
     <div class="danger-marker">Escalation Failure</div>
     <h2>When no authorization is granted<br>and <em>no one responds.</em></h2>
     <p class="body-p">
-      Refusal authority was invoked. Hold is active.
-      The authorization authority was notified. No response followed.
+      Refusal authority was invoked. The authorization authority was notified.
+      No response followed.
     </p>
     <p class="body-p">
       A refusal that dissolves through silence was never fully designed.
     </p>
-    <p class="body-p">
-      Silence is not neutral. It is continuation without re-authorization.
-    </p>
+    <div class="pull-danger">
+      Silence is not neutral.<br>
+      It is continuation without re-authorization.
+    </div>
   </div>
 
   <div class="doc-section wrap">
     <div class="section-num">IV — Oversight</div>
-    <h2>Refusal authority must be fast.<br>Its use must be <em>reviewable.</em></h2>
+    <h2>Refusal authority without review<br>and review without refusal authority<br>produce <em>different failures.</em></h2>
     <p class="body-p">
-      Refusal authority without oversight can become arbitrary veto power.
-      An oversight mechanism without real refusal authority becomes symbolic process.
+      Where refusal authority exists without oversight, it can accumulate into
+      arbitrary veto power. Where oversight exists without real refusal authority,
+      it tends to become symbolic process.
     </p>
     <div class="pull">
       Refusal authority without review becomes veto.<br>
       Review without refusal authority becomes theater.
     </div>
     <p class="body-p">
-      Oversight exists to examine refusal authority — not substitute for it.
+      Both conditions have been observed in consequential failures.
+      In neither case did the presence of one substitute for the absence of the other.
     </p>
   </div>
 
   <div class="doc-section wrap">
     <div class="section-num">V — Autonomous Systems</div>
-    <h2>The faster the system,<br>the clearer the authorization<br>structure must <em>be.</em></h2>
+    <h2>The faster the system,<br>the clearer named authority<br>must <em>become.</em></h2>
     <p class="body-p">
       Automation compresses time between signal and irreversible consequence.
       When AI removes the visible decision-maker,
@@ -278,14 +249,21 @@ a{text-decoration:none;color:inherit}
 
   <div class="doc-section wrap">
     <div class="section-num">VI — Closing</div>
-    <h2>Strong organizations are not defined<br>only by <em>execution speed.</em></h2>
+    <h2>The question is not whether<br>authority exists.<br>The question is whether<br>it belongs to <em>someone by name.</em></h2>
     <p class="body-p">
-      They are also defined by whether someone holds named refusal authority —
-      and whether that authority belongs to a person,
-      not a process.
+      Strong organizations are not defined only by execution speed.
+      They are defined by whether someone holds named refusal authority —
+      and whether that authority belongs to a person, not a process.
     </p>
     <div class="pull" style="margin-top:40px;">
-      When a decision becomes irreversible under uncertainty, someone must have the authority to stop it — by name.
+      When a decision becomes irreversible under uncertainty,
+      someone must have the authority to stop it — by name.
+    </div>
+
+    <div class="dar-link">
+      <span class="dar-link-label">The structural question</span>
+      <p class="dar-link-text">If meaningful interruption requires visibility, authority, and a named individual expected to act — what would a governance structure built around those conditions look like?</p>
+      <a href="why-dar-exists.html" class="dar-link-cta">Why DAR Exists →</a>
     </div>
   </div>
 
