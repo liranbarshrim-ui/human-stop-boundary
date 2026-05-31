@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Who Is Actually Expected to Stop? — Liran Bar-Shrim</title>
+<meta name="description" content="Organizations may preserve formal authority to interrupt. They may even preserve the visibility required to recognize when interruption is necessary. Yet interruption can still fail.">
+<meta name="robots" content="index,follow">
+<link rel="canonical" href="https://matrix-audit.com/article-3.html">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#080808;--gold:#c8a96e;--gold2:#ead9b3;--text:#ebe5da;--muted:#d8d2c8;--dim:#7a7570;--dim2:#52504c;--line:rgba(255,255,255,.06);--gold-line:rgba(200,169,110,.25);}
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;overflow-x:hidden;}
+body{background:var(--bg);color:var(--text);font-family:"Cormorant Garamond",Georgia,serif;overflow-x:hidden;-webkit-font-smoothing:antialiased;line-height:1.8;}
+body::before{content:"";position:fixed;inset:0;pointer-events:none;z-index:0;opacity:.028;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");background-size:180px;}
+a{text-decoration:none;color:inherit;}
+
+.topbar{position:fixed;top:0;left:0;right:0;height:72px;display:flex;align-items:center;justify-content:space-between;padding:0 48px;z-index:100;background:rgba(8,8,8,.82);backdrop-filter:blur(16px);border-bottom:1px solid var(--line);}
+.brand{display:flex;align-items:center;gap:14px;font-family:"IBM Plex Mono",monospace;font-size:9.5px;letter-spacing:.32em;text-transform:uppercase;color:var(--text);}
+.brand-rule{width:32px;height:1px;background:var(--gold);}
+.nav-contact{font-family:"IBM Plex Mono",monospace;font-size:9.5px;letter-spacing:.28em;text-transform:uppercase;color:var(--gold2);transition:opacity .2s;}
+.nav-contact:hover{opacity:.7;}
+
+.page{max-width:680px;margin:0 auto;padding:140px 48px 120px;position:relative;z-index:1;}
+
+/* header */
+.series-label{font-family:"IBM Plex Mono",monospace;font-size:9px;letter-spacing:.32em;text-transform:uppercase;color:var(--dim2);margin-bottom:12px;display:block;}
+.series-title{font-family:"IBM Plex Mono",monospace;font-size:9px;letter-spacing:.22em;text-transform:uppercase;color:var(--dim);margin-bottom:40px;display:block;}
+h1{font-size:clamp(1.8rem,4.5vw,2.8rem);font-weight:300;line-height:1.15;letter-spacing:.01em;color:var(--text);margin-bottom:12px;}
+.subtitle{font-size:clamp(15px,1.4vw,18px);font-weight:300;font-style:italic;color:var(--dim);margin-bottom:48px;line-height:1.5;}
+.byline{font-family:"IBM Plex Mono",monospace;font-size:9px;letter-spacing:.16em;color:var(--dim2);margin-bottom:72px;padding-bottom:40px;border-bottom:1px solid var(--line);}
+
+/* opening */
+.opening{font-size:clamp(18px,2vw,26px);font-weight:300;line-height:1.75;color:#c8c2b8;max-width:50ch;margin-bottom:80px;}
+.opening p{margin-bottom:20px;}
+
+/* sections */
+.section{margin-bottom:72px;}
+.section-num{font-family:"IBM Plex Mono",monospace;font-size:9px;letter-spacing:.22em;text-transform:uppercase;color:var(--dim2);margin-bottom:8px;display:block;}
+h2{font-size:clamp(1.2rem,2.5vw,1.7rem);font-weight:400;color:var(--text);margin-bottom:32px;line-height:1.3;}
+.body{font-size:clamp(16px,1.5vw,20px);font-weight:300;line-height:1.9;color:#d8d2c8;max-width:56ch;}
+.body p{margin-bottom:24px;}
+.body p:last-child{margin-bottom:0;}
+.body em{font-style:italic;color:var(--text);}
+
+/* pull quotes */
+.pull{border-left:1px solid var(--gold-line);padding-left:24px;margin:40px 0;font-size:clamp(17px,1.8vw,22px);font-weight:300;font-style:italic;color:var(--text);line-height:1.6;max-width:46ch;}
+
+/* closing */
+.closing{margin-top:80px;padding-top:56px;border-top:1px solid var(--line);}
+.closing-text{font-size:clamp(18px,2vw,26px);font-weight:300;font-style:italic;line-height:1.7;color:#c8c2b8;max-width:48ch;margin-bottom:40px;}
+.closing-sig{font-family:"IBM Plex Mono",monospace;font-size:9px;letter-spacing:.2em;text-transform:uppercase;color:var(--dim2);margin-bottom:48px;}
+
+/* dar link */
+.dar-link{padding:32px 36px;background:rgba(200,169,110,.05);border-left:2px solid rgba(200,169,110,.3);margin-top:64px;}
+.dar-link-label{font-family:"IBM Plex Mono",monospace;font-size:9px;letter-spacing:.2em;text-transform:uppercase;color:var(--dim2);margin-bottom:16px;display:block;}
+.dar-link-text{font-size:clamp(15px,1.4vw,18px);font-weight:300;color:var(--muted);line-height:1.7;margin-bottom:20px;max-width:50ch;}
+.dar-link-cta{font-family:"IBM Plex Mono",monospace;font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--gold);border-bottom:1px solid rgba(200,169,110,.3);padding-bottom:2px;transition:opacity .2s;}
+.dar-link-cta:hover{opacity:.7;}
+
+.footer{position:relative;z-index:1;text-align:center;padding:20px;border-top:1px solid var(--line);font-family:"IBM Plex Mono",monospace;font-size:9px;letter-spacing:.08em;color:#7a7570;margin-top:80px;}
+
+@media(max-width:860px){
+  .topbar{padding:0 20px;}
+  .page{padding:120px 24px 80px;}
+}
+@keyframes fadeUp{from{opacity:0;transform:translateY(16px);}to{opacity:1;transform:translateY(0);}}
+.page{animation:fadeUp .8s ease both;}
+</style>
+</head>
+<body>
+
+<header class="topbar">
+  <a href="index.html" class="brand"><span class="brand-rule"></span><span>Liran Bar-Shrim</span></a>
+  <a href="mailto:Liran@liranbarshrim.com" class="nav-contact">Correspondence</a>
+</header>
+
+<div class="page">
+
+  <span class="series-label">Ownership · Essay Three</span>
+  <span class="series-title">On Collective Accountability and the Missing Owner of Interruption</span>
+  <h1>Who Is Actually Expected to Stop?</h1>
+  <p class="subtitle">On Collective Accountability and the Missing Owner of Interruption</p>
+  <div class="byline">Liran Bar-Shrim &nbsp;·&nbsp; May 2026</div>
+
+  <!-- OPENING -->
+  <div class="opening">
+    <p>Organizations may preserve formal authority to interrupt.</p>
+    <p>They may even preserve the visibility required to recognize when interruption is necessary.</p>
+    <p>Yet interruption can still fail for a quieter reason:</p>
+    <p>No specific person understands that stopping belongs to them.</p>
+  </div>
+
+  <!-- I -->
+  <div class="section">
+    <span class="section-num">I</span>
+    <h2>The Comfort of Collective Responsibility</h2>
+    <div class="body">
+      <p>After most consequential failures, organizations can identify what happened.</p>
+      <p>They can trace decisions. They can reconstruct timelines. They can assign accountability in retrospect.</p>
+      <p>The language of collective responsibility survives intact:</p>
+      <p><em>We reviewed it. We escalated it. We followed the process.</em></p>
+      <p>This language is not dishonest. In most cases, review did occur. Escalation did happen. Process was followed.</p>
+      <p>What is less often examined is whether any of this amounted to meaningful interruption — or whether responsibility for stopping was ever clearly assigned to anyone in particular.</p>
+      <p>Collective responsibility is comfortable precisely because it distributes ownership without concentrating it.</p>
+      <p>Everyone participates. No one bears singular expectation.</p>
+    </div>
+  </div>
+
+  <!-- II -->
+  <div class="section">
+    <span class="section-num">II</span>
+    <h2>Why Escalation Is Not Interruption</h2>
+    <div class="body">
+      <p>Organizations often treat escalation as the governance mechanism for uncertain decisions.</p>
+      <p>Escalation sounds like governance. It has structure. It has process. It has documentation.</p>
+      <p>But escalation and interruption are not the same thing.</p>
+      <p>Escalation routes a concern upward. It distributes the question to a broader audience. It may increase visibility.</p>
+      <p>But visibility without ownership does not guarantee interruption. It does not, by itself, designate anyone as the person whose specific responsibility it is to say: <em>Not yet.</em></p>
+      <div class="pull">When escalation is the primary governance mechanism, organizations may create the appearance of meaningful interruption while leaving the actual responsibility for stopping diffuse, unassigned, and ultimately unexercised.</div>
+      <p>Everyone escalated. No one stopped.</p>
+    </div>
+  </div>
+
+  <!-- III -->
+  <div class="section">
+    <span class="section-num">III</span>
+    <h2>The Drift Toward Diffused Accountability</h2>
+    <div class="body">
+      <p>Modern governance structures are designed to distribute responsibility. Committees. Cross-functional approval. Shared ownership. Multi-stakeholder review.</p>
+      <p>These structures reflect genuine wisdom about the limits of individual judgment. They prevent single points of failure. They incorporate diverse perspectives.</p>
+      <p>But they may also produce an unintended consequence: the gradual dissolution of singular interruption expectation.</p>
+      <p>When responsibility is distributed across a committee, no individual member necessarily understands that the obligation to stop belongs specifically to them. When approval requires multiple signatures, no single signatory necessarily bears the expectation that their refusal would halt execution.</p>
+      <p>Collective governance can preserve accountability in the aggregate while eliminating it at the level of named expectation.</p>
+      <p><em>Everyone is responsible. No one is responsible by name.</em></p>
+    </div>
+  </div>
+
+  <!-- IV -->
+  <div class="section">
+    <span class="section-num">IV</span>
+    <h2>The Moment Before Failure</h2>
+    <div class="body">
+      <p>There is a specific moment that tends to appear in reconstructions of consequential failures.</p>
+      <p>Not the moment of catastrophic error. The moment before.</p>
+      <p>A decision felt uncertain. Several people noticed signals. Concerns existed and were acknowledged. Escalation occurred.</p>
+      <p>But no single person understood: <em>If this proceeds and causes harm because we failed to stop it, that responsibility is mine.</em></p>
+      <p>Without that singular named expectation, the decision continued.</p>
+      <p>Not because no one cared. Not because process was absent. Not because authority to interrupt did not exist.</p>
+      <p>But because no one carried the specific, named, operational expectation that stopping was their responsibility to exercise.</p>
+      <div class="pull">The decision felt collectively reviewed. It was individually unowned.</div>
+    </div>
+  </div>
+
+  <!-- V -->
+  <div class="section">
+    <span class="section-num">V</span>
+    <h2>The Harder Governance Question</h2>
+    <div class="body">
+      <p>Governance traditionally asks: <em>Who is accountable after failure?</em></p>
+      <p>The harder question — the one organizations rarely ask in advance:</p>
+      <p><em>Who was explicitly expected to interrupt before failure, by name?</em></p>
+      <p>Not a function. Not a committee. Not a process.</p>
+      <p>A person. Named. Carrying the specific understanding that if continuation becomes inadvisable, stopping belongs to them.</p>
+      <p>The absence of that named expectation may not be visible until failure makes it apparent.</p>
+    </div>
+  </div>
+
+  <!-- CLOSING -->
+  <div class="closing">
+    <p class="closing-text">By then, responsibility will be reconstructed. It was never assigned.</p>
+    <div class="closing-sig">Liran Bar-Shrim &nbsp;·&nbsp; May 2026</div>
+
+    <!-- DAR LINK -->
+    <div class="dar-link">
+      <span class="dar-link-label">A related question</span>
+      <p class="dar-link-text">If interruption requires visibility, authority, and a named individual expected to act — what would a governance structure built around those conditions look like?</p>
+      <a href="why-dar-exists.html" class="dar-link-cta">Why DAR Exists →</a>
+    </div>
+  </div>
+
+</div>
+
+<footer class="footer">
+  © 2026 Liran Bar-Shrim &nbsp;·&nbsp;
+  <a href="faq.html" style="color:var(--dim);text-decoration:none;">FAQ</a> &nbsp;·&nbsp;
+  <a href="goodfaith.html" style="color:var(--dim);text-decoration:none;">Good Faith Use</a>
+</footer>
+
+</body>
+</html>
