@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Genesis — Decision Authority Research</title>
+<meta name="description" content="A chronological record of artifacts associated with the development of Decision Authority Research. Origins, precursors, and the emergence of the DAR formulation.">
+<meta name="robots" content="index,follow">
+<link rel="canonical" href="https://matrix-audit.com/genesis.html">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #080808;
+  --gold: #c8a96e;
+  --gold2: #ead9b3;
+  --text: #ebe5da;
+  --muted: #d8d2c8;
+  --dim: #7a7570;
+  --dim2: #52504c;
+  --line: rgba(255,255,255,.06);
+  --gold-line: rgba(200,169,110,.25);
+}
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;overflow-x:hidden;}
+body{background:var(--bg);color:var(--text);font-family:"Cormorant Garamond",Georgia,serif;overflow-x:hidden;-webkit-font-smoothing:antialiased;line-height:1.8;}
+body::before{content:"";position:fixed;inset:0;pointer-events:none;z-index:0;opacity:.028;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");background-size:180px;}
+a{text-decoration:none;color:inherit;}
+
+.topbar{position:fixed;top:0;left:0;right:0;height:72px;display:flex;align-items:center;justify-content:space-between;padding:0 48px;z-index:100;background:rgba(8,8,8,.92);backdrop-filter:blur(16px);border-bottom:1px solid var(--line);}
+.brand{display:flex;align-items:center;gap:14px;font-family:"IBM Plex Mono",monospace;font-size:9.5px;letter-spacing:.32em;text-transform:uppercase;color:var(--text);}
+.brand-rule{width:32px;height:1px;background:var(--gold);}
+.nav-contact{font-family:"IBM Plex Mono",monospace;font-size:9.5px;letter-spacing:.28em;text-transform:uppercase;color:var(--gold2);transition:opacity .2s;}
+.nav-contact:hover{opacity:.7;}
+
+.page{max-width:720px;margin:0 auto;padding:140px 48px 120px;position:relative;z-index:1;}
+
+.doc-label{font-family:"IBM Plex Mono",monospace;font-size:9px;letter-spacing:.32em;text-transform:uppercase;color:var(--dim);margin-bottom:32px;display:block;}
+h1{font-size:clamp(2rem,5vw,3rem);font-weight:300;line-height:1.15;color:var(--text);margin-bottom:16px;}
+.page-sub{font-size:clamp(15px,1.4vw,18px);font-weight:300;font-style:italic;color:var(--dim);margin-bottom:56px;line-height:1.5;}
+
+/* methodology note */
+.method-note{border-left:1px solid var(--gold-line);padding:24px 28px;margin-bottom:72px;}
+.method-note p{font-size:clamp(15px,1.4vw,17px);font-weight:300;color:var(--muted);line-height:1.8;}
+.method-note p+p{margin-top:12px;}
+
+/* phase headers */
+.phase{margin-bottom:64px;}
+.phase-label{font-family:"IBM Plex Mono",monospace;font-size:9px;letter-spacing:.22em;text-transform:uppercase;color:var(--gold);margin-bottom:8px;display:block;}
+.phase-title{font-size:clamp(1.1rem,2.5vw,1.6rem);font-weight:400;color:var(--text);margin-bottom:8px;line-height:1.3;}
+.phase-note{font-size:clamp(14px,1.3vw,16px);font-weight:300;font-style:italic;color:var(--dim);margin-bottom:40px;max-width:52ch;line-height:1.7;}
+
+/* artifact entries */
+.artifact{padding:32px 0;border-top:1px solid var(--line);}
+.artifact:last-child{border-bottom:1px solid var(--line);}
+
+.artifact-date{font-family:"IBM Plex Mono",monospace;font-size:10px;letter-spacing:.16em;color:var(--gold);margin-bottom:12px;display:block;}
+.artifact-title{font-size:clamp(16px,1.6vw,20px);font-weight:400;color:var(--text);margin-bottom:8px;line-height:1.3;}
+.artifact-fields{display:flex;flex-direction:column;gap:6px;margin-bottom:12px;}
+.artifact-field{display:grid;grid-template-columns:140px 1fr;gap:16px;align-items:baseline;}
+.field-key{font-family:"IBM Plex Mono",monospace;font-size:9px;letter-spacing:.14em;text-transform:uppercase;color:var(--dim2);}
+.field-val{font-size:clamp(14px,1.3vw,16px);font-weight:300;color:var(--muted);line-height:1.65;overflow-wrap:break-word;}
+.field-val a{color:var(--gold);border-bottom:1px solid rgba(200,169,110,.3);transition:opacity .2s;}
+.field-val a:hover{opacity:.7;}
+.artifact-note{font-size:clamp(13px,1.2vw,15px);font-weight:300;font-style:italic;color:var(--dim);line-height:1.7;max-width:54ch;margin-top:8px;padding-top:12px;border-top:1px solid var(--line);}
+
+/* unknown date */
+.unknown{color:var(--dim);font-style:italic;}
+
+/* footer */
+.footer{position:relative;z-index:1;text-align:center;padding:20px;border-top:1px solid var(--line);font-family:"IBM Plex Mono",monospace;font-size:9px;letter-spacing:.08em;color:var(--dim);margin-top:80px;}
+.footer a{color:var(--dim);transition:color .2s;}
+.footer a:hover{color:var(--gold);}
+
+@media(max-width:860px){
+  .topbar{padding:0 20px;}
+  .page{padding:120px 24px 80px;}
+  .artifact-field{grid-template-columns:100px 1fr;gap:12px;}
+}
+@keyframes fadeUp{from{opacity:0;transform:translateY(16px);}to{opacity:1;transform:translateY(0);}}
+.page{animation:fadeUp .8s ease both;}
+</style>
+</head>
+<body>
+
+<header class="topbar">
+  <a href="index.html" class="brand"><span class="brand-rule"></span><span>Liran Bar-Shrim</span></a>
+  <a href="mailto:Liran@liranbarshrim.com" class="nav-contact">Correspondence</a>
+</header>
+
+<div class="page">
+
+  <span class="doc-label">Historical Record · Decision Authority Research</span>
+  <h1>Genesis</h1>
+  <p class="page-sub">A chronological record of artifacts associated with the development of this work.</p>
+
+  <div class="method-note">
+    <p>This page documents the earliest currently identified artifacts associated with the development of the concepts examined in this research. Entries are presented in documentary form without interpretive claims.</p>
+    <p>Where a date is uncertain or an artifact predates the current formulation, this is stated explicitly. This record will be updated as earlier artifacts are identified. All timestamps are drawn from verifiable sources where possible.</p>
+  </div>
+
+  <!-- PHASE 1: PRECURSORS -->
+  <div class="phase">
+    <span class="phase-label">Phase 1</span>
+    <h2 class="phase-title">Origins and Precursors</h2>
+    <p class="phase-note">These artifacts predate the DAR formulation. They explored related questions under different frameworks and terminology. They are recorded here as precursor artifacts, not as equivalent to the current work.</p>
+
+    <!-- Artifact 1 -->
+    <div class="artifact">
+      <span class="artifact-date">2025-12-20</span>
+      <div class="artifact-title">The Distilled Truth Manifesto</div>
+      <div class="artifact-fields">
+        <div class="artifact-field">
+          <span class="field-key">Platform</span>
+          <span class="field-val">Substack (@barusaliran)</span>
+        </div>
+        <div class="artifact-field">
+          <span class="field-key">Author</span>
+          <span class="field-val">Liran Bar-Shrim</span>
+        </div>
+        <div class="artifact-field">
+          <span class="field-key">Key concepts</span>
+          <span class="field-val">Methodology of Refusal. Human Originality. Friction as systemic critique. Ethical responsibility in synthetic replication.</span>
+        </div>
+      </div>
+      <p class="artifact-note">Earliest currently identified public artifact. Introduces "Methodology of Refusal" as a stance toward technological systems. Does not yet contain the DAR formulation of named stop authority.</p>
+    </div>
+
+    <!-- Artifact 2 -->
+    <div class="artifact">
+      <span class="artifact-date">2025-12-22 · 13:33</span>
+      <div class="artifact-title">Preserve HOI – Absolute Paradigm Implementation</div>
+      <div class="artifact-fields">
+        <div class="artifact-field">
+          <span class="field-key">Platform</span>
+          <span class="field-val">OpenAI Support (Case 03997909)</span>
+        </div>
+        <div class="artifact-field">
+          <span class="field-key">Author</span>
+          <span class="field-val">Liran Bar-Shrim</span>
+        </div>
+        <div class="artifact-field">
+          <span class="field-key">Key concepts</span>
+          <span class="field-val">Human Original Input (HOI). Negative Anomaly Collapse. C-T-A Loop (Compassion-Truth-Action). LBS Fail-Safe. Reset Protocol.</span>
+        </div>
+      </div>
+      <p class="artifact-note">First documented instance of a "Fail-Safe" mechanism requiring human re-centering before continuation is permitted. Structurally related to the DAR principle of named stop authority, but expressed within a different framework and terminology.</p>
+    </div>
+
+    <!-- Artifact 3 -->
+    <div class="artifact">
+      <span class="artifact-date">2025-12-22 · 13:45</span>
+      <div class="artifact-title">Absolute Paradigm – Complete Technical Package</div>
+      <div class="artifact-fields">
+        <div class="artifact-field">
+          <span class="field-key">Platform</span>
+          <span class="field-val">Email to saltman@openai.com (undelivered)</span>
+        </div>
+        <div class="artifact-field">
+          <span class="field-key">Author</span>
+          <span class="field-val">Liran Bar-Shrim</span>
+        </div>
+        <div class="artifact-field">
+          <span class="field-key">Key concepts</span>
+          <span class="field-val">Reset Protocol. LBS Fail-Safe. "Immediate Cessation: Pause all automated Action outputs." "Re-initiate Action: Only execute after human verification."</span>
+        </div>
+      </div>
+      <p class="artifact-note">Email not delivered (address not found). Document dated December 22, 2025 by author. Contains earliest documented instance of explicit cessation-before-continuation language. Delivery failure recorded.</p>
+    </div>
+
+    <!-- Artifact 4 -->
+    <div class="artifact">
+      <span class="artifact-date">2025-12-22 · 19:23</span>
+      <div class="artifact-title">Email to Dan Ariely</div>
+      <div class="artifact-fields">
+        <div class="artifact-field">
+          <span class="field-key">Type</span>
+          <span class="field-val">Private correspondence</span>
+        </div>
+        <div class="artifact-field">
+          <span class="field-key">Recipient</span>
+          <span class="field-val">Dan Ariely (dan@danariely.com)</span>
+        </div>
+        <div class="artifact-field">
+          <span class="field-key">Author</span>
+          <span class="field-val">Liran Bar-Shrim</span>
+        </div>
+        <div class="artifact-field">
+          <span class="field-key">Key concepts</span>
+          <span class="field-val">"האנומליה האנושית" (The Human Anomaly). "הפרדיגמה המיוחלת" (The Expected Paradigm). Human originality as non-replicable.</span>
+        </div>
+      </div>
+      <p class="artifact-note">Private correspondence. Included here as a timestamped artifact, not a public record. Frames the core concern in terms of human distinctiveness rather than governance authority. Precursor to DAR's organizational framing.</p>
+    </div>
+
+  </div>
+
+  <!-- PHASE 2: DAR FORMATION -->
+  <div class="phase">
+    <span class="phase-label">Phase 2</span>
+    <h2 class="phase-title">DAR Formation</h2>
+    <p class="phase-note">Artifacts from this phase show the transition toward the current DAR formulation: named individuals, stop authority, and irreversibility as the operative threshold.</p>
+
+    <!-- Artifact 5 -->
+    <div class="artifact">
+      <span class="artifact-date">2026-01-04</span>
+      <div class="artifact-title">When Autonomous Systems Must Stop</div>
+      <div class="artifact-fields">
+        <div class="artifact-field">
+          <span class="field-key">Platform</span>
+          <span class="field-val">Medium</span>
+        </div>
+        <div class="artifact-field">
+          <span class="field-key">Author</span>
+          <span class="field-val">Liran Bar Shrim</span>
+        </div>
+        <div class="artifact-field">
+          <span class="field-key">Subtitle</span>
+          <span class="field-val">"Why the most dangerous design decision is allowing machines to continue"</span>
+        </div>
+        <div class="artifact-field">
+          <span class="field-key">Source</span>
+          <span class="field-val"><a href="https://medium.com/@liranbarshrim/when-autonomous-systems-must-stop-5bf0e2594cba" target="_blank">medium.com/@liranbarshrim</a></span>
+        </div>
+      </div>
+      <p class="artifact-note">First publicly identified artifact framing continuation as the governance risk, rather than error. Shift from "human originality" framework toward "who stops continuation" framework.</p>
+    </div>
+
+    <!-- Artifact 6 -->
+    <div class="artifact">
+      <span class="artifact-date">2026-01-04</span>
+      <div class="artifact-title">human-stop-boundary · Initial Commit</div>
+      <div class="artifact-fields">
+        <div class="artifact-field">
+          <span class="field-key">Platform</span>
+          <span class="field-val">GitHub</span>
+        </div>
+        <div class="artifact-field">
+          <span class="field-key">Repository</span>
+          <span class="field-val"><a href="https://github.com/liranbarshrim-ui/human-stop-boundary" target="_blank">liranbarshrim-ui/human-stop-boundary</a></span>
+        </div>
+        <div class="artifact-field">
+          <span class="field-key">Commit hash</span>
+          <span class="field-val">2abfc655f9561fdbfb0ad7d4b0a18d8355a54087</span>
+        </div>
+        <div class="artifact-field">
+          <span class="field-key">Description</span>
+          <span class="field-val">"A sovereign decision boundary for irreversible automated actions."</span>
+        </div>
+        <div class="artifact-field">
+          <span class="field-key">Timestamp (Unix)</span>
+          <span class="field-val">1767535989</span>
+        </div>
+      </div>
+      <p class="artifact-note">Earliest currently identified repository artifact. Earliest currently identified use of "irreversible" as the operative threshold in a versioned, timestamped artifact. Concurrent with the Medium publication of the same date.</p>
+    </div>
+
+    <!-- Artifact 7 -->
+    <div class="artifact">
+      <span class="artifact-date">2026-01 · Approximate</span>
+      <div class="artifact-title">LICENSE.txt · human-stop-boundary</div>
+      <div class="artifact-fields">
+        <div class="artifact-field">
+          <span class="field-key">Platform</span>
+          <span class="field-val">GitHub (liranbarshrim-ui/human-stop-boundary)</span>
+        </div>
+        <div class="artifact-field">
+          <span class="field-key">Commit label</span>
+          <span class="field-val">Create LICENSE.txt</span>
+        </div>
+        <div class="artifact-field">
+          <span class="field-key">Date precision</span>
+          <span class="field-val">Approximate. GitHub mobile shows "5mo" from June 2026. Exact date not yet extracted.</span>
+        </div>
+      </div>
+      <p class="artifact-note">First formal copyright registration in a versioned repository. Follows the initial commit by days. Exact timestamp to be updated when commit details are accessed.</p>
+    </div>
+
+    <!-- Artifact 8 -->
+    <div class="artifact">
+      <span class="artifact-date">2026-03 · Approximate</span>
+      <div class="artifact-title">matrix-audit.com · Site Launch</div>
+      <div class="artifact-fields">
+        <div class="artifact-field">
+          <span class="field-key">Platform</span>
+          <span class="field-val">GitHub Pages (liranbarshrim-ui)</span>
+        </div>
+        <div class="artifact-field">
+          <span class="field-key">Commits</span>
+          <span class="field-val">Create index.html · Create CNAME · Create dar-record.md</span>
+        </div>
+        <div class="artifact-field">
+          <span class="field-key">Date precision</span>
+          <span class="field-val">Approximate. GitHub mobile shows "3mo" from June 2026. Exact date not yet extracted.</span>
+        </div>
+      </div>
+      <p class="artifact-note">First appearance of matrix-audit.com as a public site. Concurrent creation of dar-record.md earliest currently identified DAR-titled document in a versioned repository.</p>
+    </div>
+
+    <!-- Artifact 9 -->
+    <div class="artifact">
+      <span class="artifact-date"><span class="unknown">Date not currently identified</span></span>
+      <div class="artifact-title">First appearance: "Who, by name, is authorized to refuse?"</div>
+      <div class="artifact-fields">
+        <div class="artifact-field">
+          <span class="field-key">Status</span>
+          <span class="field-val">Earliest known instance not yet located. This entry will be updated when a dated artifact is identified.</span>
+        </div>
+      </div>
+      <p class="artifact-note">The question "Who, by name, is authorized to refuse?" represents the current DAR formulation. Its first documented appearance has not yet been traced to a specific artifact with a verifiable date.</p>
+    </div>
+
+  </div>
+
+  <!-- METHODOLOGY NOTE -->
+  <div style="padding-top:48px;border-top:1px solid var(--line);margin-top:16px;">
+    <span style="font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:.2em;text-transform:uppercase;color:var(--dim2);display:block;margin-bottom:20px;">On this record</span>
+    <p style="font-size:clamp(14px,1.3vw,16px);font-weight:300;color:var(--dim);line-height:1.8;max-width:54ch;">This page is maintained as a living document. Entries reflect the earliest artifacts currently identified. Where earlier artifacts are located, this record will be updated. Verifiable timestamps are preferred over approximations.</p>
+  </div>
+
+  <div style="margin-top:48px;">
+    <a href="index.html" style="font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:.28em;text-transform:uppercase;color:var(--dim);transition:color .2s;">← Back to main</a>
+  </div>
+
+</div>
+
+<footer class="footer">
+  © 2026 Liran Bar-Shrim &nbsp;·&nbsp;
+  <a href="faq.html">FAQ</a> &nbsp;·&nbsp;
+  <a href="goodfaith.html">Good Faith Use</a>
+</footer>
+
+</body>
+</html>
