@@ -1,0 +1,555 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Trigger Authority: Who Defined the Threshold? — Liran Bar-Shrim</title>
+<meta name="description" content="Working note on Trigger Authority: who defined in advance when refusal becomes necessary?">
+<meta name="robots" content="noindex,nofollow">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#080808;
+  --surface:#111111;
+  --gold:#c8a96e;
+  --gold2:#ead9b3;
+  --text:#ebe5da;
+  --muted:#d8d2c8;
+  --dim:#7a7570;
+  --line:rgba(255,255,255,.06);
+  --yes:#3d9970;
+  --no:#c0392b;
+  --unknown:#7a7570;
+}
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{
+  background:var(--bg);
+  color:var(--text);
+  font-family:"Cormorant Garamond",Georgia,serif;
+  -webkit-font-smoothing:antialiased;
+  line-height:1.8;
+}
+body::before{
+  content:"";
+  position:fixed;inset:0;
+  pointer-events:none;z-index:0;
+  opacity:.028;
+  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-size:180px;
+}
+a{text-decoration:none;color:inherit;}
+
+.topbar{
+  position:fixed;top:0;left:0;right:0;height:72px;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:0 48px;z-index:100;
+  background:rgba(8,8,8,.88);
+  backdrop-filter:blur(16px);
+  border-bottom:1px solid var(--line);
+}
+.brand{
+  display:flex;align-items:center;gap:14px;
+  font-family:"IBM Plex Mono",monospace;
+  font-size:9.5px;letter-spacing:.32em;text-transform:uppercase;color:var(--text);
+}
+.brand-rule{width:32px;height:1px;background:var(--gold);}
+
+.wrap{max-width:800px;margin:0 auto;padding:0 48px;position:relative;z-index:1;}
+
+/* STATUS BADGE */
+.status-bar{
+  padding-top:120px;padding-bottom:40px;
+}
+.status-badges{display:flex;gap:12px;flex-wrap:wrap;margin-bottom:48px;}
+.badge{
+  font-family:"IBM Plex Mono",monospace;
+  font-size:9px;letter-spacing:.22em;text-transform:uppercase;
+  padding:5px 12px;
+  border:1px solid;
+}
+.badge-working{color:#c8a96e;border-color:rgba(200,169,110,.4);}
+.badge-preliminary{color:#7a7570;border-color:rgba(122,117,112,.3);}
+.badge-noindex{color:#52504c;border-color:rgba(82,80,76,.3);}
+
+/* HERO */
+.doc-title{
+  font-size:clamp(28px,5vw,72px);
+  font-weight:400;line-height:.95;
+  letter-spacing:-.02em;
+  color:var(--text);
+  margin-bottom:16px;
+  max-width:14ch;
+}
+.doc-subtitle{
+  font-size:clamp(18px,2.5vw,32px);
+  font-weight:300;font-style:italic;
+  color:var(--gold2);
+  margin-bottom:48px;
+}
+.doc-meta{
+  font-family:"IBM Plex Mono",monospace;
+  font-size:9px;letter-spacing:.18em;text-transform:uppercase;
+  color:var(--dim);
+  padding-top:24px;
+  border-top:1px solid var(--line);
+}
+
+/* SECTIONS */
+.section{padding:64px 0;border-bottom:1px solid var(--line);}
+.section:last-child{border-bottom:none;}
+
+.section-label{
+  font-family:"IBM Plex Mono",monospace;
+  font-size:9px;letter-spacing:.28em;text-transform:uppercase;
+  color:var(--dim);margin-bottom:28px;
+}
+
+.section-body{
+  font-size:clamp(17px,1.5vw,21px);
+  font-weight:300;line-height:1.9;
+  color:var(--muted);
+  max-width:54ch;
+}
+.section-body p{margin-bottom:20px;}
+.section-body p:last-child{margin-bottom:0;}
+
+.prior-q{
+  font-size:clamp(20px,2.5vw,32px);
+  font-weight:400;font-style:italic;
+  color:var(--text);
+  border-left:1px solid rgba(200,169,110,.5);
+  padding-left:28px;
+  margin:32px 0;
+  line-height:1.4;
+}
+
+/* DEFINITION BOX */
+.def-box{
+  background:var(--surface);
+  border-left:3px solid var(--gold);
+  padding:32px 36px;
+  margin:32px 0;
+}
+.def-term{
+  font-family:"IBM Plex Mono",monospace;
+  font-size:9px;letter-spacing:.28em;text-transform:uppercase;
+  color:var(--gold);margin-bottom:16px;
+}
+.def-body{
+  font-size:clamp(17px,1.5vw,20px);
+  font-weight:300;line-height:1.75;
+  color:var(--text);
+}
+
+/* CODING TABLE */
+.code-grid{display:grid;gap:2px;margin:32px 0;}
+.code-row{
+  display:grid;
+  grid-template-columns:80px 1fr;
+  gap:0;
+  background:var(--surface);
+}
+.code-label{
+  display:flex;align-items:center;justify-content:center;
+  font-family:"IBM Plex Mono",monospace;
+  font-size:11px;font-weight:500;letter-spacing:.08em;
+  padding:20px 16px;
+}
+.code-label.yes{color:var(--yes);border-left:3px solid var(--yes);}
+.code-label.no{color:var(--no);border-left:3px solid var(--no);}
+.code-label.unknown{color:var(--unknown);border-left:3px solid var(--unknown);}
+.code-desc{
+  padding:20px 24px;
+  font-size:clamp(15px,1.3vw,17px);
+  font-weight:300;line-height:1.7;
+  color:var(--muted);
+  border-left:1px solid var(--line);
+}
+
+/* FINDINGS */
+.findings-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:2px;margin:32px 0;}
+.finding-col{background:var(--surface);padding:24px 20px;}
+.finding-header{
+  font-family:"IBM Plex Mono",monospace;
+  font-size:9px;letter-spacing:.2em;text-transform:uppercase;
+  padding-bottom:14px;
+  border-bottom:1px solid var(--line);
+  margin-bottom:16px;
+}
+.finding-header.yes{color:var(--yes);}
+.finding-header.no{color:var(--no);}
+.finding-header.unknown{color:var(--unknown);}
+.finding-item{
+  font-size:14px;font-weight:300;
+  color:var(--muted);
+  line-height:1.6;
+  padding:6px 0;
+  border-bottom:1px solid rgba(255,255,255,.03);
+}
+.finding-item:last-child{border-bottom:none;}
+
+/* OBSERVATIONS */
+.obs-block{
+  background:var(--surface);
+  border-left:3px solid rgba(200,169,110,.3);
+  padding:28px 32px;
+  margin:24px 0;
+}
+.obs-block:hover{border-left-color:var(--gold);}
+.obs-num-label{
+  font-family:"IBM Plex Mono",monospace;
+  font-size:9px;letter-spacing:.22em;text-transform:uppercase;
+  color:var(--dim);margin-bottom:14px;
+}
+.obs-text{
+  font-size:clamp(16px,1.4vw,19px);
+  font-weight:300;line-height:1.8;
+  color:var(--text);
+  margin-bottom:16px;
+}
+.obs-examples{
+  font-family:"IBM Plex Mono",monospace;
+  font-size:11px;letter-spacing:.04em;
+  color:var(--dim);
+  line-height:1.9;
+}
+.obs-examples span.yes{color:var(--yes);}
+.obs-examples span.no{color:var(--no);}
+
+/* PATTERN TABLE */
+.pattern-table{width:100%;border-collapse:collapse;margin:28px 0;}
+.pattern-table th{
+  font-family:"IBM Plex Mono",monospace;
+  font-size:9px;letter-spacing:.18em;text-transform:uppercase;
+  color:var(--dim);
+  text-align:left;padding:12px 16px;
+  border-bottom:1px solid var(--line);
+}
+.pattern-table td{
+  font-size:clamp(14px,1.2vw,16px);font-weight:300;
+  color:var(--muted);
+  padding:14px 16px;
+  border-bottom:1px solid rgba(255,255,255,.03);
+}
+.pattern-table tr:last-child td{border-bottom:none;}
+.pattern-table td.yes{color:var(--yes);font-family:"IBM Plex Mono",monospace;font-size:11px;}
+.pattern-table td.no{color:var(--no);font-family:"IBM Plex Mono",monospace;font-size:11px;}
+.pattern-table td.case{color:var(--text);}
+
+/* NON-CLAIMS */
+.nonclaim-list{
+  list-style:none;
+  margin:24px 0;
+}
+.nonclaim-list li{
+  font-size:clamp(15px,1.3vw,18px);
+  font-weight:300;line-height:1.75;
+  color:var(--muted);
+  padding:10px 0 10px 24px;
+  border-bottom:1px solid var(--line);
+  position:relative;
+}
+.nonclaim-list li::before{
+  content:"—";
+  position:absolute;left:0;
+  color:var(--dim);
+}
+.nonclaim-list li:last-child{border-bottom:none;}
+
+/* HYPOTHESIS */
+.hypothesis{
+  padding:40px 0;
+  border-top:1px solid rgba(200,169,110,.2);
+  border-bottom:1px solid rgba(200,169,110,.2);
+  margin:32px 0;
+}
+.hypothesis-text{
+  font-size:clamp(20px,2.5vw,34px);
+  font-weight:300;font-style:italic;
+  line-height:1.5;
+  color:var(--text);
+  max-width:44ch;
+  border-left:1px solid rgba(200,169,110,.5);
+  padding-left:28px;
+}
+
+/* STATUS FOOTER */
+.status-footer{
+  background:var(--surface);
+  border:1px solid var(--line);
+  padding:28px 32px;
+  margin:40px 0;
+}
+.status-footer-label{
+  font-family:"IBM Plex Mono",monospace;
+  font-size:9px;letter-spacing:.22em;text-transform:uppercase;
+  color:var(--dim);margin-bottom:16px;
+}
+.status-items{display:flex;flex-wrap:wrap;gap:12px;}
+.status-item{
+  font-family:"IBM Plex Mono",monospace;
+  font-size:10px;letter-spacing:.12em;
+  color:var(--dim);
+  padding:4px 10px;
+  border:1px solid rgba(122,117,112,.25);
+}
+
+.footer{
+  position:relative;z-index:1;
+  text-align:center;padding:20px;
+  border-top:1px solid var(--line);
+  font-family:"IBM Plex Mono",monospace;
+  font-size:9px;letter-spacing:.08em;color:#7a7570;
+}
+
+@media(max-width:860px){
+  .topbar{padding:0 20px;}
+  .wrap{padding:0 20px;}
+  .findings-grid{grid-template-columns:1fr;}
+  .code-row{grid-template-columns:60px 1fr;}
+}
+</style>
+</head>
+<body>
+
+<header class="topbar">
+  <a href="index.html" class="brand"><span class="brand-rule"></span><span>Liran Bar-Shrim</span></a>
+</header>
+
+<main class="wrap">
+
+  <!-- STATUS + TITLE -->
+  <div class="status-bar">
+    <div class="status-badges">
+      <span class="badge badge-working">Working Note</span>
+      <span class="badge badge-preliminary">v0.1 · Preliminary</span>
+      <span class="badge badge-noindex">Internal — Not Indexed</span>
+    </div>
+
+    <div class="doc-title">Trigger Authority</div>
+    <div class="doc-subtitle">Who Defined the Threshold?</div>
+    <div class="doc-meta">Observational Research Only · June 2026 · 23 cases reviewed</div>
+  </div>
+
+  <!-- CORE QUESTION -->
+  <section class="section">
+    <div class="section-label">Core Question</div>
+    <div class="section-body">
+      <p>DAR asks:</p>
+    </div>
+    <div class="prior-q">Who, by name, is authorized to refuse?</div>
+    <div class="section-body">
+      <p>A prior question may exist:</p>
+    </div>
+    <div class="prior-q" style="border-left-color:rgba(200,169,110,.25);color:var(--muted);">Who defined in advance when refusal becomes necessary?</div>
+    <div class="section-body">
+      <p>This document refers to that condition as Trigger Authority.</p>
+    </div>
+  </section>
+
+  <!-- DEFINITION -->
+  <section class="section">
+    <div class="section-label">Proposed Definition</div>
+    <div class="def-box">
+      <div class="def-term">Trigger Authority</div>
+      <div class="def-body">A named role, function, regulation, or operational mechanism that defines in advance the conditions under which interruption, review, refusal, or release becomes required.</div>
+    </div>
+    <div class="section-body" style="margin-top:28px;">
+      <p>The question is not: <em>"Who stopped?"</em></p>
+      <p>The question is: <em>"Who defined the threshold that makes stopping relevant?"</em></p>
+    </div>
+  </section>
+
+  <!-- CODING METHOD -->
+  <section class="section">
+    <div class="section-label">Coding Method</div>
+    <div class="section-body" style="margin-bottom:24px;">
+      <p>Three possible classifications:</p>
+    </div>
+    <div class="code-grid">
+      <div class="code-row">
+        <div class="code-label yes">Yes</div>
+        <div class="code-desc">A threshold, condition, event, or trigger requiring interruption was defined in advance.</div>
+      </div>
+      <div class="code-row">
+        <div class="code-label no">No</div>
+        <div class="code-desc">No threshold was defined in advance. Recognition occurred during or after the event.</div>
+      </div>
+      <div class="code-row">
+        <div class="code-label unknown">?</div>
+        <div class="code-desc">Public evidence does not allow determination.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PRELIMINARY FINDINGS -->
+  <section class="section">
+    <div class="section-label">Preliminary Findings · 23 cases reviewed</div>
+    <div class="findings-grid">
+      <div class="finding-col">
+        <div class="finding-header yes">Yes · 7</div>
+        <div class="finding-item">Toyota Andon</div>
+        <div class="finding-item">US Nuclear PAL</div>
+        <div class="finding-item">EU Qualified Person</div>
+        <div class="finding-item">Aviation PIC</div>
+        <div class="finding-item">NRC Shift Supervisor</div>
+        <div class="finding-item">GDPR DPO</div>
+        <div class="finding-item">Challenger</div>
+      </div>
+      <div class="finding-col">
+        <div class="finding-header no">No · 10</div>
+        <div class="finding-item">SMCR / FCA</div>
+        <div class="finding-item">SOX CFO</div>
+        <div class="finding-item">Wells Fargo</div>
+        <div class="finding-item">VW Dieselgate</div>
+        <div class="finding-item">Boeing MCAS</div>
+        <div class="finding-item">LLM Production Deploy</div>
+        <div class="finding-item">Agentic AI Workflow</div>
+        <div class="finding-item">US Federal AI Deploy</div>
+        <div class="finding-item">Knight Capital</div>
+        <div class="finding-item">Flash Crash</div>
+      </div>
+      <div class="finding-col">
+        <div class="finding-header unknown">Unknown · 6</div>
+        <div class="finding-item">CRO Veto — Banking</div>
+        <div class="finding-item">NHS Caldicott Guardian</div>
+        <div class="finding-item">US Responsible Official</div>
+        <div class="finding-item">ISO 27001 CISO</div>
+        <div class="finding-item">Clinical AI Diagnosis</div>
+        <div class="finding-item">LUNA / Terra</div>
+      </div>
+    </div>
+    <div class="section-body" style="margin-top:8px;">
+      <p style="font-size:14px;color:var(--dim);">3 additional cases pending verification. Distribution above is preliminary.</p>
+    </div>
+  </section>
+
+  <!-- OBSERVATIONS -->
+  <section class="section">
+    <div class="section-label">Observations</div>
+
+    <div class="obs-block">
+      <div class="obs-num-label">Observation 1</div>
+      <div class="obs-text">Trigger Authority is not equivalent to Effective Authority.</div>
+      <div class="obs-examples">
+        Toyota Andon &nbsp;·&nbsp; <span class="yes">Trigger Yes</span> &nbsp;·&nbsp; <span class="yes">Effective Yes</span><br>
+        Challenger &nbsp;·&nbsp; <span class="yes">Trigger Yes</span> &nbsp;·&nbsp; <span class="no">Effective No</span><br>
+        GDPR DPO &nbsp;·&nbsp; <span class="yes">Trigger Yes</span> &nbsp;·&nbsp; <span class="no">Effective No</span><br><br>
+        The trigger existed. The interruption did not.
+      </div>
+    </div>
+
+    <div class="obs-block">
+      <div class="obs-num-label">Observation 2</div>
+      <div class="obs-text">Some failures appear to occur before refusal authority becomes relevant.</div>
+      <div class="obs-examples">
+        Boeing MCAS &nbsp;·&nbsp; <span class="no">Trigger No</span> &nbsp;·&nbsp; <span class="no">Effective No</span><br>
+        Wells Fargo &nbsp;·&nbsp; <span class="no">Trigger No</span> &nbsp;·&nbsp; <span class="no">Effective No</span><br>
+        VW Dieselgate &nbsp;·&nbsp; <span class="no">Trigger No</span> &nbsp;·&nbsp; <span class="no">Effective No</span><br>
+        Knight Capital &nbsp;·&nbsp; <span class="no">Trigger No</span> &nbsp;·&nbsp; <span class="no">Effective No</span><br><br>
+        The problem may not be "who could stop?" but "no threshold was defined that would require stopping."
+      </div>
+    </div>
+
+    <div class="obs-block">
+      <div class="obs-num-label">Observation 3</div>
+      <div class="obs-text">The strongest observed interruption structures contain both Trigger Authority and Effective Authority.</div>
+      <div class="obs-examples">
+        Toyota Andon &nbsp;·&nbsp; <span class="yes">Trigger Yes</span> &nbsp;·&nbsp; <span class="yes">Effective Yes</span><br>
+        US Nuclear PAL &nbsp;·&nbsp; <span class="yes">Trigger Yes</span> &nbsp;·&nbsp; <span class="yes">Effective Yes</span><br>
+        EU Qualified Person &nbsp;·&nbsp; <span class="yes">Trigger Yes</span> &nbsp;·&nbsp; <span class="yes">Effective Yes</span><br>
+        NRC Shift Supervisor &nbsp;·&nbsp; <span class="yes">Trigger Yes</span> &nbsp;·&nbsp; <span class="yes">Effective Yes</span><br><br>
+        Whether this relationship is causal remains unknown.
+      </div>
+    </div>
+  </section>
+
+  <!-- THREE PATTERNS -->
+  <section class="section">
+    <div class="section-label">Three Observable Patterns</div>
+    <table class="pattern-table">
+      <thead>
+        <tr>
+          <th>Trigger</th>
+          <th>Effective</th>
+          <th>Example</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="yes">Yes</td>
+          <td class="yes">Yes</td>
+          <td class="case">Toyota Andon, US Nuclear PAL, EU QP</td>
+        </tr>
+        <tr>
+          <td class="yes">Yes</td>
+          <td class="no">No</td>
+          <td class="case">Challenger, GDPR DPO</td>
+        </tr>
+        <tr>
+          <td class="no">No</td>
+          <td class="no">No</td>
+          <td class="case">Boeing MCAS, Wells Fargo, VW Dieselgate</td>
+        </tr>
+      </tbody>
+    </table>
+  </section>
+
+  <!-- NON-CLAIMS -->
+  <section class="section">
+    <div class="section-label">What This Does Not Claim</div>
+    <ul class="nonclaim-list">
+      <li>Trigger Authority prevents failure.</li>
+      <li>Trigger Authority improves outcomes.</li>
+      <li>Trigger Authority predicts success.</li>
+      <li>Trigger Authority eliminates judgment errors or shared assumption failures.</li>
+      <li>A system satisfying all three conditions will not fail.</li>
+    </ul>
+    <div class="section-body" style="margin-top:24px;">
+      <p>A system may satisfy Trigger Authority, Stop Authority, and Effective Authority and still fail. DAR identifies authority structures, not the correctness of beliefs or the quality of decisions.</p>
+    </div>
+  </section>
+
+  <!-- HYPOTHESIS -->
+  <section class="section">
+    <div class="section-label">Working Hypothesis</div>
+    <div class="hypothesis">
+      <div class="hypothesis-text">Many governance failures begin one layer earlier than refusal authority.</div>
+    </div>
+    <div class="section-body">
+      <p>The question may not be: <em>"Who was authorized to refuse?"</em></p>
+      <p>The prior question may be: <em>"Who defined the threshold that made refusal necessary?"</em></p>
+      <p>If no threshold exists, refusal authority may never become operational.</p>
+    </div>
+  </section>
+
+  <!-- STATUS -->
+  <section class="section">
+    <div class="section-label">Status</div>
+    <div class="status-footer">
+      <div class="status-footer-label">Current limitations</div>
+      <div class="status-items">
+        <span class="status-item">Working Note v0.1</span>
+        <span class="status-item">Preliminary Coding</span>
+        <span class="status-item">Not Validated</span>
+        <span class="status-item">Not Causal</span>
+        <span class="status-item">23 of 26 Cases</span>
+        <span class="status-item">Further Review Required</span>
+      </div>
+    </div>
+    <div class="section-body" style="margin-top:24px;">
+      <p>This document records what emerged from systematic coding of the DAR Research Matrix against a new variable. It does not establish a new theory. It opens a question for further examination.</p>
+    </div>
+  </section>
+
+</main>
+
+<footer class="footer">
+  © 2026 Liran Bar-Shrim &nbsp;·&nbsp; <a href="index.html" style="color:var(--dim);">← Index</a>
+</footer>
+
+</body>
+</html>
