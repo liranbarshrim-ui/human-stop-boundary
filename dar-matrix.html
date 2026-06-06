@@ -39,7 +39,6 @@ body{background:var(--bg);color:var(--text);font-family:'IBM Plex Mono',monospac
 body::before{content:'';position:fixed;inset:0;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.025'/%3E%3C/svg%3E");pointer-events:none;z-index:0}
 a{text-decoration:none;color:inherit}
 
-/* TOPBAR */
 .topbar{position:fixed;top:0;left:0;right:0;height:72px;display:flex;align-items:center;justify-content:space-between;padding:0 48px;z-index:100;background:rgba(8,8,8,.95);backdrop-filter:blur(16px);border-bottom:1px solid var(--line)}
 .brand{display:flex;align-items:center;gap:14px;font-family:"IBM Plex Mono",monospace;font-size:9.5px;letter-spacing:.32em;text-transform:uppercase;color:var(--text)}
 .brand-rule{width:32px;height:1px;background:var(--gold)}
@@ -48,13 +47,11 @@ a{text-decoration:none;color:inherit}
 
 .container{max-width:1440px;margin:0 auto;padding:104px 48px 80px;position:relative;z-index:1}
 
-/* HEADER */
 .header{border-left:2px solid var(--gold);padding-left:24px;margin-bottom:48px}
 .header-tag{font-size:9px;letter-spacing:.2em;color:var(--gold);text-transform:uppercase;margin-bottom:10px;font-family:"IBM Plex Mono",monospace}
 .header h1{font-family:'Cormorant Garamond',serif;font-size:clamp(26px,4vw,42px);font-weight:300;color:var(--text);margin-bottom:10px}
 .header p{color:var(--dim);font-size:11px;max-width:600px;line-height:1.75}
 
-/* TAXONOMY */
 .taxonomy{display:grid;grid-template-columns:repeat(3,1fr);gap:2px;margin-bottom:40px}
 .tax-box{background:var(--surface);border:1px solid var(--line);padding:20px 24px}
 .tax-box.l3{border-left:3px solid var(--safe)}
@@ -68,12 +65,10 @@ a{text-decoration:none;color:inherit}
 .tax-def{font-size:11px;color:var(--muted);line-height:1.7}
 .tax-test{font-size:10px;color:var(--dim2);margin-top:10px;border-top:1px solid var(--line);padding-top:10px;line-height:1.6}
 
-/* CORE Q */
 .core-q{background:var(--surface);border:1px solid var(--line2);border-left:2px solid var(--gold);padding:20px 24px;margin-bottom:40px}
 .core-q-label{font-size:9px;letter-spacing:.16em;text-transform:uppercase;color:var(--gold);margin-bottom:8px}
 .core-q-text{font-size:13px;color:var(--text);line-height:1.6}
 
-/* STATS */
 .stats{display:grid;grid-template-columns:repeat(5,1fr);gap:2px;margin-bottom:40px}
 .stat-box{background:var(--surface);border:1px solid var(--line);padding:16px;text-align:center}
 .stat-number{font-family:'Cormorant Garamond',serif;font-size:22px;display:block;line-height:1;margin-bottom:6px}
@@ -84,7 +79,6 @@ a{text-decoration:none;color:inherit}
 .stat-number.accent{color:var(--gold)}
 .stat-label{font-size:9px;letter-spacing:.08em;text-transform:uppercase;color:var(--dim);line-height:1.4}
 
-/* TABLE */
 .table-wrapper{overflow-x:auto;border:1px solid var(--line);margin-bottom:40px}
 table{width:100%;border-collapse:collapse;table-layout:fixed}
 thead tr{background:var(--surface2);border-bottom:2px solid var(--gold)}
@@ -113,12 +107,10 @@ td{padding:11px 14px;font-size:11px;color:var(--muted);vertical-align:top}
 .conf-medium{color:var(--warn);border-color:var(--warn);background:rgba(230,126,34,.08)}
 .conf-contested{color:#9b59b6;border-color:#9b59b6;background:rgba(155,89,182,.08)}
 
-/* CONFIDENCE LEGEND */
 .conf-legend{display:flex;gap:20px;margin-bottom:32px;flex-wrap:wrap;align-items:center}
 .conf-legend-label{font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:var(--dim)}
 .conf-legend-item{display:flex;align-items:center;gap:8px;font-size:10px;color:var(--dim)}
 
-/* FINDINGS */
 .findings{display:grid;grid-template-columns:1fr 1fr;gap:2px;margin-bottom:40px}
 .finding-box{background:var(--surface);border:1px solid var(--line);padding:22px}
 .finding-box.key{border-left:2px solid var(--gold)}
@@ -130,11 +122,17 @@ td{padding:11px 14px;font-size:11px;color:var(--muted);vertical-align:top}
 .finding-box li{font-size:11px;color:var(--muted);padding-left:14px;position:relative;line-height:1.6}
 .finding-box li::before{content:'—';position:absolute;left:0;color:var(--dim2)}
 
-/* HYPOTHESIS */
 .hypothesis{background:var(--surface);border:1px solid var(--line2);border-left:2px solid var(--gold);padding:24px;margin-bottom:32px}
 .hypothesis-label{font-size:9px;letter-spacing:.14em;text-transform:uppercase;color:var(--gold);margin-bottom:12px}
 .hypothesis-text{font-family:'Cormorant Garamond',serif;font-size:17px;font-weight:300;color:var(--text);line-height:1.75;font-style:italic}
 .hypothesis-sub{font-size:11px;color:var(--dim);margin-top:12px;line-height:1.7}
+
+/* EXTENDED ANALYSIS BLOCK */
+.extended{background:var(--surface);border:1px solid var(--line);border-left:2px solid rgba(200,169,110,.4);padding:24px;margin-bottom:32px}
+.extended-label{font-size:9px;letter-spacing:.14em;text-transform:uppercase;color:var(--dim);margin-bottom:12px}
+.extended-text{font-size:11px;color:var(--muted);line-height:1.8;max-width:620px;margin-bottom:16px}
+.extended-link{display:inline-flex;align-items:center;gap:8px;font-size:9px;letter-spacing:.16em;text-transform:uppercase;color:var(--gold);border:1px solid rgba(200,169,110,.3);padding:8px 16px;transition:border-color .2s,background .2s}
+.extended-link:hover{border-color:var(--gold);background:rgba(200,169,110,.06)}
 
 .footnote{margin-top:32px;padding:16px;border-top:1px solid var(--line);font-size:10px;color:var(--dim2);line-height:1.7}
 
@@ -438,7 +436,7 @@ col.c-conf{width:100px}
         <tr>
           <td><span class="case-name">Flash Crash</span><span class="case-sub">May 6, 2010</span></td>
           <td><span class="sector-tag">Finance</span></td>
-          <td><div class="owner-name">Waddell & Reed PM</div></td>
+          <td><div class="owner-name">Waddell &amp; Reed PM</div></td>
           <td><div class="owner-name">CME Circuit Breaker</div><div class="owner-note">Automated. No named human.</div></td>
           <td><span class="lvl lvl-na">N/A</span></td>
           <td><div class="cont-note">Cascade too fast for human refusal. Technical stop existed; authority structure irrelevant at that timescale.</div></td>
@@ -491,7 +489,6 @@ col.c-conf{width:100px}
     </table>
   </div>
 
-
   <div class="findings">
     <div class="finding-box key">
       <div class="finding-label">Key Finding — Post Taxonomy</div>
@@ -521,6 +518,13 @@ col.c-conf{width:100px}
     <div class="hypothesis-label">Working Hypothesis</div>
     <div class="hypothesis-text">Independent refusal authority is most consistently observed in domains where irreversibility is salient and refusal authority is operationally or institutionally enforced.</div>
     <div class="hypothesis-sub">Not all veto authority constitutes refusal authority. A veto that can be routinely overridden through escalation functions as procedural friction. Refusal authority exists when continuation cannot proceed without resolving the refusal.</div>
+  </div>
+
+  <!-- EXTENDED ANALYSIS -->
+  <div class="extended">
+    <div class="extended-label">Extended Analysis</div>
+    <div class="extended-text">The coding of these 23 cases against a new variable — who defined the threshold in advance — is documented in a separate working note. The analysis examines whether a prior condition to refusal authority exists: Trigger Authority. Preliminary findings suggest the two variables are not equivalent. Challenger shows Trigger Authority present but Effective Authority absent. Boeing MCAS shows both absent.</div>
+    <a href="trigger-authority.html" class="extended-link">Trigger Authority: Who Defined the Threshold? →</a>
   </div>
 
   <div class="footnote">
