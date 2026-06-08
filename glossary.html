@@ -28,6 +28,10 @@
     .label { font-family: 'IBM Plex Mono', monospace; font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--gold); margin-bottom: 20px; display: block; }
     h1 { font-size: clamp(2rem, 5vw, 2.8rem); font-weight: 300; letter-spacing: 0.02em; line-height: 1.2; color: var(--text); margin-bottom: 20px; }
     .header-desc { font-size: 1rem; color: var(--muted); font-style: italic; font-weight: 300; line-height: 1.6; max-width: 520px; }
+    .dar-mirror { border-left: 2px solid var(--gold); padding: 24px 28px; margin-bottom: 32px; background: var(--gold-dim); }
+    .dar-mirror p { font-size: clamp(0.95rem, 1.8vw, 1.1rem); font-weight: 300; color: var(--muted); line-height: 1.75; }
+    .dar-mirror p + p { margin-top: 8px; }
+    .dar-mirror em { font-style: italic; color: var(--gold2); }
     .core-question { border-left: 2px solid var(--gold); padding: 28px 32px; background: var(--gold-dim); margin-bottom: 72px; }
     .core-question .cq-label { font-family: 'IBM Plex Mono', monospace; font-size: 10px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--gold); margin-bottom: 16px; display: block; }
     .core-question p { font-size: clamp(1.1rem, 2.5vw, 1.35rem); font-weight: 400; font-style: italic; color: var(--text); line-height: 1.5; }
@@ -72,7 +76,7 @@
 <body>
 <header class="topbar">
   <a href="index.html" class="brand"><span class="brand-rule"></span><span>Liran Bar-Shrim</span></a>
-  <a href="mailto:Liran@liranbarshrim.com" class="nav-contact">Correspondence</a>
+  <a href="mailto:Liranbarshrim@gmail.com" class="nav-contact">Correspondence</a>
 </header>
 
 <main>
@@ -84,14 +88,18 @@
     <p class="header-desc">A working vocabulary for the question DAR asks. The terms, distinctions, and test used to examine refusal authority.</p>
   </header>
 
+  <div class="dar-mirror">
+    <p>DAR functions as a <em>mirror, not a mandate.</em></p>
+    <p>It does not determine whether an organization should stop. It reveals whether authority to stop and authority to release continuation have been intentionally defined.</p>
+  </div>
+
   <div class="core-question">
     <span class="cq-label">Core Question</span>
-    <p>Before an irreversible action proceeds, who is authorized to stop it — by name?</p>
+    <p>Before an irreversible action proceeds, who is authorized to stop or release continuation — by name?</p>
   </div>
 
   <div class="terms">
 
-    <!-- 1. Irreversible Commitment -->
     <div class="term">
       <div class="term-header">
         <span class="term-name">Irreversible Commitment</span>
@@ -103,7 +111,6 @@
       </div>
     </div>
 
-    <!-- 2. Trigger Authority -->
     <div class="term">
       <div class="term-header">
         <span class="term-name">Trigger Authority</span>
@@ -117,7 +124,6 @@
       <p class="term-note">DAR does not determine when stopping is required. It asks whether that determination was made in advance — and by whom.</p>
     </div>
 
-    <!-- 3. Control Point -->
     <div class="term">
       <div class="term-header">
         <span class="term-name">Control Point</span>
@@ -130,7 +136,6 @@
       </div>
     </div>
 
-    <!-- 4. Stop Authority -->
     <div class="term">
       <div class="term-header">
         <span class="term-name">Stop Authority</span>
@@ -143,7 +148,6 @@
       </div>
     </div>
 
-    <!-- 5. Effective Authority -->
     <div class="term">
       <div class="term-header">
         <span class="term-name">Effective Authority</span>
@@ -161,7 +165,6 @@
 
   </div>
 
-  <!-- functional test -->
   <div class="functional-test">
     <span class="ft-label">Operative Test</span>
     <p class="ft-question">If the identified party says no, does continuation stop?</p>
@@ -181,7 +184,6 @@
 
   <div class="terms" style="margin-top:0;">
 
-    <!-- 6. Interruption -->
     <div class="term">
       <div class="term-header">
         <span class="term-name">Interruption</span>
@@ -194,7 +196,6 @@
       </div>
     </div>
 
-    <!-- 7. Orphaned Responsibility -->
     <div class="term">
       <div class="term-header">
         <span class="term-name">Orphaned Responsibility</span>
@@ -221,7 +222,7 @@
 
   <div style="margin-top:80px;padding-top:64px;border-top:1px solid rgba(200,169,110,.2);">
     <span style="font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:#52504c;display:block;margin-bottom:24px;">Core Question</span>
-    <p style="font-size:clamp(1.4rem,3.5vw,2.2rem);font-weight:400;font-style:italic;line-height:1.2;color:#ebe5da;max-width:22ch;">Before an irreversible action proceeds, who is authorized to stop it — by name?</p>
+    <p style="font-size:clamp(1.4rem,3.5vw,2.2rem);font-weight:400;font-style:italic;line-height:1.2;color:#ebe5da;max-width:22ch;">Before an irreversible action proceeds, who is authorized to stop or release continuation — by name?</p>
   </div>
 
   <footer style="position:relative;z-index:1;text-align:center;padding:20px;margin-top:80px;border-top:1px solid var(--line);font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:.08em;color:#7a7570;">
