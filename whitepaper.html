@@ -37,23 +37,17 @@ html{scroll-behavior:smooth}
 body{background:var(--bg);color:var(--text);font-family:"Cormorant Garamond",Georgia,serif;overflow-x:hidden;-webkit-font-smoothing:antialiased;line-height:1.85}
 body::before{content:"";position:fixed;inset:0;pointer-events:none;z-index:0;opacity:.028;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");background-size:180px}
 a{text-decoration:none;color:inherit}
-
 .topbar{position:fixed;top:0;left:0;right:0;height:72px;display:flex;align-items:center;justify-content:space-between;padding:0 48px;z-index:100;background:rgba(8,8,8,.92);backdrop-filter:blur(16px);border-bottom:1px solid var(--line)}
 .brand{display:flex;align-items:center;gap:14px;font-family:"IBM Plex Mono",monospace;font-size:9.5px;letter-spacing:.32em;text-transform:uppercase;color:var(--text)}
 .brand-rule{width:32px;height:1px;background:var(--gold)}
 .nav-contact{font-family:"IBM Plex Mono",monospace;font-size:9.5px;letter-spacing:.28em;text-transform:uppercase;color:var(--gold2);transition:opacity .2s}
 .nav-contact:hover{opacity:.7}
-
 .wrap{max-width:720px;margin:0 auto;padding:0 48px;position:relative;z-index:1}
-
-/* HERO */
 .hero{padding-top:160px;padding-bottom:70px;border-bottom:1px solid var(--line)}
 .doc-meta{font-family:"IBM Plex Mono",monospace;font-size:9px;letter-spacing:.32em;text-transform:uppercase;color:var(--dim);margin-bottom:32px}
 .hero h1{font-size:clamp(36px,5.5vw,78px);font-weight:400;line-height:1.0;letter-spacing:-.01em;color:var(--text);margin-bottom:36px;max-width:18ch}
 .hero h1 em{font-style:italic;color:var(--gold2)}
 .hero-summary{font-size:clamp(17px,1.5vw,20px);font-weight:300;line-height:1.9;color:var(--muted);max-width:58ch;border-left:1px solid var(--gold-line);padding-left:24px}
-
-/* SECTIONS */
 .doc-section{padding:60px 0;border-bottom:1px solid var(--line)}
 .doc-section:last-of-type{border-bottom:none}
 .section-num{font-family:"IBM Plex Mono",monospace;font-size:9px;letter-spacing:.28em;text-transform:uppercase;color:var(--dim);margin-bottom:20px}
@@ -61,39 +55,22 @@ a{text-decoration:none;color:inherit}
 .doc-section h2 em{font-style:italic;color:var(--gold2)}
 .body-p{font-size:clamp(16px,1.4vw,19px);font-weight:300;color:var(--muted);margin-bottom:20px;max-width:60ch;line-height:1.9}
 .body-p strong{color:var(--text);font-weight:400}
-
-/* PULL */
 .pull{border-left:2px solid var(--gold);padding-left:24px;margin:36px 0;font-size:clamp(18px,2vw,26px);font-weight:300;line-height:1.5;font-style:italic;color:var(--text);}
-
-/* PULL DANGER */
 .pull-danger{border-left:2px solid var(--danger);padding-left:24px;margin:36px 0;font-size:clamp(17px,1.8vw,22px);font-weight:300;line-height:1.55;font-style:italic;color:#d4a0a0;}
-
 .danger-marker{font-family:"IBM Plex Mono",monospace;font-size:9px;letter-spacing:.28em;text-transform:uppercase;color:var(--danger);margin-bottom:20px;opacity:.8}
-
-/* DAR LINK */
 .dar-link{padding:32px 36px;background:rgba(200,169,110,.05);border-left:2px solid rgba(200,169,110,.3);margin-top:48px;}
 .dar-link-label{font-family:"IBM Plex Mono",monospace;font-size:9px;letter-spacing:.2em;text-transform:uppercase;color:var(--dim2);margin-bottom:16px;display:block;}
 .dar-link-text{font-size:clamp(15px,1.4vw,18px);font-weight:300;color:var(--muted);line-height:1.7;margin-bottom:20px;max-width:50ch;}
 .dar-link-cta{font-family:"IBM Plex Mono",monospace;font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--gold);border-bottom:1px solid rgba(200,169,110,.3);padding-bottom:2px;transition:opacity .2s;}
 .dar-link-cta:hover{opacity:.7;}
-
-/* FINAL */
 .final{padding:80px 0 100px;border-top:1px solid var(--line)}
 .back-link{font-family:"IBM Plex Mono",monospace;font-size:9px;letter-spacing:.28em;text-transform:uppercase;color:var(--dim);transition:color .2s;display:block;margin-bottom:14px}
 .back-link:hover{color:var(--gold2)}
 .sig{font-family:"IBM Plex Mono",monospace;font-size:9.5px;letter-spacing:.26em;text-transform:uppercase;color:var(--dim);margin-top:28px}
-
 .footer{position:relative;z-index:1;text-align:center;padding:20px;border-top:1px solid var(--line);font-family:"IBM Plex Mono",monospace;font-size:9px;letter-spacing:.08em;color:var(--dim)}
 .footer a{color:var(--dim);transition:color .2s}
 .footer a:hover{color:var(--gold)}
-
-@media(max-width:860px){
-  .topbar{padding:0 20px}
-  .wrap{padding:0 20px}
-  .hero{padding-top:120px}
-  .doc-section{padding:44px 0}
-  .body-p{line-height:1.75}
-}
+@media(max-width:860px){.topbar{padding:0 20px}.wrap{padding:0 20px}.hero{padding-top:120px}.doc-section{padding:44px 0}.body-p{line-height:1.75}}
 @media(max-width:640px){body{overflow-x:hidden !important}}
 @keyframes fadeUp{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
 .hero{animation:fadeUp .9s ease both}
@@ -104,7 +81,7 @@ a{text-decoration:none;color:inherit}
 
 <header class="topbar">
   <a href="index.html" class="brand"><span class="brand-rule"></span><span>Liran Bar-Shrim</span></a>
-  <a href="mailto:Liran@liranbarshrim.com" class="nav-contact">Correspondence</a>
+  <a href="mailto:Liranbarshrim@gmail.com" class="nav-contact">Correspondence</a>
 </header>
 
 <main>
@@ -132,8 +109,8 @@ a{text-decoration:none;color:inherit}
       while authorization had previously been undefined.
     </p>
     <div class="pull">
-      If no named refusal authority exists,
-      continuation is already authorized by default.
+      If no named individual is authorized to release or refuse continuation,
+      continuation proceeds by default.
       The organization has not made a governance decision.
       It has avoided one.
     </div>
