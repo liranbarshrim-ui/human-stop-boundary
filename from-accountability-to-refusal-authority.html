@@ -35,55 +35,31 @@ a{text-decoration:none;color:inherit;}
 .nav-contact:hover{opacity:.7;}
 .wrap{max-width:1280px;margin:0 auto;padding:0 48px;position:relative;z-index:1;}
 .wrap-narrow{max-width:800px;margin:0 auto;padding:0 48px;position:relative;z-index:1;}
-
-/* HERO */
 .hero{padding-top:172px;padding-bottom:112px;}
 .hero-label{font-family:"IBM Plex Mono",monospace;font-size:9px;letter-spacing:.32em;text-transform:uppercase;color:var(--dim);margin-bottom:40px;}
 .hero h1{font-size:clamp(36px,7vw,110px);font-weight:400;line-height:.9;letter-spacing:-.02em;color:var(--text);margin-bottom:48px;max-width:16ch;}
 .hero h1 em{font-style:italic;color:var(--gold2);}
 .hero-context{font-size:clamp(17px,1.6vw,22px);font-weight:300;line-height:1.85;color:#c8c2b8;max-width:52ch;border-left:1px solid rgba(200,169,110,.25);padding-left:24px;}
-
-/* PAUSE */
 .pause{padding:96px 0;border-top:1px solid var(--line);border-bottom:1px solid var(--line);margin:0;position:relative;z-index:1;}
 .pause-line{position:relative;padding-left:28px;font-size:clamp(24px,3.8vw,58px);font-weight:300;font-style:italic;line-height:1.2;color:var(--text);max-width:600px;margin:0 0 0 48px;}
 .pause-line::before{content:"";position:absolute;left:0;top:6px;bottom:6px;width:1px;background:rgba(200,169,110,.35);}
-
-/* SECTION LABELS */
 .section-label{font-family:"IBM Plex Mono",monospace;font-size:9px;letter-spacing:.22em;text-transform:uppercase;color:var(--dim);margin-bottom:36px;}
-
-/* GRID */
 .ev-grid{display:grid;grid-template-columns:1fr;gap:2px;}
 .ev-link{display:block;background:#0d0d0d;border-left:3px solid rgba(200,169,110,.3);padding:28px 32px;transition:border-color .3s,background .3s;}
 .ev-link:hover{border-left-color:var(--gold);background:#111;}
 .ev-tag{font-family:"IBM Plex Mono",monospace;font-size:9px;letter-spacing:.2em;text-transform:uppercase;color:var(--dim);margin-bottom:10px;}
 .ev-title{font-size:clamp(16px,1.5vw,20px);font-weight:300;color:var(--text);line-height:1.4;margin-bottom:8px;}
 .ev-desc{font-size:14px;font-weight:300;color:#7a7570;line-height:1.6;}
-
-/* TEXT BLOCKS */
 .body-text{font-size:clamp(17px,1.5vw,21px);font-weight:300;line-height:1.9;color:#d8d2c8;max-width:58ch;}
 .body-text p{margin-bottom:20px;}
 .body-text strong{font-weight:400;color:var(--text);font-style:italic;}
-
 .final{padding:88px 0 112px;border-top:1px solid var(--line);}
 .final-line{font-size:clamp(28px,4.5vw,68px);font-weight:400;font-style:italic;line-height:1.08;max-width:20ch;margin-bottom:32px;color:var(--text);}
 .sig{font-family:"IBM Plex Mono",monospace;font-size:9.5px;letter-spacing:.2em;text-transform:uppercase;color:#7a7570;}
 .footer{position:relative;z-index:1;text-align:center;padding:20px;border-top:1px solid var(--line);font-family:"IBM Plex Mono",monospace;font-size:9px;letter-spacing:.08em;color:#7a7570;}
-
 @media(min-width:900px){.ev-grid{grid-template-columns:repeat(2,1fr);}}
-@media(max-width:860px){
-  .topbar{padding:0 20px;}
-  .wrap,.wrap-narrow{padding:0 20px;max-width:100%;}
-  .hero{padding-top:120px;padding-bottom:64px;}
-  .hero h1{font-size:28px;}
-  .pause{padding:56px 0;}
-  .pause-line{font-size:20px;margin:0 20px;}
-  .final{padding:56px 0 72px;}
-  .final-line{font-size:22px;}
-}
-@media(max-width:640px){
-  body{overflow-x:hidden !important;}
-  .wrap,.wrap-narrow{padding-left:20px !important;padding-right:20px !important;max-width:100% !important;}
-}
+@media(max-width:860px){.topbar{padding:0 20px;}.wrap,.wrap-narrow{padding:0 20px;max-width:100%;}.hero{padding-top:120px;padding-bottom:64px;}.hero h1{font-size:28px;}.pause{padding:56px 0;}.pause-line{font-size:20px;margin:0 20px;}.final{padding:56px 0 72px;}.final-line{font-size:22px;}}
+@media(max-width:640px){body{overflow-x:hidden !important;}.wrap,.wrap-narrow{padding-left:20px !important;padding-right:20px !important;max-width:100% !important;}}
 @keyframes fadeUp{from{opacity:0;transform:translateY(16px);}to{opacity:1;transform:translateY(0);}}
 .hero{animation:fadeUp .9s ease both;}
 </style>
@@ -92,12 +68,11 @@ a{text-decoration:none;color:inherit;}
 
 <header class="topbar">
   <a href="index.html" class="brand"><span class="brand-rule"></span><span>Liran Bar-Shrim</span></a>
-  <a href="mailto:Liran@liranbarshrim.com" class="nav-contact">Correspondence</a>
+  <a href="mailto:Liranbarshrim@gmail.com" class="nav-contact">Correspondence</a>
 </header>
 
 <main>
 
-  <!-- HERO -->
   <section class="hero wrap-narrow">
     <div class="hero-label">A structural translation</div>
     <h1>From Accountability<br>to Refusal<br>Authority</h1>
@@ -111,7 +86,6 @@ a{text-decoration:none;color:inherit;}
     <p style="font-size:clamp(17px,1.6vw,24px);font-weight:300;font-style:italic;line-height:1.75;color:#c8c2b8;max-width:54ch;border-left:1px solid rgba(200,169,110,.2);padding-left:24px;">Most governance frameworks can answer at least one of these questions. Some can answer all of them.</p>
   </div>
 
-  <!-- INTRODUCTION -->
   <div class="wrap-narrow" style="padding-bottom:88px;position:relative;z-index:1;">
     <div class="body-text">
       <p>Who approved?</p>
@@ -119,7 +93,6 @@ a{text-decoration:none;color:inherit;}
       <p>Who accepted the risk?</p>
       <p>Who signed?</p>
       <p>Who is accountable?</p>
-      
       <p style="margin-top:32px;">Most governance frameworks stop here.</p>
       <p>This work begins where those questions end.</p>
       <p>Governance usually begins with ownership.</p>
@@ -127,7 +100,6 @@ a{text-decoration:none;color:inherit;}
     </div>
   </div>
 
-  <!-- PAUSE -->
   <div class="pause">
     <div class="pause-line">
       The distinction becomes visible<br>
@@ -137,13 +109,11 @@ a{text-decoration:none;color:inherit;}
     </div>
   </div>
 
-  <!-- GOVERNANCE TRANSLATION -->
   <section class="wrap" style="padding:88px 0;border-bottom:1px solid var(--line);">
     <div class="wrap-narrow">
       <div class="section-label">Common Governance Questions</div>
       <p style="font-size:clamp(17px,1.6vw,23px);font-weight:300;line-height:1.75;color:#c8c2b8;max-width:52ch;margin-bottom:48px;">Most governance questions examine responsibility. This one examines what happens after objection.</p>
     </div>
-    
     <div class="ev-grid" style="margin:0 48px;">
       <div class="ev-link" style="border-left-color:rgba(200,169,110,.5);">
         <div class="ev-tag">Approval</div>
@@ -178,7 +148,6 @@ a{text-decoration:none;color:inherit;}
     </div>
   </section>
 
-  <!-- RULES, GUARDRAILS, AND REFUSAL -->
   <section class="wrap-narrow" style="padding:88px 0;border-bottom:1px solid var(--line);">
     <div class="section-label">Rules, Guardrails, and Refusal</div>
     <div class="body-text">
@@ -193,7 +162,6 @@ a{text-decoration:none;color:inherit;}
     </div>
   </section>
 
-  <!-- PAUSE 2 -->
   <div class="pause">
     <div class="pause-line">
       When everyone agrees,<br>
@@ -203,7 +171,6 @@ a{text-decoration:none;color:inherit;}
     </div>
   </div>
 
-  <!-- OPERATIONAL QUESTION -->
   <section class="wrap-narrow" style="padding:88px 0;border-bottom:1px solid var(--line);">
     <div class="section-label">The Operational Question</div>
     <div class="body-text">
@@ -218,7 +185,6 @@ a{text-decoration:none;color:inherit;}
     </div>
   </section>
 
-  <!-- FINAL -->
   <section class="final wrap-narrow">
     <div class="final-line">The language changes.<br>The question does not.<br><br>Who, by name,<br>is authorized to refuse?</div>
     <div class="sig">Liran Bar-Shrim · 2026</div>
