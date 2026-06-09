@@ -10,282 +10,51 @@
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=IBM+Plex+Mono:wght@300;400&display=swap" rel="stylesheet" />
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
     :root {
-      --bg: #090909;
-      --surface: #111111;
-      --gold: #c8a96e;
-      --text: #e6e0d4;
-      --muted: #7a7570;
-      --muted-dark: #52504c;
-      --border: #1e1e1e;
-      --border-light: #2a2a2a;
-      --danger: #c0392b;
+      --bg: #090909; --surface: #111111; --gold: #c8a96e; --text: #e6e0d4;
+      --muted: #7a7570; --muted-dark: #52504c; --border: #1e1e1e;
+      --border-light: #2a2a2a; --danger: #c0392b;
     }
-
     html { scroll-behavior: smooth; }
-
-    body {
-      background: var(--bg);
-      color: var(--text);
-      font-family: 'Cormorant Garamond', Georgia, serif;
-      font-size: 18px;
-      line-height: 1.7;
-      min-height: 100vh;
-      overflow-x: hidden;
-    }
-
-    body::before {
-      content: '';
-      position: fixed;
-      inset: 0;
-      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
-      pointer-events: none;
-      z-index: 1000;
-      opacity: 0.6;
-    }
-
-    nav {
-      position: fixed;
-      top: 0; left: 0; right: 0;
-      z-index: 100;
-      padding: 1.5rem 3rem;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      border-bottom: 1px solid var(--border);
-      background: rgba(9,9,9,0.92);
-      backdrop-filter: blur(8px);
-    }
-
-    .nav-brand {
-      font-family: 'IBM Plex Mono', monospace;
-      font-size: 0.7rem;
-      font-weight: 300;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      color: var(--muted);
-      text-decoration: none;
-    }
-
+    body { background: var(--bg); color: var(--text); font-family: 'Cormorant Garamond', Georgia, serif; font-size: 18px; line-height: 1.7; min-height: 100vh; overflow-x: hidden; }
+    body::before { content: ''; position: fixed; inset: 0; background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E"); pointer-events: none; z-index: 1000; opacity: 0.6; }
+    nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; padding: 1.5rem 3rem; display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid var(--border); background: rgba(9,9,9,0.92); backdrop-filter: blur(8px); }
+    .nav-brand { font-family: 'IBM Plex Mono', monospace; font-size: 0.7rem; font-weight: 300; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); text-decoration: none; }
     .nav-brand span { color: var(--gold); }
-
-    .nav-links {
-      display: flex;
-      gap: 2rem;
-      list-style: none;
-    }
-
-    .nav-links a {
-      font-family: 'IBM Plex Mono', monospace;
-      font-size: 0.65rem;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      color: var(--muted);
-      text-decoration: none;
-      transition: color 0.2s;
-    }
-
+    .nav-links { display: flex; gap: 2rem; list-style: none; }
+    .nav-links a { font-family: 'IBM Plex Mono', monospace; font-size: 0.65rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); text-decoration: none; transition: color 0.2s; }
     .nav-links a:hover { color: var(--text); }
-
-    main {
-      max-width: 720px;
-      margin: 0 auto;
-      padding: 8rem 2rem 6rem;
-    }
-
-    .tag {
-      font-family: 'IBM Plex Mono', monospace;
-      font-size: 0.6rem;
-      font-weight: 400;
-      letter-spacing: 0.18em;
-      text-transform: uppercase;
-      color: var(--gold);
-      display: inline-block;
-      margin-bottom: 2.5rem;
-      opacity: 0;
-      animation: fadeUp 0.6s ease forwards 0.1s;
-    }
-
-    h1 {
-      font-size: clamp(3.5rem, 8vw, 5.5rem);
-      font-weight: 300;
-      line-height: 1.0;
-      letter-spacing: -0.02em;
-      color: var(--text);
-      margin-bottom: 3.5rem;
-      opacity: 0;
-      animation: fadeUp 0.7s ease forwards 0.2s;
-    }
-
-    .section {
-      border-left: 2px solid var(--border-light);
-      padding-left: 2rem;
-      margin-bottom: 3.5rem;
-      opacity: 0;
-      animation: fadeUp 0.7s ease forwards;
-    }
-
+    main { max-width: 720px; margin: 0 auto; padding: 8rem 2rem 6rem; }
+    .tag { font-family: 'IBM Plex Mono', monospace; font-size: 0.6rem; font-weight: 400; letter-spacing: 0.18em; text-transform: uppercase; color: var(--gold); display: inline-block; margin-bottom: 2.5rem; opacity: 0; animation: fadeUp 0.6s ease forwards 0.1s; }
+    h1 { font-size: clamp(3.5rem, 8vw, 5.5rem); font-weight: 300; line-height: 1.0; letter-spacing: -0.02em; color: var(--text); margin-bottom: 3.5rem; opacity: 0; animation: fadeUp 0.7s ease forwards 0.2s; }
+    .section { border-left: 2px solid var(--border-light); padding-left: 2rem; margin-bottom: 3.5rem; opacity: 0; animation: fadeUp 0.7s ease forwards; }
     .section:nth-child(3) { animation-delay: 0.3s; }
     .section:nth-child(4) { animation-delay: 0.4s; }
     .section:nth-child(5) { animation-delay: 0.5s; }
     .section:nth-child(6) { animation-delay: 0.6s; }
-
     .section.gold-bar { border-left-color: var(--gold); }
-
-    p {
-      font-size: 1.15rem;
-      font-weight: 300;
-      line-height: 1.8;
-      color: var(--text);
-      margin-bottom: 1.2rem;
-    }
-
+    p { font-size: 1.15rem; font-weight: 300; line-height: 1.8; color: var(--text); margin-bottom: 1.2rem; }
     p:last-child { margin-bottom: 0; }
-
-    .stack {
-      display: flex;
-      flex-direction: column;
-      gap: 0.5rem;
-      margin: 1.2rem 0;
-    }
-
-    .stack-item {
-      font-family: 'IBM Plex Mono', monospace;
-      font-size: 0.78rem;
-      font-weight: 300;
-      color: var(--muted);
-      letter-spacing: 0.04em;
-      padding-left: 1rem;
-      border-left: 1px solid var(--border-light);
-      line-height: 1.6;
-    }
-
-    /* punch block */
-    .punch {
-      margin: 4rem 0;
-      padding: 2.5rem 0;
-      border-top: 1px solid var(--border-light);
-      border-bottom: 1px solid var(--border-light);
-      opacity: 0;
-      animation: fadeUp 0.7s ease forwards 0.65s;
-    }
-
-    .punch-line {
-      font-size: 1.15rem;
-      font-weight: 300;
-      line-height: 2;
-      color: var(--muted);
-      font-family: 'IBM Plex Mono', monospace;
-      font-size: 0.82rem;
-      letter-spacing: 0.04em;
-    }
-
-    .punch-line.strike {
-      color: var(--muted-dark);
-      text-decoration: line-through;
-      text-decoration-color: var(--border-light);
-    }
-
-    .punch-line.final {
-      color: var(--gold);
-      font-size: 1rem;
-      margin-top: 0.8rem;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-    }
-
-    /* key question */
-    .key-question {
-      margin: 3rem 0;
-      padding: 2rem 2rem 2rem 2.5rem;
-      border-left: 3px solid var(--gold);
-      background: rgba(200, 169, 110, 0.04);
-      opacity: 0;
-      animation: fadeUp 0.7s ease forwards 0.8s;
-    }
-
-    .key-question p {
-      font-size: 1.2rem;
-      font-weight: 300;
-      color: var(--text);
-      margin: 0;
-      margin-bottom: 0.8rem;
-    }
-
+    .stack { display: flex; flex-direction: column; gap: 0.5rem; margin: 1.2rem 0; }
+    .stack-item { font-family: 'IBM Plex Mono', monospace; font-size: 0.78rem; font-weight: 300; color: var(--muted); letter-spacing: 0.04em; padding-left: 1rem; border-left: 1px solid var(--border-light); line-height: 1.6; }
+    .punch { margin: 4rem 0; padding: 2.5rem 0; border-top: 1px solid var(--border-light); border-bottom: 1px solid var(--border-light); opacity: 0; animation: fadeUp 0.7s ease forwards 0.65s; }
+    .punch-line { font-family: 'IBM Plex Mono', monospace; font-size: 0.82rem; font-weight: 300; line-height: 2; color: var(--muted); letter-spacing: 0.04em; }
+    .punch-line.strike { color: var(--muted-dark); text-decoration: line-through; text-decoration-color: var(--border-light); }
+    .punch-line.final { color: var(--gold); font-size: 1rem; margin-top: 0.8rem; letter-spacing: 0.1em; text-transform: uppercase; }
+    .key-question { margin: 3rem 0; padding: 2rem 2rem 2rem 2.5rem; border-left: 3px solid var(--gold); background: rgba(200, 169, 110, 0.04); opacity: 0; animation: fadeUp 0.7s ease forwards 0.8s; }
+    .key-question p { font-size: 1.2rem; font-weight: 300; color: var(--text); margin: 0; margin-bottom: 0.8rem; }
     .key-question p:last-child { margin-bottom: 0; }
-
-    .key-question strong {
-      font-weight: 600;
-      color: var(--gold);
-    }
-
-    /* closing */
-    .closing {
-      margin-top: 5rem;
-      padding-top: 3rem;
-      border-top: 1px solid var(--border);
-      opacity: 0;
-      animation: fadeUp 0.7s ease forwards 1s;
-    }
-
-    .closing p {
-      font-size: 1rem;
-      color: var(--muted);
-    }
-
-    .closing .signature {
-      font-family: 'IBM Plex Mono', monospace;
-      font-size: 0.65rem;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      color: var(--muted-dark);
-      margin-top: 1.5rem;
-    }
-
-    footer {
-      border-top: 1px solid var(--border);
-      padding: 2rem 3rem;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      margin-top: 4rem;
-    }
-
-    .footer-copy {
-      font-family: 'IBM Plex Mono', monospace;
-      font-size: 0.6rem;
-      color: var(--muted-dark);
-      letter-spacing: 0.08em;
-    }
-
-    .footer-links {
-      display: flex;
-      gap: 1.5rem;
-    }
-
-    .footer-links a {
-      font-family: 'IBM Plex Mono', monospace;
-      font-size: 0.6rem;
-      letter-spacing: 0.08em;
-      color: var(--muted-dark);
-      text-decoration: none;
-      transition: color 0.2s;
-    }
-
+    .key-question strong { font-weight: 600; color: var(--gold); }
+    .closing { margin-top: 5rem; padding-top: 3rem; border-top: 1px solid var(--border); opacity: 0; animation: fadeUp 0.7s ease forwards 1s; }
+    .closing p { font-size: 1rem; color: var(--muted); }
+    .closing .signature { font-family: 'IBM Plex Mono', monospace; font-size: 0.65rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted-dark); margin-top: 1.5rem; }
+    footer { border-top: 1px solid var(--border); padding: 2rem 3rem; display: flex; align-items: center; justify-content: space-between; margin-top: 4rem; }
+    .footer-copy { font-family: 'IBM Plex Mono', monospace; font-size: 0.6rem; color: var(--muted-dark); letter-spacing: 0.08em; }
+    .footer-links { display: flex; gap: 1.5rem; }
+    .footer-links a { font-family: 'IBM Plex Mono', monospace; font-size: 0.6rem; letter-spacing: 0.08em; color: var(--muted-dark); text-decoration: none; transition: color 0.2s; }
     .footer-links a:hover { color: var(--gold); }
-
-    @keyframes fadeUp {
-      from { opacity: 0; transform: translateY(16px); }
-      to   { opacity: 1; transform: translateY(0); }
-    }
-
-    @media (max-width: 640px) {
-      nav { padding: 1.2rem 1.5rem; }
-      .nav-links { display: none; }
-      main { padding: 6rem 1.5rem 4rem; }
-      footer { flex-direction: column; gap: 1rem; padding: 1.5rem; }
-    }
+    @keyframes fadeUp { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: translateY(0); } }
+    @media (max-width: 640px) { nav { padding: 1.2rem 1.5rem; } .nav-links { display: none; } main { padding: 6rem 1.5rem 4rem; } footer { flex-direction: column; gap: 1rem; padding: 1.5rem; } }
   </style>
 </head>
 <body>
@@ -343,10 +112,20 @@
       <p>Few define interruption.</p>
     </div>
 
+    <div class="section">
+      <p>Gravity does not require approval.<br>
+      It does not require intent.<br>
+      It does not require a person deciding that continuation should occur.</p>
+      <p>It only requires that continuation be easier than interruption.<br>
+      Once that condition exists, continuation no longer needs a decision.</p>
+    </div>
+
     <div class="closing">
-      <p>Authority Drift is erosion.<br>
-      Gravity is the absence of a decision that stops.</p>
-      <div class="signature">Liran Bar-Shrim · matrix-audit.com · 2026</div>
+      <p>Authority Drift explains why interruption fails after authority exists.<br>
+      Gravity explains what happens when interruption was never structurally required in the first place.</p>
+      <p style="margin-top:1.2rem;">The question remains:<br>
+      Who, by name, was expected to stop?</p>
+      <div class="signature">Liran Bar-Shrim · 2026</div>
     </div>
 
   </main>
