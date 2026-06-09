@@ -35,47 +35,24 @@ a{text-decoration:none;color:inherit;}
 .nav-contact:hover{opacity:.7;}
 .wrap{max-width:1280px;margin:0 auto;padding:0 48px;position:relative;z-index:1;}
 .wrap-narrow{max-width:800px;margin:0 auto;padding:0 48px;position:relative;z-index:1;}
-
-/* HERO */
 .hero{padding-top:172px;padding-bottom:112px;}
 .hero-label{font-family:"IBM Plex Mono",monospace;font-size:9px;letter-spacing:.32em;text-transform:uppercase;color:var(--dim);margin-bottom:40px;}
 .hero h1{font-size:clamp(36px,7vw,110px);font-weight:400;line-height:.9;letter-spacing:-.02em;color:var(--text);margin-bottom:48px;max-width:16ch;}
 .hero h1 em{font-style:italic;color:var(--gold2);}
 .hero-context{font-size:clamp(17px,1.6vw,22px);font-weight:300;line-height:1.85;color:#c8c2b8;max-width:52ch;border-left:1px solid rgba(200,169,110,.25);padding-left:24px;}
-
-/* PAUSE */
 .pause{padding:96px 0;border-top:1px solid var(--line);border-bottom:1px solid var(--line);margin:0;position:relative;z-index:1;}
 .pause-line{position:relative;padding-left:28px;font-size:clamp(24px,3.8vw,58px);font-weight:300;font-style:italic;line-height:1.2;color:var(--text);max-width:600px;margin:0 0 0 48px;}
 .pause-line::before{content:"";position:absolute;left:0;top:6px;bottom:6px;width:1px;background:rgba(200,169,110,.35);}
-
-/* SECTION LABELS */
 .section-label{font-family:"IBM Plex Mono",monospace;font-size:9px;letter-spacing:.22em;text-transform:uppercase;color:var(--dim);margin-bottom:36px;}
-
-/* TEXT BLOCKS */
 .body-text{font-size:clamp(17px,1.5vw,21px);font-weight:300;line-height:1.9;color:#d8d2c8;max-width:58ch;}
 .body-text p{margin-bottom:20px;}
 .body-text strong{font-weight:400;color:var(--text);font-style:italic;}
-
 .final{padding:88px 0 112px;border-top:1px solid var(--line);}
 .final-line{font-size:clamp(28px,4.5vw,68px);font-weight:400;font-style:italic;line-height:1.08;max-width:20ch;margin-bottom:32px;color:var(--text);}
 .sig{font-family:"IBM Plex Mono",monospace;font-size:9.5px;letter-spacing:.2em;text-transform:uppercase;color:#7a7570;}
 .footer{position:relative;z-index:1;text-align:center;padding:20px;border-top:1px solid var(--line);font-family:"IBM Plex Mono",monospace;font-size:9px;letter-spacing:.08em;color:#7a7570;}
-
-@media(min-width:900px){.ev-grid{grid-template-columns:repeat(2,1fr);}}
-@media(max-width:860px){
-  .topbar{padding:0 20px;}
-  .wrap,.wrap-narrow{padding:0 20px;max-width:100%;}
-  .hero{padding-top:120px;padding-bottom:64px;}
-  .hero h1{font-size:28px;}
-  .pause{padding:56px 0;}
-  .pause-line{font-size:20px;margin:0 20px;}
-  .final{padding:56px 0 72px;}
-  .final-line{font-size:22px;}
-}
-@media(max-width:640px){
-  body{overflow-x:hidden !important;}
-  .wrap,.wrap-narrow{padding-left:20px !important;padding-right:20px !important;max-width:100% !important;}
-}
+@media(max-width:860px){.topbar{padding:0 20px;}.wrap,.wrap-narrow{padding:0 20px;max-width:100%;}.hero{padding-top:120px;padding-bottom:64px;}.hero h1{font-size:28px;}.pause{padding:56px 0;}.pause-line{font-size:20px;margin:0 20px;}.final{padding:56px 0 72px;}.final-line{font-size:22px;}}
+@media(max-width:640px){body{overflow-x:hidden !important;}.wrap,.wrap-narrow{padding-left:20px !important;padding-right:20px !important;max-width:100% !important;}}
 @keyframes fadeUp{from{opacity:0;transform:translateY(16px);}to{opacity:1;transform:translateY(0);}}
 .hero{animation:fadeUp .9s ease both;}
 </style>
@@ -84,12 +61,11 @@ a{text-decoration:none;color:inherit;}
 
 <header class="topbar">
   <a href="index.html" class="brand"><span class="brand-rule"></span><span>Liran Bar-Shrim</span></a>
-  <a href="mailto:Liran@liranbarshrim.com" class="nav-contact">Correspondence</a>
+  <a href="mailto:Liranbarshrim@gmail.com" class="nav-contact">Correspondence</a>
 </header>
 
 <main>
 
-  <!-- HERO -->
   <section class="hero wrap-narrow">
     <div class="hero-label">The economics of interruption</div>
     <h1>The Invisible<br>ROI of<br>Refusal</h1>
@@ -103,7 +79,6 @@ a{text-decoration:none;color:inherit;}
     <p style="font-size:clamp(17px,1.6vw,24px);font-weight:300;font-style:italic;line-height:1.75;color:#c8c2b8;max-width:54ch;border-left:1px solid rgba(200,169,110,.2);padding-left:24px;">The better the refusal, the less visible its value becomes.</p>
   </div>
 
-  <!-- PAUSE -->
   <div class="pause">
     <div class="pause-line">
       Approval leaves evidence.<br>
@@ -113,7 +88,6 @@ a{text-decoration:none;color:inherit;}
     </div>
   </div>
 
-  <!-- MAIN CONTENT -->
   <section class="wrap-narrow" style="padding:88px 0;border-bottom:1px solid var(--line);">
     <div class="section-label">The Paradox</div>
     <div class="body-text">
@@ -133,7 +107,6 @@ a{text-decoration:none;color:inherit;}
     </div>
   </section>
 
-  <!-- CORE QUESTION -->
   <div class="wrap-narrow" style="padding:72px 0 96px;">
     <p style="font-size:clamp(19px,1.8vw,26px);font-style:italic;color:#c8c2b8;max-width:48ch;margin:0 auto;text-align:center;line-height:1.4;border-left:1px solid rgba(200,169,110,.4);border-right:1px solid rgba(200,169,110,.4);padding:0 32px;">
       Who, by name,<br>
@@ -141,7 +114,6 @@ a{text-decoration:none;color:inherit;}
     </p>
   </div>
 
-  <!-- FINAL -->
   <section class="final wrap-narrow">
     <div class="final-line">The highest return on governance<br>may be the one that leaves<br>the fewest traces.</div>
     <div class="sig">Liran Bar-Shrim · 2026</div>
