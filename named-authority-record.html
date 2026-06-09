@@ -19,37 +19,23 @@
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@300;400;500&family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300&display=swap" rel="stylesheet">
 <style>
 :root {
-  --bg: #080808;
-  --surface: #0d0d0d;
-  --surface2: #0f0f0f;
-  --gold: #c8a96e;
-  --gold2: #ead9b3;
-  --text: #ebe5da;
-  --muted: #d8d2c8;
-  --dim: #7a7570;
-  --line: rgba(255,255,255,.06);
-  --line-strong: rgba(255,255,255,.09);
-  --amber: #c8a96e;
-  --danger: #a83232;
+  --bg: #080808; --surface: #0d0d0d; --surface2: #0f0f0f;
+  --gold: #c8a96e; --gold2: #ead9b3; --text: #ebe5da;
+  --muted: #d8d2c8; --dim: #7a7570;
+  --line: rgba(255,255,255,.06); --line-strong: rgba(255,255,255,.09);
+  --amber: #c8a96e; --danger: #a83232;
 }
-
 *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
 html{scroll-behavior:smooth;overflow-x:hidden}
 body{background:var(--bg);color:var(--text);font-family:'IBM Plex Mono',monospace;overflow-x:hidden;-webkit-font-smoothing:antialiased;line-height:1.6}
 body::before{content:"";position:fixed;inset:0;pointer-events:none;z-index:0;opacity:.025;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");background-size:180px}
 a{text-decoration:none;color:inherit}
-
-/* TOPBAR — aligned with site */
 .topbar{position:fixed;top:0;left:0;right:0;height:72px;display:flex;align-items:center;justify-content:space-between;padding:0 48px;z-index:100;background:rgba(8,8,8,.92);backdrop-filter:blur(16px);border-bottom:1px solid var(--line)}
 .brand{display:flex;align-items:center;gap:14px;font-family:"IBM Plex Mono",monospace;font-size:9.5px;letter-spacing:.32em;text-transform:uppercase;color:var(--text)}
 .brand-rule{width:32px;height:1px;background:var(--gold)}
 .nav-back{font-family:"IBM Plex Mono",monospace;font-size:9px;letter-spacing:.22em;text-transform:uppercase;color:var(--dim);transition:color .2s}
 .nav-back:hover{color:var(--gold2)}
-
-/* PAGE */
 .page{max-width:680px;margin:0 auto;padding:108px 48px 88px;position:relative;z-index:1}
-
-/* PAGE HEADER */
 .page-header{padding-bottom:28px;margin-bottom:36px;border-bottom:1px solid var(--line-strong)}
 .header-top{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:20px;gap:20px}
 .header-id{font-size:8px;letter-spacing:.2em;color:var(--dim)}
@@ -57,14 +43,10 @@ a{text-decoration:none;color:inherit}
 .page-title{font-family:'Cormorant Garamond',serif;font-size:clamp(26px,4vw,40px);font-weight:300;color:var(--text);line-height:1.15;margin-bottom:10px}
 .page-subtitle{font-size:10px;color:var(--dim);letter-spacing:.08em;line-height:1.6}
 .page-note{margin-top:16px;padding:10px 14px;border-left:2px solid var(--dim);font-size:9px;color:var(--dim);line-height:1.65;letter-spacing:.02em}
-
-/* RECORD */
 .record{background:var(--surface);border:1px solid var(--line-strong);margin-bottom:2px}
 .rec-header{display:flex;align-items:center;justify-content:space-between;padding:10px 18px;background:var(--surface2);border-bottom:1px solid var(--line)}
 .rec-section{font-size:7px;letter-spacing:.22em;text-transform:uppercase;color:var(--dim)}
 .rec-id{font-size:7px;letter-spacing:.12em;color:var(--dim)}
-
-/* FIELDS */
 .field-group{padding:4px 0}
 .field{display:grid;grid-template-columns:180px 1fr;border-bottom:1px solid rgba(255,255,255,.025);min-height:40px}
 .field:last-child{border-bottom:none}
@@ -75,45 +57,26 @@ a{text-decoration:none;color:inherit}
 .field-value.withheld{color:var(--danger)}
 .field-value.released{color:#5a8a6a}
 .field-value.ts{color:var(--dim);font-size:10px}
-
-/* CONDITION */
 .condition-block{padding:14px 18px;border-top:1px solid var(--line);background:rgba(255,255,255,.012)}
 .condition-label{font-size:7px;letter-spacing:.2em;text-transform:uppercase;color:var(--dim);margin-bottom:8px}
 .condition-text{font-family:'Cormorant Garamond',serif;font-size:15px;font-weight:300;font-style:italic;color:var(--text);line-height:1.65}
-
-/* STATUS FOOTER */
 .status-footer{display:flex;align-items:center;justify-content:space-between;padding:12px 18px;border-top:1px solid var(--line-strong);background:var(--surface2)}
 .sf-label{font-size:8px;letter-spacing:.16em;text-transform:uppercase;color:var(--dim)}
 .sf-value{font-size:10px;font-weight:500;letter-spacing:.06em;text-transform:uppercase}
 .sf-value.withheld{color:var(--danger)}
 .sf-value.released{color:#5a8a6a}
 .sf-value.pending{color:var(--amber)}
-
-/* RECORD GAP */
 .record-gap{height:20px;display:flex;align-items:center;padding:0 18px}
 .record-gap span{font-size:7px;letter-spacing:.18em;text-transform:uppercase;color:var(--dim)}
-
-/* OVERRIDE NOTE */
 .override-note{background:rgba(168,50,50,.05);border-left:2px solid var(--danger);padding:12px 16px;font-size:10px;color:var(--dim);line-height:1.65}
 .override-note strong{color:var(--danger);font-weight:500}
-
-/* FOOTER NOTE */
 .footer-note{margin-top:40px;padding-top:24px;border-top:1px solid var(--line);font-size:9px;color:var(--dim);line-height:1.75;max-width:54ch}
 .footer-note a{color:var(--gold);border-bottom:1px solid rgba(200,169,110,.2);transition:border-color .2s}
 .footer-note a:hover{border-color:var(--gold)}
-
 .site-footer{border-top:1px solid var(--line);padding:20px 48px;display:flex;justify-content:space-between;position:relative;z-index:1;font-family:"IBM Plex Mono",monospace;font-size:9px;letter-spacing:.08em;color:var(--dim)}
 .site-footer a{color:var(--dim);transition:color .2s}
 .site-footer a:hover{color:var(--gold)}
-
-@media(max-width:860px){
-  .topbar{padding:0 20px}
-  .page{padding:96px 20px 64px}
-  .field{grid-template-columns:1fr}
-  .field-label{border-right:none;border-bottom:1px solid rgba(255,255,255,.025);padding:10px 14px 6px}
-  .field-value{padding:6px 14px 10px}
-  .site-footer{flex-direction:column;gap:6px;padding:14px 20px}
-}
+@media(max-width:860px){.topbar{padding:0 20px}.page{padding:96px 20px 64px}.field{grid-template-columns:1fr}.field-label{border-right:none;border-bottom:1px solid rgba(255,255,255,.025);padding:10px 14px 6px}.field-value{padding:6px 14px 10px}.site-footer{flex-direction:column;gap:6px;padding:14px 20px}}
 @media(max-width:640px){body{overflow-x:hidden !important}}
 </style>
 </head>
@@ -134,6 +97,10 @@ a{text-decoration:none;color:inherit}
     <div class="page-title">Named Authority<br>Record</div>
     <div class="page-subtitle">Structural governance artifact · named refusal authority designation</div>
     <div class="page-note">Names, organizations, execution contexts, and decisions are fictional. These records exist to illustrate what named refusal authority looks like when designated before an event — not reconstructed after it.</div>
+  </div>
+
+  <div style="margin-bottom:20px;padding:12px 18px;border-left:2px solid rgba(200,169,110,.3);font-size:10px;color:var(--dim);line-height:1.7;letter-spacing:.02em;">
+    These records are not proposed governance requirements. They are illustrative artifacts showing what named refusal authority might look like when documented before execution begins.
   </div>
 
   <!-- RECORD A -->
