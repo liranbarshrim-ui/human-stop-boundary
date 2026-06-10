@@ -7,24 +7,24 @@
   <meta name="description" content="Nobody decided to continue. Continuation happened anyway. This is not negligence. This is not drift. This is gravity." />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=IBM+Plex+Mono:wght@300;400&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=IBM+Plex+Mono:wght@300;400;500&display=swap" rel="stylesheet" />
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     :root {
-      --bg: #090909; --surface: #111111; --gold: #c8a96e; --text: #e6e0d4;
-      --muted: #7a7570; --muted-dark: #52504c; --border: #1e1e1e;
-      --border-light: #2a2a2a; --danger: #c0392b;
+      --bg: #090909; --surface: #111111; --gold: #c8a96e; --gold2: #ead9b3;
+      --text: #e6e0d4; --muted: #7a7570; --muted-dark: #52504c;
+      --border: #1e1e1e; --border-light: #2a2a2a; --line: rgba(255,255,255,.06);
     }
     html { scroll-behavior: smooth; }
     body { background: var(--bg); color: var(--text); font-family: 'Cormorant Garamond', Georgia, serif; font-size: 18px; line-height: 1.7; min-height: 100vh; overflow-x: hidden; }
-    body::before { content: ''; position: fixed; inset: 0; background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E"); pointer-events: none; z-index: 1000; opacity: 0.6; }
-    nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; padding: 1.5rem 3rem; display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid var(--border); background: rgba(9,9,9,0.92); backdrop-filter: blur(8px); }
-    .nav-brand { font-family: 'IBM Plex Mono', monospace; font-size: 0.7rem; font-weight: 300; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); text-decoration: none; }
-    .nav-brand span { color: var(--gold); }
-    .nav-links { display: flex; gap: 2rem; list-style: none; }
-    .nav-links a { font-family: 'IBM Plex Mono', monospace; font-size: 0.65rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); text-decoration: none; transition: color 0.2s; }
-    .nav-links a:hover { color: var(--text); }
-    main { max-width: 720px; margin: 0 auto; padding: 8rem 2rem 6rem; }
+    body::before { content: ''; position: fixed; inset: 0; background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E"); pointer-events: none; z-index: 0; opacity: 0.6; }
+    a { text-decoration: none; color: inherit; }
+    .topbar { position: fixed; top: 0; left: 0; right: 0; height: 72px; display: flex; align-items: center; justify-content: space-between; padding: 0 48px; z-index: 100; background: rgba(9,9,9,.82); backdrop-filter: blur(16px); border-bottom: 1px solid var(--line); }
+    .brand { display: flex; align-items: center; gap: 14px; font-family: 'IBM Plex Mono', monospace; font-size: 9.5px; letter-spacing: .32em; text-transform: uppercase; color: var(--text); }
+    .brand-rule { width: 32px; height: 1px; background: var(--gold); }
+    .nav-contact { font-family: 'IBM Plex Mono', monospace; font-size: 9.5px; letter-spacing: .28em; text-transform: uppercase; color: var(--gold2); transition: opacity .2s; }
+    .nav-contact:hover { opacity: .7; }
+    main { max-width: 720px; margin: 0 auto; padding: 8rem 3rem 6rem; position: relative; z-index: 1; }
     .tag { font-family: 'IBM Plex Mono', monospace; font-size: 0.6rem; font-weight: 400; letter-spacing: 0.18em; text-transform: uppercase; color: var(--gold); display: inline-block; margin-bottom: 2.5rem; opacity: 0; animation: fadeUp 0.6s ease forwards 0.1s; }
     h1 { font-size: clamp(3.5rem, 8vw, 5.5rem); font-weight: 300; line-height: 1.0; letter-spacing: -0.02em; color: var(--text); margin-bottom: 3.5rem; opacity: 0; animation: fadeUp 0.7s ease forwards 0.2s; }
     .section { border-left: 2px solid var(--border-light); padding-left: 2rem; margin-bottom: 3.5rem; opacity: 0; animation: fadeUp 0.7s ease forwards; }
@@ -47,27 +47,21 @@
     .key-question strong { font-weight: 600; color: var(--gold); }
     .closing { margin-top: 5rem; padding-top: 3rem; border-top: 1px solid var(--border); opacity: 0; animation: fadeUp 0.7s ease forwards 1s; }
     .closing p { font-size: 1rem; color: var(--muted); }
+    .closing .invisible { font-size: 0.9rem; font-style: italic; color: var(--muted-dark); margin-top: 1.5rem; font-family: 'IBM Plex Mono', monospace; letter-spacing: 0.06em; }
     .closing .signature { font-family: 'IBM Plex Mono', monospace; font-size: 0.65rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted-dark); margin-top: 1.5rem; }
-    footer { border-top: 1px solid var(--border); padding: 2rem 3rem; display: flex; align-items: center; justify-content: space-between; margin-top: 4rem; }
-    .footer-copy { font-family: 'IBM Plex Mono', monospace; font-size: 0.6rem; color: var(--muted-dark); letter-spacing: 0.08em; }
-    .footer-links { display: flex; gap: 1.5rem; }
-    .footer-links a { font-family: 'IBM Plex Mono', monospace; font-size: 0.6rem; letter-spacing: 0.08em; color: var(--muted-dark); text-decoration: none; transition: color 0.2s; }
-    .footer-links a:hover { color: var(--gold); }
+    footer { border-top: 1px solid var(--border); padding: 20px; text-align: center; margin-top: 4rem; position: relative; z-index: 1; font-family: 'IBM Plex Mono', monospace; font-size: 9px; letter-spacing: .08em; color: var(--muted-dark); }
+    footer a { color: var(--muted-dark); text-decoration: none; transition: color 0.2s; }
+    footer a:hover { color: var(--gold); }
     @keyframes fadeUp { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: translateY(0); } }
-    @media (max-width: 640px) { nav { padding: 1.2rem 1.5rem; } .nav-links { display: none; } main { padding: 6rem 1.5rem 4rem; } footer { flex-direction: column; gap: 1rem; padding: 1.5rem; } }
+    @media (max-width: 640px) { .topbar { padding: 0 20px; } main { padding: 6rem 1.5rem 4rem; } }
   </style>
 </head>
 <body>
 
-  <nav>
-    <a href="index.html" class="nav-brand"><span>DAR</span> · Decision Authority Research</a>
-    <ul class="nav-links">
-      <li><a href="index.html">Index</a></li>
-      <li><a href="approval-is-not-refusal.html">Approval</a></li>
-      <li><a href="authority-drift.html">Authority Drift</a></li>
-      <li><a href="faq.html">FAQ</a></li>
-    </ul>
-  </nav>
+  <header class="topbar">
+    <a href="index.html" class="brand"><span class="brand-rule"></span><span>Liran Bar-Shrim</span></a>
+    <a href="mailto:Liranbarshrim@gmail.com" class="nav-contact">Correspondence</a>
+  </header>
 
   <main>
 
@@ -98,7 +92,7 @@
     <div class="punch">
       <div class="punch-line strike">This is not negligence.</div>
       <div class="punch-line strike">This is not intent.</div>
-      <div class="punch-line strike">This is not authority drift.</div>
+      <div class="punch-line strike">This is not necessarily authority drift.</div>
       <div class="punch-line final">This is gravity.</div>
     </div>
 
@@ -123,20 +117,19 @@
     <div class="closing">
       <p>Authority Drift explains why interruption fails after authority exists.<br>
       Gravity explains what happens when interruption was never structurally required in the first place.</p>
-      <p style="margin-top:1.2rem;">The question remains:<br>
-      Who, by name, was expected to stop?</p>
+      <div class="invisible">Once the question is asked, the absence can no longer remain invisible.</div>
       <div class="signature">Liran Bar-Shrim · 2026</div>
     </div>
 
   </main>
 
   <footer>
-    <div class="footer-copy">© 2026 Liran Bar-Shrim</div>
-    <div class="footer-links">
-      <a href="authority-drift.html">Authority Drift</a>
-      <a href="approval-is-not-refusal.html">Approval</a>
-      <a href="index.html">DAR</a>
-    </div>
+    © 2026 Liran Bar-Shrim &nbsp;·&nbsp;
+    <a href="authority-drift.html">Authority Drift</a> &nbsp;·&nbsp;
+    <a href="approval-is-not-refusal.html">Approval</a> &nbsp;·&nbsp;
+    <a href="faq.html">FAQ</a> &nbsp;·&nbsp;
+    <a href="goodfaith.html">Good Faith Use</a> &nbsp;·&nbsp;
+    <a href="index.html">Index</a>
   </footer>
 
 </body>
