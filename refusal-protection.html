@@ -3,108 +3,221 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
-
-<title>Refusal Protection | Decision Authority Research</title>
-
-<meta name="description" content="Why refusal authority collapses without institutional protection.">
-
+<title>Refusal Protection — Liran Bar-Shrim</title>
+<meta name="description" content="Refusal authority without structural protection is unstable authority. On the conditions that allow a named refusal to hold under pressure.">
 <meta name="robots" content="index,follow">
-
+<meta property="og:title" content="Refusal Protection — Liran Bar-Shrim">
+<meta property="og:description" content="Refusal authority without structural protection is unstable authority.">
+<meta property="og:image" content="https://matrix-audit.com/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Liran Bar-Shrim">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://matrix-audit.com/og-image.png">
 <link rel="canonical" href="https://matrix-audit.com/refusal-protection.html">
-
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&family=Cormorant+Garamond:wght@400;600;700&display=swap" rel="stylesheet">
-
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&display=swap" rel="stylesheet">
 <style>
-
 :root{
---bg:#090909;
---gold:#c8a96e;
---gold2:#e8d4a8;
---text:#e8e2d7;
---muted:#a7a097;
---line:rgba(255,255,255,.08);
---line2:rgba(255,255,255,.05);
+  --bg:#080808;--gold:#c8a96e;--gold2:#ead9b3;
+  --text:#ebe5da;--muted:#d8d2c8;--dim:#7a7570;
+  --line:rgba(255,255,255,.06);
 }
-
-*{
-margin:0;
-padding:0;
-box-sizing:border-box;
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;overflow-x:hidden;}
+body{background:var(--bg);color:var(--text);font-family:"Cormorant Garamond",Georgia,serif;overflow-x:hidden;-webkit-font-smoothing:antialiased;line-height:1.8;}
+body::before{content:"";position:fixed;inset:0;pointer-events:none;z-index:0;opacity:.028;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");background-size:180px;}
+a{text-decoration:none;color:inherit;}
+.topbar{position:fixed;top:0;left:0;right:0;height:72px;display:flex;align-items:center;justify-content:space-between;padding:0 48px;z-index:100;background:rgba(8,8,8,.92);backdrop-filter:blur(16px);border-bottom:1px solid var(--line);}
+.brand{display:flex;align-items:center;gap:14px;font-family:"IBM Plex Mono",monospace;font-size:9.5px;letter-spacing:.32em;text-transform:uppercase;color:var(--text);}
+.brand-rule{width:32px;height:1px;background:var(--gold);}
+.nav-contact{font-family:"IBM Plex Mono",monospace;font-size:9.5px;letter-spacing:.28em;text-transform:uppercase;color:var(--gold2);transition:opacity .2s;}
+.nav-contact:hover{opacity:.7;}
+.wrap-narrow{max-width:720px;margin:0 auto;padding:0 48px;position:relative;z-index:1;}
+.hero{padding-top:160px;padding-bottom:96px;}
+.hero-label{font-family:"IBM Plex Mono",monospace;font-size:9px;letter-spacing:.32em;text-transform:uppercase;color:var(--dim);margin-bottom:40px;}
+.hero h1{font-size:clamp(40px,9vw,140px);font-weight:400;line-height:.86;letter-spacing:-.02em;color:var(--text);margin-bottom:56px;max-width:14ch;}
+.hero h1 em{font-style:italic;color:var(--gold2);}
+.hero-sub{font-size:clamp(17px,1.8vw,22px);font-weight:300;line-height:1.9;color:var(--muted);max-width:56ch;border-left:1px solid rgba(200,169,110,.25);padding-left:24px;}
+.pause{padding:96px 0;border-top:1px solid var(--line);border-bottom:1px solid var(--line);margin:20px 0;position:relative;z-index:1;}
+.pause-line{position:relative;padding-left:28px;font-size:clamp(24px,4vw,58px);font-weight:300;font-style:italic;line-height:1.2;color:var(--text);max-width:560px;margin:0 0 0 48px;}
+.pause-line::before{content:"";position:absolute;left:0;top:6px;bottom:6px;width:1px;background:rgba(200,169,110,.35);}
+.section{padding:72px 0;border-top:1px solid var(--line);}
+.section-label{font-family:"IBM Plex Mono",monospace;font-size:9px;letter-spacing:.22em;text-transform:uppercase;color:var(--dim);margin-bottom:32px;}
+.section h2{font-size:clamp(26px,4vw,52px);font-weight:400;line-height:1.05;margin-bottom:28px;max-width:22ch;}
+.section h2 em{font-style:italic;color:var(--gold2);}
+.body-p{font-size:clamp(16px,1.4vw,19px);font-weight:300;color:var(--muted);margin-bottom:20px;max-width:58ch;line-height:1.9;}
+.body-p strong{color:var(--text);font-weight:400;}
+.pull{border-left:2px solid var(--gold);padding-left:24px;margin:40px 0;font-size:clamp(18px,2.2vw,32px);font-weight:300;line-height:1.4;font-style:italic;color:var(--text);}
+.conditions{margin:40px 0;display:flex;flex-direction:column;gap:2px;}
+.condition-row{display:grid;grid-template-columns:32px 1fr;gap:0 24px;padding:24px 0;border-top:1px solid var(--line);}
+.condition-row:last-child{border-bottom:1px solid var(--line);}
+.condition-num{font-family:"IBM Plex Mono",monospace;font-size:9px;letter-spacing:.12em;color:#52504c;padding-top:4px;}
+.condition-q{font-size:clamp(15px,1.4vw,18px);font-weight:300;color:var(--text);line-height:1.6;}
+.final{padding:100px 0 120px;border-top:1px solid var(--line);margin-top:20px;}
+.final-line{font-size:clamp(28px,5vw,68px);font-weight:400;font-style:italic;line-height:1.05;max-width:20ch;margin-bottom:36px;color:var(--text);}
+.sig{font-family:"IBM Plex Mono",monospace;font-size:9.5px;letter-spacing:.2em;text-transform:uppercase;color:var(--dim);}
+.back-link{font-family:"IBM Plex Mono",monospace;font-size:9px;letter-spacing:.28em;text-transform:uppercase;color:var(--dim);transition:color .2s;display:inline-block;margin-bottom:14px;}
+.back-link:hover{color:var(--gold2);}
+.footer{position:relative;z-index:1;text-align:center;padding:20px;border-top:1px solid var(--line);font-family:"IBM Plex Mono",monospace;font-size:9px;letter-spacing:.08em;color:var(--dim);}
+.footer a{color:var(--dim);transition:color .2s;}
+.footer a:hover{color:var(--gold);}
+@media(max-width:860px){
+  .topbar{padding:0 20px;}
+  .wrap-narrow{padding:0 20px;max-width:100%;}
+  .hero{padding-top:120px;padding-bottom:56px;}
+  .pause{padding:56px 0;}
+  .pause-line{font-size:20px;margin:0 20px;}
+  .section{padding:52px 0;}
+  .final{padding:64px 0 80px;}
 }
+@keyframes fadeUp{from{opacity:0;transform:translateY(16px);}to{opacity:1;transform:translateY(0);}}
+.hero{animation:fadeUp .9s ease both;}
+@media(max-width:640px){body{overflow-x:hidden !important;}}
+</style>
+</head>
+<body>
 
-html{
-scroll-behavior:smooth;
-}
+<header class="topbar">
+  <a href="index.html" class="brand"><span class="brand-rule"></span><span>Liran Bar-Shrim</span></a>
+  <a href="mailto:Liranbarshrim@gmail.com" class="nav-contact">Correspondence</a>
+</header>
 
-body{
-font-family:Inter,sans-serif;
-background:var(--bg);
-color:var(--text);
-overflow-x:hidden;
-line-height:1.78;
--webkit-font-smoothing:antialiased;
-}
+<main>
 
-body:before{
-content:"";
-position:fixed;
-inset:0;
-pointer-events:none;
-opacity:.05;
-background-image:
-linear-gradient(rgba(255,255,255,.03) 1px,transparent 1px),
-linear-gradient(90deg,rgba(255,255,255,.03) 1px,transparent 1px);
-background-size:40px 40px;
-}
+  <section class="hero wrap-narrow">
+    <div class="hero-label">Structural Stability</div>
+    <h1>Refusal<br><em>Protection</em></h1>
+    <p class="hero-sub">
+      Naming a person does not protect the refusal.<br>
+      The structure must make the refusal hold.
+    </p>
+  </section>
 
-a{
-text-decoration:none;
-color:inherit;
-}
+  <div class="pause">
+    <div class="pause-line">
+      Authority that survives only<br>
+      when it is costless<br>
+      is not protected authority.
+    </div>
+  </div>
 
-.topbar{
-position:fixed;
-top:0;
-left:0;
-right:0;
-height:74px;
-display:flex;
-align-items:center;
-justify-content:space-between;
-padding:0 18px;
-z-index:1000;
-background:rgba(5,5,5,.88);
-backdrop-filter:blur(14px);
-border-bottom:1px solid var(--line2);
-}
+  <section class="section wrap-narrow">
+    <div class="section-label">The Gap</div>
+    <h2>Refusal authority<br>and <em>protected</em> refusal authority<br>are not the same thing.</h2>
+    <p class="body-p">
+      A person can be named. A threshold can be defined. A hold can be invoked.
+      And the refusal can still collapse — through silence, informal override,
+      escalation that never resolves, or organizational pressure that makes
+      continuation easier than holding the stop.
+    </p>
+    <p class="body-p">
+      Authority Drift describes what happens after protection fails.
+      Refusal Protection asks what structural conditions prevent the failure.
+    </p>
+    <div class="pull">
+      Refusal authority without refusal protection<br>
+      is unstable authority.
+    </div>
+  </section>
 
-.brand{
-display:flex;
-align-items:center;
-gap:12px;
-font-family:"IBM Plex Mono",monospace;
-font-size:10px;
-letter-spacing:.28em;
-text-transform:uppercase;
-white-space:nowrap;
-}
+  <section class="section wrap-narrow">
+    <div class="section-label">The Conditions</div>
+    <h2>Six questions<br>a structure must<br>be able to <em>answer.</em></h2>
+    <p class="body-p">These are not policy requirements. They are diagnostic questions. A structure that cannot answer them has not yet defined protected refusal authority.</p>
 
-.brand-line{
-width:34px;
-height:2px;
-background:var(--gold);
-}
+    <div class="conditions">
+      <div class="condition-row">
+        <span class="condition-num">01</span>
+        <div class="condition-q">If the named individual invokes a hold, is a response structurally required — or can silence allow continuation?</div>
+      </div>
+      <div class="condition-row">
+        <span class="condition-num">02</span>
+        <div class="condition-q">If the refusal is overridden, does the override require a named individual to carry it — in writing?</div>
+      </div>
+      <div class="condition-row">
+        <span class="condition-num">03</span>
+        <div class="condition-q">Does the refusal remain in effect until explicitly released — or does it expire through inaction?</div>
+      </div>
+      <div class="condition-row">
+        <span class="condition-num">04</span>
+        <div class="condition-q">If the override is undocumented, who carries the accountability for continuation?</div>
+      </div>
+      <div class="condition-row">
+        <span class="condition-num">05</span>
+        <div class="condition-q">Does the structure distinguish between escalation and override — or do they produce the same outcome?</div>
+      </div>
+      <div class="condition-row">
+        <span class="condition-num">06</span>
+        <div class="condition-q">If the named individual is unavailable, does continuation default to proceeding — or to holding?</div>
+      </div>
+    </div>
+  </section>
 
-.menu-btn{
-width:42px;
-height:42px;
-border:none;
-background:none;
-cursor:pointer;
-display:flex;
-flex-direction:column;
-justify-content:center;
-gap:6
+  <div class="pause">
+    <div class="pause-line">
+      Silence is not authorization.<br>
+      Escalation is not interruption.<br>
+      Override without a name<br>
+      belongs to no one.
+    </div>
+  </div>
+
+  <section class="section wrap-narrow">
+    <div class="section-label">The Default State</div>
+    <h2>What the structure<br>assumes<br>when nothing is said.</h2>
+    <p class="body-p">
+      Every governance structure has a default state. Most default to continuation.
+      A process runs until someone stops it. A deployment proceeds until someone holds it.
+      An execution continues until an exception is raised.
+    </p>
+    <p class="body-p">
+      Protected refusal authority inverts this assumption:
+      continuation is not available until someone named releases it.
+    </p>
+    <p class="body-p">
+      <strong>The default state is the most important design decision in any structure
+      that claims to have named refusal authority.</strong>
+    </p>
+    <div class="pull">
+      A structure that defaults to continuation<br>
+      has not yet defined stop authority.<br>
+      It has defined a pause.
+    </div>
+  </section>
+
+  <section class="section wrap-narrow">
+    <div class="section-label">The Connection</div>
+    <p class="body-p">
+      Authority Drift describes how refusal authority erodes over time —
+      through accumulated pressure, repeated escalations, and the quiet
+      organizational understanding that refusal carries personal cost.
+    </p>
+    <p class="body-p">
+      Refusal Protection describes the structural conditions that slow or prevent that erosion.
+      Not through personal courage. Through design.
+    </p>
+    <p style="margin-top:48px;font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.06em;color:var(--dim);line-height:1.8;">Once the question is asked, the absence can no longer remain invisible.</p>
+  </section>
+
+  <section class="final wrap-narrow">
+    <div class="final-line">The refusal held.<br>Or the structure<br>did not protect it.</div>
+    <a href="index.html" class="back-link">← Back to main</a><br>
+    <a href="authority-drift.html" class="back-link">→ Authority Drift</a><br>
+    <a href="named-authority-record.html" class="back-link">→ Named Authority Record</a>
+    <div class="sig" style="margin-top:28px;">Liran Bar-Shrim · 2026</div>
+  </section>
+
+</main>
+
+<footer class="footer">
+  © 2026 Liran Bar-Shrim &nbsp;·&nbsp;
+  <a href="faq.html">FAQ</a> &nbsp;·&nbsp;
+  <a href="goodfaith.html">Good Faith Use</a> &nbsp;·&nbsp;
+  <a href="index.html">Index</a>
+</footer>
+
+</body>
+</html>
