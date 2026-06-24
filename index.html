@@ -3,368 +3,538 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>Who, by name, is authorized to refuse? — Liran Bar-Shrim</title>
-<meta name="description" content="A structural examination of refusal authority, named responsibility, and the conditions under which continuation becomes the decision.">
-<meta name="robots" content="index,follow">
-<meta property="og:title" content="Who, by name, is authorized to refuse? — Liran Bar-Shrim">
-<meta property="og:description" content="A structural examination of refusal authority, named responsibility, and the conditions under which continuation becomes the decision.">
-<meta property="og:image" content="https://matrix-audit.com/og-image.png">
-<meta property="og:image:width" content="1200">
-<meta property="og:image:height" content="630">
-<meta property="og:type" content="website">
-<meta property="og:site_name" content="Liran Bar-Shrim">
-<meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="Who, by name, is authorized to refuse? — Liran Bar-Shrim">
-<meta name="twitter:description" content="A structural examination of refusal authority, named responsibility, and the conditions under which continuation becomes the decision.">
-<meta name="twitter:image" content="https://matrix-audit.com/og-image.png">
-<link rel="canonical" href="https://matrix-audit.com/">
+<title>Matrix Audit — Who, by name, is authorized to refuse?</title>
+<meta name="description" content="A confidential structural review of refusal authority in your organization's highest-stakes processes.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Source+Serif+4:opsz,wght@8..60,300;8..60,400;8..60,500&display=swap" rel="stylesheet">
 <style>
-:root{--bg:#080808;--gold:#c8a96e;--gold2:#ead9b3;--text:#ebe5da;--muted:#d8d2c8;--dim:#7a7570;--line:rgba(255,255,255,.06);}
+:root{
+  --bg:#090909;
+  --surface:#111111;
+  --surface2:#0d0d0d;
+  --gold:#c8a96e;
+  --gold-dim:rgba(200,169,110,.18);
+  --text:#e6e0d4;
+  --muted:#8a8478;
+  --dim:#525048;
+  --border:#1e1e1e;
+  --border2:#2a2a2a;
+}
 *,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
-html{scroll-behavior:smooth;overflow-x:hidden;}
-body{background:var(--bg);color:var(--text);font-family:"Cormorant Garamond",Georgia,serif;overflow-x:hidden;-webkit-font-smoothing:antialiased;line-height:1.8;}
-body::before{content:"";position:fixed;inset:0;pointer-events:none;z-index:0;opacity:.028;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");background-size:180px;}
-a{text-decoration:none;color:inherit;}
-.topbar{position:fixed;top:0;left:0;right:0;height:72px;display:flex;align-items:center;justify-content:space-between;padding:0 48px;z-index:100;background:rgba(8,8,8,.82);backdrop-filter:blur(16px);border-bottom:1px solid var(--line);}
-.brand{display:flex;align-items:center;gap:14px;font-family:"IBM Plex Mono",monospace;font-size:9.5px;letter-spacing:.32em;text-transform:uppercase;color:var(--text);}
-.brand-rule{width:32px;height:1px;background:var(--gold);}
-.nav-contact{font-family:"IBM Plex Mono",monospace;font-size:9.5px;letter-spacing:.28em;text-transform:uppercase;color:var(--gold2);transition:opacity .2s;}
-.nav-contact:hover{opacity:.7;}
-.wrap{max-width:1280px;margin:0 auto;padding:0 48px;position:relative;z-index:1;}
-.wrap-narrow{max-width:800px;margin:0 auto;padding:0 48px;position:relative;z-index:1;}
+html{scroll-behavior:smooth;}
+body{
+  background:var(--bg);
+  color:var(--text);
+  font-family:"Source Serif 4",Georgia,serif;
+  font-weight:300;
+  line-height:1.7;
+  -webkit-font-smoothing:antialiased;
+  overflow-x:hidden;
+  padding:0 24px;
+}
+.mono{font-family:"IBM Plex Mono",monospace;}
+a{color:inherit;text-decoration:none;}
+
+/* grain texture, consistent with DAR identity */
+body::before{
+  content:"";position:fixed;inset:0;pointer-events:none;z-index:0;opacity:.025;
+  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-size:180px;
+}
+
+.wrap{max-width:760px;margin:0 auto;padding:0 max(22px, 4vw);position:relative;z-index:1;}
+
+/* NAV */
+.topbar{
+  position:fixed;top:0;left:0;right:0;height:68px;z-index:100;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:0 max(22px, 4vw);background:rgba(9,9,9,.86);backdrop-filter:blur(12px);
+  border-bottom:1px solid var(--border);
+}
+.brand{display:flex;align-items:center;gap:12px;font-size:11px;letter-spacing:.28em;text-transform:uppercase;color:var(--text);}
+.brand-mark{width:7px;height:7px;background:var(--gold);transform:rotate(45deg);}
+.nav-cta{font-size:10.5px;letter-spacing:.2em;text-transform:uppercase;color:var(--gold);border:1px solid var(--border2);padding:9px 18px;transition:border-color .2s,background .2s;}
+.nav-cta:hover{border-color:var(--gold);background:var(--gold-dim);}
 
 /* HERO */
-.hero{padding-top:172px;padding-bottom:112px;}
-.hero-label{font-family:"IBM Plex Mono",monospace;font-size:9px;letter-spacing:.32em;text-transform:uppercase;color:var(--dim);margin-bottom:40px;}
-.hero h1{font-size:clamp(36px,7vw,110px);font-weight:400;line-height:.9;letter-spacing:-.02em;color:var(--text);margin-bottom:48px;max-width:16ch;}
-.hero h1 em{font-style:italic;color:var(--gold2);}
-.hero-context{font-size:clamp(17px,1.6vw,22px);font-weight:300;line-height:1.85;color:#c8c2b8;max-width:52ch;border-left:1px solid rgba(200,169,110,.25);padding-left:24px;}
-
-/* PAUSE */
-.pause{padding:96px 0;border-top:1px solid var(--line);border-bottom:1px solid var(--line);margin:0;position:relative;z-index:1;}
-.pause-line{position:relative;padding-left:28px;font-size:clamp(24px,3.8vw,58px);font-weight:300;font-style:italic;line-height:1.2;color:var(--text);max-width:600px;margin:0 0 0 48px;}
-.pause-line::before{content:"";position:absolute;left:0;top:6px;bottom:6px;width:1px;background:rgba(200,169,110,.35);}
-
-/* WHY HARD */
-.why{padding:88px 0;border-bottom:1px solid var(--line);}
-.why-inner{max-width:800px;margin:0 auto;padding:0 48px;}
-.why-label{font-family:"IBM Plex Mono",monospace;font-size:9px;letter-spacing:.22em;text-transform:uppercase;color:var(--dim);margin-bottom:36px;}
-.why-body{font-size:clamp(17px,1.5vw,21px);font-weight:300;line-height:1.9;color:#d8d2c8;max-width:58ch;}
-.why-body p{margin-bottom:20px;}
-.why-body strong{font-weight:400;color:var(--text);font-style:italic;}
-
-/* MIRROR QUESTION */
-.mirror{padding:96px 0;border-bottom:1px solid var(--line);position:relative;z-index:1;}
-.mirror-inner{max-width:800px;margin:0 auto;padding:0 48px;}
-.mirror-q{font-size:clamp(28px,4.5vw,68px);font-weight:400;line-height:1.05;color:#f5ead7;border-left:1px solid rgba(200,169,110,.5);padding-left:34px;margin-bottom:24px;}
-.mirror-sub{font-size:clamp(16px,2vw,30px);font-style:italic;font-weight:300;color:var(--gold2);padding-left:34px;}
-
-/* EVIDENCE NAV */
-.evidence{padding:88px 0 104px;position:relative;z-index:1;}
-.evidence-inner{max-width:1280px;margin:0 auto;padding:0 48px;}
-.evidence-label{font-family:"IBM Plex Mono",monospace;font-size:9px;letter-spacing:.32em;text-transform:uppercase;color:var(--dim);margin-bottom:8px;}
-.evidence-intro{font-size:clamp(15px,1.3vw,18px);font-weight:300;color:#b8b2a8;max-width:52ch;line-height:1.75;margin-bottom:48px;}
-.ev-grid{display:grid;grid-template-columns:1fr;gap:2px;}
-.ev-link{display:block;background:#0d0d0d;border-left:3px solid rgba(200,169,110,.3);padding:28px 32px;transition:border-color .3s,background .3s;}
-.ev-link:hover{border-left-color:var(--gold);background:#111;}
-.ev-tag{font-family:"IBM Plex Mono",monospace;font-size:9px;letter-spacing:.2em;text-transform:uppercase;color:var(--dim);margin-bottom:10px;}
-.ev-title{font-size:clamp(16px,1.5vw,20px);font-weight:300;color:var(--text);line-height:1.4;margin-bottom:8px;}
-.ev-desc{font-size:14px;font-weight:300;color:#7a7570;line-height:1.6;}
-
-/* OBS STRIP */
-.obs-strip{padding:0 0 88px;position:relative;z-index:1;}
-.obs-strip-inner{max-width:1280px;margin:0 auto;padding:0 48px;}
-.obs-strip-label{font-family:"IBM Plex Mono",monospace;font-size:9px;letter-spacing:.22em;text-transform:uppercase;color:var(--dim);margin-bottom:24px;}
-.obs-row{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:rgba(255,255,255,.04);}
-.obs-card{background:#0f1610;padding:24px 20px;display:block;border-top:2px solid transparent;transition:border-color .3s,background .3s;}
-.obs-card:hover{background:#141d14;border-top-color:var(--gold);}
-.obs-num{font-family:"IBM Plex Mono",monospace;font-size:9px;letter-spacing:.18em;color:#7a7570;margin-bottom:12px;}
-.obs-domain{font-family:"IBM Plex Mono",monospace;font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:#5a5550;margin-bottom:10px;}
-.obs-title{font-size:clamp(15px,1.3vw,18px);font-weight:300;color:var(--text);line-height:1.35;margin-bottom:12px;}
-.obs-vel{font-family:"IBM Plex Mono",monospace;font-size:9px;letter-spacing:.15em;text-transform:uppercase;color:var(--gold);padding-top:10px;border-top:1px solid rgba(255,255,255,.05);}
-
-/* FINAL */
-.final{padding:88px 0 112px;border-top:1px solid var(--line);}
-.final-line{font-size:clamp(28px,4.5vw,68px);font-weight:400;font-style:italic;line-height:1.08;max-width:20ch;margin-bottom:32px;color:var(--text);}
-.sig{font-family:"IBM Plex Mono",monospace;font-size:9.5px;letter-spacing:.2em;text-transform:uppercase;color:#7a7570;}
-.footer{position:relative;z-index:1;text-align:center;padding:20px;border-top:1px solid var(--line);font-family:"IBM Plex Mono",monospace;font-size:9px;letter-spacing:.08em;color:#7a7570;}
-
-@media(min-width:900px){.ev-grid{grid-template-columns:repeat(2,1fr);}}
-@media(max-width:860px){
-  .topbar{padding:0 20px;}
-  .wrap,.wrap-narrow{padding:0 20px;max-width:100%;}
-  .hero{padding-top:120px;padding-bottom:64px;}
-  .hero h1{font-size:28px;}
-  .pause{padding:56px 0;}
-  .pause-line{font-size:20px;margin:0 20px;}
-  .why-inner,.mirror-inner,.evidence-inner,.obs-strip-inner{padding:0 20px;}
-  .why{padding:56px 0;}
-  .mirror{padding:56px 0;}
-  .evidence{padding:56px 0 64px;}
-  .obs-row{grid-template-columns:1fr 1fr;}
-  .final{padding:56px 0 72px;}
-  .final-line{font-size:22px;}
+.hero{padding:168px 0 80px;}
+.eyebrow{
+  font-size:10.5px;letter-spacing:.32em;text-transform:uppercase;color:var(--dim);
+  margin-bottom:36px;display:flex;align-items:center;gap:14px;
 }
-@media(max-width:640px){
-  body{overflow-x:hidden !important;}
-  .wrap,.wrap-narrow{padding-left:20px !important;padding-right:20px !important;max-width:100% !important;}
+.eyebrow::before{content:"";width:24px;height:1px;background:var(--gold);}
+.hero h1{
+  font-size:clamp(32px,5.4vw,52px);font-weight:400;line-height:1.18;
+  letter-spacing:-.01em;color:var(--text);max-width:15ch;margin-bottom:32px;
 }
-@keyframes fadeUp{from{opacity:0;transform:translateY(16px);}to{opacity:1;transform:translateY(0);}}
-.hero{animation:fadeUp .9s ease both;}
+.hero h1 em{font-style:italic;color:var(--gold);}
+.hero-sub{
+  font-size:clamp(16px,1.6vw,19px);font-weight:300;line-height:1.75;color:#a39d90;
+  max-width:46ch;margin-bottom:48px;
+}
+.hero-sub strong{color:var(--text);font-weight:400;}
+.hero-actions{display:flex;gap:16px;flex-wrap:wrap;align-items:center;}
+.btn-primary{
+  font-family:"IBM Plex Mono",monospace;font-size:11.5px;letter-spacing:.16em;text-transform:uppercase;
+  background:var(--gold);color:var(--bg);padding:16px 30px;border:1px solid var(--gold);
+  transition:background .2s,color .2s;cursor:pointer;
+}
+.btn-primary:hover{background:transparent;color:var(--gold);}
+.btn-ghost{
+  font-family:"IBM Plex Mono",monospace;font-size:11.5px;letter-spacing:.16em;text-transform:uppercase;
+  color:var(--muted);padding:16px 4px;border-bottom:1px solid var(--border2);
+  transition:color .2s,border-color .2s;
+}
+.btn-ghost:hover{color:var(--gold);border-color:var(--gold);}
+
+/* QUESTIONS SECTION */
+.section{padding:88px 0;border-top:1px solid var(--border);}
+.section-label{
+  font-size:10.5px;letter-spacing:.26em;text-transform:uppercase;color:var(--dim);
+  margin-bottom:14px;
+}
+.section-title{
+  font-size:clamp(22px,2.8vw,30px);font-weight:400;line-height:1.35;color:var(--text);
+  max-width:30ch;margin-bottom:48px;
+}
+.q-list{display:flex;flex-direction:column;}
+.q-item{
+  padding:24px 0;border-top:1px solid var(--border);
+  display:flex;align-items:baseline;gap:24px;
+}
+.q-item:last-child{border-bottom:1px solid var(--border);}
+.q-mark{font-family:"IBM Plex Mono",monospace;font-size:13px;color:var(--gold);flex-shrink:0;}
+.q-text{font-size:clamp(16px,1.5vw,18.5px);font-weight:300;color:#c4beb2;line-height:1.5;}
+
+/* DELIVERABLES */
+.deliv-grid{display:grid;grid-template-columns:1fr;gap:1px;background:var(--border);}
+.deliv-item{background:var(--surface2);padding:32px;}
+.deliv-num{font-family:"IBM Plex Mono",monospace;font-size:10px;letter-spacing:.2em;color:var(--dim);margin-bottom:14px;}
+.deliv-name{font-size:19px;font-weight:400;color:var(--gold);margin-bottom:10px;}
+.deliv-desc{font-size:14.5px;font-weight:300;color:var(--muted);line-height:1.65;}
+.deliv-note{
+  margin-top:32px;font-size:13.5px;font-weight:300;color:var(--dim);font-style:italic;
+  border-left:2px solid var(--border2);padding-left:18px;line-height:1.7;max-width:48ch;
+}
+
+/* PRINCIPLE BLOCK */
+.principle{
+  padding:88px 0;border-top:1px solid var(--border);text-align:left;
+}
+.principle-quote{
+  font-size:clamp(22px,3.2vw,36px);font-style:italic;font-weight:300;line-height:1.4;
+  color:var(--text);border-left:1px solid var(--gold-dim);padding-left:28px;max-width:24ch;
+  margin-bottom:28px;
+}
+.principle-body{font-size:15.5px;color:var(--muted);max-width:50ch;line-height:1.8;padding-left:29px;}
+
+/* FORM SECTION */
+.form-section{padding:96px 0 120px;border-top:1px solid var(--border);}
+.form-title{font-size:clamp(24px,3.2vw,34px);font-weight:400;line-height:1.3;color:var(--text);max-width:20ch;margin-bottom:16px;}
+.form-sub{font-size:15px;color:var(--muted);max-width:46ch;margin-bottom:48px;line-height:1.7;}
+.form-grid{display:flex;flex-direction:column;gap:24px;max-width:520px;}
+.field{display:flex;flex-direction:column;gap:8px;}
+.field label{
+  font-family:"IBM Plex Mono",monospace;font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);
+}
+.field input,.field textarea{
+  background:transparent;border:none;border-bottom:1px solid var(--border2);
+  color:var(--text);font-family:"Source Serif 4",serif;font-size:16px;font-weight:300;
+  padding:10px 2px;outline:none;transition:border-color .2s;
+}
+.field input:focus,.field textarea:focus{border-color:var(--gold);}
+.field textarea{resize:vertical;min-height:70px;font-family:"Source Serif 4",serif;}
+.field input::placeholder,.field textarea::placeholder{color:#6a6560;}
+.form-submit{
+  margin-top:12px;align-self:flex-start;
+  font-family:"IBM Plex Mono",monospace;font-size:11.5px;letter-spacing:.16em;text-transform:uppercase;
+  background:var(--gold);color:var(--bg);padding:17px 36px;border:1px solid var(--gold);
+  cursor:pointer;transition:background .2s,color .2s;
+}
+.form-submit:hover{background:transparent;color:var(--gold);}
+.form-foot{margin-top:28px;font-size:13px;color:var(--muted);max-width:44ch;line-height:1.7;}
+
+/* FOOTER */
+.footer{
+  padding:40px 0;border-top:1px solid var(--border);
+  display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:16px;
+}
+.footer-text{font-family:"IBM Plex Mono",monospace;font-size:10px;letter-spacing:.1em;color:var(--dim);}
+.footer-links a{font-family:"IBM Plex Mono",monospace;font-size:10px;letter-spacing:.1em;color:var(--dim);margin-left:20px;transition:color .2s;}
+.footer-links a:hover{color:var(--gold);}
+
+@media(max-width:680px){
+  .wrap{padding:0 22px;}
+  .topbar{padding:0 22px;}
+  .hero{padding:128px 0 56px;}
+  .section{padding:64px 0;}
+  .principle{padding:64px 0;}
+  .form-section{padding:72px 0 88px;}
+  .q-item{flex-direction:column;gap:6px;}
+  .footer{flex-direction:column;align-items:flex-start;}
+  .footer-links a{margin-left:0;margin-right:18px;}
+}
+
+@keyframes fadeUp{from{opacity:0;transform:translateY(14px);}to{opacity:1;transform:translateY(0);}}
+.hero{animation:fadeUp .8s ease both;}
 </style>
 </head>
 <body>
 
 <header class="topbar">
-  <a href="index.html" class="brand"><span class="brand-rule"></span><span>Liran Bar-Shrim</span></a>
-  <a href="mailto:Liranbarshrim@gmail.com" class="nav-contact">Correspondence</a>
+  <div class="brand"><span class="brand-mark"></span>MATRIX AUDIT</div>
+  <div style="display:flex;align-items:center;gap:24px;">
+<a href="#ask" class="nav-cta">Test One Process</a>
+  </div>
 </header>
 
 <main>
 
-  <!-- HERO: THE QUESTION -->
-  <section class="hero wrap-narrow">
-    <div class="hero-label">A structural question</div>
-    <h1>Who, by name,<br>is authorized<br>to <em>refuse?</em></h1>
-    <p class="hero-context">
-      Not who reviews. Not who approves. Not who escalates.<br>
-      Who is named, in advance, and authorized to say: "Not yet."
+  <!-- HERO -->
+  <section class="hero wrap">
+    <div class="eyebrow">Structural review of refusal authority</div>
+    <h1 style="max-width:22ch;"><em>If the person responsible says no, can the process continue anyway?</em></h1>
+    <p style="font-size:clamp(15px,1.5vw,18px);font-weight:300;line-height:1.85;color:#a39d90;max-width:44ch;margin-bottom:20px;">
+      Most organizations have never tested the answer.
+    </p>
+    <p style="font-size:14px;color:var(--dim);max-width:44ch;margin-bottom:48px;line-height:1.9;">
+      DAR examines whether refusal actually binds the process.
+    </p>
+    <div class="hero-actions">
+      <a href="#ask" class="btn-primary">Test One Process</a>
+      <a href="mailto:liran@matrix-audit.com?subject=15-Minute%20DAR%20Conversation" class="btn-ghost">Or schedule a 15-minute conversation</a>
+    </div>
+  </section>
+
+  <!-- CONTEXT LINE -->
+  <div class="wrap" style="padding-bottom:48px;">
+    <p style="font-size:14.5px;color:var(--dim);font-style:italic;max-width:48ch;border-left:1px solid var(--border2);padding-left:18px;line-height:1.75;">
+      Most organizations only discover the answer to this question after a stop condition has already appeared.
+    </p>
+  </div>
+
+<!-- CORE STATEMENT -->
+  <section class="principle wrap" style="text-align:left;">
+    <div class="principle-quote" style="max-width:32ch;border-left:1px solid var(--gold-dim);padding-left:28px;font-size:clamp(20px,2.8vw,30px);">
+      A process is not controlled by the person who approves it.<br><br>
+      It is controlled by the person whose refusal cannot be bypassed.
+    </div>
+  </section>
+
+  <!-- QUESTIONS WE INVESTIGATE -->
+  <section class="section wrap">
+    <div class="section-label">Questions we investigate</div>
+    <div class="section-title">The same question, applied to different points of irreversibility.</div>
+    <div class="q-list">
+      <div class="q-item"><span class="q-mark">→</span><span class="q-text">Who can stop a deployment before it reaches production?</span></div>
+      <div class="q-item"><span class="q-mark">→</span><span class="q-text">Who can stop a model release before it reaches users?</span></div>
+      <div class="q-item"><span class="q-mark">→</span><span class="q-text">Who can stop an automated decision process mid-execution?</span></div>
+      <div class="q-item"><span class="q-mark">→</span><span class="q-text">Who can stop a high-risk exception before it is granted?</span></div>
+      <div class="q-item"><span class="q-mark">→</span><span class="q-text">Who can release continuation, once something has been stopped?</span></div>
+    </div>
+  </section>
+
+  <!-- WHY THIS -->
+  <section class="section wrap">
+    <div class="section-label">The distinction</div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:40px;max-width:60ch;">
+      <div>
+        <div style="font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--dim);margin-bottom:16px;">Most organizations can identify</div>
+        <div style="display:flex;flex-direction:column;gap:10px;">
+          <div style="font-size:15px;color:var(--muted);padding-left:14px;border-left:1px solid var(--border2);">who owns a process</div>
+          <div style="font-size:15px;color:var(--muted);padding-left:14px;border-left:1px solid var(--border2);">who approves a process</div>
+          <div style="font-size:15px;color:var(--muted);padding-left:14px;border-left:1px solid var(--border2);">who is accountable for a process</div>
+        </div>
+      </div>
+      <div>
+        <div style="font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--gold);margin-bottom:16px;">Far fewer can identify</div>
+        <div style="display:flex;flex-direction:column;gap:10px;">
+          <div style="font-size:15px;color:var(--text);padding-left:14px;border-left:1px solid var(--gold);">whose refusal binds the process</div>
+          <div style="font-size:15px;color:var(--text);padding-left:14px;border-left:1px solid var(--gold);">whether that refusal can be overridden</div>
+          <div style="font-size:15px;color:var(--text);padding-left:14px;border-left:1px solid var(--gold);">who is authorized to release continuation</div>
+        </div>
+      </div>
+    </div>
+    <p style="margin-top:32px;font-size:14.5px;color:var(--dim);font-style:italic;max-width:48ch;line-height:1.8;">
+      The distinction often remains invisible until it is tested.
     </p>
   </section>
 
-  <div class="wrap-narrow" style="padding:0 48px 72px;position:relative;z-index:1;">
-    <p style="font-size:clamp(17px,1.6vw,24px);font-weight:300;font-style:italic;line-height:1.75;color:#c8c2b8;max-width:54ch;border-left:1px solid rgba(200,169,110,.2);padding-left:24px;">Many systems do not fail because of a bad decision, but because the moment to say "not yet" quietly disappears.</p>
-    <p style="font-size:clamp(16px,1.4vw,20px);font-weight:300;font-style:italic;line-height:1.75;color:#a8a29e;max-width:54ch;padding-left:24px;margin-top:24px;border-left:1px solid rgba(200,169,110,.15);">After a recognized stop condition appears, continuation is no longer the default. It becomes a decision that requires explicit release by a named individual.</p>
-    <p style="font-size:clamp(15px,1.3vw,18px);font-weight:300;line-height:1.8;color:#a8a29e;max-width:54ch;padding-left:24px;margin-top:20px;">Most organizations can tell you who approves.<br>Far fewer can tell you who can refuse.</p>
-    <p style="font-size:clamp(15px,1.3vw,18px);font-weight:300;line-height:1.8;color:#a8a29e;max-width:54ch;padding-left:24px;margin-top:16px;">If nobody can say &#8220;not yet,&#8221; continuation quietly becomes the decision.</p>
-  </div>
-
-  <!-- PAUSE: DISCOMFORT -->
-  <div class="pause">
-    <div class="pause-line">
-      Without "not yet,"<br>
-      continuation quietly becomes the decision.
-    </div>
-  </div>
-
-  <!-- WHY HARD -->
-  <section class="why">
-    <div class="why-inner">
-      <div class="why-label">Why the question is difficult to answer</div>
-      <div class="why-body">
-        <p>Most governance structures define who approves. Fewer define who is authorized to refuse — before continuation acquires momentum.</p>
-        <p>Under pressure, approval scales. <strong>Refusal rarely does.</strong></p>
-        <p>Expertise can be collective. Refusal authority rarely is.<br>
-        Oversight is not refusal authority. Escalation is not refusal authority. Approval is not refusal.<br>
-        A control point can influence a decision. A refusal authority can prevent it.</p>
-        <p>And even when refusal authority is assigned, it can drift. <strong>The person remains. The authority quietly does not.</strong></p>
+  <!-- APPROVAL VS REFUSAL -->
+  <section class="section wrap">
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--border);max-width:520px;margin-bottom:32px;">
+      <div style="background:var(--surface2);padding:28px 24px;">
+        <div style="font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--dim);margin-bottom:14px;">Approval Authority</div>
+        <div style="font-size:16px;color:var(--muted);line-height:1.6;">Can authorize<br>continuation.</div>
+      </div>
+      <div style="background:var(--surface2);padding:28px 24px;border-left:2px solid var(--gold);">
+        <div style="font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--gold);margin-bottom:14px;">Refusal Authority</div>
+        <div style="font-size:16px;color:var(--text);line-height:1.6;">Can prevent<br>continuation.</div>
       </div>
     </div>
-  </section>
-
-  <!-- MIRROR: THE QUESTION RETURNS -->
-  <div class="mirror">
-    <div class="mirror-inner">
-      <div class="mirror-q">Who, by name,<br>is authorized to refuse<br>in your organization?</div>
-      <div class="mirror-sub">Before continuation acquires momentum.</div>
-      <div style="margin-top:48px;padding-left:34px;max-width:52ch;">
-        <p style="font-size:clamp(15px,1.3vw,18px);font-weight:300;line-height:1.85;color:#7a7570;font-style:italic;">DAR functions as a mirror, not a mandate.</p>
-        <p style="font-size:clamp(15px,1.3vw,18px);font-weight:300;line-height:1.85;color:#7a7570;margin-top:8px;">It does not determine whether an organization should stop. It reveals whether authority to stop and authority to release continuation have been intentionally defined.</p>
-        <p style="font-size:clamp(15px,1.3vw,18px);font-weight:300;line-height:1.85;color:#7a7570;margin-top:16px;">DAR does not evaluate people.<br>It ensures the question was asked before the event, not after it.<br>If an answer exists, DAR records it.<br>If no answer exists, DAR makes the absence visible.</p>
-      </div>
-    </div>
-  </div>
-
-  <!-- PERSONAL MOMENT -->
-  <div style="padding:96px 0;border-bottom:1px solid rgba(255,255,255,.06);position:relative;z-index:1;">
-    <div style="max-width:800px;margin:0 auto;padding:0 48px;">
-      <p style="font-size:clamp(22px,2.8vw,38px);font-weight:300;font-style:italic;line-height:1.6;color:#c8c2b8;max-width:44ch;border-left:1px solid rgba(200,169,110,.35);padding-left:28px;">If no one is named in advance, someone will assume the refusal belongs to someone else.</p>
-      <p style="font-size:clamp(17px,1.6vw,22px);font-weight:300;line-height:1.85;color:#a8a29e;max-width:44ch;padding-left:28px;margin-top:28px;">By the time that assumption is tested, someone may realize that the refusal belonged to them.</p>
-    </div>
-  </div>
-
-  <!-- WHY NOW -->
-  <div style="padding:72px 0;border-bottom:1px solid rgba(255,255,255,.06);position:relative;z-index:1;">
-    <div style="max-width:800px;margin:0 auto;padding:0 48px;">
-      <div style="font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:.22em;text-transform:uppercase;color:#7a7570;margin-bottom:32px;">Why the question is urgent</div>
-      <p style="font-size:clamp(16px,1.5vw,20px);font-weight:300;line-height:1.9;color:#c8c2b8;max-width:54ch;">Irreversible actions increasingly occur before responsibility becomes visible. Continuation can acquire momentum before interruption becomes explicit.</p>
-      <p style="font-size:clamp(16px,1.5vw,20px);font-weight:300;line-height:1.9;color:#c8c2b8;max-width:54ch;margin-top:16px;">The question is not whether a decision can be made.<br>The question is who, by name, can still interrupt it.</p>
-    </div>
-  </div>
-
-  <!-- EVIDENCE: NAVIGATION AS TAXONOMY -->
-  <section class="evidence">
-    <div class="evidence-inner">
-
-      <!-- CORE DOCUMENTS -->
-      <div class="evidence-label">Research Path</div>
-      <div class="evidence-intro">Theory. Failure mode. Evidence.</div>
-      <div class="ev-grid" style="margin-bottom:48px;">
-        <a href="why-dar-exists.html" class="ev-link" style="border-left-color:rgba(200,169,110,.6);">
-          <div class="ev-tag">Theory</div>
-          <div class="ev-title">Why DAR Exists</div>
-          <div class="ev-desc">Three conditions for meaningful interruption. The failure of any one may allow continuation to proceed — even when the others remain intact.</div>
-        </a>
-        <a href="whitepaper.html" class="ev-link" style="border-left-color:rgba(200,169,110,.6);">
-          <div class="ev-tag">Failure mode</div>
-          <div class="ev-title">When Refusal Authority Disappears</div>
-          <div class="ev-desc">Authority drift, override risk, and escalation failure. What happens when named refusal authority exists on paper but fails in practice.</div>
-        </a>
-        <a href="dar-matrix.html" class="ev-link" style="border-left-color:rgba(200,169,110,.6);">
-          <div class="ev-tag">Evidence</div>
-          <div class="ev-title">Who Holds Refusal Authority</div>
-          <div class="ev-desc">26 cases. Three levels. One test: after refusal, can continuation proceed anyway?</div>
-        </a>
-      </div>
-
-      <!-- REFERENCE -->
-      <div class="evidence-label" style="margin-top:16px;">Reference</div>
-      <div class="evidence-intro" style="margin-bottom:24px;">The language this work uses.</div>
-      <div class="ev-grid" style="margin-bottom:48px;">
-        <a href="glossary.html" class="ev-link">
-          <div class="ev-tag">Defined terms</div>
-          <div class="ev-title">Glossary</div>
-          <div class="ev-desc">Five terms. One question. The language DAR uses — and what each term does and does not claim.</div>
-        </a>
-        <a href="from-accountability-to-refusal-authority.html" class="ev-link">
-          <div class="ev-tag">Translation</div>
-          <div class="ev-title">From Accountability to Refusal Authority</div>
-          <div class="ev-desc">A bridge between conventional governance language and the operational question of refusal authority.</div>
-        </a>
-      </div>
-
-      <!-- METHOD -->
-      <div class="evidence-label" style="margin-top:16px;">Method</div>
-      <div class="evidence-intro" style="margin-bottom:24px;">How this work proceeds.</div>
-      <div class="ev-grid" style="margin-bottom:48px;">
-        <a href="about.html#method" class="ev-link">
-          <div class="ev-tag">Method</div>
-          <div class="ev-title">How This Work Proceeds</div>
-          <div class="ev-desc">This work proceeds by separating concepts that appear unified and identifying the conditions under which their functions diverge.</div>
-        </a>
-      </div>
-
-      <!-- SUPPORTING -->
-      <div class="evidence-label" style="margin-top:16px;">Ways to understand why the answer is hard</div>
-      <div class="evidence-intro">Each examines a different way the moment to say "not yet" disappears.</div>
-      <div class="ev-grid">
-        <a href="approval-is-not-refusal.html" class="ev-link">
-          <div class="ev-tag">Missing authority</div>
-          <div class="ev-title">Approval Is Not Refusal</div>
-          <div class="ev-desc">A system can contain oversight, escalation, and approval — and still leave refusal authority unassigned. If refusal belongs to everyone, it belongs to no one.</div>
-        </a>
-        <a href="authority-drift.html" class="ev-link">
-          <div class="ev-tag">Degraded authority</div>
-          <div class="ev-title">Authority Drift</div>
-          <div class="ev-desc">Refusal authority can be clearly assigned and still disappear. The person remains. The authority quietly does not.</div>
-        </a>
-        <a href="gravity.html" class="ev-link">
-          <div class="ev-tag">Mechanism</div>
-          <div class="ev-title">Gravity</div>
-          <div class="ev-desc">Nobody decided to continue. Yet continuation happened anyway. When forward becomes easier than interruption, who, by name, still has the authority to stop?</div>
-        </a>
-        <a href="the-invisible-roi-of-refusal.html" class="ev-link">
-          <div class="ev-tag">Incentives</div>
-          <div class="ev-title">The Invisible ROI of Refusal</div>
-          <div class="ev-desc">Organizations reward what can be measured. Some of the most valuable refusals leave almost no trace.</div>
-        </a>
-        <a href="human-in-the-loop.html" class="ev-link">
-          <div class="ev-tag">False reassurance</div>
-          <div class="ev-title">Human In The Loop</div>
-          <div class="ev-desc">Human presence is not refusal authority. A person may review, approve, or escalate — and still not be authorized to stop.</div>
-        </a>
-        <a href="named-authority-record.html" class="ev-link">
-          <div class="ev-tag">Governance artifact</div>
-          <div class="ev-title">Named Authority Record</div>
-          <div class="ev-desc">What it looks like when refusal authority is designated in advance, before pressure, ambiguity, or organizational reinterpretation emerge.</div>
-        </a>
-        <a href="about.html" class="ev-link">
-          <div class="ev-tag">About this work</div>
-          <div class="ev-title">About</div>
-          <div class="ev-desc">What this work examines, how it proceeds, and what it does not claim.</div>
-        </a>
-      </div>
-
-      <!-- HOW REFUSAL DISAPPEARS -->
-      <div class="evidence-label" style="margin-top:48px;">How refusal authority disappears</div>
-      <div class="evidence-intro">Three mechanisms. Each removes stop authority without a formal decision.</div>
-      <div class="ev-grid">
-        <a href="momentum-made-the-decision.html" class="ev-link">
-          <div class="ev-tag">Operational observation</div>
-          <div class="ev-title">Momentum Made the Decision</div>
-          <div class="ev-desc">Nobody decided to continue. Continuation happened anyway. When momentum takes over, who still has the authority to stop?</div>
-        </a>
-        <a href="when-refusal-becomes-escalation.html" class="ev-link">
-          <div class="ev-tag">Misplaced authority</div>
-          <div class="ev-title">When Refusal Becomes Escalation</div>
-          <div class="ev-desc">Escalation transfers a concern to another level. It does not stop continuation. The moment refusal becomes escalation, something has already changed.</div>
-        </a>
-        <a href="why-refusal-disappears.html" class="ev-link">
-          <div class="ev-tag">Structural explanation</div>
-          <div class="ev-title">Why Refusal Disappears</div>
-          <div class="ev-desc">Refusal authority does not require revocation. It only requires structures that make continuation easier than stopping.</div>
-        </a>
-      </div>
-
-    </div>
-  </section>
-
-  <!-- OBSERVATION SERIES -->
-  <section class="obs-strip">
-    <div class="obs-strip-inner">
-      <div class="obs-strip-label" style="color:#52504c;">Governance Observation Series</div>
-      <p style="font-size:clamp(13px,1.1vw,15px);font-weight:300;color:#52504c;line-height:1.7;margin-bottom:24px;font-family:'IBM Plex Mono',monospace;letter-spacing:.04em;">The domain changes. The question does not.</p>
-      <div class="obs-row">
-        <a href="boeing-reconstruction.html" class="obs-card">
-          <div class="obs-num">01</div>
-          <div class="obs-domain">Safety Certification · 2018–2019</div>
-          <div class="obs-title">Certification without interruption</div>
-          <div class="obs-vel">Velocity: years</div>
-        </a>
-        <a href="crowdstrike-reconstruction.html" class="obs-card">
-          <div class="obs-num">02</div>
-          <div class="obs-domain">Software Deployment · 2024</div>
-          <div class="obs-title">Propagation without interruption</div>
-          <div class="obs-vel">Velocity: minutes</div>
-        </a>
-        <a href="knight-capital-reconstruction.html" class="obs-card">
-          <div class="obs-num">03</div>
-          <div class="obs-domain">Financial Execution · 2012</div>
-          <div class="obs-title">Interruption lag under uncertainty</div>
-          <div class="obs-vel">Velocity: seconds</div>
-        </a>
-        <a href="toyota-andon-reconstruction.html" class="obs-card">
-          <div class="obs-num">04</div>
-          <div class="obs-domain">Manufacturing · Ongoing</div>
-          <div class="obs-title">Interruption by design</div>
-          <div class="obs-vel">Authority: named in advance</div>
-        </a>
-      </div>
-    </div>
-  </section>
-
-  <div style="padding:0 48px 72px;max-width:800px;margin:0 auto;position:relative;z-index:1;">
-    <p style="font-size:clamp(20px,2vw,30px);font-weight:300;font-style:italic;line-height:1.6;color:#c8c2b8;border-left:1px solid rgba(200,169,110,.2);padding-left:24px;max-width:28ch;">
-      Once the question is visible,<br>
-      silence becomes a different kind of answer.
+    <p style="font-size:15px;color:var(--muted);max-width:46ch;line-height:1.8;">
+      Most organizations document the first.<br>Few can identify the second.
     </p>
-    <p style="font-size:clamp(15px,1.3vw,18px);font-weight:300;line-height:1.85;color:#52504c;padding-left:24px;margin-top:48px;max-width:44ch;">The organization is not required to change.<br>But it can no longer claim the question was never asked.</p>
-  </div>
-
-  <!-- FINAL -->
-  <section class="final wrap-narrow">
-    <div class="final-line">If it cannot wait,<br>it is no longer a decision.<br>It is momentum.</div>
-    <div class="sig">Liran Bar-Shrim · 2026</div>
   </section>
+
+  <!-- DAR VS GOVERNANCE -->
+  <section class="section wrap">
+    <div class="section-label">A narrower question</div>
+    <p style="font-size:15px;color:var(--muted);max-width:52ch;line-height:1.9;margin-bottom:24px;">
+      Governance reviews document controls, responsibilities, and decision structures.
+    </p>
+    <p style="font-size:15.5px;color:var(--text);max-width:52ch;line-height:1.9;padding-left:18px;border-left:2px solid var(--gold);">
+      DAR asks a narrower question:<br>
+      Can a named person prevent continuation, and does that refusal bind the process?
+    </p>
+  </section>
+
+  <!-- WHAT MAKES THIS DIFFICULT -->
+  <section class="section wrap">
+    <div class="section-label">What makes this difficult</div>
+    <div class="section-title" style="max-width:32ch;">Most organizations can answer these questions.</div>
+    <p style="font-size:15.5px;color:var(--muted);max-width:50ch;line-height:1.8;margin-bottom:36px;">
+      What is less clear is whether everyone gives the same answer.
+    </p>
+    <div style="display:flex;flex-direction:column;gap:1px;background:var(--border);max-width:480px;margin-bottom:32px;">
+      <div style="background:var(--surface2);padding:20px 24px;">
+        <div style="font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--dim);margin-bottom:6px;">Process owner</div>
+        <div style="font-size:15px;color:var(--muted);">may identify one authority</div>
+      </div>
+      <div style="background:var(--surface2);padding:20px 24px;">
+        <div style="font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--dim);margin-bottom:6px;">Risk</div>
+        <div style="font-size:15px;color:var(--muted);">may identify another</div>
+      </div>
+      <div style="background:var(--surface2);padding:20px 24px;">
+        <div style="font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--dim);margin-bottom:6px;">Legal</div>
+        <div style="font-size:15px;color:var(--muted);">may identify a third</div>
+      </div>
+    </div>
+    <p style="font-size:14.5px;color:var(--dim);font-style:italic;max-width:50ch;line-height:1.8;">
+      Each answer can appear reasonable in isolation. The ambiguity often becomes visible only when the answers are compared.
+    </p>
+  </section>
+
+  <!-- TWO-MINUTE TEST -->
+  <section class="section wrap">
+    <div class="section-label">A two-minute test</div>
+    <div class="section-title" style="max-width:36ch;">Before requesting a review, choose one high-stakes process and answer three questions.</div>
+
+    <div style="display:flex;flex-direction:column;gap:1px;background:var(--border);margin-bottom:32px;">
+      <div style="background:var(--surface2);padding:24px 28px;display:flex;align-items:baseline;gap:20px;">
+        <span style="font-family:'IBM Plex Mono',monospace;font-size:13px;color:var(--gold);flex-shrink:0;">1</span>
+        <span style="font-size:17px;color:var(--text);font-weight:300;">Who can stop it?</span>
+      </div>
+      <div style="background:var(--surface2);padding:24px 28px;display:flex;align-items:baseline;gap:20px;">
+        <span style="font-family:'IBM Plex Mono',monospace;font-size:13px;color:var(--gold);flex-shrink:0;">2</span>
+        <span style="font-size:17px;color:var(--text);font-weight:300;">Can that refusal be overridden?</span>
+      </div>
+      <div style="background:var(--surface2);padding:24px 28px;display:flex;align-items:baseline;gap:20px;">
+        <span style="font-family:'IBM Plex Mono',monospace;font-size:13px;color:var(--gold);flex-shrink:0;">3</span>
+        <span style="font-size:17px;color:var(--text);font-weight:300;">Who can authorize continuation after a stop?</span>
+      </div>
+    </div>
+
+    <div style="display:flex;flex-direction:column;gap:16px;max-width:50ch;">
+      <p style="font-size:15px;color:var(--muted);line-height:1.8;padding-left:18px;border-left:2px solid var(--border2);">
+        If all three answers are named, documented, and immediately available, you may not need this review.
+      </p>
+      <p style="font-size:15px;color:var(--text);line-height:1.8;padding-left:18px;border-left:2px solid var(--gold);">
+        If one answer depends on interpretation, escalation, or who is asked, the question may not be fully resolved.
+      </p>
+    </div>
+  </section>
+
+  <!-- WHAT YOU RECEIVE -->
+  <section class="section wrap" id="method">
+    <div class="section-label">What you receive</div>
+    <div class="section-title">Structured visibility. Not a finding, a score, or a recommendation.</div>
+    <div class="deliv-grid">
+      <div class="deliv-item">
+        <div class="deliv-num">01</div>
+        <div class="deliv-name">Named Authority Record</div>
+        <div class="deliv-desc">For each process reviewed: who, by name or role, holds the authority to refuse continuation — and whether that authority is binding or advisory.</div>
+      </div>
+      <div class="deliv-item">
+        <div class="deliv-num">02</div>
+        <div class="deliv-name">Release Authority Map</div>
+        <div class="deliv-desc">Once a process is stopped, who is authorized to release it again — and under what conditions.</div>
+      </div>
+      <div class="deliv-item">
+        <div class="deliv-num">03</div>
+        <div class="deliv-name">Authority Gap Analysis</div>
+        <div class="deliv-desc">Where the answer to "who can refuse" is unclear, contested, or assumed rather than established.</div>
+      </div>
+      <div class="deliv-item">
+        <div class="deliv-num">04</div>
+        <div class="deliv-name">Diagnostic Position Report</div>
+        <div class="deliv-desc">A structured written account of what was found — and, as often, what could not yet be established. Findings reviewed directly in a short executive discussion.</div>
+      </div>
+    </div>
+    <div class="deliv-note">
+      Structured visibility into who can refuse, who can release continuation, and where authority becomes unclear — or a precise account of why that answer is not currently available. Not a finding, a score, or a recommendation imposed in advance.
+    </div>
+  </section>
+
+  <!-- PRINCIPLE -->
+  <section class="principle wrap">
+    <div class="section-label">The principle this work follows</div>
+    <div class="principle-quote">A mirror, not a mandate.</div>
+    <div class="principle-body">
+      We do not tell you what is wrong with your organization. We do not generate scores, simulate findings, or diagnose before evidence exists.
+      We ask one question, applied to the processes you choose, and report only what the evidence supports — including when the evidence is not yet sufficient to answer.
+    </div>
+  </section>
+
+  <!-- EXAMPLE OUTPUT -->
+  <section class="section wrap">
+    <div class="section-label">Example format</div>
+    <div class="section-title">What a diagnostic position looks like.</div>
+
+    <div style="background:var(--surface2);border:1px solid var(--border2);padding:32px;">
+      <div style="font-family:'IBM Plex Mono',monospace;font-size:9.5px;letter-spacing:.18em;text-transform:uppercase;color:var(--dim);margin-bottom:20px;">Illustrative example — not an actual client review</div>
+
+      <div style="display:flex;flex-direction:column;gap:18px;">
+        <div>
+          <div style="font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--gold);margin-bottom:4px;">Process</div>
+          <div style="font-size:15px;color:#c4beb2;">Production deployment</div>
+        </div>
+        <div>
+          <div style="font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--gold);margin-bottom:4px;">Claimed stop authority</div>
+          <div style="font-size:15px;color:#c4beb2;">Engineering manager</div>
+        </div>
+        <div>
+          <div style="font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--gold);margin-bottom:4px;">Continuation test</div>
+          <div style="font-size:15px;color:#c4beb2;">Deployment can proceed through executive override.</div>
+        </div>
+        <div>
+          <div style="font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--gold);margin-bottom:4px;">Observation</div>
+          <div style="font-size:15px;color:#c4beb2;">Stop authority not established. The role functions as oversight — continuation does not require its consent.</div>
+        </div>
+        <div style="padding-top:10px;border-top:1px solid var(--border);">
+          <div style="font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--dim);margin-bottom:4px;">Evidence status</div>
+          <div style="font-size:13.5px;color:var(--dim);">Preliminary</div>
+        </div>
+      </div>
+    </div>
+
+    <p style="margin-top:24px;font-size:14px;">
+      <a href="Diagnostic-Position-Example.pdf" style="color:var(--gold);border-bottom:1px solid var(--gold-dim);">Download a full one-page example →</a>
+    </p>
+  </section>
+
+  <!-- ENGAGEMENT STRUCTURE -->
+  <section class="section wrap">
+    <div class="section-label">How this works</div>
+    <div class="section-title">One process. A defined scope. A short timeline.</div>
+
+    <div class="deliv-grid">
+      <div class="deliv-item">
+        <div class="deliv-num">PHASE 1</div>
+        <div class="deliv-name">Refusal Authority Review</div>
+        <div class="deliv-desc">One process. Three questions. Who holds the gate, and is that authority named in advance?</div>
+      </div>
+      <div class="deliv-item">
+        <div class="deliv-num">PHASE 2</div>
+        <div class="deliv-name">Continuation &amp; Release Analysis</div>
+        <div class="deliv-desc">The binding authority test applied: if refusal occurs, can the process proceed anyway — and once stopped, who is authorized to release it again? A 30-minute conversation, if warranted.</div>
+      </div>
+      <div class="deliv-item">
+        <div class="deliv-num">OUTPUT</div>
+        <div class="deliv-name">Diagnostic Position</div>
+        <div class="deliv-desc">A structured account of what was found — in the same format as the example above.</div>
+      </div>
+      <div class="deliv-item">
+        <div class="deliv-num">SCOPE</div>
+        <div class="deliv-name">Defined After Initial Conversation</div>
+        <div class="deliv-desc">Timeline and depth depend on the process reviewed. Established before any commitment, not after.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FORM -->
+  <section class="form-section wrap" id="ask">
+    <div class="section-label">Who this is for</div>
+    <p style="font-size:14px;color:var(--muted);max-width:46ch;margin-bottom:56px;line-height:2.1;">
+      Risk Leaders &nbsp;·&nbsp; Technology Leaders &nbsp;·&nbsp; Audit Functions &nbsp;·&nbsp; Safety Teams &nbsp;·&nbsp; General Counsel Offices
+    </p>
+
+    <p style="font-size:13.5px;color:var(--dim);max-width:46ch;margin-bottom:40px;line-height:1.8;font-style:italic;">
+      Reviewed personally. No automated scoring, no algorithmic diagnosis — a direct read of what you describe.
+    </p>
+
+    <p style="font-size:14.5px;color:var(--muted);max-width:46ch;margin-bottom:48px;line-height:1.8;">
+      Before you begin: if the person responsible says no, can the process continue anyway? If you're not certain, that may be the reason to ask.
+    </p>
+
+    <div class="section-label">Begin</div>
+    <div class="form-title">Begin a one-process review.</div>
+    <p class="form-sub">
+      Not a full review. Not a commitment. The start of a conversation, nothing more.
+    </p>
+
+    <form class="form-grid" id="dar-form">
+      <div class="field">
+        <label for="process">What is the process?</label>
+        <input type="text" id="process" name="process" placeholder="e.g. model release, credit exception, deployment to production">
+      </div>
+      <div class="field">
+        <label for="who">Who can stop it?</label>
+        <input type="text" id="who" name="who" placeholder="A name, a role, a committee — or say if you're not certain.">
+      </div>
+      <div class="field">
+        <label for="override">If they say no, can it continue anyway?</label>
+        <input type="text" id="override" name="override" placeholder="Yes / No / Not sure">
+      </div>
+      <button type="button" class="form-submit" id="form-send">Send</button>
+    </form>
+
+    <p style="font-size:13px;color:var(--muted);max-width:44ch;margin-top:18px;line-height:1.7;">
+      Submissions are reviewed individually. You may receive clarifying questions, a short diagnostic position, an invitation to a conversation, or a note explaining why no conclusion can yet be reached.
+    </p>
+
+    <p class="form-foot">
+      This is not an assessment. Nothing is concluded from what you write here. It is the starting point for a direct conversation, if one is warranted.
+    </p>
+  </section>
+
+  <script>
+    document.getElementById('form-send').addEventListener('click', function(){
+      var process = document.getElementById('process').value || '(not provided)';
+      var who = document.getElementById('who').value || '(not answered)';
+      var override = document.getElementById('override').value || '(not answered)';
+
+      var subject = encodeURIComponent('DAR Question — ' + process);
+      var body = encodeURIComponent(
+        'Process: ' + process + '\n' +
+        'Who can stop it: ' + who + '\n' +
+        'Can it continue anyway if they say no: ' + override
+      );
+
+      window.location.href = 'mailto:liran@matrix-audit.com?subject=' + subject + '&body=' + body;
+    });
+  </script>
+
+  <footer class="footer wrap">
+    <div class="footer-text">© 2026 MATRIX AUDIT</div>
+    <div class="footer-links">
+      <a href="mailto:liran@matrix-audit.com">CORRESPONDENCE</a>
+    </div>
+  </footer>
 
 </main>
 
-<footer class="footer">
-  © 2026 Liran Bar-Shrim &nbsp;·&nbsp; <a href="faq.html" style="color:var(--dim);text-decoration:none;">FAQ</a> &nbsp;·&nbsp; <a href="goodfaith.html" style="color:var(--dim);text-decoration:none;">Good Faith Use</a>
-</footer>
 
+  <script>
+  function showHero(v) {
+    document.getElementById('hero-a').style.display = v === 'a' ? '' : 'none';
+    document.getElementById('hero-b').style.display = v === 'b' ? '' : 'none';
+    document.getElementById('btn-a').style.background = v === 'a' ? 'var(--gold)' : 'transparent';
+    document.getElementById('btn-a').style.color = v === 'a' ? 'var(--bg)' : 'var(--dim)';
+    document.getElementById('btn-b').style.background = v === 'b' ? 'var(--gold)' : 'transparent';
+    document.getElementById('btn-b').style.color = v === 'b' ? 'var(--bg)' : 'var(--dim)';
+  }
+  </script>
 </body>
 </html>
