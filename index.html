@@ -195,11 +195,14 @@ body::before{
   <section class="hero wrap">
     <div class="eyebrow">Structural review of refusal authority</div>
     <h1 style="max-width:22ch;"><em>If the person responsible says no, can the process continue anyway?</em></h1>
-    <p style="font-size:clamp(15px,1.5vw,18px);font-weight:300;line-height:1.85;color:#a39d90;max-width:44ch;margin-bottom:20px;">
-      Most organizations have never tested the answer.
+    <p style="font-size:clamp(15px,1.5vw,18px);font-weight:300;line-height:1.85;color:#a39d90;max-width:44ch;margin-bottom:24px;">
+      Very few organizations can answer this question immediately.
     </p>
-    <p style="font-size:14px;color:var(--muted);max-width:44ch;margin-bottom:48px;line-height:1.9;">
-      DAR examines whether refusal actually binds the process.
+    <p style="font-size:clamp(17px,1.8vw,22px);color:var(--text);max-width:44ch;margin-bottom:24px;line-height:1.7;font-weight:300;font-style:italic;">
+      The difference between a prevented event and an irreversible one is often not whether someone saw the risk. It's whether the refusal was binding.
+    </p>
+    <p style="font-size:14px;color:var(--dim);max-width:44ch;margin-bottom:48px;line-height:1.9;">
+      DAR tests whether refusal is structurally binding.
     </p>
     <div class="hero-actions">
       <a href="#ask" class="btn-primary">Test One Process</a>
@@ -211,6 +214,13 @@ body::before{
   <div class="wrap" style="padding-bottom:48px;">
     <p style="font-size:14.5px;color:var(--muted);font-style:italic;max-width:48ch;border-left:1px solid var(--border2);padding-left:18px;line-height:1.75;">
       Most organizations only discover the answer to this question after a stop condition has already appeared.
+    </p>
+  </div>
+
+  <!-- CREDIBILITY -->
+  <div class="wrap" style="padding-bottom:40px;">
+    <p style="font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--dim);line-height:2;">
+      Evidence-based structural review&nbsp;&nbsp;·&nbsp;&nbsp;No automated scoring&nbsp;&nbsp;·&nbsp;&nbsp;No maturity model&nbsp;&nbsp;·&nbsp;&nbsp;No predefined findings
     </p>
   </div>
 
@@ -392,6 +402,7 @@ body::before{
     <div class="section-label">Example format</div>
     <div class="section-title">What a diagnostic position looks like.</div>
 
+    <p style="font-size:16px;color:var(--muted);margin-bottom:24px;font-style:italic;">Consider this.</p>
     <div style="background:var(--surface2);border:1px solid var(--border2);padding:32px;">
       <div style="font-family:'IBM Plex Mono',monospace;font-size:9.5px;letter-spacing:.18em;text-transform:uppercase;color:var(--dim);margin-bottom:20px;">Illustrative example — not an actual client review</div>
 
@@ -410,7 +421,7 @@ body::before{
         </div>
         <div>
           <div style="font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--gold);margin-bottom:4px;">Observation</div>
-          <div style="font-size:15px;color:#c4beb2;">Stop authority not established. The role functions as oversight — continuation does not require its consent.</div>
+          <div style="font-size:15px;color:#c4beb2;">The claimed stop authority does not bind continuation. Refusal is advisory. Continuation remains possible.</div>
         </div>
         <div style="padding-top:10px;border-top:1px solid var(--border);">
           <div style="font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--dim);margin-bottom:4px;">Evidence status</div>
@@ -516,6 +527,14 @@ body::before{
     });
   </script>
 
+  <!-- CLOSING STATEMENT -->
+  <div class="wrap" style="padding:64px 0 80px;border-top:1px solid var(--border);text-align:left;">
+    <p style="font-size:clamp(16px,1.8vw,21px);font-weight:300;font-style:italic;color:var(--muted);line-height:1.8;max-width:40ch;">
+      Every irreversible process already has an effective authority.<br>
+      DAR identifies who it is.
+    </p>
+  </div>
+
   <footer class="footer wrap">
     <div class="footer-text">© 2026 MATRIX AUDIT</div>
     <div class="footer-links">
@@ -526,15 +545,6 @@ body::before{
 </main>
 
 
-  <script>
-  function showHero(v) {
-    document.getElementById('hero-a').style.display = v === 'a' ? '' : 'none';
-    document.getElementById('hero-b').style.display = v === 'b' ? '' : 'none';
-    document.getElementById('btn-a').style.background = v === 'a' ? 'var(--gold)' : 'transparent';
-    document.getElementById('btn-a').style.color = v === 'a' ? 'var(--bg)' : 'var(--dim)';
-    document.getElementById('btn-b').style.background = v === 'b' ? 'var(--gold)' : 'transparent';
-    document.getElementById('btn-b').style.color = v === 'b' ? 'var(--bg)' : 'var(--dim)';
-  }
-  </script>
+
 </body>
 </html>
