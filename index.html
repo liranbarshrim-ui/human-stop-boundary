@@ -155,6 +155,18 @@ body::before{
 .form-submit:hover{background:transparent;color:var(--gold);}
 .form-foot{margin-top:28px;font-size:13px;color:var(--muted);max-width:44ch;line-height:1.7;}
 
+/* ESSAY LINE */
+.research-line{
+  padding:0 0 64px;
+}
+.research-line p{
+  font-size:14px;color:var(--muted);line-height:1.8;max-width:52ch;
+}
+.research-line a{
+  color:var(--gold);border-bottom:1px solid var(--gold-dim);transition:border-color .2s;
+}
+.research-line a:hover{border-color:var(--gold);}
+
 /* FOOTER */
 .footer{
   padding:40px 0;border-top:1px solid var(--border);
@@ -230,6 +242,21 @@ body::before{
       A process is not controlled by the person who approves it.<br><br>
       It is controlled by the person whose refusal cannot be bypassed.
     </div>
+  </section>
+
+  <!-- WHEN THIS QUESTION ARISES -->
+  <section class="section wrap">
+    <div class="section-label">When organizations ask this question</div>
+    <div class="section-title" style="max-width:34ch;">The question is always relevant. Four moments make it urgent.</div>
+    <div class="q-list">
+      <div class="q-item"><span class="q-mark">01</span><span class="q-text">Before an AI system is deployed into a decision it cannot easily be pulled back from.</span></div>
+      <div class="q-item"><span class="q-mark">02</span><span class="q-text">Before a release, launch, or go-live where rollback is expensive or impossible.</span></div>
+      <div class="q-item"><span class="q-mark">03</span><span class="q-text">After a near miss — when someone did say no, and the process continued anyway.</span></div>
+      <div class="q-item"><span class="q-mark">04</span><span class="q-text">After a regulatory finding that asks who was accountable — and the answers don't match.</span></div>
+    </div>
+    <p style="margin-top:32px;font-size:14.5px;color:var(--muted);font-style:italic;max-width:48ch;line-height:1.8;">
+      In each of these moments, the cost of not knowing who holds binding refusal is no longer theoretical.
+    </p>
   </section>
 
   <!-- QUESTIONS WE INVESTIGATE -->
@@ -528,23 +555,32 @@ body::before{
   </script>
 
   <!-- CLOSING STATEMENT -->
-  <div class="wrap" style="padding:64px 0 80px;border-top:1px solid var(--border);text-align:left;">
+  <div class="wrap" style="padding:64px 0 40px;border-top:1px solid var(--border);text-align:left;">
     <p style="font-size:clamp(16px,1.8vw,21px);font-weight:300;font-style:italic;color:var(--muted);line-height:1.8;max-width:40ch;">
       Every irreversible process already has an effective authority.<br>
-      DAR identifies who it is.
+      DAR examines who holds it — and reports only what the evidence supports.
+    </p>
+  </div>
+
+  <!-- RESEARCH ESSAY -->
+  <div class="wrap research-line">
+    <p>
+      The research behind this work:
+      <a href="/death-rules">Knowledge Has No Death Rules</a> — an essay on why refuted claims survive, and who holds the authority to say stop.
+      <span style="color:var(--dim);">&nbsp;·&nbsp;</span>
+      <a href="/death-rules-he" lang="he">עברית</a>
     </p>
   </div>
 
   <footer class="footer wrap">
     <div class="footer-text">© 2026 MATRIX AUDIT</div>
     <div class="footer-links">
+      <a href="/death-rules">ESSAY</a>
       <a href="mailto:liranbarshrim@gmail.com">CORRESPONDENCE</a>
     </div>
   </footer>
 
 </main>
-
-
 
 </body>
 </html>
