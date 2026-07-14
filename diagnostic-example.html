@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Diagnostic Position — Example — Matrix Audit</title>
+<meta name="description" content="An illustrative example of a DAR diagnostic position: what a one-process review is delivered in.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Source+Serif+4:opsz,wght@8..60,300;8..60,400;8..60,500&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#090909;--surface2:#0d0d0d;--gold:#c8a96e;--gold-dim:rgba(200,169,110,.18);
+--text:#e6e0d4;--muted:#8a8478;--dim:#525048;--border:#1e1e1e;--border2:#2a2a2a;}
+*{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{background:var(--bg);color:var(--text);font-family:"Source Serif 4",Georgia,serif;
+font-weight:300;line-height:1.7;-webkit-font-smoothing:antialiased;padding:0 24px;overflow-x:hidden;}
+.mono{font-family:"IBM Plex Mono",monospace;}
+a{color:inherit;text-decoration:none;}
+body::before{content:"";position:fixed;inset:0;pointer-events:none;z-index:0;opacity:.025;
+background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");background-size:180px;}
+.wrap{max-width:720px;margin:0 auto;position:relative;z-index:1;}
+.topbar{position:fixed;top:0;left:0;right:0;height:60px;z-index:100;display:flex;align-items:center;
+justify-content:space-between;padding:0 max(22px,4vw);background:rgba(9,9,9,.86);backdrop-filter:blur(12px);
+border-bottom:1px solid var(--border);}
+.brand{display:flex;align-items:center;gap:11px;font-family:"IBM Plex Mono",monospace;font-size:10.5px;
+letter-spacing:.28em;text-transform:uppercase;color:var(--text);}
+.brand-mark{width:6px;height:6px;background:var(--gold);transform:rotate(45deg);}
+.nav-cta{font-family:"IBM Plex Mono",monospace;font-size:10px;letter-spacing:.2em;text-transform:uppercase;
+color:var(--gold);border:1px solid var(--border2);padding:8px 16px;transition:border-color .2s,background .2s;}
+.nav-cta:hover{border-color:var(--gold);background:var(--gold-dim);}
+.doc{padding:104px 0 40px;}
+.eyebrow{font-family:"IBM Plex Mono",monospace;font-size:10px;letter-spacing:.26em;text-transform:uppercase;
+color:var(--gold);margin-bottom:12px;display:flex;align-items:center;gap:12px;}
+.eyebrow::before{content:"";width:22px;height:1px;background:var(--gold);}
+.idstrip{display:flex;gap:26px;flex-wrap:wrap;margin-bottom:16px;font-family:"IBM Plex Mono",monospace;
+font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--dim);}
+.idstrip b{color:var(--muted);font-weight:500;margin-inline-end:5px;}
+h1{font-size:clamp(26px,4vw,34px);font-weight:400;line-height:1.18;letter-spacing:-.01em;
+color:var(--text);max-width:22ch;margin-bottom:14px;}
+.sub{font-size:14px;font-style:italic;color:var(--muted);max-width:58ch;line-height:1.6;margin-bottom:22px;}
+.tags{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:30px;}
+.tag{font-family:"IBM Plex Mono",monospace;font-size:9px;letter-spacing:.14em;text-transform:uppercase;
+color:var(--dim);border:1px solid var(--border2);padding:7px 12px;}
+.tag.scope{color:var(--muted);}
+.rows{border-top:1px solid var(--border);}
+.row{display:grid;grid-template-columns:180px 1fr;gap:22px;padding:16px 0;border-bottom:1px solid var(--border);align-items:start;}
+.row .k{font-family:"IBM Plex Mono",monospace;font-size:9.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--gold);padding-top:3px;}
+.row .v{font-size:15px;color:#c4beb2;line-height:1.55;}
+.row .v.strong{color:var(--text);}
+.row .ev{display:block;margin-top:6px;font-family:"IBM Plex Mono",monospace;font-size:9.5px;
+letter-spacing:.03em;color:var(--dim);line-height:1.7;text-transform:none;}
+.split{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--border);margin:30px 0;}
+.cell{background:var(--surface2);padding:22px 24px;}
+.cell.interp{border-inline-start:2px solid var(--gold);}
+.cell .ck{font-family:"IBM Plex Mono",monospace;font-size:9.5px;letter-spacing:.16em;text-transform:uppercase;margin-bottom:11px;}
+.cell.obs .ck{color:var(--muted);}
+.cell.interp .ck{color:var(--gold);}
+.cell .cv{font-size:14.5px;line-height:1.6;color:var(--text);}
+.status{display:flex;gap:48px;flex-wrap:wrap;margin:24px 0 6px;padding-top:20px;border-top:1px solid var(--border);}
+.status .item .k{font-family:"IBM Plex Mono",monospace;font-size:9.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--dim);margin-bottom:6px;}
+.status .item .v{font-family:"IBM Plex Mono",monospace;font-size:12px;letter-spacing:.08em;color:var(--gold);}
+.notes{margin-top:30px;padding:24px 26px;border:1px solid var(--border2);background:var(--surface2);}
+.notes-title{font-family:"IBM Plex Mono",monospace;font-size:9.5px;letter-spacing:.2em;text-transform:uppercase;color:var(--muted);margin-bottom:16px;}
+.notes ul{list-style:none;display:flex;flex-direction:column;gap:8px;margin-bottom:16px;}
+.notes li{font-size:14px;color:#c4beb2;line-height:1.5;padding-inline-start:22px;position:relative;}
+.notes li::before{content:"\2713";position:absolute;inset-inline-start:0;color:var(--gold);}
+.notes li.neg::before{content:"\2014";color:var(--dim);}
+.notes .disc{font-size:13.5px;font-style:italic;color:var(--muted);line-height:1.65;border-top:1px solid var(--border);padding-top:16px;}
+.foot{padding:32px 0 48px;border-top:1px solid var(--border);display:flex;justify-content:space-between;
+align-items:center;flex-wrap:wrap;gap:16px;margin-top:40px;}
+.foot .t{font-family:"IBM Plex Mono",monospace;font-size:10px;letter-spacing:.1em;color:var(--dim);}
+.foot a.t:hover{color:var(--gold);}
+@media(max-width:640px){
+  .row{grid-template-columns:1fr;gap:6px;}
+  .split{grid-template-columns:1fr;}
+  .status{gap:28px;}
+  .doc{padding:88px 0 32px;}
+}
+</style>
+</head>
+<body>
+<header class="topbar">
+  <div class="brand"><span class="brand-mark"></span>MATRIX AUDIT</div>
+  <a href="dar.html" class="nav-cta">&larr; Home</a>
+</header>
+<main class="wrap">
+  <section class="doc">
+    <div class="eyebrow">Decision Authority Research</div>
+    <div class="idstrip">
+      <span><b>ID</b> DP-EXAMPLE</span>
+      <span><b>Framework</b> DAR v1.0</span>
+      <span><b>Format version</b> 2026-07</span>
+    </div>
+    <h1>What a diagnostic position looks like</h1>
+    <p class="sub">A single reviewed process, documented against one question: if the person responsible says no, can the process continue anyway? This is the format a real review is delivered in.</p>
+    <div class="tags">
+      <span class="tag">Illustrative example &mdash; not an actual client review</span>
+      <span class="tag scope">Scope: one deployment process only &middot; findings do not extend to other workflows</span>
+    </div>
+    <div class="rows">
+      <div class="row"><div class="k">Process</div><div class="v strong">Production deployment</div></div>
+      <div class="row"><div class="k">Point of irreversibility</div><div class="v">Release reaches live users; rollback is partial and time-bound.</div></div>
+      <div class="row"><div class="k">Claimed stop authority</div><div class="v strong">Engineering manager<span class="ev">Evidence: deployment runbook v3.2 &middot; interview, eng. manager</span></div></div>
+      <div class="row"><div class="k">Named in advance?</div><div class="v">Yes, documented in the deployment runbook.<span class="ev">Evidence: runbook v3.2 &sect;2</span></div></div>
+      <div class="row"><div class="k">Continuation test</div><div class="v">Deployment can proceed through executive override, without the named authority's agreement.<span class="ev">Evidence: release policy &sect;4.1 &middot; two prior release records</span></div></div>
+      <div class="row"><div class="k">Release authority</div><div class="v">Once halted, no single role is documented as authorized to resume.<span class="ev">Evidence: no source located &middot; gap</span></div></div>
+    </div>
+    <div class="split">
+      <div class="cell obs">
+        <div class="ck">Observed</div>
+        <div class="cv">Deployment can proceed through executive override. Resumption after a halt occurred, in practice, by escalation.</div>
+      </div>
+      <div class="cell interp">
+        <div class="ck">Interpretation</div>
+        <div class="cv">Based on the evidence reviewed, continuation remains possible through executive override. The claimed stop authority therefore appears advisory rather than binding. Resumption authority is not established.</div>
+      </div>
+    </div>
+    <div class="status">
+      <div class="item"><div class="k">Evidence status</div><div class="v">Preliminary</div></div>
+      <div class="item"><div class="k">Evidence completeness</div><div class="v">Partial</div></div>
+      <div class="item"><div class="k">Open gap</div><div class="v">Release authority</div></div>
+    </div>
+    <div class="notes">
+      <div class="notes-title">Research notes</div>
+      <ul>
+        <li>What was observed, traced to its source.</li>
+        <li>What evidence supports each line above.</li>
+        <li class="neg">What could not yet be established (release authority).</li>
+      </ul>
+      <div class="disc">This report does not determine whether the governance structure is correct or incorrect. It documents only what the evidence supports. A mirror, not a mandate.</div>
+    </div>
+  </section>
+  <footer class="foot">
+    <a class="t" href="dar.html">&larr; MATRIX AUDIT</a>
+    <div class="t">&copy; 2026 &middot; matrix-audit.com</div>
+  </footer>
+</main>
+</body>
+</html>
