@@ -48,6 +48,25 @@ It implements a bounded enforcement boundary with:
 - optional Linux `no_new_privs`, seccomp and Landlock hardening;
 - an explicit external monotonic-anchor interface for rollback detection.
 
+## Boundary Conformance v1
+
+The implementation is now paired with a pre-registered, machine-readable enforcement specification under [`dar_v36_14/spec/`](dar_v36_14/spec/):
+
+- `boundary_manifest_v1.json` — declares the protected boundary before adversarial testing;
+- `ASSUMPTIONS_v1.md` — public trust assumptions and their verification targets;
+- `THREAT_MODEL_v1.md` — adversary capabilities and attack surface;
+- `ATTACK_CATALOG_v1.md` — frozen attack families;
+- `FORMAL_PROPERTY.md` — the conditional safety property and counterexample criterion;
+- `CONFORMANCE.md` — PASS / FAIL / OUT-OF-SCOPE / AMBIGUOUS rules;
+- `INDEPENDENT_REPRODUCTION.md` — protocol for testing the claim without importing DAR internals;
+- `RESULT_SCHEMA_v1.json` — machine-readable result format.
+
+The central property is intentionally bounded:
+
+> **Within a pre-declared enforcement boundary and explicit trust assumptions, a valid refusal must make protected effect commitment unreachable.**
+
+No post-hoc boundary expansion or contraction is permitted. `AMBIGUOUS` is never treated as `PASS`.
+
 ## Verification
 
 The verified development checkout was executed with:
@@ -78,24 +97,5 @@ This is an **active research prototype, not a production certification or indepe
 - **Canonical repository:** https://github.com/liranbarshrim-ui/human-stop-boundary
 - **Research site:** https://matrix-audit.com
 - **Citation metadata:** [`CITATION.cff`](CITATION.cff)
-- **Zenodo metadata:** [`.zenodo.json`](.zenodo.json)
-- **Provenance policy:** [`PROVENANCE.md`](PROVENANCE.md)
-- **Version history:** [`CHANGELOG.md`](CHANGELOG.md)
-- **License:** Apache-2.0
-
-The repository is prepared for persistent archiving through GitHub Releases, Zenodo, and Software Heritage. A canonical release must preserve its version, evidence, limitations, and integrity references.
-
-## Read next
-
-1. **[DAR Core Doctrine](dar_v36_14/DAR_DOCTRINE.md)** — the conceptual foundation.
-2. **[Implementation README](dar_v36_14/README.md)** — what v36.14 actually enforces.
-3. **[Security](dar_v36_14/SECURITY.md)** — boundary conditions and explicit limitations.
-4. **[Verification Record](dar_v36_14/AUDIT_v36_14.md)** — findings, corrections, evidence, and claims not established.
-5. **[Release SHA-256](dar_v36_14/RELEASE_SHA256.txt)** — release artifact integrity reference.
-6. **[Provenance Policy](PROVENANCE.md)** — how DAR evidence and claims are established.
-7. **[Changelog](CHANGELOG.md)** — versioned research history and known limitations.
-
----
-
-**Liran Bar-Shrim**  
-https://matrix-audit.com
+- **Archival plan:** [`ARCHIVAL.md`](ARCHIVAL.md)
+- **Provenance:** [`PROVENANCE.md`](PROVENANCE.md)
