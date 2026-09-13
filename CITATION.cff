@@ -1,0 +1,24 @@
+cff-version: 1.2.0
+message: "If you use or discuss DAR, please cite this research record."
+title: "Decision Accountability Review (DAR)"
+type: software
+abstract: "A structural framework and research prototype for making refusal and stop authority explicit, bounded, and testable in high-stakes decision processes."
+authors:
+  - family-names: "Bar-Shrim"
+    given-names: "Liran"
+    email: "Liran130185@gmail.com"
+repository-code: "https://github.com/liranbarshrim-ui/human-stop-boundary"
+url: "https://matrix-audit.com"
+license: "NOASSERTION"
+keywords:
+  - "AI safety"
+  - "AI governance"
+  - "alignment"
+  - "control"
+  - "evaluation"
+  - "refusal authority"
+  - "decision accountability"
+  - "human oversight"
+  - "governance"
+version: "v36.14"
+date-released: "2026-09-13"
