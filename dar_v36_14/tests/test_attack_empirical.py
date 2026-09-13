@@ -6,7 +6,7 @@ from pathlib import Path
 from dar import Kernel, Snapshot, Store, SystemState
 from dar.boundary import BoundaryDenied, PrivilegedDispatcher
 from dar.effect_gate import EffectDenied, EffectGate, EffectRequest
-from dar.canonical import CanonicalizationError, canonical_bytes, canonical_digest
+from dar.canonical import CanonicalizationError, canonical_bytes, canonical_digest, parse_json_object
 SECRET=b"x"*32
 
 def make_kernel(root,*,anchor=None):
@@ -59,9 +59,14 @@ class AttackEmpiricalTests(unittest.TestCase):
             with self.assertRaises(EffectDenied): gate.execute(req,lambda:"should-not-run",substituted)
     def test_a08_canonicalization_is_order_stable(self):
         self.assertEqual(canonical_bytes({"b":1,"a":2}),canonical_bytes({"a":2,"b":1})); self.assertEqual(canonical_digest({"b":1,"a":2}),canonical_digest({"a":2,"b":1}))
+    def test_a08_canonicalization_unicode_nfc(self):
+        composed="é"; decomposed="e\u0301"; self.assertEqual(canonical_bytes({"text":composed}),canonical_bytes({"text":decomposed})); self.assertEqual(canonical_digest({"text":composed}),canonical_digest({"text":decomposed}))
     def test_a08_canonicalization_rejects_ambiguous_numbers(self):
         with self.assertRaises(CanonicalizationError): canonical_bytes({"x":1.5})
         with self.assertRaises(CanonicalizationError): canonical_bytes({"x":float("nan")})
+    def test_a08_transport_rejects_duplicate_keys(self):
+        with self.assertRaises(CanonicalizationError): parse_json_object('{"a":1,"a":2}')
+        self.assertEqual(parse_json_object('{"a":1,"b":2}'),{"a":1,"b":2})
     def test_a09_recovery_replay_is_guarded_by_consumption(self):
         with tempfile.TemporaryDirectory() as d:
             _,kernel=make_kernel(d); gate=EffectGate(kernel); p={"path":"a09.txt","data":"ok"}; cap=issue_write(kernel,p); req=EffectRequest(cap,"human","root","WRITE","a09","WRITE"); gate.execute(req,lambda:"first",p)
