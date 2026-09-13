@@ -20,6 +20,24 @@ class EffectGate:
             self.k.store._write_atomic(ns)
         return executor()
     def execute_recoverable(self,req,adapter,params,journal):
+        """Execute a recoverable effect with durable intent before adapter execution.
+
+        The capability is authorized, consumed, and paired with a durable
+        recoverable intent in the authenticated Store before the adapter is
+        invoked. The intent records the effect identity, idempotency key,
+        effect class, and parameter digest.
+
+        The audit journal is a second durable record. PREPARED must be appended
+        successfully before the external effect is executed; if that append
+        fails, execution fails closed and the Store retains the intent for
+        reconciliation. A crash after PREPARED but before COMMITTED is
+        recoverable through the adapter's idempotency/status contract.
+
+        Store intent and journal records are intentionally not a single
+        cross-file atomic transaction. The Store is therefore the durable
+        recovery source for an authorized-but-not-finalized intent, while the
+        journal provides an independently authenticated audit trail.
+        """
         if req.effect_class not in self.DECLARED or req.effect_class != req.action: raise EffectDenied('invalid effect class/action')
         import hashlib,json
         params_digest=hashlib.sha256(json.dumps(params,sort_keys=True,separators=(',',':')).encode()).hexdigest()
