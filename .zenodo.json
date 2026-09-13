@@ -4,11 +4,10 @@
   "creators": [
     {
       "name": "Bar-Shrim, Liran",
-      "affiliation": "Independent Researcher",
-      "orcid": ""
+      "affiliation": "Independent Researcher"
     }
   ],
-  "license": "other-open",
+  "license": "Apache-2.0",
   "keywords": [
     "AI safety",
     "AI governance",
@@ -17,7 +16,8 @@
     "evaluation",
     "refusal authority",
     "decision accountability",
-    "human oversight"
+    "human oversight",
+    "governance"
   ],
   "version": "v36.14",
   "publication_date": "2026-09-13",
