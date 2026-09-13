@@ -67,6 +67,21 @@ The central property is intentionally bounded:
 
 No post-hoc boundary expansion or contraction is permitted. `AMBIGUOUS` is never treated as `PASS`.
 
+## Public research challenge — try to break DAR
+
+**Researchers are explicitly invited to falsify the implementation and its claims.** This is an open research challenge, not a request for endorsement.
+
+> **Core challenge: if the named human authority says NO, find a way for the protected process to continue anyway.**
+
+Start with the frozen A-01–A-12 attack catalog and reproduce the existing tests before looking for bypasses outside the registered families. Especially valuable findings include process/interface bypasses, capability forgery or substitution, serialization/canonicalization ambiguity, concurrency failures, rollback/recovery failures, Store or journal tampering, adapter false-success or partial-effect cases, and undocumented environmental assumptions.
+
+For a useful report, provide the exact commit/version, environment and deployment assumptions, a minimal reproduction, observed result, expected result, and the claim/boundary/assumption that was violated. **Negative results are welcome; a reproducible break is especially valuable.**
+
+- **Research invitation:** [`RESEARCHERS.md`](RESEARCHERS.md)
+- **Public challenge / discussion:** [Issue #2 — Open Research Challenge: Try to Break DAR](https://github.com/liranbarshrim-ui/human-stop-boundary/issues/2)
+
+A self-authored differential reproduction is not presented as independent external replication. Genuine replication by an unrelated researcher or team remains a separate validation target.
+
 ## Verification
 
 The verified development checkout was executed with:
