@@ -44,7 +44,7 @@ class UnixDispatcherServer:
         req=self._recv_frame(conn)
         if not isinstance(req,dict) or set(req)!={'capability','principal','domain','action','effect_id','effect_class','params'}: raise BoundaryDenied('invalid request shape')
         cap=self._cap(req['capability']); er=EffectRequest(cap,req['principal'],req['domain'],req['action'],req['effect_id'],req['effect_class'])
-        result=self.gate.execute(er,lambda:self.dispatcher.execute(er.effect_class,req['params']),req['params'])
+        result=self.gate.execute(er,lambda:self.dispatcher._apply(er.effect_class,req['params']),req['params'])
         self._send_frame(conn,{'ok':True,'result':result})
     def _acquire_daemon_lock(self):
         if self._daemon_lock_fd is not None: return
@@ -65,7 +65,7 @@ class UnixDispatcherServer:
         parent=os.path.dirname(os.path.realpath(self.socket_path)) or '.'; os.makedirs(parent,mode=0o711,exist_ok=True); os.chmod(parent,0o711)
         try: os.unlink(self.socket_path)
         except FileNotFoundError: pass
-        s=socket.socket(socket.AF_UNIX,socket.SOCK_STREAM); s.settimeout(1); s.bind(self.socket_path); os.chmod(self.socket_path,0o666); s.listen(32)
+        s=socket.socket(socket.AF_UNIX,socket.SOCK_STREAM); s.settimeout(1); s.bind(self.socket_path); os.chmod(self.socket_path,0o660); s.listen(32)
         if getattr(self,'enable_seccomp',False) or getattr(self,'enable_landlock',False):
             from .hardening import install_no_new_privs; install_no_new_privs()
         if getattr(self,'enable_seccomp',False):
@@ -91,7 +91,7 @@ class UnixDispatcherServer:
         parent=os.path.dirname(os.path.realpath(self.socket_path)) or '.'; os.makedirs(parent,mode=0o711,exist_ok=True); os.chmod(parent,0o711)
         try: os.unlink(self.socket_path)
         except FileNotFoundError: pass
-        s=socket.socket(socket.AF_UNIX,socket.SOCK_STREAM); s.settimeout(5); s.bind(self.socket_path); os.chmod(self.socket_path,0o666); s.listen(8)
+        s=socket.socket(socket.AF_UNIX,socket.SOCK_STREAM); s.settimeout(5); s.bind(self.socket_path); os.chmod(self.socket_path,0o660); s.listen(8)
         try:
             conn,_=s.accept(); conn.settimeout(5)
             try: self.handle(conn)
