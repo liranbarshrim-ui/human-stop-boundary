@@ -50,18 +50,13 @@ It implements a bounded enforcement boundary with:
 
 ## Verification
 
-The current development checkout has been executed with:
+The verified development checkout was executed with:
 
-**`PYTHONPATH=. pytest -q -v` → 60 passed, 1 skipped.**
+**`PYTHONPATH=. pytest -q -v` → 60 passed, 1 skipped (61 collected).**
 
 The single skip is the optional Landlock test because the host kernel returns `ENOSYS`.
 
-Additional local checks passed:
-
-- package installation;
-- Python compilation;
-- live two-UID boundary test;
-- live `SIGKILL` generation-rotation test.
+Additional local checks passed: package installation, Python compilation, live two-UID boundary testing, and live `SIGKILL` generation-rotation testing.
 
 The repository must be treated as the source of truth. Chat-pasted artifacts are not evidence until compared against a fresh checkout and executed.
 
@@ -73,7 +68,7 @@ HMAC-authenticated state does not by itself prevent restoration of an older vali
 
 Exactly-once semantics for arbitrary external side effects remain dependent on an authoritative idempotent adapter.
 
-Pending-intent reconciliation is deliberately bounded: the current implementation can reconcile an intent after authoritative external commitment, but it does **not** retain the original effect parameters or autonomously retry an UNKNOWN/PREPARED effect. Such an intent may remain pending indefinitely and requires an external operational recovery decision if it never reaches COMMITTED.
+Pending-intent reconciliation is bounded and deployment-dependent: `reconcile_pending()` requires an external `params_provider` to supply the original parameters, verifies their `params_digest`, consults authoritative adapter status, and retries UNKNOWN/PREPARED only through the adapter's idempotent contract. It clears the pending intent only after COMMITTED is established and the journal contains matching validated intent. If the deployment cannot supply the original parameters or the adapter cannot provide the required semantics, the intent may remain pending and requires an external operational decision.
 
 This is a **hardened research prototype, not a production certification or independent security audit**.
 
