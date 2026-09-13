@@ -22,6 +22,11 @@ def digest(path):
 if __name__ == "__main__":
     cmd = ["python", "-m", "pytest", "-q", *TESTS]
     completed = subprocess.run(cmd, cwd=ROOT, text=True)
+    independent = subprocess.run(
+        ["python", "tools/independent_a08_reproduction.py"],
+        cwd=ROOT,
+        text=True,
+    )
     evidence = {
         "format": "DAR-CONFORMANCE-RUN-1",
         "spec_version": "BRB-1.0",
@@ -35,7 +40,12 @@ if __name__ == "__main__":
             ]
         },
         "exit_code": completed.returncode,
-        "classification": "PASS" if completed.returncode == 0 else "FAIL",
+        "independent_a08_exit_code": independent.returncode,
+        "classification": (
+            "PASS"
+            if completed.returncode == 0 and independent.returncode == 0
+            else "FAIL"
+        ),
     }
     print(json.dumps(evidence, indent=2, sort_keys=True))
-    raise SystemExit(completed.returncode)
+    raise SystemExit(0 if evidence["classification"] == "PASS" else 1)
