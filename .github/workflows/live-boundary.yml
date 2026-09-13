@@ -1,5 +1,7 @@
 name: DAR Live OS Boundary
 
+# Re-run this OS/process boundary whenever the dispatcher, kernel, transport,
+# or live regression harness changes. A-06 is not closed by unit tests alone.
 on:
   workflow_dispatch:
   push:
