@@ -27,9 +27,12 @@ jobs:
       - name: Install test package
         working-directory: dar_v36_14
         run: python -m pip install '.[test]'
-      - name: Stage privileged launcher
+      - name: Stage privileged runtime
         working-directory: dar_v36_14
-        run: install -m 0755 run_privileged_server.py /tmp/dar-run-privileged-server.py
+        run: |
+          install -m 0755 run_privileged_server.py /tmp/dar-run-privileged-server.py
+          cp -a dar /tmp/dar-runtime
+          chmod -R a+rX /tmp/dar-runtime
       - name: Run live two-UID boundary test
         working-directory: dar_v36_14
-        run: sudo -E env DAR_PRIVILEGED_LAUNCHER=/tmp/dar-run-privileged-server.py python live_os_boundary_test.py
+        run: sudo -E env PYTHONPATH=/tmp DAR_PRIVILEGED_LAUNCHER=/tmp/dar-run-privileged-server.py python live_os_boundary_test.py
