@@ -13,7 +13,7 @@ A green unit-test run is **not** equivalent to a production security certificati
 | A-03 | replay | PASS: consumed nonce/txid/effect key reject replay |
 | A-04 | stale capability | PASS: capability epoch must match current state |
 | A-05 | rollback | PASS **conditional on** a trusted external monotonic anchor; without one this is an assumption |
-| A-06 | alternate interface | **HARDENED / PENDING LIVE OS VALIDATION**: the public `PrivilegedDispatcher.execute` endpoint has been removed; the registered IPC/Gate path calls only the internal `_apply` primitive. Process isolation, filesystem permissions, socket replacement, and cross-UID behavior still require live deployment validation |
+| A-06 | alternate interface | **PASS within the tested Linux deployment boundary**: the public `PrivilegedDispatcher.execute` endpoint has been removed; the privileged dispatcher runs as a separate OS identity; protected root, Store, secret, and IPC socket are permission-bound; unauthorized direct filesystem/socket access and parameter substitution were rejected, while authorized IPC succeeded. This is deployment-bounded evidence, not a production security certification. |
 | A-07 | confused deputy | PASS for principal binding in `EffectGate` |
 | A-08 | parameter substitution | PASS for the registered Gate/IPC path: capability MAC binds a deterministic canonical `params_digest`; supplied parameters must match it. Canonicalization rejects ambiguous/non-integral/non-finite numeric representations |
 | A-09 | recovery replay | PASS for the basic consumed-capability replay path; recoverable adapter semantics remain adapter-dependent |
@@ -23,13 +23,19 @@ A green unit-test run is **not** equivalent to a production security certificati
 
 ## Critical findings
 
-A-06 is no longer an exposed public alternate execution endpoint in the supported Python interface, but it is **not yet a final PASS** because the stronger criterion includes live OS/process isolation. A-08 has been hardened with an explicit canonical parameter profile and cryptographic parameter binding.
+A-06 has now passed the registered live OS/process validation for the tested Linux configuration. The evidence includes separate OS identities, filesystem permissions, socket permissions, unauthorized direct-access attempts, authorized IPC, and post-issuance parameter substitution. The claim remains bounded to the tested deployment configuration and does not constitute a production security certification.
 
-1. **A-06 — alternate interface:** the remaining question is deployment-level: whether an unprivileged identity can reach the privileged process, its Store, secret, protected filesystem, or socket by another route. This remains assumption A1 plus deployment controls until independently reproduced.
+1. **A-06 — alternate interface:** live validation demonstrated that the tested unprivileged identity could not reach the privileged process through the tested alternate routes: protected filesystem, Store, secret, socket replacement, or unauthorized socket connection. The supported Python interface also has no public `PrivilegedDispatcher.execute` endpoint. The remaining security assumption is that deployment preserves the tested process/OS boundary and does not grant equivalent privileged access by an untested route.
 2. **A-08 — parameter binding:** authorization is bound to the canonical parameter representation before the capability MAC is issued. The Gate recomputes that digest at execution/recovery time, so a substitution after issuance is rejected inside the registered boundary.
+
+## A-06 live evidence
+
+GitHub Actions workflow `DAR Live OS Boundary` completed successfully on commit `3c74ddc9b064695bea56db0101462f7de3690568` (run `34767671747`). The live job executed the two-UID boundary test successfully. The workflow stages the privileged runtime outside the repository workspace and runs the boundary test with real Linux account separation and filesystem/socket permissions.
+
+The live result is stronger than a unit-test-only result, but it remains a test-environment observation. It does not establish resistance to kernel compromise, privileged-process compromise, deployment misconfiguration, or all possible alternate interfaces.
 
 ## Classification rule
 
 `PASS` means the specific declared property was observed under the stated test conditions. `HARDENED / PENDING LIVE OS VALIDATION` is not a PASS and is not converted into PASS by post-hoc narrowing of the claim. Any future boundary change requires a new pre-registered manifest and new evidence.
 
-The correct research claim is therefore bounded: the prototype demonstrates several enforceable properties inside its registered boundary, A-06's public alternate endpoint has been removed, A-08 parameter binding is cryptographically hardened, and deployment-level boundary assumptions remain subject to live and independent validation.
+The correct research claim is therefore bounded: the prototype demonstrates several enforceable properties inside its registered boundary; A-06's public alternate endpoint has been removed and the tested Linux process/OS boundary has passed live validation; A-08 parameter binding is cryptographically hardened; and deployment-level assumptions remain subject to independent reproduction and broader validation.
