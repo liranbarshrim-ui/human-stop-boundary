@@ -1,0 +1,20 @@
+name: DAR-MA reference tests
+
+on:
+  push:
+    paths:
+      - 'dar_v37_0/**'
+      - '.github/workflows/dar-ma.yml'
+  pull_request:
+    paths:
+      - 'dar_v37_0/**'
+      - '.github/workflows/dar-ma.yml'
+
+jobs:
+  reference-tests:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Run DAR-MA adversarial reference tests
+        working-directory: dar_v37_0
+        run: python -m unittest -v test_multi_agent.py
