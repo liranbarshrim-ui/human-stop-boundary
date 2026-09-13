@@ -10,7 +10,13 @@ class EffectTicket:
     effect_class: str
 
 class PrivilegedDispatcher:
-    """No caller-supplied Python callable crosses the effect boundary."""
+    """OS-effect implementation primitive.
+
+    Protected effects are not exposed through a public `execute` API. The
+    registered Gate/IPC integration calls `_apply` only after authorization,
+    replay, identity, and parameter checks. `_apply` is an implementation
+    primitive, not a host-process security boundary.
+    """
     ALLOWED={'READ':'read_file','WRITE':'write_file'}
     def __init__(self,root):
         self.root=os.path.realpath(root); os.makedirs(self.root,mode=0o700,exist_ok=True); os.chmod(self.root,0o700)
@@ -40,7 +46,7 @@ class PrivilegedDispatcher:
         rootfd=os.open(self.root,os.O_RDONLY|os.O_DIRECTORY|getattr(os,'O_NOFOLLOW',0))
         try: return os.fdopen(os.open(parts[0],os.O_WRONLY|os.O_CREAT|os.O_TRUNC|getattr(os,'O_NOFOLLOW',0),0o600,dir_fd=rootfd),'w',encoding='utf-8')
         finally: os.close(rootfd)
-    def execute(self,effect_class,params):
+    def _apply(self,effect_class,params):
         if effect_class not in self.ALLOWED: raise BoundaryDenied('undeclared effect')
         if not isinstance(params,dict): raise BoundaryDenied('invalid params')
         if effect_class=='READ':
@@ -56,4 +62,4 @@ class DispatcherClient:
     def __init__(self,gate,dispatcher): self.gate=gate; self.dispatcher=dispatcher
     def execute(self,req,params):
         if req.effect_class not in self.dispatcher.ALLOWED: raise BoundaryDenied('undeclared effect')
-        return self.gate.execute(req,lambda:self.dispatcher.execute(req.effect_class,params))
+        return self.gate.execute(req,lambda:self.dispatcher._apply(req.effect_class,params),params)
