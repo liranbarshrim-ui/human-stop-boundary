@@ -19,7 +19,13 @@ def _normalize(value):
     if isinstance(value, dict):
         if any(not isinstance(k, str) for k in value):
             raise CanonicalizationError("parameter object keys must be strings")
-        return {_normalize(k): _normalize(value[k]) for k in sorted(value)}
+        out = {}
+        for key in sorted(value):
+            normalized_key = unicodedata.normalize("NFC", key)
+            if normalized_key in out:
+                raise CanonicalizationError(f"duplicate object key after NFC normalization: {normalized_key!r}")
+            out[normalized_key] = _normalize(value[key])
+        return out
     if isinstance(value, (list, tuple)):
         return [_normalize(x) for x in value]
     raise CanonicalizationError(f"unsupported parameter type: {type(value).__name__}")
