@@ -26,7 +26,7 @@ The principles are deliberately non-redundant: each addresses a different route 
 
 ## The implementation
 
-[`dar_v36_14/`](dar_v36_14/) contains the current hardened research prototype.
+[`dar_v36_14/`](dar_v36_14/) contains the current **active research prototype**.
 
 It implements a bounded enforcement boundary with:
 
@@ -70,7 +70,20 @@ Exactly-once semantics for arbitrary external side effects remain dependent on a
 
 Pending-intent reconciliation is bounded and deployment-dependent: `reconcile_pending()` requires an external `params_provider` to supply the original parameters, verifies their `params_digest`, consults authoritative adapter status, and retries UNKNOWN/PREPARED only through the adapter's idempotent contract. It clears the pending intent only after COMMITTED is established and the journal contains matching validated intent. If the deployment cannot supply the original parameters or the adapter cannot provide the required semantics, the intent may remain pending and requires an external operational decision.
 
-This is a **hardened research prototype, not a production certification or independent security audit**.
+This is an **active research prototype, not a production certification or independent security audit**.
+
+## Research and archival record
+
+- **Author:** Liran Bar-Shrim
+- **Canonical repository:** https://github.com/liranbarshrim-ui/human-stop-boundary
+- **Research site:** https://matrix-audit.com
+- **Citation metadata:** [`CITATION.cff`](CITATION.cff)
+- **Zenodo metadata:** [`.zenodo.json`](.zenodo.json)
+- **Provenance policy:** [`PROVENANCE.md`](PROVENANCE.md)
+- **Version history:** [`CHANGELOG.md`](CHANGELOG.md)
+- **License:** Apache-2.0
+
+The repository is prepared for persistent archiving through GitHub Releases, Zenodo, and Software Heritage. A canonical release must preserve its version, evidence, limitations, and integrity references.
 
 ## Read next
 
@@ -79,6 +92,8 @@ This is a **hardened research prototype, not a production certification or indep
 3. **[Security](dar_v36_14/SECURITY.md)** — boundary conditions and explicit limitations.
 4. **[Verification Record](dar_v36_14/AUDIT_v36_14.md)** — findings, corrections, evidence, and claims not established.
 5. **[Release SHA-256](dar_v36_14/RELEASE_SHA256.txt)** — release artifact integrity reference.
+6. **[Provenance Policy](PROVENANCE.md)** — how DAR evidence and claims are established.
+7. **[Changelog](CHANGELOG.md)** — versioned research history and known limitations.
 
 ---
 
