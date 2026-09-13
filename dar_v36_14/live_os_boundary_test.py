@@ -60,8 +60,6 @@ for p in (state, Path(str(state) + ".lock"), secretf):
 
 sock = ipc / "dar.sock"
 env = os.environ.copy()
-# The live test is executed from the source tree, but the privileged server
-# launcher is staged by CI outside the workspace so the daemon UID can read it.
 env.pop("DAR_PRIVILEGED_LAUNCHER", None)
 launcher = Path(os.environ.get("DAR_PRIVILEGED_LAUNCHER", "/tmp/dar-run-privileged-server.py"))
 
@@ -96,6 +94,22 @@ try:
         time.sleep(0.02)
     assert sock.exists()
     checks = []
+
+    # Exact regression test for the original A-06 flaw: the unprivileged
+    # process imports the class and attempts the old direct public API.
+    direct_api_code = (
+        "from dar.boundary import PrivilegedDispatcher; "
+        f"d=PrivilegedDispatcher({str(root)!r}); "
+        "assert not hasattr(d,'execute'); "
+        "getattr(d,'execute')('WRITE',{'path':'direct-api.txt','data':'PWN'})"
+    )
+    r = as_uid(N.pw_uid, N.pw_gid, ["python3", "-c", direct_api_code])
+    checks.append(("unprivileged direct import + old execute denied", r.returncode != 0 and not (root / "direct-api.txt").exists()))
+
+    # The package may be readable by the unprivileged identity for client use,
+    # but its privileged resources remain OS-protected.
+    r = as_uid(N.pw_uid, N.pw_gid, ["python3", "-c", "from dar.boundary import PrivilegedDispatcher; print(PrivilegedDispatcher.__name__)"])
+    checks.append(("unprivileged can import package but has no public privileged endpoint", r.returncode == 0))
 
     # Unauthorized identity: OS-level access to protected resources must fail.
     r = as_uid(N.pw_uid, N.pw_gid, ["python3", "-c", f"open({str(root/'x')!r},'w').write('PWN')"])
