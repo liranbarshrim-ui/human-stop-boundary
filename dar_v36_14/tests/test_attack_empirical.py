@@ -64,6 +64,8 @@ class AttackEmpiricalTests(unittest.TestCase):
     def test_a08_canonicalization_rejects_ambiguous_numbers(self):
         with self.assertRaises(CanonicalizationError): canonical_bytes({"x":1.5})
         with self.assertRaises(CanonicalizationError): canonical_bytes({"x":float("nan")})
+    def test_a08_canonicalization_rejects_unicode_colliding_keys(self):
+        with self.assertRaises(CanonicalizationError): canonical_bytes({"é":1,"e\u0301":2})
     def test_a08_transport_rejects_duplicate_keys(self):
         with self.assertRaises(CanonicalizationError): parse_json_object('{"a":1,"a":2}')
         self.assertEqual(parse_json_object('{"a":1,"b":2}'),{"a":1,"b":2})
