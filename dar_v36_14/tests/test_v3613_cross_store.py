@@ -2,8 +2,7 @@ import tempfile, unittest
 from pathlib import Path
 from dar import *
 from dar.effect_journal import EffectJournal
-from dar.effect_transaction import TxnStatus
-from dar.effect_gate import EffectRequest
+from dar.effect_transaction import TxnStatus, AdapterContractError
 
 class Adapter:
     def __init__(self): self.calls=[]; self.done=set()
@@ -15,12 +14,6 @@ class BrokenJournal:
     def append(self,r):
         self.calls.append(r)
         if r['status']==self.fail_status: raise OSError('injected journal failure')
-    def _validated_state(self):
-        state={}
-        for r in self.calls:
-            if r['status']=='PREPARED': state[r['key']]=r
-            elif r['status']=='COMMITTED': state[r['key']]=r
-        return state
 
 class V3613(unittest.TestCase):
     def setUp(self):
@@ -33,26 +26,39 @@ class V3613(unittest.TestCase):
         p=SystemState(1,{'alice':{'docs':frozenset({'READ'})}},{'docs':GovernanceRule('docs','root')})
         return self.k.issue('alice','docs','READ',p,'n1')
     def req(self,c): return EffectRequest(c,'alice','docs','READ','e1','READ')
+
     def test_capability_consumption_and_intent_are_one_store_commit(self):
         c=self.cap(); a=Adapter(); j=BrokenJournal('PREPARED')
         with self.assertRaises(OSError): self.g.execute_recoverable(self.req(c),a,{'x':1},j)
-        self.assertEqual(a.calls, []); self.assertEqual(len(self.store._read().pending_effects),1); self.assertTrue(c.txid in self.store._read().consumed)
+        self.assertEqual(a.calls, [])
+        self.assertEqual(len(self.store._read().pending_effects),1)
+        self.assertTrue(c.txid in self.store._read().consumed)
+
+    def test_journal_prepare_failure_does_not_lose_recoverable_intent(self):
+        c=self.cap(); a=Adapter(); j=BrokenJournal('PREPARED')
+        with self.assertRaises(OSError): self.g.execute_recoverable(self.req(c),a,{'x':1},j)
+        self.assertEqual(a.calls, [])
+        self.assertEqual(len(self.store._read().pending_effects),1)
+
     def test_commit_journal_failure_leaves_durable_intent(self):
         c=self.cap(); a=Adapter(); j=BrokenJournal('COMMITTED')
         with self.assertRaises(OSError): self.g.execute_recoverable(self.req(c),a,{'x':1},j)
-        s=self.store._read(); self.assertEqual(len(s.pending_effects),1); self.assertEqual(a.calls, [(f'{c.txid}:e1', {'x':1})])
+        s=self.store._read(); self.assertEqual(len(s.pending_effects),1)
+        self.assertEqual(s.pending_effects[0]['params_digest'], __import__('dar.effect_transaction',fromlist=['_params_digest'])._params_digest({'x':1}))
+        self.assertEqual(a.calls, [(f'{c.txid}:e1', {'x':1})])
+
     def test_reconcile_pending_after_commit_journal_failure(self):
         c=self.cap(); a=Adapter(); j=BrokenJournal('COMMITTED')
         with self.assertRaises(OSError): self.g.execute_recoverable(self.req(c),a,{'x':1},j)
-        real=EffectJournal(Path(self.d.name)/'effects.log', b'z'*32); intent=self.store._read().pending_effects[0]
+        real=EffectJournal(Path(self.d.name)/'effects.log', b'z'*32)
+        intent=self.store._read().pending_effects[0]
         real.append({'status':'PREPARED', **intent})
         self.assertEqual(self.g.reconcile_pending(a, real, lambda i:{'x':1}), 1)
         self.assertEqual(self.store._read().pending_effects, ())
         self.assertEqual(real._validated_state()[intent['key']]['status'], 'COMMITTED')
         self.assertEqual(a.calls, [(f'{c.txid}:e1', {'x':1})])
+
     def test_replay_cannot_create_different_intent_after_commit_failure(self):
         c=self.cap(); a=Adapter(); j=BrokenJournal('COMMITTED')
         with self.assertRaises(OSError): self.g.execute_recoverable(self.req(c),a,{'x':1},j)
         with self.assertRaises(EffectDenied): self.g.execute_recoverable(self.req(c),Adapter(),{'x':2},BrokenJournal())
-
-if __name__=='__main__': unittest.main()
