@@ -20,5 +20,7 @@ jobs:
           python-version: ${{ matrix.python-version }}
       - name: Install package and test dependencies
         run: python -m pip install ".[test]"
-      - name: Run tests
-        run: pytest -q
+      - name: Run portable test suite
+        run: pytest -q --ignore=live_os_boundary_test.py
+      - name: Note privileged live smoke test
+        run: echo "live_os_boundary_test.py is an optional privileged two-UID smoke test and is not run on the unprivileged GitHub-hosted runner"
