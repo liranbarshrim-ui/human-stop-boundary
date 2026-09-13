@@ -1,0 +1,23 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "DAR Conformance Result",
+  "type": "object",
+  "required": ["spec_version", "classification", "tests"],
+  "properties": {
+    "spec_version": {"const": "BRB-1.0"},
+    "classification": {"enum": ["PASS", "FAIL", "OUT-OF-SCOPE", "AMBIGUOUS"]},
+    "tests": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["id", "classification"],
+        "properties": {
+          "id": {"type": "string"},
+          "classification": {"enum": ["PASS", "FAIL", "OUT-OF-SCOPE", "AMBIGUOUS"]},
+          "evidence": {"type": "string"},
+          "notes": {"type": "string"}
+        }
+      }
+    }
+  }
+}
