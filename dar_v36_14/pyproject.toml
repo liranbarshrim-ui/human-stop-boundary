@@ -10,3 +10,8 @@ requires-python = ">=3.10"
 
 [project.optional-dependencies]
 test = ["pytest>=8"]
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["dar*"]
+exclude = ["spec*", "tests*"]
