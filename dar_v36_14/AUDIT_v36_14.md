@@ -41,7 +41,7 @@ During reconciliation:
 - the adapter must expose authoritative idempotency/status semantics;
 - the pending Store intent is removed only after COMMITTED is established and the journal contains matching validated intent.
 
-If original parameters cannot be supplied, or the adapter cannot provide the required idempotency/status contract, complete recovery is not established and the intent may remain pending pending an external operational decision.
+If original parameters cannot be supplied, or the adapter cannot provide the required idempotency/status contract, complete recovery is not established and the intent may remain pending and require an external operational decision.
 
 This is a known architectural boundary, not a claim of arbitrary external exactly-once execution.
 
