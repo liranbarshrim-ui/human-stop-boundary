@@ -11,6 +11,7 @@ TESTS = [
     "tests/test_attack_catalog.py",
     "tests/test_boundary_negative.py",
     "tests/test_effect_refusal_property.py",
+    "tests/test_attack_empirical.py",
 ]
 
 
