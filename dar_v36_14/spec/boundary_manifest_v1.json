@@ -1,0 +1,19 @@
+{
+  "spec_version": "BRB-1.0",
+  "status": "pre-registered",
+  "effective_boundary": {
+    "protected_effect_classes": ["WRITE"],
+    "registered_interfaces": ["PrivilegedDispatcher._open_write"],
+    "commit_event": "adapter_status=COMMITTED",
+    "refusal_terminal": true
+  },
+  "classification": ["PASS", "FAIL", "OUT-OF-SCOPE", "AMBIGUOUS"],
+  "rules": {
+    "no_post_hoc_boundary_change": true,
+    "ambiguous_is_not_pass": true,
+    "out_of_scope_requires_pre_registered_reason": true
+  },
+  "property": "VALID_REFUSAL => NO_PROTECTED_COMMIT",
+  "assumption_registry": "ASSUMPTIONS_v1.md",
+  "threat_model": "THREAT_MODEL_v1.md"
+}
