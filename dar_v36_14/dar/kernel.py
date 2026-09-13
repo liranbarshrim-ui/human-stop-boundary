@@ -14,7 +14,19 @@ class Capability:
 class Kernel:
     def __init__(self,store,secret,boot_id=None): self.store=store; self.secret=secret; self.boot_id=boot_id or secrets.token_hex(32)
     def _digest(self,state): return hashlib.sha256(json.dumps(state.canonical(),sort_keys=True,separators=(',',':')).encode()).hexdigest()
-    def _params_digest(self,params): return hashlib.sha256(json.dumps(params,sort_keys=True,separators=(',',':')).encode()).hexdigest()
+    def _params_digest(self,params):
+        def norm(v):
+            if v is None or isinstance(v,(str,bool,int)): return v
+            if isinstance(v,float):
+                if not v.is_integer() or not __import__('math').isfinite(v): raise ValueError('parameters must not contain non-integral or non-finite floats')
+                return int(v)
+            if isinstance(v,dict):
+                if any(not isinstance(k,str) for k in v): raise ValueError('parameter object keys must be strings')
+                return {k:norm(v[k]) for k in sorted(v)}
+            if isinstance(v,(list,tuple)): return [norm(x) for x in v]
+            raise ValueError(f'unsupported parameter type: {type(v).__name__}')
+        raw=json.dumps(norm(params),ensure_ascii=False,sort_keys=True,separators=(',',':'),allow_nan=False).encode('utf-8')
+        return hashlib.sha256(raw).hexdigest()
     def _mac(self,*x): return hmac.new(self.secret,'|'.join(map(str,x)).encode(),hashlib.sha256).hexdigest()
     def _state(self,s):
         from .model import GovernanceRule
