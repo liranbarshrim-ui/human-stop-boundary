@@ -21,25 +21,29 @@
 - Journal PREPARED failure is fail-closed; no external effect is executed.
 - COMMITTED is recorded only after authoritative adapter status confirms COMMITTED.
 - Effect-state mutations advance the Store sequence, so an external monotonic anchor can detect rollback of consumed/pending effect state as well as authority state.
-- `EffectGate.reconcile_pending()` reconciles durable pending intents against the adapter and validated journal state and removes them only after COMMITTED is established.
+- `EffectGate.reconcile_pending()` reconciles durable Store intents against the adapter and validated journal state, verifies the supplied original parameters against `params_digest`, and invokes recovery only through the adapter's idempotency/status contract.
 - Optional monotonic anchor detects Store rollback when the anchor is outside the rollback domain.
 - IPC frame headers are read exactly, including fragmented stream headers.
 - Live paths are derived from the checked-out artifact.
 - Dedicated tests exercise the intended governance and permission-expansion guards.
 - A live SIGKILL test verifies generation rotation and old-capability rejection.
 
-## Reconciliation limitation
+## Reconciliation boundary
 
-The current reconciliation mechanism is intentionally bounded. It is **post-success bookkeeping**, not autonomous retry recovery.
+The reconciliation mechanism is deliberately bounded and deployment-dependent.
 
-The durable pending intent contains an idempotency identity and `params_digest`, but the current implementation does not retain the original effect parameters. Therefore:
+The Store retains the effect identity, idempotency key and `params_digest`, not the original effect parameters. A deployment must therefore supply the original parameters through an external `params_provider` when recovery needs to execute or retry the effect.
 
-- if the adapter authoritatively reports `COMMITTED`, reconciliation can establish the committed outcome and clear the pending intent;
-- if the adapter remains UNKNOWN or PREPARED, the pending intent remains pending;
-- there is currently no timeout, stuck-state alert, retry counter, or autonomous retry operation;
-- an UNKNOWN/PREPARED intent can therefore remain pending indefinitely and requires an external operational recovery decision if it never reaches COMMITTED.
+During reconciliation:
 
-This is a known limitation, not a claim of complete crash recovery.
+- an existing committed adapter operation is not blindly replayed;
+- UNKNOWN/PREPARED status may be retried only after the supplied parameters pass the durable digest check;
+- the adapter must expose authoritative idempotency/status semantics;
+- the pending Store intent is removed only after COMMITTED is established and the journal contains matching validated intent.
+
+If original parameters cannot be supplied, or the adapter cannot provide the required idempotency/status contract, complete recovery is not established and the intent may remain pending pending an external operational decision.
+
+This is a known architectural boundary, not a claim of arbitrary external exactly-once execution.
 
 ## Evidence provenance
 
