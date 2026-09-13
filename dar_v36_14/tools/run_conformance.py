@@ -22,8 +22,8 @@ def digest(path):
 if __name__ == "__main__":
     cmd = ["python", "-m", "pytest", "-q", *TESTS]
     completed = subprocess.run(cmd, cwd=ROOT, text=True)
-    independent = subprocess.run(
-        ["python", "tools/independent_a08_reproduction.py"],
+    differential = subprocess.run(
+        ["python", "tools/self_authored_a08_differential.py"],
         cwd=ROOT,
         text=True,
     )
@@ -40,10 +40,10 @@ if __name__ == "__main__":
             ]
         },
         "exit_code": completed.returncode,
-        "independent_a08_exit_code": independent.returncode,
+        "self_authored_a08_differential_exit_code": differential.returncode,
         "classification": (
             "PASS"
-            if completed.returncode == 0 and independent.returncode == 0
+            if completed.returncode == 0 and differential.returncode == 0
             else "FAIL"
         ),
     }
