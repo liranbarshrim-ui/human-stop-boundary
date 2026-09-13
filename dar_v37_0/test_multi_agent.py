@@ -2,7 +2,6 @@ import unittest
 
 from multi_agent import (
     DARMAError,
-    Delegation,
     MultiAgentBoundary,
     OutcomeContract,
     OutcomeEdge,
@@ -14,6 +13,7 @@ class MultiAgentTests(unittest.TestCase):
     def setUp(self):
         self.b = MultiAgentBoundary({
             "transfer": OutcomeContract("transfer", "finance", "alice"),
+            "delete": OutcomeContract("delete", "data", "bob"),
         })
 
     def test_named_authority_can_stop_and_stop_is_persistent(self):
@@ -30,7 +30,7 @@ class MultiAgentTests(unittest.TestCase):
     def test_delegation_cannot_widen(self):
         self.b.delegate("alice", "agent-a", {"transfer"}, 0)
         with self.assertRaises(PermissionError):
-            self.b.delegate("agent-a", "agent-b", {"transfer", "unknown"}, 0)
+            self.b.delegate("agent-a", "agent-b", {"transfer", "delete"}, 0)
 
     def test_delegated_authority_is_invalid_after_stop(self):
         self.b.delegate("alice", "agent-a", {"transfer"}, 0)
