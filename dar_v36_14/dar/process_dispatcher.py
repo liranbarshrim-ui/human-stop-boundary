@@ -36,7 +36,7 @@ class UnixDispatcherServer:
         conn.sendall(struct.pack('!I',len(data))+data)
     @staticmethod
     def _cap(obj):
-        fields=('txid','sequence','nonce','epoch','boot_id','principal','domain','action','effect_class','mutation_class','state_digest','mac')
+        fields=('txid','sequence','nonce','epoch','boot_id','principal','domain','action','effect_class','mutation_class','state_digest','mac','params_digest')
         if not isinstance(obj,dict) or set(obj)!=set(fields): raise BoundaryDenied('invalid capability shape')
         return Capability(*(obj[x] for x in fields))
     def handle(self,conn):
@@ -44,7 +44,7 @@ class UnixDispatcherServer:
         req=self._recv_frame(conn)
         if not isinstance(req,dict) or set(req)!={'capability','principal','domain','action','effect_id','effect_class','params'}: raise BoundaryDenied('invalid request shape')
         cap=self._cap(req['capability']); er=EffectRequest(cap,req['principal'],req['domain'],req['action'],req['effect_id'],req['effect_class'])
-        result=self.gate.execute(er,lambda:self.dispatcher.execute(er.effect_class,req['params']))
+        result=self.gate.execute(er,lambda:self.dispatcher.execute(er.effect_class,req['params']),req['params'])
         self._send_frame(conn,{'ok':True,'result':result})
     def _acquire_daemon_lock(self):
         if self._daemon_lock_fd is not None: return
@@ -108,7 +108,7 @@ class UnixDispatcherClient:
         if len(data)>MAX_FRAME: raise BoundaryDenied('request too large')
         return struct.pack('!I',len(data))+data
     def execute(self,req,params):
-        c=req.capability; fields=('txid','sequence','nonce','epoch','boot_id','principal','domain','action','effect_class','mutation_class','state_digest','mac')
+        c=req.capability; fields=('txid','sequence','nonce','epoch','boot_id','principal','domain','action','effect_class','mutation_class','state_digest','mac','params_digest')
         cap={k:getattr(c,k) for k in fields}; msg={'capability':cap,'principal':req.principal,'domain':req.domain,'action':req.action,'effect_id':req.effect_id,'effect_class':req.effect_class,'params':params}
         s=socket.socket(socket.AF_UNIX,socket.SOCK_STREAM); s.settimeout(5)
         try:
