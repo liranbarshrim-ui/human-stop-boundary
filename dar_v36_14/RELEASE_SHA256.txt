@@ -1,4 +1,10 @@
+DAR v36.14 source-bundle integrity reference
+
+Archived source bundle:
 DAR_v36_14_source_bundle.zip
 SHA-256: e8aa2f627cc5a35a8232f0ae014fb495a97f50d9bf6a72515ee7d008914312f1
 
-This hash identifies the local source bundle produced from the audited v36.14 tree. The GitHub branch is the canonical source representation; the bundle is a convenience artifact.
+Note: this SHA identifies the previously produced local source bundle, not the current GitHub tree after the publication edits. The GitHub repository's `main` branch is the canonical current source representation.
+
+Current publication commit at the time this file was updated:
+529374479aaaac61bd29a3222101028971cc54d4
