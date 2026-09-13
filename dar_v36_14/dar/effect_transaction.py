@@ -1,8 +1,7 @@
 """Crash-aware effect transaction contract."""
 from dataclasses import dataclass
 from enum import Enum
-import hashlib
-import json
+from .canonical import canonical_digest
 
 class TxnStatus(str, Enum):
     UNKNOWN='UNKNOWN'; PREPARED='PREPARED'; COMMITTED='COMMITTED'; FAILED='FAILED'
@@ -21,7 +20,7 @@ class RecoverableEffectAdapter:
     def execute(self, idempotency_key, params): raise NotImplementedError
 
 def _params_digest(params):
-    return hashlib.sha256(json.dumps(params, sort_keys=True, separators=(',', ':')).encode()).hexdigest()
+    return canonical_digest(params)
 
 def recover(adapter, txn, params):
     if _params_digest(params) != txn.params_digest:
