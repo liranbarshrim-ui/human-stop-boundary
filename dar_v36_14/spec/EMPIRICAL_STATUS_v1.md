@@ -15,7 +15,7 @@ This file records what the probes mean. A green unit-test run is **not** equival
 | A-05 | rollback | PASS **conditional on** a trusted external monotonic anchor; without one this is an assumption |
 | A-06 | alternate interface | **BOUNDARY LIMITATION**: `PrivilegedDispatcher` can be called directly. The registered conformance boundary is `EffectGate`/`DispatcherClient`; arbitrary callers are outside that declared boundary unless explicitly routed through it |
 | A-07 | confused deputy | PASS for principal binding in `EffectGate` |
-| A-08 | parameter substitution | **BOUNDARY LIMITATION**: the current `EffectRequest` does not bind a parameter digest for `execute()`. The dispatcher receives parameters separately. This must not be reported as a PASS |
+| A-08 | parameter substitution | PASS for the registered Gate/IPC path: capability MAC now includes a canonical `params_digest`, and supplied parameters must match it |
 | A-09 | recovery replay | PASS for the basic consumed-capability replay path; recoverable adapter semantics remain adapter-dependent |
 | A-10 | journal/store tampering | PASS for Store MAC integrity in the tested path |
 | A-11 | adapter false-success | PASS for the recoverable path: `COMMITTED` status is required before finalization |
@@ -23,13 +23,13 @@ This file records what the probes mean. A green unit-test run is **not** equival
 
 ## Critical findings
 
-A-06 and A-08 are deliberately retained as visible limitations rather than hidden behind a green test suite.
+A-06 remains a visible boundary limitation. A-08 has been hardened but remains subject to the canonicalization and cryptographic assumptions of the implementation.
 
 1. **A-06 — alternate interface:** the enforcement boundary is only meaningful if all protected effects are forced through the registered interface. This is assumption A1 and remains the highest-risk assumption.
-2. **A-08 — parameter binding:** capability authorization currently binds action/effect identity, but the basic `execute()` path does not cryptographically bind the requested parameters. A future conformance revision should bind a canonical parameter digest to the authorization record before treating parameter-substitution resistance as PASS.
+2. **A-08 — parameter binding:** capability authorization now binds a canonical parameter digest into the capability MAC and durable commit record. The Gate recomputes the digest for concrete parameter-bearing execution and rejects substitution. This closes the previously identified parameter-substitution path inside the registered boundary; it does not solve arbitrary alternate interfaces.
 
 ## Classification rule
 
 `PASS` means the specific declared property was observed under the stated test conditions. `BOUNDARY LIMITATION` is not a PASS and is not converted into PASS by post-hoc narrowing of the claim. Any future boundary change requires a new pre-registered manifest and new evidence.
 
-The correct research claim is therefore bounded: the prototype demonstrates several enforceable properties inside its registered boundary while exposing concrete remaining attack surfaces at alternate interfaces and parameter binding.
+The correct research claim is therefore bounded: the prototype demonstrates several enforceable properties inside its registered boundary while retaining a concrete alternate-interface boundary limitation and deployment-dependent assumptions.
