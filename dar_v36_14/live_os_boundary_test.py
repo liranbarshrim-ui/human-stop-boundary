@@ -7,8 +7,6 @@ The dispatcher runs as `daemon`; `nobody` is the unauthorized identity.
 import json
 import os
 import pwd
-import socket
-import struct
 import subprocess
 import tempfile
 import time
@@ -62,9 +60,10 @@ for p in (state, Path(str(state) + ".lock"), secretf):
 
 sock = ipc / "dar.sock"
 env = os.environ.copy()
-HERE = Path(__file__).resolve().parent
-env["PYTHONPATH"] = str(HERE)
-launcher = str(HERE / "run_privileged_server.py")
+# The live test is executed from the source tree, but the privileged server
+# launcher is staged by CI outside the workspace so the daemon UID can read it.
+env.pop("DAR_PRIVILEGED_LAUNCHER", None)
+launcher = Path(os.environ.get("DAR_PRIVILEGED_LAUNCHER", "/tmp/dar-run-privileged-server.py"))
 
 def as_uid(uid, gid, args):
     return subprocess.run(
@@ -78,7 +77,7 @@ def as_uid(uid, gid, args):
 
 p = subprocess.Popen(
     [
-        "python3", launcher,
+        "python3", str(launcher),
         "--socket", str(sock), "--root", str(root), "--state", str(state),
         "--secret-file", str(secretf), "--allowed-uid", str(D.pw_uid),
         "--boot-id", boot, "--seccomp",
