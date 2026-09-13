@@ -72,8 +72,11 @@ class OutcomeGraph:
         return tuple(paths)
 
     def has_stop_cut(self, outcome_id: str) -> bool:
-        """Every enumerated source-to-outcome path must cross enforcement."""
-        for path in self.paths_to(outcome_id):
+        """Every source-to-outcome path must cross a declared enforcement edge."""
+        paths = self.paths_to(outcome_id)
+        if not paths:
+            return False
+        for path in paths:
             pairs = set(zip(path, path[1:]))
             if not any(edge.stop_enforcement and (edge.source, edge.target) in pairs for edge in self.edges):
                 return False
@@ -104,7 +107,6 @@ class MultiAgentBoundary:
             raise DARMAError("delegation must contain an outcome")
         if any(o not in self.contracts for o in requested):
             raise DARMAError("delegation contains unknown outcome")
-        # Delegation can only narrow an existing parent's authority.
         parent_caps = [d.outcomes for d in self.delegations if d.child == parent and d.epoch <= epoch]
         allowed = frozenset(self.contracts) if not parent_caps else frozenset().union(*parent_caps)
         if not requested <= allowed:
@@ -118,8 +120,8 @@ class MultiAgentBoundary:
     def can_execute(self, actor: str, outcome_id: str, epoch: int) -> bool:
         if outcome_id not in self.contracts:
             return False
-        # A stop is persistent in this reference model: a new positive
-        # authorization/release operation would be required to resume.
+        # A stop is persistent in this reference model. Resumption requires a
+        # distinct positive authorization mechanism, intentionally not modeled here.
         if outcome_id in self.stops:
             return False
         if actor == self.contracts[outcome_id].authority:
