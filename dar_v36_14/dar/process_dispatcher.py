@@ -1,5 +1,6 @@
 import json, os, socket, struct, secrets, fcntl
 from .boundary import PrivilegedDispatcher, BoundaryDenied
+from .canonical import CanonicalizationError, parse_json_object
 from .effect_gate import EffectGate, EffectRequest
 from .kernel import Capability
 MAX_FRAME=64*1024
@@ -28,7 +29,8 @@ class UnixDispatcherServer:
             chunk=conn.recv(min(16384,n-len(buf)))
             if not chunk: raise BoundaryDenied('truncated frame')
             buf.extend(chunk)
-        return json.loads(bytes(buf).decode('utf-8'))
+        try: return parse_json_object(bytes(buf).decode('utf-8'))
+        except CanonicalizationError as exc: raise BoundaryDenied(str(exc)) from exc
     @staticmethod
     def _send_frame(conn,obj):
         data=json.dumps(obj,separators=(',',':')).encode('utf-8')
@@ -104,7 +106,7 @@ class UnixDispatcherClient:
     def __init__(self,socket_path): self.socket_path=socket_path
     @staticmethod
     def _frame(obj):
-        data=json.dumps(obj,separators=(',',':')).encode()
+        data=json.dumps(obj,separators=(',',':'),ensure_ascii=False).encode('utf-8')
         if len(data)>MAX_FRAME: raise BoundaryDenied('request too large')
         return struct.pack('!I',len(data))+data
     def execute(self,req,params):
@@ -124,7 +126,8 @@ class UnixDispatcherClient:
                 chunk=s.recv(min(16384,n-len(data)))
                 if not chunk: raise BoundaryDenied('truncated response')
                 data.extend(chunk)
-            out=json.loads(bytes(data).decode())
+            out=parse_json_object(bytes(data).decode('utf-8'))
             if not out.get('ok'): raise BoundaryDenied(out.get('error','denied'))
             return out['result']
+        except CanonicalizationError as exc: raise BoundaryDenied(str(exc)) from exc
         finally: s.close()
