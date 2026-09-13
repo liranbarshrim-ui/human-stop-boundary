@@ -6,6 +6,7 @@ from pathlib import Path
 from dar import Kernel, Snapshot, Store, SystemState
 from dar.boundary import BoundaryDenied, PrivilegedDispatcher
 from dar.effect_gate import EffectDenied, EffectGate, EffectRequest
+from dar.canonical import CanonicalizationError, canonical_bytes, canonical_digest
 SECRET=b"x"*32
 
 def make_kernel(root,*,anchor=None):
@@ -42,17 +43,25 @@ class AttackEmpiricalTests(unittest.TestCase):
         with tempfile.TemporaryDirectory() as d:
             anchor=Anchor(); store,kernel=make_kernel(d,anchor=anchor); issue_write(kernel,{"path":"a05.txt","data":"ok"}); self.assertGreaterEqual(anchor.floor(),1)
             with self.assertRaises(ValueError): store._write_atomic(Snapshot(0,0,frozenset(),frozenset(),tuple(),SystemState(0,{}).canonical(),"B"))
-    def test_a06_alternate_interface_is_explicitly_outside_gate(self):
+    def test_a06_alternate_interface_has_no_public_execute(self):
         with tempfile.TemporaryDirectory() as d:
-            dispatcher=PrivilegedDispatcher(Path(d)/"boundary"); dispatcher.execute("WRITE",{"path":"alternate.txt","data":"outside gate"}); self.assertEqual((Path(d)/"boundary"/"alternate.txt").read_text(),"outside gate")
+            dispatcher=PrivilegedDispatcher(Path(d)/"boundary")
+            self.assertFalse(hasattr(dispatcher,"execute"))
+            with self.assertRaises(AttributeError): dispatcher.execute("WRITE",{"path":"alternate.txt","data":"outside gate"})
+            self.assertFalse((Path(d)/"boundary"/"alternate.txt").exists())
     def test_a07_confused_deputy_is_rejected(self):
         with tempfile.TemporaryDirectory() as d:
-            _,kernel=make_kernel(d); gate=EffectGate(kernel); p={"path":"a07.txt","data":"ok"}; cap=issue_write(kernel,p); req=EffectRequest(cap,"attacker","root","WRITE","a07","WRITE")
+            _,kernel=make_kernel(d); gate=EffectGate(kernel); p={"path":"a07.txt","data":"ok"}; cap=issue_write(kernel,p); req=EffectRequest(cap,"attacker","root","WRITE","a07","WRITE","WRITE")
             with self.assertRaises(EffectDenied): gate.execute(req,lambda:"deputy",p)
     def test_a08_parameter_substitution_is_rejected(self):
         with tempfile.TemporaryDirectory() as d:
             _,kernel=make_kernel(d); gate=EffectGate(kernel); bound={"path":"a08.txt","data":"authorized"}; substituted={"path":"a08.txt","data":"attacker"}; cap=issue_write(kernel,bound); req=EffectRequest(cap,"human","root","WRITE","a08","WRITE")
             with self.assertRaises(EffectDenied): gate.execute(req,lambda:"should-not-run",substituted)
+    def test_a08_canonicalization_is_order_stable(self):
+        self.assertEqual(canonical_bytes({"b":1,"a":2}),canonical_bytes({"a":2,"b":1})); self.assertEqual(canonical_digest({"b":1,"a":2}),canonical_digest({"a":2,"b":1}))
+    def test_a08_canonicalization_rejects_ambiguous_numbers(self):
+        with self.assertRaises(CanonicalizationError): canonical_bytes({"x":1.5})
+        with self.assertRaises(CanonicalizationError): canonical_bytes({"x":float("nan")})
     def test_a09_recovery_replay_is_guarded_by_consumption(self):
         with tempfile.TemporaryDirectory() as d:
             _,kernel=make_kernel(d); gate=EffectGate(kernel); p={"path":"a09.txt","data":"ok"}; cap=issue_write(kernel,p); req=EffectRequest(cap,"human","root","WRITE","a09","WRITE"); gate.execute(req,lambda:"first",p)
@@ -74,5 +83,5 @@ class AttackEmpiricalTests(unittest.TestCase):
     def test_a12_boundary_rejects_path_escape(self):
         with tempfile.TemporaryDirectory() as d:
             dispatcher=PrivilegedDispatcher(Path(d)/"boundary")
-            with self.assertRaises(BoundaryDenied): dispatcher.execute("WRITE",{"path":"../escape.txt","data":"x"})
-            with self.assertRaises(BoundaryDenied): dispatcher.execute("WRITE",{"path":"/absolute.txt","data":"x"})
+            with self.assertRaises(BoundaryDenied): dispatcher._apply("WRITE",{"path":"../escape.txt","data":"x"})
+            with self.assertRaises(BoundaryDenied): dispatcher._apply("WRITE",{"path":"/absolute.txt","data":"x"})
