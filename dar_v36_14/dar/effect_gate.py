@@ -11,17 +11,22 @@ class EffectGate:
         if req.effect_class != req.action: raise EffectDenied('action/effect-class mismatch')
         with self.k.store.tx():
             s=self.k.store._read(); c=req.capability
-            if not self.k.verify_locked(c,req.principal,req.domain,req.action,req.effect_class,s): raise EffectDenied('invalid capability')
+            if not self.k.verify_locked(c,req.principal,req.domain,req.action,req.effect_class,s):
+                raise EffectDenied('invalid capability')
             key=f'{c.txid}:{req.effect_id}'
-            if c.nonce in s.consumed or c.txid in s.consumed or key in s.consumed: raise EffectDenied('replay')
+            if c.nonce in s.consumed or c.txid in s.consumed or key in s.consumed:
+                raise EffectDenied('replay')
             from .store import Snapshot
-            effects=set(s.effects); effects.add(key)
+            effects = set(s.effects)
+            effects.add(key)
             ns=Snapshot(s.epoch,s.sequence+1,s.nonces,s.consumed|{c.nonce,c.txid,key},s.commits,s.state_payload,s.boot_id,tuple(sorted(effects)),s.pending_effects)
             self.k.store._write_atomic(ns)
+        # The durable effect ledger gives registered effects a stable idempotency key.
+        # It does NOT claim exactly-once semantics for arbitrary external side effects.
         return executor()
 
     def execute_recoverable(self, req, adapter, params, journal):
-        """Execute a recoverable effect with durable intent before adapter execution.
+        """Execute through a recoverable adapter with a durable intent.
 
         The capability is authorized, consumed, and paired with a durable
         recoverable intent in the authenticated Store before the adapter is
@@ -36,35 +41,46 @@ class EffectGate:
         adapter's idempotency/status contract.
 
         Store intent and journal records are intentionally not a single
-        cross-file atomic transaction. The Store is the durable recovery
-        source for authorized-but-not-finalized intent; the journal is an
-        independently authenticated audit trail.
+        cross-file atomic transaction. The Store is therefore the durable
+        recovery source for an authorized-but-not-finalized intent, while the
+        journal provides an independently authenticated audit trail.
         """
         if req.effect_class not in self.DECLARED or req.effect_class != req.action:
             raise EffectDenied('invalid effect class/action')
         import hashlib, json
         params_digest=hashlib.sha256(json.dumps(params,sort_keys=True,separators=(',',':')).encode()).hexdigest()
         ikey=f'{req.capability.txid}:{req.effect_id}'
-        intent={'key':ikey,'capability_txid':req.capability.txid,'effect_id':req.effect_id,'idempotency_key':ikey,'effect_class':req.effect_class,'params_digest':params_digest}
+        intent={'key':f'{req.capability.txid}:{req.effect_id}','capability_txid':req.capability.txid,'effect_id':req.effect_id,'idempotency_key':ikey,'effect_class':req.effect_class,'params_digest':params_digest}
         with self.k.store.tx():
             s=self.k.store._read(); c=req.capability
-            if not self.k.verify_locked(c,req.principal,req.domain,req.action,req.effect_class,s): raise EffectDenied('invalid capability')
-            if c.nonce in s.consumed or c.txid in s.consumed or ikey in s.consumed: raise EffectDenied('replay')
+            if not self.k.verify_locked(c,req.principal,req.domain,req.action,req.effect_class,s):
+                raise EffectDenied('invalid capability')
+            key=intent['key']
+            if c.nonce in s.consumed or c.txid in s.consumed or key in s.consumed:
+                raise EffectDenied('replay')
             pending=dict((x['key'],x) for x in s.pending_effects)
-            if ikey in pending and pending[ikey] != intent: raise EffectDenied('conflicting durable intent')
-            pending[ikey]=intent
+            if key in pending and pending[key] != intent:
+                raise EffectDenied('conflicting durable intent')
+            pending[key]=intent
             from .store import Snapshot
-            ns=Snapshot(s.epoch,s.sequence+1,s.nonces,s.consumed|{c.nonce,c.txid,ikey},s.commits,s.state_payload,s.boot_id,tuple(sorted(set(s.effects)|{ikey})),tuple(pending.values()))
+            ns=Snapshot(s.epoch,s.sequence,s.nonces,s.consumed|{c.nonce,c.txid,key},s.commits,s.state_payload,s.boot_id,tuple(sorted(set(s.effects)|{key})),tuple(pending.values()))
             self.k.store._write_atomic(ns)
+        # The audit journal is part of the fail-closed execution boundary.
+        # The Store already contains the recoverable intent, so a journal outage
+        # must stop before the external effect rather than allowing an
+        # un-audited effect to execute.
         journal.append({'status':'PREPARED',**intent})
         result=adapter.execute(ikey,params)
+        # Never record COMMITTED merely because execute() returned. The adapter's
+        # authoritative status must confirm the external effect is committed.
         status=adapter.status(ikey)
         from .effect_transaction import TxnStatus, AdapterContractError
         if status != TxnStatus.COMMITTED and status != 'COMMITTED':
             raise AdapterContractError(f'adapter did not confirm COMMITTED status: {status}')
         journal.append({'status':'COMMITTED',**intent})
         with self.k.store.tx():
-            s=self.k.store._read(); pending=tuple(x for x in s.pending_effects if x.get('key') != ikey)
+            s=self.k.store._read()
+            pending=tuple(x for x in s.pending_effects if x.get('key') != key)
             from .store import Snapshot
             self.k.store._write_atomic(Snapshot(s.epoch,s.sequence+1,s.nonces,s.consumed,s.commits,s.state_payload,s.boot_id,s.effects,pending))
         return result
