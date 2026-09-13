@@ -32,4 +32,4 @@ jobs:
         run: install -m 0755 run_privileged_server.py /tmp/dar-run-privileged-server.py
       - name: Run live two-UID boundary test
         working-directory: dar_v36_14
-        run: sudo -E env PYTHONPATH="$PWD" DAR_PRIVILEGED_LAUNCHER=/tmp/dar-run-privileged-server.py python live_os_boundary_test.py
+        run: sudo -E env DAR_PRIVILEGED_LAUNCHER=/tmp/dar-run-privileged-server.py python live_os_boundary_test.py
