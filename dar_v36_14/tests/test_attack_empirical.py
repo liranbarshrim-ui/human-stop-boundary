@@ -51,7 +51,7 @@ class AttackEmpiricalTests(unittest.TestCase):
             self.assertFalse((Path(d)/"boundary"/"alternate.txt").exists())
     def test_a07_confused_deputy_is_rejected(self):
         with tempfile.TemporaryDirectory() as d:
-            _,kernel=make_kernel(d); gate=EffectGate(kernel); p={"path":"a07.txt","data":"ok"}; cap=issue_write(kernel,p); req=EffectRequest(cap,"attacker","root","WRITE","a07","WRITE","WRITE")
+            _,kernel=make_kernel(d); gate=EffectGate(kernel); p={"path":"a07.txt","data":"ok"}; cap=issue_write(kernel,p); req=EffectRequest(cap,"attacker","root","WRITE","a07","WRITE")
             with self.assertRaises(EffectDenied): gate.execute(req,lambda:"deputy",p)
     def test_a08_parameter_substitution_is_rejected(self):
         with tempfile.TemporaryDirectory() as d:
