@@ -1,204 +1,29 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>Independent Research | Decision Authority Research</title>
-<meta name="description" content="Research on one recurring governance failure: responsibility assigned without named obligation to stop.">
-<meta name="robots" content="index,follow">
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Research — Matrix Audit</title>
+<meta name="description" content="Independent research on refusal authority, authority drift, irreversible decisions, and governance failure.">
 <link rel="canonical" href="https://matrix-audit.com/research.html">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Source+Serif+4:opsz,wght@8..60,300;8..60,400;8..60,500;8..60,600&display=swap" rel="stylesheet">
 <style>
-:root{--bg:#090909;--gold:#c8a96e;--gold2:#e8d4a8;--text:#e8e2d7;--muted:#a7a097;--line:rgba(255,255,255,.08);--line2:rgba(255,255,255,.05);}
-*{margin:0;padding:0;box-sizing:border-box;}html{scroll-behavior:smooth;}
-body{font-family:Inter,sans-serif;background:var(--bg);color:var(--text);overflow-x:hidden;line-height:1.78;-webkit-font-smoothing:antialiased;}
-body:before{content:"";position:fixed;inset:0;pointer-events:none;opacity:.05;background-image:linear-gradient(rgba(255,255,255,.03) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.03) 1px,transparent 1px);background-size:40px 40px;}
-a{text-decoration:none;color:inherit;}
-.topbar{position:fixed;top:0;left:0;right:0;height:74px;display:flex;align-items:center;justify-content:space-between;padding:0 18px;z-index:1000;background:rgba(5,5,5,.88);backdrop-filter:blur(14px);border-bottom:1px solid var(--line2);}
-.brand{display:flex;align-items:center;gap:12px;font-family:"IBM Plex Mono",monospace;font-size:10px;letter-spacing:.28em;text-transform:uppercase;white-space:nowrap;}
-.brand-line{width:34px;height:2px;background:var(--gold);}
-.menu-btn{width:42px;height:42px;border:none;background:none;cursor:pointer;display:flex;flex-direction:column;justify-content:center;gap:6px;}
-.menu-btn span{height:2px;background:#fff;border-radius:4px;}
-.menu-btn span:nth-child(2){width:72%;margin-left:auto;}
-.overlay{position:fixed;inset:0;background:rgba(0,0,0,.55);opacity:0;visibility:hidden;transition:.25s;z-index:998;}
-.overlay.active{opacity:1;visibility:visible;}
-.drawer{position:fixed;top:0;right:-100%;width:86%;max-width:420px;height:100vh;overflow-y:auto;z-index:999;padding:24px;transition:.3s ease;background:#0a0a0a;border-left:1px solid var(--line);}
-.drawer.active{right:0;}
-.drawer-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:18px;}
-.drawer-title{font-family:"IBM Plex Mono",monospace;font-size:11px;letter-spacing:.28em;text-transform:uppercase;color:var(--gold);}
-.close-btn{font-size:38px;line-height:1;background:none;border:none;color:#fff;cursor:pointer;}
-.group{margin-top:18px;}
-.group small{display:block;font-family:"IBM Plex Mono",monospace;font-size:10px;letter-spacing:.26em;text-transform:uppercase;color:var(--gold);margin-bottom:10px;}
-.drawer a.link{display:block;padding:14px 0;font-size:20px;border-bottom:1px solid var(--line2);}
-.drawer a.link:hover{color:var(--gold2);}
-.private-btn{display:block;margin-top:22px;padding:16px;border-radius:16px;text-align:center;font-weight:800;letter-spacing:.18em;font-size:13px;text-transform:uppercase;background:linear-gradient(135deg,#d9bb79,#b88e45);color:#111;}
-.mail-btn{display:block;margin-top:14px;padding:14px;text-align:center;border-radius:16px;border:1px solid var(--line);color:#f3dfb4;font-size:15px;word-break:break-word;}
-.container{max-width:860px;margin:auto;padding:0 18px;position:relative;z-index:1;}
-.hero{padding-top:90px;padding-bottom:22px;}
-.meta{font-family:"IBM Plex Mono",monospace;font-size:10px;letter-spacing:.28em;text-transform:uppercase;color:var(--gold);margin-bottom:26px;}
-h1{font-family:"Cormorant Garamond",serif;font-size:clamp(38px,8vw,72px);line-height:.96;font-weight:600;margin-bottom:24px;border-left:3px solid var(--gold);padding-left:20px;}
-h1 span{color:var(--gold2);}
-.hero-sub{font-size:17px;color:var(--muted);line-height:1.8;padding-left:23px;max-width:540px;margin-bottom:32px;}
-.thesis-box{background:linear-gradient(180deg,#111,#0d0d0d);border:1px solid var(--line2);border-left:3px solid var(--gold);padding:26px;margin-bottom:22px;}
-.thesis-box p{font-family:"Cormorant Garamond",serif;font-size:20px;line-height:1.6;color:#cfd5d1;}
-.thesis-box p em{font-style:italic;color:var(--gold2);}
-.section-label{font-family:"IBM Plex Mono",monospace;font-size:10px;letter-spacing:.28em;text-transform:uppercase;color:var(--gold);margin:32px 0 14px;}
-.featured{display:block;background:linear-gradient(180deg,#111,#0d0d0d);border:1px solid var(--line2);border-left:3px solid var(--gold);padding:26px;margin-bottom:22px;transition:.2s;}
-.featured:hover{border-color:rgba(200,169,110,.4);}
-.featured h2{font-family:"Cormorant Garamond",serif;font-size:clamp(28px,5vw,48px);line-height:.95;margin-bottom:14px;color:var(--gold2);}
-.featured p{font-size:17px;line-height:1.8;color:var(--muted);max-width:68ch;margin-bottom:14px;}
-.read-link{font-family:"IBM Plex Mono",monospace;font-size:10px;letter-spacing:.22em;text-transform:uppercase;color:var(--gold);}
-.grid{display:grid;grid-template-columns:1fr;gap:14px;margin-bottom:22px;}
-.card{display:block;background:linear-gradient(180deg,#111,#0d0d0d);border:1px solid var(--line2);padding:20px;transition:.2s;}
-.card:hover{border-color:rgba(200,169,110,.35);}
-.card h3{font-family:"Cormorant Garamond",serif;font-size:clamp(20px,3vw,26px);line-height:1.05;font-weight:600;margin-bottom:8px;color:var(--gold2);}
-.card p{font-size:15px;line-height:1.7;color:var(--muted);margin-bottom:0;}
-.section-gap{height:22px;}
-.footer-bar{max-width:860px;margin:auto;padding:22px 18px 60px;border-top:1px solid var(--line);font-family:Inter,sans-serif;font-size:13px;color:#7c766f;display:flex;justify-content:space-between;position:relative;z-index:1;}
-@media(min-width:900px){.topbar{padding:0 34px;}.hero{padding-top:100px;}.hero-sub{font-size:19px;}.thesis-box{padding:34px;}.thesis-box p{font-size:22px;}.featured{padding:34px;}.card{padding:26px;}.grid{grid-template-columns:1fr 1fr;}.footer-bar{padding:26px 34px 60px;}}
+:root{--bg:#080808;--panel:#0e0e0e;--text:#eee9df;--muted:#a6a097;--gold:#c8a96e;--gold2:#ead8ad;--line:rgba(255,255,255,.09);--max:1040px}*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:var(--bg);color:var(--text);font-family:"Source Serif 4",serif;line-height:1.75}body:before{content:"";position:fixed;inset:0;pointer-events:none;opacity:.035;background-image:linear-gradient(rgba(255,255,255,.05) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.05) 1px,transparent 1px);background-size:48px 48px}a{color:inherit;text-decoration:none}.nav{position:sticky;top:0;z-index:10;background:rgba(8,8,8,.9);backdrop-filter:blur(14px);border-bottom:1px solid var(--line)}.navin{max-width:var(--max);margin:auto;padding:18px 28px;display:flex;justify-content:space-between;align-items:center}.brand,.meta,.label,.nav a{font-family:"IBM Plex Mono",monospace;text-transform:uppercase;letter-spacing:.18em}.brand{font-size:11px;color:var(--gold)}.navlinks{display:flex;gap:22px;font-size:10px}.navlinks a:hover{color:var(--gold2)}main{max-width:var(--max);margin:auto;padding:90px 28px 110px}.eyebrow{font:11px "IBM Plex Mono",monospace;letter-spacing:.25em;color:var(--gold);text-transform:uppercase;margin-bottom:24px}h1{font-size:clamp(46px,7vw,82px);line-height:.98;font-weight:500;max-width:12ch;margin:0 0 30px}h1 em{color:var(--gold2);font-weight:400}.lead{font-size:clamp(20px,2.4vw,28px);font-weight:300;color:#d2ccc2;max-width:34ch;margin-bottom:64px}.rule{height:1px;background:var(--line);margin:50px 0}.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--line);border:1px solid var(--line)}.card{background:var(--panel);padding:28px;min-height:220px}.num{font:10px "IBM Plex Mono",monospace;color:var(--gold);letter-spacing:.2em}.card h2{font-size:30px;line-height:1.08;font-weight:500;margin:34px 0 14px;color:var(--gold2)}.card p{color:var(--muted);font-size:17px}.thesis{border-left:2px solid var(--gold);padding:8px 0 8px 24px;font-size:clamp(23px,3vw,34px);line-height:1.4;max-width:800px}.thesis em{color:var(--gold2)}.foot{margin-top:80px;padding-top:20px;border-top:1px solid var(--line);display:flex;justify-content:space-between;color:#716c65;font:10px "IBM Plex Mono",monospace;letter-spacing:.08em}@media(max-width:760px){.navlinks{display:none}.navin,main{padding-left:20px;padding-right:20px}.grid{grid-template-columns:1fr}.card{min-height:auto}.lead{margin-bottom:45px}}
 </style>
-</head>
-<body>
-
-<header class="topbar">
-<a href="index.html" class="brand"><span class="brand-line"></span><span>Decision Authority Research</span></a>
-<button type="button" class="menu-btn" id="openMenu" aria-label="Open Menu"><span></span><span></span><span></span></button>
-</header>
-
-<div class="overlay" id="overlay"></div>
-
-<aside class="drawer" id="drawer">
-<div class="drawer-top">
-<div class="drawer-title">Navigation</div>
-<button type="button" class="close-btn" id="closeMenu">&#215;</button>
-</div>
-<div class="group">
-<small>Primary</small>
-<a class="link" href="index.html">Home</a>
-<a class="link" href="dar.html">DAR</a>
-<a class="link" href="services.html">Services</a>
-<a class="link" href="about.html">About</a>
-<a class="link" href="contact.html">Contact</a>
-</div>
-<div class="group">
-<small>Research</small>
-<a class="link" href="research.html">Independent Research</a>
-<a class="link" href="whitepaper.html">White Paper</a>
-<a class="link" href="board-brief.html">Board Brief</a>
-<a class="link" href="insights.html">Insights</a>
-<a class="link" href="after-the-stop.html">After the Stop</a>
-<a class="link" href="/human-stop-boundary">Human Stop Boundary</a>
-</div>
-<div class="group">
-<small>Reference</small>
-<a class="link" href="definitions.html">Definitions</a>
-<a class="link" href="faq.html">FAQ</a>
-<a class="link" href="goodfaith.html">Good Faith Use</a>
-<a class="link" href="diagnostic.html">Governance Diagnostic</a>
-</div>
-<a href="contact.html" class="private-btn">Private Intake</a>
-<a href="mailto:Liran@liranbarshrim.com" class="mail-btn">Liran@liranbarshrim.com</a>
-</aside>
-
+</head><body>
+<header class="nav"><div class="navin"><a class="brand" href="index.html">— Matrix Audit</a><nav class="navlinks"><a href="dar.html">DAR</a><a href="research.html">Research</a><a href="case-studies.html">Evidence</a><a href="ai-governance.html">AI Governance</a><a href="about.html">About</a><a href="contact.html">Contact</a></nav></div></header>
 <main>
-<div class="container hero">
-<div class="meta">Independent Research</div>
-<h1>Who is required to <span>stop</span> it in time?</h1>
-<p class="hero-sub">Research on one recurring governance failure: responsibility assigned without named obligation to stop.</p>
-</div>
-
-<div class="container">
-<div class="thesis-box">
-<p>This is not a blog. It is a body of work around one neglected question:<br>
-<em>Who, by name, is required to interrupt continuation before a decision becomes irreversible?</em></p>
-</div>
-</div>
-
-<div class="section-gap"></div>
-
-<div class="container">
-<div class="section-label">Featured Essay</div>
-<a href="executive.html" class="featured">
-<h2>The Executive Who Could Not Stop It</h2>
-<p>Responsibility without authority is not governance. It is exposure. A study of the structural gap between who signs and who can actually stop a decision.</p>
-<span class="read-link">Read Essay &#8594;</span>
-</a>
-
-<div class="section-label">Essays</div>
-<div class="grid">
-<a href="we.html" class="card">
-<h3>The Death of We</h3>
-<p>Collective language survives until responsibility becomes personal.</p>
-</a>
-<a href="exposure.html" class="card">
-<h3>A Name Appears</h3>
-<p>When failure arrives, shared ownership collapses into one signature.</p>
-</a>
-<a href="stop-authority.html" class="card">
-<h3>Named Stop Authority</h3>
-<p>Approval enables continuation. Stop authority interrupts it.</p>
-</a>
-<a href="insights.html" class="card">
-<h3>Insights</h3>
-<p>Seven observations on authority, accountability, and the default state.</p>
-</a>
-<a href="after-the-stop.html" class="card">
-<h3>After the Stop</h3>
-<p>Stop is not the end. It is the beginning of a governance event.</p>
-</a>
-</div>
-
-<div class="section-label">AI Governance</div>
-<div class="grid">
-<a href="ai-governance.html" class="card">
-<h3>AI Governance</h3>
-<p>When systems move faster than oversight, control becomes theoretical.</p>
-</a>
-<a href="stop-authority.html" class="card">
-<h3>Human Override</h3>
-<p>Someone, by name, must be required to interrupt it.</p>
-</a>
-</div>
-
-<div class="section-label">Case Studies</div>
-<div class="grid">
-<a href="case-studies.html" class="card">
-<h3>Real Failures</h3>
-<p>Boeing, Wells Fargo, Knight Capital, CrowdStrike and recurring governance gaps.</p>
-</a>
-<a href="failure-points.html" class="card">
-<h3>Failure Points</h3>
-<p>The moments accountability breaks under pressure.</p>
-</a>
-</div>
-
-<div class="section-label">Sectors</div>
-<div class="grid">
-<a href="clinical-governance.html" class="card">
-<h3>Clinical Governance</h3>
-<p>Clinical systems do not fail only in design. They fail in moments no one holds.</p>
-</a>
-</div>
-
-</div>
-
-<div class="section-gap"></div>
-</main>
-
-<footer class="footer-bar">
-<span>&#169; 2026 Liran Bar-Shrim</span>
-<span>matrix-audit.com</span>
-</footer>
-
-<script>
-var drawer=document.getElementById('drawer');
-var overlay=document.getElementById('overlay');
-document.getElementById('openMenu').onclick=function(){drawer.classList.add('active');overlay.classList.add('active');document.body.style.overflow='hidden';};
-document.getElementById('closeMenu').onclick=closeDrawer;
-overlay.onclick=closeDrawer;
-function closeDrawer(){drawer.classList.remove('active');overlay.classList.remove('active');document.body.style.overflow='';}
-</script>
-</body>
-</html>
+<div class="eyebrow">Independent research / 2026</div>
+<h1>The question beneath <em>governance.</em></h1>
+<p class="lead">Before a consequential decision becomes irreversible, who, by name, is authorized to refuse continuation?</p>
+<div class="thesis">A control point can influence a decision. A <em>refusal authority</em> can prevent it.</div>
+<div class="rule"></div>
+<section class="grid">
+<a class="card" href="dar.html"><span class="num">01 / Theory</span><h2>DAR</h2><p>Decision Accountability Review examines whether refusal authority is named, bounded, and actually binding within the defined enforcement boundary.</p></a>
+<a class="card" href="authority-drift.html"><span class="num">02 / Failure mode</span><h2>Authority drift</h2><p>Responsibility can remain visible while practical authority quietly disappears through escalation, override, delegation, or momentum.</p></a>
+<a class="card" href="case-studies.html"><span class="num">03 / Evidence</span><h2>Governance observations</h2><p>Cases and reconstructions across safety, software, finance, manufacturing, clinical systems, and AI governance.</p></a>
+</section>
+<div class="rule"></div>
+<p style="max-width:68ch;color:var(--muted);font-size:18px">This work is deliberately narrower than a general governance score. It does not decide whether an organization should stop. It asks whether the organization has intentionally defined who can stop, when they can stop, and whether continuation can proceed despite that refusal.</p>
+<footer class="foot"><span>© 2026 Liran Bar-Shrim</span><span><a href="index.html">Matrix Audit</a> · <a href="contact.html">Private review</a></span></footer>
+</main></body></html>
