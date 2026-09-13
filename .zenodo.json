@@ -1,0 +1,37 @@
+{
+  "title": "Decision Accountability Review (DAR)",
+  "description": "A structural framework and research prototype for making refusal and stop authority explicit, bounded, and testable in high-stakes decision processes. Defined by Liran Bar-Shrim.",
+  "creators": [
+    {
+      "name": "Bar-Shrim, Liran",
+      "affiliation": "Independent Researcher",
+      "orcid": ""
+    }
+  ],
+  "license": "other-open",
+  "keywords": [
+    "AI safety",
+    "AI governance",
+    "alignment",
+    "control",
+    "evaluation",
+    "refusal authority",
+    "decision accountability",
+    "human oversight"
+  ],
+  "version": "v36.14",
+  "publication_date": "2026-09-13",
+  "upload_type": "software",
+  "related_identifiers": [
+    {
+      "identifier": "https://github.com/liranbarshrim-ui/human-stop-boundary",
+      "relation": "isIdenticalTo",
+      "scheme": "url"
+    },
+    {
+      "identifier": "https://matrix-audit.com",
+      "relation": "isSupplementTo",
+      "scheme": "url"
+    }
+  ]
+}
