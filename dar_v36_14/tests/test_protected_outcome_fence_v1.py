@@ -25,7 +25,6 @@ class FencedAdapter(FencedEffectAdapter):
         self.execute_calls += 1; return self.commit(idempotency_key,'legacy',self.default_epoch,params)
 
 class RacingFenceAdapter(FencedAdapter):
-    """Adversarial model: the fence changes after DAR's advisory pre-check."""
     def __init__(self): super().__init__(1); self.raced=False
     def current_fence(self, outcome_key):
         value=super().current_fence(outcome_key)
@@ -51,7 +50,7 @@ class ProtectedOutcomeFenceTests(unittest.TestCase):
             store,kernel=self.make(d); gate=EffectGate(kernel); adapter=FencedAdapter(); outcome='aabbcc'
             cap1=kernel.issue_protected('human','root','WRITE',self.state(1),nonce='n1',params={'amount':1},effect_id='000001',outcome_key=outcome); adapter.fences[outcome]=1
             refusal=RefusalAuthority(store,{'human':SECRET}).issue_protected('human','000001',cap1.txid,outcome,target_epoch=2); RefusalAuthority(store,{'human':SECRET}).commit_protected(refusal,adapter)
-            cap2=kernel.issue_protected('human','root','WRITE',self.state(2),nonce='n2',params={'amount':1},effect_id='000002',outcome_key=outcome); req=EffectRequest(cap2,'human','root','WRITE','000002','WRITE',outcome)
+            cap2=kernel.issue_protected('human','root','WRITE',self.state(3),nonce='n2',params={'amount':1},effect_id='000002',outcome_key=outcome); req=EffectRequest(cap2,'human','root','WRITE','000002','WRITE',outcome)
             with self.assertRaises(EffectDenied): gate.execute_protected(req,adapter,{'amount':1},Journal())
             self.assertEqual(adapter.effects,{})
 
@@ -76,14 +75,14 @@ class ProtectedOutcomeFenceTests(unittest.TestCase):
         with tempfile.TemporaryDirectory() as d:
             store,kernel=self.make(d); gate=EffectGate(kernel); adapter=FencedAdapter(); outcome='facefeed'; adapter.fences[outcome]=1
             intent={'key':'tx:000005','capability_txid':'tx','effect_id':'000005','outcome_key':outcome,'idempotency_key':'tx:000005','effect_class':'WRITE','params_digest':kernel._params_digest({'x':5}),'epoch':1}
-            s=store._read(); store._write_atomic(Snapshot(s.epoch,s.sequence+1,s.nonces,s.consumed,s.commits,s.state_payload,s.boot_id,s.effects,(intent,))); journal=Journal()
+            s=store._read(); s=Snapshot(1,s.sequence+1,s.nonces,s.consumed,s.commits,s.state_payload,s.boot_id,s.effects,(intent,)); store._write_atomic(s); journal=Journal()
             self.assertEqual(gate.reconcile_pending(adapter,journal,lambda _intent:{'x':5}),1); self.assertEqual(adapter.execute_calls,0); self.assertEqual(adapter.effects['tx:000005'][0],outcome)
 
     def test_protected_reconcile_refuses_after_external_fence_advance(self):
         with tempfile.TemporaryDirectory() as d:
             store,kernel=self.make(d); gate=EffectGate(kernel); adapter=FencedAdapter(); outcome='badc0de'; adapter.fences[outcome]=1
             intent={'key':'tx:000006','capability_txid':'tx','effect_id':'000006','outcome_key':outcome,'idempotency_key':'tx:000006','effect_class':'WRITE','params_digest':kernel._params_digest({'x':6}),'epoch':1}
-            s=store._read(); store._write_atomic(Snapshot(s.epoch,s.sequence+1,s.nonces,s.consumed,s.commits,s.state_payload,s.boot_id,s.effects,(intent,)))
+            s=store._read(); store._write_atomic(Snapshot(1,s.sequence+1,s.nonces,s.consumed,s.commits,s.state_payload,s.boot_id,s.effects,(intent,)))
             refusal=RefusalAuthority(store,{'human':SECRET}).issue_protected('human','000006','tx',outcome,target_epoch=2); RefusalAuthority(store,{'human':SECRET}).commit_protected(refusal,adapter); journal=Journal()
             self.assertEqual(gate.reconcile_pending(adapter,journal,lambda _intent:{'x':6}),1); self.assertEqual(adapter.execute_calls,0); self.assertNotIn('tx:000006',adapter.effects); self.assertEqual(journal._validated_state()['tx:000006']['status'],'REFUSED')
 
