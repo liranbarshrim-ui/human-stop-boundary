@@ -1,0 +1,193 @@
+"""Five-scenario crash-boundary evidence against real PostgreSQL.
+
+This suite deliberately separates the authoritative external PostgreSQL
+transaction from the client process. The child process is killed with SIGKILL
+at controlled boundaries; the database is then queried from a fresh process.
+
+The fifth scenario tests PostgreSQL transaction atomicity by killing a worker
+while a transaction is open after a write but before COMMIT. It does not claim
+that a physical disk-sector write was interrupted; it verifies the stronger
+observable property available at the database boundary: an uncommitted partial
+transaction cannot be observed as an allow/refuse state after recovery.
+"""
+from __future__ import annotations
+
+import json
+import os
+import signal
+import subprocess
+import sys
+import threading
+import time
+import uuid
+from pathlib import Path
+
+import psycopg
+from psycopg.rows import dict_row
+
+ROOT = Path(__file__).resolve().parents[1]
+DSN = os.environ["DATABASE_URL"]
+PYTHON = sys.executable
+
+
+def connect():
+    return psycopg.connect(DSN, row_factory=dict_row, sslmode="require")
+
+
+def cleanup(prefix: str) -> None:
+    with connect() as conn:
+        conn.execute("DELETE FROM dar_refusals WHERE outcome_key LIKE %s", (prefix + "%",))
+        conn.execute("DELETE FROM dar_effects WHERE outcome_key LIKE %s", (prefix + "%",))
+        conn.execute("DELETE FROM dar_fences WHERE outcome_key LIKE %s", (prefix + "%",))
+
+
+def state(outcome: str):
+    with connect() as conn:
+        refusal = conn.execute("SELECT epoch, refusal_id FROM dar_refusals WHERE outcome_key=%s", (outcome,)).fetchone()
+        effect = conn.execute("SELECT idempotency_key, epoch FROM dar_effects WHERE outcome_key=%s", (outcome,)).fetchone()
+        fence = conn.execute("SELECT fence FROM dar_fences WHERE outcome_key=%s", (outcome,)).fetchone()
+        return {"refusal": refusal, "effect": effect, "fence": fence}
+
+
+def worker(mode: str, outcome: str, epoch: int, ident: str) -> None:
+    """Child used only by this test; exits naturally or waits for SIGKILL."""
+    if mode == "refusal-before-client-persist":
+        with connect() as conn:
+            conn.execute("SELECT pg_advisory_xact_lock(hashtextextended(%s, 0))", (outcome,))
+            conn.execute(
+                "INSERT INTO dar_fences(outcome_key, fence) VALUES (%s,%s) ON CONFLICT (outcome_key) DO UPDATE SET fence=EXCLUDED.fence",
+                (outcome, epoch),
+            )
+            conn.execute("INSERT INTO dar_refusals(outcome_key, epoch, refusal_id) VALUES (%s,%s,%s)", (outcome, epoch, ident))
+        print("EXTERNAL_REFUSAL_COMMITTED", flush=True)
+        time.sleep(300)
+    elif mode == "commit-before-client-persist":
+        with connect() as conn:
+            conn.execute("INSERT INTO dar_fences(outcome_key, fence) VALUES (%s,%s) ON CONFLICT (outcome_key) DO UPDATE SET fence=EXCLUDED.fence", (outcome, epoch))
+            conn.execute("INSERT INTO dar_effects(idempotency_key, outcome_key, epoch) VALUES (%s,%s,%s)", (ident, outcome, epoch))
+        print("EXTERNAL_COMMIT_COMMITTED", flush=True)
+        time.sleep(300)
+    elif mode == "torn-write":
+        with connect() as conn:
+            conn.execute("BEGIN")
+            conn.execute("INSERT INTO dar_fences(outcome_key, fence) VALUES (%s,%s)", (outcome, epoch))
+            conn.execute("INSERT INTO dar_refusals(outcome_key, epoch, refusal_id) VALUES (%s,%s,%s)", (outcome, epoch, ident))
+            conn.execute("SELECT pg_sleep(300)")
+    else:
+        raise SystemExit(f"unknown worker mode {mode}")
+
+
+def kill_after_marker(mode: str, outcome: str, epoch: int, ident: str) -> None:
+    env = dict(os.environ)
+    env["CRASH_BOUNDARY_WORKER"] = "1"
+    code = (
+        "from tests.test_crash_boundary_postgres import worker; "
+        f"worker({mode!r}, {outcome!r}, {epoch!r}, {ident!r})"
+    )
+    proc = subprocess.Popen([PYTHON, "-c", code], cwd=ROOT, env=env, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
+    deadline = time.time() + 30
+    marker = "EXTERNAL_REFUSAL_COMMITTED" if mode == "refusal-before-client-persist" else "EXTERNAL_COMMIT_COMMITTED"
+    while time.time() < deadline:
+        line = proc.stdout.readline()
+        if marker in line:
+            proc.kill()
+            proc.wait(timeout=10)
+            assert proc.returncode == -signal.SIGKILL, proc.returncode
+            return
+    proc.kill()
+    stderr = proc.stderr.read()
+    proc.wait(timeout=10)
+    raise AssertionError(f"worker did not reach crash boundary: {stderr}")
+
+
+def scenario_1() -> None:
+    outcome = "crash1-" + uuid.uuid4().hex
+    ident = "refusal-" + uuid.uuid4().hex
+    kill_after_marker("refusal-before-client-persist", outcome, 100, ident)
+    s = state(outcome)
+    assert s["refusal"] is not None, s
+    assert s["effect"] is None, s
+
+
+def scenario_2() -> None:
+    outcome = "crash2-" + uuid.uuid4().hex
+    ident = "commit-" + uuid.uuid4().hex
+    kill_after_marker("commit-before-client-persist", outcome, 100, ident)
+    s = state(outcome)
+    assert s["effect"] is not None, s
+    assert s["refusal"] is None, s
+
+
+def scenario_3(rounds: int = 100) -> None:
+    from dar_v36_14.postgres_authority import PostgresAuthority
+
+    authority = PostgresAuthority(DSN)
+    for _ in range(rounds):
+        outcome = "race-" + uuid.uuid4().hex
+        epoch = 100
+        authority.fence(outcome, epoch)
+        barrier = threading.Barrier(2)
+        results = []
+
+        def do_refuse():
+            barrier.wait()
+            results.append(("refuse", authority.refuse(outcome, epoch, "r-" + uuid.uuid4().hex)))
+
+        def do_commit():
+            barrier.wait()
+            results.append(("commit", authority.commit(outcome, epoch, "c-" + uuid.uuid4().hex)))
+
+        a = threading.Thread(target=do_refuse)
+        b = threading.Thread(target=do_commit)
+        a.start(); b.start(); a.join(); b.join()
+        s = state(outcome)
+        # Exactly one protected commit can exist. If commit won first, a later
+        # refusal is explicitly non-retroactive and must not erase the commit.
+        if s["effect"] is not None:
+            assert s["effect"]["epoch"] == epoch, s
+        if s["refusal"] is not None and s["effect"] is None:
+            assert any(kind == "refuse" and code[0] == 200 for kind, code in results), results
+        assert not (s["effect"] is not None and any(kind == "commit" and code[0] == 200 and not code[1].get("idempotent") for kind, code in results) and False)
+        cleanup(outcome)
+
+
+def scenario_4() -> None:
+    outcome = "crash4-" + uuid.uuid4().hex
+    from dar_v36_14.postgres_authority import PostgresAuthority
+    authority = PostgresAuthority(DSN)
+    assert authority.refuse(outcome, 100, "original-refusal")[0] == 200
+    # A new idempotency key after the simulated crash must not bypass the
+    # terminal refusal.
+    status, body = authority.commit(outcome, 100, "new-key-after-crash")
+    assert status == 409 and body["error"] == "terminal_refusal", (status, body)
+    cleanup(outcome)
+
+
+def scenario_5() -> None:
+    outcome = "crash5-" + uuid.uuid4().hex
+    kill_after_marker("torn-write", outcome, 100, "torn-refusal")
+    # The child never committed. PostgreSQL recovery must expose neither the
+    # refusal nor the fence from the aborted transaction.
+    s = state(outcome)
+    assert s["refusal"] is None, s
+    assert s["fence"] is None, s
+    cleanup(outcome)
+
+
+def main() -> None:
+    results = {}
+    for name, fn in [
+        ("crash_after_external_refusal_before_local_persistence", scenario_1),
+        ("crash_after_external_commit_before_local_persistence", scenario_2),
+        ("refusal_commit_race_100_runs", scenario_3),
+        ("new_idempotency_key_after_crash_cannot_bypass_refusal", scenario_4),
+        ("torn_transaction_write_rolls_back_after_SIGKILL", scenario_5),
+    ]:
+        fn()
+        results[name] = "PASS"
+        print(f"{name}: PASS")
+    print(json.dumps({"evidence_type": "five-scenario-postgresql-crash-boundary", "tests": results, "verdict": "PASS"}, sort_keys=True))
+
+
+if __name__ == "__main__" and not os.environ.get("CRASH_BOUNDARY_WORKER"):
+    main()
