@@ -15,7 +15,7 @@ This file identifies third-party components and externally hosted resources curr
 - License: GNU Lesser General Public License v3 (LGPL-3.0-only)
 - Source/project: https://www.psycopg.org/
 
-The package metadata for psycopg 3.2.10 identifies the distribution as LGPLv3. The repository does not relicense psycopg; it remains governed by its own license and notices. The `[binary]` extra also distributes compiled/native components, so their respective upstream notices remain applicable. citeturn1search0turn1search2
+The package metadata for psycopg 3.2.10 identifies the distribution as LGPLv3. The repository does not relicense psycopg; it remains governed by its own license and notices. The `[binary]` extra also distributes compiled/native components, so their respective upstream notices remain applicable.
 
 ## 2. Google Fonts
 
