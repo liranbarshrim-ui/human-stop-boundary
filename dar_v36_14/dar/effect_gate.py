@@ -6,16 +6,22 @@ class EffectRequest:
 class EffectGate:
     DECLARED={'READ','WRITE','NETWORK','PROCESS'}
     def __init__(self,kernel): self.k=kernel
-    def execute(self,req,executor,params=None):
+
+    def _is_refused(self, state, effect_id):
+        return any(r.get('effect_id') == effect_id for r in state.state_payload.get('refusals', []))
+
+    def _validate_common(self, req, params=None):
         if req.effect_class not in self.DECLARED: raise EffectDenied('undeclared effect class')
         if req.effect_class != req.action: raise EffectDenied('action/effect-class mismatch')
         if params is not None:
             expected=self.k._params_digest(params)
             if expected != getattr(req.capability,'params_digest',''): raise EffectDenied('parameter substitution')
-        # Hold the refusal lock through the protected execution. This makes
-        # refusal and execution have a single linearization order.
+
+    def execute(self,req,executor,params=None):
+        self._validate_common(req, params)
         with self.k.store.tx():
             s=self.k.store._read(); c=req.capability
+            if self._is_refused(s, req.effect_id): raise EffectDenied('effect refused')
             if not self.k.verify_locked(c,req.principal,req.domain,req.action,req.effect_class,s): raise EffectDenied('invalid capability')
             key=f'{c.txid}:{req.effect_id}'
             if c.nonce in s.consumed or c.txid in s.consumed or key in s.consumed: raise EffectDenied('replay')
@@ -26,12 +32,12 @@ class EffectGate:
             return executor()
 
     def execute_recoverable(self, req, adapter, params, journal):
-        if req.effect_class not in self.DECLARED or req.effect_class != req.action: raise EffectDenied('invalid effect class/action')
+        self._validate_common(req, params)
         params_digest=self.k._params_digest(params)
-        if params_digest != getattr(req.capability,'params_digest',''): raise EffectDenied('parameter substitution')
         ikey=f'{req.capability.txid}:{req.effect_id}'
         with self.k.store.tx():
             s=self.k.store._read(); c=req.capability
+            if self._is_refused(s, req.effect_id): raise EffectDenied('effect refused')
             if not self.k.verify_locked(c,req.principal,req.domain,req.action,req.effect_class,s): raise EffectDenied('invalid capability')
             key=ikey
             if c.nonce in s.consumed or c.txid in s.consumed or key in s.consumed: raise EffectDenied('replay')
@@ -39,13 +45,9 @@ class EffectGate:
             intent={'key':ikey,'capability_txid':c.txid,'effect_id':req.effect_id,'idempotency_key':ikey,'effect_class':req.effect_class,'params_digest':params_digest,'epoch':s.epoch}
             if key in pending and pending[key] != intent: raise EffectDenied('conflicting durable intent')
             from .store import Snapshot
-            # Pending creation is an effect-state mutation and advances the
-            # monotonic sequence, preventing same-sequence rollback.
             ns=Snapshot(s.epoch,s.sequence+1,s.nonces,s.consumed|{c.nonce,c.txid,key},s.commits,s.state_payload,s.boot_id,tuple(sorted(set(s.effects)|{key})),tuple(pending.values()) + ((intent,) if key not in pending else ()))
             self.k.store._write_atomic(ns)
             journal.append({'status':'PREPARED',**intent})
-            # Keep the lock through adapter execution and finalization. A
-            # refusal cannot linearize between authorization and COMMITTED.
             result=adapter.execute(ikey,params)
             status=adapter.status(ikey)
             from .effect_transaction import TxnStatus, AdapterContractError
@@ -67,10 +69,8 @@ class EffectGate:
                 for field in ('capability_txid','effect_id','idempotency_key','effect_class','params_digest'):
                     if existing.get(field) != intent.get(field): raise EffectDenied(f'pending intent does not match journal: {field}')
                 current=self.k.store._read()
-                # A refusal is represented by an epoch advance. Work created
-                # under an older epoch is cancelled, never resumed.
-                if 'epoch' not in intent or int(intent['epoch']) != current.epoch:
-                    journal.append({'status':'REFUSED','reason':'epoch advanced after pending intent',**intent})
+                if self._is_refused(current, intent['effect_id']) or 'epoch' not in intent or int(intent['epoch']) != current.epoch:
+                    journal.append({'status':'REFUSED','reason':'effect refused or epoch advanced after pending intent',**intent})
                     still=tuple(x for x in current.pending_effects if x.get('key') != key)
                     self.k.store._write_atomic(Snapshot(current.epoch,current.sequence+1,current.nonces,current.consumed,current.commits,current.state_payload,current.boot_id,current.effects,still))
                     continue
@@ -82,7 +82,7 @@ class EffectGate:
                 if records.get(key,{}).get('status') != 'COMMITTED': journal.append({'status':'COMMITTED',**intent}); records=journal._validated_state()
                 if records.get(key,{}).get('status') != 'COMMITTED': raise AdapterContractError('reconciliation did not establish COMMITTED journal state')
                 current=self.k.store._read()
-                if int(intent['epoch']) != current.epoch: raise EffectDenied('refusal occurred before pending commit finalization')
+                if self._is_refused(current, intent['effect_id']) or int(intent['epoch']) != current.epoch: raise EffectDenied('refusal occurred before pending commit finalization')
                 still=tuple(x for x in current.pending_effects if x.get('key') != key)
                 self.k.store._write_atomic(Snapshot(current.epoch,current.sequence+1,current.nonces,current.consumed,current.commits,current.state_payload,current.boot_id,current.effects,still))
             return len(pending)
