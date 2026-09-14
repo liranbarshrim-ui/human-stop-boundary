@@ -6,6 +6,11 @@ on:
       - .github/workflows/rekor-anchor-evidence.yml
       - dar_v36_14/dar/rekor_anchor.py
       - tests/test_rekor_external_anchor.py
+  pull_request:
+    paths:
+      - .github/workflows/rekor-anchor-evidence.yml
+      - dar_v36_14/dar/rekor_anchor.py
+      - tests/test_rekor_external_anchor.py
   workflow_dispatch:
 
 jobs:
