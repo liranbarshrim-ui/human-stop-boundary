@@ -91,7 +91,7 @@ The repository now includes a dedicated PostgreSQL crash-boundary test covering 
 4. new idempotency key after crash cannot bypass an existing refusal;
 5. torn PostgreSQL transaction write interrupted by `SIGKILL`, followed by rollback verification.
 
-The final machine-validated run was GitHub Actions **run 34868342315**, job **104057846583** (the crash-boundary job). All five scenarios returned `PASS`, the machine-readable aggregate returned `verdict: PASS`, and the evidence artifact was uploaded successfully. The test logs also show an open PostgreSQL transaction receiving an unexpected EOF after the crash injection, consistent with the intended rollback boundary.
+The final machine-validated run was GitHub Actions **run 34868342315**, job **104057736583** (the crash-boundary job). All five scenarios returned `PASS`, the machine-readable aggregate returned `verdict: PASS`, and the evidence artifact was uploaded successfully. The test logs also show an open PostgreSQL transaction receiving an unexpected EOF after the crash injection, consistent with the intended rollback boundary.
 
 **Development transparency:** the immediately preceding attempt, GitHub Actions **run 34868180786**, executed the five scenarios successfully but failed the evidence-validation step because the generated evidence file was not in the expected machine-readable form. The implementation/workflow was corrected and the final run above was executed from the corrected commit. This earlier failure is retained in the Actions history rather than being presented as if the first run passed.
 
