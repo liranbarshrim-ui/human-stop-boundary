@@ -1,0 +1,32 @@
+name: DAR Deployment Evidence
+
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - 'dar_v36_14/deployment_evidence.py'
+      - 'dar_v36_14/dar/effect_transaction.py'
+      - 'dar_v36_14/dar/refusal.py'
+      - '.github/workflows/deployment-evidence.yml'
+
+jobs:
+  external-authority-deployment:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Deploy separate external-authority process and exercise DAR boundary
+        working-directory: dar_v36_14
+        run: |
+          set -euo pipefail
+          python deployment_evidence.py | tee deployment-evidence.json
+          test "$(python -c 'import json; print(json.load(open("deployment-evidence.json"))["verdict"])')" = PASS
+      - name: Upload deployment evidence
+        uses: actions/upload-artifact@v4
+        with:
+          name: dar-deployment-evidence
+          path: dar_v36_14/deployment-evidence.json
