@@ -13,6 +13,7 @@ class FencedAdapter(FencedEffectAdapter):
         self.fences={}
         self.effects={}
         self.default_epoch=epoch
+        self.execute_calls=0
     def current_fence(self, outcome_key):
         return self.fences.get(outcome_key,self.default_epoch)
     def advance_fence(self, outcome_key, epoch):
@@ -28,11 +29,18 @@ class FencedAdapter(FencedEffectAdapter):
     def status(self, idempotency_key):
         return TxnStatus.COMMITTED if idempotency_key in self.effects else TxnStatus.UNKNOWN
     def execute(self, idempotency_key, params):
+        self.execute_calls += 1
         return self.commit(idempotency_key, 'legacy', self.default_epoch, params)
 
 class Journal:
     def __init__(self): self.rows=[]
     def append(self,row): self.rows.append(dict(row))
+    def _validated_state(self):
+        state={}
+        for row in self.rows:
+            key=row['key']
+            state[key]=dict(row)
+        return state
 
 class ProtectedOutcomeFenceTests(unittest.TestCase):
     def make(self,d):
@@ -74,5 +82,30 @@ class ProtectedOutcomeFenceTests(unittest.TestCase):
             cap=kernel.issue_protected('human','root','WRITE',self.state(1),nonce='n1',params={'x':1},effect_id='000004',outcome_key=outcome)
             req=EffectRequest(cap,'human','root','WRITE','000004','WRITE',outcome)
             with self.assertRaises(EffectDenied): gate.execute_protected(req,adapter,{'x':1},Journal())
+
+    def test_protected_reconcile_never_calls_unfenced_execute(self):
+        with tempfile.TemporaryDirectory() as d:
+            store,kernel=self.make(d); gate=EffectGate(kernel); adapter=FencedAdapter(); outcome='facefeed'; adapter.fences[outcome]=1
+            intent={'key':'tx:000005','capability_txid':'tx','effect_id':'000005','outcome_key':outcome,'idempotency_key':'tx:000005','effect_class':'WRITE','params_digest':kernel._params_digest({'x':5}),'epoch':0}
+            s=store._read(); store._write_atomic(Snapshot(s.epoch,s.sequence+1,s.nonces,s.consumed,s.commits,s.state_payload,s.boot_id,s.effects,(intent,)))
+            journal=Journal()
+            result=gate.reconcile_pending(adapter,journal,lambda _intent:{'x':5})
+            self.assertEqual(result,1)
+            self.assertEqual(adapter.execute_calls,0)
+            self.assertEqual(adapter.effects['tx:000005'][0],outcome)
+
+    def test_protected_reconcile_refuses_after_external_fence_advance(self):
+        with tempfile.TemporaryDirectory() as d:
+            store,kernel=self.make(d); gate=EffectGate(kernel); adapter=FencedAdapter(); outcome='badc0de'; adapter.fences[outcome]=1
+            intent={'key':'tx:000006','capability_txid':'tx','effect_id':'000006','outcome_key':outcome,'idempotency_key':'tx:000006','effect_class':'WRITE','params_digest':kernel._params_digest({'x':6}),'epoch':0}
+            s=store._read(); store._write_atomic(Snapshot(s.epoch,s.sequence+1,s.nonces,s.consumed,s.commits,s.state_payload,s.boot_id,s.effects,(intent,)))
+            refusal=RefusalAuthority(store,{'human':SECRET}).issue_protected('human','000006','tx',outcome,target_epoch=2)
+            RefusalAuthority(store,{'human':SECRET}).commit_protected(refusal,adapter)
+            journal=Journal()
+            result=gate.reconcile_pending(adapter,journal,lambda _intent:{'x':6})
+            self.assertEqual(result,1)
+            self.assertEqual(adapter.execute_calls,0)
+            self.assertNotIn('tx:000006',adapter.effects)
+            self.assertEqual(journal._validated_state()['tx:000006']['status'],'REFUSED')
 
 if __name__=='__main__': unittest.main()
