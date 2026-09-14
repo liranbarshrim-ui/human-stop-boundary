@@ -1,5 +1,6 @@
 import tempfile
 import unittest
+from dataclasses import replace
 from pathlib import Path
 from dar import Kernel, Snapshot, Store, SystemState
 from dar.effect_gate import EffectDenied, EffectGate, EffectRequest
@@ -82,6 +83,39 @@ class ProtectedOutcomeFenceTests(unittest.TestCase):
             store,kernel=self.make(d); gate=EffectGate(kernel); outcome='cafebabe'; adapter=UnsafeAdapter()
             cap=kernel.issue_protected('human','root','WRITE',self.state(1),nonce='n1',params={'x':1},effect_id='000004',outcome_key=outcome); req=EffectRequest(cap,'human','root','WRITE','000004','WRITE',outcome)
             with self.assertRaises(EffectDenied): gate.execute_protected(req,adapter,{'x':1},Journal())
+
+    def test_protected_refusal_rejects_unfenced_adapter_even_if_it_exposes_fence_methods(self):
+        class Lookalike:
+            def current_fence(self, outcome_key): return 0
+            def advance_fence(self, outcome_key, epoch): pass
+        with tempfile.TemporaryDirectory() as d:
+            store,kernel=self.make(d); outcome='abc123'; cap=kernel.issue_protected('human','root','WRITE',self.state(1),nonce='n1',params={'x':1},effect_id='000009',outcome_key=outcome)
+            refusal=RefusalAuthority(store,{'human':SECRET}).issue_protected('human','000009',cap.txid,outcome,target_epoch=2)
+            with self.assertRaises(TypeError): RefusalAuthority(store,{'human':SECRET}).commit_protected(refusal,Lookalike())
+            self.assertEqual(store._read().epoch,1)
+
+    def test_outcome_identity_mismatch_is_denied(self):
+        with tempfile.TemporaryDirectory() as d:
+            store,kernel=self.make(d); gate=EffectGate(kernel); adapter=FencedAdapter(); outcome='abc001'
+            cap=kernel.issue_protected('human','root','WRITE',self.state(1),nonce='n1',params={'x':1},effect_id='000010',outcome_key=outcome); adapter.fences[outcome]=1
+            req=EffectRequest(cap,'human','root','WRITE','000010','WRITE','abc002')
+            with self.assertRaises(EffectDenied): gate.execute_protected(req,adapter,{'x':1},Journal())
+            self.assertEqual(adapter.effects,{})
+
+    def test_tampered_capability_outcome_key_fails_authentication(self):
+        with tempfile.TemporaryDirectory() as d:
+            store,kernel=self.make(d); outcome='abc003'
+            cap=kernel.issue_protected('human','root','WRITE',self.state(1),nonce='n1',params={'x':1},effect_id='000011',outcome_key=outcome)
+            tampered=replace(cap,outcome_key='abc004')
+            self.assertFalse(kernel.verify_locked(tampered,'human','root','WRITE','WRITE',store._read()))
+
+    def test_parameter_substitution_is_denied_before_external_commit(self):
+        with tempfile.TemporaryDirectory() as d:
+            store,kernel=self.make(d); gate=EffectGate(kernel); adapter=FencedAdapter(); outcome='abc005'
+            cap=kernel.issue_protected('human','root','WRITE',self.state(1),nonce='n1',params={'x':1},effect_id='000012',outcome_key=outcome); adapter.fences[outcome]=1
+            req=EffectRequest(cap,'human','root','WRITE','000012','WRITE',outcome)
+            with self.assertRaises(EffectDenied): gate.execute_protected(req,adapter,{'x':2},Journal())
+            self.assertEqual(adapter.effects,{})
 
     def test_protected_reconcile_never_calls_unfenced_execute(self):
         with tempfile.TemporaryDirectory() as d:
