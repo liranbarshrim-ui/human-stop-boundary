@@ -27,6 +27,8 @@ WORKERS = int(os.environ.get("DAR_LOAD_WORKERS", "8"))
 TIMEOUT = float(os.environ.get("DAR_LOAD_TIMEOUT", "30"))
 HEALTH_RETRIES = int(os.environ.get("DAR_HEALTH_RETRIES", "6"))
 REQUEST_RETRIES = int(os.environ.get("DAR_REQUEST_RETRIES", "4"))
+PROGRESS_INTERVAL = int(os.environ.get("DAR_PROGRESS_INTERVAL", "100"))
+HEARTBEAT_SECONDS = float(os.environ.get("DAR_PROGRESS_HEARTBEAT_SECONDS", "60"))
 GATEWAY_CODES = {502, 503, 504}
 
 
@@ -135,22 +137,61 @@ def main() -> None:
     health = wait_for_health()
     results: list[dict] = []
     failures: list[str] = []
-    with concurrent.futures.ThreadPoolExecutor(max_workers=WORKERS) as pool:
-        futures = [pool.submit(race_round, i) for i in range(ROUNDS)]
-        for future in concurrent.futures.as_completed(futures):
-            try:
-                results.append(future.result())
-                completed = len(results)
-                if completed == 1 or completed % 100 == 0 or completed == ROUNDS:
-                    print(json.dumps({
-                        "evidence_type": "external-authority-concurrent-load-progress",
-                        "base_url": BASE_URL,
-                        "completed_rounds": completed,
-                        "rounds": ROUNDS,
-                        "workers": WORKERS,
-                    }, sort_keys=True), flush=True)
-            except Exception as exc:
-                failures.append(repr(exc))
+    completed = 0
+    next_index = 0
+    in_flight: dict[concurrent.futures.Future[dict], int] = {}
+    lock = threading.Lock()
+    stop_heartbeat = threading.Event()
+
+    def heartbeat() -> None:
+        while not stop_heartbeat.wait(HEARTBEAT_SECONDS):
+            with lock:
+                done = completed
+            print(json.dumps({
+                "evidence_type": "external-authority-concurrent-load-heartbeat",
+                "base_url": BASE_URL,
+                "completed_rounds": done,
+                "rounds": ROUNDS,
+                "workers": WORKERS,
+            }, sort_keys=True), flush=True)
+
+    heartbeat_thread = threading.Thread(target=heartbeat, daemon=True)
+    heartbeat_thread.start()
+    try:
+        with concurrent.futures.ThreadPoolExecutor(max_workers=WORKERS) as pool:
+            while next_index < ROUNDS and len(in_flight) < WORKERS:
+                future = pool.submit(race_round, next_index)
+                in_flight[future] = next_index
+                next_index += 1
+
+            while in_flight:
+                done, _ = concurrent.futures.wait(
+                    in_flight,
+                    return_when=concurrent.futures.FIRST_COMPLETED,
+                )
+                for future in done:
+                    index = in_flight.pop(future)
+                    try:
+                        results.append(future.result())
+                        with lock:
+                            completed += 1
+                        if completed == 1 or completed % PROGRESS_INTERVAL == 0 or completed == ROUNDS:
+                            print(json.dumps({
+                                "evidence_type": "external-authority-concurrent-load-progress",
+                                "base_url": BASE_URL,
+                                "completed_rounds": completed,
+                                "rounds": ROUNDS,
+                                "workers": WORKERS,
+                            }, sort_keys=True), flush=True)
+                    except Exception as exc:
+                        failures.append(f"round={index}: {exc!r}")
+                    if next_index < ROUNDS:
+                        replacement = pool.submit(race_round, next_index)
+                        in_flight[replacement] = next_index
+                        next_index += 1
+    finally:
+        stop_heartbeat.set()
+        heartbeat_thread.join(timeout=1)
 
     if failures or len(results) != ROUNDS:
         evidence = {
