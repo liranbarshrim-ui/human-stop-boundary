@@ -5,8 +5,8 @@ Usage:
   DAR_EXTERNAL_AUTHORITY_URL=https://example.onrender.com python tools/verify_external_authority.py
 
 The verifier uses fresh outcome keys so it can safely run against an otherwise
-empty deployment. It proves refusal terminality, non-retroactivity, fence
-rollback rejection, and idempotent refusal/commit behavior over HTTP.
+empty deployment. It proves refusal terminality, non-retroactivity, one-shot
+protected outcome semantics, fence rollback rejection, and idempotent behavior.
 """
 from __future__ import annotations
 
@@ -60,6 +60,10 @@ def main() -> None:
     status, body = call("/commit", {"outcome": live, "epoch": 1, "idempotency_key": idem_live})
     require(status == 200 and body.get("ok") is True and body.get("idempotent") is False,
             f"initial commit failed: {status} {body}")
+    # A different retry key cannot create a second protected effect for the same logical outcome.
+    status, body = call("/commit", {"outcome": live, "epoch": 1, "idempotency_key": f"commit-{suffix}-duplicate"})
+    require(status == 409 and body.get("error") == "outcome_already_committed",
+            f"duplicate outcome unexpectedly accepted: {status} {body}")
     status, body = call("/refuse", {"outcome": live, "epoch": 1, "refusal_id": f"refusal-{suffix}-late"})
     require(status == 200 and body.get("ok") is True, f"late refusal failed: {status} {body}")
 
@@ -67,7 +71,7 @@ def main() -> None:
     status, body = call("/refuse", {"outcome": refused, "epoch": 7, "refusal_id": f"refusal-{suffix}"})
     require(status == 200 and body.get("ok") is True and body.get("idempotent") is False,
             f"refusal failed: {status} {body}")
-    status, body = call("/refuse", {"outcome": refused, "epoch": 7, "refusal_id": f"refusal-{suffix}"})
+    status, body = call("/refuse", {"outcome": refused, "epoch": 7, "refusal_id": f"refusal-{suffix}")
     require(status == 200 and body.get("ok") is True and body.get("idempotent") is True,
             f"refusal retry not idempotent: {status} {body}")
     status, body = call("/commit", {"outcome": refused, "epoch": 7, "idempotency_key": f"commit-{suffix}-1"})
@@ -89,6 +93,8 @@ def main() -> None:
     require(state.get("effects", {}).get(idem_live, {}).get("outcome") == live,
             "committed outcome missing from authoritative state")
     require(refused in state.get("refusals", {}), "terminal refusal missing from authoritative state")
+    require(state.get("committed_outcomes", {}).get(live) == idem_live,
+            "committed outcome index missing from authoritative state")
 
     evidence = {
         "evidence_type": "external-authority-black-box-verification",
@@ -102,6 +108,7 @@ def main() -> None:
             "refusal_retry_idempotent": "PASS",
             "refusal_blocks_commit": "PASS",
             "new_idempotency_key_cannot_bypass_refusal": "PASS",
+            "duplicate_protected_outcome_rejected": "PASS",
             "fence_rollback_rejected": "PASS",
             "authoritative_state_observed": "PASS",
         },
@@ -117,5 +124,3 @@ if __name__ == "__main__":
     except Exception as exc:
         print(f"FAIL: {exc}", file=sys.stderr)
         raise
-
-# Live verification trigger marker: 2026-09-14T12:55Z
