@@ -1,13 +1,5 @@
 #!/usr/bin/env python3
-"""Black-box verification of a live DAR external authority.
-
-Usage:
-  DAR_EXTERNAL_AUTHORITY_URL=https://example.onrender.com python tools/verify_external_authority.py
-
-The verifier uses fresh outcome keys so it can safely run against an otherwise
-empty deployment. It proves refusal terminality, non-retroactivity, one-shot
-protected outcome semantics, fence rollback rejection, and idempotent behavior.
-"""
+"""Black-box verification of a live DAR external authority."""
 from __future__ import annotations
 
 import json
@@ -53,25 +45,22 @@ def main() -> None:
     live = f"dar-live-{suffix}"
     rollback = f"dar-rollback-{suffix}"
 
-    # Commit before refusal is non-retroactive: the already-committed outcome stays committed.
     status, body = call("/fence", {"outcome": live, "epoch": 1})
     require(status == 200 and body.get("ok") is True, f"live fence failed: {status} {body}")
     idem_live = f"commit-{suffix}-live"
     status, body = call("/commit", {"outcome": live, "epoch": 1, "idempotency_key": idem_live})
     require(status == 200 and body.get("ok") is True and body.get("idempotent") is False,
             f"initial commit failed: {status} {body}")
-    # A different retry key cannot create a second protected effect for the same logical outcome.
     status, body = call("/commit", {"outcome": live, "epoch": 1, "idempotency_key": f"commit-{suffix}-duplicate"})
     require(status == 409 and body.get("error") == "outcome_already_committed",
             f"duplicate outcome unexpectedly accepted: {status} {body}")
     status, body = call("/refuse", {"outcome": live, "epoch": 1, "refusal_id": f"refusal-{suffix}-late"})
     require(status == 200 and body.get("ok") is True, f"late refusal failed: {status} {body}")
 
-    # Refusal before commit is terminal, including with a fresh idempotency key.
     status, body = call("/refuse", {"outcome": refused, "epoch": 7, "refusal_id": f"refusal-{suffix}"})
     require(status == 200 and body.get("ok") is True and body.get("idempotent") is False,
             f"refusal failed: {status} {body}")
-    status, body = call("/refuse", {"outcome": refused, "epoch": 7, "refusal_id": f"refusal-{suffix}")
+    status, body = call("/refuse", {"outcome": refused, "epoch": 7, "refusal_id": f"refusal-{suffix}"})
     require(status == 200 and body.get("ok") is True and body.get("idempotent") is True,
             f"refusal retry not idempotent: {status} {body}")
     status, body = call("/commit", {"outcome": refused, "epoch": 7, "idempotency_key": f"commit-{suffix}-1"})
@@ -81,7 +70,6 @@ def main() -> None:
     require(status == 409 and body.get("error") == "terminal_refusal",
             f"new idem bypassed refusal: {status} {body}")
 
-    # Numeric fence rollback is rejected.
     status, body = call("/fence", {"outcome": rollback, "epoch": 9})
     require(status == 200, f"rollback setup failed: {status} {body}")
     status, body = call("/fence", {"outcome": rollback, "epoch": 8})
