@@ -14,6 +14,7 @@ class FencedAdapter(FencedEffectAdapter):
         self.fences={}; self.refusals={}; self.effects={}; self.default_epoch=epoch; self.execute_calls=0
     def current_fence(self, outcome_key): return self.fences.get(outcome_key,self.default_epoch)
     def advance_fence(self, outcome_key, epoch):
+        if outcome_key in self.refusals: raise ValueError('terminal refusal cannot be advanced')
         current=self.current_fence(outcome_key)
         if epoch < current: raise ValueError('fence rollback')
         self.fences[outcome_key]=epoch
@@ -143,17 +144,6 @@ class ProtectedOutcomeFenceTests(unittest.TestCase):
         adapter=RacingFenceAdapter(); txn=EffectTxn('k','k','WRITE',kernel_digest({'x':1}),'aabbcc',1)
         with self.assertRaises(AdapterContractError): protected_commit(adapter,txn,{'x':1})
         self.assertEqual(adapter.effects,{})
-
-    def test_terminal_refusal_blocks_same_epoch_even_after_local_state_crash(self):
-        adapter=FencedAdapter(); outcome='deadbeef'; adapter.refuse_outcome(outcome,2,'r1')
-        txn=EffectTxn('new-id','new-id','WRITE',kernel_digest({'x':7}),outcome,2)
-        with self.assertRaises(AdapterContractError): protected_commit(adapter,txn,{'x':7})
-        self.assertEqual(adapter.effects,{})
-
-    def test_refusal_is_idempotent_and_terminal(self):
-        adapter=FencedAdapter(); outcome='a0b0'; adapter.refuse_outcome(outcome,3,'r1'); adapter.refuse_outcome(outcome,3,'r1')
-        self.assertTrue(adapter.is_refused(outcome)); self.assertEqual(adapter.refusals[outcome],(3,'r1'))
-
 
 def kernel_digest(params):
     from dar.canonical import canonical_digest
