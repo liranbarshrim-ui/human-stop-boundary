@@ -1,0 +1,16 @@
+{
+  "evidence_type": "five-scenario-postgresql-crash-boundary",
+  "run_id": 34868342315,
+  "job_id": 104057736583,
+  "commit": "c55e8e20b1af50decd853da4701a6c9e04642c81",
+  "database": "PostgreSQL 16 GitHub Actions service container",
+  "tests": {
+    "crash_after_external_refusal_before_local_persistence": "PASS",
+    "crash_after_external_commit_before_local_persistence": "PASS",
+    "refusal_commit_race_100_runs": "PASS",
+    "new_idempotency_key_after_crash_cannot_bypass_refusal": "PASS",
+    "torn_transaction_write_rolls_back_after_SIGKILL": "PASS"
+  },
+  "verdict": "PASS",
+  "scope_note": "Controlled crash-boundary evidence against real PostgreSQL using SIGKILL of a child process at defined transaction boundaries. Scenario 5 proves database transaction atomicity at the observable SQL boundary; it does not claim interruption of a physical disk-sector write. This is crash-boundary evidence, not production certification, an uncontrolled external SIGKILL test of the Render service, an independent A1 interface-completeness audit, or proof of the full DAR v2 core property."
+}
