@@ -44,16 +44,16 @@ class EffectJournal:
         state={}
         for r in self.records():
             key=r.get('key'); status=r.get('status')
-            if not key or status not in ('PREPARED','COMMITTED'): raise ValueError('invalid journal record')
+            if not key or status not in ('PREPARED','COMMITTED','REFUSED'): raise ValueError('invalid journal record')
             if status=='PREPARED':
                 if key in state: raise ValueError('duplicate PREPARED transition')
                 missing=[f for f in self._IMMUTABLE_FIELDS if f not in r]
                 if missing: raise ValueError(f'missing PREPARED fields: {missing}')
                 state[key]=r; continue
             previous=state.get(key)
-            if previous is None or previous.get('status')!='PREPARED': raise ValueError('invalid COMMITTED transition')
+            if previous is None or previous.get('status')!='PREPARED': raise ValueError(f'invalid {status} transition')
             for field in self._IMMUTABLE_FIELDS:
-                if r.get(field)!=previous.get(field): raise ValueError(f'COMMITTED field mismatch: {field}')
+                if r.get(field)!=previous.get(field): raise ValueError(f'{status} field mismatch: {field}')
             state[key]=r
         return state
     def pending(self):
