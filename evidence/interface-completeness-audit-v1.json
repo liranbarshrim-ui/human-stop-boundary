@@ -1,0 +1,71 @@
+{
+  "audit": "DAR Independent Interface / Escape Audit v1",
+  "status": "AMBIGUOUS",
+  "classification": "AMBIGUOUS",
+  "purpose": "Machine-readable boundary-completeness work product prepared from repository inspection; not an independent external audit and therefore not sufficient for a v2 PASS.",
+  "manifest": {
+    "path": "dar_v36_14/spec/boundary_manifest_v2.json",
+    "registered_interfaces": ["PrivilegedDispatcher._open_write"],
+    "protected_effect_class": "WRITE",
+    "commit_event": "adapter_status=COMMITTED"
+  },
+  "observed_paths": [
+    {
+      "path": "dar_v36_14/dar/boundary.py::PrivilegedDispatcher._open_write",
+      "role": "filesystem write primitive",
+      "classification": "REGISTERED_BOUNDARY_PRIMITIVE"
+    },
+    {
+      "path": "dar_v36_14/dar/boundary.py::PrivilegedDispatcher._apply",
+      "role": "WRITE effect dispatch to _open_write",
+      "classification": "REGISTERED_DISPATCH_PATH"
+    },
+    {
+      "path": "dar_v36_14/dar/boundary.py::DispatcherClient.execute",
+      "role": "public client path into EffectGate",
+      "classification": "REGISTERED_GATE_ENTRY"
+    },
+    {
+      "path": "dar_v36_14/dar/effect_gate.py::EffectGate.execute",
+      "role": "capability/replay/refusal checks before dispatcher application",
+      "classification": "REGISTERED_GATE"
+    },
+    {
+      "path": "dar_v36_14/dar/effect_gate.py::EffectGate.execute_protected",
+      "role": "protected effect transaction and adapter commit path",
+      "classification": "PROTECTED_TRANSACTION_PATH"
+    },
+    {
+      "path": "dar_v36_14/dar/effect_gate.py::EffectGate.execute_recoverable",
+      "role": "recoverable adapter execution followed by authoritative COMMITTED status check",
+      "classification": "RECOVERY_PATH_REQUIRES_AUDIT"
+    },
+    {
+      "path": "dar_v36_14/dar/effect_gate.py::EffectGate.reconcile_pending",
+      "role": "startup/recovery reconciliation that can invoke adapter commit",
+      "classification": "RECOVERY_PATH_REQUIRES_AUDIT"
+    }
+  ],
+  "other_write_capabilities_observed": [
+    "dar_v36_14/dar/store.py uses os.open/os.write for DAR state persistence; this is internal authority state, not by itself evidence of the declared protected WRITE outcome.",
+    "dar_v36_14/dar/effect_journal.py uses os.open/os.write for the effect journal; this is evidence-relevant state handling, not by itself the protected external WRITE effect.",
+    "Repository contains subprocess-based crash/deployment tests and a privileged server; deployment-level process/identity/IPC completeness cannot be proven from source inspection alone."
+  ],
+  "required_external_evidence_missing": [
+    "independently administered frozen deployment inventory",
+    "OS identity/permission boundary inspection by an independent auditor",
+    "complete enumeration of IPC/socket/pipe/queue/shared-memory/helper-process paths",
+    "adversarial invocation attempts against every discovered alternate path",
+    "independent external artifact signed or otherwise attributable to the auditor"
+  ],
+  "decision": {
+    "passes_v2_interface_completeness_gate": false,
+    "reason": "The repository protocol explicitly requires an external independent completeness conclusion. Repository-authored inspection cannot be promoted to COMPLETE merely by adding another internal test.",
+    "next_required_action": "Obtain an independently performed completeness audit against the frozen deployment, or obtain equivalent external evidence satisfying the pre-registered protocol without changing the boundary definition post hoc."
+  },
+  "provenance": {
+    "source_commit": "8119d2391c4e3f5e6b9b68b049a486ff876b3586",
+    "manifest_sha": "c2df8aa1213ac57772d26482c0e6f62547cdfb13",
+    "audit_protocol_sha": "44afba92c8e8c2ad6c3cfc7ce37fe9daba57e43b"
+  }
+}
