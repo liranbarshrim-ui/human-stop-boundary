@@ -107,14 +107,13 @@ class AttackEmpiricalTests(unittest.TestCase):
             self.assertEqual(cap.effect_id,composed)
             refusal=auth.issue("human",decomposed,cap.txid); auth.commit(refusal)
             cap2=issue_write(kernel,p,decomposed,nonce="n2")
-            req=EffectRequest(cap2,"human","root","WRITE","a14-effect","WRITE")
+            req=EffectRequest(cap2,"human","root","WRITE",decomposed,"WRITE")
             with self.assertRaises(EffectDenied): gate.execute(req,lambda:"should-not-run",p)
-    def test_a15_effect_id_rejects_ascii_confusables_and_non_hex(self):
-        bad_ids=("wire-001","wire-O01","wire-o01","wire-00l","wire-00I","wire-001 ","wire-001\t","wire-001\n")
+    def test_a15_effect_id_rejects_ambiguous_unicode_and_control_input(self):
+        bad_ids=("wіre-001","wıre-001","wire-\u200b001","wire-\u200d001","wire-001\u0000","wire-001\u007f"," wire-001","wire-001 ","wire-001\t","wire-001\n","café","cafe\u0301")
         for value in bad_ids:
             with self.assertRaises(CanonicalizationError): canonical_effect_id(value)
-        self.assertEqual(canonical_effect_id("a0b1c2"),"a0b1c2")
-        self.assertEqual(canonical_effect_id("A0B1C2"),"A0B1C2") if False else None
+        for value in ("wire-001","payment.v2:001","a0b1c2","A0B1C2"):
+            self.assertEqual(canonical_effect_id(value),value)
 
-if __name__ == '__main__':
-    unittest.main()
+if __name__ == '__main__': unittest.main()
