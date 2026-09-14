@@ -51,22 +51,30 @@ class RefusalAuthority:
         expected=self._mac(credential,refusal.refusal_id,refusal.principal,effect_id,refusal.capability_txid,refusal.target_epoch,refusal.issued_at,outcome_key)
         return hmac.compare_digest(expected,refusal.mac)
 
+    @staticmethod
+    def _has_refusal(payload, refusal):
+        return any(r.get('refusal_id') == refusal.refusal_id and r.get('outcome_key', '') == getattr(refusal, 'outcome_key', '') for r in payload.get('refusals', []))
+
     def _append_refusal_locked(self, s, refusal):
         from .store import Snapshot
         payload=dict(s.state_payload); payload['epoch']=refusal.target_epoch
-        refusals=list(payload.get('refusals',[])); refusals.append({'refusal_id':refusal.refusal_id,'principal':refusal.principal,'effect_id':refusal.effect_id,'capability_txid':refusal.capability_txid,'target_epoch':refusal.target_epoch,'issued_at':refusal.issued_at,'mac':refusal.mac,'outcome_key':getattr(refusal,'outcome_key','')}); payload['refusals']=refusals
+        refusals=list(payload.get('refusals',[]))
+        if not self._has_refusal(payload, refusal):
+            refusals.append({'refusal_id':refusal.refusal_id,'principal':refusal.principal,'effect_id':refusal.effect_id,'capability_txid':refusal.capability_txid,'target_epoch':refusal.target_epoch,'issued_at':refusal.issued_at,'mac':refusal.mac,'outcome_key':getattr(refusal,'outcome_key','')})
+        payload['refusals']=refusals
         return Snapshot(refusal.target_epoch,s.sequence+1,s.nonces,s.consumed,s.commits,payload,s.boot_id,s.effects,s.pending_effects)
 
     def commit(self, refusal):
         if not self.verify(refusal): raise PermissionError('invalid refusal authentication')
-        from .store import Snapshot
         with self.store.tx():
             s=self.store._read()
-            if refusal.target_epoch<=s.epoch: raise ValueError('refusal target epoch is not newer than current epoch')
+            if refusal.target_epoch<=s.epoch:
+                if self._has_refusal(s.state_payload, refusal): return refusal
+                raise ValueError('refusal target epoch is not newer than current epoch')
             self.store._write_atomic(self._append_refusal_locked(s,refusal)); return refusal
 
     def commit_protected(self, refusal, adapter):
-        """Atomically install an external terminal refusal before local publication.
+        """Install an external terminal refusal before local publication.
 
         The external refusal marker is permanent for the outcome and is checked
         by the same authority at the protected commit point. If local publication
@@ -80,16 +88,17 @@ class RefusalAuthority:
             raise PermissionError('invalid or unbound protected refusal')
         with self.store.tx():
             s=self.store._read()
-            if refusal.target_epoch<=s.epoch: raise ValueError('refusal target epoch is not newer than current epoch')
+            local_exists=self._has_refusal(s.state_payload, refusal)
+            if refusal.target_epoch<=s.epoch and not local_exists:
+                raise ValueError('refusal target epoch is not newer than current epoch')
             outcome_key=canonical_outcome_key(refusal.outcome_key)
             current=int(adapter.current_fence(outcome_key))
             if current>int(refusal.target_epoch): raise ValueError('external refusal fence already advanced')
-            if current==int(refusal.target_epoch) and not adapter.is_refused(outcome_key):
-                raise ValueError('external fence is at target without terminal refusal')
             if not adapter.is_refused(outcome_key):
                 adapter.refuse_outcome(outcome_key,int(refusal.target_epoch),refusal.refusal_id)
             if not adapter.is_refused(outcome_key):
                 raise RuntimeError('adapter did not durably publish terminal refusal')
             if int(adapter.current_fence(outcome_key))!=int(refusal.target_epoch):
                 raise RuntimeError('adapter did not durably advance refusal fence')
+            if local_exists: return refusal
             self.store._write_atomic(self._append_refusal_locked(s,refusal)); return refusal
