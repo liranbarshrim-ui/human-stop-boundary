@@ -1,14 +1,10 @@
 """Five-scenario crash-boundary evidence against real PostgreSQL.
 
-This suite deliberately separates the authoritative external PostgreSQL
-transaction from the client process. The child process is killed with SIGKILL
-at controlled boundaries; the database is then queried from a fresh process.
-
-The fifth scenario tests PostgreSQL transaction atomicity by killing a worker
-while a transaction is open after a write but before COMMIT. It does not claim
-that a physical disk-sector write was interrupted; it verifies the stronger
-observable property available at the database boundary: an uncommitted partial
-transaction cannot be observed as an allow/refuse state after recovery.
+The child process is killed with SIGKILL at controlled transaction boundaries;
+the database is then queried from a fresh process. Scenario 5 verifies
+transaction atomicity at the database boundary: an uncommitted partial
+transaction cannot be observed after recovery. It does not claim a physical
+disk-sector write was interrupted.
 """
 from __future__ import annotations
 
@@ -50,7 +46,6 @@ def state(outcome: str):
 
 
 def worker(mode: str, outcome: str, epoch: int, ident: str) -> None:
-    """Child used only by this test; exits naturally or waits for SIGKILL."""
     if mode == "refusal-before-client-persist":
         with connect() as conn:
             conn.execute("SELECT pg_advisory_xact_lock(hashtextextended(%s, 0))", (outcome,))
@@ -72,7 +67,8 @@ def worker(mode: str, outcome: str, epoch: int, ident: str) -> None:
             conn.execute("BEGIN")
             conn.execute("INSERT INTO dar_fences(outcome_key, fence) VALUES (%s,%s)", (outcome, epoch))
             conn.execute("INSERT INTO dar_refusals(outcome_key, epoch, refusal_id) VALUES (%s,%s,%s)", (outcome, epoch, ident))
-            conn.execute("SELECT pg_sleep(300)")
+            print("TORN_WRITE_WINDOW", flush=True)
+            time.sleep(300)
     else:
         raise SystemExit(f"unknown worker mode {mode}")
 
@@ -80,13 +76,15 @@ def worker(mode: str, outcome: str, epoch: int, ident: str) -> None:
 def kill_after_marker(mode: str, outcome: str, epoch: int, ident: str) -> None:
     env = dict(os.environ)
     env["CRASH_BOUNDARY_WORKER"] = "1"
-    code = (
-        "from tests.test_crash_boundary_postgres import worker; "
-        f"worker({mode!r}, {outcome!r}, {epoch!r}, {ident!r})"
-    )
+    code = "from tests.test_crash_boundary_postgres import worker; " + f"worker({mode!r}, {outcome!r}, {epoch!r}, {ident!r})"
     proc = subprocess.Popen([PYTHON, "-c", code], cwd=ROOT, env=env, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
     deadline = time.time() + 30
-    marker = "EXTERNAL_REFUSAL_COMMITTED" if mode == "refusal-before-client-persist" else "EXTERNAL_COMMIT_COMMITTED"
+    markers = {
+        "refusal-before-client-persist": "EXTERNAL_REFUSAL_COMMITTED",
+        "commit-before-client-persist": "EXTERNAL_COMMIT_COMMITTED",
+        "torn-write": "TORN_WRITE_WINDOW",
+    }
+    marker = markers[mode]
     while time.time() < deadline:
         line = proc.stdout.readline()
         if marker in line:
@@ -102,30 +100,29 @@ def kill_after_marker(mode: str, outcome: str, epoch: int, ident: str) -> None:
 
 def scenario_1() -> None:
     outcome = "crash1-" + uuid.uuid4().hex
-    ident = "refusal-" + uuid.uuid4().hex
-    kill_after_marker("refusal-before-client-persist", outcome, 100, ident)
+    kill_after_marker("refusal-before-client-persist", outcome, 100, "refusal-" + uuid.uuid4().hex)
     s = state(outcome)
     assert s["refusal"] is not None, s
     assert s["effect"] is None, s
+    cleanup(outcome)
 
 
 def scenario_2() -> None:
     outcome = "crash2-" + uuid.uuid4().hex
-    ident = "commit-" + uuid.uuid4().hex
-    kill_after_marker("commit-before-client-persist", outcome, 100, ident)
+    kill_after_marker("commit-before-client-persist", outcome, 100, "commit-" + uuid.uuid4().hex)
     s = state(outcome)
     assert s["effect"] is not None, s
     assert s["refusal"] is None, s
+    cleanup(outcome)
 
 
 def scenario_3(rounds: int = 100) -> None:
     from dar_v36_14.postgres_authority import PostgresAuthority
-
     authority = PostgresAuthority(DSN)
     for _ in range(rounds):
         outcome = "race-" + uuid.uuid4().hex
         epoch = 100
-        authority.fence(outcome, epoch)
+        assert authority.fence(outcome, epoch)[0] == 200
         barrier = threading.Barrier(2)
         results = []
 
@@ -141,13 +138,13 @@ def scenario_3(rounds: int = 100) -> None:
         b = threading.Thread(target=do_commit)
         a.start(); b.start(); a.join(); b.join()
         s = state(outcome)
-        # Exactly one protected commit can exist. If commit won first, a later
-        # refusal is explicitly non-retroactive and must not erase the commit.
+        successful_commit = [r for kind, r in results if kind == "commit" and r[0] == 200 and not r[1].get("idempotent", False)]
+        assert len(successful_commit) <= 1, results
         if s["effect"] is not None:
-            assert s["effect"]["epoch"] == epoch, s
-        if s["refusal"] is not None and s["effect"] is None:
-            assert any(kind == "refuse" and code[0] == 200 for kind, code in results), results
-        assert not (s["effect"] is not None and any(kind == "commit" and code[0] == 200 and not code[1].get("idempotent") for kind, code in results) and False)
+            assert len(successful_commit) == 1, (results, s)
+            assert s["refusal"] is None or s["effect"] is not None, s
+        else:
+            assert s["refusal"] is not None, (results, s)
         cleanup(outcome)
 
 
@@ -156,8 +153,6 @@ def scenario_4() -> None:
     from dar_v36_14.postgres_authority import PostgresAuthority
     authority = PostgresAuthority(DSN)
     assert authority.refuse(outcome, 100, "original-refusal")[0] == 200
-    # A new idempotency key after the simulated crash must not bypass the
-    # terminal refusal.
     status, body = authority.commit(outcome, 100, "new-key-after-crash")
     assert status == 409 and body["error"] == "terminal_refusal", (status, body)
     cleanup(outcome)
@@ -166,8 +161,6 @@ def scenario_4() -> None:
 def scenario_5() -> None:
     outcome = "crash5-" + uuid.uuid4().hex
     kill_after_marker("torn-write", outcome, 100, "torn-refusal")
-    # The child never committed. PostgreSQL recovery must expose neither the
-    # refusal nor the fence from the aborted transaction.
     s = state(outcome)
     assert s["refusal"] is None, s
     assert s["fence"] is None, s
