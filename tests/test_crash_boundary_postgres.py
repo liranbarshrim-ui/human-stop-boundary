@@ -49,10 +49,7 @@ def worker(mode: str, outcome: str, epoch: int, ident: str) -> None:
     if mode == "refusal-before-client-persist":
         with connect() as conn:
             conn.execute("SELECT pg_advisory_xact_lock(hashtextextended(%s, 0))", (outcome,))
-            conn.execute(
-                "INSERT INTO dar_fences(outcome_key, fence) VALUES (%s,%s) ON CONFLICT (outcome_key) DO UPDATE SET fence=EXCLUDED.fence",
-                (outcome, epoch),
-            )
+            conn.execute("INSERT INTO dar_fences(outcome_key, fence) VALUES (%s,%s) ON CONFLICT (outcome_key) DO UPDATE SET fence=EXCLUDED.fence", (outcome, epoch))
             conn.execute("INSERT INTO dar_refusals(outcome_key, epoch, refusal_id) VALUES (%s,%s,%s)", (outcome, epoch, ident))
         print("EXTERNAL_REFUSAL_COMMITTED", flush=True)
         time.sleep(300)
@@ -79,12 +76,11 @@ def kill_after_marker(mode: str, outcome: str, epoch: int, ident: str) -> None:
     code = "from tests.test_crash_boundary_postgres import worker; " + f"worker({mode!r}, {outcome!r}, {epoch!r}, {ident!r})"
     proc = subprocess.Popen([PYTHON, "-c", code], cwd=ROOT, env=env, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
     deadline = time.time() + 30
-    markers = {
+    marker = {
         "refusal-before-client-persist": "EXTERNAL_REFUSAL_COMMITTED",
         "commit-before-client-persist": "EXTERNAL_COMMIT_COMMITTED",
         "torn-write": "TORN_WRITE_WINDOW",
-    }
-    marker = markers[mode]
+    }[mode]
     while time.time() < deadline:
         line = proc.stdout.readline()
         if marker in line:
@@ -149,9 +145,12 @@ def scenario_3(rounds: int = 100) -> None:
 
 def scenario_4() -> None:
     outcome = "crash4-" + uuid.uuid4().hex
+    refusal_id = "original-refusal-" + uuid.uuid4().hex
+    kill_after_marker("refusal-before-client-persist", outcome, 100, refusal_id)
+    s = state(outcome)
+    assert s["refusal"] is not None, s
     from dar_v36_14.postgres_authority import PostgresAuthority
     authority = PostgresAuthority(DSN)
-    assert authority.refuse(outcome, 100, "original-refusal")[0] == 200
     status, body = authority.commit(outcome, 100, "new-key-after-crash")
     assert status == 409 and body["error"] == "terminal_refusal", (status, body)
     cleanup(outcome)
@@ -168,7 +167,7 @@ def scenario_5() -> None:
 
 def main() -> None:
     from dar_v36_14.postgres_authority import PostgresAuthority
-    PostgresAuthority(DSN)  # creates the exact schema used by the authority
+    PostgresAuthority(DSN)
     results = {}
     for name, fn in [
         ("crash_after_external_refusal_before_local_persistence", scenario_1),
