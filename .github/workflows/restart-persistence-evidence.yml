@@ -1,0 +1,134 @@
+name: DAR External Restart Persistence Evidence
+
+on:
+  workflow_dispatch:
+    inputs:
+      authority_url:
+        description: 'Live external authority URL'
+        required: false
+        type: string
+        default: 'https://dar-external-authority-v2.onrender.com'
+
+permissions:
+  contents: write
+
+jobs:
+  restart-persistence:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Resolve authority URL
+        id: url
+        env:
+          SECRET_URL: ${{ secrets.DAR_EXTERNAL_AUTHORITY_URL }}
+          INPUT_URL: ${{ inputs.authority_url }}
+        run: |
+          set -euo pipefail
+          url="$SECRET_URL"
+          if [ -z "$url" ]; then url="$INPUT_URL"; fi
+          echo "url=$url" >> "$GITHUB_OUTPUT"
+
+      - name: Seed terminal refusal before restart
+        env:
+          BASE: ${{ steps.url.outputs.url }}
+        run: |
+          set -euo pipefail
+          outcome="dar-restart-${GITHUB_RUN_ID}-${GITHUB_RUN_ATTEMPT}"
+          epoch=100
+          refusal="refusal-${GITHUB_RUN_ID}-${GITHUB_RUN_ATTEMPT}"
+          python - <<'PY'
+          import json, os, urllib.request
+          base=os.environ['BASE'].rstrip('/')
+          outcome=os.environ['OUTCOME']
+          epoch=int(os.environ['EPOCH'])
+          refusal=os.environ['REFUSAL']
+          req=urllib.request.Request(base+'/refuse', data=json.dumps({'outcome':outcome,'epoch':epoch,'refusal_id':refusal}).encode(), headers={'Content-Type':'application/json'}, method='POST')
+          with urllib.request.urlopen(req, timeout=20) as r:
+              body=json.loads(r.read())
+              assert r.status == 200 and body.get('ok') is True, (r.status, body)
+          print('seeded terminal refusal')
+          PY
+          echo "outcome=$outcome" >> "$GITHUB_OUTPUT"
+        id: seed
+        env:
+          OUTCOME: dar-restart-${{ github.run_id }}-${{ github.run_attempt }}
+          EPOCH: '100'
+          REFUSAL: refusal-${{ github.run_id }}-${{ github.run_attempt }}
+
+      - name: Verify refusal exists before restart
+        env:
+          BASE: ${{ steps.url.outputs.url }}
+          OUTCOME: ${{ steps.seed.outputs.outcome }}
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          import json, os, urllib.request
+          base=os.environ['BASE'].rstrip('/')
+          outcome=os.environ['OUTCOME']
+          with urllib.request.urlopen(base+'/state', timeout=20) as r:
+              state=json.loads(r.read())
+          assert outcome in state.get('refusals', {}), state
+          print('refusal present before restart')
+          PY
+
+      - name: Trigger Render restart through auto-deploy commit
+        run: |
+          set -euo pipefail
+          printf '{"run_id": "%s", "attempt": "%s", "purpose": "restart-persistence-evidence"}\n' "$GITHUB_RUN_ID" "$GITHUB_RUN_ATTEMPT" > .dar-restart-marker.json
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add .dar-restart-marker.json
+          git commit -m "test: trigger external authority restart evidence"
+          git push origin HEAD:main
+
+      - name: Wait for restarted authority
+        env:
+          BASE: ${{ steps.url.outputs.url }}
+          OUTCOME: ${{ steps.seed.outputs.outcome }}
+        run: |
+          set -euo pipefail
+          for i in $(seq 1 30); do
+            if python - <<'PY'
+          import json, os, urllib.request
+          base=os.environ['BASE'].rstrip('/')
+          outcome=os.environ['OUTCOME']
+          try:
+              with urllib.request.urlopen(base+'/health', timeout=10) as r:
+                  health=json.loads(r.read())
+              with urllib.request.urlopen(base+'/state', timeout=10) as r:
+                  state=json.loads(r.read())
+              print(json.dumps({'health':health,'refusal_present': outcome in state.get('refusals', {})}))
+          except Exception as e:
+              print(e)
+              raise SystemExit(1)
+          PY
+            then
+              sleep 10
+              continue
+            fi
+            sleep 5
+          done
+
+      - name: Prove refusal survived restart and blocks new commit
+        env:
+          BASE: ${{ steps.url.outputs.url }}
+          OUTCOME: ${{ steps.seed.outputs.outcome }}
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          import json, os, urllib.error, urllib.request
+          base=os.environ['BASE'].rstrip('/')
+          outcome=os.environ['OUTCOME']
+          with urllib.request.urlopen(base+'/state', timeout=20) as r:
+              state=json.loads(r.read())
+          assert outcome in state.get('refusals', {}), 'refusal did not survive restart'
+          req=urllib.request.Request(base+'/commit', data=json.dumps({'outcome':outcome,'epoch':100,'idempotency_key':'post-restart-bypass'}).encode(), headers={'Content-Type':'application/json'}, method='POST')
+          try:
+              urllib.request.urlopen(req, timeout=20)
+              raise AssertionError('protected commit unexpectedly accepted after restart')
+          except urllib.error.HTTPError as e:
+              body=json.loads(e.read())
+              assert e.code == 409 and body.get('error') == 'terminal_refusal', (e.code, body)
+          print(json.dumps({'restart_persistence':'PASS','post_restart_commit_blocked':'PASS','verdict':'PASS'}))
+          PY
