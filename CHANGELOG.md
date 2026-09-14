@@ -43,4 +43,5 @@ Chat-pasted artifacts are unverified until compared against a fresh repository c
 - Research site: https://matrix-audit.com
 - Citation metadata: `CITATION.cff`
 - Zenodo metadata: `.zenodo.json`
-- License: Apache-2.0
+- License status: current repository materials are proprietary / **All Rights Reserved** where Liran Bar-Shrim has the applicable rights; earlier releases may have carried Apache-2.0 terms and those historical grants are not retroactively revoked.
+- Third-party components are documented in `THIRD_PARTY_NOTICES.md` and remain under their own licenses.
