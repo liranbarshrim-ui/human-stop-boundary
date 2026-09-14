@@ -8,9 +8,20 @@ import unicodedata
 class CanonicalizationError(ValueError):
     pass
 
-# Protocol identities are opaque lowercase-hex tokens. Visual/confusable
-# mappings are intentionally not attempted: the protocol accepts one syntax.
+# Effect IDs are opaque protocol tokens. They remain ASCII so Unicode
+# homoglyphs, bidi controls, zero-width characters, and NFC aliases cannot
+# create visually ambiguous identities. Outcome keys use the stricter
+# lowercase-hex syntax because they identify protected external outcomes.
+_EFFECT_ID_RE = re.compile(r"^[\x21-\x7e]+$")
 _OPAQUE_KEY_RE = re.compile(r"^[0-9a-f]+$")
+
+def _canonical_effect_id(value):
+    if not isinstance(value, str) or not value:
+        raise CanonicalizationError("effect_id must be a non-empty string")
+    normalized = unicodedata.normalize("NFC", value)
+    if normalized != value or not _EFFECT_ID_RE.fullmatch(normalized):
+        raise CanonicalizationError("effect_id must be printable ASCII with no Unicode normalization or control escape")
+    return normalized
 
 def _canonical_opaque_key(value, name):
     if not isinstance(value, str) or not value:
@@ -21,7 +32,7 @@ def _canonical_opaque_key(value, name):
     return normalized
 
 def canonical_effect_id(value):
-    return _canonical_opaque_key(value, "effect_id")
+    return _canonical_effect_id(value)
 
 def canonical_outcome_key(value):
     """Canonical identity of the protected external outcome.
