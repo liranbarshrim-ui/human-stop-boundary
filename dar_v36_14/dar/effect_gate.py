@@ -80,7 +80,7 @@ class EffectGate:
             journal.append({'status':'COMMITTED',**intent}); s2=self.k.store._read(); pending2=tuple(x for x in s2.pending_effects if x.get('key')!=key)
             self.k.store._write_atomic(Snapshot(s2.epoch,s2.sequence+1,s2.nonces,s2.consumed,s2.commits,s2.state_payload,s2.boot_id,s2.effects,pending2)); return result
     def reconcile_pending(self,adapter,journal,params_provider):
-        from .effect_transaction import EffectTxn,recover,AdapterContractError,_params_digest
+        from .effect_transaction import EffectTxn,recover,protected_commit,AdapterContractError,_params_digest
         from .store import Snapshot
         with self.k.store.tx():
             records=journal._validated_state(); pending=tuple(self.k.store._read().pending_effects)
@@ -89,15 +89,26 @@ class EffectGate:
                 if existing is None: journal.append({'status':'PREPARED',**intent}); records=journal._validated_state(); existing=records[key]
                 for field in ('capability_txid','effect_id','idempotency_key','effect_class','params_digest'):
                     if existing.get(field)!=intent.get(field): raise EffectDenied(f'pending intent does not match journal: {field}')
-                current=self.k.store._read()
-                if self._is_refused(current,intent['effect_id'],intent.get('outcome_key','')) or 'epoch' not in intent or int(intent['epoch'])!=current.epoch:
+                current=self.k.store._read(); outcome_key=intent.get('outcome_key','')
+                if outcome_key:
+                    try: outcome_key=canonical_outcome_key(outcome_key)
+                    except Exception as exc: raise EffectDenied('protected pending intent has invalid outcome identity') from exc
+                if self._is_refused(current,intent['effect_id'],outcome_key) or 'epoch' not in intent or int(intent['epoch'])!=current.epoch:
                     journal.append({'status':'REFUSED','reason':'effect refused or epoch advanced after pending intent',**intent}); still=tuple(x for x in current.pending_effects if x.get('key')!=key); self.k.store._write_atomic(Snapshot(current.epoch,current.sequence+1,current.nonces,current.consumed,current.commits,current.state_payload,current.boot_id,current.effects,still)); continue
                 params=params_provider(intent)
                 if _params_digest(params)!=intent['params_digest']: raise AdapterContractError('reconciliation params do not match durable intent')
-                txn=EffectTxn(key,intent['idempotency_key'],intent['effect_class'],intent['params_digest'],intent.get('outcome_key',''),int(intent['epoch'])); recover(adapter,txn,params); records=journal._validated_state()
+                txn=EffectTxn(key,intent['idempotency_key'],intent['effect_class'],intent['params_digest'],outcome_key,int(intent['epoch']))
+                if outcome_key:
+                    # Protected pending intents may ONLY recover through the fenced commit path.
+                    # Never route them through recover()/adapter.execute(), which is outside the strong claim.
+                    try: protected_commit(adapter,txn,params)
+                    except AdapterContractError as exc: raise EffectDenied(str(exc)) from exc
+                else:
+                    recover(adapter,txn,params)
+                records=journal._validated_state()
                 if records.get(key,{}).get('status')!='COMMITTED': journal.append({'status':'COMMITTED',**intent}); records=journal._validated_state()
                 if records.get(key,{}).get('status')!='COMMITTED': raise AdapterContractError('reconciliation did not establish COMMITTED journal state')
                 current=self.k.store._read()
-                if self._is_refused(current,intent['effect_id'],intent.get('outcome_key','')) or int(intent['epoch'])!=current.epoch: raise EffectDenied('refusal occurred before pending commit finalization')
+                if self._is_refused(current,intent['effect_id'],outcome_key) or int(intent['epoch'])!=current.epoch: raise EffectDenied('refusal occurred before pending commit finalization')
                 still=tuple(x for x in current.pending_effects if x.get('key')!=key); self.k.store._write_atomic(Snapshot(current.epoch,current.sequence+1,current.nonces,current.consumed,current.commits,current.state_payload,current.boot_id,current.effects,still))
             return len(pending)
