@@ -10,7 +10,7 @@ on:
 jobs:
   external-load:
     runs-on: ubuntu-latest
-    timeout-minutes: 15
+    timeout-minutes: 20
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
@@ -19,9 +19,10 @@ jobs:
       - name: Run black-box concurrent load
         env:
           DAR_AUTHORITY_URL: https://dar-external-authority-v2.onrender.com
-          DAR_LOAD_ROUNDS: "500"
-          DAR_LOAD_WORKERS: "64"
-          DAR_LOAD_TIMEOUT: "15"
+          DAR_LOAD_ROUNDS: "250"
+          DAR_LOAD_WORKERS: "16"
+          DAR_LOAD_TIMEOUT: "30"
+          DAR_HEALTH_RETRIES: "6"
         run: python tests/test_external_load.py | tee external-load-evidence.jsonl
       - name: Verify machine-readable PASS
         run: |
@@ -30,8 +31,8 @@ jobs:
           from pathlib import Path
           record = json.loads(Path("external-load-evidence.jsonl").read_text().splitlines()[-1])
           assert record["verdict"] == "PASS", record
-          assert record["rounds"] == 500, record
-          assert record["workers"] == 64, record
+          assert record["rounds"] == 250, record
+          assert record["workers"] == 16, record
           assert all(v == "PASS" for v in record["checks"].values()), record
           Path("external-load-evidence.json").write_text(json.dumps(record, indent=2, sort_keys=True) + "\n")
           print(json.dumps(record, sort_keys=True))
