@@ -104,6 +104,7 @@ class AttackEmpiricalTests(unittest.TestCase):
             with self.assertRaises(CanonicalizationError): canonical_effect_id("cafe\u0301")
             cap=issue_write(kernel,p,"cafe-1")
             refusal=auth.issue("human","cafe-1",cap.txid); auth.commit(refusal)
+            # issue_write derives proposed.epoch from the store, so this remains valid after refusal.
             cap2=issue_write(kernel,p,"cafe-2",nonce="n2")
             req=EffectRequest(cap2,"human","root","WRITE","cafe-2","WRITE")
             with self.assertRaises(EffectDenied): gate.execute(req,lambda:"should-not-run",p)
