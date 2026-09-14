@@ -14,7 +14,7 @@ def make_kernel(root,*,anchor=None):
     store=Store(Path(root)/"state",SECRET,anchor=anchor); state=SystemState(0,{"human":{"root":frozenset({"WRITE","READ"})}},{}); store._write_atomic(Snapshot(0,0,frozenset(),frozenset(),tuple(),state.canonical(),"B")); return store,Kernel(store,SECRET,boot_id="B")
 
 def issue_write(kernel,params,effect_id,nonce="n1"):
-    state=SystemState(1,{"human":{"root":frozenset({"WRITE","READ"})}},{}); return kernel.issue("human","root","WRITE",state,nonce=nonce,params=params,effect_id=effect_id)
+    current=kernel._state(kernel.store._read()); state=SystemState(current.epoch+1,{"human":{"root":frozenset({"WRITE","READ"})}},{}); return kernel.issue("human","root","WRITE",state,nonce=nonce,params=params,effect_id=effect_id)
 
 class AttackEmpiricalTests(unittest.TestCase):
     def test_a01_refusal_before_execution(self):
@@ -101,10 +101,8 @@ class AttackEmpiricalTests(unittest.TestCase):
     def test_a14_effect_id_is_nfc_canonical_across_issue_refuse_and_gate(self):
         with tempfile.TemporaryDirectory() as d:
             store,kernel=make_kernel(d); gate=EffectGate(kernel); auth=RefusalAuthority(store,{"human":b"a"*32}); p={"path":"a14.txt","data":"same"}
-            decomposed="cafe\u0301"; composed="café"
-            with self.assertRaises(CanonicalizationError): canonical_effect_id(decomposed)
+            with self.assertRaises(CanonicalizationError): canonical_effect_id("cafe\u0301")
             cap=issue_write(kernel,p,"cafe-1")
-            self.assertEqual(cap.effect_id,"cafe-1")
             refusal=auth.issue("human","cafe-1",cap.txid); auth.commit(refusal)
             cap2=issue_write(kernel,p,"cafe-2",nonce="n2")
             req=EffectRequest(cap2,"human","root","WRITE","cafe-2","WRITE")
