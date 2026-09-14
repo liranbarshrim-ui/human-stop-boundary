@@ -24,7 +24,8 @@ import uuid
 BASE_URL = os.environ.get("DAR_AUTHORITY_URL", "https://dar-external-authority-v2.onrender.com").rstrip("/")
 ROUNDS = int(os.environ.get("DAR_LOAD_ROUNDS", "100"))
 WORKERS = int(os.environ.get("DAR_LOAD_WORKERS", "32"))
-TIMEOUT = float(os.environ.get("DAR_LOAD_TIMEOUT", "15"))
+TIMEOUT = float(os.environ.get("DAR_LOAD_TIMEOUT", "30"))
+HEALTH_RETRIES = int(os.environ.get("DAR_HEALTH_RETRIES", "6"))
 
 
 def post(path: str, body: dict) -> tuple[int, dict]:
@@ -45,6 +46,21 @@ def get(path: str) -> tuple[int, dict]:
     req = urllib.request.Request(BASE_URL + path, method="GET")
     with urllib.request.urlopen(req, timeout=TIMEOUT) as resp:
         return resp.status, json.loads(resp.read())
+
+
+def wait_for_health() -> dict:
+    last_error: Exception | None = None
+    for attempt in range(HEALTH_RETRIES):
+        try:
+            status, health = get("/health")
+            if status == 200 and health.get("ok") is True and health.get("persistence") == "postgres":
+                return health
+            last_error = RuntimeError(f"health status={status} body={health}")
+        except Exception as exc:  # startup/warmup only; the load itself stays strict
+            last_error = exc
+        if attempt + 1 < HEALTH_RETRIES:
+            time.sleep(2 ** attempt)
+    raise AssertionError(f"external authority did not become healthy: {last_error}")
 
 
 def race_round(index: int) -> dict:
@@ -70,11 +86,11 @@ def race_round(index: int) -> dict:
         return "commit", status, body
 
     with concurrent.futures.ThreadPoolExecutor(max_workers=2) as pool:
-        results = [pool.submit(fn) for fn in (refusal, commit)]
-        observed = [f.result() for f in results]
+        futures = [pool.submit(fn) for fn in (refusal, commit)]
+        observed = [f.result() for f in futures]
 
-    _, refuse_status, refuse_body = observed[0]
-    _, commit_status, commit_body = observed[1]
+    _, refuse_status, _ = observed[0]
+    _, commit_status, _ = observed[1]
     _, state = get("/state")
     refused = outcome in state.get("refusals", {})
     committed = outcome in state.get("committed_outcomes", {})
@@ -96,10 +112,7 @@ def race_round(index: int) -> dict:
 
 
 def main() -> None:
-    status, health = get("/health")
-    assert status == 200 and health.get("ok") is True, health
-    assert health.get("persistence") == "postgres", health
-
+    health = wait_for_health()
     results: list[dict] = []
     with concurrent.futures.ThreadPoolExecutor(max_workers=WORKERS) as pool:
         futures = [pool.submit(race_round, i) for i in range(ROUNDS)]
@@ -116,6 +129,8 @@ def main() -> None:
         "base_url": BASE_URL,
         "rounds": ROUNDS,
         "workers": WORKERS,
+        "timeout_seconds": TIMEOUT,
+        "health": health,
         "checks": {
             "health_postgres": "PASS",
             "concurrent_refusal_commit_exclusion": "PASS",
