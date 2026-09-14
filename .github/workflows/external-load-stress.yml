@@ -8,6 +8,10 @@ on:
       - tests/test_external_load.py
       - dar_v36_14/postgres_authority.py
 
+permissions:
+  contents: read
+  statuses: write
+
 jobs:
   external-stress:
     runs-on: ubuntu-latest
@@ -25,6 +29,12 @@ jobs:
           DAR_LOAD_WORKERS: "32"
           DAR_LOAD_TIMEOUT: "30"
           DAR_HEALTH_RETRIES: "10"
+          DAR_HEARTBEAT_GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_REPOSITORY: ${{ github.repository }}
+          GITHUB_SHA: ${{ github.sha }}
+          GITHUB_RUN_ID: ${{ github.run_id }}
+          DAR_PROGRESS_INTERVAL: "250"
+          DAR_PROGRESS_HEARTBEAT_SECONDS: "60"
         run: |
           set +e
           python tests/test_external_load.py | tee external-stress-evidence.jsonl
