@@ -140,6 +140,15 @@ def main() -> None:
         for future in concurrent.futures.as_completed(futures):
             try:
                 results.append(future.result())
+                completed = len(results)
+                if completed == 1 or completed % 100 == 0 or completed == ROUNDS:
+                    print(json.dumps({
+                        "evidence_type": "external-authority-concurrent-load-progress",
+                        "base_url": BASE_URL,
+                        "completed_rounds": completed,
+                        "rounds": ROUNDS,
+                        "workers": WORKERS,
+                    }, sort_keys=True), flush=True)
             except Exception as exc:
                 failures.append(repr(exc))
 
@@ -162,7 +171,7 @@ def main() -> None:
             "failures": failures[:10],
             "verdict": "FAIL",
         }
-        print(json.dumps(evidence, sort_keys=True))
+        print(json.dumps(evidence, sort_keys=True), flush=True)
         raise SystemExit(1)
 
     refused = sum(1 for item in results if item["refused"])
@@ -187,7 +196,7 @@ def main() -> None:
         "commit_wins": committed,
         "verdict": "PASS",
     }
-    print(json.dumps(evidence, sort_keys=True))
+    print(json.dumps(evidence, sort_keys=True), flush=True)
 
 
 if __name__ == "__main__":
