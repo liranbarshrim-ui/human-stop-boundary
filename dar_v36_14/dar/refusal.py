@@ -74,6 +74,9 @@ class RefusalAuthority:
         protected commit. The adapter must make fence advancement authoritative
         at the same external commit point used by FencedEffectAdapter.commit.
         """
+        from .effect_transaction import FencedEffectAdapter
+        if not isinstance(adapter, FencedEffectAdapter):
+            raise TypeError('protected refusal fencing requires FencedEffectAdapter')
         if not self.verify(refusal) or not refusal.outcome_key:
             raise PermissionError('invalid or unbound protected refusal')
         with self.store.tx():
