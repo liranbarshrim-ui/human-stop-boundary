@@ -1,11 +1,24 @@
+databases:
+  - name: dar-authority-db
+    plan: free
+    region: frankfurt
+    databaseName: dar_authority_db
+    user: dar_authority_db_user
+    postgresMajorVersion: 18
+
 services:
   - type: web
     name: dar-external-authority
     runtime: python
     plan: free
-    buildCommand: "python -m pip install --upgrade pip"
+    region: frankfurt
+    buildCommand: "python -m pip install --upgrade pip && pip install -r requirements.txt"
     startCommand: "python dar_v36_14/external_authority_server.py"
     healthCheckPath: /health
     envVars:
       - key: PYTHON_VERSION
         value: 3.12.0
+      - key: DATABASE_URL
+        fromDatabase:
+          name: dar-authority-db
+          property: connectionString
