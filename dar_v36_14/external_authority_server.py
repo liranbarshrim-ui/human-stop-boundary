@@ -15,6 +15,7 @@ lock = threading.RLock()
 fences: dict[str, int] = {}
 refusals: dict[str, list[object]] = {}
 effects: dict[str, dict[str, object]] = {}
+committed_outcomes: dict[str, str] = {}
 
 
 def response(handler: BaseHTTPRequestHandler, status: int, body: dict) -> None:
@@ -39,6 +40,7 @@ class Handler(BaseHTTPRequestHandler):
                     "fences": dict(fences),
                     "refusals": dict(refusals),
                     "effects": dict(effects),
+                    "committed_outcomes": dict(committed_outcomes),
                 })
         return response(self, 404, {"error": "not_found"})
 
@@ -80,7 +82,10 @@ class Handler(BaseHTTPRequestHandler):
                     return response(self, 409, {"ok": False, "error": "stale_fence"})
                 if idem in effects:
                     return response(self, 200, {"ok": True, "idempotent": True})
+                if outcome in committed_outcomes:
+                    return response(self, 409, {"ok": False, "error": "outcome_already_committed"})
                 effects[idem] = {"outcome": outcome, "epoch": epoch}
+                committed_outcomes[outcome] = idem
                 return response(self, 200, {"ok": True, "idempotent": False})
 
         return response(self, 404, {"error": "not_found"})
