@@ -28,6 +28,8 @@ class AtomicFenceAuthority(FencedEffectAdapter):
 
     def advance_fence(self, outcome_key, epoch):
         with self._lock:
+            if outcome_key in self.refusals:
+                raise ValueError("terminal refusal cannot be cleared or advanced")
             current = self.fences.get(outcome_key, 0)
             if epoch < current:
                 raise ValueError("fence rollback")
@@ -40,8 +42,8 @@ class AtomicFenceAuthority(FencedEffectAdapter):
                 raise ValueError("refusal fence rollback")
             existing = self.refusals.get(outcome_key)
             if existing:
-                if existing[0] != fence_epoch:
-                    raise ValueError("conflicting refusal epoch")
+                if existing != (fence_epoch, refusal_id):
+                    raise ValueError("conflicting refusal")
                 return
             self.fences[outcome_key] = fence_epoch
             self.refusals[outcome_key] = (fence_epoch, refusal_id)
