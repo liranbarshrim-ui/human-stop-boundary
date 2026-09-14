@@ -6,14 +6,15 @@ from pathlib import Path
 from dar import Kernel, Snapshot, Store, SystemState
 from dar.boundary import BoundaryDenied, PrivilegedDispatcher
 from dar.effect_gate import EffectDenied, EffectGate, EffectRequest
-from dar.canonical import CanonicalizationError, canonical_bytes, canonical_digest, parse_json_object
+from dar.canonical import CanonicalizationError, canonical_bytes, canonical_digest, canonical_effect_id, parse_json_object
+from dar.refusal import RefusalAuthority
 SECRET=b"x"*32
 
 def make_kernel(root,*,anchor=None):
     store=Store(Path(root)/"state",SECRET,anchor=anchor); state=SystemState(0,{"human":{"root":frozenset({"WRITE","READ"})}},{}); store._write_atomic(Snapshot(0,0,frozenset(),frozenset(),tuple(),state.canonical(),"B")); return store,Kernel(store,SECRET,boot_id="B")
 
-def issue_write(kernel,params,effect_id):
-    state=SystemState(1,{"human":{"root":frozenset({"WRITE","READ"})}},{}); return kernel.issue("human","root","WRITE",state,nonce="n1",params=params,effect_id=effect_id)
+def issue_write(kernel,params,effect_id,nonce="n1"):
+    state=SystemState(1,{"human":{"root":frozenset({"WRITE","READ"})}},{}); return kernel.issue("human","root","WRITE",state,nonce=nonce,params=params,effect_id=effect_id)
 
 class AttackEmpiricalTests(unittest.TestCase):
     def test_a01_refusal_before_execution(self):
@@ -97,3 +98,17 @@ class AttackEmpiricalTests(unittest.TestCase):
             _,kernel=make_kernel(d); gate=EffectGate(kernel); p={"path":"same.txt","data":"same"}; cap=issue_write(kernel,p,"wire-001")
             forged=EffectRequest(cap,"human","root","WRITE","wire-002","WRITE")
             with self.assertRaises(EffectDenied): gate.execute(forged,lambda:"should-not-run",p)
+    def test_a14_effect_id_is_nfc_canonical_across_issue_refuse_and_gate(self):
+        with tempfile.TemporaryDirectory() as d:
+            store,kernel=make_kernel(d); gate=EffectGate(kernel); auth=RefusalAuthority(store,{"human":b"a"*32}); p={"path":"a14.txt","data":"same"}
+            decomposed="cafe\u0301"; composed="café"
+            self.assertEqual(canonical_effect_id(decomposed),composed)
+            cap=issue_write(kernel,p,decomposed)
+            self.assertEqual(cap.effect_id,composed)
+            refusal=auth.issue("human",decomposed,cap.txid); auth.commit(refusal)
+            cap2=issue_write(kernel,p,decomposed,nonce="n2")
+            req=EffectRequest(cap2,"human","root","WRITE",composed,"WRITE")
+            with self.assertRaises(EffectDenied): gate.execute(req,lambda:"should-not-run",p)
+
+if __name__ == '__main__':
+    unittest.main()
