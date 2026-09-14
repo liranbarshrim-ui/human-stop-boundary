@@ -1,0 +1,19 @@
+{
+  "evidence_type": "deployment-level external-authority evidence",
+  "run_id": 34842454274,
+  "commit": "1c70d04c842ac67e1d7e531c1a3aa394cfefae6d",
+  "artifact_id": 10346856700,
+  "artifact_sha256": "7745d512c274e093487885d81e3dad2fe8c5cfa833f51759009261148d372ca6",
+  "deployment": "separate HTTP authority process on a GitHub Actions runner",
+  "outcome_key": "cafebabe",
+  "target_epoch": 7,
+  "external_after_crash": {
+    "fence": 7,
+    "terminal_refusal": true,
+    "protected_effects": 0
+  },
+  "new_effect_id_for_same_outcome": "DENIED",
+  "refusal_retry": "IDEMPOTENT",
+  "verdict": "PASS",
+  "scope_note": "This is deployment-level evidence against a separately running external authority process; it is not evidence from an independently hosted production customer system."
+}
