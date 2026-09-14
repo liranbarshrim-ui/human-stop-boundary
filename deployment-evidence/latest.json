@@ -1,19 +1,21 @@
 {
-  "evidence_type": "deployment-level external-authority evidence",
-  "run_id": 34842454274,
-  "commit": "1c70d04c842ac67e1d7e531c1a3aa394cfefae6d",
-  "artifact_id": 10346856700,
-  "artifact_sha256": "7745d512c274e093487885d81e3dad2fe8c5cfa833f51759009261148d372ca6",
-  "deployment": "separate HTTP authority process on a GitHub Actions runner",
-  "outcome_key": "cafebabe",
-  "target_epoch": 7,
-  "external_after_crash": {
-    "fence": 7,
-    "terminal_refusal": true,
-    "protected_effects": 0
+  "evidence_type": "external-authority-black-box-verification",
+  "run_id": 34848128322,
+  "commit": "8674fee89c64bb8d8ade68e09a33695eaff42166",
+  "artifact_id": 10348568147,
+  "artifact_sha256": "88c08bab56ae09ce4f49ee5bc911c806a274cd8cb117f12de98f9c4cc8191821",
+  "deployment": "independently hosted Render web service dar-external-authority-v3",
+  "base_url": "https://dar-external-authority-v3.onrender.com",
+  "tests": {
+    "health": "PASS",
+    "commit_before_refusal_nonretroactive": "PASS",
+    "refusal_retry_idempotent": "PASS",
+    "refusal_blocks_commit": "PASS",
+    "new_idempotency_key_cannot_bypass_refusal": "PASS",
+    "duplicate_protected_outcome_rejected": "PASS",
+    "fence_rollback_rejected": "PASS",
+    "authoritative_state_observed": "PASS"
   },
-  "new_effect_id_for_same_outcome": "DENIED",
-  "refusal_retry": "IDEMPOTENT",
   "verdict": "PASS",
-  "scope_note": "This is deployment-level evidence against a separately running external authority process; it is not evidence from an independently hosted production customer system."
+  "scope_note": "Deployment-level black-box evidence against an independently hosted Render service. This run does not establish restart persistence because this service is not yet wired to durable PostgreSQL state."
 }
