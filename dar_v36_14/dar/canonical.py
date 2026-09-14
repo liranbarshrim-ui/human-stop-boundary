@@ -2,21 +2,29 @@
 import hashlib
 import json
 import math
+import re
 import unicodedata
 
 class CanonicalizationError(ValueError):
     pass
 
-def canonical_effect_id(value):
-    """Return the canonical logical identity used by refusal/gate matching.
+_EFFECT_ID_RE = re.compile(r"^[A-Za-z0-9._:-]+$")
 
-    Effect IDs are textual identifiers, so DAR treats canonically equivalent
-    Unicode spellings as the same identity.  Policy-specific case folding or
-    whitespace rules are intentionally not implicit here.
+def canonical_effect_id(value):
+    """Return the canonical, unambiguous identity used by refusal/gate matching.
+
+    Effect IDs are protocol identifiers, not free-form display text. NFC is
+    applied first, then the identifier is restricted to a deliberately small
+    ASCII grammar. This prevents zero-width/control characters, bidi marks,
+    whitespace variants, and Unicode homoglyphs from creating visually
+    confusable but distinct refusal identities.
     """
     if not isinstance(value, str) or not value:
         raise CanonicalizationError("effect_id must be a non-empty string")
-    return unicodedata.normalize("NFC", value)
+    normalized = unicodedata.normalize("NFC", value)
+    if not _EFFECT_ID_RE.fullmatch(normalized):
+        raise CanonicalizationError("effect_id must match [A-Za-z0-9._:-]+ after NFC normalization")
+    return normalized
 
 def _normalize(value):
     if value is None or isinstance(value, (bool, int)):
