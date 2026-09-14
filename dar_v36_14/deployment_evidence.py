@@ -1,10 +1,18 @@
-"""Real deployment evidence: DAR client against a separate HTTP authority process."""
+"""Deployment evidence: DAR client against an independently spawned HTTP authority.
+
+The authority is a separate OS process. The DAR client communicates with it
+only over HTTP; no in-process object or shared Python state is used for the
+protected decision. This is deployment-level evidence, not production
+certification or evidence about an unrelated third-party system.
+"""
 from __future__ import annotations
 
 import json
+import os
+import subprocess
+import sys
 import tempfile
-import threading
-from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
+import time
 from pathlib import Path
 from urllib.request import Request, urlopen
 
@@ -15,75 +23,6 @@ from dar.refusal import RefusalAuthority
 
 OUTCOME = "cafebabe"
 EPOCH = 7
-
-
-class ExternalAuthority:
-    """The deployed process: outcome fence/refusal/commit share one lock."""
-    def __init__(self):
-        self.lock = threading.RLock()
-        self.fences = {}
-        self.refusals = {}
-        self.effects = {}
-
-    def state(self):
-        with self.lock:
-            return {"fences": dict(self.fences), "refusals": dict(self.refusals), "effects": dict(self.effects)}
-
-    def refuse(self, outcome, epoch, refusal_id):
-        with self.lock:
-            existing = self.refusals.get(outcome)
-            if existing:
-                return {"ok": existing == [epoch, refusal_id], "idempotent": existing == [epoch, refusal_id]}
-            if epoch < self.fences.get(outcome, 0):
-                return {"ok": False, "error": "fence_rollback"}
-            self.fences[outcome] = epoch
-            self.refusals[outcome] = [epoch, refusal_id]
-            return {"ok": True, "idempotent": False}
-
-    def commit(self, outcome, epoch, idem):
-        with self.lock:
-            if outcome in self.refusals:
-                return {"ok": False, "error": "terminal_refusal"}
-            if self.fences.get(outcome, 0) != epoch:
-                return {"ok": False, "error": "stale_fence"}
-            if idem in self.effects:
-                return {"ok": True, "idempotent": True}
-            self.effects[idem] = {"outcome": outcome, "epoch": epoch}
-            return {"ok": True, "idempotent": False}
-
-
-AUTHORITY = ExternalAuthority()
-
-
-class Handler(BaseHTTPRequestHandler):
-    def log_message(self, *_args):
-        pass
-
-    def _reply(self, status, body):
-        raw = json.dumps(body, sort_keys=True).encode()
-        self.send_response(status)
-        self.send_header("Content-Type", "application/json")
-        self.send_header("Content-Length", str(len(raw)))
-        self.end_headers()
-        self.wfile.write(raw)
-
-    def do_GET(self):
-        if self.path == "/state":
-            return self._reply(200, AUTHORITY.state())
-        return self._reply(404, {"error": "not_found"})
-
-    def do_POST(self):
-        n = int(self.headers.get("Content-Length", "0"))
-        data = json.loads(self.rfile.read(n) or b"{}")
-        if self.path == "/fence":
-            with AUTHORITY.lock:
-                AUTHORITY.fences[data["outcome"]] = int(data["epoch"])
-            return self._reply(200, {"ok": True})
-        if self.path == "/refuse":
-            return self._reply(200, AUTHORITY.refuse(data["outcome"], int(data["epoch"]), data["refusal_id"]))
-        if self.path == "/commit":
-            return self._reply(200, AUTHORITY.commit(data["outcome"], int(data["epoch"]), data["idempotency_key"]))
-        return self._reply(404, {"error": "not_found"})
 
 
 def post(base, path, body):
@@ -98,7 +37,7 @@ def get(base):
 
 
 class HTTPFencedAdapter(FencedEffectAdapter):
-    """DAR's external adapter contract backed only by the deployed HTTP process."""
+    """DAR adapter backed only by the independent authority process."""
     def __init__(self, base):
         self.base = base
 
@@ -126,6 +65,58 @@ class HTTPFencedAdapter(FencedEffectAdapter):
         raise AssertionError("protected path must never call execute()")
 
 
+def launch_authority():
+    authority = r'''
+import json, sys, threading
+from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
+
+OUTCOME = "cafebabe"
+EPOCH = 7
+lock = threading.RLock()
+fences = {OUTCOME: EPOCH}
+refusals = {}
+effects = {}
+
+class Handler(BaseHTTPRequestHandler):
+    def log_message(self, *args): pass
+    def reply(self, status, body):
+        raw = json.dumps(body, sort_keys=True).encode()
+        self.send_response(status); self.send_header("Content-Type", "application/json")
+        self.send_header("Content-Length", str(len(raw))); self.end_headers(); self.wfile.write(raw)
+    def do_GET(self):
+        if self.path == "/state":
+            with lock: return self.reply(200, {"fences": dict(fences), "refusals": dict(refusals), "effects": dict(effects)})
+        return self.reply(404, {"error":"not_found"})
+    def do_POST(self):
+        n = int(self.headers.get("Content-Length", "0")); d = json.loads(self.rfile.read(n) or b"{}")
+        with lock:
+            if self.path == "/refuse":
+                o, e, rid = d["outcome"], int(d["epoch"]), d["refusal_id"]
+                existing = refusals.get(o)
+                if existing:
+                    return self.reply(200, {"ok": existing == [e, rid], "idempotent": existing == [e, rid]})
+                if e < fences.get(o, 0): return self.reply(200, {"ok":False,"error":"fence_rollback"})
+                fences[o] = e; refusals[o] = [e, rid]
+                return self.reply(200, {"ok":True,"idempotent":False})
+            if self.path == "/commit":
+                o, e, idem = d["outcome"], int(d["epoch"]), d["idempotency_key"]
+                if o in refusals: return self.reply(200, {"ok":False,"error":"terminal_refusal"})
+                if fences.get(o, 0) != e: return self.reply(200, {"ok":False,"error":"stale_fence"})
+                if idem in effects: return self.reply(200, {"ok":True,"idempotent":True})
+                effects[idem] = {"outcome":o,"epoch":e}; return self.reply(200, {"ok":True,"idempotent":False})
+        return self.reply(404, {"error":"not_found"})
+
+server = ThreadingHTTPServer(("127.0.0.1", 0), Handler)
+print(server.server_address[1], flush=True)
+server.serve_forever()
+'''
+    env = os.environ.copy()
+    env["PYTHONUNBUFFERED"] = "1"
+    p = subprocess.Popen([sys.executable, "-c", authority], stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True, env=env)
+    port = int(p.stdout.readline().strip())
+    return p, f"http://127.0.0.1:{port}"
+
+
 def make_store(root):
     store = Store(Path(root) / "state", b"x" * 32)
     store._write_atomic(Snapshot(0, 0, frozenset(), frozenset(), tuple(), {"epoch": 0, "permissions": {}, "governance": {}}, "B", tuple(), tuple()))
@@ -133,13 +124,17 @@ def make_store(root):
 
 
 def main():
-    server = ThreadingHTTPServer(("127.0.0.1", 0), Handler)
-    thread = threading.Thread(target=server.serve_forever, daemon=True)
-    thread.start()
-    base = f"http://127.0.0.1:{server.server_address[1]}"
-    evidence = {"deployment": "separate HTTP authority process", "outcome_key": OUTCOME, "target_epoch": EPOCH}
+    authority, base = launch_authority()
+    evidence = {
+        "deployment": "independent OS process + HTTP boundary",
+        "authority_pid": authority.pid,
+        "authority_endpoint": base,
+        "outcome_key": OUTCOME,
+        "target_epoch": EPOCH,
+    }
     try:
-        post(base, "/fence", {"outcome": OUTCOME, "epoch": EPOCH})
+        # Prove the endpoint is actually reachable before DAR touches it.
+        evidence["initial_external_state"] = get(base)
         adapter = HTTPFencedAdapter(base)
         with tempfile.TemporaryDirectory() as d:
             auth = RefusalAuthority(make_store(d), {"human-a": b"a" * 32})
@@ -154,7 +149,7 @@ def main():
             try:
                 auth.commit_protected(refusal, adapter)
             except RuntimeError as exc:
-                evidence["simulated_crash"] = str(exc)
+                evidence["simulated_local_crash"] = str(exc)
             else:
                 raise AssertionError("crash simulation did not fire")
 
@@ -175,10 +170,14 @@ def main():
             evidence["external_refusal_retry"] = retry
             assert retry == {"ok": True, "idempotent": True}
 
+        evidence["final_external_state"] = get(base)
         evidence["verdict"] = "PASS"
     finally:
-        server.shutdown()
-        thread.join(timeout=2)
+        authority.terminate()
+        try:
+            authority.wait(timeout=2)
+        except subprocess.TimeoutExpired:
+            authority.kill(); authority.wait(timeout=2)
     print(json.dumps(evidence, sort_keys=True, indent=2))
 
 
