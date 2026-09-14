@@ -3,7 +3,8 @@
 The ordinary RecoverableEffectAdapter contract is NOT sufficient to prove an
 external outcome did not occur after a DAR refusal. Strong protected-outcome
 claims require a fenced adapter whose commit operation atomically checks the
-current monotonic fence in the same authority that makes the external effect.
+current monotonic fence and the authoritative terminal refusal state in the
+same authority that makes the external effect.
 """
 from dataclasses import dataclass
 from enum import Enum
@@ -28,17 +29,25 @@ class RecoverableEffectAdapter:
     def execute(self, idempotency_key, params): raise NotImplementedError
 
 class FencedEffectAdapter(RecoverableEffectAdapter):
-    """Required boundary for the strong `NO => no protected_commit` claim.
+    """Required boundary for the strong protected-outcome claim.
 
-    `commit` MUST atomically enforce: fence_epoch is still current for
-    outcome_key, and no protected external effect is made if the fence has
-    already advanced. The adapter's status must durably reflect the same
-    external transaction and be authoritative for recovery.
+    The external authority must durably record terminal refusal state for an
+    outcome. `commit` must atomically reject when that outcome is refused,
+    regardless of numeric fence equality, and must atomically enforce that the
+    supplied fence is still current before making the protected effect.
     """
     def commit(self, idempotency_key, outcome_key, fence_epoch, params):
         raise NotImplementedError
 
     def current_fence(self, outcome_key):
+        raise NotImplementedError
+
+    def refuse_outcome(self, outcome_key, fence_epoch, refusal_id):
+        """Atomically install the terminal external refusal marker."""
+        raise NotImplementedError
+
+    def is_refused(self, outcome_key):
+        """Return authoritative terminal refusal state for an outcome."""
         raise NotImplementedError
 
 def _params_digest(params): return canonical_digest(params)
@@ -54,11 +63,13 @@ def recover(adapter, txn, params):
     return final
 
 def protected_commit(adapter, txn, params):
-    """Perform an externally fenced commit; refusal wins once its fence is advanced."""
+    """Perform an externally fenced commit; terminal refusal wins atomically."""
     if not isinstance(adapter, FencedEffectAdapter):
         raise AdapterContractError('strong protected outcome requires FencedEffectAdapter')
     if _params_digest(params) != txn.params_digest: raise AdapterContractError('commit params do not match durable intent')
     outcome_key = canonical_outcome_key(txn.outcome_key)
+    if adapter.is_refused(outcome_key):
+        raise AdapterContractError('protected outcome is terminally refused')
     fence = adapter.current_fence(outcome_key)
     if int(fence) != int(txn.fence_epoch):
         raise AdapterContractError('protected outcome fence is no longer current')
