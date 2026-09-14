@@ -1,4 +1,4 @@
-"""Deterministic canonicalization for capability-bound parameters."""
+"""Deterministic canonicalization for capability-bound parameters and effect identities."""
 import hashlib
 import json
 import math
@@ -6,6 +6,17 @@ import unicodedata
 
 class CanonicalizationError(ValueError):
     pass
+
+def canonical_effect_id(value):
+    """Return the canonical logical identity used by refusal/gate matching.
+
+    Effect IDs are textual identifiers, so DAR treats canonically equivalent
+    Unicode spellings as the same identity.  Policy-specific case folding or
+    whitespace rules are intentionally not implicit here.
+    """
+    if not isinstance(value, str) or not value:
+        raise CanonicalizationError("effect_id must be a non-empty string")
+    return unicodedata.normalize("NFC", value)
 
 def _normalize(value):
     if value is None or isinstance(value, (bool, int)):
