@@ -27,9 +27,11 @@ class Kernel:
         if action not in allowed: raise PermissionError(f'unsupported action/effect class: {action}')
         return action
     def issue(self,principal,domain,action,proposed,nonce=None,params=None,effect_id=None,outcome_key=None):
+        nonce=nonce or secrets.token_hex(32)
+        if effect_id is None: effect_id=secrets.token_hex(16)
         effect_id=canonical_effect_id(effect_id)
         if outcome_key is not None: outcome_key=canonical_outcome_key(outcome_key)
-        nonce=nonce or secrets.token_hex(32); effect_class=self._effect_class(action); pd=self._params_digest({} if params is None else params)
+        effect_class=self._effect_class(action); pd=self._params_digest({} if params is None else params)
         with self.store.tx():
             s=self.store._read()
             if s.boot_id and s.boot_id!=self.boot_id: raise RuntimeError('boot identity mismatch')
@@ -45,8 +47,7 @@ class Kernel:
             self.store._write_atomic(Snapshot(proposed.epoch,seq,s.nonces|{nonce},s.consumed,s.commits+(commit,),proposed.canonical(),self.boot_id,s.effects,s.pending_effects))
             return cap
     def issue_protected(self,principal,domain,action,proposed,nonce=None,params=None,effect_id=None,outcome_key=None):
-        if outcome_key is None:
-            raise ValueError('protected effects require an explicit outcome_key')
+        if outcome_key is None: raise ValueError('protected effects require an explicit outcome_key')
         return self.issue(principal,domain,action,proposed,nonce,params,effect_id,outcome_key)
     def verify_locked(self,cap,principal,domain,action,effect_class,s):
         if (cap.boot_id!=self.boot_id or cap.principal!=principal or cap.domain!=domain or cap.action!=action or cap.effect_class!=effect_class or cap.epoch!=s.epoch): return False
