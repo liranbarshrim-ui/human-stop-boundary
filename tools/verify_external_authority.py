@@ -112,3 +112,4 @@ if __name__ == "__main__":
     except Exception as exc:
         print(f"FAIL: {exc}", file=sys.stderr)
         raise
+# Trigger live external-authority evidence after the deployed authority update.
