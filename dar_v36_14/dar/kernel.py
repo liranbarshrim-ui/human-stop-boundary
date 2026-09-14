@@ -3,7 +3,7 @@ from dataclasses import dataclass
 from .model import SystemState
 from .policy import validate_transition
 from .store import Snapshot
-from .canonical import canonical_digest
+from .canonical import canonical_digest, canonical_effect_id
 
 @dataclass(frozen=True)
 class Capability:
@@ -27,7 +27,7 @@ class Kernel:
         if action not in allowed: raise PermissionError(f'unsupported action/effect class: {action}')
         return action
     def issue(self,principal,domain,action,proposed,nonce=None,params=None,effect_id=None):
-        if not effect_id: raise ValueError('effect_id is required and must be bound at capability issuance')
+        effect_id=canonical_effect_id(effect_id)
         nonce=nonce or secrets.token_hex(32); effect_class=self._effect_class(action); pd=self._params_digest({} if params is None else params)
         with self.store.tx():
             s=self.store._read()
@@ -47,6 +47,10 @@ class Kernel:
         if (cap.boot_id!=self.boot_id or cap.principal!=principal or cap.domain!=domain or cap.action!=action or cap.effect_class!=effect_class or cap.epoch!=s.epoch): return False
         pd=getattr(cap,'params_digest',''); effect_id=getattr(cap,'effect_id','')
         if not pd or not effect_id: return False
+        try:
+            if canonical_effect_id(effect_id) != effect_id: return False
+        except Exception:
+            return False
         exp=self._mac(cap.txid,cap.sequence,cap.nonce,cap.epoch,cap.boot_id,cap.principal,cap.domain,cap.action,cap.effect_class,cap.mutation_class,cap.state_digest,pd,effect_id)
         if not hmac.compare_digest(exp,cap.mac): return False
         return any(r['txid']==cap.txid and r['sequence']==cap.sequence and r['nonce']==cap.nonce and r['state_digest']==cap.state_digest and r.get('effect_class',r.get('action'))==cap.effect_class and r.get('params_digest','')==pd and r.get('effect_id','')==effect_id for r in s.commits)
