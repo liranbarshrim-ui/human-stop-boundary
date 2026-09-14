@@ -1,6 +1,8 @@
 """External authority for DAR verification.
 
-Default mode remains in-memory for deterministic local/deployment tests.
+The external authority is deliberately fail-closed when PostgreSQL persistence
+is requested but DATABASE_URL is absent or unusable. In-memory mode is only
+allowed when persistence mode is explicitly ``memory`` (or omitted).
 When DATABASE_URL is configured, all authoritative state is stored in
 PostgreSQL and refusal/commit serialize through a transaction-scoped
 advisory lock. This makes restart persistence testable without silently
@@ -17,7 +19,14 @@ from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 from urllib.parse import urlsplit
 
 
+PERSISTENCE_MODE = os.environ.get("DAR_PERSISTENCE_MODE", "memory").strip().lower()
 DB_URL = os.environ.get("DATABASE_URL", "").strip()
+
+if PERSISTENCE_MODE not in {"memory", "postgres"}:
+    raise RuntimeError(f"Unsupported DAR_PERSISTENCE_MODE: {PERSISTENCE_MODE!r}")
+if PERSISTENCE_MODE == "postgres" and not DB_URL:
+    raise RuntimeError("DAR_PERSISTENCE_MODE=postgres requires DATABASE_URL")
+
 if DB_URL:
     try:
         from dar_v36_14.postgres_authority import PostgresAuthority
