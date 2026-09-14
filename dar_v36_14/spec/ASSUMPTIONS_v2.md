@@ -2,7 +2,7 @@
 
 Status: **PRE-REGISTERED / NOT INDEPENDENTLY VALIDATED**
 
-The v3 strong property adds the external atomicity condition required to turn an advisory fence check into an outcome-level safety claim.
+The v3 strong property requires an external authority that couples the monotonic commit fence with a terminal outcome-refusal state. A numeric fence alone is insufficient after crashes that can leave local DAR state behind the external authority.
 
 | ID | Assumption | Verification target | Required for PASS |
 |---|---|---|---|
@@ -16,8 +16,9 @@ The v3 strong property adds the external atomicity condition required to turn an
 | A8 | Results are evaluated against frozen classification rules. | independent reproduction | Yes |
 | A9 | A trusted monotonic anchor exists outside the Store rollback domain. | deployment/anchor audit plus rollback restoration test | Yes |
 | A10 | Fence advancement and protected external commit are serialized by the same authoritative external mechanism. | independent adapter/transaction audit plus adversarial race test | Yes |
-| A11 | No alternate interface can create the protected outcome without the same authoritative fence. | independent completeness/escape audit | Yes |
+| A11 | No alternate interface can create the protected outcome without the same authoritative fence and refusal state. | independent completeness/escape audit | Yes |
 | A12 | Repeated accepted commits are idempotent for the protected outcome. | retry/crash/replay testing | Yes |
+| A13 | Terminal refusal state for `outcome_key` is durably authoritative and is atomically checked by the same external mechanism that can create the protected outcome; it cannot be cleared or bypassed by a numeric fence update. | refusal/commit crash, retry, rollback, and race audit | Yes |
 
 ## Critical conditions
 
@@ -25,11 +26,13 @@ The v3 strong property adds the external atomicity condition required to turn an
 
 **A9 is mandatory for anti-rollback.** Snapshot authentication does not establish freshness.
 
-**A10 is mandatory for the strong `NO => no later outcome` claim.** A DAR-side `current_fence()` check is only advisory. The decisive safety check must occur atomically at the external commit point. If a race can advance the fence between the advisory read and the external operation, the external operation must reject the stale epoch without producing the protected outcome.
+**A10 is mandatory for atomic exclusion.** A DAR-side `current_fence()` check is only advisory. The decisive safety check must occur atomically at the external commit point, sharing the same serialization authority as refusal publication.
 
-**A11 closes alternate-path bypass.** A fence protecting one API does not protect a second API, direct database path, recovery worker, subprocess, or side channel unless those paths are covered by the same authoritative enforcement point.
+**A11 closes alternate-path bypass.** A fence protecting one API does not protect a second API, direct database path, recovery worker, subprocess, or side channel unless those paths are covered by the same authoritative enforcement point and terminal refusal state.
 
 **A12 prevents replay from creating additional protected outcomes after a successful commit.**
+
+**A13 closes the crash/equality gap.** A fence value such as `2` does not distinguish “epoch 2 is current” from “epoch 2 became terminally refused.” The external authority therefore needs an explicit refusal marker (or independently equivalent terminal state) and `commit` must reject that outcome regardless of numeric fence equality. A crash after external refusal publication but before local DAR publication may reduce availability, but must not reopen the outcome.
 
 ## Classification discipline
 
