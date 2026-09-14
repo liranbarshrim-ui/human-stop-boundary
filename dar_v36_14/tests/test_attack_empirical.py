@@ -104,9 +104,8 @@ class AttackEmpiricalTests(unittest.TestCase):
             with self.assertRaises(CanonicalizationError): canonical_effect_id("cafe\u0301")
             cap=issue_write(kernel,p,"cafe-1")
             refusal=auth.issue("human","cafe-1",cap.txid); auth.commit(refusal)
-            # issue_write derives proposed.epoch from the store, so this remains valid after refusal.
-            cap2=issue_write(kernel,p,"cafe-2",nonce="n2")
-            req=EffectRequest(cap2,"human","root","WRITE","cafe-2","WRITE")
+            cap2=issue_write(kernel,p,"cafe-1",nonce="n2")
+            req=EffectRequest(cap2,"human","root","WRITE","cafe-1","WRITE")
             with self.assertRaises(EffectDenied): gate.execute(req,lambda:"should-not-run",p)
     def test_a15_effect_id_rejects_ambiguous_unicode_and_control_input(self):
         bad_ids=("wіre-001","wıre-001","wire-\u200b001","wire-\u200d001","wire-001\u0000","wire-001\u007f"," wire-001","wire-001 ","wire-001\t","wire-001\n","café","cafe\u0301")
