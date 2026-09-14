@@ -22,7 +22,12 @@ class PostgresAuthority:
         self._init_schema()
 
     def _connect(self):
-        return psycopg.connect(self.dsn, row_factory=dict_row, connect_timeout=10)
+        return psycopg.connect(
+            self.dsn,
+            row_factory=dict_row,
+            connect_timeout=10,
+            sslmode="require",
+        )
 
     @staticmethod
     def _lock_key(outcome: str) -> int:
