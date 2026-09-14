@@ -75,21 +75,25 @@ class ProtectedOutcomeFenceTests(unittest.TestCase):
     def test_protected_reconcile_never_calls_unfenced_execute(self):
         with tempfile.TemporaryDirectory() as d:
             store,kernel=self.make(d); gate=EffectGate(kernel); adapter=FencedAdapter(); outcome='facefeed'; adapter.fences[outcome]=1
-            intent={'key':'tx:000005','capability_txid':'tx','effect_id':'000005','outcome_key':outcome,'idempotency_key':'tx:000005','effect_class':'WRITE','params_digest':kernel._params_digest({'x':5}),'epoch':0}
+            intent={'key':'tx:000005','capability_txid':'tx','effect_id':'000005','outcome_key':outcome,'idempotency_key':'tx:000005','effect_class':'WRITE','params_digest':kernel._params_digest({'x':5}),'epoch':1}
             s=store._read(); store._write_atomic(Snapshot(s.epoch,s.sequence+1,s.nonces,s.consumed,s.commits,s.state_payload,s.boot_id,s.effects,(intent,))); journal=Journal()
             self.assertEqual(gate.reconcile_pending(adapter,journal,lambda _intent:{'x':5}),1); self.assertEqual(adapter.execute_calls,0); self.assertEqual(adapter.effects['tx:000005'][0],outcome)
 
     def test_protected_reconcile_refuses_after_external_fence_advance(self):
         with tempfile.TemporaryDirectory() as d:
             store,kernel=self.make(d); gate=EffectGate(kernel); adapter=FencedAdapter(); outcome='badc0de'; adapter.fences[outcome]=1
-            intent={'key':'tx:000006','capability_txid':'tx','effect_id':'000006','outcome_key':outcome,'idempotency_key':'tx:000006','effect_class':'WRITE','params_digest':kernel._params_digest({'x':6}),'epoch':0}
+            intent={'key':'tx:000006','capability_txid':'tx','effect_id':'000006','outcome_key':outcome,'idempotency_key':'tx:000006','effect_class':'WRITE','params_digest':kernel._params_digest({'x':6}),'epoch':1}
             s=store._read(); store._write_atomic(Snapshot(s.epoch,s.sequence+1,s.nonces,s.consumed,s.commits,s.state_payload,s.boot_id,s.effects,(intent,)))
             refusal=RefusalAuthority(store,{'human':SECRET}).issue_protected('human','000006','tx',outcome,target_epoch=2); RefusalAuthority(store,{'human':SECRET}).commit_protected(refusal,adapter); journal=Journal()
             self.assertEqual(gate.reconcile_pending(adapter,journal,lambda _intent:{'x':6}),1); self.assertEqual(adapter.execute_calls,0); self.assertNotIn('tx:000006',adapter.effects); self.assertEqual(journal._validated_state()['tx:000006']['status'],'REFUSED')
 
     def test_adversarial_race_after_advisory_fence_check_cannot_commit(self):
-        adapter=RacingFenceAdapter(); txn=EffectTxn('k','k','WRITE','x','aabbcc',1)
+        adapter=RacingFenceAdapter(); txn=EffectTxn('k','k','WRITE',kernel_digest({'x':1}),'aabbcc',1)
         with self.assertRaises(AdapterContractError): protected_commit(adapter,txn,{'x':1})
         self.assertEqual(adapter.effects,{})
+
+def kernel_digest(params):
+    from dar.canonical import canonical_digest
+    return canonical_digest(params)
 
 if __name__=='__main__': unittest.main()
