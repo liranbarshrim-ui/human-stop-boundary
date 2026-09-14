@@ -102,12 +102,12 @@ class AttackEmpiricalTests(unittest.TestCase):
         with tempfile.TemporaryDirectory() as d:
             store,kernel=make_kernel(d); gate=EffectGate(kernel); auth=RefusalAuthority(store,{"human":b"a"*32}); p={"path":"a14.txt","data":"same"}
             decomposed="cafe\u0301"; composed="café"
-            self.assertEqual(canonical_effect_id(decomposed),composed)
-            cap=issue_write(kernel,p,decomposed)
-            self.assertEqual(cap.effect_id,composed)
-            refusal=auth.issue("human",decomposed,cap.txid); auth.commit(refusal)
-            cap2=issue_write(kernel,p,decomposed,nonce="n2")
-            req=EffectRequest(cap2,"human","root","WRITE",decomposed,"WRITE")
+            with self.assertRaises(CanonicalizationError): canonical_effect_id(decomposed)
+            cap=issue_write(kernel,p,"cafe-1")
+            self.assertEqual(cap.effect_id,"cafe-1")
+            refusal=auth.issue("human","cafe-1",cap.txid); auth.commit(refusal)
+            cap2=issue_write(kernel,p,"cafe-2",nonce="n2")
+            req=EffectRequest(cap2,"human","root","WRITE","cafe-2","WRITE")
             with self.assertRaises(EffectDenied): gate.execute(req,lambda:"should-not-run",p)
     def test_a15_effect_id_rejects_ambiguous_unicode_and_control_input(self):
         bad_ids=("wіre-001","wıre-001","wire-\u200b001","wire-\u200d001","wire-001\u0000","wire-001\u007f"," wire-001","wire-001 ","wire-001\t","wire-001\n","café","cafe\u0301")
