@@ -1,0 +1,50 @@
+name: DAR External Authority Evidence
+
+on:
+  workflow_dispatch:
+    inputs:
+      authority_url:
+        description: 'Live external authority URL (optional; secret is preferred)'
+        required: false
+        type: string
+  push:
+    paths:
+      - 'tools/verify_external_authority.py'
+      - '.github/workflows/external-authority-evidence.yml'
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Resolve authority URL
+        id: url
+        env:
+          SECRET_URL: ${{ secrets.DAR_EXTERNAL_AUTHORITY_URL }}
+          INPUT_URL: ${{ inputs.authority_url }}
+        run: |
+          set -euo pipefail
+          url="$SECRET_URL"
+          if [ -z "$url" ]; then url="$INPUT_URL"; fi
+          if [ -z "$url" ]; then
+            echo 'DAR_EXTERNAL_AUTHORITY_URL is not configured. Add the repository secret or dispatch with authority_url.'
+            exit 1
+          fi
+          echo 'url<<EOF' >> "$GITHUB_OUTPUT"
+          echo "$url" >> "$GITHUB_OUTPUT"
+          echo 'EOF' >> "$GITHUB_OUTPUT"
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Verify live authority
+        env:
+          DAR_EXTERNAL_AUTHORITY_URL: ${{ steps.url.outputs.url }}
+        run: |
+          set -euo pipefail
+          python tools/verify_external_authority.py | tee external-authority-evidence.json
+      - name: Upload evidence
+        uses: actions/upload-artifact@v4
+        with:
+          name: dar-external-authority-evidence-${{ github.run_id }}
+          path: external-authority-evidence.json
+          if-no-files-found: error
