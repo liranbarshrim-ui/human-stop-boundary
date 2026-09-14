@@ -30,6 +30,50 @@ REQUEST_RETRIES = int(os.environ.get("DAR_REQUEST_RETRIES", "4"))
 PROGRESS_INTERVAL = int(os.environ.get("DAR_PROGRESS_INTERVAL", "100"))
 HEARTBEAT_SECONDS = float(os.environ.get("DAR_PROGRESS_HEARTBEAT_SECONDS", "60"))
 GATEWAY_CODES = {502, 503, 504}
+GITHUB_TOKEN = os.environ.get("DAR_HEARTBEAT_GITHUB_TOKEN")
+GITHUB_REPOSITORY = os.environ.get("GITHUB_REPOSITORY")
+GITHUB_SHA = os.environ.get("GITHUB_SHA")
+STATUS_CONTEXT = "DAR / 10K-B progress"
+_status_lock = threading.Lock()
+
+
+def _publish_progress(completed: int, state: str = "pending") -> None:
+    """Publish progress as a GitHub commit status, independent of live logs."""
+    if not (GITHUB_TOKEN and GITHUB_REPOSITORY and GITHUB_SHA):
+        return
+    description = f"10K-B progress: {completed}/{ROUNDS} rounds completed"
+    if state == "success":
+        description = f"10K-B PASS: {completed}/{ROUNDS} rounds completed"
+    elif state == "failure":
+        description = f"10K-B FAIL: {completed}/{ROUNDS} rounds completed"
+    body = json.dumps({
+        "state": state,
+        "target_url": f"https://github.com/{GITHUB_REPOSITORY}/actions/runs/{os.environ.get('GITHUB_RUN_ID', '')}",
+        "description": description[:140],
+        "context": STATUS_CONTEXT,
+    }).encode()
+    req = urllib.request.Request(
+        f"https://api.github.com/repos/{GITHUB_REPOSITORY}/statuses/{GITHUB_SHA}",
+        data=body,
+        headers={
+            "Accept": "application/vnd.github+json",
+            "Authorization": f"Bearer {GITHUB_TOKEN}",
+            "Content-Type": "application/json",
+            "X-GitHub-Api-Version": "2022-11-28",
+        },
+        method="POST",
+    )
+    with _status_lock:
+        try:
+            with urllib.request.urlopen(req, timeout=10):
+                pass
+        except Exception as exc:
+            print(json.dumps({
+                "evidence_type": "external-authority-concurrent-load-status-warning",
+                "error": repr(exc),
+                "completed_rounds": completed,
+                "rounds": ROUNDS,
+            }, sort_keys=True), flush=True)
 
 
 def _request(req: urllib.request.Request) -> tuple[int, dict]:
@@ -143,6 +187,8 @@ def main() -> None:
     lock = threading.Lock()
     stop_heartbeat = threading.Event()
 
+    _publish_progress(0)
+
     def heartbeat() -> None:
         while not stop_heartbeat.wait(HEARTBEAT_SECONDS):
             with lock:
@@ -154,6 +200,7 @@ def main() -> None:
                 "rounds": ROUNDS,
                 "workers": WORKERS,
             }, sort_keys=True), flush=True)
+            _publish_progress(done)
 
     heartbeat_thread = threading.Thread(target=heartbeat, daemon=True)
     heartbeat_thread.start()
@@ -183,6 +230,7 @@ def main() -> None:
                                 "rounds": ROUNDS,
                                 "workers": WORKERS,
                             }, sort_keys=True), flush=True)
+                            _publish_progress(completed)
                     except Exception as exc:
                         failures.append(f"round={index}: {exc!r}")
                     if next_index < ROUNDS:
@@ -194,6 +242,7 @@ def main() -> None:
         heartbeat_thread.join(timeout=1)
 
     if failures or len(results) != ROUNDS:
+        _publish_progress(len(results), "failure")
         evidence = {
             "evidence_type": "external-authority-concurrent-load-black-box",
             "base_url": BASE_URL,
@@ -219,6 +268,7 @@ def main() -> None:
     committed = sum(1 for item in results if item["committed"])
     assert refused + committed == ROUNDS
 
+    _publish_progress(ROUNDS, "success")
     evidence = {
         "evidence_type": "external-authority-concurrent-load-black-box",
         "base_url": BASE_URL,
