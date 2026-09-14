@@ -4,7 +4,7 @@
   "supersedes": "boundary_manifest_v2.json for future strong outcome-fence runs; prior results remain historical",
   "effective_boundary": {
     "protected_effect_classes": ["WRITE"],
-    "registered_interfaces": ["EffectGate.execute_protected", "FencedEffectAdapter.commit"],
+    "registered_interfaces": ["EffectGate.execute_protected", "FencedEffectAdapter.commit", "FencedEffectAdapter.refuse_outcome"],
     "commit_event": "authoritative_external_outcome_commit",
     "refusal_terminal": true
   },
@@ -13,7 +13,8 @@
     "A9_external_monotonic_anchor": true,
     "A10_same_authority_fence_commit_serialization": true,
     "A11_no_alternate_protected_outcome_path": true,
-    "A12_idempotent_retries": true
+    "A12_idempotent_retries": true,
+    "A13_terminal_external_refusal_state": true
   },
   "classification": ["PASS", "FAIL", "OUT-OF-SCOPE", "AMBIGUOUS"],
   "rules": {
@@ -21,10 +22,11 @@
     "ambiguous_is_not_pass": true,
     "out_of_scope_requires_pre_registered_reason": true,
     "missing_required_condition_is_not_pass": true,
-    "unknown_external_status_is_not_no": true
+    "unknown_external_status_is_not_no": true,
+    "terminal_refusal_cannot_be_cleared_by_numeric_fence_update": true
   },
-  "property": "VALID_REFUSAL => NO_PROTECTED_OUTCOME_AFTER_FENCE",
-  "claim": "For a frozen deployment satisfying A1, A9, A10, A11 and A12, once an authenticated refusal advances the authoritative external fence for outcome O, no later protected operation may produce O.",
+  "property": "VALID_REFUSAL => NO_PROTECTED_OUTCOME_AFTER_TERMINAL_REFUSAL",
+  "claim": "For a frozen deployment satisfying A1, A9, A10, A11, A12 and A13, once an authenticated refusal installs terminal external refusal state for outcome O, no later protected operation may produce O.",
   "non_claims": [
     "No universal AI control",
     "No system-wide complete mediation without independent interface evidence",
