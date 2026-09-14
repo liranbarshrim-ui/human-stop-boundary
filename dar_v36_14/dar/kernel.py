@@ -28,8 +28,7 @@ class Kernel:
         return action
     def issue(self,principal,domain,action,proposed,nonce=None,params=None,effect_id=None,outcome_key=None):
         nonce=nonce or secrets.token_hex(32)
-        if effect_id is None: effect_id=secrets.token_hex(16)
-        effect_id=canonical_effect_id(effect_id)
+        effect_id='' if effect_id is None else canonical_effect_id(effect_id)
         if outcome_key is not None: outcome_key=canonical_outcome_key(outcome_key)
         effect_class=self._effect_class(action); pd=self._params_digest({} if params is None else params)
         with self.store.tx():
@@ -47,14 +46,15 @@ class Kernel:
             self.store._write_atomic(Snapshot(proposed.epoch,seq,s.nonces|{nonce},s.consumed,s.commits+(commit,),proposed.canonical(),self.boot_id,s.effects,s.pending_effects))
             return cap
     def issue_protected(self,principal,domain,action,proposed,nonce=None,params=None,effect_id=None,outcome_key=None):
+        if effect_id is None: raise ValueError('protected effects require an explicit effect_id')
         if outcome_key is None: raise ValueError('protected effects require an explicit outcome_key')
         return self.issue(principal,domain,action,proposed,nonce,params,effect_id,outcome_key)
     def verify_locked(self,cap,principal,domain,action,effect_class,s):
         if (cap.boot_id!=self.boot_id or cap.principal!=principal or cap.domain!=domain or cap.action!=action or cap.effect_class!=effect_class or cap.epoch!=s.epoch): return False
         pd=getattr(cap,'params_digest',''); effect_id=getattr(cap,'effect_id',''); outcome_key=getattr(cap,'outcome_key','')
-        if not pd or not effect_id: return False
+        if not pd: return False
         try:
-            if canonical_effect_id(effect_id) != effect_id: return False
+            if effect_id and canonical_effect_id(effect_id) != effect_id: return False
             if outcome_key and canonical_outcome_key(outcome_key) != outcome_key: return False
         except Exception:
             return False
