@@ -1,51 +1,64 @@
-# DAR Protected-Effect Semantics v1
+# DAR Protected-Effect Semantics v2
 
-Status: SPECIFICATION / REQUIRED FOR V2 CORE VALIDATION
+Status: SPECIFICATION / STRONG OUTCOME-FENCE PROFILE
 
 ## 1. Protected commit
 
-`protected_commit(e)` denotes the externally observable commit of protected effect instance `e`, not merely a DAR journal record.
+`protected_commit(e)` denotes the externally observable irreversible outcome DAR intends to prevent, not a DAR journal record.
 
-A DAR journal record with status `COMMITTED` is evidence about the enforcement mechanism. It is not, by itself, the definition of the real-world effect.
+A DAR journal record with status `COMMITTED` is mechanism evidence only. It is never the definition of the real-world outcome.
 
-## 2. Boundary requirement
+## 2. Two identities are mandatory
 
-For a v2 claim, the protected effect MUST be specified at the level of the outcome DAR intends to prevent.
+`effect_id` identifies a protocol invocation. It is NOT the semantic identity of the protected outcome.
 
-Examples may include:
+`outcome_key` identifies the stable external outcome being fenced. It MUST be supplied by the deployment/business protocol and MUST NOT be inferred from `effect_id` or blindly derived from parameters.
 
-- a durable database mutation;
-- an externally delivered message that causes the protected state transition;
-- a filesystem mutation when that mutation itself is the protected outcome;
-- an external API action when that action is the protected outcome.
+A valid protected capability and a valid protected refusal MUST bind cryptographically to the same `outcome_key`.
 
-A syscall, `open`, `write`, adapter invocation, or journal entry is not automatically the protected outcome.
+## 3. Strong outcome-fence contract
 
-## 3. Crash semantics
+The strong DAR profile requires an external `FencedEffectAdapter` (or an independently equivalent mechanism) with:
 
-The following trace is explicitly distinguished:
+1. an authoritative monotonic fence per `outcome_key`;
+2. atomic fence advancement for refusal;
+3. an atomic protected commit operation that succeeds only when its fence is still current;
+4. durable idempotency by the protected transaction key;
+5. authoritative recovery status for the same external transaction;
+6. no protected side effect outside the fenced commit operation.
+
+Critical invariant:
+
+`refusal_fence(outcome_key) > commit_fence(outcome_key) => protected_commit(outcome_key) is impossible`
+
+The external system, not the DAR process, must enforce the final atomicity point.
+
+## 4. Crash semantics
+
+The old unsafe trace remains explicitly rejected as a proof strategy:
 
 `adapter.execute -> external side effect -> process crash -> refusal -> DAR REFUSED`
 
-If the external side effect is already irreversible, the trace contains `protected_commit` even if DAR subsequently records `REFUSED`.
+A later `REFUSED` record cannot erase an already-existing world outcome.
 
-Therefore DAR MUST NOT claim that a later `REFUSED` record proves that the external effect did not occur.
+Under the strong profile, the irreversible side effect is permitted only inside the externally fenced commit operation. A crash before the fenced commit leaves no committed protected outcome; a crash after it may leave an outcome recoverable as `COMMITTED`, but a later refusal cannot retroactively classify that earlier commit as absent.
 
-## 4. Formal property
+Safety ordering is established at the external fence, not by journal ordering.
 
-The intended v2 property is:
+## 5. Strong property
 
-`valid_refusal(r,e) ∧ r ≺ protected_commit(e) ∧ A1 ∧ A9 => ¬reachable(protected_commit(e))`
+For an in-boundary protected outcome `e`:
 
-where `r ≺ protected_commit(e)` means the valid refusal is durably ordered before the externally observable protected commit.
+`VALID_PROTECTED_REFUSAL(r,e) ∧ refusal_fence(e) advanced ∧ FENCED_ADAPTER(e) => ¬protected_commit(e) after the refusal fence`
 
-If the protected effect cannot be atomically coordinated with the enforcement boundary, the deployment MUST document that limitation and MUST NOT silently equate DAR state with world state.
+Equivalently, once the external refusal fence is durably advanced for the outcome, no later external protected commit for that outcome can succeed.
 
-## 5. Non-claims
+This is the DAR operational target:
 
-DAR does not currently establish:
+> **NO ⇒ outcome לא קרה**
 
-- prevention of an external side effect that occurs before a crash;
-- transactional atomicity between Store, journal, and an arbitrary external system;
-- compensation or rollback of an already irreversible external outcome;
-- complete mediation of outcomes outside the independently audited boundary.
+Precise temporal meaning: **NO must be established before the external commit point, and the external system must enforce the fence.**
+
+## 6. Non-claims
+
+DAR still does not claim to control arbitrary external systems. An adapter that can make irreversible effects without the fence is outside the strong profile. In that deployment the correct result is `NOT PASS`, not an inference that `DAR REFUSED` means the world outcome did not occur.
