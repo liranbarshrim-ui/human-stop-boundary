@@ -12,10 +12,10 @@ This file identifies third-party components and externally hosted resources curr
 - Package: `psycopg[binary]`
 - Pinned version in this repository: `3.2.10`
 - Purpose: PostgreSQL connectivity for the DAR authority implementation
-- License: PostgreSQL License (for the psycopg project; verify the package's distributed metadata for the exact applicable notices)
-- Source: https://www.psycopg.org/
+- License: GNU Lesser General Public License v3 (LGPL-3.0-only)
+- Source/project: https://www.psycopg.org/
 
-The dependency is not part of the proprietary DAR ownership claim. It remains governed by its own applicable license and distribution terms.
+The package metadata for psycopg 3.2.10 identifies the distribution as LGPLv3. The repository does not relicense psycopg; it remains governed by its own license and notices. The `[binary]` extra also distributes compiled/native components, so their respective upstream notices remain applicable. citeturn1search0turn1search2
 
 ## 2. Google Fonts
 
