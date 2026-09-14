@@ -7,6 +7,7 @@ attack the exact interleavings that a deployment must independently verify.
 import threading
 import unittest
 
+from dar.canonical import canonical_digest
 from dar.effect_transaction import FencedEffectAdapter, TxnStatus, AdapterContractError, EffectTxn, protected_commit
 
 
@@ -52,69 +53,62 @@ class AtomicFenceAuthority(FencedEffectAdapter):
 
 
 class AtomicFenceAuthorityTests(unittest.TestCase):
+    def _txn(self, key, outcome, epoch=1, params=None):
+        params = {"x": 1} if params is None else params
+        return EffectTxn(key, key, "WRITE", canonical_digest(params), outcome, epoch), params
+
     def test_refusal_versus_commit_serialization(self):
         a = AtomicFenceAuthority()
         outcome = "aa11"
+        txn, params = self._txn("k", outcome)
         a.fences[outcome] = 1
-        txn = EffectTxn("k", "k", "WRITE", "x", outcome, 1)
-
-        # If the refusal wins first, the commit is rejected at the same
-        # authority that advances the fence; there is no side effect.
         a.advance_fence(outcome, 2)
         with self.assertRaises(AdapterContractError):
-            protected_commit(a, txn, {"x": 1})
+            protected_commit(a, txn, params)
         self.assertEqual(a.effects, {})
 
     def test_commit_wins_before_refusal_then_refusal_cannot_claim_retroactive_no(self):
         a = AtomicFenceAuthority()
         outcome = "bb22"
+        txn, params = self._txn("k", outcome)
         a.fences[outcome] = 1
-        txn = EffectTxn("k", "k", "WRITE", "x", outcome, 1)
-        self.assertEqual(protected_commit(a, txn, {"x": 1}), TxnStatus.COMMITTED)
+        self.assertEqual(protected_commit(a, txn, params), TxnStatus.COMMITTED)
         self.assertEqual(a.effects["k"][0], outcome)
         a.advance_fence(outcome, 2)
-        # The model permits the refusal fence to advance, but the earlier
-        # committed outcome remains a fact. A DAR refusal cannot rewrite it.
         self.assertEqual(a.current_fence(outcome), 2)
         self.assertIn("k", a.effects)
 
     def test_crash_after_external_commit_is_unknown_not_no(self):
         a = AtomicFenceAuthority()
         outcome = "cc33"
+        txn, params = self._txn("k", outcome)
         a.fences[outcome] = 1
         a.fail_after_effect = True
-        txn = EffectTxn("k", "k", "WRITE", "x", outcome, 1)
         with self.assertRaises(AdapterContractError):
-            protected_commit(a, txn, {"x": 1})
-        # The external world has the effect even though the caller saw an
-        # exception. Any recovery layer must inspect authoritative status;
-        # it must never convert this state into NO.
+            protected_commit(a, txn, params)
         self.assertEqual(a.status("k"), TxnStatus.COMMITTED)
 
     def test_idempotent_retry_does_not_duplicate_outcome(self):
         a = AtomicFenceAuthority()
         outcome = "dd44"
+        txn, params = self._txn("k", outcome)
         a.fences[outcome] = 1
-        txn = EffectTxn("k", "k", "WRITE", "x", outcome, 1)
-        self.assertEqual(protected_commit(a, txn, {"x": 1}), TxnStatus.COMMITTED)
-        self.assertEqual(protected_commit(a, txn, {"x": 1}), TxnStatus.COMMITTED)
+        self.assertEqual(protected_commit(a, txn, params), TxnStatus.COMMITTED)
+        self.assertEqual(protected_commit(a, txn, params), TxnStatus.COMMITTED)
         self.assertEqual(len(a.effects), 1)
 
     def test_adversarial_commit_hook_can_advance_fence_but_atomicity_wins(self):
         a = AtomicFenceAuthority()
         outcome = "ee55"
+        txn, params = self._txn("k", outcome)
         a.fences[outcome] = 1
-        txn = EffectTxn("k", "k", "WRITE", "x", outcome, 1)
 
-        # The hook runs while the same authority lock is held. A real external
-        # implementation must provide equivalent serialization at its commit
-        # point; a separate advisory read is not sufficient.
         def try_advance(authority, key):
             authority.fences[key] = 2
 
         a.commit_attempt_hook = try_advance
         with self.assertRaises(AdapterContractError):
-            protected_commit(a, txn, {"x": 1})
+            protected_commit(a, txn, params)
         self.assertEqual(a.effects, {})
 
 
