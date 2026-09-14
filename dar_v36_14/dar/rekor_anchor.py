@@ -11,7 +11,6 @@ from __future__ import annotations
 import base64
 import hashlib
 import json
-import os
 import subprocess
 import tempfile
 import urllib.request
@@ -95,6 +94,7 @@ class RekorMonotonicAnchor:
         uuid = next(iter(response))
         entry = response[uuid]
         log_index = int(entry["logIndex"])
-        tree_size = int(entry["verification"]["signedEntryTimestamp"]["integratedTime"] if False else entry.get("logIndex", 0))
+        proof = entry.get("verification", {}).get("inclusionProof", {})
+        tree_size = int(proof.get("treeSize", log_index + 1))
         self.advance_to(log_index)
         return RekorAnchorRecord(uuid, log_index, tree_size, digest)
