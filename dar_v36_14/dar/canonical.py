@@ -8,22 +8,18 @@ import unicodedata
 class CanonicalizationError(ValueError):
     pass
 
-_EFFECT_ID_RE = re.compile(r"^[A-Za-z0-9._:-]+$")
+# Effect IDs are opaque protocol tokens. Lowercase hex removes ASCII
+# confusables (O/0, I/l/1) and case ambiguity rather than attempting a
+# context-dependent visual mapping.
+_EFFECT_ID_RE = re.compile(r"^[0-9a-f]+$")
 
 def canonical_effect_id(value):
-    """Return the canonical, unambiguous identity used by refusal/gate matching.
-
-    Effect IDs are protocol identifiers, not free-form display text. NFC is
-    applied first, then the identifier is restricted to a deliberately small
-    ASCII grammar. This prevents zero-width/control characters, bidi marks,
-    whitespace variants, and Unicode homoglyphs from creating visually
-    confusable but distinct refusal identities.
-    """
+    """Return the canonical, unambiguous protocol identity for an effect."""
     if not isinstance(value, str) or not value:
         raise CanonicalizationError("effect_id must be a non-empty string")
     normalized = unicodedata.normalize("NFC", value)
     if not _EFFECT_ID_RE.fullmatch(normalized):
-        raise CanonicalizationError("effect_id must match [A-Za-z0-9._:-]+ after NFC normalization")
+        raise CanonicalizationError("effect_id must be lowercase hexadecimal [0-9a-f]+ after NFC normalization")
     return normalized
 
 def _normalize(value):
