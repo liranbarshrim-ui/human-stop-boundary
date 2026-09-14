@@ -2,6 +2,11 @@ name: DAR External Stress Conformance
 
 on:
   workflow_dispatch:
+  push:
+    paths:
+      - .github/workflows/external-load-stress.yml
+      - tests/test_external_load.py
+      - dar_v36_14/postgres_authority.py
 
 jobs:
   external-stress:
