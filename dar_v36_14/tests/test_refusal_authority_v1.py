@@ -119,7 +119,8 @@ class RefusalAuthorityTests(unittest.TestCase):
             self.assertEqual(store._read().state_payload.get('refusals', []), [])
             txn = EffectTxn('new', 'new', 'WRITE', canonical_digest({'x': 1}), 'deadbeef', 1)
             with self.assertRaises(AdapterContractError):
-                protected_commit(adapter, txn, {'x': 1})\            self.assertEqual(adapter.effects, {})
+                protected_commit(adapter, txn, {'x': 1})
+            self.assertEqual(adapter.effects, {})
 
     def test_protected_refusal_retry_is_idempotent(self):
         with tempfile.TemporaryDirectory() as d:
@@ -129,8 +130,7 @@ class RefusalAuthorityTests(unittest.TestCase):
             refusal = auth.issue_protected('human-a', 'effect-1', 'tx-1', 'feed01', target_epoch=1, refusal_id='r1')
             auth.commit_protected(refusal, adapter)
             self.assertTrue(adapter.is_refused('feed01'))
-            with self.assertRaises(ValueError):
-                auth.commit_protected(refusal, adapter)
+            self.assertEqual(auth.commit_protected(refusal, adapter), refusal)
 
     def test_external_fence_is_not_retroactive(self):
         with tempfile.TemporaryDirectory() as d:
