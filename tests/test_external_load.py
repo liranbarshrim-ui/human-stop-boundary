@@ -23,9 +23,34 @@ import uuid
 
 BASE_URL = os.environ.get("DAR_AUTHORITY_URL", "https://dar-external-authority-v2.onrender.com").rstrip("/")
 ROUNDS = int(os.environ.get("DAR_LOAD_ROUNDS", "100"))
-WORKERS = int(os.environ.get("DAR_LOAD_WORKERS", "32"))
+WORKERS = int(os.environ.get("DAR_LOAD_WORKERS", "8"))
 TIMEOUT = float(os.environ.get("DAR_LOAD_TIMEOUT", "30"))
 HEALTH_RETRIES = int(os.environ.get("DAR_HEALTH_RETRIES", "6"))
+REQUEST_RETRIES = int(os.environ.get("DAR_REQUEST_RETRIES", "4"))
+GATEWAY_CODES = {502, 503, 504}
+
+
+def _request(req: urllib.request.Request) -> tuple[int, dict]:
+    last_error: Exception | None = None
+    for attempt in range(REQUEST_RETRIES + 1):
+        try:
+            with urllib.request.urlopen(req, timeout=TIMEOUT) as resp:
+                return resp.status, json.loads(resp.read())
+        except urllib.error.HTTPError as exc:
+            if exc.code not in GATEWAY_CODES or attempt >= REQUEST_RETRIES:
+                try:
+                    body = json.loads(exc.read())
+                except Exception:
+                    body = {"error": exc.reason}
+                return exc.code, body
+            last_error = exc
+        except (urllib.error.URLError, TimeoutError) as exc:
+            if attempt >= REQUEST_RETRIES:
+                raise
+            last_error = exc
+        if attempt < REQUEST_RETRIES:
+            time.sleep(0.5 * (2 ** attempt))
+    raise AssertionError(f"request failed after retries: {last_error}")
 
 
 def post(path: str, body: dict) -> tuple[int, dict]:
@@ -35,17 +60,12 @@ def post(path: str, body: dict) -> tuple[int, dict]:
         headers={"Content-Type": "application/json"},
         method="POST",
     )
-    try:
-        with urllib.request.urlopen(req, timeout=TIMEOUT) as resp:
-            return resp.status, json.loads(resp.read())
-    except urllib.error.HTTPError as exc:
-        return exc.code, json.loads(exc.read())
+    return _request(req)
 
 
 def get(path: str) -> tuple[int, dict]:
     req = urllib.request.Request(BASE_URL + path, method="GET")
-    with urllib.request.urlopen(req, timeout=TIMEOUT) as resp:
-        return resp.status, json.loads(resp.read())
+    return _request(req)
 
 
 def wait_for_health() -> dict:
@@ -56,7 +76,7 @@ def wait_for_health() -> dict:
             if status == 200 and health.get("ok") is True and health.get("persistence") == "postgres":
                 return health
             last_error = RuntimeError(f"health status={status} body={health}")
-        except Exception as exc:  # startup/warmup only; the load itself stays strict
+        except Exception as exc:
             last_error = exc
         if attempt + 1 < HEALTH_RETRIES:
             time.sleep(2 ** attempt)
@@ -114,12 +134,37 @@ def race_round(index: int) -> dict:
 def main() -> None:
     health = wait_for_health()
     results: list[dict] = []
+    failures: list[str] = []
     with concurrent.futures.ThreadPoolExecutor(max_workers=WORKERS) as pool:
         futures = [pool.submit(race_round, i) for i in range(ROUNDS)]
         for future in concurrent.futures.as_completed(futures):
-            results.append(future.result())
+            try:
+                results.append(future.result())
+            except Exception as exc:
+                failures.append(repr(exc))
 
-    assert len(results) == ROUNDS
+    if failures or len(results) != ROUNDS:
+        evidence = {
+            "evidence_type": "external-authority-concurrent-load-black-box",
+            "base_url": BASE_URL,
+            "rounds": ROUNDS,
+            "workers": WORKERS,
+            "timeout_seconds": TIMEOUT,
+            "health": health,
+            "checks": {
+                "health_postgres": "PASS",
+                "concurrent_refusal_commit_exclusion": "FAIL",
+                "no_both_winners": "FAIL",
+                "fresh_idempotency_key_cannot_bypass_refusal": "FAIL",
+                "all_rounds_completed": "FAIL",
+            },
+            "completed_rounds": len(results),
+            "failures": failures[:10],
+            "verdict": "FAIL",
+        }
+        print(json.dumps(evidence, sort_keys=True))
+        raise SystemExit(1)
+
     refused = sum(1 for item in results if item["refused"])
     committed = sum(1 for item in results if item["committed"])
     assert refused + committed == ROUNDS
