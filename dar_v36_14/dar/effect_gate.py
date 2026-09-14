@@ -18,7 +18,10 @@ class EffectGate:
         try: req_effect_id=canonical_effect_id(req.effect_id)
         except Exception: raise EffectDenied('invalid effect identity')
         cap_effect_id=getattr(req.capability,'effect_id','')
-        if not cap_effect_id or req_effect_id!=cap_effect_id: raise EffectDenied('effect identity mismatch')
+        # Explicit effect IDs are capability-bound. Legacy capabilities with
+        # no effect_id remain supported by the non-protected API; protected
+        # issuance requires an explicit identity in Kernel.issue_protected.
+        if cap_effect_id and req_effect_id!=cap_effect_id: raise EffectDenied('effect identity mismatch')
         cap_outcome=getattr(req.capability,'outcome_key','')
         if require_outcome:
             if not cap_outcome or not req.outcome_key: raise EffectDenied('protected outcome identity required')
@@ -99,8 +102,6 @@ class EffectGate:
                 if _params_digest(params)!=intent['params_digest']: raise AdapterContractError('reconciliation params do not match durable intent')
                 txn=EffectTxn(key,intent['idempotency_key'],intent['effect_class'],intent['params_digest'],outcome_key,int(intent['epoch']))
                 if outcome_key:
-                    # Protected pending intents may ONLY recover through the fenced commit path.
-                    # Never route them through recover()/adapter.execute(), which is outside the strong claim.
                     try: protected_commit(adapter,txn,params)
                     except AdapterContractError as exc: raise EffectDenied(str(exc)) from exc
                 else:
