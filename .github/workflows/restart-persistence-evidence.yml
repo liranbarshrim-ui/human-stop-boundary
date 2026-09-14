@@ -10,7 +10,6 @@ on:
         default: 'https://dar-external-authority-v2.onrender.com'
   push:
     paths:
-      - '.github/workflows/restart-persistence-evidence.yml'
       - '.dar-restart-trigger'
 
 permissions:
