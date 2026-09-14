@@ -142,7 +142,6 @@ def scenario_3(rounds: int = 100) -> None:
         assert len(successful_commit) <= 1, results
         if s["effect"] is not None:
             assert len(successful_commit) == 1, (results, s)
-            assert s["refusal"] is None or s["effect"] is not None, s
         else:
             assert s["refusal"] is not None, (results, s)
         cleanup(outcome)
@@ -168,6 +167,8 @@ def scenario_5() -> None:
 
 
 def main() -> None:
+    from dar_v36_14.postgres_authority import PostgresAuthority
+    PostgresAuthority(DSN)  # creates the exact schema used by the authority
     results = {}
     for name, fn in [
         ("crash_after_external_refusal_before_local_persistence", scenario_1),
