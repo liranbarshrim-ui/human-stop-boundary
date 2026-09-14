@@ -1,8 +1,9 @@
-
 Copyright (c) 2026 Liran Bar Shrim
 
 All rights reserved.
 
-The Decision Accountability Record (DAR) concept and related materials are the intellectual work of Liran Bar Shrim.
+The Decision Accountability Record (DAR), Human Stop Boundary, and related original materials in this repository are the intellectual work of Liran Bar Shrim, subject to the provenance and third-party notices documented in IP_PROVENANCE.md.
 
-Unauthorized commercial use is prohibited without permission.
+No license to use, reproduce, modify, distribute, or commercially exploit the proprietary materials in this repository is granted except as expressly stated in a separate written license or permission from Liran Bar Shrim.
+
+Third-party components remain subject to their applicable licenses. This notice does not purport to revoke rights already granted under prior versions of this repository's licensing terms.
