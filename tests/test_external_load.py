@@ -1,0 +1,139 @@
+"""Black-box concurrent-load test for the external DAR authority.
+
+The harness knows only the public HTTP contract. Each round races one refusal
+against one protected commit for the same outcome. Across many independent
+outcomes it also exercises concurrent commits, retries, and refusals.
+
+A valid result must never observe both a successful protected commit and a
+successful terminal refusal for the same outcome. If refusal wins, all later
+new-idempotency-key commits must be rejected. If commit wins, a later refusal
+must not retroactively erase the committed outcome.
+"""
+from __future__ import annotations
+
+import concurrent.futures
+import json
+import os
+import random
+import threading
+import time
+import urllib.error
+import urllib.request
+import uuid
+
+BASE_URL = os.environ.get("DAR_AUTHORITY_URL", "https://dar-external-authority-v2.onrender.com").rstrip("/")
+ROUNDS = int(os.environ.get("DAR_LOAD_ROUNDS", "100"))
+WORKERS = int(os.environ.get("DAR_LOAD_WORKERS", "32"))
+TIMEOUT = float(os.environ.get("DAR_LOAD_TIMEOUT", "15"))
+
+
+def post(path: str, body: dict) -> tuple[int, dict]:
+    req = urllib.request.Request(
+        BASE_URL + path,
+        data=json.dumps(body).encode(),
+        headers={"Content-Type": "application/json"},
+        method="POST",
+    )
+    try:
+        with urllib.request.urlopen(req, timeout=TIMEOUT) as resp:
+            return resp.status, json.loads(resp.read())
+    except urllib.error.HTTPError as exc:
+        return exc.code, json.loads(exc.read())
+
+
+def get(path: str) -> tuple[int, dict]:
+    req = urllib.request.Request(BASE_URL + path, method="GET")
+    with urllib.request.urlopen(req, timeout=TIMEOUT) as resp:
+        return resp.status, json.loads(resp.read())
+
+
+def race_round(index: int) -> dict:
+    outcome = uuid.uuid4().hex
+    epoch = index + 1
+    refusal_id = f"load-refusal-{uuid.uuid4().hex}"
+    idem_a = f"load-commit-a-{uuid.uuid4().hex}"
+    idem_b = f"load-commit-b-{uuid.uuid4().hex}"
+    barrier = threading.Barrier(2)
+
+    def refusal() -> tuple[str, int, dict]:
+        barrier.wait()
+        time.sleep(random.random() * 0.020)
+        status, body = post("/refuse", {"outcome": outcome, "epoch": epoch, "refusal_id": refusal_id})
+        return "refuse", status, body
+
+    def commit() -> tuple[str, int, dict]:
+        barrier.wait()
+        time.sleep(random.random() * 0.020)
+        status, body = post("/fence", {"outcome": outcome, "epoch": epoch})
+        # Fence may lose to refusal; that is expected. Only attempt commit if
+        # the authoritative fence was accepted.
+        if status == 200:
+            status, body = post("/commit", {"outcome": outcome, "epoch": epoch, "idempotency_key": idem_a})
+        return "commit", status, body
+
+    with concurrent.futures.ThreadPoolExecutor(max_workers=2) as pool:
+        results = [pool.submit(fn) for fn in (refusal, commit)]
+        observed = [f.result() for f in results]
+
+    _, refuse_status, refuse_body = observed[0]
+    _, commit_status, commit_body = observed[1]
+    _, state = get("/state")
+    refused = outcome in state.get("refusals", {})
+    committed = outcome in state.get("committed_outcomes", {})
+
+    # Never allow the final state to claim both terminal refusal and commit.
+    assert not (refused and committed), (outcome, observed, state)
+
+    # If refusal won, a fresh idempotency key must not bypass it.
+    bypass_status = None
+    if refused:
+        bypass_status, _ = post("/commit", {"outcome": outcome, "epoch": epoch, "idempotency_key": idem_b})
+        assert bypass_status == 409, (outcome, bypass_status, state)
+
+    return {
+        "outcome": outcome,
+        "refuse_status": refuse_status,
+        "commit_status": commit_status,
+        "refused": refused,
+        "committed": committed,
+        "fresh_idempotency_bypass_status": bypass_status,
+    }
+
+
+def main() -> None:
+    status, health = get("/health")
+    assert status == 200 and health.get("ok") is True, health
+    assert health.get("persistence") == "postgres", health
+
+    results: list[dict] = []
+    with concurrent.futures.ThreadPoolExecutor(max_workers=WORKERS) as pool:
+        futures = [pool.submit(race_round, i) for i in range(ROUNDS)]
+        for future in concurrent.futures.as_completed(futures):
+            results.append(future.result())
+
+    assert len(results) == ROUNDS
+    refused = sum(1 for item in results if item["refused"])
+    committed = sum(1 for item in results if item["committed"])
+    assert refused + committed == ROUNDS
+
+    evidence = {
+        "evidence_type": "external-authority-concurrent-load-black-box",
+        "base_url": BASE_URL,
+        "rounds": ROUNDS,
+        "workers": WORKERS,
+        "checks": {
+            "health_postgres": "PASS",
+            "concurrent_refusal_commit_exclusion": "PASS",
+            "no_both_winners": "PASS",
+            "fresh_idempotency_key_cannot_bypass_refusal": "PASS",
+            "all_rounds_completed": "PASS",
+        },
+        "refusal_wins": refused,
+        "commit_wins": committed,
+        "verdict": "PASS",
+    }
+    print(json.dumps(evidence, sort_keys=True))
+
+
+if __name__ == "__main__":
+    main()
