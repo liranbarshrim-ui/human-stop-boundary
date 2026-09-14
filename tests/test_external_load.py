@@ -65,8 +65,6 @@ def race_round(index: int) -> dict:
         barrier.wait()
         time.sleep(random.random() * 0.020)
         status, body = post("/fence", {"outcome": outcome, "epoch": epoch})
-        # Fence may lose to refusal; that is expected. Only attempt commit if
-        # the authoritative fence was accepted.
         if status == 200:
             status, body = post("/commit", {"outcome": outcome, "epoch": epoch, "idempotency_key": idem_a})
         return "commit", status, body
@@ -80,11 +78,8 @@ def race_round(index: int) -> dict:
     _, state = get("/state")
     refused = outcome in state.get("refusals", {})
     committed = outcome in state.get("committed_outcomes", {})
-
-    # Never allow the final state to claim both terminal refusal and commit.
     assert not (refused and committed), (outcome, observed, state)
 
-    # If refusal won, a fresh idempotency key must not bypass it.
     bypass_status = None
     if refused:
         bypass_status, _ = post("/commit", {"outcome": outcome, "epoch": epoch, "idempotency_key": idem_b})
@@ -137,3 +132,5 @@ def main() -> None:
 
 if __name__ == "__main__":
     main()
+
+# Triggered from the main branch to produce external deployment evidence.
