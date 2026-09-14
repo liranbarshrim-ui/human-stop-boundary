@@ -26,7 +26,7 @@ jobs:
           set -euo pipefail
           url="$SECRET_URL"
           if [ -z "$url" ]; then url="$INPUT_URL"; fi
-          if [ -z "$url" ]; then url="https://dar-external-authority-v2.onrender.com"; fi
+          if [ -z "$url" ]; then url="https://dar-external-authority-v3.onrender.com"; fi
           echo "Using configured/default external authority endpoint"
           echo 'url<<EOF' >> "$GITHUB_OUTPUT"
           echo "$url" >> "$GITHUB_OUTPUT"
