@@ -28,7 +28,9 @@ def test_br_b3_strong_outcome_fence_is_pre_registered():
     m = json.loads((SPEC / "boundary_manifest_v3.json").read_text())
     assert m["spec_version"] == "BRB-3.0"
     assert m["status"] == "pre-registered"
-    assert m["property"] == "VALID_REFUSAL => NO_PROTECTED_OUTCOME_AFTER_FENCE"
+    assert m["property"] == "VALID_REFUSAL => NO_PROTECTED_OUTCOME_AFTER_TERMINAL_REFUSAL"
     conditions = m["required_conditions"]
     assert all(conditions.values())
+    assert conditions["A13_terminal_external_refusal_state"] is True
     assert m["rules"]["unknown_external_status_is_not_no"] is True
+    assert m["rules"]["terminal_refusal_cannot_be_cleared_by_numeric_fence_update"] is True
