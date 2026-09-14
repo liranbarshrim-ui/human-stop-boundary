@@ -8,7 +8,7 @@ databases:
 
 services:
   - type: web
-    name: dar-external-authority
+    name: dar-external-authority-v2
     runtime: python
     plan: free
     region: frankfurt
@@ -18,6 +18,8 @@ services:
     envVars:
       - key: PYTHON_VERSION
         value: 3.12.0
+      - key: DAR_PERSISTENCE_MODE
+        value: postgres
       - key: DATABASE_URL
         fromDatabase:
           name: dar-authority-db
