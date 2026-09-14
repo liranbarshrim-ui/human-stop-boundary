@@ -48,28 +48,30 @@ It implements a bounded enforcement boundary with:
 - optional Linux `no_new_privs`, seccomp and Landlock hardening;
 - an explicit external monotonic-anchor interface for rollback detection.
 
-## Boundary Conformance v1
+## Boundary Conformance v2
 
-The implementation is now paired with a pre-registered, machine-readable enforcement specification under [`dar_v36_14/spec/`](dar_v36_14/spec/):
+Version 1 remains the historical preregistration and its results are not rewritten. Future conformance claims use v2, which makes the two load-bearing environmental conditions explicit before a PASS can be claimed.
 
-- `boundary_manifest_v1.json` — declares the protected boundary before adversarial testing;
-- `ASSUMPTIONS_v1.md` — public trust assumptions and their verification targets;
+The machine-readable and human-readable specification is under [`dar_v36_14/spec/`](dar_v36_14/spec/):
+
+- `boundary_manifest_v2.json` — requires an external monotonic anchor and independent interface-completeness audit;
+- `ASSUMPTIONS_v2.md` — separates implementation properties from environmental trust conditions;
+- `FORMAL_PROPERTY_v2.md` — defines the conditional property and counterexample criterion;
+- `EMPIRICAL_STATUS_v2.md` — records the evidence still required before a v2 PASS;
 - `THREAT_MODEL_v1.md` — adversary capabilities and attack surface;
 - `ATTACK_CATALOG_v1.md` — frozen attack families;
-- `FORMAL_PROPERTY.md` — the conditional safety property and counterexample criterion;
 - `CONFORMANCE.md` — PASS / FAIL / OUT-OF-SCOPE / AMBIGUOUS rules;
-- `INDEPENDENT_REPRODUCTION.md` — protocol for testing the claim without importing DAR internals;
-- `RESULT_SCHEMA_v1.json` — machine-readable result format.
+- `INDEPENDENT_REPRODUCTION.md` — protocol for testing the claim without importing DAR internals.
 
-The central property is intentionally bounded:
+The revised central claim is deliberately narrow:
 
-> **Within a pre-declared enforcement boundary and explicit trust assumptions, a valid refusal must make protected effect commitment unreachable.**
+> **Within a pre-declared protected-effect boundary, with a trusted external monotonic anchor and an independently established completeness property for all paths capable of producing the protected effect, a valid refusal must make protected effect commitment unreachable.**
 
-No post-hoc boundary expansion or contraction is permitted. `AMBIGUOUS` is never treated as `PASS`.
+DAR does not establish either the monotonic anchor or interface completeness merely by implementing its own enforcement interface. Missing or unverified required conditions are not `PASS`.
 
 ## Verification
 
-The verified development checkout was executed with:
+The verified development checkout was previously executed with:
 
 **`PYTHONPATH=. pytest -q -v` → 60 passed, 1 skipped (61 collected).**
 
@@ -77,13 +79,17 @@ The single skip is the optional Landlock test because the host kernel returns `E
 
 Additional local checks passed: package installation, Python compilation, live two-UID boundary testing, and live `SIGKILL` generation-rotation testing.
 
+These results are bounded implementation evidence, not independent validation of A1 or A9.
+
 The repository must be treated as the source of truth. Chat-pasted artifacts are not evidence until compared against a fresh checkout and executed.
 
 ## Security boundary and limits
 
-DAR does **not** claim universal control over arbitrary AI systems. Its security claims apply only to effects actually routed through and controlled by the DAR enforcement boundary.
+DAR does **not** claim universal control over arbitrary AI systems, complete mediation by assertion, or protection against effects outside the declared boundary.
 
-HMAC-authenticated state does not by itself prevent restoration of an older valid snapshot. Anti-rollback therefore requires a trusted monotonic anchor outside the Store rollback domain.
+HMAC-authenticated state does not by itself prevent restoration of an older valid snapshot. Anti-rollback requires a trusted monotonic anchor outside the Store rollback domain. A deployment without that anchor cannot claim the v2 anti-rollback property.
+
+Likewise, tests of the registered interface do not prove that no alternate path exists. A1 therefore requires an independent interface/escape audit covering processes, IPC, filesystem, adapters, helpers, and other paths capable of producing the protected effect.
 
 Exactly-once semantics for arbitrary external side effects remain dependent on an authoritative idempotent adapter.
 
