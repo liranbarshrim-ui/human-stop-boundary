@@ -1,0 +1,59 @@
+name: DAR Five-Scenario Crash Boundary Evidence
+
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - 'tests/test_crash_boundary_postgres.py'
+      - 'dar_v36_14/postgres_authority.py'
+      - '.github/workflows/crash-boundary-evidence.yml'
+
+permissions:
+  contents: read
+
+jobs:
+  crash-boundary:
+    runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgres:16
+        env:
+          POSTGRES_PASSWORD: postgres
+          POSTGRES_USER: postgres
+          POSTGRES_DB: postgres
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -U postgres -d postgres"
+          --health-interval 5s
+          --health-timeout 5s
+          --health-retries 20
+    env:
+      DATABASE_URL: postgresql://postgres:postgres@127.0.0.1:5432/postgres
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install PostgreSQL client dependency
+        run: python -m pip install --disable-pip-version-check 'psycopg[binary]==3.2.10'
+      - name: Run five crash-boundary scenarios
+        run: python tests/test_crash_boundary_postgres.py | tee crash-boundary-evidence.jsonl
+      - name: Verify machine-readable PASS
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          lines = Path('crash-boundary-evidence.jsonl').read_text().splitlines()
+          record = json.loads(lines[-1])
+          assert record['verdict'] == 'PASS', record
+          assert len(record['tests']) == 5, record
+          assert all(value == 'PASS' for value in record['tests'].values()), record
+          Path('crash-boundary-evidence.json').write_text(json.dumps(record, indent=2, sort_keys=True) + '\n')
+          print(json.dumps(record, sort_keys=True))
+          PY
+      - name: Upload crash boundary evidence
+        uses: actions/upload-artifact@v4
+        with:
+          name: dar-five-scenario-crash-boundary-evidence
+          path: crash-boundary-evidence.json
