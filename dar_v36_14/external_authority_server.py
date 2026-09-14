@@ -1,8 +1,11 @@
-"""Minimal external authority for deployment-level DAR verification.
+"""External authority for DAR verification.
 
-This service is deliberately separate from the DAR client. The same lock
-serializes terminal refusal and protected commit for each outcome_key.
-It is suitable for deployment testing, not production certification.
+Default mode remains in-memory for deterministic local/deployment tests.
+When DATABASE_URL is configured, all authoritative state is stored in
+PostgreSQL and refusal/commit serialize through a transaction-scoped
+advisory lock. This makes restart persistence testable without silently
+falling back to memory. It is still deployment evidence, not production
+certification.
 """
 from __future__ import annotations
 
@@ -10,6 +13,17 @@ import json
 import os
 import threading
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
+
+
+# PostgreSQL mode is fail-closed: a configured but unusable database must not
+# silently downgrade the authority boundary to ephemeral memory.
+DB_URL = os.environ.get("DATABASE_URL", "").strip()
+if DB_URL:
+    from dar_v36_14.postgres_authority import PostgresAuthority
+
+    authority = PostgresAuthority(DB_URL)
+else:
+    authority = None
 
 lock = threading.RLock()
 fences: dict[str, int] = {}
@@ -33,8 +47,18 @@ class Handler(BaseHTTPRequestHandler):
 
     def do_GET(self) -> None:
         if self.path == "/health":
-            return response(self, 200, {"ok": True})
+            if authority:
+                try:
+                    authority.health()
+                except Exception as exc:
+                    return response(self, 503, {"ok": False, "error": "database_unavailable", "detail": str(exc)})
+            return response(self, 200, {"ok": True, "persistence": "postgres" if authority else "memory"})
         if self.path == "/state":
+            if authority:
+                try:
+                    return response(self, 200, authority.state())
+                except Exception as exc:
+                    return response(self, 503, {"ok": False, "error": "database_unavailable", "detail": str(exc)})
             with lock:
                 return response(self, 200, {
                     "fences": dict(fences),
@@ -47,6 +71,22 @@ class Handler(BaseHTTPRequestHandler):
     def do_POST(self) -> None:
         length = int(self.headers.get("Content-Length", "0"))
         data = json.loads(self.rfile.read(length) or b"{}")
+
+        if authority:
+            try:
+                if self.path == "/fence":
+                    status, body = authority.fence(data["outcome"], int(data["epoch"]))
+                    return response(self, status, body)
+                if self.path == "/refuse":
+                    status, body = authority.refuse(data["outcome"], int(data["epoch"]), data["refusal_id"])
+                    return response(self, status, body)
+                if self.path == "/commit":
+                    status, body = authority.commit(data["outcome"], int(data["epoch"]), data["idempotency_key"])
+                    return response(self, status, body)
+            except Exception as exc:
+                return response(self, 503, {"ok": False, "error": "database_unavailable", "detail": str(exc)})
+            return response(self, 404, {"error": "not_found"})
+
         with lock:
             if self.path == "/fence":
                 outcome = data["outcome"]
