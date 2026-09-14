@@ -30,7 +30,7 @@ PYTHON = sys.executable
 
 
 def connect():
-    return psycopg.connect(DSN, row_factory=dict_row, sslmode="require")
+    return psycopg.connect(DSN, row_factory=dict_row, sslmode=os.environ.get("DAR_TEST_SSLMODE", "disable"))
 
 
 def cleanup(prefix: str) -> None:
@@ -79,11 +79,7 @@ def kill_after_marker(mode: str, outcome: str, epoch: int, ident: str) -> None:
     code = "from tests.test_crash_boundary_postgres import worker; " + f"worker({mode!r}, {outcome!r}, {epoch!r}, {ident!r})"
     proc = subprocess.Popen([PYTHON, "-c", code], cwd=ROOT, env=env, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
     deadline = time.time() + 30
-    marker = {
-        "refusal-before-client-persist": "EXTERNAL_REFUSAL_COMMITTED",
-        "commit-before-client-persist": "EXTERNAL_COMMIT_COMMITTED",
-        "torn-write": "TORN_WRITE_WINDOW",
-    }[mode]
+    marker = {"refusal-before-client-persist": "EXTERNAL_REFUSAL_COMMITTED", "commit-before-client-persist": "EXTERNAL_COMMIT_COMMITTED", "torn-write": "TORN_WRITE_WINDOW"}[mode]
     while time.time() < deadline:
         line = proc.stdout.readline()
         if marker in line:
