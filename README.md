@@ -81,6 +81,26 @@ Additional local checks passed: package installation, Python compilation, live t
 
 These results are bounded implementation evidence, not independent validation of A1 or A9.
 
+### Five-scenario crash-boundary evidence
+
+The repository now includes a dedicated PostgreSQL crash-boundary test covering five failure windows:
+
+1. crash after external refusal but before local persistence;
+2. crash after protected external commit but before local persistence;
+3. refusal/commit race, repeated for 100 runs;
+4. new idempotency key after crash cannot bypass an existing refusal;
+5. torn PostgreSQL transaction write interrupted by `SIGKILL`, followed by rollback verification.
+
+The final machine-validated run was GitHub Actions **run 34868342315**, job **104057846583** (the crash-boundary job). All five scenarios returned `PASS`, the machine-readable aggregate returned `verdict: PASS`, and the evidence artifact was uploaded successfully. The test logs also show an open PostgreSQL transaction receiving an unexpected EOF after the crash injection, consistent with the intended rollback boundary.
+
+**Development transparency:** the immediately preceding attempt, GitHub Actions **run 34868180786**, executed the five scenarios successfully but failed the evidence-validation step because the generated evidence file was not in the expected machine-readable form. The implementation/workflow was corrected and the final run above was executed from the corrected commit. This earlier failure is retained in the Actions history rather than being presented as if the first run passed.
+
+This five-scenario result is **crash/transaction-boundary evidence only**. It does not constitute a production certification, an independent A1 interface-completeness audit, a second-infrastructure validation, an uncontrolled external `SIGKILL` test against the Render service, or a full DAR v2 PASS.
+
+### External PostgreSQL restart persistence
+
+A separate deployment-level black-box test against the independently hosted Render authority, backed by PostgreSQL, verified that a terminal refusal survived a real Render auto-deploy restart and continued to block a protected commit afterward. This is restart-persistence evidence, not an uncontrolled `SIGKILL` claim.
+
 The repository must be treated as the source of truth. Chat-pasted artifacts are not evidence until compared against a fresh checkout and executed.
 
 ## Security boundary and limits
