@@ -17,7 +17,7 @@ class RefusalIntent:
     outcome_key: str = ''
 
 class RefusalAuthority:
-    """Authenticated refusal authority with outcome-level fencing."""
+    """Authenticated refusal authority with outcome-level terminal fencing."""
     def __init__(self, store, principal_credentials):
         self.store = store; self.credentials = dict(principal_credentials)
 
@@ -66,13 +66,12 @@ class RefusalAuthority:
             self.store._write_atomic(self._append_refusal_locked(s,refusal)); return refusal
 
     def commit_protected(self, refusal, adapter):
-        """Advance the external fence before publishing the durable refusal.
+        """Atomically install an external terminal refusal before local publication.
 
-        Safety ordering is deliberate: once the external fence is advanced,
-        no later protected commit for this outcome can succeed. A crash after
-        the fence advance may reduce availability, but cannot permit a stale
-        protected commit. The adapter must make fence advancement authoritative
-        at the same external commit point used by FencedEffectAdapter.commit.
+        The external refusal marker is permanent for the outcome and is checked
+        by the same authority at the protected commit point. If local publication
+        crashes afterward, the external marker still prevents reuse of the same
+        outcome, including at the same numeric epoch and under a new effect ID.
         """
         from .effect_transaction import FencedEffectAdapter
         if not isinstance(adapter, FencedEffectAdapter):
@@ -85,7 +84,12 @@ class RefusalAuthority:
             outcome_key=canonical_outcome_key(refusal.outcome_key)
             current=int(adapter.current_fence(outcome_key))
             if current>int(refusal.target_epoch): raise ValueError('external refusal fence already advanced')
-            if current==int(refusal.target_epoch): raise ValueError('external refusal fence already committed')
-            adapter.advance_fence(outcome_key,int(refusal.target_epoch))
-            if int(adapter.current_fence(outcome_key))!=int(refusal.target_epoch): raise RuntimeError('adapter did not durably advance refusal fence')
+            if current==int(refusal.target_epoch) and not adapter.is_refused(outcome_key):
+                raise ValueError('external fence is at target without terminal refusal')
+            if not adapter.is_refused(outcome_key):
+                adapter.refuse_outcome(outcome_key,int(refusal.target_epoch),refusal.refusal_id)
+            if not adapter.is_refused(outcome_key):
+                raise RuntimeError('adapter did not durably publish terminal refusal')
+            if int(adapter.current_fence(outcome_key))!=int(refusal.target_epoch):
+                raise RuntimeError('adapter did not durably advance refusal fence')
             self.store._write_atomic(self._append_refusal_locked(s,refusal)); return refusal
