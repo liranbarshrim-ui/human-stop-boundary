@@ -3,8 +3,8 @@ services:
     name: dar-external-authority
     runtime: python
     plan: free
-    buildCommand: pip install -e .
-    startCommand: python dar_v36_14/external_authority_server.py
+    buildCommand: "python -m pip install --upgrade pip"
+    startCommand: "python dar_v36_14/external_authority_server.py"
     healthCheckPath: /health
     envVars:
       - key: PYTHON_VERSION
