@@ -117,3 +117,5 @@ if __name__ == "__main__":
     except Exception as exc:
         print(f"FAIL: {exc}", file=sys.stderr)
         raise
+
+# Live verification trigger marker: 2026-09-14T12:55Z
