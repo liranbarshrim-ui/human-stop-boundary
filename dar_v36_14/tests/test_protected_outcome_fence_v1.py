@@ -54,6 +54,18 @@ class ProtectedOutcomeFenceTests(unittest.TestCase):
             with self.assertRaises(EffectDenied): gate.execute_protected(req,adapter,{'amount':1},Journal())
             self.assertEqual(adapter.effects,{})
 
+    def test_refusal_survives_unrelated_capability_issuance(self):
+        with tempfile.TemporaryDirectory() as d:
+            store,kernel=self.make(d); gate=EffectGate(kernel); adapter=FencedAdapter(); outcome='feed01'
+            cap1=kernel.issue_protected('human','root','WRITE',self.state(1),nonce='n1',params={'amount':1},effect_id='000007',outcome_key=outcome); adapter.fences[outcome]=1
+            refusal=RefusalAuthority(store,{'human':SECRET}).issue_protected('human','000007',cap1.txid,outcome,target_epoch=2)
+            RefusalAuthority(store,{'human':SECRET}).commit_protected(refusal,adapter)
+            cap2=kernel.issue_protected('human','root','WRITE',self.state(3),nonce='n2',params={'amount':2},effect_id='000008',outcome_key='beef02')
+            self.assertTrue(any(r.get('outcome_key')==outcome for r in store._read().state_payload.get('refusals',[])))
+            req=EffectRequest(cap2,'human','root','WRITE','000007','WRITE',outcome)
+            with self.assertRaises(EffectDenied): gate.execute_protected(req,adapter,{'amount':2},Journal())
+            self.assertNotIn('000008',adapter.effects)
+
     def test_refusal_fence_wins_after_crash_before_journal(self):
         with tempfile.TemporaryDirectory() as d:
             store,kernel=self.make(d); adapter=FencedAdapter(); outcome='deadbeef'; adapter.fences[outcome]=1
