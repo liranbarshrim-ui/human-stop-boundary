@@ -15,11 +15,17 @@ import threading
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 
 
-# PostgreSQL mode is fail-closed: a configured but unusable database must not
-# silently downgrade the authority boundary to ephemeral memory.
 DB_URL = os.environ.get("DATABASE_URL", "").strip()
 if DB_URL:
-    from dar_v36_14.postgres_authority import PostgresAuthority
+    try:
+        from dar_v36_14.postgres_authority import PostgresAuthority
+    except ModuleNotFoundError as exc:
+        # Render executes this file directly, so its containing directory is
+        # on sys.path while the repository root may not be. Keep the import
+        # explicit and fail closed for any other missing dependency.
+        if exc.name != "dar_v36_14":
+            raise
+        from postgres_authority import PostgresAuthority
 
     authority = PostgresAuthority(DB_URL)
 else:
