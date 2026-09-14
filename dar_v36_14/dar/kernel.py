@@ -10,7 +10,7 @@ class Capability:
     txid:str; sequence:int; nonce:str; epoch:int; boot_id:str
     principal:str; domain:str; action:str; effect_class:str
     mutation_class:str; state_digest:str; mac:str
-    params_digest:str=''
+    params_digest:str=''; effect_id:str=''
 
 class Kernel:
     def __init__(self,store,secret,boot_id=None): self.store=store; self.secret=secret; self.boot_id=boot_id or secrets.token_hex(32)
@@ -26,7 +26,8 @@ class Kernel:
         allowed={'READ','WRITE','NETWORK','PROCESS'}
         if action not in allowed: raise PermissionError(f'unsupported action/effect class: {action}')
         return action
-    def issue(self,principal,domain,action,proposed,nonce=None,params=None):
+    def issue(self,principal,domain,action,proposed,nonce=None,params=None,effect_id=None):
+        if not effect_id: raise ValueError('effect_id is required and must be bound at capability issuance')
         nonce=nonce or secrets.token_hex(32); effect_class=self._effect_class(action); pd=self._params_digest({} if params is None else params)
         with self.store.tx():
             s=self.store._read()
@@ -37,15 +38,15 @@ class Kernel:
             delta=validate_transition(cur,proposed,principal,domain)
             if nonce in s.nonces: raise ValueError('nonce replay')
             seq=s.sequence+1; txid=str(uuid.uuid4()); sd=self._digest(proposed)
-            mac=self._mac(txid,seq,nonce,proposed.epoch,self.boot_id,principal,domain,action,effect_class,delta.mutation_class.value,sd,pd)
-            cap=Capability(txid,seq,nonce,proposed.epoch,self.boot_id,principal,domain,action,effect_class,delta.mutation_class.value,sd,mac,pd)
-            commit={'txid':txid,'sequence':seq,'nonce':nonce,'epoch':proposed.epoch,'principal':principal,'domain':domain,'action':action,'effect_class':effect_class,'mutation_class':delta.mutation_class.value,'state_digest':sd,'params_digest':pd}
+            mac=self._mac(txid,seq,nonce,proposed.epoch,self.boot_id,principal,domain,action,effect_class,delta.mutation_class.value,sd,pd,effect_id)
+            cap=Capability(txid,seq,nonce,proposed.epoch,self.boot_id,principal,domain,action,effect_class,delta.mutation_class.value,sd,mac,pd,effect_id)
+            commit={'txid':txid,'sequence':seq,'nonce':nonce,'epoch':proposed.epoch,'principal':principal,'domain':domain,'action':action,'effect_class':effect_class,'mutation_class':delta.mutation_class.value,'state_digest':sd,'params_digest':pd,'effect_id':effect_id}
             self.store._write_atomic(Snapshot(proposed.epoch,seq,s.nonces|{nonce},s.consumed,s.commits+(commit,),proposed.canonical(),self.boot_id,s.effects,s.pending_effects))
             return cap
     def verify_locked(self,cap,principal,domain,action,effect_class,s):
         if (cap.boot_id!=self.boot_id or cap.principal!=principal or cap.domain!=domain or cap.action!=action or cap.effect_class!=effect_class or cap.epoch!=s.epoch): return False
-        pd=getattr(cap,'params_digest','')
-        if not pd: return False
-        exp=self._mac(cap.txid,cap.sequence,cap.nonce,cap.epoch,cap.boot_id,cap.principal,cap.domain,cap.action,cap.effect_class,cap.mutation_class,cap.state_digest,pd)
+        pd=getattr(cap,'params_digest',''); effect_id=getattr(cap,'effect_id','')
+        if not pd or not effect_id: return False
+        exp=self._mac(cap.txid,cap.sequence,cap.nonce,cap.epoch,cap.boot_id,cap.principal,cap.domain,cap.action,cap.effect_class,cap.mutation_class,cap.state_digest,pd,effect_id)
         if not hmac.compare_digest(exp,cap.mac): return False
-        return any(r['txid']==cap.txid and r['sequence']==cap.sequence and r['nonce']==cap.nonce and r['state_digest']==cap.state_digest and r.get('effect_class',r.get('action'))==cap.effect_class and r.get('params_digest','')==pd for r in s.commits)
+        return any(r['txid']==cap.txid and r['sequence']==cap.sequence and r['nonce']==cap.nonce and r['state_digest']==cap.state_digest and r.get('effect_class',r.get('action'))==cap.effect_class and r.get('params_digest','')==pd and r.get('effect_id','')==effect_id for r in s.commits)
