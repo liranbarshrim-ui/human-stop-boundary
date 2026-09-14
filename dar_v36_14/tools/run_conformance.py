@@ -12,6 +12,8 @@ TESTS = [
     "tests/test_boundary_negative.py",
     "tests/test_effect_refusal_property.py",
     "tests/test_attack_empirical.py",
+    "tests/test_atomic_fence_authority_v1.py",
+    "tests/test_protected_outcome_fence_v1.py",
 ]
 
 
@@ -28,15 +30,15 @@ if __name__ == "__main__":
         text=True,
     )
     evidence = {
-        "format": "DAR-CONFORMANCE-RUN-1",
-        "spec_version": "BRB-1.0",
+        "format": "DAR-CONFORMANCE-RUN-2",
+        "spec_version": "BRB-3.0",
         "spec_hashes": {
             p.name: digest(p)
             for p in [
-                SPEC / "boundary_manifest_v1.json",
+                SPEC / "boundary_manifest_v3.json",
                 SPEC / "CONFORMANCE.md",
-                SPEC / "ATTACK_CATALOG_v1.md",
-                SPEC / "FORMAL_PROPERTY.md",
+                SPEC / "FORMAL_PROPERTY_v3_OUTCOME_FENCE.md",
+                SPEC / "ASSUMPTIONS_v2.md",
             ]
         },
         "exit_code": completed.returncode,
