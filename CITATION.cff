@@ -9,7 +9,7 @@ authors:
     email: "Liran130185@gmail.com"
 repository-code: "https://github.com/liranbarshrim-ui/human-stop-boundary"
 url: "https://matrix-audit.com"
-license: "LicenseRef-Liran-Bar-Shrim-Proprietary"
+license-url: "https://github.com/liranbarshrim-ui/human-stop-boundary/blob/main/LICENSE"
 keywords:
   - "AI safety"
   - "AI governance"
