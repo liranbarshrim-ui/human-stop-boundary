@@ -52,3 +52,5 @@ jobs:
         with:
           name: dar-external-10000-round-evidence
           path: external-stress-evidence.json
+
+# v37 stress-gate execution trigger: 2026-09-15
