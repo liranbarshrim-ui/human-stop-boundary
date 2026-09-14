@@ -1,0 +1,49 @@
+name: DAR External Stress Conformance
+
+on:
+  workflow_dispatch:
+
+jobs:
+  external-stress:
+    runs-on: ubuntu-latest
+    timeout-minutes: 90
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Run 10000-round black-box load
+        id: load
+        env:
+          DAR_AUTHORITY_URL: https://dar-external-authority-v2.onrender.com
+          DAR_LOAD_ROUNDS: "10000"
+          DAR_LOAD_WORKERS: "32"
+          DAR_LOAD_TIMEOUT: "30"
+          DAR_HEALTH_RETRIES: "10"
+        run: |
+          set +e
+          python tests/test_external_load.py | tee external-stress-evidence.jsonl
+          rc=${PIPESTATUS[0]}
+          echo "exit_code=$rc" >> "$GITHUB_OUTPUT"
+          exit 0
+      - name: Validate stress evidence
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          lines = Path("external-stress-evidence.jsonl").read_text().splitlines()
+          records = [json.loads(line) for line in lines if line.strip()]
+          record = records[-1]
+          print(json.dumps(record, indent=2, sort_keys=True))
+          Path("external-stress-evidence.json").write_text(json.dumps(record, indent=2, sort_keys=True) + "\n")
+          assert record["verdict"] == "PASS", record
+          assert record["rounds"] == 10000, record
+          assert record["workers"] == 32, record
+          assert all(v == "PASS" for v in record["checks"].values()), record
+          PY
+      - name: Upload stress evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: dar-external-10000-round-evidence
+          path: external-stress-evidence.json
