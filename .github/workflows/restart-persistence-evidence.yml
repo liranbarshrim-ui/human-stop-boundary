@@ -32,6 +32,22 @@ jobs:
           if [ -z "$url" ]; then url="$INPUT_URL"; fi
           if [ -z "$url" ]; then url="https://dar-external-authority-v2.onrender.com"; fi
           echo "url=$url" >> "$GITHUB_OUTPUT"
+      - name: Capture pre-restart boot identity
+        id: pre
+        env:
+          BASE: ${{ steps.url.outputs.url }}
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          import json, os, urllib.request
+          base=os.environ['BASE'].rstrip('/')
+          with urllib.request.urlopen(base+'/health', timeout=20) as r:
+              health=json.loads(r.read())
+          assert health.get('ok') is True, health
+          print(json.dumps(health))
+          with open(os.environ['GITHUB_OUTPUT'], 'a') as out:
+              out.write(f"boot_id={health['boot_id']}\n")
+          PY
       - name: Seed terminal refusal before restart
         id: seed
         env:
@@ -72,17 +88,20 @@ jobs:
           git add .dar-restart-marker.json
           git commit -m 'test: trigger external authority restart evidence'
           git push origin HEAD:main
-      - name: Wait for healthy PostgreSQL authority
+      - name: Wait for a real restart with healthy PostgreSQL authority
         env:
           BASE: ${{ steps.url.outputs.url }}
+          OLD_BOOT_ID: ${{ steps.pre.outputs.boot_id }}
         run: |
           set -euo pipefail
-          for i in $(seq 1 36); do
+          for i in $(seq 1 48); do
             if python - <<'PY'
           import json, os, urllib.request
           base=os.environ['BASE'].rstrip('/')
           with urllib.request.urlopen(base+'/health', timeout=10) as r: health=json.loads(r.read())
-          assert health.get('ok') is True and health.get('persistence') == 'postgres', health
+          assert health.get('ok') is True, health
+          assert health.get('persistence') == 'postgres', health
+          assert health.get('boot_id') != os.environ['OLD_BOOT_ID'], health
           print(json.dumps(health))
           PY
             then exit 0; fi
@@ -108,5 +127,5 @@ jobs:
           except urllib.error.HTTPError as e:
               body=json.loads(e.read())
               assert e.code == 409 and body.get('error') == 'terminal_refusal', (e.code, body)
-          print(json.dumps({'restart_persistence':'PASS','post_restart_commit_blocked':'PASS','verdict':'PASS'}))
+          print(json.dumps({'restart_persistence':'PASS','boot_id_changed':'PASS','post_restart_commit_blocked':'PASS','verdict':'PASS'}))
           PY
