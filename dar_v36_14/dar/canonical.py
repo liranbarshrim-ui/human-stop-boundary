@@ -1,4 +1,4 @@
-"""Deterministic canonicalization for capability-bound parameters and effect identities."""
+"""Deterministic canonicalization for capability-bound protocol identities."""
 import hashlib
 import json
 import math
@@ -8,19 +8,31 @@ import unicodedata
 class CanonicalizationError(ValueError):
     pass
 
-# Effect IDs are opaque protocol tokens. Lowercase hex removes ASCII
-# confusables (O/0, I/l/1) and case ambiguity rather than attempting a
-# context-dependent visual mapping.
-_EFFECT_ID_RE = re.compile(r"^[0-9a-f]+$")
+# Protocol identities are opaque lowercase-hex tokens. Visual/confusable
+# mappings are intentionally not attempted: the protocol accepts one syntax.
+_OPAQUE_KEY_RE = re.compile(r"^[0-9a-f]+$")
+
+def _canonical_opaque_key(value, name):
+    if not isinstance(value, str) or not value:
+        raise CanonicalizationError(f"{name} must be a non-empty string")
+    normalized = unicodedata.normalize("NFC", value)
+    if not _OPAQUE_KEY_RE.fullmatch(normalized):
+        raise CanonicalizationError(f"{name} must be lowercase hexadecimal [0-9a-f]+ after NFC normalization")
+    return normalized
 
 def canonical_effect_id(value):
-    """Return the canonical, unambiguous protocol identity for an effect."""
-    if not isinstance(value, str) or not value:
-        raise CanonicalizationError("effect_id must be a non-empty string")
-    normalized = unicodedata.normalize("NFC", value)
-    if not _EFFECT_ID_RE.fullmatch(normalized):
-        raise CanonicalizationError("effect_id must be lowercase hexadecimal [0-9a-f]+ after NFC normalization")
-    return normalized
+    return _canonical_opaque_key(value, "effect_id")
+
+def canonical_outcome_key(value):
+    """Canonical identity of the protected external outcome.
+
+    This is deliberately distinct from effect_id. An effect_id identifies a
+    protocol invocation; outcome_key identifies the external world-state
+    outcome that the refusal is intended to fence. It must therefore be
+    supplied by the deployment/business protocol rather than inferred from
+    an invocation label or blindly derived from parameters.
+    """
+    return _canonical_opaque_key(value, "outcome_key")
 
 def _normalize(value):
     if value is None or isinstance(value, (bool, int)):
