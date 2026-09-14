@@ -97,9 +97,8 @@ class PostgresAuthority:
             if epoch < current:
                 return 409, {"ok": False, "error": "fence_rollback"}
             if conn.execute("SELECT 1 FROM dar_effects WHERE outcome_key=%s", (outcome,)).fetchone():
-                conn.execute("INSERT INTO dar_refusals(outcome_key, epoch, refusal_id) VALUES (%s,%s,%s)", (outcome, epoch, refusal_id))
-                return 200, {"ok": True, "idempotent": False, "late": True}
-            conn.execute("INSERT INTO dar_fences(outcome_key, fence) VALUES (%s,%s) ON CONFLICT (outcome_key) DO UPDATE SET fence=GREATEST(dar_fences.fence, EXCLUDED.fence)", (outcome, epoch))
+                return 409, {"ok": False, "error": "outcome_already_committed", "late": True}
+            conn.execute("INSERT INTO dar_fences(outcome_key, epoch) VALUES (%s,%s) ON CONFLICT (outcome_key) DO UPDATE SET fence=GREATEST(dar_fences.fence, EXCLUDED.fence)", (outcome, epoch))
             conn.execute("INSERT INTO dar_refusals(outcome_key, epoch, refusal_id) VALUES (%s,%s,%s)", (outcome, epoch, refusal_id))
             return 200, {"ok": True, "idempotent": False}
 
