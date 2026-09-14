@@ -4,6 +4,7 @@ import hmac
 import json
 import time
 import uuid
+from .canonical import canonical_effect_id
 
 
 @dataclass(frozen=True)
@@ -39,6 +40,7 @@ class RefusalAuthority:
     def issue(self, principal, effect_id, capability_txid, target_epoch=None, refusal_id=None, issued_at=None):
         if principal not in self.credentials:
             raise PermissionError('principal is not authorized to refuse effects')
+        effect_id = canonical_effect_id(effect_id)
         refusal_id = refusal_id or str(uuid.uuid4())
         issued_at = int(time.time()) if issued_at is None else int(issued_at)
         with self.store.tx():
@@ -53,7 +55,13 @@ class RefusalAuthority:
         credential = self.credentials.get(refusal.principal)
         if credential is None:
             return False
-        expected = self._mac(credential, refusal.refusal_id, refusal.principal, refusal.effect_id, refusal.capability_txid, refusal.target_epoch, refusal.issued_at)
+        try:
+            effect_id = canonical_effect_id(refusal.effect_id)
+        except Exception:
+            return False
+        if effect_id != refusal.effect_id:
+            return False
+        expected = self._mac(credential, refusal.refusal_id, refusal.principal, effect_id, refusal.capability_txid, refusal.target_epoch, refusal.issued_at)
         return hmac.compare_digest(expected, refusal.mac)
 
     def commit(self, refusal):
