@@ -1,13 +1,13 @@
 {
   "title": "Decision Accountability Review (DAR)",
-  "description": "A structural framework and research prototype for making refusal and stop authority explicit, bounded, and testable in high-stakes decision processes. Defined by Liran Bar-Shrim.",
+  "description": "A structural framework and research prototype for making refusal and stop authority explicit, bounded, and testable in high-stakes decision processes. Defined by Liran Bar-Shrim. Current repository materials are proprietary / All Rights Reserved except for separately identified third-party components and valid historical rights.",
   "creators": [
     {
       "name": "Bar-Shrim, Liran",
       "affiliation": "Independent Researcher"
     }
   ],
-  "license": "LicenseRef-Liran-Bar-Shrim-Proprietary",
+  "access_right": "closed",
   "keywords": [
     "AI safety",
     "AI governance",
