@@ -43,7 +43,12 @@ class Kernel:
             mac=self._mac(txid,seq,nonce,proposed.epoch,self.boot_id,principal,domain,action,effect_class,delta.mutation_class.value,sd,pd,effect_id,outcome_key or '')
             cap=Capability(txid,seq,nonce,proposed.epoch,self.boot_id,principal,domain,action,effect_class,delta.mutation_class.value,sd,mac,pd,effect_id,outcome_key or '')
             commit={'txid':txid,'sequence':seq,'nonce':nonce,'epoch':proposed.epoch,'principal':principal,'domain':domain,'action':action,'effect_class':effect_class,'mutation_class':delta.mutation_class.value,'state_digest':sd,'params_digest':pd,'effect_id':effect_id,'outcome_key':outcome_key or ''}
-            self.store._write_atomic(Snapshot(proposed.epoch,seq,s.nonces|{nonce},s.consumed,s.commits+(commit,),proposed.canonical(),self.boot_id,s.effects,s.pending_effects))
+            # Refusals are terminal boundary facts. A capability/state transition
+            # must never erase them by replacing the durable state payload.
+            payload=proposed.canonical()
+            prior_refusals=s.state_payload.get('refusals',[])
+            if prior_refusals: payload['refusals']=list(prior_refusals)
+            self.store._write_atomic(Snapshot(proposed.epoch,seq,s.nonces|{nonce},s.consumed,s.commits+(commit,),payload,self.boot_id,s.effects,s.pending_effects))
             return cap
     def issue_protected(self,principal,domain,action,proposed,nonce=None,params=None,effect_id=None,outcome_key=None):
         if effect_id is None: raise ValueError('protected effects require an explicit effect_id')
