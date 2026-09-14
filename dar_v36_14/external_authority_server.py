@@ -12,6 +12,7 @@ from __future__ import annotations
 import json
 import os
 import threading
+import uuid
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 
 
@@ -31,6 +32,7 @@ if DB_URL:
 else:
     authority = None
 
+BOOT_ID = uuid.uuid4().hex
 lock = threading.RLock()
 fences: dict[str, int] = {}
 refusals: dict[str, list[object]] = {}
@@ -58,11 +60,17 @@ class Handler(BaseHTTPRequestHandler):
                     authority.health()
                 except Exception as exc:
                     return response(self, 503, {"ok": False, "error": "database_unavailable", "detail": str(exc)})
-            return response(self, 200, {"ok": True, "persistence": "postgres" if authority else "memory"})
+            return response(self, 200, {
+                "ok": True,
+                "persistence": "postgres" if authority else "memory",
+                "boot_id": BOOT_ID,
+            })
         if self.path == "/state":
             if authority:
                 try:
-                    return response(self, 200, authority.state())
+                    body = authority.state()
+                    body["boot_id"] = BOOT_ID
+                    return response(self, 200, body)
                 except Exception as exc:
                     return response(self, 503, {"ok": False, "error": "database_unavailable", "detail": str(exc)})
             with lock:
@@ -71,6 +79,7 @@ class Handler(BaseHTTPRequestHandler):
                     "refusals": dict(refusals),
                     "effects": dict(effects),
                     "committed_outcomes": dict(committed_outcomes),
+                    "boot_id": BOOT_ID,
                 })
         return response(self, 404, {"error": "not_found"})
 
