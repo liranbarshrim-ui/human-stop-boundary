@@ -11,13 +11,21 @@ SECRET=b'x'*32
 
 class FencedAdapter(FencedEffectAdapter):
     def __init__(self, epoch=0):
-        self.fences={}; self.effects={}; self.default_epoch=epoch; self.execute_calls=0
+        self.fences={}; self.refusals={}; self.effects={}; self.default_epoch=epoch; self.execute_calls=0
     def current_fence(self, outcome_key): return self.fences.get(outcome_key,self.default_epoch)
     def advance_fence(self, outcome_key, epoch):
         current=self.current_fence(outcome_key)
         if epoch < current: raise ValueError('fence rollback')
         self.fences[outcome_key]=epoch
+    def refuse_outcome(self, outcome_key, fence_epoch, refusal_id):
+        current=self.current_fence(outcome_key)
+        if current > fence_epoch: raise ValueError('fence rollback')
+        existing=self.refusals.get(outcome_key)
+        if existing and existing != (fence_epoch, refusal_id): raise ValueError('conflicting refusal')
+        self.fences[outcome_key]=fence_epoch; self.refusals[outcome_key]=(fence_epoch,refusal_id)
+    def is_refused(self, outcome_key): return outcome_key in self.refusals
     def commit(self, idempotency_key, outcome_key, fence_epoch, params):
+        if self.refusals.get(outcome_key): raise RuntimeError('outcome terminally refused')
         if self.current_fence(outcome_key) != fence_epoch: raise RuntimeError('fence advanced')
         if idempotency_key in self.effects: return TxnStatus.COMMITTED
         self.effects[idempotency_key]=(outcome_key,dict(params)); return TxnStatus.COMMITTED
@@ -59,8 +67,7 @@ class ProtectedOutcomeFenceTests(unittest.TestCase):
         with tempfile.TemporaryDirectory() as d:
             store,kernel=self.make(d); gate=EffectGate(kernel); adapter=FencedAdapter(); outcome='feed01'
             cap1=kernel.issue_protected('human','root','WRITE',self.state(1),nonce='n1',params={'amount':1},effect_id='000007',outcome_key=outcome); adapter.fences[outcome]=1
-            refusal=RefusalAuthority(store,{'human':SECRET}).issue_protected('human','000007',cap1.txid,outcome,target_epoch=2)
-            RefusalAuthority(store,{'human':SECRET}).commit_protected(refusal,adapter)
+            refusal=RefusalAuthority(store,{'human':SECRET}).issue_protected('human','000007',cap1.txid,outcome,target_epoch=2); RefusalAuthority(store,{'human':SECRET}).commit_protected(refusal,adapter)
             cap2=kernel.issue_protected('human','root','WRITE',self.state(3),nonce='n2',params={'amount':2},effect_id='000008',outcome_key='beef02')
             self.assertTrue(any(r.get('outcome_key')==outcome for r in store._read().state_payload.get('refusals',[])))
             req=EffectRequest(cap2,'human','root','WRITE','000007','WRITE',outcome)
@@ -136,6 +143,17 @@ class ProtectedOutcomeFenceTests(unittest.TestCase):
         adapter=RacingFenceAdapter(); txn=EffectTxn('k','k','WRITE',kernel_digest({'x':1}),'aabbcc',1)
         with self.assertRaises(AdapterContractError): protected_commit(adapter,txn,{'x':1})
         self.assertEqual(adapter.effects,{})
+
+    def test_terminal_refusal_blocks_same_epoch_even_after_local_state_crash(self):
+        adapter=FencedAdapter(); outcome='deadbeef'; adapter.refuse_outcome(outcome,2,'r1')
+        txn=EffectTxn('new-id','new-id','WRITE',kernel_digest({'x':7}),outcome,2)
+        with self.assertRaises(AdapterContractError): protected_commit(adapter,txn,{'x':7})
+        self.assertEqual(adapter.effects,{})
+
+    def test_refusal_is_idempotent_and_terminal(self):
+        adapter=FencedAdapter(); outcome='a0b0'; adapter.refuse_outcome(outcome,3,'r1'); adapter.refuse_outcome(outcome,3,'r1')
+        self.assertTrue(adapter.is_refused(outcome)); self.assertEqual(adapter.refusals[outcome],(3,'r1'))
+
 
 def kernel_digest(params):
     from dar.canonical import canonical_digest
