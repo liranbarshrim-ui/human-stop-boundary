@@ -14,18 +14,38 @@ SECRET = b'x' * 32
 class RefusalFenceAdapter(FencedEffectAdapter):
     def __init__(self):
         self.fences = {}
+        self.refusals = {}
         self.effects = {}
 
     def current_fence(self, outcome_key):
         return self.fences.get(outcome_key, 0)
 
+    def refuse_outcome(self, outcome_key, epoch, refusal_id):
+        current = self.current_fence(outcome_key)
+        existing = self.refusals.get(outcome_key)
+        if existing:
+            if existing != (epoch, refusal_id):
+                raise ValueError('conflicting terminal refusal')
+            return
+        if epoch < current:
+            raise ValueError('fence rollback')
+        self.fences[outcome_key] = epoch
+        self.refusals[outcome_key] = (epoch, refusal_id)
+
+    def is_refused(self, outcome_key):
+        return outcome_key in self.refusals
+
     def advance_fence(self, outcome_key, epoch):
+        if self.is_refused(outcome_key):
+            raise ValueError('terminal refusal cannot be advanced')
         current = self.current_fence(outcome_key)
         if epoch < current:
             raise ValueError('fence rollback')
         self.fences[outcome_key] = epoch
 
     def commit(self, idempotency_key, outcome_key, fence_epoch, params):
+        if self.is_refused(outcome_key):
+            raise RuntimeError('outcome terminally refused')
         if self.current_fence(outcome_key) != fence_epoch:
             raise RuntimeError('fence advanced')
         if idempotency_key in self.effects:
@@ -78,14 +98,14 @@ class RefusalAuthorityTests(unittest.TestCase):
             tampered = type(refusal)(refusal.refusal_id, refusal.principal, 'effect-2', refusal.capability_txid, refusal.target_epoch, refusal.issued_at, refusal.mac, refusal.outcome_key)
             self.assertFalse(auth.verify(tampered))
 
-    def test_external_fence_survives_crash_before_local_refusal_persistence(self):
+    def test_external_terminal_refusal_survives_crash_before_local_persistence_and_blocks_new_id(self):
         with tempfile.TemporaryDirectory() as d:
             store = self.make_store(d)
             auth = RefusalAuthority(store, {'human-a': b'a' * 32})
             adapter = RefusalFenceAdapter()
             refusal = auth.issue_protected('human-a', 'effect-1', 'tx-1', 'deadbeef', target_epoch=1)
-
             real_write = store._write_atomic
+
             def crash_on_refusal(snapshot):
                 if snapshot.state_payload.get('refusals'):
                     raise RuntimeError('simulated crash before durable refusal publication')
@@ -95,13 +115,22 @@ class RefusalAuthorityTests(unittest.TestCase):
                 with self.assertRaises(RuntimeError):
                     auth.commit_protected(refusal, adapter)
 
-            self.assertEqual(adapter.current_fence('deadbeef'), 1)
+            self.assertTrue(adapter.is_refused('deadbeef'))
             self.assertEqual(store._read().state_payload.get('refusals', []), [])
-
-            txn = EffectTxn('stale', 'stale', 'WRITE', canonical_digest({'x': 1}), 'deadbeef', 0)
+            txn = EffectTxn('new', 'new', 'WRITE', canonical_digest({'x': 1}), 'deadbeef', 1)
             with self.assertRaises(AdapterContractError):
-                protected_commit(adapter, txn, {'x': 1})
-            self.assertEqual(adapter.effects, {})
+                protected_commit(adapter, txn, {'x': 1})\            self.assertEqual(adapter.effects, {})
+
+    def test_protected_refusal_retry_is_idempotent(self):
+        with tempfile.TemporaryDirectory() as d:
+            store = self.make_store(d)
+            auth = RefusalAuthority(store, {'human-a': b'a' * 32})
+            adapter = RefusalFenceAdapter()
+            refusal = auth.issue_protected('human-a', 'effect-1', 'tx-1', 'feed01', target_epoch=1, refusal_id='r1')
+            auth.commit_protected(refusal, adapter)
+            self.assertTrue(adapter.is_refused('feed01'))
+            with self.assertRaises(ValueError):
+                auth.commit_protected(refusal, adapter)
 
     def test_external_fence_is_not_retroactive(self):
         with tempfile.TemporaryDirectory() as d:
@@ -112,7 +141,6 @@ class RefusalAuthorityTests(unittest.TestCase):
             adapter.fences['feed01'] = 1
             auth.commit_protected(refusal, adapter)
             self.assertEqual(adapter.current_fence('feed01'), 2)
-
             already_committed = EffectTxn('k', 'k', 'WRITE', canonical_digest({'x': 1}), 'feed01', 1)
             with self.assertRaises(AdapterContractError):
                 protected_commit(adapter, already_committed, {'x': 1})
