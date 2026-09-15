@@ -12,6 +12,10 @@ permissions:
   contents: read
   statuses: write
 
+concurrency:
+  group: dar-external-stress
+  cancel-in-progress: false
+
 jobs:
   external-stress:
     runs-on: ubuntu-latest
@@ -21,7 +25,7 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: "3.12"
-      - name: Run 10000-round black-box load
+      - name: Run 10000-round controlled black-box load
         id: load
         env:
           DAR_AUTHORITY_URL: https://dar-external-authority-v2.onrender.com
@@ -35,32 +39,67 @@ jobs:
           GITHUB_RUN_ID: ${{ github.run_id }}
           DAR_PROGRESS_INTERVAL: "250"
           DAR_PROGRESS_HEARTBEAT_SECONDS: "60"
+          DAR_STAGE_1_END: "1000"
+          DAR_STAGE_2_END: "4000"
+          DAR_STAGE_1_RATE: "1.0"
+          DAR_STAGE_2_RATE: "2.0"
+          DAR_STAGE_3_RATE: "3.0"
         run: |
           set +e
-          python tests/test_external_load.py | tee external-stress-evidence.jsonl
+          timeout --signal=TERM --kill-after=20s 80m \
+            python tests/test_external_load.py | tee external-stress-evidence.jsonl
           rc=${PIPESTATUS[0]}
           echo "exit_code=$rc" >> "$GITHUB_OUTPUT"
           exit 0
+      - name: Materialize final or partial evidence
+        id: evidence
+        if: always()
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          path = Path("external-stress-evidence.jsonl")
+          if not path.exists():
+              record = {
+                  "evidence_type": "external-authority-concurrent-load-partial",
+                  "verdict": "INCONCLUSIVE",
+                  "reason": "stress process produced no evidence before termination",
+              }
+          else:
+              records = []
+              for line in path.read_text().splitlines():
+                  try:
+                      records.append(json.loads(line))
+                  except json.JSONDecodeError:
+                      pass
+              record = records[-1] if records else {
+                  "evidence_type": "external-authority-concurrent-load-partial",
+                  "verdict": "INCONCLUSIVE",
+                  "reason": "stress process produced no parseable evidence",
+              }
+          print(json.dumps(record, indent=2, sort_keys=True))
+          Path("external-stress-evidence.json").write_text(
+              json.dumps(record, indent=2, sort_keys=True) + "\n"
+          )
+          PY
       - name: Validate stress evidence
         run: |
           python - <<'PY'
           import json
           from pathlib import Path
-          lines = Path("external-stress-evidence.jsonl").read_text().splitlines()
-          records = [json.loads(line) for line in lines if line.strip()]
-          record = records[-1]
-          print(json.dumps(record, indent=2, sort_keys=True))
-          Path("external-stress-evidence.json").write_text(json.dumps(record, indent=2, sort_keys=True) + "\n")
+          record = json.loads(Path("external-stress-evidence.json").read_text())
           assert record["verdict"] == "PASS", record
           assert record["rounds"] == 10000, record
           assert record["workers"] == 32, record
           assert all(v == "PASS" for v in record["checks"].values()), record
           PY
-      - name: Upload stress evidence
+      - name: Upload stress evidence and diagnostics
         if: always()
         uses: actions/upload-artifact@v4
         with:
           name: dar-external-10000-round-evidence
-          path: external-stress-evidence.json
+          path: |
+            external-stress-evidence.json
+            external-stress-evidence.jsonl
 
 # v37 stress-gate execution trigger: 2026-09-15
