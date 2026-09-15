@@ -1,0 +1,109 @@
+name: DAR 10K — Locust Distributed
+
+on:
+  workflow_dispatch:
+    inputs:
+      authority_url:
+        description: External authority URL
+        required: true
+        default: https://dar-external-authority-v2.onrender.com
+      shards:
+        description: Number of independent Locust shards
+        required: true
+        default: '10'
+
+permissions:
+  contents: read
+
+concurrency:
+  group: dar-10k-locust
+  cancel-in-progress: false
+
+jobs:
+  shard:
+    strategy:
+      fail-fast: false
+      matrix:
+        shard: [0,1,2,3,4,5,6,7,8,9]
+    runs-on: ubuntu-latest
+    timeout-minutes: 50
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Install Locust
+        run: python -m pip install --upgrade pip locust
+
+      - name: Run shard
+        env:
+          DAR_AUTHORITY_URL: ${{ inputs.authority_url }}
+          DAR_LOAD_ROUNDS: '10000'
+          DAR_LOAD_SEED: DAR-10K-B
+          DAR_SHARD_INDEX: ${{ matrix.shard }}
+          DAR_SHARD_COUNT: '10'
+        run: |
+          locust -f load/locust/locustfile.py \
+            --headless --host "$DAR_AUTHORITY_URL" \
+            -u 8 -r 8 --run-time 40m \
+            --only-summary
+
+      - name: Upload shard evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: dar-10k-locust-shard-${{ matrix.shard }}
+          path: locust-evidence.json
+
+  aggregate:
+    needs: shard
+    if: always()
+    runs-on: ubuntu-latest
+    steps:
+      - name: Download shard evidence
+        uses: actions/download-artifact@v4
+        with:
+          pattern: dar-10k-locust-shard-*
+          merge-multiple: true
+          path: evidence
+
+      - name: Validate aggregate
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          files = sorted(Path('evidence').glob('locust-evidence.json'))
+          if len(files) != 10:
+              raise SystemExit(f'INCONCLUSIVE: expected 10 shard evidence files, found {len(files)}')
+          rows = [json.loads(p.read_text()) for p in files]
+          completed = sum(r['completed_rounds'] for r in rows)
+          infra = sum(r['infrastructure_failures'] for r in rows)
+          inv = sum(r['invariant_failures'] for r in rows)
+          target = sum(r['shard_target'] for r in rows)
+          evidence = {
+              'evidence_type': 'external-authority-locust-distributed-10k-aggregate',
+              'rounds': 10000,
+              'completed_rounds': completed,
+              'expected_shard_rounds': target,
+              'infrastructure_failures': infra,
+              'invariant_failures': inv,
+              'shards': len(rows),
+              'verdict': 'PASS' if completed == 10000 and target == 10000 and infra == 0 and inv == 0 else 'INCONCLUSIVE',
+          }
+          print(json.dumps(evidence, indent=2, sort_keys=True))
+          Path('locust-10k-aggregate.json').write_text(json.dumps(evidence, indent=2, sort_keys=True) + '\n')
+          if evidence['verdict'] != 'PASS':
+              raise SystemExit(1)
+          PY
+
+      - name: Upload aggregate evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: dar-10k-locust-aggregate
+          path: locust-10k-aggregate.json
