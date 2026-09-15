@@ -48,6 +48,22 @@ It implements a bounded enforcement boundary with:
 - optional Linux `no_new_privs`, seccomp and Landlock hardening;
 - an explicit external monotonic-anchor interface for rollback detection.
 
+## External deployment evidence
+
+On 2026-09-15, DAR was tested through a live Make deployment against an external Google Sheets state mutation. The controlled effect was a write to `Evidence!A1`.
+
+The bounded result was independently verified:
+
+- **ALLOW** invoked `google-sheets:updateCell`, which reported `updatedCells: 1` and `updatedRange: Evidence!A1`.
+- A separate read-back returned the exact value written by the ALLOW execution.
+- **DENY** returned `DENY_BLOCKED` and did **not invoke** the external mutation module; the run recorded zero operations.
+
+This is the first recorded **externally verifiable enforcement demonstration** in this repository: the distinction is not merely an internal return value, because the ALLOW path changed external state and the change was subsequently read back.
+
+Evidence record: [`evidence/EXTERNAL_DEPLOYMENT_PROOF_2026-09-15.md`](evidence/EXTERNAL_DEPLOYMENT_PROOF_2026-09-15.md).
+
+The claim is deliberately bounded. This experiment does **not** prove universal control over arbitrary AI systems, complete mediation of every possible external path, production certification, or a full DAR v2 PASS. Those stronger claims require independent interface/escape-path completeness evidence and the other environmental conditions specified below.
+
 ## Boundary Conformance v2
 
 Version 1 remains the historical preregistration and its results are not rewritten. Future conformance claims use v2, which makes the two load-bearing environmental conditions explicit before a PASS can be claimed.
