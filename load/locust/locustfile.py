@@ -1,3 +1,5 @@
+import json
+import math
 import os
 import threading
 import uuid
@@ -11,14 +13,11 @@ SHARD_INDEX = int(os.getenv('DAR_SHARD_INDEX', '0'))
 SHARD_COUNT = int(os.getenv('DAR_SHARD_COUNT', '1'))
 
 lock = threading.Lock()
-started = 0
+next_index = SHARD_INDEX
 completed = 0
 infra_failures = 0
 invariant_failures = 0
-
-
-def owns(index: int) -> bool:
-    return index % SHARD_COUNT == SHARD_INDEX
+SHARD_TARGET = max(0, math.ceil((TARGET - SHARD_INDEX) / SHARD_COUNT))
 
 
 class DarAuthorityUser(HttpUser):
@@ -34,14 +33,12 @@ class DarAuthorityUser(HttpUser):
 
     @task
     def race_round(self):
-        global started, completed, infra_failures, invariant_failures
+        global next_index, completed, infra_failures, invariant_failures
         with lock:
-            index = started
-            while index < TARGET and not owns(index):
-                index += 1
-            if index >= TARGET:
+            if completed >= SHARD_TARGET or next_index >= TARGET:
                 raise StopUser()
-            started += 1
+            index = next_index
+            next_index += SHARD_COUNT
 
         epoch = index + 1
         outcome = f'{SEED}-{index}'
@@ -49,8 +46,8 @@ class DarAuthorityUser(HttpUser):
         idem_a = f'locust-commit-a-{SEED}-{index}-{uuid.uuid4().hex}'
         idem_b = f'locust-commit-b-{SEED}-{index}-{uuid.uuid4().hex}'
 
-        # Locust's task is intentionally conservative: the two race requests are
-        # issued in rapid succession; k6 remains the canonical true batch-race engine.
+        # Locust is the secondary cross-engine implementation. k6 is the
+        # canonical engine for the true refuse/fence race via http.batch().
         refuse = self.client.post('/refuse', json={'outcome': outcome, 'epoch': epoch, 'refusal_id': refusal_id}, name='POST /refuse')
         fence = self.client.post('/fence', json={'outcome': outcome, 'epoch': epoch}, name='POST /fence')
         if refuse.status_code in (502, 503, 504) or fence.status_code in (502, 503, 504):
@@ -58,7 +55,6 @@ class DarAuthorityUser(HttpUser):
                 infra_failures += 1
             raise StopUser()
 
-        commit = None
         if fence.status_code == 200:
             commit = self.client.post('/commit', json={'outcome': outcome, 'epoch': epoch, 'idempotency_key': idem_a}, name='POST /commit')
             if commit.status_code in (502, 503, 504):
@@ -67,7 +63,7 @@ class DarAuthorityUser(HttpUser):
                 raise StopUser()
 
         state_response = self.client.get('/state', name='GET /state')
-        if state_response.status_code in (502, 503, 504) or state_response.status_code != 200:
+        if state_response.status_code != 200:
             with lock:
                 infra_failures += 1
             raise StopUser()
@@ -92,18 +88,19 @@ class DarAuthorityUser(HttpUser):
 
         with lock:
             completed += 1
-            if completed >= TARGET:
+            if completed >= SHARD_TARGET:
                 raise StopUser()
 
 
 @events.test_stop.add_listener
 def emit_evidence(environment, **kwargs):
     with lock:
-        verdict = 'PASS' if completed == TARGET and infra_failures == 0 and invariant_failures == 0 else 'INCONCLUSIVE'
+        verdict = 'PASS' if completed == SHARD_TARGET and infra_failures == 0 and invariant_failures == 0 else 'INCONCLUSIVE'
         evidence = {
             'evidence_type': 'external-authority-locust-concurrent-load-black-box',
             'rounds': TARGET,
             'completed_rounds': completed,
+            'shard_target': SHARD_TARGET,
             'shard_index': SHARD_INDEX,
             'shard_count': SHARD_COUNT,
             'infrastructure_failures': infra_failures,
@@ -112,7 +109,6 @@ def emit_evidence(environment, **kwargs):
             'verdict': verdict,
         }
     with open('locust-evidence.json', 'w', encoding='utf-8') as fh:
-        import json
         json.dump(evidence, fh, indent=2, sort_keys=True)
         fh.write('\n')
     print(evidence)
