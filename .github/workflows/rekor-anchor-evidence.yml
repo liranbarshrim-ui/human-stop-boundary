@@ -16,7 +16,7 @@ on:
 jobs:
   rekor-anchor:
     runs-on: ubuntu-latest
-    timeout-minutes: 10
+    timeout-minutes: 15
     env:
       PYTHONUNBUFFERED: "1"
       PYTHONPATH: .
@@ -26,6 +26,14 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: "3.12"
+      - uses: actions/setup-go@v5
+        with:
+          go-version: "1.24"
+      - name: Install Rekor CLI
+        run: |
+          go install github.com/sigstore/rekor/cmd/rekor-cli@main
+          echo "$(go env GOPATH)/bin" >> "$GITHUB_PATH"
+          rekor-cli version || true
       - name: Run live external anchor test
         run: |
           python tests/test_rekor_external_anchor.py | tee rekor-anchor-evidence.json
@@ -38,6 +46,7 @@ jobs:
           print(json.dumps(record, indent=2, sort_keys=True))
           assert record["verdict"] == "PASS", record
           assert all(v == "PASS" for v in record["checks"].values()), record
+          assert record["checks"]["rekor_cli_inclusion_verification"] == "PASS", record
           assert record["second"]["log_index"] > record["first"]["log_index"], record
           PY
       - name: Upload machine-readable evidence
