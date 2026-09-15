@@ -65,6 +65,32 @@ class PostgresAuthority:
             conn.execute("SELECT 1")
         return True
 
+    def state_for_outcome(self, outcome: str) -> dict[str, Any]:
+        """Return only the state needed to verify one load-test round.
+
+        The old full-state endpoint is intentionally preserved for diagnostics,
+        but a 10K harness must not scan and serialize the entire database after
+        every round (which turns the workload into O(n^2) data transfer).
+        """
+        with self._connect() as conn:
+            fence = conn.execute(
+                "SELECT fence FROM dar_fences WHERE outcome_key=%s", (outcome,)
+            ).fetchone()
+            refusal = conn.execute(
+                "SELECT epoch, refusal_id FROM dar_refusals WHERE outcome_key=%s", (outcome,)
+            ).fetchone()
+            effect = conn.execute(
+                "SELECT idempotency_key, epoch FROM dar_effects WHERE outcome_key=%s", (outcome,)
+            ).fetchone()
+            return {
+                "outcome": outcome,
+                "fence": int(fence["fence"]) if fence else None,
+                "refused": bool(refusal),
+                "refusal": {"epoch": int(refusal["epoch"]), "refusal_id": refusal["refusal_id"]} if refusal else None,
+                "committed": bool(effect),
+                "commit": {"idempotency_key": effect["idempotency_key"], "epoch": int(effect["epoch"])} if effect else None,
+            }
+
     def state(self) -> dict[str, Any]:
         with self._connect() as conn:
             fences = {r["outcome_key"]: r["fence"] for r in conn.execute("SELECT * FROM dar_fences")}

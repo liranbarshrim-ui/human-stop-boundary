@@ -1,0 +1,82 @@
+name: DAR 10K — k6 Cross-Engine
+
+on:
+  workflow_dispatch:
+    inputs:
+      authority_url:
+        description: External authority URL
+        required: true
+        default: https://dar-external-authority-v2.onrender.com
+      vus:
+        description: Concurrent k6 VUs
+        required: true
+        default: '32'
+      rounds:
+        description: Total DAR rounds
+        required: true
+        default: '10000'
+
+permissions:
+  contents: read
+
+concurrency:
+  group: dar-10k-k6
+  cancel-in-progress: false
+
+jobs:
+  k6-10k:
+    runs-on: ubuntu-latest
+    timeout-minutes: 100
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+
+      - name: Setup Grafana k6
+        uses: grafana/setup-k6-action@v1
+
+      - name: Preflight external authority
+        env:
+          DAR_AUTHORITY_URL: ${{ inputs.authority_url }}
+        run: |
+          python - <<'PY'
+          import json, os, urllib.request
+          url = os.environ['DAR_AUTHORITY_URL'].rstrip('/') + '/health'
+          with urllib.request.urlopen(url, timeout=20) as r:
+              data = json.loads(r.read())
+              print(json.dumps(data, indent=2, sort_keys=True))
+              assert r.status == 200
+              assert data.get('ok') is True
+              assert data.get('persistence') == 'postgres'
+          PY
+
+      - name: Run canonical 10K
+        env:
+          DAR_AUTHORITY_URL: ${{ inputs.authority_url }}
+          DAR_LOAD_ROUNDS: ${{ inputs.rounds }}
+          DAR_LOAD_VUS: ${{ inputs.vus }}
+          DAR_LOAD_SEED: DAR-10K-B
+        run: k6 run load/k6/dar_10k.js
+
+      - name: Validate evidence
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          p = Path('k6-evidence.json')
+          assert p.exists(), 'missing k6-evidence.json'
+          e = json.loads(p.read_text())
+          print(json.dumps(e, indent=2, sort_keys=True))
+          assert e['verdict'] == 'PASS', e
+          assert e['rounds'] == int('${{ inputs.rounds }}'), e
+          assert e['completed_rounds'] == e['rounds'], e
+          assert e['infrastructure_failures'] == 0, e
+          assert e['invariant_failures'] == 0, e
+          PY
+
+      - name: Upload evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: dar-10k-k6-evidence
+          path: k6-evidence.json
