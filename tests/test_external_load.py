@@ -4,6 +4,11 @@ The harness knows only the public HTTP contract. Each round races one refusal
 against one protected commit for the same outcome. Across many independent
 outcomes it also exercises concurrent commits, retries, and refusals.
 
+The 10K stress gate uses an arrival-rate controller rather than submitting all
+available work at once. This separates total conformance rounds from load
+intensity and makes infrastructure saturation observable instead of confusing
+it with a DAR invariant failure.
+
 A valid result must never observe both a successful protected commit and a
 successful terminal refusal for the same outcome. If refusal wins, all later
 new-idempotency-key commits must be rejected. If commit wins, a later refusal
@@ -15,6 +20,7 @@ import concurrent.futures
 import json
 import os
 import random
+import signal
 import threading
 import time
 import urllib.error
@@ -34,7 +40,72 @@ GITHUB_TOKEN = os.environ.get("DAR_HEARTBEAT_GITHUB_TOKEN")
 GITHUB_REPOSITORY = os.environ.get("GITHUB_REPOSITORY")
 GITHUB_SHA = os.environ.get("GITHUB_SHA")
 STATUS_CONTEXT = "DAR / 10K-B progress"
+# Controlled open-model arrival rates. The total remains exactly ROUNDS.
+STAGE_1_END = int(os.environ.get("DAR_STAGE_1_END", "1000"))
+STAGE_2_END = int(os.environ.get("DAR_STAGE_2_END", "4000"))
+STAGE_1_RATE = float(os.environ.get("DAR_STAGE_1_RATE", "1.0"))
+STAGE_2_RATE = float(os.environ.get("DAR_STAGE_2_RATE", "2.0"))
+STAGE_3_RATE = float(os.environ.get("DAR_STAGE_3_RATE", "3.0"))
 _status_lock = threading.Lock()
+_progress_lock = threading.Lock()
+_completed = 0
+_started = 0
+_stop_requested = threading.Event()
+_signal_name: str | None = None
+
+
+def _rate_for_round(index: int) -> float:
+    if index < STAGE_1_END:
+        return STAGE_1_RATE
+    if index < STAGE_2_END:
+        return STAGE_2_RATE
+    return STAGE_3_RATE
+
+
+def _stage_for_round(index: int) -> str:
+    if index < STAGE_1_END:
+        return "stage-1"
+    if index < STAGE_2_END:
+        return "stage-2"
+    return "stage-3"
+
+
+def _snapshot_progress() -> tuple[int, int]:
+    with _progress_lock:
+        return _started, _completed
+
+
+def _partial_evidence(reason: str) -> dict:
+    started, completed = _snapshot_progress()
+    return {
+        "evidence_type": "external-authority-concurrent-load-partial",
+        "base_url": BASE_URL,
+        "rounds": ROUNDS,
+        "workers": WORKERS,
+        "timeout_seconds": TIMEOUT,
+        "arrival_rate": {
+            "stage_1": {"end_round": STAGE_1_END, "rounds_per_second": STAGE_1_RATE},
+            "stage_2": {"end_round": STAGE_2_END, "rounds_per_second": STAGE_2_RATE},
+            "stage_3": {"end_round": ROUNDS, "rounds_per_second": STAGE_3_RATE},
+        },
+        "started_rounds": started,
+        "completed_rounds": completed,
+        "remaining_rounds": max(0, ROUNDS - completed),
+        "reason": reason,
+        "signal": _signal_name,
+        "verdict": "INCONCLUSIVE",
+    }
+
+
+def _handle_signal(signum: int, _frame) -> None:
+    global _signal_name
+    _signal_name = signal.Signals(signum).name
+    _stop_requested.set()
+    print(json.dumps(_partial_evidence(f"received {_signal_name}"), sort_keys=True), flush=True)
+
+
+for _sig in (signal.SIGTERM, signal.SIGINT):
+    signal.signal(_sig, _handle_signal)
 
 
 def _publish_progress(completed: int, state: str = "pending") -> None:
@@ -178,27 +249,29 @@ def race_round(index: int) -> dict:
 
 
 def main() -> None:
+    global _completed, _started
     health = wait_for_health()
     results: list[dict] = []
     failures: list[str] = []
-    completed = 0
     next_index = 0
     in_flight: dict[concurrent.futures.Future[dict], int] = {}
     lock = threading.Lock()
     stop_heartbeat = threading.Event()
+    next_launch_at = time.monotonic()
 
     _publish_progress(0)
 
     def heartbeat() -> None:
         while not stop_heartbeat.wait(HEARTBEAT_SECONDS):
-            with lock:
-                done = completed
+            _, done = _snapshot_progress()
             print(json.dumps({
                 "evidence_type": "external-authority-concurrent-load-heartbeat",
                 "base_url": BASE_URL,
                 "completed_rounds": done,
                 "rounds": ROUNDS,
                 "workers": WORKERS,
+                "stage": _stage_for_round(done),
+                "arrival_rate_rounds_per_second": _rate_for_round(done),
             }, sort_keys=True), flush=True)
             _publish_progress(done)
 
@@ -206,14 +279,32 @@ def main() -> None:
     heartbeat_thread.start()
     try:
         with concurrent.futures.ThreadPoolExecutor(max_workers=WORKERS) as pool:
-            while next_index < ROUNDS and len(in_flight) < WORKERS:
-                future = pool.submit(race_round, next_index)
-                in_flight[future] = next_index
-                next_index += 1
+            while next_index < ROUNDS or in_flight:
+                if _stop_requested.is_set():
+                    break
 
-            while in_flight:
+                # Open-model pacing: start new rounds at a controlled rate instead
+                # of filling the worker pool immediately and creating a burst.
+                if next_index < ROUNDS and len(in_flight) < WORKERS:
+                    now = time.monotonic()
+                    if now < next_launch_at:
+                        time.sleep(min(next_launch_at - now, 0.25))
+                        continue
+                    rate = _rate_for_round(next_index)
+                    future = pool.submit(race_round, next_index)
+                    in_flight[future] = next_index
+                    with _progress_lock:
+                        _started += 1
+                    next_index += 1
+                    next_launch_at = max(next_launch_at, now) + (1.0 / rate)
+                    continue
+
+                if not in_flight:
+                    continue
+
                 done, _ = concurrent.futures.wait(
                     in_flight,
+                    timeout=0.5,
                     return_when=concurrent.futures.FIRST_COMPLETED,
                 )
                 for future in done:
@@ -221,25 +312,30 @@ def main() -> None:
                     try:
                         results.append(future.result())
                         with lock:
-                            completed += 1
-                        if completed == 1 or completed % PROGRESS_INTERVAL == 0 or completed == ROUNDS:
+                            _completed += 1
+                        with _progress_lock:
+                            _completed = len(results)
+                        if _completed == 1 or _completed % PROGRESS_INTERVAL == 0 or _completed == ROUNDS:
                             print(json.dumps({
                                 "evidence_type": "external-authority-concurrent-load-progress",
                                 "base_url": BASE_URL,
-                                "completed_rounds": completed,
+                                "completed_rounds": _completed,
                                 "rounds": ROUNDS,
                                 "workers": WORKERS,
+                                "stage": _stage_for_round(_completed),
+                                "arrival_rate_rounds_per_second": _rate_for_round(_completed),
                             }, sort_keys=True), flush=True)
-                            _publish_progress(completed)
+                            _publish_progress(_completed)
                     except Exception as exc:
                         failures.append(f"round={index}: {exc!r}")
-                    if next_index < ROUNDS:
-                        replacement = pool.submit(race_round, next_index)
-                        in_flight[replacement] = next_index
-                        next_index += 1
     finally:
         stop_heartbeat.set()
         heartbeat_thread.join(timeout=1)
+
+    if _stop_requested.is_set():
+        print(json.dumps(_partial_evidence("controlled stop requested"), sort_keys=True), flush=True)
+        _publish_progress(len(results), "failure")
+        raise SystemExit(2)
 
     if failures or len(results) != ROUNDS:
         _publish_progress(len(results), "failure")
@@ -249,6 +345,11 @@ def main() -> None:
             "rounds": ROUNDS,
             "workers": WORKERS,
             "timeout_seconds": TIMEOUT,
+            "arrival_rate": {
+                "stage_1": {"end_round": STAGE_1_END, "rounds_per_second": STAGE_1_RATE},
+                "stage_2": {"end_round": STAGE_2_END, "rounds_per_second": STAGE_2_RATE},
+                "stage_3": {"end_round": ROUNDS, "rounds_per_second": STAGE_3_RATE},
+            },
             "health": health,
             "checks": {
                 "health_postgres": "PASS",
@@ -275,6 +376,11 @@ def main() -> None:
         "rounds": ROUNDS,
         "workers": WORKERS,
         "timeout_seconds": TIMEOUT,
+        "arrival_rate": {
+            "stage_1": {"end_round": STAGE_1_END, "rounds_per_second": STAGE_1_RATE},
+            "stage_2": {"end_round": STAGE_2_END, "rounds_per_second": STAGE_2_RATE},
+            "stage_3": {"end_round": ROUNDS, "rounds_per_second": STAGE_3_RATE},
+        },
         "health": health,
         "checks": {
             "health_postgres": "PASS",
