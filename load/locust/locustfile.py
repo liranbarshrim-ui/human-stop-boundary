@@ -46,8 +46,6 @@ class DarAuthorityUser(HttpUser):
         idem_a = f'locust-commit-a-{SEED}-{index}-{uuid.uuid4().hex}'
         idem_b = f'locust-commit-b-{SEED}-{index}-{uuid.uuid4().hex}'
 
-        # Locust is the secondary cross-engine implementation. k6 is the
-        # canonical engine for the true refuse/fence race via http.batch().
         refuse = self.client.post('/refuse', json={'outcome': outcome, 'epoch': epoch, 'refusal_id': refusal_id}, name='POST /refuse')
         fence = self.client.post('/fence', json={'outcome': outcome, 'epoch': epoch}, name='POST /fence')
         if refuse.status_code in (502, 503, 504) or fence.status_code in (502, 503, 504):
@@ -62,14 +60,14 @@ class DarAuthorityUser(HttpUser):
                     infra_failures += 1
                 raise StopUser()
 
-        state_response = self.client.get('/state', name='GET /state')
+        state_response = self.client.get(f'/state?outcome={outcome}', name='GET /state?outcome')
         if state_response.status_code != 200:
             with lock:
                 infra_failures += 1
             raise StopUser()
         state = state_response.json()
-        refused = outcome in state.get('refusals', {})
-        committed = outcome in state.get('committed_outcomes', {})
+        refused = state.get('refused') is True
+        committed = state.get('committed') is True
 
         bypass_status = None
         if refused:
