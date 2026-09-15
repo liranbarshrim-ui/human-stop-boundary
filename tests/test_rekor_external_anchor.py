@@ -1,4 +1,3 @@
-import base64
 import json
 import os
 import subprocess
@@ -19,7 +18,7 @@ def fetch_entry(uuid: str) -> dict:
 
 
 def verify_inclusion_with_rekor_cli() -> dict:
-    """Create a real signed artifact and let Rekor CLI verify its inclusion."""
+    """Upload a real signed artifact, then let Rekor CLI verify its inclusion."""
     with tempfile.TemporaryDirectory() as td:
         root = Path(td)
         artifact = root / "anchor-verified.bin"
@@ -47,7 +46,28 @@ def verify_inclusion_with_rekor_cli() -> dict:
             stderr=subprocess.DEVNULL,
         )
 
-        result = subprocess.run(
+        upload = subprocess.run(
+            [
+                "rekor-cli",
+                "upload",
+                "--rekor_server",
+                SERVER,
+                "--signature",
+                str(sig),
+                "--public-key",
+                str(pub),
+                "--pki-format",
+                "x509",
+                "--artifact",
+                str(artifact),
+            ],
+            check=True,
+            capture_output=True,
+            text=True,
+            timeout=120,
+        )
+
+        verify = subprocess.run(
             [
                 "rekor-cli",
                 "verify",
@@ -67,8 +87,9 @@ def verify_inclusion_with_rekor_cli() -> dict:
         )
         return {
             "status": "PASS",
-            "stdout": result.stdout.strip(),
-            "stderr": result.stderr.strip(),
+            "upload_stdout": upload.stdout.strip(),
+            "verify_stdout": verify.stdout.strip(),
+            "verify_stderr": verify.stderr.strip(),
         }
 
 
