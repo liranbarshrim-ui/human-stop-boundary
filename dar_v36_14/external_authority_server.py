@@ -16,8 +16,7 @@ import os
 import threading
 import uuid
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
-from urllib.parse import urlsplit
-
+from urllib.parse import parse_qs, urlsplit
 
 PERSISTENCE_MODE = os.environ.get("DAR_PERSISTENCE_MODE", "memory").strip().lower()
 DB_URL = os.environ.get("DATABASE_URL", "").strip()
@@ -31,13 +30,9 @@ if DB_URL:
     try:
         from dar_v36_14.postgres_authority import PostgresAuthority
     except ModuleNotFoundError as exc:
-        # Render executes this file directly, so its containing directory is
-        # on sys.path while the repository root may not be. Keep the import
-        # explicit and fail closed for any other missing dependency.
         if exc.name != "dar_v36_14":
             raise
         from postgres_authority import PostgresAuthority
-
     authority = PostgresAuthority(DB_URL)
 else:
     authority = None
@@ -64,19 +59,39 @@ class Handler(BaseHTTPRequestHandler):
         pass
 
     def do_GET(self) -> None:
-        path = urlsplit(self.path).path
+        parsed = urlsplit(self.path)
+        path = parsed.path
         if path == "/health":
             if authority:
                 try:
                     authority.health()
                 except Exception as exc:
                     return response(self, 503, {"ok": False, "error": "database_unavailable", "detail": str(exc)})
-            return response(self, 200, {
-                "ok": True,
-                "persistence": "postgres" if authority else "memory",
-                "boot_id": BOOT_ID,
-            })
+            return response(self, 200, {"ok": True, "persistence": "postgres" if authority else "memory", "boot_id": BOOT_ID})
+
         if path == "/state":
+            outcome_values = parse_qs(parsed.query).get("outcome", [])
+            if outcome_values:
+                outcome = outcome_values[0]
+                if authority:
+                    try:
+                        body = authority.state_for_outcome(outcome)
+                        body["boot_id"] = BOOT_ID
+                        return response(self, 200, body)
+                    except Exception as exc:
+                        return response(self, 503, {"ok": False, "error": "database_unavailable", "detail": str(exc)})
+                with lock:
+                    idem = committed_outcomes.get(outcome)
+                    return response(self, 200, {
+                        "outcome": outcome,
+                        "fence": fences.get(outcome),
+                        "refused": outcome in refusals,
+                        "refusal": refusals.get(outcome),
+                        "committed": outcome in committed_outcomes,
+                        "commit": effects.get(idem) if idem else None,
+                        "boot_id": BOOT_ID,
+                    })
+
             if authority:
                 try:
                     body = authority.state()
@@ -92,13 +107,9 @@ class Handler(BaseHTTPRequestHandler):
                     "committed_outcomes": dict(committed_outcomes),
                     "boot_id": BOOT_ID,
                 })
+
         if path == "/":
-            return response(self, 200, {
-                "service": "DAR external authority",
-                "health": "/health",
-                "state": "/state",
-                "boot_id": BOOT_ID,
-            })
+            return response(self, 200, {"service": "DAR external authority", "health": "/health", "state": "/state", "boot_id": BOOT_ID})
         return response(self, 404, {"error": "not_found"})
 
     def do_POST(self) -> None:
@@ -123,19 +134,15 @@ class Handler(BaseHTTPRequestHandler):
 
         with lock:
             if path == "/fence":
-                outcome = data["outcome"]
-                epoch = int(data["epoch"])
+                outcome, epoch = data["outcome"], int(data["epoch"])
                 if epoch < fences.get(outcome, 0):
                     return response(self, 409, {"ok": False, "error": "fence_rollback"})
                 if outcome in refusals:
                     return response(self, 409, {"ok": False, "error": "terminal_refusal"})
                 fences[outcome] = epoch
                 return response(self, 200, {"ok": True})
-
             if path == "/refuse":
-                outcome = data["outcome"]
-                epoch = int(data["epoch"])
-                refusal_id = data["refusal_id"]
+                outcome, epoch, refusal_id = data["outcome"], int(data["epoch"]), data["refusal_id"]
                 existing = refusals.get(outcome)
                 if existing is not None:
                     same = existing == [epoch, refusal_id]
@@ -145,11 +152,8 @@ class Handler(BaseHTTPRequestHandler):
                 fences[outcome] = epoch
                 refusals[outcome] = [epoch, refusal_id]
                 return response(self, 200, {"ok": True, "idempotent": False})
-
             if path == "/commit":
-                outcome = data["outcome"]
-                epoch = int(data["epoch"])
-                idem = data["idempotency_key"]
+                outcome, epoch, idem = data["outcome"], int(data["epoch"]), data["idempotency_key"]
                 if outcome in refusals:
                     return response(self, 409, {"ok": False, "error": "terminal_refusal"})
                 if fences.get(outcome, 0) != epoch:
@@ -161,7 +165,6 @@ class Handler(BaseHTTPRequestHandler):
                 effects[idem] = {"outcome": outcome, "epoch": epoch}
                 committed_outcomes[outcome] = idem
                 return response(self, 200, {"ok": True, "idempotent": False})
-
         return response(self, 404, {"error": "not_found"})
 
 
