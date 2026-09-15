@@ -1,0 +1,59 @@
+name: DAR External Rekor Anchor Evidence
+
+on:
+  push:
+    paths:
+      - .github/workflows/rekor-anchor-evidence.yml
+      - dar_v36_14/dar/rekor_anchor.py
+      - tests/test_rekor_external_anchor.py
+  pull_request:
+    paths:
+      - .github/workflows/rekor-anchor-evidence.yml
+      - dar_v36_14/dar/rekor_anchor.py
+      - tests/test_rekor_external_anchor.py
+  workflow_dispatch:
+
+jobs:
+  rekor-anchor:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    env:
+      PYTHONUNBUFFERED: "1"
+      PYTHONPATH: .
+      DAR_REKOR_URL: https://rekor.sigstore.dev
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Install pinned Rekor CLI release
+        run: |
+          set -euo pipefail
+          version="v1.5.1"
+          url="https://github.com/sigstore/rekor/releases/download/${version}/rekor-cli-linux-amd64"
+          curl -fsSL "$url" -o rekor-cli
+          echo "0b4964af85477892c37039fb80793b151864970d19838873eaa1a777ca2fb813  rekor-cli" | sha256sum -c -
+          chmod +x rekor-cli
+          sudo install -m 0755 rekor-cli /usr/local/bin/rekor-cli
+          rekor-cli version
+      - name: Run live external anchor test
+        run: |
+          python tests/test_rekor_external_anchor.py | tee rekor-anchor-evidence.json
+      - name: Validate evidence
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          record = json.loads(Path("rekor-anchor-evidence.json").read_text().splitlines()[-1])
+          print(json.dumps(record, indent=2, sort_keys=True))
+          assert record["verdict"] == "PASS", record
+          assert all(v == "PASS" for v in record["checks"].values()), record
+          assert record["checks"]["rekor_cli_inclusion_verification"] == "PASS", record
+          assert record["second"]["log_index"] > record["first"]["log_index"], record
+          PY
+      - name: Upload machine-readable evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: dar-rekor-monotonic-anchor-evidence
+          path: rekor-anchor-evidence.json
