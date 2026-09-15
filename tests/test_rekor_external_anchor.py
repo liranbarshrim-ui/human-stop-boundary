@@ -18,7 +18,7 @@ def fetch_entry(uuid: str) -> dict:
 
 
 def verify_inclusion_with_rekor_cli() -> dict:
-    """Upload a real signed artifact, then let Rekor CLI verify its inclusion."""
+    """Upload a real PKIX/X509 signed artifact, then verify its inclusion proof."""
     with tempfile.TemporaryDirectory() as td:
         root = Path(td)
         artifact = root / "anchor-verified.bin"
@@ -48,42 +48,20 @@ def verify_inclusion_with_rekor_cli() -> dict:
 
         upload = subprocess.run(
             [
-                "rekor-cli",
-                "upload",
-                "--rekor_server",
-                SERVER,
-                "--signature",
-                str(sig),
-                "--public-key",
-                str(pub),
-                "--pki-format",
-                "x509",
-                "--artifact",
-                str(artifact),
+                "rekor-cli", "upload", "--rekor_server", SERVER,
+                "--signature", str(sig), "--public-key", str(pub),
+                "--pki-format", "x509", "--artifact", str(artifact),
             ],
-            check=True,
-            capture_output=True,
-            text=True,
-            timeout=120,
+            check=True, capture_output=True, text=True, timeout=120,
         )
 
         verify = subprocess.run(
             [
-                "rekor-cli",
-                "verify",
-                "--rekor_server",
-                SERVER,
-                "--signature",
-                str(sig),
-                "--public-key",
-                str(pub),
-                "--artifact",
-                str(artifact),
+                "rekor-cli", "verify", "--rekor_server", SERVER,
+                "--signature", str(sig), "--public-key", str(pub),
+                "--pki-format", "x509", "--artifact", str(artifact),
             ],
-            check=True,
-            capture_output=True,
-            text=True,
-            timeout=120,
+            check=True, capture_output=True, text=True, timeout=120,
         )
         return {
             "status": "PASS",
@@ -99,10 +77,8 @@ def main() -> None:
     second = anchor.publish(b"DAR-v37-anchor-test/refusal/two")
 
     assert second.log_index > first.log_index, (first, second)
-    first_entry = fetch_entry(first.uuid)
-    second_entry = fetch_entry(second.uuid)
-    assert first_entry, first
-    assert second_entry, second
+    assert fetch_entry(first.uuid)
+    assert fetch_entry(second.uuid)
 
     floor = anchor.floor()
     assert floor == second.log_index, (floor, second)
@@ -128,18 +104,8 @@ def main() -> None:
             "rollback_rejected": "PASS",
             "rekor_cli_inclusion_verification": inclusion["status"],
         },
-        "first": {
-            "uuid": first.uuid,
-            "log_index": first.log_index,
-            "tree_size": first.tree_size,
-            "digest": first.digest,
-        },
-        "second": {
-            "uuid": second.uuid,
-            "log_index": second.log_index,
-            "tree_size": second.tree_size,
-            "digest": second.digest,
-        },
+        "first": {"uuid": first.uuid, "log_index": first.log_index, "tree_size": first.tree_size, "digest": first.digest},
+        "second": {"uuid": second.uuid, "log_index": second.log_index, "tree_size": second.tree_size, "digest": second.digest},
         "inclusion_verification": inclusion,
     }
     print(json.dumps(evidence, sort_keys=True), flush=True)
