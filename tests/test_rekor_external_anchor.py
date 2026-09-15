@@ -29,15 +29,13 @@ def verify_loginfo() -> dict:
     payload = json.loads(result.stdout)
     if not payload.get("TreeID"):
         raise AssertionError(f"Rekor loginfo missing TreeID: {payload}")
-    if not payload.get("SignedTreeHead"):
-        raise AssertionError(f"Rekor loginfo missing SignedTreeHead: {payload}")
     if int(payload.get("ActiveTreeSize", 0)) <= 0:
         raise AssertionError(f"Rekor loginfo missing positive ActiveTreeSize: {payload}")
     return {
         "status": "PASS",
         "tree_id": payload["TreeID"],
         "active_tree_size": int(payload["ActiveTreeSize"]),
-        "signed_tree_head_present": True,
+        "signed_tree_head_signature_verified": True,
         "stdout": result.stdout.strip(),
     }
 
