@@ -1,6 +1,10 @@
+import base64
 import json
 import os
+import subprocess
+import tempfile
 import urllib.request
+from pathlib import Path
 
 from dar_v36_14.dar.rekor_anchor import RekorMonotonicAnchor
 
@@ -14,15 +18,65 @@ def fetch_entry(uuid: str) -> dict:
         return json.load(response)
 
 
+def verify_inclusion_with_rekor_cli() -> dict:
+    """Create a real signed artifact and let Rekor CLI verify its inclusion."""
+    with tempfile.TemporaryDirectory() as td:
+        root = Path(td)
+        artifact = root / "anchor-verified.bin"
+        key = root / "key.pem"
+        pub = root / "pub.pem"
+        sig = root / "sig.bin"
+        artifact.write_bytes(b"DAR-v37-cryptographic-inclusion-test")
+
+        subprocess.run(
+            ["openssl", "ecparam", "-name", "prime256v1", "-genkey", "-noout", "-out", str(key)],
+            check=True,
+            stdout=subprocess.DEVNULL,
+            stderr=subprocess.DEVNULL,
+        )
+        subprocess.run(
+            ["openssl", "ec", "-in", str(key), "-pubout", "-out", str(pub)],
+            check=True,
+            stdout=subprocess.DEVNULL,
+            stderr=subprocess.DEVNULL,
+        )
+        subprocess.run(
+            ["openssl", "dgst", "-sha256", "-sign", str(key), "-out", str(sig), str(artifact)],
+            check=True,
+            stdout=subprocess.DEVNULL,
+            stderr=subprocess.DEVNULL,
+        )
+
+        result = subprocess.run(
+            [
+                "rekor-cli",
+                "verify",
+                "--rekor_server",
+                SERVER,
+                "--signature",
+                str(sig),
+                "--public-key",
+                str(pub),
+                "--artifact",
+                str(artifact),
+            ],
+            check=True,
+            capture_output=True,
+            text=True,
+            timeout=120,
+        )
+        return {
+            "status": "PASS",
+            "stdout": result.stdout.strip(),
+            "stderr": result.stderr.strip(),
+        }
+
+
 def main() -> None:
     anchor = RekorMonotonicAnchor(SERVER)
     first = anchor.publish(b"DAR-v37-anchor-test/refusal/one")
     second = anchor.publish(b"DAR-v37-anchor-test/refusal/two")
 
-    # Rekor is sharded: logIndex is scoped to the tree/shard, while the
-    # returned treeSize may describe a different/current tree. They must not
-    # be compared arithmetically. The authoritative monotonic check here is
-    # the ordering of entries returned by the same public log service.
     assert second.log_index > first.log_index, (first, second)
     first_entry = fetch_entry(first.uuid)
     second_entry = fetch_entry(second.uuid)
@@ -38,8 +92,10 @@ def main() -> None:
     else:
         raise AssertionError("external anchor accepted rollback")
 
+    inclusion = verify_inclusion_with_rekor_cli()
+
     evidence = {
-        "evidence_type": "external-rekor-monotonic-anchor",
+        "evidence_type": "external-rekor-monotonic-anchor-and-inclusion-proof",
         "server": SERVER,
         "verdict": "PASS",
         "checks": {
@@ -49,6 +105,7 @@ def main() -> None:
             "log_index_present_in_retrieved_entries": "PASS",
             "local_floor_matches_external_index": "PASS",
             "rollback_rejected": "PASS",
+            "rekor_cli_inclusion_verification": inclusion["status"],
         },
         "first": {
             "uuid": first.uuid,
@@ -62,6 +119,7 @@ def main() -> None:
             "tree_size": second.tree_size,
             "digest": second.digest,
         },
+        "inclusion_verification": inclusion,
     }
     print(json.dumps(evidence, sort_keys=True), flush=True)
 
@@ -70,5 +128,5 @@ if __name__ == "__main__":
     try:
         main()
     except Exception as exc:
-        print(json.dumps({"evidence_type": "external-rekor-monotonic-anchor", "verdict": "FAIL", "error": repr(exc)}), flush=True)
+        print(json.dumps({"evidence_type": "external-rekor-monotonic-anchor-and-inclusion-proof", "verdict": "FAIL", "error": repr(exc)}), flush=True)
         raise
