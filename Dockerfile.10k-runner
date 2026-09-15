@@ -3,6 +3,7 @@ WORKDIR /app
 COPY . /app
 ENV PYTHONUNBUFFERED=1
 ENV PYTHONPATH=/app
+# Railway webhook trigger verification
 ENV DAR_CHECKPOINT_PATH=/app/state/checkpoint.json
 RUN pip install --no-cache-dir -r requirements.txt
 RUN mkdir -p /app/state
