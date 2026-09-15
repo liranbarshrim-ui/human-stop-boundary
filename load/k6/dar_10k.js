@@ -52,11 +52,10 @@ export default function (data) {
   const idemA = `k6-commit-a-${SEED}-${__VU}-${epoch}`;
   const idemB = `k6-commit-b-${SEED}-${__VU}-${epoch}`;
 
-  const requests = [
+  const raced = http.batch([
     ['POST', `${data.baseUrl}/refuse`, JSON.stringify({ outcome, epoch, refusal_id: refusalId }), { headers: { 'Content-Type': 'application/json' }, timeout: TIMEOUT }],
     ['POST', `${data.baseUrl}/fence`, JSON.stringify({ outcome, epoch }), { headers: { 'Content-Type': 'application/json' }, timeout: TIMEOUT }],
-  ];
-  const raced = http.batch(requests);
+  ]);
   const refuse = raced[0];
   const fence = raced[1];
 
@@ -76,15 +75,16 @@ export default function (data) {
     }
   }
 
-  const stateResponse = http.get(`${data.baseUrl}/state`, { timeout: TIMEOUT });
-  if (infra(stateResponse)) {
+  // Targeted state avoids scanning/serializing all prior rounds after every round.
+  const stateResponse = http.get(`${data.baseUrl}/state?outcome=${encodeURIComponent(outcome)}`, { timeout: TIMEOUT });
+  if (infra(stateResponse) || stateResponse.status !== 200) {
     infrastructureFailures.add(1);
     invariantRate.add(false);
     fail(`INCONCLUSIVE infrastructure failure: state=${stateResponse && stateResponse.status}`);
   }
   const state = body(stateResponse);
-  const refused = Boolean(state.refusals && state.refusals[outcome]);
-  const committed = Boolean(state.committed_outcomes && state.committed_outcomes[outcome]);
+  const refused = state.refused === true;
+  const committed = state.committed === true;
   const exclusive = refused !== committed;
 
   let bypassStatus = null;
@@ -133,8 +133,5 @@ export function handleSummary(data) {
     verdict,
     generated_at: new Date().toISOString(),
   };
-  return {
-    stdout: JSON.stringify(evidence) + '\n',
-    'k6-evidence.json': JSON.stringify(evidence, null, 2) + '\n',
-  };
+  return { stdout: JSON.stringify(evidence) + '\n', 'k6-evidence.json': JSON.stringify(evidence, null, 2) + '\n' };
 }
