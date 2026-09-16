@@ -4,6 +4,8 @@ on:
   push:
     branches:
       - dar-nf-10k
+    paths-ignore:
+      - '.github/workflows/**'
   pull_request:
   workflow_dispatch:
 
