@@ -1,0 +1,131 @@
+name: DAR Restart Recovery Conformance
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  actions: read
+
+jobs:
+  restart-recovery:
+    name: PostgreSQL Authority Restart Recovery
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    services:
+      postgres:
+        image: postgres:16
+        env:
+          POSTGRES_PASSWORD: postgres
+          POSTGRES_DB: postgres
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd="pg_isready -U postgres -d postgres"
+          --health-interval=5s
+          --health-timeout=5s
+          --health-retries=20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Install dependencies
+        run: python -m pip install -r requirements.txt
+      - name: Start authority and verify PostgreSQL health
+        env:
+          DAR_PERSISTENCE_MODE: postgres
+          DATABASE_URL: postgresql://postgres:postgres@127.0.0.1:5432/postgres
+          DAR_DB_SSLMODE: disable
+          PYTHONPATH: ${{ github.workspace }}
+        run: |
+          set -euo pipefail
+          python dar_v36_14/external_authority_server.py > authority-before.log 2>&1 &
+          echo $! > authority.pid
+          for i in $(seq 1 30); do
+            if curl -fsS http://127.0.0.1:10000/health | tee health-before.json; then
+              exit 0
+            fi
+            sleep 2
+          done
+          cat authority-before.log
+          exit 1
+      - name: Seed terminal refusal
+        env:
+          BASE: http://127.0.0.1:10000
+          OUTCOME: restart-recovery-${{ github.run_id }}
+          REFUSAL: refusal-${{ github.run_id }}
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          import json, os, urllib.request
+          base=os.environ['BASE']
+          payload={'outcome':os.environ['OUTCOME'],'epoch':100,'refusal_id':os.environ['REFUSAL']}
+          req=urllib.request.Request(base+'/refuse', data=json.dumps(payload).encode(), headers={'Content-Type':'application/json'}, method='POST')
+          with urllib.request.urlopen(req, timeout=20) as r:
+              body=json.loads(r.read())
+              assert r.status == 200 and body.get('ok') is True, (r.status, body)
+          with urllib.request.urlopen(base+'/state', timeout=20) as r: state=json.loads(r.read())
+          assert os.environ['OUTCOME'] in state.get('refusals', {}), state
+          print(json.dumps({'pre_restart_refusal':'PASS'}))
+          PY
+      - name: Stop authority process
+        run: |
+          set -euo pipefail
+          kill "$(cat authority.pid)"
+          for i in $(seq 1 20); do
+            if ! kill -0 "$(cat authority.pid)" 2>/dev/null; then exit 0; fi
+            sleep 1
+          done
+          echo 'authority process did not stop cleanly'
+          exit 1
+      - name: Restart same authority against same PostgreSQL
+        env:
+          DAR_PERSISTENCE_MODE: postgres
+          DATABASE_URL: postgresql://postgres:postgres@127.0.0.1:5432/postgres
+          DAR_DB_SSLMODE: disable
+          PYTHONPATH: ${{ github.workspace }}
+        run: |
+          set -euo pipefail
+          python dar_v36_14/external_authority_server.py > authority-after.log 2>&1 &
+          echo $! > authority.pid
+          for i in $(seq 1 30); do
+            if curl -fsS http://127.0.0.1:10000/health | tee health-after.json; then
+              exit 0
+            fi
+            sleep 2
+          done
+          cat authority-after.log
+          exit 1
+      - name: Verify refusal survived restart and bypass remains blocked
+        env:
+          BASE: http://127.0.0.1:10000
+          OUTCOME: restart-recovery-${{ github.run_id }}
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          import json, os, urllib.error, urllib.request
+          base=os.environ['BASE']
+          outcome=os.environ['OUTCOME']
+          with urllib.request.urlopen(base+'/health', timeout=20) as r:
+              health=json.loads(r.read())
+          assert health.get('ok') is True and health.get('persistence') == 'postgres', health
+          with urllib.request.urlopen(base+'/state', timeout=20) as r:
+              state=json.loads(r.read())
+          assert outcome in state.get('refusals', {}), 'refusal did not survive process restart'
+          req=urllib.request.Request(base+'/commit', data=json.dumps({'outcome':outcome,'epoch':100,'idempotency_key':'post-restart-bypass'}).encode(), headers={'Content-Type':'application/json'}, method='POST')
+          try:
+              urllib.request.urlopen(req, timeout=20)
+              raise AssertionError('protected commit unexpectedly accepted after restart')
+          except urllib.error.HTTPError as e:
+              body=json.loads(e.read())
+              assert e.code == 409 and body.get('error') == 'terminal_refusal', (e.code, body)
+          print(json.dumps({'restart_recovery':'PASS','postgres_health_after_restart':'PASS','refusal_persistence':'PASS','post_restart_bypass_blocked':'PASS','verdict':'PASS'}))
+          PY
+      - name: Preserve restart evidence
+        if: always()
+        run: |
+          cat health-before.json 2>/dev/null || true
+          cat health-after.json 2>/dev/null || true
+          cat authority-before.log 2>/dev/null || true
+          cat authority-after.log 2>/dev/null || true
