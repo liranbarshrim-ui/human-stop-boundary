@@ -8,7 +8,9 @@ on:
   workflow_dispatch:
 
 permissions:
-  contents: write
+  contents: read
+  statuses: write
+  actions: read
 
 concurrency:
   group: dar-official-10k-${{ github.ref }}
@@ -93,7 +95,58 @@ jobs:
           GITHUB_SHA: ${{ github.sha }}
           GITHUB_RUN_ID: ${{ github.run_id }}
           PYTHONPATH: ${{ github.workspace }}/dar_v36_14:${{ github.workspace }}
-        run: python tools/resumable_10k_runner.py
+        run: |
+          python tools/resumable_10k_runner.py 2>&1 | tee runner.log
+      - name: Build machine-readable evidence package
+        if: always()
+        run: |
+          python - <<'PY'
+          import hashlib
+          import json
+          import os
+          from pathlib import Path
+
+          root = Path("evidence-10k")
+          root.mkdir(exist_ok=True)
+          run_log = Path("runner.log")
+          authority_log = Path("authority.log")
+          text = run_log.read_text(encoding="utf-8", errors="replace") if run_log.exists() else ""
+          records = []
+          for line in text.splitlines():
+              line = line.strip()
+              if line.startswith("{") and line.endswith("}"):
+                  try:
+                      obj = json.loads(line)
+                  except json.JSONDecodeError:
+                      continue
+                  if obj.get("evidence_type", "").startswith("external-authority-concurrent-load"):
+                      records.append(obj)
+          finals = [r for r in records if r.get("evidence_type") == "external-authority-concurrent-load-black-box"]
+          final = finals[-1] if finals else (records[-1] if records else {"verdict": "INCONCLUSIVE", "evidence_type": "missing-final-evidence"})
+          manifest = {
+              "schema": 1,
+              "workflow": "DAR Boundary Conformance",
+              "run_id": os.environ.get("GITHUB_RUN_ID"),
+              "repository": os.environ.get("GITHUB_REPOSITORY"),
+              "sha": os.environ.get("GITHUB_SHA"),
+              "ref": os.environ.get("GITHUB_REF"),
+              "event": os.environ.get("GITHUB_EVENT_NAME"),
+              "final_evidence": final,
+              "runner_log_sha256": hashlib.sha256(run_log.read_bytes()).hexdigest() if run_log.exists() else None,
+              "authority_log_sha256": hashlib.sha256(authority_log.read_bytes()).hexdigest() if authority_log.exists() else None,
+          }
+          (root / "evidence.json").write_text(json.dumps(manifest, indent=2, sort_keys=True) + "\n", encoding="utf-8")
+          (root / "runner.log").write_text(text, encoding="utf-8")
+          if authority_log.exists():
+              (root / "authority.log").write_bytes(authority_log.read_bytes())
+          print(json.dumps(manifest, indent=2, sort_keys=True))
+      - name: Upload 10K evidence artifact
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: dar-10k-evidence-${{ github.run_id }}
+          path: evidence-10k/
+          if-no-files-found: error
       - name: Preserve authority log
         if: always()
         run: cat authority.log || true
