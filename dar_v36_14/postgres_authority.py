@@ -26,7 +26,7 @@ class PostgresAuthority:
             self.dsn,
             row_factory=dict_row,
             connect_timeout=10,
-            sslmode=os.environ.get("DAR_DB_SSLMODE", "require").strip().lower() or "require",
+            sslmode=os.environ.get("DAR_DB_SSLMODE", "prefer").strip().lower() or "prefer",
         )
 
     @staticmethod
