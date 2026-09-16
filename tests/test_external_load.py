@@ -1,7 +1,13 @@
-"""Black-box concurrent-load test for the external DAR authority.
+"""Resumable black-box concurrent-load test for the external DAR authority.
 
-The harness distinguishes DAR invariant failures from infrastructure failures.
-A transport/database outage is INCONCLUSIVE, not a DAR FAIL.
+Transient gateway failures are retried at both HTTP-request and logical-round
+levels. A logical round keeps the same outcome/refusal/idempotency identifiers
+across retries, so recovery cannot silently create a different experiment.
+
+Infrastructure incidents are retained as evidence. They are not converted into
+DAR invariant failures; an unresolved round keeps the final verdict
+INCONCLUSIVE. A run is PASS only when all requested logical rounds reach a
+terminal observed state with no invariant failure and no unresolved round.
 """
 from __future__ import annotations
 
@@ -15,6 +21,7 @@ import time
 import urllib.error
 import urllib.request
 import uuid
+from pathlib import Path
 
 BASE_URL = os.environ.get("DAR_AUTHORITY_URL", "https://dar-external-authority-v2.onrender.com").rstrip("/")
 ROUNDS = int(os.environ.get("DAR_LOAD_ROUNDS", "100"))
@@ -22,8 +29,12 @@ WORKERS = int(os.environ.get("DAR_LOAD_WORKERS", "8"))
 TIMEOUT = float(os.environ.get("DAR_LOAD_TIMEOUT", "30"))
 HEALTH_RETRIES = int(os.environ.get("DAR_HEALTH_RETRIES", "6"))
 REQUEST_RETRIES = int(os.environ.get("DAR_REQUEST_RETRIES", "4"))
+ROUND_RETRIES = int(os.environ.get("DAR_ROUND_RETRIES", "8"))
+RETRY_BASE_SECONDS = float(os.environ.get("DAR_RETRY_BASE_SECONDS", "0.5"))
 PROGRESS_INTERVAL = int(os.environ.get("DAR_PROGRESS_INTERVAL", "100"))
 HEARTBEAT_SECONDS = float(os.environ.get("DAR_PROGRESS_HEARTBEAT_SECONDS", "60"))
+CHECKPOINT_PATH = Path(os.environ.get("DAR_CHECKPOINT_PATH", "/app/state/checkpoint.json"))
+RUN_ID = os.environ.get("DAR_LOAD_RUN_ID", "dar-10k-resumable")
 GATEWAY_CODES = {502, 503, 504}
 GITHUB_TOKEN = os.environ.get("DAR_HEARTBEAT_GITHUB_TOKEN")
 GITHUB_REPOSITORY = os.environ.get("GITHUB_REPOSITORY")
@@ -34,10 +45,12 @@ STAGE_2_END = int(os.environ.get("DAR_STAGE_2_END", "4000"))
 STAGE_1_RATE = float(os.environ.get("DAR_STAGE_1_RATE", "1.0"))
 STAGE_2_RATE = float(os.environ.get("DAR_STAGE_2_RATE", "2.0"))
 STAGE_3_RATE = float(os.environ.get("DAR_STAGE_3_RATE", "3.0"))
-_status_lock = threading.Lock()
+
 _progress_lock = threading.Lock()
-_completed = 0
+_status_lock = threading.Lock()
+_checkpoint_lock = threading.Lock()
 _started = 0
+_completed = 0
 _stop_requested = threading.Event()
 _signal_name: str | None = None
 
@@ -91,6 +104,8 @@ def _partial_evidence(reason: str) -> dict:
         "remaining_rounds": max(0, ROUNDS - completed),
         "reason": reason,
         "signal": _signal_name,
+        "checkpoint_path": str(CHECKPOINT_PATH),
+        "resumable": True,
         "verdict": "INCONCLUSIVE",
     }
 
@@ -123,7 +138,12 @@ def _publish_progress(completed: int, state: str = "pending") -> None:
     req = urllib.request.Request(
         f"https://api.github.com/repos/{GITHUB_REPOSITORY}/statuses/{GITHUB_SHA}",
         data=body,
-        headers={"Accept": "application/vnd.github+json", "Authorization": f"Bearer {GITHUB_TOKEN}", "Content-Type": "application/json", "X-GitHub-Api-Version": "2022-11-28"},
+        headers={
+            "Accept": "application/vnd.github+json",
+            "Authorization": f"Bearer {GITHUB_TOKEN}",
+            "Content-Type": "application/json",
+            "X-GitHub-Api-Version": "2022-11-28",
+        },
         method="POST",
     )
     with _status_lock:
@@ -131,7 +151,12 @@ def _publish_progress(completed: int, state: str = "pending") -> None:
             with urllib.request.urlopen(req, timeout=10):
                 pass
         except Exception as exc:
-            print(json.dumps({"evidence_type": "external-authority-concurrent-load-status-warning", "error": repr(exc), "completed_rounds": completed, "rounds": ROUNDS}, sort_keys=True), flush=True)
+            print(json.dumps({
+                "evidence_type": "external-authority-concurrent-load-status-warning",
+                "error": repr(exc),
+                "completed_rounds": completed,
+                "rounds": ROUNDS,
+            }, sort_keys=True), flush=True)
 
 
 def _request(req: urllib.request.Request) -> tuple[int, dict]:
@@ -153,13 +178,17 @@ def _request(req: urllib.request.Request) -> tuple[int, dict]:
                 raise InfrastructureFailure("transport", None, repr(exc)) from exc
             last_error = exc
         if attempt < REQUEST_RETRIES:
-            time.sleep(0.5 * (2 ** attempt))
+            time.sleep(RETRY_BASE_SECONDS * (2 ** attempt) + random.random() * 0.1)
     raise InfrastructureFailure("transport", None, repr(last_error))
 
 
 def post(path: str, body: dict) -> tuple[int, dict]:
-    req = urllib.request.Request(BASE_URL + path, data=json.dumps(body).encode(), headers={"Content-Type": "application/json"}, method="POST")
-    return _request(req)
+    return _request(urllib.request.Request(
+        BASE_URL + path,
+        data=json.dumps(body).encode(),
+        headers={"Content-Type": "application/json"},
+        method="POST",
+    ))
 
 
 def get(path: str) -> tuple[int, dict]:
@@ -189,30 +218,44 @@ def wait_for_health() -> dict:
     raise InfrastructureFailure("health", getattr(last_error, "status", None), str(last_error))
 
 
-def race_round(index: int) -> dict:
-    outcome = uuid.uuid4().hex
+def _round_payload(index: int) -> tuple[str, int, str, str, str]:
+    # Stable identifiers make a retry the same logical observation, not a new round.
+    namespace = uuid.NAMESPACE_URL
+    outcome = uuid.uuid5(namespace, f"{RUN_ID}:outcome:{index}").hex
     epoch = index + 1
-    refusal_id = f"load-refusal-{uuid.uuid4().hex}"
-    idem_a = f"load-commit-a-{uuid.uuid4().hex}"
-    idem_b = f"load-commit-b-{uuid.uuid4().hex}"
+    refusal_id = f"{RUN_ID}:refusal:{index}"
+    idem_a = f"{RUN_ID}:commit-a:{index}"
+    idem_b = f"{RUN_ID}:commit-b:{index}"
+    return outcome, epoch, refusal_id, idem_a, idem_b
+
+
+def race_round(index: int) -> dict:
+    outcome, epoch, refusal_id, idem_a, idem_b = _round_payload(index)
     barrier = threading.Barrier(2)
 
     def refusal() -> tuple[str, int, dict]:
         barrier.wait()
         time.sleep(random.random() * 0.020)
-        status, body = post("/refuse", {"outcome": outcome, "epoch": epoch, "refusal_id": refusal_id})
-        return "refuse", status, body
+        return (*(("refuse",) + post("/refuse", {
+            "outcome": outcome,
+            "epoch": epoch,
+            "refusal_id": refusal_id,
+        })),)
 
     def commit() -> tuple[str, int, dict]:
         barrier.wait()
         time.sleep(random.random() * 0.020)
         status, body = post("/fence", {"outcome": outcome, "epoch": epoch})
         if status == 200:
-            status, body = post("/commit", {"outcome": outcome, "epoch": epoch, "idempotency_key": idem_a})
+            status, body = post("/commit", {
+                "outcome": outcome,
+                "epoch": epoch,
+                "idempotency_key": idem_a,
+            })
         return "commit", status, body
 
     with concurrent.futures.ThreadPoolExecutor(max_workers=2) as pool:
-        futures = [pool.submit(fn) for fn in (refusal, commit)]
+        futures = [pool.submit(refusal), pool.submit(commit)]
         observed = [f.result() for f in futures]
 
     for name, status, body in observed:
@@ -230,27 +273,71 @@ def race_round(index: int) -> dict:
 
     bypass_status = None
     if refused:
-        bypass_status, bypass_body = post("/commit", {"outcome": outcome, "epoch": epoch, "idempotency_key": idem_b})
+        bypass_status, bypass_body = post("/commit", {
+            "outcome": outcome,
+            "epoch": epoch,
+            "idempotency_key": idem_b,
+        })
         if bypass_status in GATEWAY_CODES:
             raise InfrastructureFailure(f"round-{index}:fresh-idempotency", bypass_status, bypass_body)
         if bypass_status != 409:
             raise AssertionError((outcome, bypass_status, bypass_body, state))
 
-    return {"outcome": outcome, "refuse_status": refuse_status, "commit_status": commit_status, "refused": refused, "committed": committed, "fresh_idempotency_bypass_status": bypass_status}
+    if not (refused ^ committed):
+        raise AssertionError((outcome, observed, state))
+
+    return {
+        "index": index,
+        "outcome": outcome,
+        "refuse_status": refuse_status,
+        "commit_status": commit_status,
+        "refused": refused,
+        "committed": committed,
+        "fresh_idempotency_bypass_status": bypass_status,
+    }
 
 
-def _evidence(health: dict, results: list[dict], invariant_failures: list[str], infrastructure_failures: list[str], verdict: str) -> dict:
-    refused = sum(1 for item in results if item["refused"])
-    committed = sum(1 for item in results if item["committed"])
-    complete = len(results) == ROUNDS and not infrastructure_failures
-    invariant_ok = not invariant_failures and all(item["refused"] ^ item["committed"] for item in results)
+def _load_checkpoint() -> dict:
+    try:
+        if not CHECKPOINT_PATH.exists():
+            return {"version": 1, "run_id": RUN_ID, "rounds": ROUNDS, "completed": {}, "attempts": {}, "infrastructure_events": []}
+        data = json.loads(CHECKPOINT_PATH.read_text())
+        if data.get("run_id") != RUN_ID or int(data.get("rounds", -1)) != ROUNDS:
+            return {"version": 1, "run_id": RUN_ID, "rounds": ROUNDS, "completed": {}, "attempts": {}, "infrastructure_events": []}
+        data.setdefault("completed", {})
+        data.setdefault("attempts", {})
+        data.setdefault("infrastructure_events", [])
+        return data
+    except Exception as exc:
+        print(json.dumps({"evidence_type": "external-authority-concurrent-load-checkpoint-warning", "error": repr(exc), "path": str(CHECKPOINT_PATH)}, sort_keys=True), flush=True)
+        return {"version": 1, "run_id": RUN_ID, "rounds": ROUNDS, "completed": {}, "attempts": {}, "infrastructure_events": []}
+
+
+def _save_checkpoint(state: dict) -> None:
+    with _checkpoint_lock:
+        CHECKPOINT_PATH.parent.mkdir(parents=True, exist_ok=True)
+        tmp = CHECKPOINT_PATH.with_suffix(".tmp")
+        tmp.write_text(json.dumps(state, sort_keys=True))
+        tmp.replace(CHECKPOINT_PATH)
+
+
+def _evidence(health: dict, results: dict[int, dict], invariant_failures: list[str], infrastructure_events: list[str], unresolved: list[str], verdict: str) -> dict:
+    refused = sum(1 for item in results.values() if item["refused"])
+    committed = sum(1 for item in results.values() if item["committed"])
+    complete = len(results) == ROUNDS and not unresolved and not invariant_failures
+    invariant_ok = not invariant_failures and all(item["refused"] ^ item["committed"] for item in results.values())
     return {
         "evidence_type": "external-authority-concurrent-load-black-box",
         "base_url": BASE_URL,
+        "run_id": RUN_ID,
         "rounds": ROUNDS,
         "workers": WORKERS,
         "timeout_seconds": TIMEOUT,
-        "arrival_rate": {"stage_1": {"end_round": STAGE_1_END, "rounds_per_second": STAGE_1_RATE}, "stage_2": {"end_round": STAGE_2_END, "rounds_per_second": STAGE_2_RATE}, "stage_3": {"end_round": ROUNDS, "rounds_per_second": STAGE_3_RATE}},
+        "arrival_rate": {
+            "stage_1": {"end_round": STAGE_1_END, "rounds_per_second": STAGE_1_RATE},
+            "stage_2": {"end_round": STAGE_2_END, "rounds_per_second": STAGE_2_RATE},
+            "stage_3": {"end_round": ROUNDS, "rounds_per_second": STAGE_3_RATE},
+        },
         "health": health,
         "completed_rounds": len(results),
         "refused_rounds": refused,
@@ -263,7 +350,10 @@ def _evidence(health: dict, results: list[dict], invariant_failures: list[str], 
             "all_rounds_completed": "PASS" if complete else "INCONCLUSIVE",
         },
         "invariant_failures": invariant_failures[:10],
-        "infrastructure_failures": infrastructure_failures[:10],
+        "infrastructure_failures": unresolved[:10],
+        "recovered_infrastructure_events": infrastructure_events[:25],
+        "checkpoint_path": str(CHECKPOINT_PATH),
+        "resumable": True,
         "verdict": verdict,
     }
 
@@ -273,93 +363,129 @@ def main() -> None:
     try:
         health = wait_for_health()
     except InfrastructureFailure as exc:
-        evidence = _evidence({"ok": False, "error": "database_unavailable", "detail": str(exc)}, [], [], [repr(exc)], "INCONCLUSIVE")
+        evidence = _evidence({"ok": False, "error": "database_unavailable", "detail": str(exc)}, {}, [], [repr(exc)], [repr(exc)], "INCONCLUSIVE")
         print(json.dumps(evidence, sort_keys=True), flush=True)
         _publish_progress(0, "failure")
         raise SystemExit(2)
 
-    results: list[dict] = []
+    checkpoint = _load_checkpoint()
+    results: dict[int, dict] = {int(k): v for k, v in checkpoint.get("completed", {}).items()}
+    attempts: dict[int, int] = {int(k): int(v) for k, v in checkpoint.get("attempts", {}).items()}
+    infrastructure_events: list[str] = list(checkpoint.get("infrastructure_events", []))
     invariant_failures: list[str] = []
-    infrastructure_failures: list[str] = []
-    next_index = 0
-    in_flight: dict[concurrent.futures.Future[dict], int] = {}
-    next_launch_at = time.monotonic()
+    unresolved: list[str] = []
+    _completed = len(results)
+
     stop_heartbeat = threading.Event()
-    _publish_progress(0)
 
     def heartbeat() -> None:
         while not stop_heartbeat.wait(HEARTBEAT_SECONDS):
             _, done = _snapshot_progress()
-            print(json.dumps({"evidence_type": "external-authority-concurrent-load-heartbeat", "base_url": BASE_URL, "completed_rounds": done, "rounds": ROUNDS, "workers": WORKERS, "stage": _stage_for_round(done), "arrival_rate_rounds_per_second": _rate_for_round(done)}, sort_keys=True), flush=True)
+            print(json.dumps({
+                "evidence_type": "external-authority-concurrent-load-heartbeat",
+                "base_url": BASE_URL,
+                "run_id": RUN_ID,
+                "completed_rounds": done,
+                "rounds": ROUNDS,
+                "workers": WORKERS,
+                "stage": _stage_for_round(min(done, max(0, ROUNDS - 1))),
+                "arrival_rate_rounds_per_second": _rate_for_round(min(done, max(0, ROUNDS - 1))),
+                "resumable": True,
+            }, sort_keys=True), flush=True)
             _publish_progress(done)
 
     heartbeat_thread = threading.Thread(target=heartbeat, daemon=True)
     heartbeat_thread.start()
+
+    pending = [index for index in range(ROUNDS) if index not in results]
     try:
         with concurrent.futures.ThreadPoolExecutor(max_workers=WORKERS) as pool:
-            while next_index < ROUNDS or in_flight:
-                if _stop_requested.is_set():
-                    break
-                if next_index < ROUNDS and len(in_flight) < WORKERS:
-                    now = time.monotonic()
-                    if now < next_launch_at:
-                        time.sleep(min(next_launch_at - now, 0.25))
-                        continue
-                    rate = _rate_for_round(next_index)
-                    future = pool.submit(race_round, next_index)
-                    in_flight[future] = next_index
+            queue = list(pending)
+            while queue and not _stop_requested.is_set():
+                batch = queue[:WORKERS]
+                queue = queue[WORKERS:]
+                futures: dict[concurrent.futures.Future[dict], int] = {}
+                for index in batch:
+                    attempts[index] = attempts.get(index, 0) + 1
                     with _progress_lock:
                         _started += 1
-                    next_index += 1
-                    next_launch_at = max(next_launch_at, now) + (1.0 / rate)
-                    continue
-                if not in_flight:
-                    continue
-                done, _ = concurrent.futures.wait(in_flight, timeout=0.5, return_when=concurrent.futures.FIRST_COMPLETED)
-                for future in done:
-                    index = in_flight.pop(future)
+                    futures[pool.submit(race_round, index)] = index
+                for future, index in list(futures.items()):
                     try:
-                        results.append(future.result())
+                        result = future.result()
+                        results[index] = result
                         with _progress_lock:
                             _completed = len(results)
+                        checkpoint["completed"] = {str(k): v for k, v in results.items()}
+                        checkpoint["attempts"] = {str(k): v for k, v in attempts.items()}
+                        checkpoint["infrastructure_events"] = infrastructure_events[-100:]
+                        _save_checkpoint(checkpoint)
                         if _completed == 1 or _completed % PROGRESS_INTERVAL == 0 or _completed == ROUNDS:
-                            print(json.dumps({"evidence_type": "external-authority-concurrent-load-progress", "base_url": BASE_URL, "completed_rounds": _completed, "rounds": ROUNDS, "workers": WORKERS, "stage": _stage_for_round(_completed), "arrival_rate_rounds_per_second": _rate_for_round(_completed)}, sort_keys=True), flush=True)
+                            print(json.dumps({
+                                "evidence_type": "external-authority-concurrent-load-progress",
+                                "base_url": BASE_URL,
+                                "run_id": RUN_ID,
+                                "completed_rounds": _completed,
+                                "rounds": ROUNDS,
+                                "workers": WORKERS,
+                                "stage": _stage_for_round(min(_completed, max(0, ROUNDS - 1))),
+                                "arrival_rate_rounds_per_second": _rate_for_round(min(_completed, max(0, ROUNDS - 1))),
+                                "resumable": True,
+                            }, sort_keys=True), flush=True)
                             _publish_progress(_completed)
                     except InfrastructureFailure as exc:
-                        infrastructure_failures.append(f"round={index}: {exc!r}")
+                        event = f"round={index}: attempt={attempts[index]}: {exc!r}"
+                        infrastructure_events.append(event)
+                        if attempts[index] <= ROUND_RETRIES:
+                            delay = RETRY_BASE_SECONDS * (2 ** min(attempts[index] - 1, 6))
+                            time.sleep(delay + random.random() * 0.2)
+                            queue.append(index)
+                        else:
+                            unresolved.append(event)
+                        checkpoint["attempts"] = {str(k): v for k, v in attempts.items()}
+                        checkpoint["infrastructure_events"] = infrastructure_events[-100:]
+                        checkpoint["completed"] = {str(k): v for k, v in results.items()}
+                        _save_checkpoint(checkpoint)
                     except AssertionError as exc:
                         invariant_failures.append(f"round={index}: {exc!r}")
+                        checkpoint["completed"] = {str(k): v for k, v in results.items()}
+                        _save_checkpoint(checkpoint)
                     except Exception as exc:
-                        infrastructure_failures.append(f"round={index}: unexpected={exc!r}")
+                        event = f"round={index}: attempt={attempts[index]}: unexpected={exc!r}"
+                        infrastructure_events.append(event)
+                        if attempts[index] <= ROUND_RETRIES:
+                            queue.append(index)
+                        else:
+                            unresolved.append(event)
+                        checkpoint["infrastructure_events"] = infrastructure_events[-100:]
+                        checkpoint["completed"] = {str(k): v for k, v in results.items()}
+                        _save_checkpoint(checkpoint)
     finally:
         stop_heartbeat.set()
         heartbeat_thread.join(timeout=1)
 
     if _stop_requested.is_set():
         evidence = _partial_evidence("controlled stop requested")
-        evidence["infrastructure_failures"] = infrastructure_failures[:10]
-        evidence["invariant_failures"] = invariant_failures[:10]
+        evidence["infrastructure_failures"] = unresolved[:10]
+        evidence["recovered_infrastructure_events"] = infrastructure_events[:25]
         print(json.dumps(evidence, sort_keys=True), flush=True)
-        _publish_progress(len(results), "failure")
-        raise SystemExit(2)
+        _publish_progress(_completed, "failure")
+        return
 
-    if invariant_failures:
-        verdict, exit_code = "FAIL", 1
-    elif infrastructure_failures or len(results) != ROUNDS:
-        verdict, exit_code = "INCONCLUSIVE", 2
-    else:
-        refused = sum(1 for item in results if item["refused"])
-        committed = sum(1 for item in results if item["committed"])
-        if refused + committed != ROUNDS:
-            invariant_failures.append(f"winner accounting mismatch: refused={refused} committed={committed}")
-            verdict, exit_code = "FAIL", 1
-        else:
-            verdict, exit_code = "PASS", 0
+    # Any retryable failure that remained in queue but was not completed is unresolved.
+    unresolved_indexes = [index for index in range(ROUNDS) if index not in results]
+    for index in unresolved_indexes:
+        marker = f"round={index}: unresolved after {attempts.get(index, 0)} attempts"
+        if marker not in unresolved:
+            unresolved.append(marker)
 
-    evidence = _evidence(health, results, invariant_failures, infrastructure_failures, verdict)
+    verdict = "PASS" if len(results) == ROUNDS and not invariant_failures and not unresolved else "INCONCLUSIVE"
+    evidence = _evidence(health, results, invariant_failures, infrastructure_events, unresolved, verdict)
     print(json.dumps(evidence, sort_keys=True), flush=True)
     _publish_progress(len(results), "success" if verdict == "PASS" else "failure")
-    raise SystemExit(exit_code)
+    if verdict == "PASS":
+        return
+    raise SystemExit(2)
 
 
 if __name__ == "__main__":
