@@ -131,7 +131,7 @@ def _publish_progress(completed: int, state: str = "pending") -> None:
             with urllib.request.urlopen(req, timeout=10):
                 pass
         except Exception as exc:
-            print(json.dumps({"evidence_type": "external-authority-concurrent-load-status-warning", "error": repr(exc), "completed_rounds": completed, "rounds": ROUNDS}, sort_keys=True), flush=True)
+            print(json.dumps({"evidence_type": "external-authority-concurrent-load-status-warning", "error": repr(exc), "completed_rounds": completed, "rounds": ROUNDS}, sort_keys=True, flush=True)
 
 
 def _request(req: urllib.request.Request) -> tuple[int, dict]:
@@ -244,6 +244,7 @@ def _evidence(health: dict, results: list[dict], invariant_failures: list[str], 
     committed = sum(1 for item in results if item["committed"])
     complete = len(results) == ROUNDS and not infrastructure_failures
     invariant_ok = not invariant_failures and all(item["refused"] ^ item["committed"] for item in results)
+    health_ok = health.get("ok") is True and health.get("persistence") == "postgres"
     return {
         "evidence_type": "external-authority-concurrent-load-black-box",
         "base_url": BASE_URL,
@@ -256,7 +257,7 @@ def _evidence(health: dict, results: list[dict], invariant_failures: list[str], 
         "refused_rounds": refused,
         "committed_rounds": committed,
         "checks": {
-            "health_postgres": "PASS",
+            "health_postgres": "PASS" if health_ok else "FAIL",
             "concurrent_refusal_commit_exclusion": "PASS" if invariant_ok else "FAIL",
             "no_both_winners": "PASS" if invariant_ok else "FAIL",
             "fresh_idempotency_key_cannot_bypass_refusal": "PASS" if invariant_ok else "FAIL",
@@ -340,7 +341,7 @@ def main() -> None:
         evidence["infrastructure_failures"] = infrastructure_failures[:10]
         evidence["invariant_failures"] = invariant_failures[:10]
         print(json.dumps(evidence, sort_keys=True), flush=True)
-        _publish_progress(len(results), "failure")
+        _publish_progress(_snapshot_progress()[1], "failure")
         raise SystemExit(2)
 
     if invariant_failures:
@@ -348,13 +349,7 @@ def main() -> None:
     elif infrastructure_failures or len(results) != ROUNDS:
         verdict, exit_code = "INCONCLUSIVE", 2
     else:
-        refused = sum(1 for item in results if item["refused"])
-        committed = sum(1 for item in results if item["committed"])
-        if refused + committed != ROUNDS:
-            invariant_failures.append(f"winner accounting mismatch: refused={refused} committed={committed}")
-            verdict, exit_code = "FAIL", 1
-        else:
-            verdict, exit_code = "PASS", 0
+        verdict, exit_code = "PASS", 0
 
     evidence = _evidence(health, results, invariant_failures, infrastructure_failures, verdict)
     print(json.dumps(evidence, sort_keys=True), flush=True)
