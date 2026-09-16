@@ -2,11 +2,6 @@ name: DAR External Concurrent Load Evidence
 
 on:
   workflow_dispatch:
-  push:
-    paths:
-      - tests/test_external_load.py
-      - dar_v36_14/postgres_authority.py
-      - .github/workflows/external-load-evidence.yml
 
 jobs:
   external-load:
