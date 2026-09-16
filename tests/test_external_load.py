@@ -131,7 +131,7 @@ def _publish_progress(completed: int, state: str = "pending") -> None:
             with urllib.request.urlopen(req, timeout=10):
                 pass
         except Exception as exc:
-            print(json.dumps({"evidence_type": "external-authority-concurrent-load-status-warning", "error": repr(exc), "completed_rounds": completed, "rounds": ROUNDS}, sort_keys=True, flush=True)
+            print(json.dumps({"evidence_type": "external-authority-concurrent-load-status-warning", "error": repr(exc), "completed_rounds": completed, "rounds": ROUNDS}, sort_keys=True), flush=True)
 
 
 def _request(req: urllib.request.Request) -> tuple[int, dict]:
