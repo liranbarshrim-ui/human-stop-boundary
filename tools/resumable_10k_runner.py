@@ -1,10 +1,7 @@
 """Portable, checkpointed launcher for the DAR 10K external-load test.
 
-The underlying black-box test remains the source of truth. This launcher adds
-restart-safe orchestration: completed round results are atomically checkpointed
-to a configurable local path and resumed after interruption. Transient gateway
-failures are re-queued instead of being silently dropped, which prevents the
-old 1770/10000 termination mode.
+Completed rounds are atomically checkpointed and resumed after interruption.
+Transient gateway failures are re-queued instead of being silently dropped.
 """
 from __future__ import annotations
 
@@ -151,12 +148,16 @@ def main() -> None:
                 if _stop_requested.is_set():
                     break
 
-                # Prefer retries so a transiently failed logical round is closed
-                # before the run advances too far.
                 while next_index < harness.ROUNDS and next_index in results:
                     next_index += 1
 
-                while len(in_flight) < harness.WORKERS and (retry_queue or next_index < harness.ROUNDS):
+                # Preserve the configured arrival-rate pacing. Retries are given
+                # priority but are still launched one-at-a-time at the same rate.
+                if len(in_flight) < harness.WORKERS and (retry_queue or next_index < harness.ROUNDS):
+                    now = time.monotonic()
+                    if now < next_launch_at:
+                        time.sleep(min(next_launch_at - now, 0.25))
+                        continue
                     if retry_queue:
                         index = retry_queue.pop(0)
                     else:
@@ -164,28 +165,15 @@ def main() -> None:
                         next_index += 1
                         while next_index < harness.ROUNDS and next_index in results:
                             next_index += 1
-
                     if index in results:
                         continue
                     attempts[index] = attempts.get(index, 0) + 1
-                    future = pool.submit(harness.race_round, index)
-                    in_flight[future] = index
-                    if not retry_queue and index >= next_index:
-                        next_index = index + 1
-
+                    in_flight[pool.submit(harness.race_round, index)] = index
                     rate = harness._rate_for_round(index)
-                    now = time.monotonic()
                     next_launch_at = max(next_launch_at, now) + (1.0 / rate)
-                    if len(in_flight) >= harness.WORKERS:
-                        break
+                    continue
 
                 if not in_flight:
-                    if retry_queue:
-                        continue
-                    if next_index >= harness.ROUNDS:
-                        break
-                    if time.monotonic() < next_launch_at:
-                        time.sleep(min(next_launch_at - time.monotonic(), 0.25))
                     continue
 
                 done, _ = concurrent.futures.wait(
@@ -210,20 +198,21 @@ def main() -> None:
                             }, sort_keys=True), flush=True)
                             harness._publish_progress(len(results))
                     except harness.InfrastructureFailure as exc:
-                        event = f"round={index}: attempt={attempts.get(index, 1)}: {exc!r}"
+                        attempt = attempts.get(index, 1)
+                        event = f"round={index}: attempt={attempt}: {exc!r}"
                         infrastructure_events.append(event)
-                        if attempts.get(index, 1) <= ROUND_RETRIES:
+                        if attempt <= ROUND_RETRIES:
                             retry_queue.append(index)
-                            delay = RETRY_BASE_SECONDS * (2 ** min(attempts.get(index, 1) - 1, 6))
-                            time.sleep(delay)
+                            delay = RETRY_BASE_SECONDS * (2 ** min(attempt - 1, 6))
                             print(json.dumps({
                                 "evidence_type": "external-authority-concurrent-load-retry",
                                 "round": index,
-                                "attempt": attempts.get(index, 1),
+                                "attempt": attempt,
                                 "retry_in_seconds": delay,
                                 "completed_rounds": len(results),
                                 "resumable": True,
                             }, sort_keys=True), flush=True)
+                            time.sleep(delay)
                         else:
                             unresolved_failures.append(event)
                         _save_checkpoint(results)
@@ -231,9 +220,10 @@ def main() -> None:
                         invariant_failures.append(f"round={index}: {exc!r}")
                         _save_checkpoint(results)
                     except Exception as exc:
-                        event = f"round={index}: attempt={attempts.get(index, 1)}: unexpected={exc!r}"
+                        attempt = attempts.get(index, 1)
+                        event = f"round={index}: attempt={attempt}: unexpected={exc!r}"
                         infrastructure_events.append(event)
-                        if attempts.get(index, 1) <= ROUND_RETRIES:
+                        if attempt <= ROUND_RETRIES:
                             retry_queue.append(index)
                         else:
                             unresolved_failures.append(event)
