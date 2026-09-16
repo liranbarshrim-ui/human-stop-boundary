@@ -2,8 +2,9 @@
 
 The underlying black-box test remains the source of truth. This launcher adds
 restart-safe orchestration: completed round results are atomically checkpointed
-to a configurable local path and resumed after interruption. Put that path on
-a persistent volume in any cloud provider (default: /app/state/checkpoint.json).
+to a configurable local path and resumed after interruption. Transient gateway
+failures are re-queued instead of being silently dropped, which prevents the
+old 1770/10000 termination mode.
 """
 from __future__ import annotations
 
@@ -22,6 +23,8 @@ import tests.test_external_load as harness
 CHECKPOINT = Path(os.environ.get("DAR_CHECKPOINT_PATH", "/app/state/checkpoint.json"))
 CHECKPOINT.parent.mkdir(parents=True, exist_ok=True)
 CHECKPOINT_LOCK = threading.Lock()
+ROUND_RETRIES = int(os.environ.get("DAR_ROUND_RETRIES", "8"))
+RETRY_BASE_SECONDS = float(os.environ.get("DAR_RETRY_BASE_SECONDS", "0.5"))
 _stop_requested = threading.Event()
 _signal_name: str | None = None
 
@@ -115,8 +118,11 @@ def main() -> None:
 
     results = dict(loaded)
     invariant_failures: list[str] = []
-    infrastructure_failures: list[str] = []
+    infrastructure_events: list[str] = []
+    unresolved_failures: list[str] = []
+    attempts: dict[int, int] = {}
     in_flight: dict[concurrent.futures.Future[dict], int] = {}
+    retry_queue: list[int] = []
     next_launch_at = time.monotonic()
     next_index = 0
     stop_heartbeat = threading.Event()
@@ -131,8 +137,8 @@ def main() -> None:
                 "completed_rounds": done,
                 "rounds": harness.ROUNDS,
                 "workers": harness.WORKERS,
-                "stage": harness._stage_for_round(done),
-                "arrival_rate_rounds_per_second": harness._rate_for_round(done),
+                "stage": harness._stage_for_round(min(done, max(0, harness.ROUNDS - 1))),
+                "arrival_rate_rounds_per_second": harness._rate_for_round(min(done, max(0, harness.ROUNDS - 1))),
                 "resumable": True,
             }, sort_keys=True), flush=True)
             harness._publish_progress(done)
@@ -141,24 +147,47 @@ def main() -> None:
     heartbeat_thread.start()
     try:
         with concurrent.futures.ThreadPoolExecutor(max_workers=harness.WORKERS) as pool:
-            while next_index < harness.ROUNDS or in_flight:
+            while next_index < harness.ROUNDS or retry_queue or in_flight:
                 if _stop_requested.is_set():
                     break
+
+                # Prefer retries so a transiently failed logical round is closed
+                # before the run advances too far.
                 while next_index < harness.ROUNDS and next_index in results:
                     next_index += 1
-                if next_index < harness.ROUNDS and len(in_flight) < harness.WORKERS:
-                    now = time.monotonic()
-                    if now < next_launch_at:
-                        time.sleep(min(next_launch_at - now, 0.25))
+
+                while len(in_flight) < harness.WORKERS and (retry_queue or next_index < harness.ROUNDS):
+                    if retry_queue:
+                        index = retry_queue.pop(0)
+                    else:
+                        index = next_index
+                        next_index += 1
+                        while next_index < harness.ROUNDS and next_index in results:
+                            next_index += 1
+
+                    if index in results:
                         continue
-                    index = next_index
+                    attempts[index] = attempts.get(index, 0) + 1
                     future = pool.submit(harness.race_round, index)
                     in_flight[future] = index
-                    next_index += 1
-                    next_launch_at = max(next_launch_at, now) + (1.0 / harness._rate_for_round(index))
-                    continue
+                    if not retry_queue and index >= next_index:
+                        next_index = index + 1
+
+                    rate = harness._rate_for_round(index)
+                    now = time.monotonic()
+                    next_launch_at = max(next_launch_at, now) + (1.0 / rate)
+                    if len(in_flight) >= harness.WORKERS:
+                        break
+
                 if not in_flight:
+                    if retry_queue:
+                        continue
+                    if next_index >= harness.ROUNDS:
+                        break
+                    if time.monotonic() < next_launch_at:
+                        time.sleep(min(next_launch_at - time.monotonic(), 0.25))
                     continue
+
                 done, _ = concurrent.futures.wait(
                     in_flight, timeout=0.5, return_when=concurrent.futures.FIRST_COMPLETED
                 )
@@ -167,6 +196,7 @@ def main() -> None:
                     try:
                         results[index] = future.result()
                         harness._completed = len(results)
+                        _save_checkpoint(results)
                         if len(results) == 1 or len(results) % harness.PROGRESS_INTERVAL == 0 or len(results) == harness.ROUNDS:
                             print(json.dumps({
                                 "evidence_type": "external-authority-concurrent-load-progress",
@@ -174,51 +204,81 @@ def main() -> None:
                                 "completed_rounds": len(results),
                                 "rounds": harness.ROUNDS,
                                 "workers": harness.WORKERS,
-                                "stage": harness._stage_for_round(len(results)),
-                                "arrival_rate_rounds_per_second": harness._rate_for_round(len(results)),
+                                "stage": harness._stage_for_round(min(len(results), max(0, harness.ROUNDS - 1))),
+                                "arrival_rate_rounds_per_second": harness._rate_for_round(min(len(results), max(0, harness.ROUNDS - 1))),
                                 "resumable": True,
                             }, sort_keys=True), flush=True)
-                            _save_checkpoint(results)
                             harness._publish_progress(len(results))
                     except harness.InfrastructureFailure as exc:
-                        infrastructure_failures.append(f"round={index}: {exc!r}")
+                        event = f"round={index}: attempt={attempts.get(index, 1)}: {exc!r}"
+                        infrastructure_events.append(event)
+                        if attempts.get(index, 1) <= ROUND_RETRIES:
+                            retry_queue.append(index)
+                            delay = RETRY_BASE_SECONDS * (2 ** min(attempts.get(index, 1) - 1, 6))
+                            time.sleep(delay)
+                            print(json.dumps({
+                                "evidence_type": "external-authority-concurrent-load-retry",
+                                "round": index,
+                                "attempt": attempts.get(index, 1),
+                                "retry_in_seconds": delay,
+                                "completed_rounds": len(results),
+                                "resumable": True,
+                            }, sort_keys=True), flush=True)
+                        else:
+                            unresolved_failures.append(event)
+                        _save_checkpoint(results)
                     except AssertionError as exc:
                         invariant_failures.append(f"round={index}: {exc!r}")
+                        _save_checkpoint(results)
                     except Exception as exc:
-                        infrastructure_failures.append(f"round={index}: unexpected={exc!r}")
+                        event = f"round={index}: attempt={attempts.get(index, 1)}: unexpected={exc!r}"
+                        infrastructure_events.append(event)
+                        if attempts.get(index, 1) <= ROUND_RETRIES:
+                            retry_queue.append(index)
+                        else:
+                            unresolved_failures.append(event)
+                        _save_checkpoint(results)
     finally:
         stop_heartbeat.set()
         heartbeat_thread.join(timeout=1)
         if results and len(results) < harness.ROUNDS:
             _save_checkpoint(results)
 
-    ordered = [results[i] for i in sorted(results)]
     if _stop_requested.is_set():
         evidence = harness._partial_evidence(f"controlled stop requested; checkpoint={CHECKPOINT}")
         evidence["completed_rounds"] = len(results)
         evidence["remaining_rounds"] = harness.ROUNDS - len(results)
-        evidence["infrastructure_failures"] = infrastructure_failures[:10]
+        evidence["infrastructure_failures"] = unresolved_failures[:10]
         evidence["invariant_failures"] = invariant_failures[:10]
+        evidence["recovered_infrastructure_events"] = infrastructure_events[:25]
         print(json.dumps(evidence, sort_keys=True), flush=True)
         harness._publish_progress(len(results), "failure")
         raise SystemExit(2)
 
+    unresolved_indexes = [index for index in range(harness.ROUNDS) if index not in results]
+    for index in unresolved_indexes:
+        marker = f"round={index}: unresolved after {attempts.get(index, 0)} attempts"
+        if marker not in unresolved_failures:
+            unresolved_failures.append(marker)
+
     if invariant_failures:
         verdict, exit_code = "FAIL", 1
-    elif infrastructure_failures or len(results) != harness.ROUNDS:
+    elif unresolved_failures or len(results) != harness.ROUNDS:
         verdict, exit_code = "INCONCLUSIVE", 2
     else:
-        refused = sum(1 for item in ordered if item["refused"])
-        committed = sum(1 for item in ordered if item["committed"])
+        refused = sum(1 for item in results.values() if item["refused"])
+        committed = sum(1 for item in results.values() if item["committed"])
         if refused + committed != harness.ROUNDS:
             invariant_failures.append(f"winner accounting mismatch: refused={refused} committed={committed}")
             verdict, exit_code = "FAIL", 1
         else:
             verdict, exit_code = "PASS", 0
 
-    evidence = harness._evidence(health, ordered, invariant_failures, infrastructure_failures, verdict)
+    ordered = [results[i] for i in sorted(results)]
+    evidence = harness._evidence(health, ordered, invariant_failures, unresolved_failures, verdict)
     evidence["resumable"] = True
     evidence["checkpoint_path"] = str(CHECKPOINT)
+    evidence["recovered_infrastructure_events"] = infrastructure_events[:25]
     print(json.dumps(evidence, sort_keys=True), flush=True)
     harness._publish_progress(len(results), "success" if verdict == "PASS" else "failure")
     if verdict == "PASS":
