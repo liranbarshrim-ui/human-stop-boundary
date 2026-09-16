@@ -2,8 +2,13 @@ name: DAR Boundary Conformance
 
 on:
   push:
+    branches:
+      - dar-nf-10k
   pull_request:
   workflow_dispatch:
+
+permissions:
+  contents: write
 
 jobs:
   conformance:
@@ -45,6 +50,8 @@ jobs:
           python-version: "3.12"
       - name: Install runner and authority dependencies
         run: python -m pip install -r requirements.txt
+      - name: Prepare runner state directory
+        run: mkdir -p .state
       - name: Start external PostgreSQL-backed DAR authority
         env:
           DAR_PERSISTENCE_MODE: postgres
@@ -67,6 +74,7 @@ jobs:
       - name: Run full 10K external load
         env:
           DAR_AUTHORITY_URL: http://127.0.0.1:10000
+          DAR_CHECKPOINT_PATH: ${{ github.workspace }}/.state/checkpoint.json
           DAR_LOAD_ROUNDS: "10000"
           DAR_LOAD_WORKERS: "32"
           DAR_LOAD_TIMEOUT: "60"
