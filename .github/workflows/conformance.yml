@@ -10,6 +10,10 @@ on:
 permissions:
   contents: write
 
+concurrency:
+  group: dar-official-10k-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
   conformance:
     runs-on: ubuntu-latest
@@ -56,6 +60,7 @@ jobs:
         env:
           DAR_PERSISTENCE_MODE: postgres
           DATABASE_URL: postgresql://postgres:postgres@127.0.0.1:5432/postgres
+          DAR_DB_SSLMODE: disable
           PYTHONPATH: ${{ github.workspace }}
         run: |
           python dar_v36_14/external_authority_server.py > authority.log 2>&1 &
