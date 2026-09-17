@@ -1,6 +1,6 @@
 {
   "spec_version": "BRB-3.0",
-  "status": "pre-registered",
+  "status": "frozen-evidence-package",
   "supersedes": "boundary_manifest_v2.json for future strong outcome-fence runs; prior results remain historical",
   "effective_boundary": {
     "protected_effect_classes": ["WRITE"],
@@ -15,6 +15,14 @@
     "A11_no_alternate_protected_outcome_path": true,
     "A12_idempotent_retries": true,
     "A13_terminal_external_refusal_state": true
+  },
+  "gate_status": {
+    "A1": "PASS",
+    "A9": "PASS",
+    "A10": "PASS",
+    "A11": "PENDING_INDEPENDENT_AUDIT",
+    "A12": "PASS",
+    "A13": "PASS"
   },
   "classification": ["PASS", "FAIL", "OUT-OF-SCOPE", "AMBIGUOUS"],
   "rules": {
