@@ -75,7 +75,9 @@ fences: dict[str, int] = {}
 refusals: dict[str, list[object]] = {}
 effects: dict[str, dict[str, object]] = {}
 committed_outcomes: dict[str, str] = {}
-refusal_authority = RefusalAuthority(authority, AUTHORITY_KEYS) if authority else None
+# verify() is deliberately independent of persistence, so the same authority
+# boundary is testable in memory and PostgreSQL modes.
+refusal_authority = RefusalAuthority(None, AUTHORITY_KEYS)
 
 
 def response(handler: BaseHTTPRequestHandler, status: int, body: dict) -> None:
@@ -96,7 +98,6 @@ def _transport_message(method: str, path: str, body_hash: str, timestamp: str, n
 
 
 def _verify_transport(handler: BaseHTTPRequestHandler, raw: bytes) -> tuple[bool, str | None, str]:
-    """Verify v2 transport MAC and enforce timestamp/nonce replay protection."""
     key_id = handler.headers.get("X-DAR-Key-Id", "")
     timestamp = handler.headers.get("X-DAR-Timestamp", "")
     nonce = handler.headers.get("X-DAR-Nonce", "")
@@ -220,7 +221,7 @@ class Handler(BaseHTTPRequestHandler):
 
         if operation == "refuse":
             refusal = _refusal_from_body(data)
-            if refusal is None or refusal_authority is None or not refusal_authority.verify(refusal):
+            if refusal is None or not refusal_authority.verify(refusal):
                 return response(self, 403, {"ok": False, "error": "authority_intent_required", "wire_protocol": "v2"})
             data = {"outcome": refusal.outcome_key, "epoch": refusal.target_epoch, "refusal_id": refusal.refusal_id}
         elif not _verify_authority_intent(operation, data):
