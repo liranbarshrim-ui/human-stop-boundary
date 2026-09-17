@@ -111,9 +111,9 @@ class PostgresAuthority:
             current = int(fence["fence"]) if fence else 0
             if current != epoch:
                 return 409, {"ok": False, "error": "stale_fence"}
-            existing = conn.execute("SELECT outcome_key FROM dar_effects WHERE idempotency_key=%s", (idem,)).fetchone()
+            existing = conn.execute("SELECT outcome_key, epoch FROM dar_effects WHERE idempotency_key=%s", (idem,)).fetchone()
             if existing:
-                if existing["outcome_key"] == outcome:
+                if existing["outcome_key"] == outcome and int(existing["epoch"]) == epoch:
                     return 200, {"ok": True, "idempotent": True}
                 return 409, {"ok": False, "error": "idempotency_key_reuse"}
             if conn.execute("SELECT 1 FROM dar_effects WHERE outcome_key=%s", (outcome,)).fetchone():
