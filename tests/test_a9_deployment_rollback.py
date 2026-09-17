@@ -1,9 +1,7 @@
 import json
 import os
 import subprocess
-import tempfile
 import urllib.request
-from pathlib import Path
 
 from dar_v36_14.dar.rekor_anchor import RekorMonotonicAnchor
 
@@ -25,33 +23,31 @@ def fetch_entry(uuid: str) -> dict:
 
 
 def main() -> None:
-    # Deployment A: create and externally anchor the first frozen state.
+    # A9: Deployment A is frozen and externally anchored.
     deployment_a = RekorMonotonicAnchor(SERVER)
     first = deployment_a.publish(b"DAR-A9-deployment-A/frozen-state")
 
-    # Deployment B: advance the external anchor after a new deployment state.
+    # A9: Deployment B advances the same external append-only witness.
     deployment_b = RekorMonotonicAnchor(SERVER)
     second = deployment_b.publish(b"DAR-A9-deployment-B/frozen-state")
     assert second.log_index > first.log_index
 
-    # Simulate rollback restoration: restore Deployment A's old local snapshot.
+    # A9: restore the old Deployment A snapshot and query the external witness.
     restored_snapshot = {"anchor_uuid": first.uuid, "anchor_log_index": first.log_index}
     restored_entry = fetch_entry(restored_snapshot["anchor_uuid"])
     restored_index = int(restored_entry["logIndex"])
-
-    # The external witness must still expose the newer state after restoration.
     info = loginfo()
     external_tree_size = int(info["ActiveTreeSize"])
+
     assert restored_index == first.log_index
     assert external_tree_size > second.log_index
     assert second.log_index > restored_index
 
-    # A restored old deployment is therefore stale relative to the external witness.
-    # Treat accepting that stale state as a failure of the A9 rollback gate.
+    # The restored state is provably stale relative to the externally witnessed state.
     stale_restoration_detected = restored_index < second.log_index
     assert stale_restoration_detected
 
-    # Local monotonic floor still rejects an attempted numeric rollback.
+    # A current deployment's monotonic floor independently rejects the old value.
     try:
         deployment_b.advance_to(first.log_index)
     except ValueError:
@@ -68,6 +64,8 @@ def main() -> None:
         "deployment_b": {"anchor_uuid": second.uuid, "log_index": second.log_index, "tree_size": second.tree_size},
         "restored_deployment_a": restored_snapshot,
         "external_tree_size_after_restore": external_tree_size,
+        "stale_restoration_detected": stale_restoration_detected,
+        "rollback_rejected": rollback_rejected,
         "checks": {
             "deployment_a_anchor_persisted_externally": "PASS",
             "deployment_b_anchor_strictly_advanced": "PASS",
@@ -76,7 +74,7 @@ def main() -> None:
             "stale_restoration_detected": "PASS",
             "numeric_floor_rollback_rejected": "PASS",
         },
-        "scope_note": "This proves deployment-specific rollback detection against the external append-only witness. It does not by itself prove A10 external commit serialization or system-wide interface completeness.",
+        "scope_note": "Deployment-specific rollback detection against the external append-only witness. This is A9 evidence only; it does not prove A10 external commit serialization or system-wide interface completeness.",
     }
     print(json.dumps(evidence, sort_keys=True), flush=True)
 
