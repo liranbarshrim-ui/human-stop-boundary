@@ -1,0 +1,55 @@
+name: DAR A9 Deployment Rollback Evidence
+
+on:
+  push:
+    branches:
+      - dar-nf-10k
+    paths:
+      - .github/workflows/a9-deployment-rollback.yml
+      - tests/test_a9_deployment_rollback.py
+      - dar_v36_14/dar/rekor_anchor.py
+  workflow_dispatch:
+
+jobs:
+  a9-rollback:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    env:
+      PYTHONUNBUFFERED: "1"
+      PYTHONPATH: .
+      DAR_REKOR_URL: https://rekor.sigstore.dev
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Install pinned Rekor CLI release
+        run: |
+          set -euo pipefail
+          version="v1.5.1"
+          url="https://github.com/sigstore/rekor/releases/download/${version}/rekor-cli-linux-amd64"
+          curl -fsSL "$url" -o rekor-cli
+          echo "0b4964af85477892c37039fb80793b151864970d19838873eaa1a777ca2fb813  rekor-cli" | sha256sum -c -
+          chmod +x rekor-cli
+          sudo install -m 0755 rekor-cli /usr/local/bin/rekor-cli
+          rekor-cli version
+      - name: Run deployment rollback restoration attack
+        run: python tests/test_a9_deployment_rollback.py | tee a9-evidence.json
+      - name: Validate A9 PASS
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          record = json.loads(Path("a9-evidence.json").read_text().splitlines()[-1])
+          print(json.dumps(record, indent=2, sort_keys=True))
+          assert record["verdict"] == "PASS", record
+          assert all(v == "PASS" for v in record["checks"].values()), record
+          assert record["deployment_b"]["log_index"] > record["deployment_a"]["log_index"], record
+          assert record["stale_restoration_detected"] if "stale_restoration_detected" in record else True
+          PY
+      - name: Upload A9 machine-readable evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: dar-a9-deployment-rollback-evidence
+          path: a9-evidence.json
