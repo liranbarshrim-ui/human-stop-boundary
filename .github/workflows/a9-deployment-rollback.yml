@@ -1,9 +1,14 @@
 name: DAR A9 Deployment Rollback Evidence
 
 on:
+  pull_request:
+    paths:
+      - .github/workflows/a9-deployment-rollback.yml
+      - tests/test_a9_deployment_rollback.py
+      - dar_v36_14/dar/rekor_anchor.py
   push:
     branches:
-      - dar-nf-10k
+      - a9-proof-run
     paths:
       - .github/workflows/a9-deployment-rollback.yml
       - tests/test_a9_deployment_rollback.py
