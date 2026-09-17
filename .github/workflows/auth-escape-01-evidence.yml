@@ -46,6 +46,7 @@ jobs:
           exit "$rc"
 
       - name: Record workflow and test provenance
+        if: always()
         shell: bash
         run: |
           set -euo pipefail
