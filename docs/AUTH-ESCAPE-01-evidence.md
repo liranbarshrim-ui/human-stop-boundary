@@ -68,7 +68,7 @@ The existing internal authority verification boundary is in `dar_v36_14/dar/refu
 
 Branch: `auth-escape-01`
 
-Current head commit: `0438cfa27f1a228cd85fff958f05f3c83f3bd9b8`
+The current head is the commit containing this evidence package. The implementation commit immediately before the evidence package is `0438cfa27f1a228cd85fff958f05f3c83f3bd9b8`.
 
 Pull request: #10 — `AUTH-ESCAPE-01: Wire Protocol v2 authorization boundary`
 
@@ -76,7 +76,7 @@ The PR targets `main` and is intentionally left open for review; it is not merge
 
 ## 9. Full git diff
 
-The complete unified diff for PR #10 is the authoritative review artifact. It contains exactly four changed files:
+The complete unified diff for PR #10 is the authoritative review artifact. At the implementation commit it contained exactly five changed files:
 
 - `dar_v36_14/external_authority_server.py`
 - `dar_v36_14/tests/test_auth_escape_01.py`
@@ -84,7 +84,7 @@ The complete unified diff for PR #10 is the authoritative review artifact. It co
 - `docs/AUTH-ESCAPE-01-wire-protocol-v2.md`
 - `render.yaml`
 
-The PR diff shows the old unauthenticated endpoint handling removed and the v2 gates inserted. There is no branch in the implementation that treats missing authentication as v1. The `health` endpoint remains public by explicit design and does not expose authority state.
+This evidence file was added afterward, so the current PR contains six changed files including this evidence package. The implementation diff shows the old unauthenticated endpoint handling removed and the v2 gates inserted. There is no branch in the implementation that treats missing authentication as v1. The `health` endpoint remains public by explicit design and does not expose authority state.
 
 ## Scope isolation statement
 
