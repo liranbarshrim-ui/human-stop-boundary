@@ -1,5 +1,7 @@
 name: DAR Five-Scenario Crash Boundary Evidence
 
+# Controlled crash-boundary evidence: SIGKILL is injected at transaction boundaries.
+
 on:
   workflow_dispatch:
   push:
