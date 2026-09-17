@@ -1,0 +1,73 @@
+name: AUTH-ESCAPE-01 Evidence
+
+on:
+  workflow_dispatch:
+    inputs:
+      claimed_sha:
+        description: Exact commit SHA to fetch and verify
+        required: true
+        type: string
+
+permissions:
+  contents: read
+
+jobs:
+  auth-escape-01:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout exact claimed SHA
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+        with:
+          ref: ${{ inputs.claimed_sha }}
+          fetch-depth: 0
+
+      - name: Verify checked-out SHA
+        shell: bash
+        run: |
+          set -euo pipefail
+          actual_sha="$(git rev-parse HEAD)"
+          printf 'claimed_sha=%s\nactual_sha=%s\n' '${{ inputs.claimed_sha }}' "$actual_sha" | tee evidence-sha.txt
+          test "$actual_sha" = '${{ inputs.claimed_sha }}'
+
+      - name: Install test dependencies
+        working-directory: dar_v36_14
+        run: python -m pip install ".[test]"
+
+      - name: Run AUTH-ESCAPE-01 suite with raw evidence
+        working-directory: dar_v36_14
+        shell: bash
+        run: |
+          set +e
+          PYTHONPATH=. pytest -q -v tests/test_auth_escape_01.py > auth-escape-01-stdout.log 2> auth-escape-01-stderr.log
+          rc=$?
+          printf '%s\n' "$rc" > auth-escape-01-exit-code.txt
+          cat auth-escape-01-stdout.log
+          cat auth-escape-01-stderr.log >&2
+          exit "$rc"
+
+      - name: Record workflow and test provenance
+        if: always()
+        shell: bash
+        run: |
+          set -euo pipefail
+          {
+            printf 'claimed_sha=%s\n' '${{ inputs.claimed_sha }}'
+            printf 'checked_out_sha=%s\n' "$(git rev-parse HEAD)"
+            printf 'workflow_file_at_claimed_sha=%s\n' "$(git rev-parse HEAD:.github/workflows/auth-escape-01-evidence.yml)"
+            printf 'runner_os=%s\n' "$RUNNER_OS"
+            printf 'run_id=%s\n' "$GITHUB_RUN_ID"
+            printf 'run_attempt=%s\n' "$GITHUB_RUN_ATTEMPT"
+            printf 'repository=%s\n' "$GITHUB_REPOSITORY"
+          } > evidence-provenance.txt
+
+      - name: Upload raw evidence
+        if: always()
+        uses: actions/upload-artifact@65c4c4a1ddee5b72f698fdd19549f0f0fb45cf08
+        with:
+          name: auth-escape-01-evidence-${{ github.run_id }}
+          path: |
+            evidence-sha.txt
+            evidence-provenance.txt
+            dar_v36_14/auth-escape-01-stdout.log
+            dar_v36_14/auth-escape-01-stderr.log
+            dar_v36_14/auth-escape-01-exit-code.txt
