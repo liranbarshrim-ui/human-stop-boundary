@@ -22,9 +22,9 @@ Wire protocol v2 uses HMAC-SHA256 transport authentication with:
 - `X-DAR-Nonce`
 - `X-DAR-Signature`
 
-The signature covers the HTTP method, path, timestamp, nonce, and SHA-256 digest of the exact request body. Missing, malformed, expired, unknown-principal, or invalid signatures are rejected. Nonces are rejected on reuse during the configured timestamp window.
+The signature covers the HTTP method, path, timestamp, nonce, and SHA-256 digest of the exact request body. Missing, malformed, expired, unknown-principal, or invalid signatures are rejected. Transport nonces are rejected on reuse during the configured timestamp window.
 
-A second HMAC-SHA256 proof, `authority_intent`, is required for mutation endpoints. Its credential set is separate from the transport credential set. The intent binds the principal, operation, outcome, epoch, refusal ID, idempotency key, issuance time, and intent nonce.
+A second HMAC-SHA256 proof, `authority_intent`, is required for mutation endpoints. Its credential set is separate from the transport credential set. The intent binds the principal, operation, outcome, epoch, refusal ID, idempotency key, issuance time, and intent nonce. Intent nonces are also rejected on reuse during the configured timestamp window, independently of the transport nonce.
 
 ## Credential source and handling
 
@@ -51,9 +51,9 @@ There is no unauthenticated compatibility path to v1.
 
 ## Replay protection
 
-Transport requests require a fresh timestamp and nonce. Reuse of a nonce within the accepted timestamp window is rejected. Authority intents also contain their own nonce and timestamp and are MAC-bound to the operation and request parameters.
+Transport requests require a fresh timestamp and nonce. Reuse of a transport nonce within the accepted timestamp window is rejected. Authority intents independently require a fresh timestamp and nonce; reuse of an intent nonce within the accepted timestamp window is rejected even when a new transport nonce is supplied. This prevents replay of a previously valid authority intent by wrapping it in a fresh transport envelope.
 
-The current nonce cache is process-local. It is therefore not a claim of cross-restart replay resistance; deployment-level persistence of replay state is a separate hardening concern.
+Both replay caches are process-local. They are therefore not claims of cross-restart or cross-instance replay resistance; deployment-level shared persistence of replay state is a separate hardening concern.
 
 ## Security limitations
 
