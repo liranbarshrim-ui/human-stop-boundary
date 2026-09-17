@@ -65,6 +65,7 @@ else:
 BOOT_ID = uuid.uuid4().hex
 lock = threading.RLock()
 replay_nonces: dict[str, float] = {}
+intent_replay_nonces: dict[str, float] = {}
 fences: dict[str, int] = {}
 refusals: dict[str, list[object]] = {}
 effects: dict[str, dict[str, object]] = {}
@@ -167,6 +168,14 @@ def _verify_intent(
     expected = hmac.new(secret.encode(), canonical, hashlib.sha256).hexdigest()
     if not hmac.compare_digest(expected, intent_mac):
         return "invalid_authority_intent"
+    with lock:
+        now = time.time()
+        stale = [key for key, expires in intent_replay_nonces.items() if expires <= now]
+        for key in stale:
+            intent_replay_nonces.pop(key, None)
+        if intent_nonce in intent_replay_nonces:
+            return "intent_replay_detected"
+        intent_replay_nonces[intent_nonce] = now + AUTH_MAX_SKEW
     return None
 
 
@@ -266,7 +275,7 @@ class Handler(BaseHTTPRequestHandler):
 
         principal, auth_error = _protected(self, path, body, data)
         if auth_error:
-            status = 409 if auth_error == "replay_detected" else 401
+            status = 409 if auth_error in {"replay_detected", "intent_replay_detected"} else 401
             return response(self, status, {"ok": False, "error": auth_error})
         _ = principal
 
