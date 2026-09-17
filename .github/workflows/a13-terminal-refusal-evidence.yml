@@ -1,0 +1,59 @@
+name: DAR A13 Terminal Refusal Evidence
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - dar-nf-10k
+    paths:
+      - 'tests/test_a13_terminal_refusal_postgres.py'
+      - 'dar_v36_14/postgres_authority.py'
+      - '.github/workflows/a13-terminal-refusal-evidence.yml'
+
+permissions:
+  contents: read
+
+jobs:
+  a13-postgres:
+    runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgres:16
+        env:
+          POSTGRES_PASSWORD: postgres
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -U postgres -d postgres"
+          --health-interval 5s
+          --health-timeout 5s
+          --health-retries 20
+    env:
+      DATABASE_URL: postgresql://postgres:postgres@127.0.0.1:5432/postgres
+      DAR_DB_SSLMODE: disable
+      DAR_TEST_SSLMODE: disable
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install runtime dependencies
+        run: python -m pip install --disable-pip-version-check psycopg[binary]
+      - name: Run real PostgreSQL A13 test
+        run: python tests/test_a13_terminal_refusal_postgres.py | tee a13-terminal-refusal-evidence.json
+      - name: Verify machine-readable PASS
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          evidence = json.loads(Path('a13-terminal-refusal-evidence.json').read_text())
+          assert evidence['verdict'] == 'PASS', evidence
+          assert all(value == 'PASS' for value in evidence['checks'].values()), evidence
+          print(json.dumps(evidence, sort_keys=True))
+          PY
+      - name: Upload A13 evidence
+        uses: actions/upload-artifact@v4
+        with:
+          name: dar-a13-terminal-refusal-evidence
+          path: a13-terminal-refusal-evidence.json
+          if-no-files-found: error
