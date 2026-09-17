@@ -51,6 +51,22 @@ principal|operation|outcome|epoch|refusal_id|idempotency_key|issued_at|nonce
 
 The intent credential set is distinct from the transport credential set. A valid transport credential without a valid authority intent cannot mutate the authority.
 
+### Single-use intent and retry semantics
+
+An `authority_intent` is a **single-use authorization envelope**.
+
+The intent nonce is consumed after the server successfully verifies the intent MAC, principal binding, operation binding, and freshness, **before** the protected authority operation is attempted.
+
+Therefore:
+
+- A successful operation consumes the intent.
+- A business-level rejection such as `409 stale_fence` also consumes the intent.
+- An infrastructure failure such as `503 database_unavailable` also consumes the intent.
+- Reusing the same intent nonce is rejected as `intent_replay_detected`, even if the first attempt did not complete the requested operation.
+- Clients **MUST issue a fresh `authority_intent` with a fresh intent nonce for every retry attempt**. A client MUST NOT resend the same signed intent JSON after any failed or rejected attempt.
+
+This is intentional: an authority intent authorizes one execution attempt, not an unlimited number of retries.
+
 ## Endpoint rules
 
 | Endpoint | Protection | v1 fallback |
@@ -64,4 +80,4 @@ The intent credential set is distinct from the transport credential set. A valid
 
 ## Failure behavior
 
-Missing, malformed, expired, unknown-principal, invalid-MAC, replayed transport authentication, missing intent, expired intent, or invalid intent causes rejection before the protected authority mutation is executed.
+Missing, malformed, expired, unknown-principal, invalid-MAC, replayed transport authentication, missing intent, expired intent, invalid intent, or replayed intent causes rejection before the protected authority mutation is executed.
