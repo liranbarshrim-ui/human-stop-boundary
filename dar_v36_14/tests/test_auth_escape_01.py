@@ -30,6 +30,7 @@ import external_authority_server as srv
 def reset_state():
     with srv.lock:
         srv.replay_nonces.clear()
+        srv.intent_replay_nonces.clear()
         srv.fences.clear()
         srv.refusals.clear()
         srv.effects.clear()
@@ -184,6 +185,28 @@ def test_authority_intent_is_bound_to_operation(server):
     status, body, _ = request(server, "POST", "/commit", payload)
     assert status == 401
     assert body["error"] == "invalid_authority_intent"
+
+
+def test_authority_intent_nonce_replay_is_rejected_even_with_new_transport_nonce(server):
+    payload = authorized_payload("fence", outcome="replay-target", epoch=1)
+    body = json.dumps(payload, sort_keys=True, separators=(",", ":")).encode()
+
+    first_headers, _ = headers(body, "POST", "/fence")
+    conn = HTTPConnection("127.0.0.1", server.server_port, timeout=3)
+    conn.request("POST", "/fence", body=body, headers=first_headers)
+    first = conn.getresponse()
+    assert first.status == 200
+    first.read()
+    conn.close()
+
+    second_headers, _ = headers(body, "POST", "/fence")
+    assert second_headers["X-DAR-Nonce"] != first_headers["X-DAR-Nonce"]
+    conn = HTTPConnection("127.0.0.1", server.server_port, timeout=3)
+    conn.request("POST", "/fence", body=body, headers=second_headers)
+    second = conn.getresponse()
+    assert second.status == 409
+    assert json.loads(second.read())["error"] == "intent_replay_detected"
+    conn.close()
 
 
 def test_no_legacy_v1_fallback(server):
