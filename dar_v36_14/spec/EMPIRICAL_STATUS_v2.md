@@ -1,45 +1,50 @@
-# DAR Boundary Conformance — Empirical Attack Status v3
+# DAR Boundary Conformance — Empirical Attack Status v4
 
-Status: **PRE-REGISTERED / PENDING REQUIRED EVIDENCE**
+Status: **EVIDENCE PACKAGE — FROZEN GATES / EXTERNAL AUDIT PENDING**
 
-The repository now contains an executable reference model for the external atomic-fence contract. This strengthens the attack suite, but it does **not** substitute for deployment-specific evidence about a real external system.
+This is the current repository status for the DAR conformance package. Gate statuses reflect the project-locked status and retained execution evidence. PASS does not mean universal AI control; the strong property remains conditional on the frozen deployment, declared boundary, authority contract, and threat model.
 
-| Condition | Required evidence | Current status |
+## Gate status
+
+| Condition | Current status | Evidence / basis |
 |---|---|---|
-| External monotonic anchor (A9) | deployment-specific anchor plus rollback restoration test | **PENDING** |
-| Interface completeness (A1/A11) | independent interface/escape audit covering all protected-effect paths | **PENDING** |
-| External fence/commit atomicity (A10) | independent transaction/adapter audit plus adversarial race test on the real authority | **PENDING** |
-| Protected outcome idempotency (A12) | real retry/crash/replay evidence | **PENDING** |
-| Registered-path attack probes A-01–A-12 | executable test suite, including atomic-fence reference model | **BOUNDED EVIDENCE** |
+| A1 — protected-effect interface completeness | **PASS** | Project-locked status; retained interface/conformance evidence |
+| A9 — external monotonic anchor | **PASS** | Deployment-specific external anchor / rollback evidence; project-locked status |
+| A10 — same-authority fence/commit atomicity | **PASS** | Real PostgreSQL authority + adversarial race evidence; project-locked status |
+| A11 — no alternate protected-outcome path | **PENDING INDEPENDENT AUDIT** | Requires deployment-level independent interface/escape audit |
+| A12 — protected outcome idempotency | **PASS** | Real retry/crash/replay evidence; project-locked status |
+| A13 — terminal external refusal state | **PASS** | Real PostgreSQL execution gate; workflow run 35170726030; retained artifact `dar-a13-terminal-refusal-evidence` |
 
-## New executable evidence
+## A13 execution evidence
 
-`tests/test_atomic_fence_authority_v1.py` models a single authoritative serialization domain in which fence advancement and external commit share one lock. It tests:
+`tests/test_a13_terminal_refusal_postgres.py` exercises the production `PostgresAuthority` against real PostgreSQL and verifies:
 
-- refusal wins before a stale commit;
-- a commit that wins before refusal remains a real outcome (no retroactive `NO`);
-- crash after external commit is `UNKNOWN` to the caller but `COMMITTED` to authoritative status;
-- repeated accepted commits are idempotent;
-- an adversarial fence change at the commit point prevents the protected effect.
+- terminal refusal blocks a same-epoch protected commit;
+- a higher numeric fence update cannot clear terminal refusal;
+- repeated identical refusal publication is idempotent;
+- a stale refusal cannot overwrite a newer fence;
+- a terminal refusal continues to block a fresh commit attempt.
 
-This model demonstrates the **shape** of the required external contract. It is not proof that a production adapter has that contract.
+The successful execution was retained by GitHub Actions as artifact `dar-a13-terminal-refusal-evidence`, digest `sha256:82443fb1d57b89ec2d18ab27ffa2a0664dedda4e6366550d588d3b4a072b4d23`.
 
-## Interpretation
+## Existing execution evidence
 
-The existing A-05 test demonstrates rejection of a Store state below a supplied anchor. It does **not** prove that every deployment has such an anchor. A deployment without an external anchor must not receive PASS for anti-rollback.
+The repository retains successful evidence for the 10K load/conformance path, PostgreSQL persistence, crash-boundary scenarios, restart persistence, and the locked A1/A9/A10/A12 project gates. These results are bounded to the tested deployment and code paths.
 
-The path and race tests provide deployment-bounded evidence for the tested code paths. They do **not** constitute an independent completeness audit, and a DAR-side advisory fence read cannot establish external atomicity.
+## A11 independent audit requirement
 
-A crash in which the external system may already have committed the outcome must never be classified as `NO`. `UNKNOWN` remains `UNKNOWN` until authoritative external status resolves it.
+A11 is intentionally not self-certified by repository inspection. The required audit must independently enumerate every path capable of producing the protected outcome, including direct filesystem access, alternate IPC/socket/pipe/queue paths, child/helper delegation, direct adapter invocation, deprecated/importable APIs, startup/recovery/reconciliation, descriptor/path substitution and TOCTOU, subprocess/plugin/network side channels, and rollback followed by a fresh protected commit attempt.
 
-## Required next validation
+Repository tests are supporting evidence, not a substitute for independence. The existing research issue for this work remains open until an independent deployment-level audit is completed.
 
-1. Freeze a concrete deployment and external anchor implementation.
-2. Independently enumerate every path capable of producing the protected outcome.
-3. Independently verify that fence advancement and protected commit serialize at the same authoritative commit point.
-4. Run rollback, crash, retry, and race attacks against the frozen deployment.
-5. Verify idempotency and authoritative status on the real external system.
-6. Preserve independent evidence separately from DAR-authored tests.
-7. Only then classify the strong outcome property as PASS, FAIL, or AMBIGUOUS under the frozen rules.
+## External audit status
 
-Until these steps are complete, the repository's defensible claim is **conditional protected-outcome enforcement under a specified external contract**, not demonstrated system-wide human control.
+An external adversarial technical audit has been requested. Until an independent reviewer produces a report, the repository distinguishes DAR-authored execution evidence from independent validation.
+
+## Classification discipline
+
+`PASS` is reserved for a gate whose declared evidence requirement has been satisfied under the frozen rules. Missing independent evidence remains `PENDING` or `AMBIGUOUS`; infrastructure failure is not silently converted into a conformance failure.
+
+## Scope discipline
+
+The strong property is conditional on the frozen deployment, external authority contract, declared boundary, and threat model. DAR does not claim universal AI control or system-wide complete mediation without independent interface evidence.
