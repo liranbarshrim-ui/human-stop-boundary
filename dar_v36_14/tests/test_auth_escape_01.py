@@ -79,7 +79,7 @@ class AuthEscape01Tests(unittest.TestCase):
         return {"refusal_id": refusal_id, "principal": "human-a", "effect_id": "effect-1", "capability_txid": "tx-1", "target_epoch": epoch, "issued_at": issued_at, "mac": mac, "outcome_key": outcome}
 
     def test_unauthorized_four_protected_endpoints_rejected(self):
-        cases = [("POST", "/fence", {"outcome": "x", "epoch": 1}), ("POST", "/refuse", {"outcome": "x", "epoch": 1, "refusal_id": "r"}), ("POST", "/commit", {"outcome": "x", "epoch": 1, "idempotency_key": "k"}), ("GET", "/state", b"")]
+        cases = [("POST", "/fence", {"outcome": "aa", "epoch": 1}), ("POST", "/refuse", {"outcome": "aa", "epoch": 1, "refusal_id": "r"}), ("POST", "/commit", {"outcome": "aa", "epoch": 1, "idempotency_key": "k"}), ("GET", "/state", b"")]
         for method, path, body in cases:
             status, payload = self.request(method, path, body, auth=False)
             self.assertEqual(status, 401, (path, payload))
@@ -93,7 +93,7 @@ class AuthEscape01Tests(unittest.TestCase):
         self.assertEqual(payload["error"], "invalid_auth")
 
     def test_transport_credentials_without_authority_intent_cannot_mutate(self):
-        for path, body in [("/fence", {"outcome": "x", "epoch": 1}), ("/commit", {"outcome": "x", "epoch": 1, "idempotency_key": "k"}), ("/refuse", {"outcome": "x", "epoch": 1, "refusal_id": "r"})]:
+        for path, body in [("/fence", {"outcome": "aa", "epoch": 1}), ("/commit", {"outcome": "aa", "epoch": 1, "idempotency_key": "k"}), ("/refuse", {"outcome": "aa", "epoch": 1, "refusal_id": "r"})]:
             status, payload = self.request("POST", path, body)
             self.assertEqual(status, 403, (path, payload))
             self.assertEqual(payload["error"], "authority_intent_required")
@@ -102,26 +102,26 @@ class AuthEscape01Tests(unittest.TestCase):
         self.assertEqual(server.effects, {})
 
     def test_authorized_v2_operations_execute(self):
-        fence = {"outcome": "x", "epoch": 1}
+        fence = {"outcome": "aa", "epoch": 1}
         fence["authority_intent"] = self.authority_intent("fence", fence)
         status, payload = self.request("POST", "/fence", fence)
         self.assertEqual(status, 200, payload)
 
-        commit = {"outcome": "x", "epoch": 1, "idempotency_key": "k"}
+        commit = {"outcome": "aa", "epoch": 1, "idempotency_key": "k"}
         commit["authority_intent"] = self.authority_intent("commit", commit)
         status, payload = self.request("POST", "/commit", commit)
         self.assertEqual(status, 200, payload)
 
-        status, payload = self.request("POST", "/refuse", {"refusal_intent": self.refusal_intent("y", 2)})
+        status, payload = self.request("POST", "/refuse", {"refusal_intent": self.refusal_intent("bb", 2)})
         self.assertEqual(status, 200, payload)
 
         status, payload = self.request("GET", "/state")
         self.assertEqual(status, 200, payload)
-        self.assertIn("x", payload["committed_outcomes"])
-        self.assertIn("y", payload["refusals"])
+        self.assertIn("aa", payload["committed_outcomes"])
+        self.assertIn("bb", payload["refusals"])
 
     def test_refusal_authority_verification_rejects_tampering(self):
-        intent = self.refusal_intent("z", 1)
+        intent = self.refusal_intent("cc", 1)
         status, _ = self.request("POST", "/refuse", {"refusal_intent": intent})
         self.assertEqual(status, 200)
         intent["mac"] = "0" * 64
@@ -130,19 +130,19 @@ class AuthEscape01Tests(unittest.TestCase):
         self.assertEqual(payload["error"], "authority_intent_required")
 
     def test_no_legacy_v1_fallback(self):
-        status, payload = self.request("POST", "/fence", {"outcome": "legacy", "epoch": 1}, auth=False)
+        status, payload = self.request("POST", "/fence", {"outcome": "aa", "epoch": 1}, auth=False)
         self.assertEqual(status, 401)
         self.assertEqual(payload["wire_protocol"], "v2")
 
     def test_transport_replay_is_rejected(self):
-        body = b"{}"
+        body = b""
         nonce = uuid.uuid4().hex
         timestamp = str(int(time.time()))
         mac = hmac.new(TRANSPORT, server._transport_message("GET", "/state", hashlib.sha256(body).hexdigest(), timestamp, nonce), hashlib.sha256).hexdigest()
-        headers = {"Content-Length": "2", "X-DAR-Key-Id": "transport-1", "X-DAR-Timestamp": timestamp, "X-DAR-Nonce": nonce, "X-DAR-MAC": mac}
+        headers = {"Content-Length": "0", "X-DAR-Key-Id": "transport-1", "X-DAR-Timestamp": timestamp, "X-DAR-Nonce": nonce, "X-DAR-MAC": mac}
         def call():
             conn = HTTPConnection("127.0.0.1", self.port, timeout=3)
-            conn.request("GET", "/state", body=body, headers=headers)
+            conn.request("GET", "/state", headers=headers)
             resp = conn.getresponse(); payload = json.loads(resp.read().decode()); conn.close(); return resp.status, payload
         first, _ = call()
         second, payload = call()
