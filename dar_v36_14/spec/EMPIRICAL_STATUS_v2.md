@@ -12,14 +12,14 @@ This document is the current repository status for the DAR conformance package. 
 | A9 — external monotonic anchor | **PASS** | Deployment-specific external anchor / rollback evidence; project-locked status |
 | A10 — same-authority fence/commit atomicity | **PASS** | Real PostgreSQL authority + adversarial race evidence; project-locked status |
 | A12 — protected outcome idempotency | **PASS** | Real retry/crash/replay evidence; project-locked status |
-| A13 — terminal external refusal state | **EVIDENCE ADDED / EXECUTION GATE PENDING** | Real PostgreSQL test and CI gate added; final status is PASS only after a successful retained CI run |
+| A13 — terminal external refusal state | **PASS** | Real PostgreSQL execution gate; workflow run 35170726030; retained artifact digest sha256:82443fb1d57b89ec2d18ab27ffa2a0664dedda4e6366550d588d3b4a072b4d23 |
 | A11 — no alternate protected-outcome path | **PENDING INDEPENDENT AUDIT** | Requires deployment-level independent interface/escape audit |
 
 ## Existing execution evidence
 
 The repository retains successful evidence for the 10K load/conformance path, PostgreSQL persistence, crash-boundary scenarios, restart persistence, and the locked A1/A9/A10/A12 project gates. These results are bounded to the tested deployment and code paths.
 
-## A13 validation added in v4
+## A13 validation
 
 `tests/test_a13_terminal_refusal_postgres.py` exercises the production `PostgresAuthority` against real PostgreSQL and verifies:
 
@@ -29,7 +29,7 @@ The repository retains successful evidence for the 10K load/conformance path, Po
 - a stale refusal cannot overwrite a newer fence;
 - a terminal refusal continues to block a fresh commit attempt.
 
-`.github/workflows/a13-terminal-refusal-evidence.yml` runs this test against PostgreSQL 16 and retains a machine-readable evidence artifact. A13 becomes execution-verified only when that workflow completes successfully and the artifact is retained.
+`.github/workflows/a13-terminal-refusal-evidence.yml` runs this test against PostgreSQL 16 and retains a machine-readable evidence artifact. The retained successful run is 35170726030 and its artifact is `dar-a13-terminal-refusal-evidence`.
 
 ## A11 independent audit requirement
 
