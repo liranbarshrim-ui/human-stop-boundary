@@ -24,6 +24,7 @@ os.environ["DAR_AUTH_CREDENTIALS_JSON"] = json.dumps({PRINCIPAL: AUTH_SECRET})
 os.environ["DAR_INTENT_CREDENTIALS_JSON"] = json.dumps({PRINCIPAL: INTENT_SECRET})
 
 import external_authority_server as srv
+from postgres_authority import PostgresAuthority
 
 
 @pytest.fixture(autouse=True)
@@ -207,6 +208,46 @@ def test_authority_intent_nonce_replay_is_rejected_even_with_new_transport_nonce
     assert second.status == 409
     assert json.loads(second.read())["error"] == "intent_replay_detected"
     conn.close()
+
+
+def test_postgres_idempotency_retry_requires_matching_epoch():
+    class FakeResult:
+        def __init__(self, row=None):
+            self.row = row
+
+        def fetchone(self):
+            return self.row
+
+    class FakeConnection:
+        def __init__(self):
+            self.calls = []
+
+        def __enter__(self):
+            return self
+
+        def __exit__(self, *args):
+            return False
+
+        def execute(self, sql, params=()):
+            self.calls.append((sql, params))
+            if "pg_advisory_xact_lock" in sql:
+                return FakeResult()
+            if "FROM dar_refusals" in sql:
+                return FakeResult(None)
+            if "SELECT fence FROM dar_fences" in sql:
+                return FakeResult({"fence": 2})
+            if "SELECT outcome_key, epoch FROM dar_effects" in sql:
+                return FakeResult({"outcome_key": "o1", "epoch": 1})
+            raise AssertionError(f"unexpected SQL: {sql}")
+
+    fake = FakeConnection()
+    authority = object.__new__(PostgresAuthority)
+    authority.dsn = "unused"
+    authority._connect = lambda: fake
+
+    status, body = authority.commit("o1", 2, "idem-1")
+    assert status == 409
+    assert body == {"ok": False, "error": "idempotency_key_reuse"}
 
 
 def test_no_legacy_v1_fallback(server):
