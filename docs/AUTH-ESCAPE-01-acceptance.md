@@ -95,6 +95,16 @@ This implementation stage must not silently include fixes for:
 
 Those findings remain separately tracked and must be handled in their own review stages.
 
+### Explicit scope exception — owner-approved
+
+The `sslmode` default change in `dar_v36_14/postgres_authority.py` from `prefer` to `require` is an explicit exception to the original SSL scope-isolation exclusion.
+
+**Approval:** The repository owner explicitly approved retaining this SSL hardening change as part of the AUTH-ESCAPE-01 patch.
+
+**Reason for recording the exception:** The change was discovered during independent code review after implementation. It must therefore be disclosed as a scope exception rather than treated as if it had been part of the original locked scope.
+
+The approval does not authorize any other unrelated SSL, transport, database, Rekor, A9, A10, A12, A13, fence, idempotency, or refactoring changes beyond those explicitly identified in this document.
+
 ## I. Required evidence package
 
 The implementation must return all of the following for review:
