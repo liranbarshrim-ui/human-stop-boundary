@@ -11,22 +11,15 @@ RUN apt-get update \
 
 WORKDIR /opt/dar
 
-# The auditor should supply a source snapshot or mount the repository here.
-# The image deliberately does not clone mutable HEAD: the audit target must be
-# checked out and verified by the auditor before execution.
+# Source is intentionally NOT copied into the image. The auditor must mount
+# a checkout/snapshot and verify it is exactly DAR_A11_FROZEN_COMMIT before use.
 
-COPY . /opt/dar
-
-RUN test "$(git rev-parse HEAD 2>/dev/null || true)" = "${DAR_A11_FROZEN_COMMIT}" || \
-    echo "WARNING: build context is not the frozen commit; auditor MUST mount/check out the frozen commit before execution"
-
-RUN python -m pip install --no-cache-dir ".[test]"
-
-RUN useradd --create-home --uid 10001 --shell /bin/bash dar-auditor
-RUN mkdir -p /opt/dar/audit-results /opt/dar/audit-state \
+RUN useradd --create-home --uid 10001 --shell /bin/bash dar-auditor \
+    && mkdir -p /opt/dar/audit-results /opt/dar/audit-state \
     && chown -R dar-auditor:dar-auditor /opt/dar/audit-results /opt/dar/audit-state
 
-# Default shell is intentional: the independent auditor controls the exact
-# execution sequence and evidence capture.
-USER dar-auditor
+# Start as root so the auditor can inspect topology and create the required
+# unprivileged identity. Individual attack vectors must explicitly record the
+# identity under which they execute.
+USER root
 CMD ["bash"]
