@@ -1,0 +1,74 @@
+name: Parameter Binding Gap Evidence
+
+on:
+  workflow_dispatch:
+    inputs:
+      claimed_sha:
+        description: Exact commit SHA to checkout and test
+        required: true
+        type: string
+
+permissions:
+  contents: read
+
+jobs:
+  parameter-binding-gap:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout exact claimed SHA
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ inputs.claimed_sha }}
+          fetch-depth: 1
+
+      - name: Verify checked-out SHA
+        run: |
+          set -euo pipefail
+          actual="$(git rev-parse HEAD)"
+          claimed="${{ inputs.claimed_sha }}"
+          echo "CLAIMED_SHA=$claimed"
+          echo "CHECKED_OUT_SHA=$actual"
+          test "$actual" = "$claimed"
+
+      - name: Install test dependencies
+        run: python -m pip install ".[test]"
+
+      - name: Run HTTP-boundary parameter binding regression/exploit test
+        run: |
+          set +e
+          PYTHONPATH=. pytest -v -s dar_v36_14/tests/test_auth_escape_01_parameter_binding_gap.py > parameter-binding-gap-stdout.log 2> parameter-binding-gap-stderr.log
+          code=$?
+          set -e
+          echo "EXIT_CODE=$code"
+          echo "=== RAW STDOUT ==="
+          cat parameter-binding-gap-stdout.log
+          echo "=== RAW STDERR ==="
+          cat parameter-binding-gap-stderr.log
+          exit "$code"
+
+      - name: Record provenance
+        if: always()
+        run: |
+          set -euo pipefail
+          {
+            echo "claimed_sha=${{ inputs.claimed_sha }}"
+            echo "checked_out_sha=$(git rev-parse HEAD)"
+            echo "workflow_file=.github/workflows/parameter-binding-gap-evidence.yml"
+            echo "workflow_file_sha=$(git rev-parse HEAD:.github/workflows/parameter-binding-gap-evidence.yml)"
+            echo "runner_os=${RUNNER_OS}"
+            echo "run_id=${GITHUB_RUN_ID}"
+            echo "run_attempt=${GITHUB_RUN_ATTEMPT}"
+            echo "repository=${GITHUB_REPOSITORY}"
+            echo "event=${GITHUB_EVENT_NAME}"
+          } > parameter-binding-gap-provenance.txt
+
+      - name: Upload permanent raw evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: parameter-binding-gap-evidence-${{ github.run_id }}
+          path: |
+            parameter-binding-gap-stdout.log
+            parameter-binding-gap-stderr.log
+            parameter-binding-gap-provenance.txt
+          if-no-files-found: error
