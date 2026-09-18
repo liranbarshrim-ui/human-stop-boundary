@@ -1,4 +1,5 @@
 from pathlib import Path
+import re
 
 ROOT = Path(__file__).resolve().parents[1]
 MARKER = 'data-matrix-audit-upgrade="v1"'
@@ -19,16 +20,22 @@ def upgrade(path: Path) -> bool:
     if path.name in {'break-it.html', 'verification.html'}:
         return False
     text = path.read_text(encoding='utf-8')
-    if MARKER in text or '<html' not in text.lower():
+    if '<html' not in text.lower():
         return False
-    root = root_for(path)
+    root = root_for(path) or './'
     nav = NAV.format(marker=MARKER, root=root)
     panel = PANEL.format(root=root)
     footer = FOOTER.format(root=root)
-    if '</head>' not in text.lower() or '<body' not in text.lower():
+    if MARKER in text:
+        text = re.sub(r'<header class="site-upgrade-bar".*?</header><div class="site-upgrade-status">.*?</div>', '', text, count=1, flags=re.S)
+        text = re.sub(r'<section class="site-upgrade-shell".*?</section>', '', text, count=1, flags=re.S)
+        text = re.sub(r'<footer class="site-upgrade-footer">.*?</footer>', '', text, count=1, flags=re.S)
+    lower = text.lower()
+    if '</head>' not in lower or '<body' not in lower:
         return False
-    head_close = text.lower().find('</head>')
-    text = text[:head_close] + '<link rel="stylesheet" href="' + root + 'site-upgrade.css">\n' + text[head_close:]
+    if 'site-upgrade.css' not in text:
+        head_close = lower.find('</head>')
+        text = text[:head_close] + '<link rel="stylesheet" href="' + root + 'site-upgrade.css">\n' + text[head_close:]
     body_open = text.lower().find('>', text.lower().find('<body')) + 1
     text = text[:body_open] + nav + text[body_open:]
     body_close = text.lower().rfind('</body>')
