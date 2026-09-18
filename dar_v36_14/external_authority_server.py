@@ -135,15 +135,31 @@ def _verify_intent(
         return "missing_authority_intent"
     intent_principal = raw.get("principal")
     operation = raw.get("operation")
-    outcome = raw.get("outcome")
-    epoch = raw.get("epoch")
+    intent_outcome = raw.get("outcome")
+    intent_epoch = raw.get("epoch")
     issued_at = raw.get("issued_at")
     intent_nonce = raw.get("nonce")
     intent_mac = raw.get("mac")
     if intent_principal != principal or operation != path.lstrip("/"):
         return "invalid_authority_intent"
-    if not isinstance(outcome, str) or not outcome or not isinstance(epoch, int):
+    if not isinstance(intent_outcome, str) or not intent_outcome or not isinstance(intent_epoch, int):
         return "invalid_authority_intent"
+
+    # Security-critical request parameters must be exactly the values that
+    # were authorized by the signed intent. Authenticating the envelope alone
+    # is insufficient if an attacker can replace an outer parameter afterward.
+    outer_outcome = data.get("outcome")
+    outer_epoch = data.get("epoch")
+    if outer_outcome != intent_outcome or not isinstance(outer_epoch, int) or outer_epoch != intent_epoch:
+        return "parameter_binding_mismatch"
+
+    refusal_id = raw.get("refusal_id", "")
+    idempotency_key = raw.get("idempotency_key", "")
+    if path == "/refuse" and data.get("refusal_id") != refusal_id:
+        return "parameter_binding_mismatch"
+    if path == "/commit" and data.get("idempotency_key") != idempotency_key:
+        return "parameter_binding_mismatch"
+
     if not isinstance(issued_at, int) or abs(int(time.time()) - issued_at) > AUTH_MAX_SKEW:
         return "expired_authority_intent"
     if not isinstance(intent_nonce, str) or len(intent_nonce) < 16 or not isinstance(intent_mac, str):
@@ -151,14 +167,12 @@ def _verify_intent(
     secret = INTENT_CREDENTIALS.get(principal)
     if secret is None:
         return "invalid_authority_intent"
-    refusal_id = raw.get("refusal_id", "")
-    idempotency_key = raw.get("idempotency_key", "")
     canonical = "|".join(
         (
             principal,
             operation,
-            outcome,
-            str(epoch),
+            intent_outcome,
+            str(intent_epoch),
             str(refusal_id),
             str(idempotency_key),
             str(issued_at),
@@ -271,7 +285,7 @@ class Handler(BaseHTTPRequestHandler):
         if not isinstance(data, dict):
             return response(self, 400, {"ok": False, "error": "invalid_json"})
         if path not in {"/fence", "/refuse", "/commit"}:
-            return response(self, 404, {"error": "not_found"})
+            return response(self, 404, {"ok": False, "error": "not_found"})
 
         principal, auth_error = _protected(self, path, body, data)
         if auth_error:
