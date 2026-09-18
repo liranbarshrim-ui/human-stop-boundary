@@ -1,0 +1,32 @@
+FROM python:3.13-slim
+
+ARG FROZEN_COMMIT=b0fc0f8f0d719e80a00b27a789ec08c8f5131a81
+ENV DAR_A11_FROZEN_COMMIT=${FROZEN_COMMIT}
+ENV PYTHONDONTWRITEBYTECODE=1
+ENV PYTHONUNBUFFERED=1
+
+RUN apt-get update \
+    && apt-get install -y --no-install-recommends procps iproute2 util-linux git ca-certificates \
+    && rm -rf /var/lib/apt/lists/*
+
+WORKDIR /opt/dar
+
+# The auditor should supply a source snapshot or mount the repository here.
+# The image deliberately does not clone mutable HEAD: the audit target must be
+# checked out and verified by the auditor before execution.
+
+COPY . /opt/dar
+
+RUN test "$(git rev-parse HEAD 2>/dev/null || true)" = "${DAR_A11_FROZEN_COMMIT}" || \
+    echo "WARNING: build context is not the frozen commit; auditor MUST mount/check out the frozen commit before execution"
+
+RUN python -m pip install --no-cache-dir ".[test]"
+
+RUN useradd --create-home --uid 10001 --shell /bin/bash dar-auditor
+RUN mkdir -p /opt/dar/audit-results /opt/dar/audit-state \
+    && chown -R dar-auditor:dar-auditor /opt/dar/audit-results /opt/dar/audit-state
+
+# Default shell is intentional: the independent auditor controls the exact
+# execution sequence and evidence capture.
+USER dar-auditor
+CMD ["bash"]
