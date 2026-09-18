@@ -170,6 +170,7 @@ def test_missing_and_malformed_auth_rejected(server):
 def test_valid_transport_without_intent_cannot_mutate(server):
     payload = {"outcome": "o1", "epoch": 1, "idempotency_key": "i1"}
     status, body, _ = request(server, "POST", "/commit", payload, auth=True, transport_only=True)
+    print(f"RAW_AUTH_ESCAPE_01_COMMIT status={status} body={json.dumps(body, sort_keys=True)}")
     assert status == 401
     assert body["error"] == "missing_authority_intent"
     status, state, _ = request(server, "GET", "/state", None, auth=True)
