@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Verification — Matrix Audit</title>
+<meta name="description" content="Current evidence posture for Matrix Audit and the DAR boundary. Claims are separated from what remains independently unverified.">
+<link rel="canonical" href="https://matrix-audit.com/verification.html">
+<link rel="stylesheet" href="site-upgrade.css">
+<style>
+body{margin:0;background:#070707;color:#eee9df;font-family:Inter,Arial,sans-serif;line-height:1.7}.page{max-width:1080px;margin:auto;padding:80px 24px}.eyebrow{font:500 10px/1.2 ui-monospace,monospace;letter-spacing:.2em;text-transform:uppercase;color:#d2b477}.hero h1{font:400 clamp(48px,8vw,82px)/.98 Georgia,serif;letter-spacing:-.045em;max-width:10ch;margin:20px 0}.lead{font:400 20px/1.55 Georgia,serif;color:#c9c2b6;max-width:64ch}.matrix{margin:55px 0;border:1px solid rgba(238,233,223,.12)}.row{display:grid;grid-template-columns:90px 1fr 190px;gap:20px;padding:19px 22px;border-top:1px solid rgba(238,233,223,.1)}.row:first-child{border-top:0}.code{font:500 10px/1.2 ui-monospace,monospace;color:#d2b477}.state{font:500 9px/1.2 ui-monospace,monospace;letter-spacing:.1em;text-transform:uppercase}.state.pass{color:#b9d5bd}.state.pending{color:#d2b477}.state.note{color:#9d978d}.desc{color:#9d978d;font-size:14px}.box{border:1px solid rgba(210,180,119,.25);padding:28px;background:#0d0d0d;margin-top:45px}.box h2{font:400 30px/1.1 Georgia,serif;margin:0 0 12px}.box p{color:#9d978d;font-size:14px}.btn{display:inline-flex;align-items:center;min-height:45px;padding:0 15px;border:1px solid #d2b477;color:#d2b477;text-decoration:none;font:500 9px/1 ui-monospace,monospace;letter-spacing:.13em;text-transform:uppercase;margin-top:12px}@media(max-width:700px){.page{padding:60px 18px}.row{grid-template-columns:1fr;gap:7px}}
+</style>
+</head>
+<body>
+<div class="page">
+<div class="eyebrow">Verification posture · September 2026</div>
+<section class="hero"><h1>What is proven, and what is not?</h1><p class="lead">Matrix Audit keeps implementation evidence, environmental assumptions and independent verification separate. A missing external condition is not silently promoted to PASS.</p></section>
+<section class="matrix" aria-label="Evidence status matrix">
+<div class="row"><div class="code">A1</div><div><div class="state pass">PASS — bounded evidence</div><div class="desc">Protected execution is routed through the registered enforcement design within the tested scope. This does not by itself prove complete mediation of every external path.</div></div><div class="desc">See repository conformance records.</div></div>
+<div class="row"><div class="code">A9</div><div><div class="state pass">PASS — integration evidence</div><div class="desc">External anchoring is maintained as a separate evidence path. Production commit semantics remain explicitly distinguished from anchoring.</div></div><div class="desc">See A9 integration record.</div></div>
+<div class="row"><div class="code">A10</div><div><div class="state pass">PASS — recorded</div><div class="desc">The required environmental condition is recorded in the current qualification package.</div></div><div class="desc">See boundary manifest.</div></div>
+<div class="row"><div class="code">A11</div><div><div class="state pending">PENDING — independent audit</div><div class="desc">The repository contains an A11 harness and audit scaffold, but independent runtime and deployment-topology evidence is still required.</div></div><div class="desc">Open the A11 challenge.</div></div>
+<div class="row"><div class="code">A12</div><div><div class="state pass">PASS — recorded</div><div class="desc">The current frozen qualification package records the required condition as satisfied.</div></div><div class="desc">See boundary manifest.</div></div>
+<div class="row"><div class="code">A13</div><div><div class="state pass">PASS — recorded</div><div class="desc">The current frozen qualification package records the required condition as satisfied.</div></div><div class="desc">See boundary manifest.</div></div>
+</section>
+<div class="box"><h2>Qualification rule</h2><p>BR-B3 is not presented as fully qualified while A11 remains pending. The purpose of independent review is to make the claim falsifiable, not to manufacture a confirmation.</p><a class="btn" href="break-it.html">Try to break A11 →</a><a class="btn" href="https://github.com/liranbarshrim-ui/human-stop-boundary">Inspect the source →</a></div>
+</div>
+</body>
+</html>
