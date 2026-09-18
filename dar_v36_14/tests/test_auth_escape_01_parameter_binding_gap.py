@@ -3,7 +3,6 @@ from __future__ import annotations
 import hashlib
 import hmac
 import json
-import os
 import threading
 import time
 import uuid
@@ -48,7 +47,6 @@ def _intent_mac(
 
 
 def _request(path: str, payload: dict, *, intent_epoch: int) -> tuple[int, dict]:
-    body = json.dumps(payload, sort_keys=True, separators=(",", ":")).encode()
     timestamp = str(int(time.time()))
     transport_nonce = uuid.uuid4().hex
     intent_nonce = uuid.uuid4().hex
@@ -145,7 +143,7 @@ def test_outer_epoch_cannot_diverge_from_signed_intent_epoch():
                 intent_epoch=signed_epoch,
             )
             print(
-                "RAW_PARAMETER_BINDING_GAP_FENCE "
+                "RAW_PARAMETER_BINDING_GAP_BLOCK "
                 + json.dumps(
                     {
                         "status": status,
@@ -156,7 +154,8 @@ def test_outer_epoch_cannot_diverge_from_signed_intent_epoch():
                     sort_keys=True,
                 )
             )
-            assert status == 200
+            assert status == 401
+            assert body == {"error": "parameter_binding_mismatch", "ok": False}
 
             status, state_after = _state(outcome)
             assert status == 200
@@ -170,8 +169,8 @@ def test_outer_epoch_cannot_diverge_from_signed_intent_epoch():
                     sort_keys=True,
                 )
             )
-            assert state_after["fences"].get(outcome) == outer_epoch
-            assert state_after["fences"].get(outcome) != signed_epoch
+            assert state_after["fences"].get(outcome) == signed_epoch
+            assert state_after["fences"].get(outcome) != outer_epoch
     finally:
         eas.AUTH_CREDENTIALS = old_auth
         eas.INTENT_CREDENTIALS = old_intent
