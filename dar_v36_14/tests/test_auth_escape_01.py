@@ -96,7 +96,10 @@ def server():
 
 
 def request(server, method, path, payload=None, auth=True, transport_only=False, timestamp=None, nonce=None):
-    body = json.dumps(payload or {}, sort_keys=True, separators=(",", ":")).encode()
+    if method.upper() == "GET" and payload is None:
+        body = b""
+    else:
+        body = json.dumps(payload or {}, sort_keys=True, separators=(",", ":")).encode()
     conn = HTTPConnection("127.0.0.1", server.server_port, timeout=3)
     hdrs = {"Content-Length": str(len(body))}
     if auth:
@@ -169,7 +172,7 @@ def test_valid_transport_without_intent_cannot_mutate(server):
     status, body, _ = request(server, "POST", "/commit", payload, auth=True, transport_only=True)
     assert status == 401
     assert body["error"] == "missing_authority_intent"
-    status, state, _ = request(server, "GET", "/state", {}, auth=True)
+    status, state, _ = request(server, "GET", "/state", None, auth=True)
     assert status == 200
     assert state["effects"] == {}
 
@@ -262,7 +265,7 @@ def test_state_requires_transport_auth_only(server):
     payload = authorized_payload("fence", epoch=1)
     status, _, _ = request(server, "POST", "/fence", payload)
     assert status == 200
-    status, body, _ = request(server, "GET", "/state", {}, auth=True)
+    status, body, _ = request(server, "GET", "/state", None, auth=True)
     assert status == 200
     assert "fences" in body
 
