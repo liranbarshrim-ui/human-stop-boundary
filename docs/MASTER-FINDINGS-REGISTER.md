@@ -12,6 +12,7 @@
 - **CLOSED:** The specific finding has been resolved and the available evidence supports closure.
 - **OPEN:** Active finding requiring further work or a decision.
 - **DECISION REQUIRED:** A real semantic/specification decision is pending; it must not be hidden by implementation or test changes.
+- **VERIFIED CODE CONDITION:** Direct source inspection establishes the stated code condition; live exploit/evidence execution may still be pending.
 
 ---
 
@@ -56,6 +57,28 @@ Permanent artifact: `auth-escape-01-evidence-35302067586` (artifact ID `10529553
 7. Evidence must include exact claimed SHA, exact checked-out SHA, matching workflow-definition ref, explicit test command, exit code, raw stdout/stderr, raw HTTP status/body for the jump scenario, proof of unchanged state on rejection, and a permanent artifact.
 
 **Critical compatibility point:** Current code does **not** enforce strict sequential advancement in `PostgresAuthority.fence()`: it rejects only `epoch < current`, rejects terminal refusal, and otherwise writes the supplied epoch. `PostgresAuthority.refuse()` likewise rejects only `epoch < current`; its fence update uses `GREATEST(current, epoch)`. Therefore `current + 1` must be treated as a candidate contract to validate, not as an already-established invariant.
+
+### Parameter Binding Gap — VERIFIED CODE CONDITION
+
+**Status:** `VERIFIED CODE CONDITION` via independent direct fetch of `dar_v36_14/external_authority_server.py` at SHA `69b61c60e620ee38c6dbce1039f024d2904b43b5`. Independent live HTTP exploit/evidence execution remains pending.
+
+**Observed condition:** `_verify_intent()` extracts and MAC-verifies `authority_intent["epoch"]`, while `do_POST()` subsequently executes the operation using the separate outer `data["epoch"]`. `_protected()` calls `_verify_transport()` and then `_verify_intent()`, but the reviewed path contains no comparison binding the outer epoch to the signed inner epoch before the operation is dispatched. The condition is present in both the PostgreSQL `authority.*` dispatch path and the in-memory fallback path.
+
+**Independent verification:** The raw file was fetched directly from GitHub outside the ChatGPT citation layer using the exact commit SHA. This independently confirmed the source condition.
+
+**Required next evidence:** Run the HTTP-boundary regression/exploit test that signs an intent for epoch A, submits outer epoch B, and records the HTTP response plus `/state` before/after. Do not implement the fix before this execution unless a separate safety decision explicitly requires it.
+
+**Important scope distinction:** The code condition is verified; exploit-in-practice is not yet classified as empirically demonstrated until the live HTTP test produces the expected result. No broader claim about all credential configurations should be made from the source condition alone.
+
+**Evidence test added:** `dar_v36_14/tests/test_auth_escape_01_parameter_binding_gap.py`.
+
+**Evidence workflow added:** `.github/workflows/parameter-binding-gap-evidence.yml`.
+
+**Latest evidence-preparation commit:** `876da7271f4e6b7b08711d69da2d15a80c752632`.
+
+**Workflow requirement:** The evidence workflow requires `claimed_sha` and checks that the checked-out SHA exactly equals it; it also records the workflow-file hash, command output, exit code, and uploads raw stdout/stderr/provenance as an artifact.
+
+**Execution limitation:** The available GitHub connector can create the workflow and inspect workflow runs, but does not expose a workflow-dispatch/write action. Therefore no live GitHub evidence run is claimed until the workflow is actually dispatched and its run/artifact are independently observable.
 
 ---
 
@@ -152,6 +175,10 @@ Closing one finding must not remove or imply closure of other findings. In parti
 - `A9-INTEGRATION-DISCONNECT-01`
 - `BR-B3` (decision required)
 
+### Source condition vs exploit evidence
+
+A source-level condition established by direct inspection is distinct from empirical exploit evidence. The register must not collapse these states. A finding can be `VERIFIED CODE CONDITION` while its live HTTP exploit remains unverified.
+
 ---
 
 ## Current register snapshot
@@ -159,7 +186,7 @@ Closing one finding must not remove or imply closure of other findings. In parti
 | Finding | Status |
 |---|---|
 | AUTH-ESCAPE-01 | CLOSED — SCOPED |
-| FENCE-GRIEFING-01 | OPEN |
+| FENCE-GRIEFING-01 | OPEN — Parameter Binding Gap: VERIFIED CODE CONDITION; live exploit pending |
 | RECON-VIA-STATE-01 | CLOSED |
 | ORPHANED-AUTH-LAYER-01 | OPEN |
 | A9-INTEGRATION-DISCONNECT-01 | OPEN |
