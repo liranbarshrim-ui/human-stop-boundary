@@ -9,7 +9,7 @@ description = "Decision Accountability Review security core"
 requires-python = ">=3.10"
 
 [project.optional-dependencies]
-test = ["pytest>=8"]
+test = ["pytest>=8", "psycopg[binary]>=3"]
 
 [tool.setuptools.packages.find]
 where = ["."]
