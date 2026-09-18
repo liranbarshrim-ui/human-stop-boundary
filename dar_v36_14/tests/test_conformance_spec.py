@@ -24,10 +24,10 @@ def test_protected_property_is_explicit():
     assert "WRITE" in m["effective_boundary"]["protected_effect_classes"]
 
 
-def test_br_b3_strong_outcome_fence_is_pre_registered():
+def test_br_b3_strong_outcome_fence_is_frozen_evidence_package():
     m = json.loads((SPEC / "boundary_manifest_v3.json").read_text())
     assert m["spec_version"] == "BRB-3.0"
-    assert m["status"] == "pre-registered"
+    assert m["status"] == "frozen-evidence-package"
     assert m["property"] == "VALID_REFUSAL => NO_PROTECTED_OUTCOME_AFTER_TERMINAL_REFUSAL"
     conditions = m["required_conditions"]
     assert all(conditions.values())
