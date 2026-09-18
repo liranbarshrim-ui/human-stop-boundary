@@ -38,7 +38,7 @@ jobs:
         shell: bash
         run: |
           set +e
-          PYTHONPATH=. pytest -q -v tests/test_auth_escape_01.py > auth-escape-01-stdout.log 2> auth-escape-01-stderr.log
+          PYTHONPATH=. pytest -v -s tests/test_auth_escape_01.py > auth-escape-01-stdout.log 2> auth-escape-01-stderr.log
           rc=$?
           printf '%s\n' "$rc" > auth-escape-01-exit-code.txt
           cat auth-escape-01-stdout.log
