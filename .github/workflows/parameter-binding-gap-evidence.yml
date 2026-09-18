@@ -55,7 +55,7 @@ jobs:
             echo "claimed_sha=${{ inputs.claimed_sha }}"
             echo "checked_out_sha=$(git rev-parse HEAD)"
             echo "workflow_file=.github/workflows/parameter-binding-gap-evidence.yml"
-            echo "workflow_file_sha=$(git rev-parse HEAD:.github/workflows/parameter-binding-evidence.yml)"
+            echo "workflow_file_sha=$(git rev-parse HEAD:.github/workflows/parameter-binding-gap-evidence.yml)"
             echo "runner_os=${RUNNER_OS}"
             echo "run_id=${GITHUB_RUN_ID}"
             echo "run_attempt=${GITHUB_RUN_ATTEMPT}"
