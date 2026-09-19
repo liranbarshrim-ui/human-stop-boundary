@@ -19,8 +19,8 @@ from identity import DeploymentRequest
 from staging_adapter import StagingDeploymentAdapter
 
 SECRET = b"reference-integration-secret-32b!!"
-AUTH = os.environ.get("STAGING_DEPLOY_SECRET") or os.environ.get("STAGING_AUTH_SECRET")
-ADMIN = os.environ.get("STAGING_ADMIN_SECRET") or AUTH
+AUTH = os.environ.get("STAGING_DEPLOY_SECRET") or os.urandom(32).hex()
+ADMIN = os.environ.get("STAGING_ADMIN_SECRET") or os.urandom(32).hex()
 PORT = int(os.environ.get("STAGING_PORT", "19190"))
 BASE = f"http://127.0.0.1:{PORT}"
 N = int(os.environ.get("CANONICAL_10K", "10000"))
@@ -88,8 +88,6 @@ class Journal:
 
 
 def main():
-    if not AUTH:
-        raise RuntimeError("STAGING_DEPLOY_SECRET is required")
     evidence = {"iterations": N, "normal_pass": 0, "refusal_pass": 0,
                 "replay_pass": 0, "failures": [], "environment": {}}
     with tempfile.TemporaryDirectory(prefix="dar-10k-") as td:
@@ -101,7 +99,8 @@ def main():
             st, body = reset(deployment_id)
             if st != 200 or not body.get("ok"):
                 raise RuntimeError(f"initial reset failed: {st} {body}")
-            evidence["environment"] = {"python": sys.version.split()[0], "port": PORT}
+            evidence["environment"] = {"python": sys.version.split()[0], "port": PORT,
+                                        "secret_source": "environment" if os.environ.get("STAGING_DEPLOY_SECRET") else "ephemeral-generated"}
             for i in range(N):
                 # A: normal protected deployment must create exactly the expected effect.
                 art = f"canonical-artifact-{i}".encode()
