@@ -1,0 +1,54 @@
+name: V1-V8 Runtime Qualification
+
+on:
+  push:
+    branches:
+      - reference/staging-deployment-integration
+  workflow_dispatch:
+
+jobs:
+  v1-v8:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Normalize integration scripts
+        timeout-minutes: 1
+        run: |
+          mkdir -p /tmp/dar-v1-v8/dar_v36_14
+          cp reference_integration/*.py /tmp/dar-v1-v8/
+          cp -R dar_v36_14/dar /tmp/dar-v1-v8/dar_v36_14/
+          chmod 755 /tmp/dar-v1-v8/*.py
+          test -f /tmp/dar-v1-v8/dar_v36_14/dar/effect_gate.py
+      - name: Run V1-V8 adversarial qualification
+        timeout-minutes: 10
+        env:
+          QUALIFICATION_COMMIT: ${{ github.sha }}
+        run: |
+          set +e
+          cd /tmp/dar-v1-v8
+          PYTHONUNBUFFERED=1 timeout --signal=TERM --kill-after=10s 540s python v1_v8_qualification.py | tee v1-v8.log
+          status=${PIPESTATUS[0]}
+          cp v1_v8_evidence.json "$GITHUB_WORKSPACE/reference_integration/v1_v8_evidence.json" 2>/dev/null || true
+          cp v1-v8.log "$GITHUB_WORKSPACE/reference_integration/v1-v8.log" 2>/dev/null || true
+          exit "$status"
+      - name: Hash V1-V8 evidence
+        if: always()
+        timeout-minutes: 1
+        run: |
+          test -f reference_integration/v1_v8_evidence.json
+          test -f reference_integration/v1-v8.log
+          sha256sum reference_integration/v1_v8_evidence.json
+          sha256sum reference_integration/v1-v8.log
+      - name: Upload V1-V8 evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: v1-v8-runtime-qualification
+          path: |
+            reference_integration/v1_v8_evidence.json
+            reference_integration/v1-v8.log
+          if-no-files-found: error
