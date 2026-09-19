@@ -22,6 +22,7 @@ jobs:
           cp reference_integration/*.py /tmp/dar-10k/
           cp -R dar_v36_14/dar /tmp/dar-10k/dar_v36_14/
           chmod 755 /tmp/dar-10k/*.py
+          test -f /tmp/dar-10k/dar_v36_14/dar/effect_gate.py
       - name: Run canonical 10K
         timeout-minutes: 25
         env:
@@ -32,6 +33,8 @@ jobs:
         run: |
           set +e
           cd /tmp/dar-10k
+          echo "QUALIFICATION_COMMIT=$QUALIFICATION_COMMIT"
+          echo "CANONICAL_10K=$CANONICAL_10K"
           timeout --signal=TERM --kill-after=10s 20m python canonical_10k.py | tee canonical-10k.log
           status=${PIPESTATUS[0]}
           cp canonical-10k.log "$GITHUB_WORKSPACE/reference_integration/canonical-10k.log" 2>/dev/null || true
