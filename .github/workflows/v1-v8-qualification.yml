@@ -12,17 +12,24 @@ jobs:
     timeout-minutes: 15
     steps:
       - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.sha }}
+          fetch-depth: 0
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
       - name: Normalize integration scripts
         timeout-minutes: 1
         run: |
+          set -euo pipefail
+          test "$(git rev-parse HEAD)" = "${GITHUB_SHA}"
           mkdir -p /tmp/dar-v1-v8/dar_v36_14
           cp reference_integration/*.py /tmp/dar-v1-v8/
           cp -R dar_v36_14/dar /tmp/dar-v1-v8/dar_v36_14/
           chmod 755 /tmp/dar-v1-v8/*.py
           test -f /tmp/dar-v1-v8/dar_v36_14/dar/effect_gate.py
+          echo "checked_out_sha=$(git rev-parse HEAD)"
+          echo "qualification_source_sha=$(git hash-object reference_integration/v1_v8_qualification.py)"
       - name: Run V1-V8 adversarial qualification
         timeout-minutes: 10
         env:
@@ -30,18 +37,6 @@ jobs:
         run: |
           set +e
           cd /tmp/dar-v1-v8
-          echo "Using authoritative V8 snapshot runner"
-          python - <<'PY'
-          from pathlib import Path
-          p = Path("v1_v8_qualification.py")
-          s = p.read_text(encoding="utf-8")
-          old = 'if sf.exists():shutil.copy2(sf,snap)'
-          new = 'if sf.exists():subprocess.run(["sudo","-u","darauthority","--","cp",str(sf),str(snap)],check=True);subprocess.run(["sudo","chmod","600",str(snap)],check=True)'
-          if old not in s:
-              raise SystemExit("V8 snapshot patch anchor not found")
-          p.write_text(s.replace(old, new, 1), encoding="utf-8")
-          print("V8 snapshot patch applied: authority UID")
-          PY
           PYTHONUNBUFFERED=1 timeout --signal=TERM --kill-after=10s 540s python v1_v8_qualification.py | tee v1-v8.log
           status=${PIPESTATUS[0]}
           cp v1_v8_evidence.json "$GITHUB_WORKSPACE/reference_integration/v1_v8_evidence.json" 2>/dev/null || true
