@@ -3,10 +3,10 @@
 from __future__ import annotations
 import argparse,hashlib,hmac,json,pathlib,time
 from http.server import BaseHTTPRequestHandler,ThreadingHTTPServer
-from dar import Store
-from dar.canonical import canonical_digest,canonical_outcome_key
-from dar.effect_transaction import AdapterContractError,EffectTxn,protected_commit
-from dar.refusal import RefusalAuthority
+from dar_v36_14.dar import Store
+from dar_v36_14.dar.canonical import canonical_digest,canonical_outcome_key
+from dar_v36_14.dar.effect_transaction import AdapterContractError,EffectTxn,protected_commit
+from dar_v36_14.dar.refusal import RefusalAuthority
 from staging_adapter import StagingDeploymentAdapter
 
 AUTH=None
