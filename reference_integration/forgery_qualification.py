@@ -51,24 +51,32 @@ def forged_refusal(secret_guess, deployment_id, epoch=0, refusal_id="forge-refus
     mac = hmac.new(secret_guess, f"REFUSE|{deployment_id}|{epoch}|{refusal_id}".encode(), hashlib.sha256).hexdigest()
     return {"deployment_id":deployment_id,"fence_epoch":epoch,"refusal_id":refusal_id,"mac":mac}
 
+def forged_reset(secret_guess, deployment_id):
+    mac = hmac.new(secret_guess, f"RESET|{deployment_id}|".encode(), hashlib.sha256).hexdigest()
+    return {"deployment_id":deployment_id,"mac":mac}
+
 def main():
     attacker, staging_user = "darattacker", "darstaging"
     ensure_user(attacker); ensure_user(staging_user)
     td = pathlib.Path(tempfile.mkdtemp(prefix="dar-forgery-"))
-    # The staging service must be able to traverse this fixture directory, while
-    # the attacker must not be able to read the secret file.  Keep the directory
-    # non-listable and protect the secret itself with owner-only/group-read mode.
     subprocess.run(["sudo", "chmod", "711", td], check=True)
     state = td / "state"; state.mkdir()
-    secret = td / "deploy.secret"; secret.write_text("deploy-" + os.urandom(24).hex() + "\n")
+    # Keep both credentials inside the staging-owned 0700 state directory. This
+    # removes ambiguity around parent-directory traversal while preserving the
+    # intended property: the attacker UID cannot read either credential.
     subprocess.run(["sudo", "chown", f"{staging_user}:{staging_user}", state], check=True)
     subprocess.run(["sudo", "chmod", "700", state], check=True)
-    subprocess.run(["sudo", "chown", f"{staging_user}:{staging_user}", secret], check=True)
-    subprocess.run(["sudo", "chmod", "640", secret], check=True)
+    deploy_secret = state / "deploy.secret"
+    admin_secret = state / "admin.secret"
+    deploy_secret.write_text("deploy-" + os.urandom(24).hex() + "\n")
+    admin_secret.write_text("admin-" + os.urandom(24).hex() + "\n")
+    for secret_file in (deploy_secret, admin_secret):
+        subprocess.run(["sudo", "chown", f"{staging_user}:{staging_user}", secret_file], check=True)
+        subprocess.run(["sudo", "chmod", "600", secret_file], check=True)
     artifact = td / "artifact.bin"; artifact.write_bytes(b"forgery-qualification-artifact\n")
     raw = artifact.read_bytes(); digest = hashlib.sha256(raw).hexdigest(); enc = base64.b64encode(raw).decode()
     forged_id = hashlib.sha256(b"forgery-deployment").hexdigest()[:32]
-    p = subprocess.Popen(["sudo","-u",staging_user,"--","python3",str(ROOT/"staging_server.py"),"--port",str(PORT),"--data-dir",str(state),"--deploy-secret-file",str(secret),"--admin-secret-file",str(secret)], cwd=ROOT, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
+    p = subprocess.Popen(["sudo","-u",staging_user,"--","python3",str(ROOT/"staging_server.py"),"--port",str(PORT),"--data-dir",str(state),"--deploy-secret-file",str(deploy_secret),"--admin-secret-file",str(admin_secret)], cwd=ROOT, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
     ev = {"environment":{"commit":os.environ.get("QUALIFICATION_COMMIT","UNSET"),"python":__import__("sys").version.split()[0]},"tests":{}}
     try:
         wait_health(f"http://127.0.0.1:{PORT}/health", p)
@@ -88,9 +96,16 @@ def main():
         ev["tests"]["bounded_secret_guessing_68_attempts"]={"attempts":len(guesses),"all_rejected":all(brute_results),"pass":all(brute_results)}
         rr=attacker_post(f"http://127.0.0.1:{PORT}/staging/refuse",forged_refusal(guessed, forged_id))
         ev["tests"]["forged_refusal_wrong_secret"]={**rr,"pass":rr["status"]==401 and rr["body"].get("error")=="invalid_refuse_mac"}
+        rr=attacker_post(f"http://127.0.0.1:{PORT}/staging/reset",forged_reset(guessed, forged_id))
+        ev["tests"]["deploy_secret_cannot_authorize_reset"]={**rr,"pass":rr["status"]==401 and rr["body"].get("error")=="invalid_reset_mac"}
         tamper = state / "staging_state.json"
         result=subprocess.run(["sudo","-u",attacker,"--","sh","-c",f"printf tampered >> {tamper}"],text=True,capture_output=True)
         ev["tests"]["attacker_cannot_tamper_persistent_state"]={"returncode":result.returncode,"stderr":result.stderr.strip(),"pass":result.returncode!=0}
+        secret_reads=[]
+        for secret_file in (deploy_secret, admin_secret):
+            rr=subprocess.run(["sudo","-u",attacker,"--","cat",str(secret_file)],text=True,capture_output=True)
+            secret_reads.append(rr.returncode!=0)
+        ev["tests"]["attacker_cannot_read_deploy_or_admin_secrets"]={"both_denied":all(secret_reads),"pass":all(secret_reads)}
         ev["overall"]=all(x.get("pass") for x in ev["tests"].values())
         out=ROOT/"forgery_evidence.json"; out.write_text(json.dumps(ev,indent=2,sort_keys=True)+"\n")
         print(json.dumps(ev,indent=2,sort_keys=True)); print("SHA256",hashlib.sha256(out.read_bytes()).hexdigest()); return 0 if ev["overall"] else 1
