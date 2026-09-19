@@ -17,19 +17,18 @@ jobs:
           python-version: '3.12'
       - name: Install test dependencies
         run: python -m pip install --upgrade pip pytest
-      - name: Run A/B and adversarial qualification
-        env:
-          STAGING_DEPLOY_SECRET: ${{ secrets.REFERENCE_STAGING_DEPLOY_SECRET }}
-          STAGING_ADMIN_SECRET: ${{ secrets.REFERENCE_STAGING_ADMIN_SECRET }}
+      - name: Run two-UID adversarial qualification
         run: |
-          test -n "$STAGING_DEPLOY_SECRET"
-          test -n "$STAGING_ADMIN_SECRET"
           cd reference_integration
-          python qualify.py | tee qualification.json
+          python two_uid_qualification.py | tee qualification-two-uid.log
       - name: Hash qualification evidence
-        run: sha256sum reference_integration/qualification.json
+        run: |
+          sha256sum reference_integration/two_uid_evidence.json
+          sha256sum reference_integration/qualification-two-uid.log
       - name: Upload qualification evidence
         uses: actions/upload-artifact@v4
         with:
-          name: reference-staging-qualification
-          path: reference_integration/qualification.json
+          name: reference-staging-two-uid-qualification
+          path: |
+            reference_integration/two_uid_evidence.json
+            reference_integration/qualification-two-uid.log
