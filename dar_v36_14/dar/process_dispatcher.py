@@ -62,9 +62,22 @@ class UnixDispatcherServer:
         self.kernel.store.rebind_boot(self.boot_id)
         from .kernel import Kernel
         self.kernel=Kernel(self.kernel.store,self.kernel.secret,boot_id=self.boot_id); self.gate=EffectGate(self.kernel)
+    def _prepare_socket_parent(self):
+        parent=os.path.dirname(os.path.realpath(self.socket_path)) or '.'
+        os.makedirs(parent,mode=0o711,exist_ok=True)
+        os.chmod(parent,0o711)
+        try:
+            st=os.stat(parent)
+        except OSError as exc:
+            raise BoundaryDenied(f'unable to inspect socket parent: {exc}') from exc
+        if not os.path.isdir(parent):
+            raise BoundaryDenied('socket parent is not a directory')
+        if st.st_uid != os.getuid():
+            raise BoundaryDenied('socket parent is not owned by dispatcher uid')
+        return parent
     def serve_forever(self):
         self._acquire_daemon_lock(); self._bind_generation()
-        parent=os.path.dirname(os.path.realpath(self.socket_path)) or '.'; os.makedirs(parent,mode=0o711,exist_ok=True); os.chmod(parent,0o711)
+        parent=self._prepare_socket_parent()
         try: os.unlink(self.socket_path)
         except FileNotFoundError: pass
         s=socket.socket(socket.AF_UNIX,socket.SOCK_STREAM); s.settimeout(1); s.bind(self.socket_path); os.chmod(self.socket_path,0o660); s.listen(32)
@@ -90,7 +103,8 @@ class UnixDispatcherServer:
             except FileNotFoundError: pass
             self._release_daemon_lock()
     def serve_once(self):
-        parent=os.path.dirname(os.path.realpath(self.socket_path)) or '.'; os.makedirs(parent,mode=0o711,exist_ok=True); os.chmod(parent,0o711)
+        self._acquire_daemon_lock(); self._bind_generation()
+        parent=self._prepare_socket_parent()
         try: os.unlink(self.socket_path)
         except FileNotFoundError: pass
         s=socket.socket(socket.AF_UNIX,socket.SOCK_STREAM); s.settimeout(5); s.bind(self.socket_path); os.chmod(self.socket_path,0o660); s.listen(8)
