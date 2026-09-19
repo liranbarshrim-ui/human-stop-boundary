@@ -4,9 +4,8 @@ from __future__ import annotations
 import argparse,hashlib,hmac,json,pathlib,urllib.error,urllib.request
 
 def mac(secret,body,purpose):
-    fields=(purpose,body.get("deployment_id",""),body.get("artifact_digest",""),str(body.get("fence_epoch","")),body.get("idempotency_key",""))
-    message="|".join(fields).encode("utf-8")
-    return hmac.new(secret,message,hashlib.sha256).hexdigest()
+    fields=(purpose,body.get("deployment_id",""),body.get("artifact_digest",""),str(body.get("fence_epoch","")),body.get("idempotency_key",""),body.get("effect_id",""),body.get("capability_txid",""),body.get("refusal_id",""),str(body.get("issued_at","")))
+    return hmac.new(secret,"|".join(fields).encode("utf-8"),hashlib.sha256).hexdigest()
 
 def main():
     ap=argparse.ArgumentParser(); ap.add_argument("--secret-file",required=True); ap.add_argument("--url",required=True); ap.add_argument("--body-file",required=True); ap.add_argument("--purpose",choices=("COMMIT","REFUSE"),required=True); a=ap.parse_args()
