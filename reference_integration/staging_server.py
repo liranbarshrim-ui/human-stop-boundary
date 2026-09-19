@@ -69,11 +69,16 @@ class Handler(BaseHTTPRequestHandler):
         if p=="/staging/refuse": c,b=refuse(body); return self._reply(c,b)
         if p=="/staging/reset": c,b=reset(body); return self._reply(c,b)
         return self._reply(404,{"error":"not_found"})
+def _read_secret_file(path):
+    if not path: return ""
+    return Path(path).read_text().rstrip("\n")
 def main():
     global DATA_FILE,DEPLOY_SECRET,ADMIN_SECRET
-    ap=argparse.ArgumentParser(); ap.add_argument("--host",default="127.0.0.1"); ap.add_argument("--port",type=int,default=19090); ap.add_argument("--data-dir",default=""); ap.add_argument("--deploy-secret",default=os.environ.get("STAGING_DEPLOY_SECRET","")); ap.add_argument("--admin-secret",default=os.environ.get("STAGING_ADMIN_SECRET","")); a=ap.parse_args()
-    if not a.deploy_secret: ap.error("--deploy-secret or STAGING_DEPLOY_SECRET is required")
-    if not a.admin_secret: ap.error("--admin-secret or STAGING_ADMIN_SECRET is required")
+    ap=argparse.ArgumentParser(); ap.add_argument("--host",default="127.0.0.1"); ap.add_argument("--port",type=int,default=19090); ap.add_argument("--data-dir",default=""); ap.add_argument("--deploy-secret",default=os.environ.get("STAGING_DEPLOY_SECRET","")); ap.add_argument("--admin-secret",default=os.environ.get("STAGING_ADMIN_SECRET","")); ap.add_argument("--deploy-secret-file",default=""); ap.add_argument("--admin-secret-file",default=""); a=ap.parse_args()
+    if a.deploy_secret_file: a.deploy_secret=_read_secret_file(a.deploy_secret_file)
+    if a.admin_secret_file: a.admin_secret=_read_secret_file(a.admin_secret_file)
+    if not a.deploy_secret: ap.error("deploy secret is required")
+    if not a.admin_secret: ap.error("admin secret is required")
     DEPLOY_SECRET=a.deploy_secret.encode(); ADMIN_SECRET=a.admin_secret.encode()
     if a.data_dir: DATA_FILE=Path(a.data_dir)/"staging_state.json"; DATA_FILE.parent.mkdir(parents=True,exist_ok=True); _load()
     print(f"staging listening on http://{a.host}:{a.port}",flush=True); ThreadingHTTPServer((a.host,a.port),Handler).serve_forever()
