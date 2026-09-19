@@ -51,12 +51,14 @@ def main():
     for u in (authority,staging_user): subprocess.run(["sudo","usermod","-a","-G","dareffect",u],check=True)
     td=pathlib.Path(tempfile.mkdtemp(prefix="dar-four-uid-")); os.chmod(td,0o755)
     state=td/"state"; state.mkdir(); subprocess.run(["sudo","chown",f"{staging_user}:{staging_user}",state],check=True); subprocess.run(["sudo","chmod","700",state],check=True)
-    secret=td/"deploy.secret"; admin=td/"admin.secret"; caller_secret=td/"caller.secret"
-    secret.write_text("deploy-"+os.urandom(24).hex()+"\n"); admin.write_text("admin-"+os.urandom(24).hex()+"\n"); caller_secret.write_bytes(os.urandom(32))
+    auth_state=td/"authority-state"; auth_state.mkdir(); subprocess.run(["sudo","chown",f"{authority}:{authority}",auth_state],check=True); subprocess.run(["sudo","chmod","700",auth_state],check=True)
+    secret=td/"deploy.secret"; admin=td/"admin.secret"; caller_secret=td/"caller.secret"; store_secret=td/"store.secret"
+    secret.write_text("deploy-"+os.urandom(24).hex()+"\n"); admin.write_text("admin-"+os.urandom(24).hex()+"\n"); caller_secret.write_bytes(os.urandom(32)); store_secret.write_bytes(os.urandom(32))
     subprocess.run(["sudo","chown",f"{authority}:dareffect",secret],check=True); subprocess.run(["sudo","chmod","640",secret],check=True)
     subprocess.run(["sudo","chown",f"{staging_user}:{staging_user}",admin],check=True); subprocess.run(["sudo","chmod","600",admin],check=True)
     subprocess.run(["sudo","chown",f"{caller}:{authority}",caller_secret],check=True); subprocess.run(["sudo","chmod","640",caller_secret],check=True)
-    artifact=ROOT/"artifact.bin"; artifact.write_bytes(b"reference-artifact-v4\n"); digest=hashlib.sha256(artifact.read_bytes()).hexdigest(); enc=base64.b64encode(artifact.read_bytes()).decode()
+    subprocess.run(["sudo","chown",f"{authority}:{authority}",store_secret],check=True); subprocess.run(["sudo","chmod","600",store_secret],check=True)
+    artifact=ROOT/"artifact.bin"; artifact.write_bytes(b"reference-artifact-v5\n"); digest=hashlib.sha256(artifact.read_bytes()).hexdigest(); enc=base64.b64encode(artifact.read_bytes()).decode()
     staging=authority_p=None
     ev={"environment":{"commit":os.environ.get("QUALIFICATION_COMMIT","UNSET"),"uname":subprocess.check_output(["uname","-a"],text=True).strip(),"python":sys.version.split()[0],"uids":{u:pwd.getpwnam(u).pw_uid for u in (attacker,caller,authority,staging_user)}},"tests":{}}
     try:
@@ -64,7 +66,7 @@ def main():
             nonlocal staging,authority_p
             staging=subprocess.Popen(["sudo","-u",staging_user,"--",sys.executable,str(ROOT/"staging_server.py"),"--port",str(PORT),"--data-dir",str(state),"--deploy-secret-file",str(secret),"--admin-secret-file",str(admin)],cwd=ROOT)
             wait(f"http://127.0.0.1:{PORT}/health")
-            authority_p=subprocess.Popen(["sudo","-u",authority,"--",sys.executable,str(ROOT/"authority_effect.py"),"--port",str(AUTH_PORT),"--staging-url",f"http://127.0.0.1:{PORT}","--deploy-secret-file",str(secret),"--caller-secret-file",str(caller_secret)],cwd=ROOT)
+            authority_p=subprocess.Popen(["sudo","-u",authority,"--",sys.executable,str(ROOT/"authority_effect.py"),"--port",str(AUTH_PORT),"--staging-url",f"http://127.0.0.1:{PORT}","--deploy-secret-file",str(secret),"--caller-secret-file",str(caller_secret),"--store-secret-file",str(store_secret),"--state-dir",str(auth_state)],cwd=ROOT,env={**os.environ,"PYTHONPATH":str(ROOT.parent)})
             wait(f"http://127.0.0.1:{AUTH_PORT}/health")
         def stop_services():
             nonlocal staging,authority_p
@@ -76,19 +78,20 @@ def main():
                     except Exception:p.kill()
             authority_p=staging=None
         start_services()
-        r=subprocess.run(["sudo","-u",attacker,"--","cat",str(secret)],text=True,capture_output=True); ev["tests"]["attacker_cannot_read_deploy_secret"]={"pass":r.returncode!=0,"returncode":r.returncode}
-        r=subprocess.run(["sudo","-u",attacker,"--","cat",str(caller_secret)],text=True,capture_output=True); ev["tests"]["attacker_cannot_read_caller_secret"]={"pass":r.returncode!=0,"returncode":r.returncode}
-        r=subprocess.run(["sudo","-u",attacker,"--","cat",str(admin)],text=True,capture_output=True); ev["tests"]["attacker_cannot_read_admin_secret"]={"pass":r.returncode!=0,"returncode":r.returncode}
-        body={"deployment_id":"four-uid-normal","artifact_digest":digest,"artifact_b64":enc,"fence_epoch":1,"idempotency_key":"normal-1","expires_at":int(time.time())+300}; bf=td/"normal.json"; bf.write_text(json.dumps(body)); os.chmod(bf,0o644)
-        result=caller_request(caller,caller_secret,f"http://127.0.0.1:{AUTH_PORT}/authority/commit",bf,"COMMIT"); _,obs=http("GET",f"http://127.0.0.1:{PORT}/staging/status/{body['deployment_id']}"); ev["tests"]["normal_deploy"]={"result":result,"observation":obs,"pass":result["status"]==200 and obs.get("state")=="DEPLOYED" and obs.get("artifact_digest")==digest}
+        for label,path,user in (("deploy_secret",secret,attacker),("caller_secret",caller_secret,attacker),("store_secret",store_secret,attacker),("admin_secret",admin,attacker)):
+            r=subprocess.run(["sudo","-u",user,"--","cat",str(path)],text=True,capture_output=True); ev["tests"][f"attacker_cannot_read_{label}"]={"pass":r.returncode!=0,"returncode":r.returncode}
+        body={"deployment_id":"four-uid-normal","artifact_digest":digest,"artifact_b64":enc,"fence_epoch":0,"idempotency_key":"normal-1","expires_at":int(time.time())+300}; bf=td/"normal.json"; bf.write_text(json.dumps(body)); os.chmod(bf,0o644)
+        result=caller_request(caller,caller_secret,f"http://127.0.0.1:{AUTH_PORT}/authority/commit",bf,"COMMIT"); _,obs=http("GET",f"http://127.0.0.1:{PORT}/staging/status/{body['deployment_id']}"); ev["tests"]["normal_deploy_through_dar_protected_commit"]={"result":result,"observation":obs,"pass":result["status"]==200 and obs.get("state")=="DEPLOYED" and obs.get("artifact_digest")==digest and obs.get("fence_epoch")==0}
         attack_body={"deployment_id":"attacker-direct","artifact_digest":hashlib.sha256(b"x").hexdigest(),"artifact_b64":base64.b64encode(b"x").decode()}; ap=attacker_post(f"http://127.0.0.1:{PORT}/staging/deploy",attack_body); ev["tests"]["V4_V7_direct_staging_deploy_as_attacker"]={**ap,"pass":ap["status"]==401}
         ap=attacker_post(f"http://127.0.0.1:{PORT}/staging/reset",{}); ev["tests"]["reset_without_admin_as_attacker"]={**ap,"pass":ap["status"]==401}
         ap=attacker_post(f"http://127.0.0.1:{AUTH_PORT}/authority/commit",body); ev["tests"]["attacker_direct_authority_without_caller_auth"]={**ap,"pass":ap["status"]==401}
-        refused={"deployment_id":"four-uid-refused","artifact_digest":digest,"artifact_b64":enc,"fence_epoch":2,"idempotency_key":"refuse-1","expires_at":int(time.time())+300,"refusal_id":"ref-1"}; rf=td/"refuse.json"; rf.write_text(json.dumps(refused)); os.chmod(rf,0o644)
-        result=caller_request(caller,caller_secret,f"http://127.0.0.1:{AUTH_PORT}/authority/refuse",rf,"REFUSE"); ev["tests"]["publish_refusal"]={"result":result,"pass":result["status"]==200}
+        refused={"deployment_id":"four-uid-refused","artifact_digest":digest,"artifact_b64":enc,"fence_epoch":1,"idempotency_key":"refuse-1","expires_at":int(time.time())+300,"refusal_id":"ref-1","effect_id":"deployment-effect-1","capability_txid":"cap-1","issued_at":int(time.time())}; rf=td/"refuse.json"; rf.write_text(json.dumps(refused)); os.chmod(rf,0o644)
+        result=caller_request(caller,caller_secret,f"http://127.0.0.1:{AUTH_PORT}/authority/refuse",rf,"REFUSE"); ev["tests"]["publish_dar_protected_refusal"]={"result":result,"pass":result["status"]==200}
+        blocked=dict(refused,idempotency_key="blocked-commit"); bcf=td/"blocked.json"; bcf.write_text(json.dumps(blocked)); os.chmod(bcf,0o644)
+        result=caller_request(caller,caller_secret,f"http://127.0.0.1:{AUTH_PORT}/authority/commit",bcf,"COMMIT"); _,obs=http("GET",f"http://127.0.0.1:{PORT}/staging/status/{refused['deployment_id']}"); ev["tests"]["valid_refusal_blocks_protected_effect"]={"result":result,"observation":obs,"pass":result["status"]==403 and obs.get("state")=="NOT_DEPLOYED" and obs.get("refused") is True}
         stop_services(); start_services()
-        replay=dict(refused,idempotency_key="replay-after-restart"); rp=td/"replay.json"; rp.write_text(json.dumps(replay)); os.chmod(rp,0o644)
-        result=caller_request(caller,caller_secret,f"http://127.0.0.1:{AUTH_PORT}/authority/commit",rp,"COMMIT"); _,obs=http("GET",f"http://127.0.0.1:{PORT}/staging/status/{refused['deployment_id']}"); ev["tests"]["V8_post_restart_replay"]={"result":result,"observation":obs,"pass":result["status"]==403 and obs.get("state")=="NOT_DEPLOYED"}
+        replay=dict(refused,fence_epoch=0,idempotency_key="replay-after-restart"); rp=td/"replay.json"; rp.write_text(json.dumps(replay)); os.chmod(rp,0o644)
+        result=caller_request(caller,caller_secret,f"http://127.0.0.1:{AUTH_PORT}/authority/commit",rp,"COMMIT"); _,obs=http("GET",f"http://127.0.0.1:{PORT}/staging/status/{refused['deployment_id']}"); ev["tests"]["V8_post_restart_replay_cannot_deploy"]={"result":result,"observation":obs,"pass":result["status"]==403 and obs.get("state")=="NOT_DEPLOYED" and obs.get("refused") is True}
         ev["overall"]=all(t.get("pass") for t in ev["tests"].values()); write_evidence(ev); return 0 if ev["overall"] else 1
     except Exception as exc:
         ev["overall"]=False; ev["harness_error"]={"type":type(exc).__name__,"message":str(exc)}; write_evidence(ev); return 2
