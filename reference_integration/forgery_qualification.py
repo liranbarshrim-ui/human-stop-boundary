@@ -54,7 +54,12 @@ def forged_refusal(secret_guess, deployment_id, epoch=0, refusal_id="forge-refus
 def main():
     attacker, staging_user = "darattacker", "darstaging"
     ensure_user(attacker); ensure_user(staging_user)
-    td = pathlib.Path(tempfile.mkdtemp(prefix="dar-forgery-")); state = td / "state"; state.mkdir()
+    td = pathlib.Path(tempfile.mkdtemp(prefix="dar-forgery-"))
+    # The staging service must be able to traverse this fixture directory, while
+    # the attacker must not be able to read the secret file.  Keep the directory
+    # non-listable and protect the secret itself with owner-only/group-read mode.
+    subprocess.run(["sudo", "chmod", "711", td], check=True)
+    state = td / "state"; state.mkdir()
     secret = td / "deploy.secret"; secret.write_text("deploy-" + os.urandom(24).hex() + "\n")
     subprocess.run(["sudo", "chown", f"{staging_user}:{staging_user}", state], check=True)
     subprocess.run(["sudo", "chmod", "700", state], check=True)
