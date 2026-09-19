@@ -23,12 +23,16 @@ jobs:
           cp reference_integration/*.py /tmp/dar-reference/
           chmod 755 /tmp/dar-reference/*.py
       - name: Run two-UID adversarial qualification
+        timeout-minutes: 2
+        env:
+          QUALIFICATION_COMMIT: ${{ github.sha }}
         run: |
           cd /tmp/dar-reference
-          python two_uid_qualification.py | tee /tmp/dar-reference/qualification-two-uid.log
+          timeout --signal=TERM --kill-after=10s 90s python two_uid_qualification.py | tee /tmp/dar-reference/qualification-two-uid.log
           cp /tmp/dar-reference/two_uid_evidence.json "$GITHUB_WORKSPACE/reference_integration/two_uid_evidence.json"
           cp /tmp/dar-reference/qualification-two-uid.log "$GITHUB_WORKSPACE/reference_integration/qualification-two-uid.log"
       - name: Hash qualification evidence
+        timeout-minutes: 1
         run: |
           sha256sum reference_integration/two_uid_evidence.json
           sha256sum reference_integration/qualification-two-uid.log
