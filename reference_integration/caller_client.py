@@ -1,11 +1,12 @@
 #!/usr/bin/env python3
 """Run caller-authenticated requests as the untrusted-but-authorized caller UID."""
 from __future__ import annotations
-import argparse,hashlib,hmac,json,pathlib,time,urllib.error,urllib.request
+import argparse,hashlib,hmac,json,pathlib,urllib.error,urllib.request
 
 def mac(secret,body,purpose):
     fields=(purpose,body.get("deployment_id",""),body.get("artifact_digest",""),str(body.get("fence_epoch","")),body.get("idempotency_key",""))
-    return hmac.new(secret,b"|".join(fields).encode(),hashlib.sha256).hexdigest()
+    message="|".join(fields).encode("utf-8")
+    return hmac.new(secret,message,hashlib.sha256).hexdigest()
 
 def main():
     ap=argparse.ArgumentParser(); ap.add_argument("--secret-file",required=True); ap.add_argument("--url",required=True); ap.add_argument("--body-file",required=True); ap.add_argument("--purpose",choices=("COMMIT","REFUSE"),required=True); a=ap.parse_args()
