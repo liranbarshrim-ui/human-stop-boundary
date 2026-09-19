@@ -18,8 +18,9 @@ jobs:
       - name: Normalize integration scripts
         timeout-minutes: 1
         run: |
-          mkdir -p /tmp/dar-10k
+          mkdir -p /tmp/dar-10k/dar_v36_14
           cp reference_integration/*.py /tmp/dar-10k/
+          cp -R dar_v36_14/dar /tmp/dar-10k/dar_v36_14/
           chmod 755 /tmp/dar-10k/*.py
       - name: Run canonical 10K
         timeout-minutes: 25
@@ -34,7 +35,6 @@ jobs:
           timeout --signal=TERM --kill-after=10s 20m python canonical_10k.py | tee canonical-10k.log
           status=${PIPESTATUS[0]}
           cp canonical-10k.log "$GITHUB_WORKSPACE/reference_integration/canonical-10k.log" 2>/dev/null || true
-          cp /tmp/dar-10k/canonical-10k.log "$GITHUB_WORKSPACE/reference_integration/canonical-10k.log" 2>/dev/null || true
           exit "$status"
       - name: Hash 10K evidence
         if: always()
