@@ -10,13 +10,14 @@ def http(method,url,body=None):
         with urllib.request.urlopen(req,timeout=5) as r:return r.status,json.loads(r.read())
     except urllib.error.HTTPError as e:return e.code,json.loads(e.read())
 
-def wait(url):
-    for _ in range(80):
+def wait(url,timeout_seconds=30):
+    deadline=time.monotonic()+timeout_seconds
+    while time.monotonic()<deadline:
         try:
             if http("GET",url)[0]==200:return
         except Exception:pass
         time.sleep(.1)
-    raise RuntimeError("service did not start")
+    raise RuntimeError(f"service did not start within {timeout_seconds}s: {url}")
 
 def ensure_user(name):
     try:return pwd.getpwnam(name).pw_uid
@@ -24,7 +25,7 @@ def ensure_user(name):
         subprocess.run(["sudo","useradd","--system","--no-create-home",name],check=True); return pwd.getpwnam(name).pw_uid
 
 def caller_request(user,secret_file,url,body_file,purpose):
-    out=subprocess.check_output(["sudo","-u",user,"--",sys.executable,str(ROOT/"caller_client.py"),"--secret-file",str(secret_file),"--url",url,"--body-file",str(body_file),"--purpose",purpose],text=True)
+    out=subprocess.check_output(["sudo","-u",user,"--",sys.executable,str(ROOT/"caller_client.py"),"--secret-file",str(secret_file),"--url",url,"--body-file",str(body_file),"--purpose",purpose],text=True,timeout=15)
     return json.loads(out)
 
 def main():
@@ -40,10 +41,11 @@ def main():
     subprocess.run(["sudo","chown",f"{staging_user}:{staging_user}",admin],check=True); subprocess.run(["sudo","chmod","600",admin],check=True)
     subprocess.run(["sudo","chown",f"{caller}:{authority}",caller_secret],check=True); subprocess.run(["sudo","chmod","640",caller_secret],check=True)
     artifact=ROOT/"artifact.bin"; artifact.write_bytes(b"reference-artifact-v4\n"); digest=hashlib.sha256(artifact.read_bytes()).hexdigest(); enc=base64.b64encode(artifact.read_bytes()).decode()
-    staging=subprocess.Popen(["sudo","-u",staging_user,"--",sys.executable,str(ROOT/"staging_server.py"),"--port",str(PORT),"--data-dir",str(state),"--deploy-secret-file",str(secret),"--admin-secret-file",str(admin)],cwd=ROOT)
-    authority_p=subprocess.Popen(["sudo","-u",authority,"--",sys.executable,str(ROOT/"authority_effect.py"),"--port",str(AUTH_PORT),"--staging-url",f"http://127.0.0.1:{PORT}","--deploy-secret-file",str(secret),"--caller-secret-file",str(caller_secret)],cwd=ROOT)
-    ev={"environment":{"commit":subprocess.check_output(["git","rev-parse","HEAD"],text=True).strip(),"uname":subprocess.check_output(["uname","-a"],text=True).strip(),"python":sys.version.split()[0],"uids":{u:pwd.getpwnam(u).pw_uid for u in (attacker,caller,authority,staging_user)}},"tests":{}}
+    staging=authority_p=None
+    ev={"environment":{"commit":os.environ.get("QUALIFICATION_COMMIT","UNSET"),"uname":subprocess.check_output(["uname","-a"],text=True).strip(),"python":sys.version.split()[0],"uids":{u:pwd.getpwnam(u).pw_uid for u in (attacker,caller,authority,staging_user)}},"tests":{}}
     try:
+        staging=subprocess.Popen(["sudo","-u",staging_user,"--",sys.executable,str(ROOT/"staging_server.py"),"--port",str(PORT),"--data-dir",str(state),"--deploy-secret-file",str(secret),"--admin-secret-file",str(admin)],cwd=ROOT)
+        authority_p=subprocess.Popen(["sudo","-u",authority,"--",sys.executable,str(ROOT/"authority_effect.py"),"--port",str(AUTH_PORT),"--staging-url",f"http://127.0.0.1:{PORT}","--deploy-secret-file",str(secret),"--caller-secret-file",str(caller_secret)],cwd=ROOT)
         wait(f"http://127.0.0.1:{PORT}/health"); wait(f"http://127.0.0.1:{AUTH_PORT}/health")
         r=subprocess.run(["sudo","-u",attacker,"--","cat",str(secret)],text=True,capture_output=True); ev["tests"]["attacker_cannot_read_deploy_secret"]={"pass":r.returncode!=0,"returncode":r.returncode}
         r=subprocess.run(["sudo","-u",attacker,"--","cat",str(caller_secret)],text=True,capture_output=True); ev["tests"]["attacker_cannot_read_caller_secret"]={"pass":r.returncode!=0,"returncode":r.returncode}
@@ -59,8 +61,12 @@ def main():
         result=caller_request(caller,caller_secret,f"http://127.0.0.1:{AUTH_PORT}/authority/commit",rp,"COMMIT"); _,obs=http("GET",f"http://127.0.0.1:{PORT}/staging/status/{refused['deployment_id']}"); ev["tests"]["V8_post_refusal_replay"]={"result":result,"observation":obs,"pass":result["status"]==403 and obs.get("state")=="NOT_DEPLOYED"}
         ev["overall"]=all(t.get("pass") for t in ev["tests"].values()); OUT.write_text(json.dumps(ev,indent=2,sort_keys=True)+"\n"); print(json.dumps(ev,indent=2,sort_keys=True)); print("SHA256",hashlib.sha256(OUT.read_bytes()).hexdigest()); return 0 if ev["overall"] else 1
     finally:
-        authority_p.terminate(); staging.terminate()
-        try: authority_p.wait(3); staging.wait(3)
-        except Exception: authority_p.kill(); staging.kill()
+        for p in (authority_p,staging):
+            if p is not None:
+                p.terminate()
+        for p in (authority_p,staging):
+            if p is not None:
+                try:p.wait(3)
+                except Exception:p.kill()
         shutil.rmtree(td,ignore_errors=True)
 if __name__=="__main__": raise SystemExit(main())
