@@ -24,31 +24,37 @@ jobs:
           chmod 755 /tmp/dar-10k/*.py
           test -f /tmp/dar-10k/dar_v36_14/dar/effect_gate.py
       - name: Run canonical 10K
-        timeout-minutes: 25
+        timeout-minutes: 26
         env:
           QUALIFICATION_COMMIT: ${{ github.sha }}
           STAGING_DEPLOY_SECRET: ${{ secrets.STAGING_DEPLOY_SECRET }}
           STAGING_ADMIN_SECRET: ${{ secrets.STAGING_ADMIN_SECRET }}
           CANONICAL_10K: '10000'
+          PYTHONUNBUFFERED: '1'
         run: |
           set +e
           cd /tmp/dar-10k
           echo "QUALIFICATION_COMMIT=$QUALIFICATION_COMMIT"
           echo "CANONICAL_10K=$CANONICAL_10K"
-          timeout --signal=TERM --kill-after=10s 20m python canonical_10k.py | tee canonical-10k.log
+          timeout --signal=TERM --kill-after=10s 25m python -u canonical_10k.py | tee canonical-10k.log
           status=${PIPESTATUS[0]}
           cp canonical-10k.log "$GITHUB_WORKSPACE/reference_integration/canonical-10k.log" 2>/dev/null || true
+          cp canonical-10k-evidence.json "$GITHUB_WORKSPACE/reference_integration/canonical-10k-evidence.json" 2>/dev/null || true
           exit "$status"
       - name: Hash 10K evidence
         if: always()
         timeout-minutes: 1
         run: |
           test -f reference_integration/canonical-10k.log
+          test -f reference_integration/canonical-10k-evidence.json
           sha256sum reference_integration/canonical-10k.log
+          sha256sum reference_integration/canonical-10k-evidence.json
       - name: Upload 10K evidence
         if: always()
         uses: actions/upload-artifact@v4
         with:
           name: canonical-10k-evidence
-          path: reference_integration/canonical-10k.log
+          path: |
+            reference_integration/canonical-10k.log
+            reference_integration/canonical-10k-evidence.json
           if-no-files-found: error
