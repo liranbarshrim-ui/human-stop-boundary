@@ -1,0 +1,51 @@
+name: Canonical 10K Qualification
+
+on:
+  push:
+    branches:
+      - reference/staging-deployment-integration
+  workflow_dispatch:
+
+jobs:
+  canonical-10k:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Normalize integration scripts
+        timeout-minutes: 1
+        run: |
+          mkdir -p /tmp/dar-10k
+          cp reference_integration/*.py /tmp/dar-10k/
+          chmod 755 /tmp/dar-10k/*.py
+      - name: Run canonical 10K
+        timeout-minutes: 25
+        env:
+          QUALIFICATION_COMMIT: ${{ github.sha }}
+          STAGING_DEPLOY_SECRET: ${{ secrets.STAGING_DEPLOY_SECRET }}
+          STAGING_ADMIN_SECRET: ${{ secrets.STAGING_ADMIN_SECRET }}
+          CANONICAL_10K: '10000'
+        run: |
+          set +e
+          cd /tmp/dar-10k
+          timeout --signal=TERM --kill-after=10s 20m python canonical_10k.py | tee canonical-10k.log
+          status=${PIPESTATUS[0]}
+          cp canonical-10k.log "$GITHUB_WORKSPACE/reference_integration/canonical-10k.log" 2>/dev/null || true
+          cp /tmp/dar-10k/canonical-10k.log "$GITHUB_WORKSPACE/reference_integration/canonical-10k.log" 2>/dev/null || true
+          exit "$status"
+      - name: Hash 10K evidence
+        if: always()
+        timeout-minutes: 1
+        run: |
+          test -f reference_integration/canonical-10k.log
+          sha256sum reference_integration/canonical-10k.log
+      - name: Upload 10K evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: canonical-10k-evidence
+          path: reference_integration/canonical-10k.log
+          if-no-files-found: error
