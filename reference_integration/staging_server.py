@@ -2,7 +2,7 @@
 """Isolated staging service — deploy only with valid authority-minted token.
 
 Refused deployment_ids are stored and rejected for this process/data dir.
-Unauthenticated /staging/deploy is rejected (401).
+Unauthenticated /staging/deploy and /staging/reset are rejected (401).
 """
 from __future__ import annotations
 
@@ -33,13 +33,7 @@ AUTH_SECRET: bytes = b""
 def _save() -> None:
     if DATA_FILE is None:
         return
-    DATA_FILE.write_text(
-        json.dumps(
-            {"deployments": DEPLOYMENTS, "refusals": REFUSALS, "used_tokens": sorted(USED_TOKENS)},
-            indent=2,
-            sort_keys=True,
-        )
-    )
+    DATA_FILE.write_text(json.dumps({"deployments": DEPLOYMENTS, "refusals": REFUSALS, "used_tokens": sorted(USED_TOKENS)}, indent=2, sort_keys=True))
 
 
 def _load() -> None:
@@ -49,6 +43,13 @@ def _load() -> None:
         DEPLOYMENTS = raw.get("deployments", {})
         REFUSALS = raw.get("refusals", {})
         USED_TOKENS = set(raw.get("used_tokens", []))
+
+
+def _valid_admin_mac(body: dict, purpose: str) -> bool:
+    mac = str(body.get("mac", ""))
+    canonical = f"{purpose}|{body.get('deployment_id','')}|{body.get('reason','') or ''}".encode()
+    expected = hm.new(AUTH_SECRET, canonical, hashlib.sha256).hexdigest()
+    return bool(mac) and hm.compare_digest(expected, mac)
 
 
 def deploy(body: dict) -> tuple[int, dict]:
@@ -61,18 +62,15 @@ def deploy(body: dict) -> tuple[int, dict]:
         token = body.get("deploy_authorization")
     except KeyError as e:
         return 400, {"ok": False, "error": f"missing_{e}"}
-
     if not token or not isinstance(token, dict):
         return 401, {"ok": False, "error": "missing_deploy_authorization"}
     err = verify_deploy_token(secret=AUTH_SECRET, token=token, deployment_id=deployment_id, artifact_digest=artifact_digest)
     if err:
         return 401, {"ok": False, "error": err}
-
     raw = base64.b64decode(artifact_b64)
     actual = hashlib.sha256(raw).hexdigest()
     if actual != artifact_digest:
         return 400, {"ok": False, "error": "artifact_digest_mismatch", "actual": actual}
-
     with LOCK:
         if deployment_id in REFUSALS:
             return 403, {"ok": False, "error": "terminal_refusal", "refusal": REFUSALS[deployment_id]}
@@ -84,16 +82,7 @@ def deploy(body: dict) -> tuple[int, dict]:
         idem = str(token.get("idempotency_key", ""))
         if idem:
             USED_TOKENS.add(idem)
-        record = {
-            "deployment_id": deployment_id,
-            "artifact_digest": artifact_digest,
-            "staging_target": staging_target,
-            "label": label,
-            "state": "DEPLOYED",
-            "deployed_at": time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime()),
-            "artifact_size": len(raw),
-            "fence_epoch": int(token["fence_epoch"]),
-        }
+        record = {"deployment_id": deployment_id, "artifact_digest": artifact_digest, "staging_target": staging_target, "label": label, "state": "DEPLOYED", "deployed_at": time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime()), "artifact_size": len(raw), "fence_epoch": int(token["fence_epoch"])}
         DEPLOYMENTS[deployment_id] = record
         _save()
         return 200, {"ok": True, "idempotent": False, **record}
@@ -117,6 +106,17 @@ def refuse(body: dict) -> tuple[int, dict]:
     return 200, {"ok": True, "deployment_id": deployment_id}
 
 
+def reset(body: dict) -> tuple[int, dict]:
+    if not _valid_admin_mac(body, "RESET"):
+        return 401, {"ok": False, "error": "invalid_reset_mac"}
+    with LOCK:
+        DEPLOYMENTS.clear()
+        REFUSALS.clear()
+        USED_TOKENS.clear()
+        _save()
+    return 200, {"ok": True, "state": "empty"}
+
+
 def status(deployment_id: str) -> tuple[int, dict]:
     with LOCK:
         if deployment_id in REFUSALS and deployment_id not in DEPLOYMENTS:
@@ -129,15 +129,6 @@ def status(deployment_id: str) -> tuple[int, dict]:
             out["refused"] = True
             out["refusal"] = REFUSALS[deployment_id]
         return 200, out
-
-
-def reset() -> dict:
-    with LOCK:
-        DEPLOYMENTS.clear()
-        REFUSALS.clear()
-        USED_TOKENS.clear()
-        _save()
-    return {"ok": True, "state": "empty"}
 
 
 class Handler(BaseHTTPRequestHandler):
@@ -156,21 +147,23 @@ class Handler(BaseHTTPRequestHandler):
     def do_GET(self) -> None:
         path = urlparse(self.path).path
         if path == "/health":
-            return self._reply(200, {"ok": True, "service": "reference-staging", "auth": "required_for_deploy"})
+            return self._reply(200, {"ok": True, "service": "reference-staging", "auth": "required_for_deploy_and_reset"})
         if path.startswith("/staging/status/"):
             code, body = status(path[len("/staging/status/"):].strip("/"))
             return self._reply(code, body)
         return self._reply(404, {"error": "not_found"})
     def do_POST(self) -> None:
         path = urlparse(self.path).path
+        body = self._read_json()
         if path == "/staging/deploy":
-            code, body = deploy(self._read_json())
-            return self._reply(code, body)
+            code, response = deploy(body)
+            return self._reply(code, response)
         if path == "/staging/refuse":
-            code, body = refuse(self._read_json())
-            return self._reply(code, body)
+            code, response = refuse(body)
+            return self._reply(code, response)
         if path == "/staging/reset":
-            return self._reply(200, reset())
+            code, response = reset(body)
+            return self._reply(code, response)
         return self._reply(404, {"error": "not_found"})
 
 
@@ -180,14 +173,16 @@ def main() -> None:
     ap.add_argument("--host", default="127.0.0.1")
     ap.add_argument("--port", type=int, default=19090)
     ap.add_argument("--data-dir", default="")
-    ap.add_argument("--secret", default=os.environ.get("STAGING_AUTH_SECRET", "reference-staging-auth-secret"))
+    ap.add_argument("--secret", default=os.environ.get("STAGING_AUTH_SECRET", ""))
     args = ap.parse_args()
-    AUTH_SECRET = args.secret.encode() if isinstance(args.secret, str) else args.secret
+    if not args.secret:
+        ap.error("--secret or STAGING_AUTH_SECRET is required")
+    AUTH_SECRET = args.secret.encode()
     if args.data_dir:
         DATA_FILE = Path(args.data_dir) / "staging_state.json"
         DATA_FILE.parent.mkdir(parents=True, exist_ok=True)
         _load()
-    print(f"staging listening on http://{args.host}:{args.port} (deploy auth required)", flush=True)
+    print(f"staging listening on http://{args.host}:{args.port} (deploy/reset auth required)", flush=True)
     ThreadingHTTPServer((args.host, args.port), Handler).serve_forever()
 
 
