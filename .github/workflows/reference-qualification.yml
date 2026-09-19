@@ -21,14 +21,14 @@ jobs:
       - name: Normalize integration scripts into runtime directory
         timeout-minutes: 1
         run: |
-          mkdir -p /tmp/dar-reference
+          mkdir -p /tmp/dar-reference/dar_v36_14
           cp reference_integration/*.py /tmp/dar-reference/
+          cp -R dar_v36_14/dar /tmp/dar-reference/dar_v36_14/
           chmod 755 /tmp/dar-reference/*.py
       - name: Run two-UID adversarial qualification
         timeout-minutes: 2
         env:
           QUALIFICATION_COMMIT: ${{ github.sha }}
-          DAR_PYTHONPATH: ${{ github.workspace }}/dar_v36_14
         run: |
           set +e
           cd /tmp/dar-reference
