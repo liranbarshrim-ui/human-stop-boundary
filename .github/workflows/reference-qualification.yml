@@ -1,0 +1,33 @@
+name: Reference Staging Qualification
+
+on:
+  push:
+    branches:
+      - reference/staging-deployment-integration
+  workflow_dispatch:
+
+jobs:
+  runtime-qualification:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install test dependencies
+        run: python -m pip install --upgrade pip pytest
+      - name: Run A/B and adversarial qualification
+        env:
+          STAGING_AUTH_SECRET: ${{ secrets.REFERENCE_STAGING_AUTH_SECRET }}
+        run: |
+          test -n "$STAGING_AUTH_SECRET"
+          cd reference_integration
+          python qualify.py | tee qualification.json
+      - name: Hash qualification evidence
+        run: sha256sum reference_integration/qualification.json
+      - name: Upload qualification evidence
+        uses: actions/upload-artifact@v4
+        with:
+          name: reference-staging-qualification
+          path: reference_integration/qualification.json
