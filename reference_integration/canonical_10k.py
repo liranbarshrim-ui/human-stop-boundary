@@ -48,11 +48,21 @@ def start_staging(data_dir):
         sys.executable, str(script), "--host", "127.0.0.1", "--port", str(PORT),
         "--data-dir", str(data_dir), "--deploy-secret", AUTH, "--admin-secret", ADMIN,
     ], stdout=subprocess.PIPE, stderr=subprocess.STDOUT, text=True)
+    import urllib.error, urllib.request
     for _ in range(120):
-        st, _ = http_json("GET", "/health")
-        if st == 200:
-            return proc
+        if proc.poll() is not None:
+            out = proc.stdout.read() if proc.stdout else ""
+            raise RuntimeError(f"staging exited during startup: {out}")
+        try:
+            with urllib.request.urlopen(BASE + "/health", timeout=0.25) as r:
+                if r.status == 200:
+                    return proc
+        except Exception:
+            pass
         time.sleep(.05)
+    proc.terminate()
+    try: proc.wait(timeout=2)
+    except Exception: proc.kill()
     out = proc.stdout.read() if proc.stdout else ""
     raise RuntimeError(f"staging failed to start: {out}")
 
@@ -87,9 +97,17 @@ class Journal:
     def _validated_state(self): return {r["key"]: dict(r) for r in self.rows}
 
 
+def persist_evidence(path, evidence):
+    tmp = path.with_suffix(".tmp")
+    tmp.write_text(json.dumps(evidence, sort_keys=True, indent=2) + "\n", encoding="utf-8")
+    tmp.replace(path)
+
+
 def main():
-    evidence = {"iterations": N, "normal_pass": 0, "refusal_pass": 0,
+    evidence = {"iterations": N, "completed": 0, "normal_pass": 0, "refusal_pass": 0,
                 "replay_pass": 0, "failures": [], "environment": {}}
+    evidence_path = Path(__file__).resolve().parent / "canonical-10k-evidence.json"
+    persist_evidence(evidence_path, evidence)
     with tempfile.TemporaryDirectory(prefix="dar-10k-") as td:
         data_dir = Path(td) / "staging"
         data_dir.mkdir()
@@ -101,6 +119,8 @@ def main():
                 raise RuntimeError(f"initial reset failed: {st} {body}")
             evidence["environment"] = {"python": sys.version.split()[0], "port": PORT,
                                         "secret_source": "environment" if os.environ.get("STAGING_DEPLOY_SECRET") else "ephemeral-generated"}
+            persist_evidence(evidence_path, evidence)
+            print(f"CANONICAL_10K_START iterations={N}", flush=True)
             for i in range(N):
                 # A: normal protected deployment must create exactly the expected effect.
                 art = f"canonical-artifact-{i}".encode()
@@ -160,13 +180,20 @@ def main():
                     if obs2.get("state") == "DEPLOYED":
                         raise AssertionError(f"replay deployed after refusal at {i}: {obs2}")
                     evidence["replay_pass"] += 1
+
+                evidence["completed"] = i + 1
+                if (i + 1) % 100 == 0 or i + 1 == N:
+                    persist_evidence(evidence_path, evidence)
+                    print(f"CANONICAL_10K_PROGRESS completed={i+1}/{N} normal={evidence['normal_pass']} refusal={evidence['refusal_pass']} replay={evidence['replay_pass']}", flush=True)
             evidence["status"] = "PASS"
-            print(json.dumps(evidence, sort_keys=True))
+            persist_evidence(evidence_path, evidence)
+            print(json.dumps(evidence, sort_keys=True), flush=True)
             return 0
         except Exception as exc:
             evidence["status"] = "FAIL"
-            evidence["failures"].append({"type": type(exc).__name__, "message": str(exc)})
-            print(json.dumps(evidence, sort_keys=True))
+            evidence["failures"].append({"type": type(exc).__name__, "message": str(exc), "completed": evidence["completed"]})
+            persist_evidence(evidence_path, evidence)
+            print(json.dumps(evidence, sort_keys=True), flush=True)
             return 1
         finally:
             proc.terminate()
