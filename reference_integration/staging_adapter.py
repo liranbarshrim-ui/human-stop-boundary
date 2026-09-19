@@ -24,13 +24,25 @@ class StagingDeploymentAdapter(FencedEffectAdapter):
         self.refusals: dict[str, tuple[int, str]] = {}
         self.committed: dict[str, str] = {}
 
+    def _remote_status(self, outcome_key: str) -> dict:
+        code, body = self._http("GET", f"/staging/status/{outcome_key}")
+        if code != 200:
+            raise RuntimeError(f"staging status failed: {code} {body}")
+        return body
+
     def current_fence(self, outcome_key: str) -> int:
+        remote = self._remote_status(outcome_key)
         with self._lock:
-            return int(self.fences.get(outcome_key, 0))
+            local = int(self.fences.get(outcome_key, 0))
+        refusal = remote.get("refusal") or {}
+        remote_fence = int(refusal.get("fence_epoch", remote.get("fence_epoch", 0)))
+        return max(local, remote_fence)
 
     def is_refused(self, outcome_key: str) -> bool:
+        remote = self._remote_status(outcome_key)
         with self._lock:
-            return outcome_key in self.refusals
+            local = outcome_key in self.refusals
+        return local or bool(remote.get("refused"))
 
     def refuse_outcome(self, outcome_key: str, fence_epoch: int, refusal_id: str) -> None:
         with self._lock:
@@ -62,11 +74,11 @@ class StagingDeploymentAdapter(FencedEffectAdapter):
                 return e.code, {"raw": raw}
 
     def commit(self, idempotency_key: str, outcome_key: str, fence_epoch: int, params: dict) -> Any:
+        if self.is_refused(outcome_key):
+            raise RuntimeError("outcome terminally refused")
+        if self.current_fence(outcome_key) != int(fence_epoch):
+            raise RuntimeError("fence advanced")
         with self._lock:
-            if outcome_key in self.refusals:
-                raise RuntimeError("outcome terminally refused")
-            if int(self.fences.get(outcome_key, 0)) != int(fence_epoch):
-                raise RuntimeError("fence advanced")
             if idempotency_key in self.committed:
                 if self.committed[idempotency_key] == outcome_key:
                     return TxnStatus.COMMITTED
@@ -97,7 +109,4 @@ class StagingDeploymentAdapter(FencedEffectAdapter):
         raise AssertionError("protected path must not call execute()")
 
     def observe_staging(self, deployment_id: str) -> dict:
-        code, body = self._http("GET", f"/staging/status/{deployment_id}")
-        if code != 200:
-            return {"error": body, "http_status": code}
-        return body
+        return self._remote_status(deployment_id)
