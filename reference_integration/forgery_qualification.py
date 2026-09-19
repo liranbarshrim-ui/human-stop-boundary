@@ -61,15 +61,15 @@ def main():
     td = pathlib.Path(tempfile.mkdtemp(prefix="dar-forgery-"))
     subprocess.run(["sudo", "chmod", "711", td], check=True)
     state = td / "state"; state.mkdir()
-    # Keep both credentials inside the staging-owned 0700 state directory. This
-    # removes ambiguity around parent-directory traversal while preserving the
-    # intended property: the attacker UID cannot read either credential.
-    subprocess.run(["sudo", "chown", f"{staging_user}:{staging_user}", state], check=True)
-    subprocess.run(["sudo", "chmod", "700", state], check=True)
+    # Create credentials before tightening the state directory. The GitHub
+    # runner creates this fixture; only after creation can ownership be handed
+    # to darstaging. This avoids a runner-side write/read permission trap.
     deploy_secret = state / "deploy.secret"
     admin_secret = state / "admin.secret"
     deploy_secret.write_text("deploy-" + os.urandom(24).hex() + "\n")
     admin_secret.write_text("admin-" + os.urandom(24).hex() + "\n")
+    subprocess.run(["sudo", "chown", f"{staging_user}:{staging_user}", state], check=True)
+    subprocess.run(["sudo", "chmod", "700", state], check=True)
     for secret_file in (deploy_secret, admin_secret):
         subprocess.run(["sudo", "chown", f"{staging_user}:{staging_user}", secret_file], check=True)
         subprocess.run(["sudo", "chmod", "600", secret_file], check=True)
