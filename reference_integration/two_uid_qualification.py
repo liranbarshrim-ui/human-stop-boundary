@@ -58,8 +58,8 @@ def main():
     subprocess.run(["sudo","chown",f"{staging_user}:{staging_user}",admin],check=True); subprocess.run(["sudo","chmod","600",admin],check=True)
     subprocess.run(["sudo","chown",f"{caller}:{authority}",caller_secret],check=True); subprocess.run(["sudo","chmod","640",caller_secret],check=True)
     subprocess.run(["sudo","chown",f"{authority}:{authority}",store_secret],check=True); subprocess.run(["sudo","chmod","600",store_secret],check=True)
-    artifact=ROOT/"artifact.bin"; artifact.write_bytes(b"reference-artifact-v6\n"); digest=hashlib.sha256(artifact.read_bytes()).hexdigest(); enc=base64.b64encode(artifact.read_bytes()).decode()
-    normal_id=hashlib.sha256(b"four-uid-normal").hexdigest()[:32]; refused_id=hashlib.sha256(b"four-uid-refused").hexdigest()[:32]
+    artifact=ROOT/"artifact.bin"; artifact.write_bytes(b"reference-artifact-v7\n"); digest=hashlib.sha256(artifact.read_bytes()).hexdigest(); enc=base64.b64encode(artifact.read_bytes()).decode()
+    normal_id=hashlib.sha256(b"four-uid-normal").hexdigest()[:32]; refused_id=hashlib.sha256(b"four-uid-refused").hexdigest()[:32]; effect_id=hashlib.sha256(("effect:"+refused_id).encode()).hexdigest()[:32]
     staging=authority_p=None
     ev={"environment":{"commit":os.environ.get("QUALIFICATION_COMMIT","UNSET"),"uname":subprocess.check_output(["uname","-a"],text=True).strip(),"python":sys.version.split()[0],"uids":{u:pwd.getpwnam(u).pw_uid for u in (attacker,caller,authority,staging_user)}},"tests":{}}
     try:
@@ -86,7 +86,7 @@ def main():
         attack_body={"deployment_id":hashlib.sha256(b"attacker-direct").hexdigest()[:32],"artifact_digest":hashlib.sha256(b"x").hexdigest(),"artifact_b64":base64.b64encode(b"x").decode()}; ap=attacker_post(f"http://127.0.0.1:{PORT}/staging/deploy",attack_body); ev["tests"]["V4_V7_direct_staging_deploy_as_attacker"]={**ap,"pass":ap["status"]==401}
         ap=attacker_post(f"http://127.0.0.1:{PORT}/staging/reset",{}); ev["tests"]["reset_without_admin_as_attacker"]={**ap,"pass":ap["status"]==401}
         ap=attacker_post(f"http://127.0.0.1:{AUTH_PORT}/authority/commit",body); ev["tests"]["attacker_direct_authority_without_caller_auth"]={**ap,"pass":ap["status"]==401}
-        refused={"deployment_id":refused_id,"artifact_digest":digest,"artifact_b64":enc,"fence_epoch":1,"idempotency_key":"refuse-1","expires_at":int(time.time())+300,"refusal_id":"ref-1","effect_id":"deployment-effect-1","capability_txid":"cap-1","issued_at":int(time.time())}; rf=td/"refuse.json"; rf.write_text(json.dumps(refused)); os.chmod(rf,0o644)
+        refused={"deployment_id":refused_id,"artifact_digest":digest,"artifact_b64":enc,"fence_epoch":1,"idempotency_key":"refuse-1","expires_at":int(time.time())+300,"refusal_id":"ref-1","effect_id":effect_id,"capability_txid":"cap-1","issued_at":int(time.time())}; rf=td/"refuse.json"; rf.write_text(json.dumps(refused)); os.chmod(rf,0o644)
         result=caller_request(caller,caller_secret,f"http://127.0.0.1:{AUTH_PORT}/authority/refuse",rf,"REFUSE"); ev["tests"]["publish_dar_protected_refusal"]={"result":result,"pass":result["status"]==200}
         blocked=dict(refused,idempotency_key="blocked-commit"); bcf=td/"blocked.json"; bcf.write_text(json.dumps(blocked)); os.chmod(bcf,0o644)
         result=caller_request(caller,caller_secret,f"http://127.0.0.1:{AUTH_PORT}/authority/commit",bcf,"COMMIT"); _,obs=http("GET",f"http://127.0.0.1:{PORT}/staging/status/{refused_id}"); ev["tests"]["valid_refusal_blocks_protected_effect"]={"result":result,"observation":obs,"pass":result["status"]==403 and obs.get("state")=="NOT_DEPLOYED" and obs.get("refused") is True}
