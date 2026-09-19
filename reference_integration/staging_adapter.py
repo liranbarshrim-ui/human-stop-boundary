@@ -14,7 +14,9 @@ from staging_auth import mint_deploy_token
 
 
 class StagingDeploymentAdapter(FencedEffectAdapter):
-    def __init__(self, staging_base: str, auth_secret: str = "reference-staging-auth-secret"):
+    def __init__(self, staging_base: str, auth_secret: str | bytes):
+        if not auth_secret:
+            raise ValueError("staging auth secret is required")
         self.staging_base = staging_base.rstrip("/")
         self.auth_secret = auth_secret.encode() if isinstance(auth_secret, str) else auth_secret
         self._lock = threading.RLock()
