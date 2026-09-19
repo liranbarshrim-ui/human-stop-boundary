@@ -30,6 +30,8 @@ jobs:
         run: |
           set +e
           cd /tmp/dar-v1-v8
+          echo "Using authoritative V8 snapshot runner"
+          test -f v1_v8_qualification_runner.py
           PYTHONUNBUFFERED=1 timeout --signal=TERM --kill-after=10s 540s python v1_v8_qualification_runner.py | tee v1-v8.log
           status=${PIPESTATUS[0]}
           cp v1_v8_evidence.json "$GITHUB_WORKSPACE/reference_integration/v1_v8_evidence.json" 2>/dev/null || true
