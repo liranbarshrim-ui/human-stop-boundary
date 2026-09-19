@@ -74,6 +74,7 @@ def main():
     if not deploy_secret or not CALLER_SECRET or not store_secret: raise SystemExit("empty authority credential")
     state_dir=pathlib.Path(a.state_dir); state_dir.mkdir(parents=True,exist_ok=True); state_path=state_dir/"authority_state.json"
     store=Store(state_path,store_secret)
+    store.rebind_boot("REFERENCE-AUTHORITY")
     ADAPTER=StagingDeploymentAdapter(STAGING_URL,deploy_secret)
     AUTH=RefusalAuthority(store,{"caller":CALLER_SECRET})
     print(f"authority listening on http://127.0.0.1:{a.port}",flush=True)
