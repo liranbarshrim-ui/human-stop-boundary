@@ -28,6 +28,7 @@ jobs:
         timeout-minutes: 2
         env:
           QUALIFICATION_COMMIT: ${{ github.sha }}
+          DAR_PYTHONPATH: ${{ github.workspace }}/dar_v36_14
         run: |
           set +e
           cd /tmp/dar-reference
