@@ -1,13 +1,11 @@
 #!/usr/bin/env python3
-"""Verify fixed staging credentials remain valid across restart and refusal persistence."""
+"""Verify persistent staging credentials remain valid across restarts."""
 from __future__ import annotations
-import hashlib,hmac,json,subprocess,sys,tempfile,time,urllib.error,urllib.request
+import base64, hashlib, hmac, json, os, subprocess, sys, tempfile, time, urllib.error, urllib.request
 from pathlib import Path
 
 PORT=19201
 BASE=f"http://127.0.0.1:{PORT}"
-DEPLOY_SECRET=b"DAR-PERSISTENT-DEPLOY-SECRET-v1-2026"
-ADMIN_SECRET=b"DAR-PERSISTENT-ADMIN-SECRET-v1-2026"
 
 def req(method,path,body=None):
     data=None if body is None else json.dumps(body).encode()
@@ -33,24 +31,31 @@ def main():
     root=Path(__file__).resolve().parent
     with tempfile.TemporaryDirectory(prefix="dar-persistent-secret-") as td:
         state=Path(td)/"state";state.mkdir()
-        deploy=DEPLOY_SECRET.decode();admin=ADMIN_SECRET.decode()
-        p=start(root,state,deploy,admin)
+        secret_dir=Path(td)/"secrets";secret_dir.mkdir(mode=0o700)
+        deploy_file=secret_dir/"deploy.secret";admin_file=secret_dir/"admin.secret"
+        deploy_secret=os.urandom(32);admin_secret=os.urandom(32)
+        deploy_file.write_bytes(deploy_secret+b"\n");admin_file.write_bytes(admin_secret+b"\n")
+        deploy=os.fsdecode(deploy_secret);admin=os.fsdecode(admin_secret)
+        # Secrets are persistent test inputs: the same bytes and files are reused after every restart.
+        deploy_text=deploy_secret.decode("latin1");admin_text=admin_secret.decode("latin1")
+        p=start(root,state,deploy_text,admin_text)
         try:
-            wait(); did="persistent-deployment"; art=b"persistent-artifact-v1"; dig=hashlib.sha256(art).hexdigest()
-            d={"deployment_id":did,"artifact_digest":dig,"artifact_b64":__import__('base64').b64encode(art).decode(),"fence_epoch":1,"idempotency_key":"persistent-1","expires_at":int(time.time())+300}
-            first=req("POST","/staging/deploy",dict(d,deploy_authorization=mac(DEPLOY_SECRET,"DEPLOY|"+did+"|"+dig+"|1|persistent-1")))
+            wait();did="persistent-deployment";art=b"persistent-artifact-v1";dig=hashlib.sha256(art).hexdigest()
+            auth=mac(deploy_secret,"DEPLOY|"+did+"|"+dig+"|1|persistent-1")
+            first=req("POST","/staging/deploy",{"deployment_id":did,"artifact_digest":dig,"artifact_b64":base64.b64encode(art).decode(),"fence_epoch":1,"idempotency_key":"persistent-1","expires_at":int(time.time())+300,"deploy_authorization":auth})
             if first[0]!=200:raise AssertionError(first)
-            p.terminate();p.wait(timeout=3);p=start(root,state,deploy,admin);wait()
+            p.terminate();p.wait(timeout=3);p=start(root,state,deploy_text,admin_text);wait()
             after=req("GET",f"/staging/status/{did}")
             if after[1].get("state")!="DEPLOYED":raise AssertionError(("deployment lost across restart",after))
-            rid="persistent-refused";refmac=mac(ADMIN_SECRET,f"REFUSE|{rid}|2|persistent-refusal")
+            rid="persistent-refused";refmac=mac(admin_secret,f"REFUSE|{rid}|2|persistent-refusal")
             refused=req("POST","/staging/refuse",{"deployment_id":rid,"epoch":2,"refusal_id":"persistent-refusal","mac":refmac})
             if refused[0]!=200:raise AssertionError(refused)
-            p.terminate();p.wait(timeout=3);p=start(root,state,deploy,admin);wait()
-            blocked=req("POST","/staging/deploy",{"deployment_id":rid,"artifact_digest":dig,"artifact_b64":__import__('base64').b64encode(art).decode(),"deploy_authorization":mac(DEPLOY_SECRET,"DEPLOY|"+rid+"|"+dig+"|2|persistent-replay")})
+            p.terminate();p.wait(timeout=3);p=start(root,state,deploy_text,admin_text);wait()
+            replay_auth=mac(deploy_secret,"DEPLOY|"+rid+"|"+dig+"|2|persistent-replay")
+            blocked=req("POST","/staging/deploy",{"deployment_id":rid,"artifact_digest":dig,"artifact_b64":base64.b64encode(art).decode(),"deploy_authorization":replay_auth})
             obs=req("GET",f"/staging/status/{rid}")
-            bad_reset=req("POST","/staging/reset",{"deployment_id":rid,"reason":"attacker-test","mac":mac(DEPLOY_SECRET,f"RESET|{rid}|attacker-test")})
-            result={"status":"PASS" if blocked[0]==409 and obs[1].get("refused") and obs[1].get("state")=="NOT_DEPLOYED" and bad_reset[0]==401 else "FAIL","first_deploy":first,"after_restart":after,"refusal":refused,"blocked_replay":blocked,"refusal_after_restart":obs,"deploy_secret_cannot_reset":bad_reset,"secret_source":"fixed-persistent-test-secret"}
+            bad_reset=req("POST","/staging/reset",{"deployment_id":rid,"reason":"attacker-test","mac":mac(deploy_secret,f"RESET|{rid}|attacker-test")})
+            result={"status":"PASS" if blocked[0]==409 and obs[1].get("refused") and obs[1].get("state")=="NOT_DEPLOYED" and bad_reset[0]==401 else "FAIL","first_deploy":first,"after_restart":after,"refusal":refused,"blocked_replay":blocked,"refusal_after_restart":obs,"deploy_secret_cannot_reset":bad_reset,"secret_source":"persistent-random-bytes-reused-across-restarts"}
             print(json.dumps(result,sort_keys=True,indent=2));return 0 if result["status"]=="PASS" else 1
         finally:
             try:p.terminate();p.wait(timeout=2)
