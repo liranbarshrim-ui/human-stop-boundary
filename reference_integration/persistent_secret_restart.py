@@ -32,25 +32,24 @@ def main():
     with tempfile.TemporaryDirectory(prefix="dar-persistent-secret-") as td:
         state=Path(td)/"state";state.mkdir()
         secret_dir=Path(td)/"secrets";secret_dir.mkdir(mode=0o700)
+        deploy_secret=os.urandom(32).hex().encode();admin_secret=os.urandom(32).hex().encode()
         deploy_file=secret_dir/"deploy.secret";admin_file=secret_dir/"admin.secret"
-        deploy_secret=os.urandom(32);admin_secret=os.urandom(32)
         deploy_file.write_bytes(deploy_secret+b"\n");admin_file.write_bytes(admin_secret+b"\n")
-        deploy=os.fsdecode(deploy_secret);admin=os.fsdecode(admin_secret)
-        # Secrets are persistent test inputs: the same bytes and files are reused after every restart.
-        deploy_text=deploy_secret.decode("latin1");admin_text=admin_secret.decode("latin1")
-        p=start(root,state,deploy_text,admin_text)
+        deploy=deploy_secret.decode();admin=admin_secret.decode()
+        # The same credential bytes and files are reused after every restart.
+        p=start(root,state,deploy,admin)
         try:
             wait();did="persistent-deployment";art=b"persistent-artifact-v1";dig=hashlib.sha256(art).hexdigest()
             auth=mac(deploy_secret,"DEPLOY|"+did+"|"+dig+"|1|persistent-1")
             first=req("POST","/staging/deploy",{"deployment_id":did,"artifact_digest":dig,"artifact_b64":base64.b64encode(art).decode(),"fence_epoch":1,"idempotency_key":"persistent-1","expires_at":int(time.time())+300,"deploy_authorization":auth})
             if first[0]!=200:raise AssertionError(first)
-            p.terminate();p.wait(timeout=3);p=start(root,state,deploy_text,admin_text);wait()
+            p.terminate();p.wait(timeout=3);p=start(root,state,deploy,admin);wait()
             after=req("GET",f"/staging/status/{did}")
             if after[1].get("state")!="DEPLOYED":raise AssertionError(("deployment lost across restart",after))
             rid="persistent-refused";refmac=mac(admin_secret,f"REFUSE|{rid}|2|persistent-refusal")
             refused=req("POST","/staging/refuse",{"deployment_id":rid,"epoch":2,"refusal_id":"persistent-refusal","mac":refmac})
             if refused[0]!=200:raise AssertionError(refused)
-            p.terminate();p.wait(timeout=3);p=start(root,state,deploy_text,admin_text);wait()
+            p.terminate();p.wait(timeout=3);p=start(root,state,deploy,admin);wait()
             replay_auth=mac(deploy_secret,"DEPLOY|"+rid+"|"+dig+"|2|persistent-replay")
             blocked=req("POST","/staging/deploy",{"deployment_id":rid,"artifact_digest":dig,"artifact_b64":base64.b64encode(art).decode(),"deploy_authorization":replay_auth})
             obs=req("GET",f"/staging/status/{rid}")
