@@ -17,6 +17,8 @@ jobs:
           python-version: '3.12'
       - name: Install test dependencies
         run: python -m pip install --upgrade pip pytest
+      - name: Normalize integration script permissions
+        run: chmod 755 reference_integration/*.py
       - name: Run two-UID adversarial qualification
         run: |
           cd reference_integration
