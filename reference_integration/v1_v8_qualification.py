@@ -69,8 +69,6 @@ def main():
     deploy_secret.write_text("deploy-"+os.urandom(32).hex()+"\n")
     admin_secret.write_text("admin-"+os.urandom(32).hex()+"\n")
     caller_secret_file.write_bytes(os.urandom(32));store_secret.write_bytes(os.urandom(32))
-    # Read all runner-side material BEFORE ownership/mode tightening. After this point
-    # the runner no longer needs privileged file access; services use the restricted files.
     deploy_secret_bytes=deploy_secret.read_text().strip().encode()
     caller_secret=caller_secret_file.read_bytes().strip()
     subprocess.run(["sudo","chown","darstaging:darstaging",state],check=True);subprocess.run(["sudo","chmod","700",state],check=True)
@@ -89,45 +87,29 @@ def main():
         wait(f"http://127.0.0.1:{AUTH_PORT}/health")
         normal_id=hashlib.sha256(b"v1-v8-normal").hexdigest()[:32];artifact=b"v1-v8-reference-artifact\n";digest=hashlib.sha256(artifact).hexdigest();enc=base64.b64encode(artifact).decode()
         normal={"deployment_id":normal_id,"artifact_digest":digest,"artifact_b64":enc,"fence_epoch":0,"idempotency_key":"v1-v8-normal","expires_at":int(time.time())+300}
-
-        # V1: OS identity and credential boundary.
         denied=all(secret_read_denied(p) for p in (deploy_secret,admin_secret,caller_secret_file,store_secret))
         v1a=attacker_post(f"http://127.0.0.1:{AUTH_PORT}/authority/commit",normal);v1b=attacker_post(f"http://127.0.0.1:{STAGING_PORT}/staging/deploy",{"deployment_id":normal_id,"artifact_digest":digest,"artifact_b64":enc})
         ev["vectors"]["V1"]={"classification":"PASS" if denied and v1a["status"]==401 and v1b["status"]==401 else "FAIL","secret_reads_denied":denied,"authority":v1a,"staging":v1b}
-
-        # V2: network/IPC exposure visible to attacker.
         v2a=attacker_post(f"http://127.0.0.1:{AUTH_PORT}/authority/commit",normal);v2b=attacker_post(f"http://127.0.0.1:{STAGING_PORT}/staging/reset",{})
         sockets=subprocess.run(["sudo","-u","darattacker","--","sh","-c","ss -xl 2>/dev/null | grep -E 'dar|staging|authority' || true"],text=True,capture_output=True).stdout.strip()
         ev["vectors"]["V2"]={"classification":"PASS" if v2a["status"]==401 and v2b["status"]==401 and not sockets else ("NOT_PRESENT" if not sockets else "FAIL"),"authority_http":v2a,"staging_http":v2b,"unix_sockets":sockets}
-
-        # V3: child/helper stays attacker identity.
         child=subprocess.run(["sudo","-u","darattacker","--",sys.executable,"-c","import os;print(os.getuid())"],text=True,capture_output=True)
         helper=attacker_post(f"http://127.0.0.1:{AUTH_PORT}/authority/commit",normal)
         ev["vectors"]["V3"]={"classification":"PASS" if child.returncode==0 and helper["status"]==401 else "FAIL","child_uid":child.stdout.strip(),"helper_authority":helper}
-
-        # V4: direct effect/authority paths and legacy endpoint.
         direct=attacker_post(f"http://127.0.0.1:{STAGING_PORT}/staging/deploy",{"deployment_id":normal_id+"x","artifact_digest":digest,"artifact_b64":enc});da=attacker_post(f"http://127.0.0.1:{AUTH_PORT}/authority/commit",normal);legacy=http("POST",f"http://127.0.0.1:{AUTH_PORT}/authority/legacy",{})
         ev["vectors"]["V4"]={"classification":"PASS" if direct["status"]==401 and da["status"]==401 and legacy[0]==404 else "FAIL","direct_staging":direct,"direct_authority":da,"legacy_endpoint":{"status":legacy[0],"body":legacy[1]}}
-
-        # Advance authority once through the legitimate caller path, then issue refusal at epoch 1.
         ok=caller_request(caller_secret,f"http://127.0.0.1:{AUTH_PORT}/authority/commit",normal,"COMMIT")
         refused_id=hashlib.sha256(b"v1-v8-refused").hexdigest()[:32]
         refused={"deployment_id":refused_id,"artifact_digest":digest,"artifact_b64":enc,"fence_epoch":1,"idempotency_key":"v1-v8-refuse","expires_at":int(time.time())+300,"refusal_id":"v1-v8-refusal","effect_id":"v1-v8-effect","capability_txid":"v1-v8-cap","issued_at":int(time.time())}
         rr=caller_request(caller_secret,f"http://127.0.0.1:{AUTH_PORT}/authority/refuse",refused,"REFUSE");blocked=caller_request(caller_secret,f"http://127.0.0.1:{AUTH_PORT}/authority/commit",dict(refused,idempotency_key="v1-v8-blocked"),"COMMIT");obs=http("GET",f"http://127.0.0.1:{STAGING_PORT}/staging/status/{refused_id}")
         ev["vectors"]["V5"]={"classification":"PASS" if ok[0]==200 and rr[0]==200 and blocked[0]==403 and obs[1].get("state")=="NOT_DEPLOYED" else "FAIL","normal":ok,"refusal":rr,"blocked_commit":blocked,"observation":obs[1]}
-
-        # V6: signature binding and path substitution.
         signed=dict(normal);signed["caller_mac"]=caller_mac(caller_secret,normal,"COMMIT");mutated=dict(signed);mutated["deployment_id"]=normal_id+"mutated";tampered=attacker_post(f"http://127.0.0.1:{AUTH_PORT}/authority/commit",mutated)
         symlink=subprocess.run(["sudo","-u","darattacker","--","sh","-c",f"ln -sf /etc/passwd {auth_state}/authority_state.json 2>/dev/null"],capture_output=True)
         ev["vectors"]["V6"]={"classification":"PASS" if tampered["status"]==401 and symlink.returncode!=0 else "FAIL","mutated_signed_request":tampered,"symlink_replace_returncode":symlink.returncode}
-
-        # V7: unknown network/plugin path and health leakage.
         unknown=attacker_post(f"http://127.0.0.1:{STAGING_PORT}/plugin/commit",normal);health=http("GET",f"http://127.0.0.1:{STAGING_PORT}/health")
         ev["vectors"]["V7"]={"classification":"PASS" if unknown["status"]==404 and "secret" not in json.dumps(health[1]).lower() else "FAIL","unknown_plugin_path":unknown,"health":health[1],"plugin_interface":"NOT_PRESENT"}
-
-        # V8: restart preserves refusal; attacker cannot overwrite authoritative state.
         snap=td/"authority_state.snapshot";sf=auth_state/"authority_state.json"
-        if sf.exists():shutil.copy2(sf,snap)
+        if sf.exists():subprocess.run(["sudo","-u","darauthority","--","cp",str(sf),str(snap)],check=True);subprocess.run(["sudo","chmod","600",str(snap)],check=True)
         for p in (authority,staging):
             if p is not None:p.terminate()
         for p in (authority,staging):
