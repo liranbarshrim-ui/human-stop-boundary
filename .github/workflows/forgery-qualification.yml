@@ -1,0 +1,52 @@
+name: Authorization Forgery Qualification
+
+on:
+  push:
+    branches:
+      - reference/staging-deployment-integration
+  workflow_dispatch:
+
+jobs:
+  forgery-qualification:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Normalize integration scripts
+        timeout-minutes: 1
+        run: |
+          mkdir -p /tmp/dar-forgery
+          cp reference_integration/*.py /tmp/dar-forgery/
+          chmod 755 /tmp/dar-forgery/*.py
+      - name: Run attacker-side forgery qualification
+        timeout-minutes: 3
+        env:
+          QUALIFICATION_COMMIT: ${{ github.sha }}
+        run: |
+          set +e
+          cd /tmp/dar-forgery
+          timeout --signal=TERM --kill-after=10s 120s python forgery_qualification.py | tee forgery-qualification.log
+          status=${PIPESTATUS[0]}
+          cp forgery_evidence.json "$GITHUB_WORKSPACE/reference_integration/forgery_evidence.json" 2>/dev/null || true
+          cp forgery-qualification.log "$GITHUB_WORKSPACE/reference_integration/forgery-qualification.log" 2>/dev/null || true
+          exit "$status"
+      - name: Hash forgery evidence
+        if: always()
+        timeout-minutes: 1
+        run: |
+          test -f reference_integration/forgery_evidence.json
+          test -f reference_integration/forgery-qualification.log
+          sha256sum reference_integration/forgery_evidence.json
+          sha256sum reference_integration/forgery-qualification.log
+      - name: Upload forgery evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: authorization-forgery-qualification
+          path: |
+            reference_integration/forgery_evidence.json
+            reference_integration/forgery-qualification.log
+          if-no-files-found: error
