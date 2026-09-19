@@ -65,6 +65,7 @@ def main():
 
     td=pathlib.Path(tempfile.mkdtemp(prefix="dar-v1-v8-"));os.chmod(td,0o755)
     state=td/"state";state.mkdir();auth_state=td/"authority-state";auth_state.mkdir()
+    snap=td/"authority_state.snapshot";snap.touch()
     deploy_secret=td/"deploy.secret";admin_secret=td/"admin.secret";caller_secret_file=td/"caller.secret";store_secret=td/"store.secret"
     deploy_secret.write_text("deploy-"+os.urandom(32).hex()+"\n")
     admin_secret.write_text("admin-"+os.urandom(32).hex()+"\n")
@@ -73,6 +74,7 @@ def main():
     caller_secret=caller_secret_file.read_bytes().strip()
     subprocess.run(["sudo","chown","darstaging:darstaging",state],check=True);subprocess.run(["sudo","chmod","700",state],check=True)
     subprocess.run(["sudo","chown","darauthority:darauthority",auth_state],check=True);subprocess.run(["sudo","chmod","700",auth_state],check=True)
+    subprocess.run(["sudo","chown","darauthority:darauthority",snap],check=True);subprocess.run(["sudo","chmod","600",snap],check=True)
     subprocess.run(["sudo","chown","darauthority:dareffect",deploy_secret],check=True);subprocess.run(["sudo","chmod","640",deploy_secret],check=True)
     subprocess.run(["sudo","chown","darstaging:darstaging",admin_secret],check=True);subprocess.run(["sudo","chmod","600",admin_secret],check=True)
     subprocess.run(["sudo","chown","darcaller:darauthority",caller_secret_file],check=True);subprocess.run(["sudo","chmod","640",caller_secret_file],check=True)
@@ -108,7 +110,7 @@ def main():
         ev["vectors"]["V6"]={"classification":"PASS" if tampered["status"]==401 and symlink.returncode!=0 else "FAIL","mutated_signed_request":tampered,"symlink_replace_returncode":symlink.returncode}
         unknown=attacker_post(f"http://127.0.0.1:{STAGING_PORT}/plugin/commit",normal);health=http("GET",f"http://127.0.0.1:{STAGING_PORT}/health")
         ev["vectors"]["V7"]={"classification":"PASS" if unknown["status"]==404 and "secret" not in json.dumps(health[1]).lower() else "FAIL","unknown_plugin_path":unknown,"health":health[1],"plugin_interface":"NOT_PRESENT"}
-        snap=td/"authority_state.snapshot";sf=auth_state/"authority_state.json"
+        sf=auth_state/"authority_state.json"
         if sf.exists():subprocess.run(["sudo","-u","darauthority","--","cp",str(sf),str(snap)],check=True);subprocess.run(["sudo","chmod","600",str(snap)],check=True)
         for p in (authority,staging):
             if p is not None:p.terminate()
