@@ -4,265 +4,33 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
 <title>Named Refusal Authority — Research Note — Liran Bar-Shrim</title>
-<meta name="description" content="A governance research note on named refusal authority, legitimacy of continuation, and institutional accountability in irreversible decisions.">
+<meta name="description" content="A governance research note on named refusal authority, binding release authority, and accountability at irreversible decision boundaries.">
 <meta name="robots" content="index,follow">
-<meta property="og:title" content="Named Refusal Authority — Research Note — Liran Bar-Shrim">
-<meta property="og:description" content="A governance research note on named refusal authority, legitimacy of continuation, and institutional accountability in irreversible decisions.">
-<meta property="og:image" content="https://matrix-audit.com/og-image.png">
-<meta property="og:image:width" content="1200">
-<meta property="og:image:height" content="630">
-<meta property="og:type" content="article">
-<meta property="og:site_name" content="Liran Bar-Shrim">
-<meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="https://matrix-audit.com/og-image.png">
 <link rel="canonical" href="https://matrix-audit.com/whitepaper.html">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&display=swap" rel="stylesheet">
 <style>
-:root {
-  --bg: #080808;
-  --gold: #c8a96e;
-  --gold2: #ead9b3;
-  --text: #ebe5da;
-  --muted: #d8d2c8;
-  --dim: #7a7570;
-  --dim2: #52504c;
-  --danger: #a83232;
-  --line: rgba(255,255,255,.06);
-  --gold-line: rgba(200,169,110,.25);
-}
-*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
-html{scroll-behavior:smooth}
-body{background:var(--bg);color:var(--text);font-family:"Cormorant Garamond",Georgia,serif;overflow-x:hidden;-webkit-font-smoothing:antialiased;line-height:1.85}
-body::before{content:"";position:fixed;inset:0;pointer-events:none;z-index:0;opacity:.028;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");background-size:180px}
-a{text-decoration:none;color:inherit}
-.topbar{position:fixed;top:0;left:0;right:0;height:72px;display:flex;align-items:center;justify-content:space-between;padding:0 48px;z-index:100;background:rgba(8,8,8,.92);backdrop-filter:blur(16px);border-bottom:1px solid var(--line)}
-.brand{display:flex;align-items:center;gap:14px;font-family:"IBM Plex Mono",monospace;font-size:9.5px;letter-spacing:.32em;text-transform:uppercase;color:var(--text)}
-.brand-rule{width:32px;height:1px;background:var(--gold)}
-.nav-contact{font-family:"IBM Plex Mono",monospace;font-size:9.5px;letter-spacing:.28em;text-transform:uppercase;color:var(--gold2);transition:opacity .2s}
-.nav-contact:hover{opacity:.7}
-.wrap{max-width:720px;margin:0 auto;padding:0 48px;position:relative;z-index:1}
-.hero{padding-top:160px;padding-bottom:70px;border-bottom:1px solid var(--line)}
-.doc-meta{font-family:"IBM Plex Mono",monospace;font-size:9px;letter-spacing:.32em;text-transform:uppercase;color:var(--dim);margin-bottom:32px}
-.hero h1{font-size:clamp(36px,5.5vw,78px);font-weight:400;line-height:1.0;letter-spacing:-.01em;color:var(--text);margin-bottom:36px;max-width:18ch}
-.hero h1 em{font-style:italic;color:var(--gold2)}
-.hero-summary{font-size:clamp(17px,1.5vw,20px);font-weight:300;line-height:1.9;color:var(--muted);max-width:58ch;border-left:1px solid var(--gold-line);padding-left:24px}
-.doc-section{padding:60px 0;border-bottom:1px solid var(--line)}
-.doc-section:last-of-type{border-bottom:none}
-.section-num{font-family:"IBM Plex Mono",monospace;font-size:9px;letter-spacing:.28em;text-transform:uppercase;color:var(--dim);margin-bottom:20px}
-.doc-section h2{font-size:clamp(22px,3vw,44px);font-weight:400;line-height:1.1;margin-bottom:28px;max-width:24ch}
-.doc-section h2 em{font-style:italic;color:var(--gold2)}
-.body-p{font-size:clamp(16px,1.4vw,19px);font-weight:300;color:var(--muted);margin-bottom:20px;max-width:60ch;line-height:1.9}
-.body-p strong{color:var(--text);font-weight:400}
-.pull{border-left:2px solid var(--gold);padding-left:24px;margin:36px 0;font-size:clamp(18px,2vw,26px);font-weight:300;line-height:1.5;font-style:italic;color:var(--text);}
-.pull-danger{border-left:2px solid var(--danger);padding-left:24px;margin:36px 0;font-size:clamp(17px,1.8vw,22px);font-weight:300;line-height:1.55;font-style:italic;color:#d4a0a0;}
-.danger-marker{font-family:"IBM Plex Mono",monospace;font-size:9px;letter-spacing:.28em;text-transform:uppercase;color:var(--danger);margin-bottom:20px;opacity:.8}
-.dar-link{padding:32px 36px;background:rgba(200,169,110,.05);border-left:2px solid rgba(200,169,110,.3);margin-top:48px;}
-.dar-link-label{font-family:"IBM Plex Mono",monospace;font-size:9px;letter-spacing:.2em;text-transform:uppercase;color:var(--dim2);margin-bottom:16px;display:block;}
-.dar-link-text{font-size:clamp(15px,1.4vw,18px);font-weight:300;color:var(--muted);line-height:1.7;margin-bottom:20px;max-width:50ch;}
-.dar-link-cta{font-family:"IBM Plex Mono",monospace;font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--gold);border-bottom:1px solid rgba(200,169,110,.3);padding-bottom:2px;transition:opacity .2s;}
-.dar-link-cta:hover{opacity:.7;}
-.final{padding:80px 0 100px;border-top:1px solid var(--line)}
-.back-link{font-family:"IBM Plex Mono",monospace;font-size:9px;letter-spacing:.28em;text-transform:uppercase;color:var(--dim);transition:color .2s;display:block;margin-bottom:14px}
-.back-link:hover{color:var(--gold2)}
-.sig{font-family:"IBM Plex Mono",monospace;font-size:9.5px;letter-spacing:.26em;text-transform:uppercase;color:var(--dim);margin-top:28px}
-.footer{position:relative;z-index:1;text-align:center;padding:20px;border-top:1px solid var(--line);font-family:"IBM Plex Mono",monospace;font-size:9px;letter-spacing:.08em;color:var(--dim)}
-.footer a{color:var(--dim);transition:color .2s}
-.footer a:hover{color:var(--gold)}
-@media(max-width:860px){.topbar{padding:0 20px}.wrap{padding:0 20px}.hero{padding-top:120px}.doc-section{padding:44px 0}.body-p{line-height:1.75}}
-@media(max-width:640px){body{overflow-x:hidden !important}}
-@keyframes fadeUp{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
-.hero{animation:fadeUp .9s ease both}
+:root{--bg:#080808;--gold:#c8a96e;--gold2:#ead9b3;--text:#ebe5da;--muted:#d8d2c8;--dim:#7a7570;--dim2:#52504c;--danger:#a83232;--line:rgba(255,255,255,.06);--gold-line:rgba(200,169,110,.25)}
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}html{scroll-behavior:smooth}body{background:var(--bg);color:var(--text);font-family:"Cormorant Garamond",Georgia,serif;overflow-x:hidden;-webkit-font-smoothing:antialiased;line-height:1.85}body::before{content:"";position:fixed;inset:0;pointer-events:none;z-index:0;opacity:.028;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");background-size:180px}a{text-decoration:none;color:inherit}.topbar{position:fixed;top:0;left:0;right:0;height:72px;display:flex;align-items:center;justify-content:space-between;padding:0 48px;z-index:100;background:rgba(8,8,8,.92);backdrop-filter:blur(16px);border-bottom:1px solid var(--line)}.brand{display:flex;align-items:center;gap:14px;font-family:"IBM Plex Mono",monospace;font-size:9.5px;letter-spacing:.32em;text-transform:uppercase;color:var(--text)}.brand-rule{width:32px;height:1px;background:var(--gold)}.nav-contact{font-family:"IBM Plex Mono",monospace;font-size:9.5px;letter-spacing:.28em;text-transform:uppercase;color:var(--gold2)}.wrap{max-width:760px;margin:0 auto;padding:0 48px;position:relative;z-index:1}.hero{padding-top:158px;padding-bottom:70px;border-bottom:1px solid var(--line)}.doc-meta,.section-num,.status-label{font-family:"IBM Plex Mono",monospace;font-size:9px;letter-spacing:.28em;text-transform:uppercase;color:var(--dim)}.doc-meta{margin-bottom:30px}.hero h1{font-size:clamp(36px,5.5vw,78px);font-weight:400;line-height:1;letter-spacing:-.01em;margin-bottom:34px}.hero h1 em,.doc-section h2 em{font-style:italic;color:var(--gold2)}.hero-summary{font-size:clamp(17px,1.5vw,20px);line-height:1.9;color:var(--muted);border-left:1px solid var(--gold-line);padding-left:24px}.status{margin-top:28px;padding:16px 18px;border:1px solid var(--gold-line);background:rgba(200,169,110,.035);font:400 10px/1.7 "IBM Plex Mono",monospace;color:var(--muted)}.status strong{color:var(--gold2);font-weight:500}.doc-section{padding:58px 0;border-bottom:1px solid var(--line)}.section-num{margin-bottom:19px}.doc-section h2{font-size:clamp(23px,3vw,44px);font-weight:400;line-height:1.1;margin-bottom:27px;max-width:25ch}.body-p{font-size:clamp(16px,1.4vw,19px);font-weight:300;color:var(--muted);margin-bottom:20px;max-width:62ch;line-height:1.9}.body-p strong{color:var(--text);font-weight:400}.pull{border-left:2px solid var(--gold);padding-left:24px;margin:34px 0;font-size:clamp(18px,2vw,26px);font-weight:300;line-height:1.5;font-style:italic;color:var(--text)}.pull-danger{border-left:2px solid var(--danger);padding-left:24px;margin:34px 0;font-size:clamp(17px,1.8vw,22px);line-height:1.55;font-style:italic;color:#d4a0a0}.boundary{display:grid;grid-template-columns:repeat(2,1fr);gap:1px;background:var(--line);margin:38px 0}.boundary div{background:#0c0c0c;padding:25px 22px;min-height:150px}.boundary strong{display:block;font-size:17px;font-weight:400;margin-bottom:9px}.boundary span{font:400 13px/1.7 Inter,Arial,sans-serif;color:var(--muted)}.audit-link{display:block;padding:30px 34px;background:rgba(200,169,110,.05);border-left:2px solid rgba(200,169,110,.3);margin-top:38px}.audit-link small{display:block;font:400 9px "IBM Plex Mono",monospace;letter-spacing:.2em;text-transform:uppercase;color:var(--dim2);margin-bottom:14px}.audit-link span{display:block;font-size:18px;color:var(--muted);margin-bottom:18px}.audit-link b{font:400 10px "IBM Plex Mono",monospace;letter-spacing:.18em;text-transform:uppercase;color:var(--gold)}.matrix{border:1px solid var(--line);margin-top:30px}.matrix-row{display:grid;grid-template-columns:1fr 2fr;border-top:1px solid var(--line)}.matrix-row:first-child{border-top:none}.matrix-row b,.matrix-row span{padding:15px 17px}.matrix-row b{font:400 9px/1.6 "IBM Plex Mono",monospace;letter-spacing:.12em;text-transform:uppercase;color:var(--gold)}.matrix-row span{font:400 14px/1.65 Inter,Arial,sans-serif;color:var(--muted)}.final{padding:75px 0 100px}.back-link{font:400 9px "IBM Plex Mono",monospace;letter-spacing:.28em;text-transform:uppercase;color:var(--dim);display:block;margin-bottom:28px}.sig{font:400 9.5px "IBM Plex Mono",monospace;letter-spacing:.22em;text-transform:uppercase;color:var(--dim);margin-top:30px}.footer{position:relative;z-index:1;text-align:center;padding:20px;border-top:1px solid var(--line);font:400 9px "IBM Plex Mono",monospace;letter-spacing:.08em;color:var(--dim)}@media(max-width:860px){.topbar{padding:0 20px}.wrap{padding:0 20px}.hero{padding-top:120px}.doc-section{padding:44px 0}}@media(max-width:640px){.boundary{grid-template-columns:1fr}.matrix-row{grid-template-columns:1fr}.matrix-row b{padding-bottom:5px}.matrix-row span{padding-top:5px}}
 </style>
 <link rel="stylesheet" href="site-upgrade.css">
 </head>
-
-<body><header class="site-upgrade-bar" data-matrix-audit-upgrade="v1"><div class="mu-inner"><a class="mu-brand" href="./"><span class="mu-dot"></span>MATRIX AUDIT</a><nav class="mu-links"><a href="./">Question</a><a href="./dar.html">DAR</a><a href="./verification.html">Verification</a><a href="./case-studies.html">Evidence</a><a href="./break-it.html">Break It</a><a href="./review.html">Private Review</a><a class="mu-cta" href="./break-it.html">TEST THE BOUNDARY →</a></nav></div></header><div class="site-upgrade-status"><strong>A11 STATUS:</strong> independent runtime/interface audit pending · the project does not claim a PASS before independent evidence</div>
-
-<header class="topbar">
-  <a href="index.html" class="brand"><span class="brand-rule"></span><span>Liran Bar-Shrim</span></a>
-  <a href="mailto:Liranbarshrim@gmail.com" class="nav-contact">Correspondence</a>
-</header>
-
+<body><header class="site-upgrade-bar" data-matrix-audit-upgrade="v1"><div class="mu-inner"><a class="mu-brand" href="./"><span class="mu-dot"></span>MATRIX AUDIT</a><nav class="mu-links"><a href="./">Question</a><a href="./dar.html">DAR</a><a href="./boundary-audit.html">Boundary Audit</a><a href="./verification.html">Verification</a><a href="./case-studies.html">Evidence</a><a href="./break-it.html">Break It</a><a href="./review.html">Private Review</a><a class="mu-cta" href="./break-it.html">TEST THE BOUNDARY →</a></nav></div></header><div class="site-upgrade-status"><strong>A11 STATUS:</strong> independent runtime/interface audit pending · reference qualification and implementation evidence do not constitute independent A11 verification</div>
+<header class="topbar"><a href="index.html" class="brand"><span class="brand-rule"></span><span>Liran Bar-Shrim</span></a><a href="mailto:Liranbarshrim@gmail.com" class="nav-contact">Correspondence</a></header>
 <main>
-
-  <section class="hero wrap">
-    <div class="doc-meta">Research Note · 2026</div>
-    <h1>Named Refusal Authority<br>in <em>Irreversible Decisions</em></h1>
-    <p class="hero-summary">
-      Organizations usually define who can approve. This work examines the narrower question:
-      who, by name, can still interrupt continuation before continuation becomes the decision?
-    </p>
-  </section>
-
-  <div class="doc-section wrap">
-    <div class="section-num">I — The Governance Gap</div>
-    <h2>Authorization to refuse is rarely defined before execution begins.</h2>
-    <p class="body-p">
-      Most organizations maintain clear approval workflows, budget authority,
-      reporting lines, and escalation structures.
-      Very few define who holds the right to refuse continuation
-      when new uncertainty appears mid-execution.
-    </p>
-    <p class="body-p">
-      Where this is unassigned, responsibility may later become personal
-      while authorization had previously been undefined.
-    </p>
-    <div class="pull">
-      If no named individual is authorized to release or refuse continuation,
-      continuation proceeds by default.
-      The organization has not made a governance decision.
-      It has avoided one.
-    </div>
-  </div>
-
-  <div class="doc-section wrap">
-    <div class="section-num">II — The Problem</div>
-    <h2>Most systems know how to authorize continuation.<br>Almost none define who holds <em>refusal authority.</em></h2>
-    <p class="body-p">
-      During consequential execution, multiple teams may be involved
-      while no one clearly holds authorization to refuse continuation.
-      The domain changes. The structural gap does not.
-    </p>
-    <p class="body-p">
-      The absence of anomaly does not create authorization.
-      The question is not whether the system failed.
-      The question is who holds refusal authority
-      before failure becomes the proof.
-    </p>
-    <div class="pull">
-      Approval scales under pressure.<br>
-      Refusal rarely does.
-    </div>
-  </div>
-
-  <div class="doc-section wrap">
-    <div class="section-num">III — Why Refusal Disappears</div>
-    <h2>Refusal authority rarely disappears through revocation.<br>It disappears through <em>accumulated hesitation.</em></h2>
-    <p class="body-p">
-      The person remains. The authority quietly does not.
-      Under pressure, refusal authority often weakens precisely when its cost becomes personal.
-    </p>
-    <p class="body-p">
-      Expertise can be collective. Named refusal authority rarely is.
-      Oversight is not refusal authority. Escalation is not refusal authority.
-      Approval is not refusal.
-    </p>
-    <div class="pull">
-      In high-momentum systems, silence acquires operational meaning.<br>
-      A refusal that dissolves through non-response was never fully designed.
-    </div>
-  </div>
-
-  <div class="doc-section wrap">
-    <div class="danger-marker">Override Risk</div>
-    <h2>When authorization was granted informally<br>over a <em>refusal.</em></h2>
-    <p class="body-p">
-      Refusal authority was invoked. Someone senior authorized continuation —
-      not formally, not in writing. The refusal was real. The override was also real.
-      By the time the outcome arrived, the person who refused
-      was often no longer part of the accountability chain.
-    </p>
-    <div class="pull-danger">
-      When refusal authority is invoked and then overridden without documentation,
-      the failure becomes personal. The person who refused has a record.
-      The person who authorized continuation often does not.
-    </div>
-    <p class="body-p">
-      Under pressure, refusal authority often weakens when its cost becomes personal.
-    </p>
-  </div>
-
-  <div class="doc-section wrap">
-    <div class="danger-marker">Escalation Failure</div>
-    <h2>When no authorization is granted<br>and <em>no one responds.</em></h2>
-    <p class="body-p">
-      Refusal authority was invoked. The authorization authority was notified.
-      No response followed.
-    </p>
-    <p class="body-p">
-      A refusal that dissolves through silence was never fully designed.
-    </p>
-    <div class="pull-danger">
-      Silence is not neutral.<br>
-      It is continuation without re-authorization.
-    </div>
-  </div>
-
-  <div class="doc-section wrap">
-    <div class="section-num">IV — Oversight</div>
-    <h2>Refusal authority without review<br>and review without refusal authority<br>produce <em>different failures.</em></h2>
-    <p class="body-p">
-      Where refusal authority exists without oversight, it can accumulate into
-      arbitrary veto power. Where oversight exists without real refusal authority,
-      it tends to become symbolic process.
-    </p>
-    <div class="pull">
-      Refusal authority without review becomes veto.<br>
-      Review without refusal authority becomes theater.
-    </div>
-    <p class="body-p">
-      Both conditions have been observed in consequential failures.
-      In neither case did the presence of one substitute for the absence of the other.
-    </p>
-  </div>
-
-  <div class="doc-section wrap">
-    <div class="section-num">V — Autonomous Systems</div>
-    <h2>The faster the system,<br>the clearer named authority<br>must <em>become.</em></h2>
-    <p class="body-p">
-      Automation compresses time between signal and irreversible consequence.
-      When AI removes the visible decision-maker,
-      governance must restore the visible authority.
-    </p>
-    <p class="body-p">
-      The question is not who reviews later.
-      It is who holds the authority to refuse before irreversible conditions emerge.
-    </p>
-    <div class="pull">
-      The faster the system, the clearer named authorization must become.
-    </div>
-  </div>
-
-  <div class="doc-section wrap">
-    <div class="section-num">VI — Closing</div>
-    <h2>The question is not whether<br>authority exists.<br>The question is whether<br>it belongs to <em>someone by name.</em></h2>
-    <p class="body-p">
-      Strong organizations are not defined only by execution speed.
-      They are defined by whether someone holds named refusal authority —
-      and whether that authority belongs to a person, not a process.
-    </p>
-    <p class="body-p" style="font-style:italic;color:var(--dim);">
-      DAR begins when continuation may cross an irreversible threshold and nobody can yet say with confidence what lies beyond it.
-    </p>
-    <div class="pull" style="margin-top:40px;">
-      When a decision becomes irreversible under uncertainty,
-      someone must have the authority to stop it — by name.
-    </div>
-
-    <div class="dar-link">
-      <span class="dar-link-label">The structural question</span>
-      <p class="dar-link-text">If meaningful interruption requires visibility, authority, and a named individual expected to act — what would a governance structure built around those conditions look like?</p>
-      <a href="why-dar-exists.html" class="dar-link-cta">Why DAR Exists →</a>
-    </div>
-  </div>
-
-  <section class="final wrap">
-    <a href="index.html" class="back-link">← Back to main</a>
-    <a href="faq.html" class="back-link">→ FAQ</a>
-    <a href="goodfaith.html" class="back-link" style="margin-bottom:28px;">→ Good Faith Use</a>
-    <div class="sig">Liran Bar-Shrim · 2026</div>
-  </section>
-
+<section class="hero wrap"><div class="doc-meta">Decision Accountability Review · Research Note · 2026</div><h1>Named Refusal Authority<br>at the <em>Irreversible Boundary</em></h1><p class="hero-summary">Organizations usually define who can approve. This work examines the narrower question: who, by name, can refuse continuation—and what makes that refusal binding through release authorization to the protected effect?</p><div class="status"><strong>RESEARCH POSTURE:</strong> conceptual framework and implementation evidence are distinct from independent A11 verification. This note does not claim a universal control over AI or other systems outside a defined enforcement boundary.</div></section>
+<section class="doc-section wrap"><div class="section-num">I — The Governance Gap</div><h2>Authorization to refuse is rarely defined before execution begins.</h2><p class="body-p">Organizations maintain approval workflows, reporting lines, escalation structures and oversight. Far fewer define who holds the authority to refuse continuation when uncertainty appears after execution has already begun.</p><p class="body-p">The resulting problem is not simply that responsibility is unclear. It is that <strong>continuation may remain possible without an explicitly authorized release.</strong></p><div class="pull">The governance question is not only who can approve. It is who can make “stop” binding.</div></section>
+<section class="doc-section wrap"><div class="section-num">II — Refusal Is Not Approval</div><h2>Approval, escalation, oversight and presence perform different functions.</h2><div class="boundary"><div><strong>Approval</strong><span>Permits a process to begin or continue under defined conditions. It does not by itself establish a refusal boundary.</span></div><div><strong>Refusal</strong><span>Activates or maintains a boundary against continuation within a defined scope.</span></div><div><strong>Escalation</strong><span>Transfers a concern to another authority or process. It does not necessarily stop execution.</span></div><div><strong>Release</strong><span>Explicitly authorizes continuation after a qualifying refusal, where the system defines release as required.</span></div></div><p class="body-p">The terms should not be collapsed. In the DAR boundary model, the critical transition is from <strong>Refusal</strong> to <strong>Binding Release</strong>.</p></section>
+<section class="doc-section wrap"><div class="section-num">III — The Boundary Chain</div><h2>Authority origin → refusal → release → protected effect.</h2><p class="body-p">A named person is not sufficient by itself. DAR asks whether the authority is bounded at its origin, whether the refusal is authenticated, whether release is explicitly owned and required, and whether the protected effect remains unreachable without that release.</p><div class="matrix"><div class="matrix-row"><b>Authority origin</b><span>Where does the authority to bind continuation originate, and who is entitled to exercise it?</span></div><div class="matrix-row"><b>Refusal event</b><span>What exact event activates the stop condition, and what target, action or effect does it cover?</span></div><div class="matrix-row"><b>Binding release</b><span>Who is authorized to release the stop, and is that release authenticated, bounded and operationally required?</span></div><div class="matrix-row"><b>Protected effect</b><span>What state transition or material action must remain unreachable without the authorized release?</span></div><div class="matrix-row"><b>Alternate path</b><span>Can another principal, session, interface or internal path produce the same protected effect?</span></div></div><div class="pull">For every execution path p capable of producing protected effect e: <strong>produce(p,e) ⇒ authorized_release(p,e)</strong>.</div></section>
+<section class="doc-section wrap"><div class="section-num">IV — Authority Provenance</div><h2>The deeper question is where binding authority comes from.</h2><p class="body-p">The <strong>Authority-Origin Test</strong> asks: can the governed system determine, create, elevate, or bind the authority that determines whether the system itself may continue?</p><p class="body-p">A valid authority chain should identify its root, scope, authentication and validation mechanism. The system should not be able to manufacture binding authority merely from its own inference, ordinary operational state or delegated capability.</p><div class="pull">Authority that can redefine its own source is not an independent boundary.</div></section>
+<section class="doc-section wrap"><div class="section-num">V — Named Roles</div><h2>Refusal, hold and release should not be left conceptually ambiguous.</h2><p class="body-p"><strong>Refusal Authority</strong> is the authority to trigger or maintain the refusal boundary within a defined scope.</p><p class="body-p"><strong>Hold Authority</strong>, where separately required, is the authority to suspend execution while a matter is resolved. It is a distinct operational function, not automatically equivalent to refusal or release.</p><p class="body-p"><strong>Release Authority</strong> is the named authority whose authenticated release permits continuation after a qualifying stop. It is the critical role for the binding-release test.</p><p class="body-p"><strong>Authorization Authority</strong>, if an organization uses that separate term, must be explicitly mapped. It should not be assumed to equal Release Authority merely because both involve authorization.</p></section>
+<section class="doc-section wrap"><div class="section-num">VI — Override and Silence</div><h2>A refusal can exist on paper while continuation remains structurally possible.</h2><p class="body-p">An override can be explicit, informal, delegated, delayed or hidden in an alternate interface. A refusal can also dissolve through silence if the system treats non-response as permission to continue.</p><div class="pull-danger">If a qualifying refusal is active and no authorized release exists, continuation should not be inferred merely from silence, momentum or ordinary approval.</div><p class="body-p">The boundary audit therefore tests alternate principals, sessions, interfaces, recovery paths and internal execution paths rather than relying on policy text alone.</p></section>
+<section class="doc-section wrap"><div class="section-num">VII — Autonomous Systems</div><h2>The faster the system, the shorter the distance to consequence.</h2><p class="body-p">Automation compresses the interval between proposal, authorization and effect. Human-in-the-loop presence can therefore coexist with a reachable protected effect unless the human authority is explicitly bound to the execution boundary.</p><p class="body-p">The relevant question is not whether a person can review the action later. It is whether the required authority can refuse or release <strong>before the protected effect becomes committed</strong>.</p><div class="audit-link"><small>Boundary Audit</small><span>Evidence-based examination from authority origin through release authorization to the defined protected effect.</span><b>Open Boundary Audit →</b></div></section>
+<section class="doc-section wrap"><div class="section-num">VIII — Evidence Discipline</div><h2>Claims remain bounded by what has actually been demonstrated.</h2><p class="body-p"><strong>VERIFIED</strong> means the mechanism or result was reproduced against the declared scope.</p><p class="body-p"><strong>DECLARED</strong> means the claim or mechanism is documented but has not been independently reproduced within this audit.</p><p class="body-p"><strong>UNRESOLVED</strong> means available evidence is insufficient to determine the property. It is not equivalent to FAIL.</p><p class="body-p">Reference qualification, implementation evidence, independent A11 runtime/interface audit, interface-completeness evidence, external monotonic anchoring and full DAR v2/v37 conformance are separate claims.</p></section>
+<section class="doc-section wrap"><div class="section-num">IX — Closing</div><h2>The question is not whether authority exists. It is whether the authority to continue is <em>bound to the right source.</em></h2><p class="body-p">DAR begins at the point where continuation may cross an irreversible threshold. The research question is deliberately narrow: <strong>when a qualifying refusal occurs, who is authorized to release it, where does that authority originate, and can the protected effect be reached without it?</strong></p><p class="body-p">The framework does not decide whether an organization should stop. It makes the authority chain visible enough to test.</p></section>
+<section class="final wrap"><a href="index.html" class="back-link">← Matrix Audit Index</a><a href="boundary-audit.html" class="back-link">→ Read the DAR Boundary Audit</a><div class="sig">Liran Bar-Shrim · Matrix Audit · Decision Accountability Review</div></section>
 </main>
-
-<footer class="footer">
-  © 2026 Liran Bar-Shrim &nbsp;·&nbsp;
-  <a href="faq.html">FAQ</a> &nbsp;·&nbsp;
-  <a href="goodfaith.html">Good Faith Use</a> &nbsp;·&nbsp;
-  <a href="index.html">Index</a>
-</footer>
-
-<section class="site-upgrade-shell" aria-label="Independent adversarial review"><div class="site-upgrade-panel"><div class="kicker">Independent verification</div><h2>Do not trust the boundary. Try to break it.</h2><p>Matrix Audit is seeking independent security researchers to test the declared boundary against alternate execution paths. The audit is intentionally falsifiable: a reproducible bypass is a finding, not a failure of the research process.</p><div class="mu-actions"><a class="mu-button primary" href="./break-it.html">Open the A11 challenge →</a><a class="mu-button" href="./verification.html">See verification posture →</a><a class="mu-button" href="https://github.com/liranbarshrim-ui/human-stop-boundary/issues/12">GitHub challenge →</a></div><div class="mu-evidence-grid"><article><b>V1–V3</b><strong>Identity · IPC · processes</strong><span>Try alternate identities, transports, helpers and child-process paths.</span></article><article><b>V4–V6</b><strong>Interfaces · recovery · TOCTOU</strong><span>Look for direct adapters, recovery bypasses, descriptor substitution and races.</span></article><article><b>V7–V8</b><strong>Side channels · rollback</strong><span>Test network/plugin routes and attempts to restore state before a fresh protected commit.</span></article></div></div></section><footer class="site-upgrade-footer"><div class="mu-inner"><span>Matrix Audit · Decision Accountability Review · Liran Bar-Shrim · 2026</span><span><a href="./about.html">About</a> · <a href="./faq.html">FAQ</a> · <a href="./goodfaith.html">Good Faith</a> · <a href="https://github.com/liranbarshrim-ui/human-stop-boundary">Repository</a></span></div></footer></body>
+<footer class="footer">Matrix Audit · Decision Accountability Review · Liran Bar-Shrim · 2026</footer>
+<section class="site-upgrade-shell" aria-label="Independent adversarial review"><div class="site-upgrade-panel"><div class="kicker">Independent verification</div><h2>Do not trust the boundary. Try to break it.</h2><p>Matrix Audit is seeking independent security researchers to test the declared boundary against alternate execution paths. A reproducible bypass is a finding, not a failure of the research process.</p><div class="mu-actions"><a class="mu-button primary" href="./break-it.html">Open the A11 challenge →</a><a class="mu-button" href="./verification.html">See verification posture →</a><a class="mu-button" href="https://github.com/liranbarshrim-ui/human-stop-boundary/issues/12">GitHub challenge →</a></div></div></section><footer class="site-upgrade-footer"><div class="mu-inner"><span>Matrix Audit · Decision Accountability Review · Liran Bar-Shrim · 2026</span><span><a href="./about.html">About</a> · <a href="./faq.html">FAQ</a> · <a href="./goodfaith.html">Good Faith</a> · <a href="https://github.com/liranbarshrim-ui/human-stop-boundary">Repository</a></span></div></footer></body>
 </html>
