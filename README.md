@@ -1,4 +1,4 @@
-# Decision Accountability Review (DAR)
+# Decision Authority Record (DAR)
 
 **A structural framework for making stop authority explicit, bounded, and testable.**
 
