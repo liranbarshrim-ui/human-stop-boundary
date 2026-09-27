@@ -24,3 +24,9 @@ services:
         fromDatabase:
           name: dar-authority-db
           property: connectionString
+      - key: DAR_V2_TRANSPORT_KEYS
+        sync: false
+      - key: DAR_V2_AUTHORITY_KEYS
+        sync: false
+      - key: DAR_AUTH_WINDOW_SECONDS
+        value: 300
