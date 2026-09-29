@@ -85,6 +85,20 @@ The revised central claim is deliberately narrow:
 
 DAR does not establish either the monotonic anchor or interface completeness merely by implementing its own enforcement interface. Missing or unverified required conditions are not `PASS`.
 
+## Independent Audit Status
+
+The current frozen evidence package does not claim independent interface completeness.
+
+**A11 — No Alternate Protected Outcome Path: PENDING_INDEPENDENT_AUDIT.**
+
+The repository-authored interface/escape analysis is explicitly classified as `AMBIGUOUS` and is not treated as independent evidence.
+
+The remaining question is deployment-level and adversarial:
+
+> Can any alternate process, IPC path, socket, filesystem path, helper, recovery mechanism, or privileged interface produce the protected outcome without passing through the same authoritative refusal/fence boundary?
+
+A qualifying independent audit may confirm the boundary, identify an alternate path, or leave the condition unresolved. No result will be promoted to `PASS` without corresponding evidence.
+
 ## Verification
 
 The verified development checkout was previously executed with:
