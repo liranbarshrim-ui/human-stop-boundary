@@ -2,7 +2,7 @@
 
 ## Purpose
 
-This document defines how claims about Decision Accountability Review (DAR) are to be established and preserved.
+This document defines how claims about Decision Authority Record (DAR) are to be established and preserved.
 
 ## Source of truth
 
