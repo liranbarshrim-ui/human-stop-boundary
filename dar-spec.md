@@ -1,4 +1,5 @@
-DAR™ — Decision Accountability Record  
+DAR™ — Decision Accountability Review (DAR)  
+**Primary governance artifact:** Decision Authority Record  
 Specification v1.0  
 Status: Public / Reference  
 
@@ -6,17 +7,15 @@ Status: Public / Reference
 
 ### 1. Definition
 
-DAR defines a named individual  
-with the authority and obligation  
-to stop execution  
-before a decision becomes irreversible under uncertainty.
+A **Decision Authority Record** is a governance construct within the Decision Accountability Review framework.
+
+It establishes a named individual with the authority and obligation to stop execution before a decision becomes irreversible under uncertainty.
 
 ---
 
 ### 2. Core Principle
 
-When a decision becomes irreversible under uncertainty,  
-someone must be required to stop it — by name.
+When a decision becomes irreversible under uncertainty, someone must be required to stop it — by name.
 
 ---
 
@@ -33,7 +32,7 @@ They do not define:
 
 ### 4. Requirement
 
-A valid DAR must include:
+A valid Decision Authority Record must include:
 
 1. Irreversibility threshold  
 2. Named individual (by name, not role)  
@@ -54,14 +53,13 @@ A valid DAR must include:
 
 ### 6. Assertion
 
-If the name must be reconstructed after the event,  
-DAR did not exist.
+If the name must be reconstructed after the event, the Decision Authority Record did not exist.
 
 ---
 
 ### 7. Scope
 
-DAR applies where:
+The Decision Accountability Review framework applies where:
 - decisions are automated or semi-automated  
 - outcomes may become irreversible  
 - uncertainty cannot be fully modeled  
@@ -70,9 +68,7 @@ DAR applies where:
 
 ### 8. Status
 
-DAR is a governance layer.  
-It does not replace systems.  
-It defines responsibility when systems are no longer sufficient.
+DAR is a governance/research framework. The Decision Authority Record is one of its core governance artifacts.
 
 ---
 
