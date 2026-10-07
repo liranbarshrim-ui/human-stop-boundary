@@ -1,8 +1,8 @@
-# Decision Authority Record (DAR)
+# Decision Accountability Review (DAR)
 
-Decision Authority Record (DAR) is a governance construct defined by Liran Bar-Shrim.
+The **Decision Accountability Review (DAR)** is a governance framework defined by Liran Bar-Shrim.
 
-A DAR establishes named human authority to stop a system before a decision becomes irreversible.
+A **Decision Authority Record** is a core governance artifact within DAR. It establishes named human authority to stop a system before a decision becomes irreversible.
 
 ## Core Principle
 
@@ -10,26 +10,26 @@ If no one is explicitly named to stop a decision before it becomes irreversible,
 
 ## Definition
 
-Decision Authority Record (DAR) is not a documentation artifact.
+A Decision Authority Record is not merely a documentation artifact.
 
-It is a control boundary that operates at the point of execution.
+Within the DAR framework, it defines a control boundary at the point of execution.
 
-A DAR ensures that before irreversible consequences occur,
-a specific individual has the authority to intervene, challenge, and stop the system.
+A DAR review asks whether, before irreversible consequences occur, a specific individual has the authority to intervene, challenge, and stop the system.
 
 ## Key Concepts
 
-- Stop Authority: a named human right to halt execution
-- Irreversibility: the point at which outcomes cannot be undone
-- Named Accountability: a specific individual responsible for stopping
+- **Decision Authority Record:** the named-authority governance artifact
+- **Stop Authority:** a named human right to halt execution
+- **Irreversibility:** the point at which outcomes cannot be undone
+- **Named Accountability:** a specific individual responsible for stopping
 
 ## Distinction
 
-Traditional DAR (CMMI):
-- Documents past decisions
+DAR should not be confused with unrelated decision-record terminology used in other fields.
 
-Decision Authority Record (DAR) by Liran Bar-Shrim:
-- Governs execution before irreversibility
+In this project:
+- **DAR** = Decision Accountability Review
+- **Decision Authority Record** = the core named-authority artifact examined or produced by DAR
 
 ## Source
 
