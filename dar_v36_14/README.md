@@ -1,6 +1,6 @@
 # DAR v36.14 — Hardened Security Candidate
 
-**Decision Accountability Review (DAR)** is a research prototype for enforcing a bounded decision/effect boundary: authorization is bound to a named principal, a domain, an effect class, a state generation and a process generation, and effects routed through the privileged boundary are subject to durable consumption and recovery rules.
+**Decision Authority Record (DAR)** is a research prototype for enforcing a bounded decision/effect boundary: authorization is bound to a named principal, a domain, an effect class, a state generation and a process generation, and effects routed through the privileged boundary are subject to durable consumption and recovery rules.
 
 > DAR does **not** claim that it can universally stop an arbitrary AI system. Its security claims apply only to effects actually routed through and controlled by the DAR enforcement boundary.
 
