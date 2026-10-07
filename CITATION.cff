@@ -1,8 +1,8 @@
 cff-version: 1.2.0
 message: "If you use or discuss DAR, please cite this research record."
-title: "Decision Accountability Review (DAR)"
+title: "Decision Authority Record (DAR)"
 type: software
-abstract: "A structural framework and research prototype for making refusal and stop authority explicit, bounded, and testable in high-stakes decision processes."
+abstract: "A named-authority governance construct and research prototype for making refusal and stop authority explicit, bounded, and testable in high-stakes decision processes."
 authors:
   - family-names: "Bar-Shrim"
     given-names: "Liran"
@@ -18,7 +18,7 @@ keywords:
   - "control"
   - "evaluation"
   - "refusal authority"
-  - "decision accountability"
+  - "decision authority"
   - "human oversight"
   - "governance"
 version: "v36.14"
