@@ -2,9 +2,17 @@
 
 **Copyright (c) 2026 Liran Bar Shrim. All rights reserved.**
 
+## Canonical identity
+
+The project's canonical name is **Decision Accountability Review (DAR)**.
+
+Within DAR, a **Decision Authority Record** is the named-authority governance artifact used to specify who holds refusal/stop authority before an irreversible effect.
+
+**Decision Accountability Record** is not a current expansion of DAR and should not be used as the project's name.
+
 ## Ownership statement
 
-The Decision Accountability Record (DAR), Human Stop Boundary, associated doctrine, specifications, research materials, website materials, and original implementation work in this repository are claimed and maintained as the intellectual work of **Liran Bar Shrim**, subject to any third-party rights expressly identified below.
+The Decision Accountability Review (DAR) framework, Decision Authority Record artifacts, Human Stop Boundary, associated doctrine, specifications, research materials, website materials, and original implementation work in this repository are claimed and maintained as the intellectual work of **Liran Bar Shrim**, subject to any third-party rights expressly identified below.
 
 The repository is maintained by Liran Bar Shrim under the GitHub account `liranbarshrim-ui`.
 
@@ -20,7 +28,11 @@ Third-party libraries, dependencies, tools, and other materials remain subject t
 
 ## Historical licensing
 
-Earlier versions of this repository may have been distributed under different licensing terms. This notice does not purport to revoke rights that were validly granted under an earlier license. Future proprietary licensing is intended to apply to materials and versions for which Liran Bar Shrim has the legal right to set the applicable terms.
+Earlier versions of this repository were distributed under different licensing terms. In particular, Git history records an **Apache License 2.0** license commit on **2026-09-13** (`3a6adb6d2a9d95d020be1e8d185a68cf89ceabbd`), followed by a proprietary-license transition on **2026-09-14** (`5024ad0970f4e95eec1eb97e5ad095c01717c610`).
+
+This notice does **not** purport to revoke rights that were validly granted under an earlier license. Future proprietary licensing is intended to apply only to materials and versions for which Liran Bar Shrim has the legal right to set the applicable terms.
+
+See `LICENSE_HISTORY.md` for the repository-backed chronology and exact commits.
 
 ## Contributions and provenance
 
