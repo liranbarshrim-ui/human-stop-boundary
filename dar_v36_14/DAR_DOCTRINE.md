@@ -1,6 +1,6 @@
 # DAR — Core Doctrine
 
-**Decision Accountability Review (DAR)**
+**Decision Authority Record (DAR)**
 
 Defined by Liran Bar-Shrim.
 
