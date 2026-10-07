@@ -1,7 +1,7 @@
 # DAR Funding Application Package — 2026
 
 **Applicant:** Liran Bar-Shrim  
-**Project:** Decision Accountability Review (DAR)  
+**Project:** Decision Authority Record (DAR)  
 **Repository:** https://github.com/liranbarshrim-ui/human-stop-boundary  
 **Research site:** https://matrix-audit.com
 
