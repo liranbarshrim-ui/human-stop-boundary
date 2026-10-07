@@ -4,15 +4,17 @@
 
 ## Canonical identity
 
-The project's canonical name is **Decision Accountability Review (DAR)**.
+The project's canonical name is **Decision Authority Record (DAR)**.
 
-Within DAR, a **Decision Authority Record** is the named-authority governance artifact used to specify who holds refusal/stop authority before an irreversible effect.
+The DAR is the named-authority governance construct used to specify who holds refusal/stop authority before an irreversible effect.
 
-**Decision Accountability Record** is not a current expansion of DAR and should not be used as the project's name.
+A **DAR review / DAR Boundary Audit** is the review process used to examine the record, its release authority, protected effect, and alternate-path resistance.
+
+**Decision Accountability Review** is not the current expansion of DAR and should not be used as the project's canonical name.
 
 ## Ownership statement
 
-The Decision Accountability Review (DAR) framework, Decision Authority Record artifacts, Human Stop Boundary, associated doctrine, specifications, research materials, website materials, and original implementation work in this repository are claimed and maintained as the intellectual work of **Liran Bar Shrim**, subject to any third-party rights expressly identified below.
+The Decision Authority Record (DAR) construct, DAR review and audit materials, Human Stop Boundary, associated doctrine, specifications, research materials, website materials, and original implementation work in this repository are claimed and maintained as the intellectual work of **Liran Bar Shrim**, subject to any third-party rights expressly identified below.
 
 The repository is maintained by Liran Bar Shrim under the GitHub account `liranbarshrim-ui`.
 
