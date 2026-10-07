@@ -1,5 +1,5 @@
-DAR™ — Decision Accountability Review (DAR)  
-**Primary governance artifact:** Decision Authority Record  
+DAR™ — Decision Authority Record (DAR)  
+**Review / audit layer:** DAR review and Boundary Audit  
 Specification v1.0  
 Status: Public / Reference  
 
@@ -7,7 +7,7 @@ Status: Public / Reference
 
 ### 1. Definition
 
-A **Decision Authority Record** is a governance construct within the Decision Accountability Review framework.
+A **Decision Authority Record** is the canonical DAR governance construct.
 
 It establishes a named individual with the authority and obligation to stop execution before a decision becomes irreversible under uncertainty.
 
@@ -59,16 +59,18 @@ If the name must be reconstructed after the event, the Decision Authority Record
 
 ### 7. Scope
 
-The Decision Accountability Review framework applies where:
+DAR applies where:
 - decisions are automated or semi-automated  
 - outcomes may become irreversible  
 - uncertainty cannot be fully modeled  
+
+A DAR review or Boundary Audit may then test whether the named authority is actually binding and whether alternate paths can bypass the protected boundary.
 
 ---
 
 ### 8. Status
 
-DAR is a governance/research framework. The Decision Authority Record is one of its core governance artifacts.
+DAR is a governance construct and named-authority record. Its review/audit layer tests whether the claimed authority is structurally effective. The Human Stop Boundary is the associated enforcement-boundary research prototype.
 
 ---
 
