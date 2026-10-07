@@ -1,8 +1,10 @@
-# Decision Authority Record (DAR)
+# Decision Accountability Review (DAR)
 
 **A structural framework for making stop authority explicit, bounded, and testable.**
 
 Defined by **Liran Bar-Shrim**.
+
+**Naming convention:** DAR is the **Decision Accountability Review** framework/research program. A **Decision Authority Record** is the named-authority governance artifact used within DAR. These terms are intentionally distinct and should not be used as interchangeable expansions of DAR.
 
 > **Control is not the ability to move forward. Control is the ability to stop.**
 
@@ -155,3 +157,5 @@ This is an **active research prototype, not a production certification or indepe
 - **Citation metadata:** [`CITATION.cff`](CITATION.cff)
 - **Archival plan:** [`ARCHIVAL.md`](ARCHIVAL.md)
 - **Provenance:** [`PROVENANCE.md`](PROVENANCE.md)
+- **Project identity:** [`PROJECT_IDENTITY.md`](PROJECT_IDENTITY.md)
+- **License history:** [`LICENSE_HISTORY.md`](LICENSE_HISTORY.md)
