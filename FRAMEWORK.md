@@ -1,5 +1,5 @@
 # Named Stop Authority — Framework
-### Decision Accountability Review — Liran Bar-Shrim
+### Decision Authority Record — Liran Bar-Shrim
 
 ---
 
@@ -152,4 +152,4 @@ It asks a narrower question about interruption authority and whether the claimed
 
 ---
 
-*Decision Accountability Review — Liran Bar-Shrim — matrix-audit.com*
+*Decision Authority Record — Liran Bar-Shrim — matrix-audit.com*
