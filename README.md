@@ -64,28 +64,27 @@ This is the first recorded **externally verifiable enforcement demonstration** i
 
 Evidence record: [`evidence/EXTERNAL_DEPLOYMENT_PROOF_2026-09-15.md`](evidence/EXTERNAL_DEPLOYMENT_PROOF_2026-09-15.md).
 
-The claim is deliberately bounded. This experiment does **not** prove universal control over arbitrary AI systems, complete mediation of every possible external path, production certification, or a full DAR v2 PASS. Those stronger claims require independent interface/escape-path completeness evidence and the other environmental conditions specified below.
+The claim is deliberately bounded. This experiment does **not** prove universal control over arbitrary AI systems, complete mediation of every possible external path, production certification, or a full DAR v3 PASS. Those stronger claims require independent interface/escape-path completeness evidence and the other environmental conditions specified below.
 
-## Boundary Conformance v2
+## Boundary Conformance v3
 
-Version 1 remains the historical preregistration and its results are not rewritten. Future conformance claims use v2, which makes the two load-bearing environmental conditions explicit before a PASS can be claimed.
+Version 1 and v2 remain historical specifications/results and are not rewritten. **Future strong outcome-fence conformance claims use the frozen v3 evidence package.**
 
 The machine-readable and human-readable specification is under [`dar_v36_14/spec/`](dar_v36_14/spec/):
 
-- `boundary_manifest_v2.json` — requires an external monotonic anchor and independent interface-completeness audit;
-- `ASSUMPTIONS_v2.md` — separates implementation properties from environmental trust conditions;
-- `FORMAL_PROPERTY_v2.md` — defines the conditional property and counterexample criterion;
-- `EMPIRICAL_STATUS_v2.md` — records the evidence still required before a v2 PASS;
-- `THREAT_MODEL_v1.md` — adversary capabilities and attack surface;
-- `ATTACK_CATALOG_v1.md` — frozen attack families;
-- `CONFORMANCE.md` — PASS / FAIL / OUT-OF-SCOPE / AMBIGUOUS rules;
-- `INDEPENDENT_REPRODUCTION.md` — protocol for testing the claim without importing DAR internals.
+- [`boundary_manifest_v3.json`](dar_v36_14/spec/boundary_manifest_v3.json) — frozen v3 boundary and required conditions;
+- [`ASSUMPTIONS_v2.md`](dar_v36_14/spec/ASSUMPTIONS_v2.md) — environmental trust assumptions;
+- [`FORMAL_PROPERTY_v3_OUTCOME_FENCE.md`](dar_v36_14/spec/FORMAL_PROPERTY_v3_OUTCOME_FENCE.md) — v3 outcome-fence property;
+- [`THREAT_MODEL_v1.md`](dar_v36_14/spec/THREAT_MODEL_v1.md) — adversary capabilities and attack surface;
+- [`ATTACK_CATALOG_v1.md`](dar_v36_14/spec/ATTACK_CATALOG_v1.md) — frozen attack families;
+- [`CONFORMANCE.md`](dar_v36_14/spec/CONFORMANCE.md) — PASS / FAIL / OUT-OF-SCOPE / AMBIGUOUS rules;
+- [`INDEPENDENT_REPRODUCTION.md`](dar_v36_14/spec/INDEPENDENT_REPRODUCTION.md) — protocol for testing the claim without importing DAR internals.
 
-The revised central claim is deliberately narrow:
+The v3 property is deliberately narrow:
 
-> **Within a pre-declared protected-effect boundary, with a trusted external monotonic anchor and an independently established completeness property for all paths capable of producing the protected effect, a valid refusal must make protected effect commitment unreachable.**
+> **For a frozen deployment satisfying A1, A9, A10, A11, A12 and A13, once an authenticated refusal installs terminal external refusal state for outcome O, no later protected operation may produce O.**
 
-DAR does not establish either the monotonic anchor or interface completeness merely by implementing its own enforcement interface. Missing or unverified required conditions are not `PASS`.
+DAR does not establish interface completeness merely by implementing its own enforcement interface. Missing or unverified required conditions are not `PASS`.
 
 ## Independent Audit Status
 
@@ -111,7 +110,7 @@ The single skip is the optional Landlock test because the host kernel returns `E
 
 Additional local checks passed: package installation, Python compilation, live two-UID boundary testing, and live `SIGKILL` generation-rotation testing.
 
-These results are bounded implementation evidence, not independent validation of A1 or A9.
+These results are bounded implementation evidence, not independent validation of A1 or A11.
 
 ### Five-scenario crash-boundary evidence
 
@@ -123,11 +122,9 @@ The repository now includes a dedicated PostgreSQL crash-boundary test covering 
 4. new idempotency key after crash cannot bypass an existing refusal;
 5. torn PostgreSQL transaction write interrupted by `SIGKILL`, followed by rollback verification.
 
-The final machine-validated run was GitHub Actions **run 34868342315**, job **104057736583** (the crash-boundary job). All five scenarios returned `PASS`, the machine-readable aggregate returned `verdict: PASS`, and the evidence artifact was uploaded successfully. The test logs also show an open PostgreSQL transaction receiving an unexpected EOF after the crash injection, consistent with the intended rollback boundary.
+The final machine-validated run was GitHub Actions **run 34868342315**, job **104057736583** (the crash-boundary job). All five scenarios returned `PASS`, the machine-readable aggregate returned `verdict: PASS`, and the evidence artifact was uploaded successfully.
 
-**Development transparency:** the immediately preceding attempt, GitHub Actions **run 34868180786**, executed the five scenarios successfully but failed the evidence-validation step because the generated evidence file was not in the expected machine-readable form. The implementation/workflow was corrected and the final run above was executed from the corrected commit. This earlier failure is retained in the Actions history rather than being presented as if the first run passed.
-
-This five-scenario result is **crash/transaction-boundary evidence only**. It does not constitute a production certification, an independent A1 interface-completeness audit, a second-infrastructure validation, an uncontrolled external `SIGKILL` test against the Render service, or a full DAR v2 PASS.
+This five-scenario result is **crash/transaction-boundary evidence only**. It does not constitute a production certification, an independent A1/A11 interface-completeness audit, a second-infrastructure validation, an uncontrolled external `SIGKILL` test against the Render service, or a full DAR v3 PASS.
 
 ### External PostgreSQL restart persistence
 
@@ -139,9 +136,9 @@ The repository must be treated as the source of truth. Chat-pasted artifacts are
 
 DAR does **not** claim universal control over arbitrary AI systems, complete mediation by assertion, or protection against effects outside the declared boundary.
 
-HMAC-authenticated state does not by itself prevent restoration of an older valid snapshot. Anti-rollback requires a trusted monotonic anchor outside the Store rollback domain. A deployment without that anchor cannot claim the v2 anti-rollback property.
+HMAC-authenticated state does not by itself prevent restoration of an older valid snapshot. Anti-rollback requires a trusted monotonic anchor outside the Store rollback domain. A deployment without that anchor cannot claim the v3 anti-rollback property.
 
-Likewise, tests of the registered interface do not prove that no alternate path exists. A1 therefore requires an independent interface/escape audit covering processes, IPC, filesystem, adapters, helpers, and other paths capable of producing the protected effect.
+Likewise, tests of the registered interface do not prove that no alternate path exists. A11 therefore requires an independent interface/escape audit covering processes, IPC, filesystem, adapters, helpers, and other paths capable of producing the protected effect.
 
 Exactly-once semantics for arbitrary external side effects remain dependent on an authoritative idempotent adapter.
 
