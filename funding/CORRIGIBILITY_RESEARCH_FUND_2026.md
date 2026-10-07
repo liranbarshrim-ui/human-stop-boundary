@@ -1,7 +1,7 @@
 # DAR — Corrigibility Research Fund 2026 Application
 
 ## Project
-**Decision Accountability Review (DAR): empirical infrastructure for protected human refusal**
+**Decision Authority Record (DAR): empirical infrastructure for protected human refusal**
 
 ## Applicant
 Liran Bar-Shrim
