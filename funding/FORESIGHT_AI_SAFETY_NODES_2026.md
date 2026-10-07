@@ -4,7 +4,7 @@
 **II. Coordination and accountability**
 
 ## Project
-**Decision Accountability Review (DAR): an independent, testable accountability layer for agentic systems**
+**Decision Authority Record (DAR): an independent, testable accountability layer for agentic systems**
 
 ## Applicant
 Liran Bar-Shrim
